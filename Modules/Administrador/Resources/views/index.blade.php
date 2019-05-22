@@ -5,7 +5,7 @@
 @section('title', 'AdminLTE')
 
 @section('content_header')
-    <h1>This view is loaded from module: {!! config('administrador.name') !!}</h1>
+    <!--h1>This view is loaded from module: {!! config('administrador.name') !!}</h1-->
 @stop
 
 @section('content')

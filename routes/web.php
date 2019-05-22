@@ -20,6 +20,8 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::prefix('administrador/')->group(function() {
-    Route::get('/cuentas/{id}', 'subCategoriaController@index')->name('subcategoria');
+    Route::get('categoria/{id}', 'subCategoriaController@index')->name('subcategoria');
 });
+
+
 

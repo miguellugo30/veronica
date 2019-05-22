@@ -52,7 +52,7 @@
                
             @endif
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="float:left">
-                    <ul class="nav navbar-nav">
+                    <ul class="nav navbar-nav menu-categorias">
                     @foreach ($categorias as $categoria)
                         <li><a href="{{ route('subcategoria', $categoria->id ) }}">{{ $categoria->nombre }}</span></a></li>
                     @endforeach
@@ -109,7 +109,7 @@
             @endif
 
             <!-- Content Header (Page header) -->
-            <section class="content-header" style="padding:0px">
+            <section class="content-header sub-categorias" style="padding:0px">
                 @yield('content_header')
             </section>
 
