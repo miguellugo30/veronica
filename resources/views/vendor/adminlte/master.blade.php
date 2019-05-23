@@ -3,9 +3,10 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title_prefix', config('adminlte.title_prefix', ''))
-@yield('title', config('adminlte.title', 'AdminLTE 2'))
-@yield('title_postfix', config('adminlte.title_postfix', ''))</title>
+    @yield('title', config('adminlte.title', 'AdminLTE 2'))
+    @yield('title_postfix', config('adminlte.title_postfix', ''))</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
@@ -14,6 +15,8 @@
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/font-awesome/css/font-awesome.min.css') }}">
     <!-- Ionicons -->
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/Ionicons/css/ionicons.min.css') }}">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
     @if(config('adminlte.plugins.select2'))
         <!-- Select2 -->
@@ -63,8 +66,7 @@
 
 @yield('adminlte_js')
 
-<script src="{{ asset('js/administrador.js') }}"></script>
-
+<script src="{{ asset('js/app.js') }}"></script>
 
 </body>
 </html>

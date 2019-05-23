@@ -10,6 +10,7 @@ class User extends Authenticatable
 {
     use Notifiable;
     use HasRoles;
+   
     /**
      * The attributes that are mass assignable.
      *
@@ -44,5 +45,6 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('Nimbus\Categorias');
     }
+
 
 }

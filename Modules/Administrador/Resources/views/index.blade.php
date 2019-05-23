@@ -9,5 +9,5 @@
 @stop
 
 @section('content')
-    <p>DASHBOARD</p>
+    <p></p>
 @stop

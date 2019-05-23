@@ -51,25 +51,15 @@
                 <!-- Sidebar toggle button-->
                
             @endif
+                <!-- MENU DE CATEGORIAS -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="float:left">
                     <ul class="nav navbar-nav menu-categorias">
-                    @foreach ($categorias as $categoria)
-                        <li><a href="{{ route('subcategoria', $categoria->id ) }}">{{ $categoria->nombre }}</span></a></li>
-                    @endforeach
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something else here</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#">Separated link</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#">One more separated link</a></li>
-                            </ul>
-                        </li>
+                        @foreach ($categorias as $categoria)
+                            <li><a href="{{ route('categoria', $categoria->id ) }}">{{ $categoria->nombre }}</span></a></li>
+                        @endforeach
                     </ul>
                 </div><!-- /.navbar-collapse -->
+                 <!-- FIN MENU DE CATEGORIAS -->
                 <!-- Navbar Right Menu -->
                 <div class="navbar-custom-menu">
 
@@ -114,7 +104,7 @@
             </section>
 
             <!-- Main content -->
-            <section class="content">
+            <section class="content viewResult">
 
                 @yield('content')
 

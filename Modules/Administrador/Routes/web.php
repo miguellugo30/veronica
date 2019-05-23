@@ -14,3 +14,8 @@
 Route::prefix('administrador')->group(function() {
     Route::get('/', 'AdministradorController@index');
 });
+
+
+Route::prefix('administrador')->name('administrador.')->group(function () {
+    Route::resource('usuarios/', 'UsuariosController');
+});
