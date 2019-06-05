@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'title' => 'Nimbus 2.0',
+    'title' => 'Nimbus CCC',
 
     'title_prefix' => '',
 
@@ -30,7 +30,7 @@ return [
     |
     */
 
-    'logo' => '<b>Nimbus</b>CC',
+    'logo' => '<b>Nimbus</b>CCC',
 
     'logo_mini' => '<b>N</b>im',
 

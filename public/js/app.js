@@ -86,97 +86,6 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./resources/js/administrador.js":
-/*!***************************************!*\
-  !*** ./resources/js/administrador.js ***!
-  \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-$(function () {
-  /**
-   * Evento para el menu categorias y mostrar las sub categorias
-   */
-  $(".menu-categorias li a").click(function (e) {
-    e.preventDefault();
-    $(".viewResult").html('');
-    $(".menu-categorias li").removeClass("active");
-    $(this).addClass("active");
-    url = $(this).attr('href');
-    $.get(url, function (data, textStatus, jqXHR) {
-      $(".sub-categorias").html(data);
-    });
-  });
-  /**
-   * Evento para el menu de sub categorias y mostrar la vista
-   */
-
-  $(".sub-categorias").on("click", ".subCat a", function (e) {
-    e.preventDefault();
-    id = $(this).data("id");
-
-    if (id == 6) {
-      $.get('administrador/usuarios', function (data, textStatus, jqXHR) {
-        $(".viewResult").html(data);
-        $('.viewResult #tableUsuarios').DataTable({
-          "lengthChange": false
-        });
-      });
-    }
-  });
-  /**
-   * Evento para ver el formulario de nuevo usuario
-   */
-
-  $(".viewResult").on("click", ".newUser", function (e) {
-    e.preventDefault();
-    $(".viewIndex").slideUp();
-    $(".viewCreate").slideDown();
-    $.get('administrador/usuarios/create', function (data, textStatus, jqXHR) {
-      $(".viewCreate").html(data);
-      /**
-       * Evento para cancelar el alta de nuevo usuario
-       */
-
-      $(".viewCreate").on("click", ".cancelClient", function (e) {
-        $(".viewIndex").slideDown();
-        $(".viewCreate").slideUp();
-      });
-      /**
-       * Evento para guardar el nuevo usuario
-       */
-
-      $('.viewCreate').on('click', '.saveClient', function (event) {
-        event.preventDefault();
-        var name = $("#name").val();
-        var email = $("#email").val();
-        var pass_1 = $("#pass_1").val();
-        var pass_2 = $("#pass_2").val();
-        var cliente = $("#cliente").val();
-        var rol = $("#rol").val();
-
-        var _token = $("input[name=_token]").val();
-
-        $.post("administrador/usuarios", {
-          name: name,
-          email: email,
-          password: pass_1,
-          id_cliente: cliente,
-          rol: rol,
-          _token: _token
-        }, function (data, textStatus, xhr) {
-          $('.viewIndex').html(data);
-          $('.viewCreate').slideUp();
-          $('.viewIndex').slideDown();
-          $('.viewCreate').html("");
-        });
-      });
-    });
-  });
-});
-
-/***/ }),
-
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -218,27 +127,439 @@ $(function () {
 
 /***/ }),
 
-/***/ "./resources/sass/app.scss":
-/*!*********************************!*\
-  !*** ./resources/sass/app.scss ***!
-  \*********************************/
+/***/ "./resources/js/menus.js":
+/*!*******************************!*\
+  !*** ./resources/js/menus.js ***!
+  \*******************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-// removed by extract-text-webpack-plugin
+$(function () {
+  var currentURL = window.location.href;
+  /**
+   * Evento para ver el formulario de nuevo usuario
+   */
+
+  $(".viewResult").on("click", "#tableMenus tbody tr", function (e) {
+    var id = $(this).data("id");
+    $(".viewIndex").removeClass('col-md-12');
+    $(".viewIndex").addClass('col-md-6');
+    var url = currentURL + '/menus/' + id;
+    $.get(url, function (data, textStatus, jqXHR) {
+      $(".viewSubCat").html(data);
+      $('.viewResult #tableSubMenus').DataTable({
+        "lengthChange": true,
+        "order": [[2, "asc"]]
+      });
+    });
+  });
+  /**
+   * Evento para crear una nueva categoria
+   */
+
+  $(".viewResult").on("click", ".newCat", function (e) {
+    e.preventDefault();
+    $(".viewIndex").slideUp();
+    $(".viewSubCat").slideUp();
+    $(".viewCreate").slideDown();
+    var url = currentURL + '/menus/create';
+    $.get(url, function (data, textStatus, jqXHR) {
+      $(".viewCreate").html(data);
+      /**
+       * Evento para cancelar el alta de nuevo usuario
+       */
+
+      $(".viewCreate").on("click", ".cancelMenu", function (e) {
+        $(".viewIndex").slideDown();
+        $(".viewSubCat").slideDown();
+        $(".viewCreate").slideUp();
+      });
+    });
+    /**
+     * Evento para guardar el nuevo usuario
+     */
+
+    $('.viewCreate').on('click', '.saveMenu', function (event) {
+      event.preventDefault();
+      var nombre = $("#nombre").val();
+      var descripcion = $("#descripcion").val();
+      var tipo = $("#tipo").val();
+
+      var _token = $("input[name=_token]").val();
+
+      var url = currentURL + '/menus';
+      $.post(url, {
+        nombre: nombre,
+        descripcion: descripcion,
+        tipo: tipo,
+        _token: _token
+      }, function (data, textStatus, xhr) {
+        $('.viewResult').html(data);
+        $('.viewCreate').slideUp();
+        $('.viewIndex').slideDown();
+        $('.viewResult #tableMenus').DataTable({
+          "lengthChange": true,
+          "order": [[2, "asc"]]
+        });
+      });
+    });
+  });
+  /**
+   * Evento para editar un usuario
+   */
+
+  $(".viewResult").on('dblclick', '#tableMenus tbody tr', function (e) {
+    e.preventDefault();
+    $(".viewIndex").slideUp();
+    $(".viewSubCat").slideUp();
+    $(".viewCreate").slideDown();
+    var id = $(this).data("id");
+    var url = currentURL + "/menus/" + id + "/edit";
+    $.get(url, function (data, textStatus, jqXHR) {
+      $(".viewCreate").html(data);
+      /**
+       * Evento para cancelar la edicion del menu
+       */
+
+      $(".viewCreate").on("click", ".cancelMenu", function (e) {
+        $(".viewIndex").slideDown();
+        $(".viewSubCat").slideDown();
+        $(".viewCreate").slideUp();
+      });
+      /**
+       * Evento para editar el menu
+       */
+
+      $('.viewCreate').on('click', '.editMenu', function (event) {
+        event.preventDefault();
+        var nombre = $("#nombre").val();
+        var id = $("#id_categoria").val();
+        var descripcion = $("#descripcion").val();
+        var tipo = $("#tipo").val();
+
+        var _token = $("input[name=_token]").val();
+
+        var _method = $("input[name=_method]").val();
+
+        var url = currentURL + '/menus/' + id;
+        $.ajax({
+          url: url,
+          type: 'POST',
+          data: {
+            nombre: nombre,
+            descripcion: descripcion,
+            tipo: tipo,
+            _token: _token,
+            _method: _method
+          },
+          success: function success(result) {
+            $('.viewResult').html(result);
+            $('.viewCreate').slideUp();
+            $('.viewIndex').slideDown();
+            $('.viewResult #tableMenus').DataTable({
+              "lengthChange": true,
+              "order": [[2, "asc"]]
+            });
+          }
+        });
+      });
+      /**
+       * Evento para eliminar el  usuario
+       */
+
+      $('.viewCreate').on('click', '.deleteMenu', function (event) {
+        event.preventDefault();
+        var id = $("#id_categoria").val();
+
+        var _token = $("input[name=_token]").val();
+
+        var url = currentURL + '/menus/' + id;
+        $.ajax({
+          url: url,
+          type: 'DELETE',
+          data: {
+            _token: _token
+          },
+          success: function success(result) {
+            $('.viewResult').html(result);
+            $('.viewCreate').slideUp();
+            $('.viewIndex').slideDown();
+            $('.viewResult #tableMenus').DataTable({
+              "lengthChange": true,
+              "order": [[2, "asc"]]
+            });
+          }
+        });
+      });
+    });
+  });
+  /**
+   * Evento para editar un usuario
+   */
+
+  $('.viewResult').on('click', '.orderignCat', function (e) {
+    e.preventDefault();
+    $(".viewIndex").slideUp();
+    $(".viewSubCat").slideUp();
+    $(".viewCreate").slideDown();
+    var url = currentURL + "/menus/ordering";
+    $.get(url, function (data, textStatus, jqXHR) {
+      $(".viewCreate").html(data);
+      $("#sortable").sortable();
+      /**
+       * Evento para cancelar la edicion del menu
+       */
+
+      $(".viewCreate").on("click", ".cancelMenu", function (e) {
+        $(".viewIndex").slideDown();
+        $(".viewSubCat").slideDown();
+        $(".viewCreate").slideUp();
+      });
+      /**
+       * Evento para editar el menu
+       */
+
+      $('.viewCreate').on('click', '.saveOrderMenu', function (event) {
+        event.preventDefault();
+        var ordenElementos = $("#sortable").sortable("toArray").toString();
+
+        var _token = $("input[name=_token]").val();
+
+        var url = currentURL + "/menus/updateOrdering";
+        $.ajax({
+          url: url,
+          type: 'POST',
+          data: {
+            ordenElementos: ordenElementos,
+            _token: _token
+          },
+          success: function success(result) {
+            $('.viewResult').html(result);
+            $('.viewCreate').slideUp();
+            $('.viewIndex').slideDown();
+            $('.viewResult #tableMenus').DataTable({
+              "lengthChange": true,
+              "order": [[2, "asc"]]
+            });
+          }
+        });
+      });
+    });
+  });
+});
+
+/***/ }),
+
+/***/ "./resources/js/usuarios.js":
+/*!**********************************!*\
+  !*** ./resources/js/usuarios.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  var currentURL = window.location.href;
+  /**
+   * Evento para el menu categorias y mostrar las sub categorias
+   */
+
+  $(".menu-categorias li a").click(function (e) {
+    e.preventDefault();
+    $(".viewResult").html('');
+    var url = $(this).attr('href');
+    $.get(url, function (data, textStatus, jqXHR) {
+      $(".sub-categorias").html(data);
+    });
+  });
+  /**
+   * Evento para el menu de sub categorias y mostrar la vista
+   */
+
+  $(".sub-categorias").on("click", ".subCat a", function (e) {
+    e.preventDefault();
+    var id = $(this).data("id");
+
+    if (id == 6) {
+      var url = currentURL + '/usuarios';
+      $.get(url, function (data, textStatus, jqXHR) {
+        $(".viewResult").html(data);
+        $('.viewResult #tableUsuarios').DataTable({
+          "lengthChange": true
+        });
+      });
+    } else if (id == 4) {
+      var _url = currentURL + '/menus';
+
+      $.get(_url, function (data, textStatus, jqXHR) {
+        $(".viewResult").html(data);
+        $('.viewResult #tableMenus').DataTable({
+          "lengthChange": true,
+          "order": [[2, "asc"]]
+        });
+      });
+    }
+  });
+  /**
+   * Evento para ver el formulario de nuevo usuario
+   */
+
+  $(".viewResult").on("click", ".newUser", function (e) {
+    e.preventDefault();
+    $(".viewIndex").slideUp();
+    $(".viewCreate").slideDown();
+    var url = currentURL + '/usuarios/create';
+    $.get(url, function (data, textStatus, jqXHR) {
+      $(".viewCreate").html(data);
+      /**
+       * Evento para cancelar el alta de nuevo usuario
+       */
+
+      $(".viewCreate").on("click", ".cancelClient", function (e) {
+        $(".viewIndex").slideDown();
+        $(".viewCreate").slideUp();
+      });
+      /**
+       * Evento para guardar el nuevo usuario
+       */
+
+      $('.viewCreate').on('click', '.saveClient', function (event) {
+        event.preventDefault();
+        var name = $("#name").val();
+        var email = $("#email").val();
+        var pass_1 = $("#pass_1").val();
+        var cliente = $("#cliente").val();
+        var rol = $("#rol").val();
+
+        var _token = $("input[name=_token]").val();
+
+        var url = currentURL + '/usuarios';
+        var arr = $('[name="cats[]"]:checked').map(function () {
+          return this.value;
+        }).get();
+        $.post(url, {
+          name: name,
+          email: email,
+          password: pass_1,
+          id_cliente: cliente,
+          rol: rol,
+          arr: arr,
+          _token: _token
+        }, function (data, textStatus, xhr) {
+          $('.viewResult').html(data);
+          $('.viewCreate').slideUp();
+          $('.viewIndex').slideDown();
+          $('.viewResult #tableUsuarios').DataTable({
+            "lengthChange": true
+          });
+        });
+      });
+    });
+  });
+  /**
+   * Evento para editar un usuario
+   */
+
+  $(".viewResult").on('dblclick', '#tableUsuarios tbody tr', function (event) {
+    event.preventDefault();
+    $(".viewIndex").slideUp();
+    $(".viewCreate").slideDown();
+    var id = $(this).data("id");
+    var url = currentURL + "/usuarios/" + id + "/edit";
+    $.get(url, function (data, textStatus, jqXHR) {
+      $(".viewCreate").html(data);
+      /**
+       * Evento para cancelar la edicion del usuario
+       */
+
+      $(".viewCreate").on("click", ".cancelClient", function (e) {
+        $(".viewIndex").slideDown();
+        $(".viewCreate").slideUp();
+        $(".viewCreate").html('');
+      });
+      /**
+       * Evento para editar el usuario
+       */
+
+      $('.viewCreate').on('click', '.saveClient', function (event) {
+        event.preventDefault();
+        var name = $("#name").val();
+        var id_user = $("#id_user").val();
+        var email = $("#email").val();
+        var pass_1 = $("#pass_1").val();
+        var cliente = $("#cliente").val();
+        var rol = $("#rol").val();
+
+        var _token = $("input[name=_token]").val();
+
+        var url = currentURL + '/usuarios/' + id_user;
+        var arr = $('[name="cats[]"]:checked').map(function () {
+          return this.value;
+        }).get();
+        $.ajax({
+          url: url,
+          type: 'PUT',
+          data: {
+            name: name,
+            email: email,
+            password: pass_1,
+            id_cliente: cliente,
+            rol: rol,
+            arr: arr,
+            _token: _token
+          },
+          success: function success(result) {
+            $('.viewResult').html(result);
+            $('.viewCreate').slideUp();
+            $('.viewIndex').slideDown();
+            $('.viewResult #tableUsuarios').DataTable({
+              "lengthChange": true
+            });
+          }
+        });
+      });
+      /**
+       * Evento para eliminar el  usuario
+       */
+
+      $('.viewCreate').on('click', '.deleteClient', function (event) {
+        event.preventDefault();
+        var id_user = $("#id_user").val();
+
+        var _token = $("input[name=_token]").val();
+
+        var url = currentURL + '/usuarios/' + id_user;
+        $.ajax({
+          url: url,
+          type: 'DELETE',
+          data: {
+            _token: _token
+          },
+          success: function success(result) {
+            $('.viewResult').html(result);
+            $('.viewCreate').slideUp();
+            $('.viewIndex').slideDown();
+            $('.viewResult #tableUsuarios').DataTable({
+              "lengthChange": true
+            });
+          }
+        });
+      });
+    });
+  });
+});
 
 /***/ }),
 
 /***/ 0:
-/*!*********************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/js/administrador.js ./resources/sass/app.scss ***!
-  \*********************************************************************************************/
+/*!**************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/js/usuarios.js ./resources/js/menus.js ***!
+  \**************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\administrador.js */"./resources/js/administrador.js");
-module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\usuarios.js */"./resources/js/usuarios.js");
+module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\menus.js */"./resources/js/menus.js");
 
 
 /***/ })

@@ -5,9 +5,8 @@ namespace Modules\Administrador\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Session;
 
-class AdministradorController extends Controller
+class SubMenuscontroller extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,11 +14,7 @@ class AdministradorController extends Controller
      */
     public function index()
     {
-        $rol        = Session::get('rol');
-        $categorias = Session::get('categorias');
-
-        return view('administrador::index', compact( 'rol', 'categorias' ) );
-
+        return view('administrador::submenus.index');
     }
 
     /**
@@ -28,10 +23,7 @@ class AdministradorController extends Controller
      */
     public function create()
     {
-        $rol        = Session::get('rol');
-        $categorias = Session::get('categorias');
-
-        return view('administrador::create', compact( 'rol', 'categorias' ));
+        return view('administrador::submenus.create');
     }
 
     /**
@@ -51,7 +43,7 @@ class AdministradorController extends Controller
      */
     public function show($id)
     {
-        return view('administrador::show');
+        return view('administrador::submenus.show');
     }
 
     /**
@@ -61,7 +53,7 @@ class AdministradorController extends Controller
      */
     public function edit($id)
     {
-        return view('administrador::edit');
+        return view('administrador::submenus.edit');
     }
 
     /**

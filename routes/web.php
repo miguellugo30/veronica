@@ -28,3 +28,4 @@ Route::prefix('administrador/')->group(function() {
 });
 
 //Route::resource('usuarios/', 'UsuariosController');
+//Route::resource('administrador/usuarios/', '\Modules\Administrador\Http\Controllers\UsuariosController');

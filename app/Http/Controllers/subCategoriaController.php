@@ -20,7 +20,7 @@ class subCategoriaController extends Controller
          * Obtenemos las sub categorias relacionadas a la categoria
          */
         $subCats =   Categorias::find( $id )->sub_categorias;
-        
+
         $rol        = Session::get('rol');
         $categorias = Session::get('categorias');
 

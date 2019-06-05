@@ -1,5 +1,4 @@
 <div class="col-12 viewIndex">
-
     <fieldset>
         <legend> 
             <i class="fas fa-users"></i> Usuarios
@@ -22,7 +21,7 @@
                 </thead>
                 <tbody>
                     @foreach( $users as $user )
-                        <tr>
+                        <tr data-id="{{ $user->id }}">
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>

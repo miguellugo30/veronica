@@ -32,7 +32,7 @@ class HomeController extends Controller
         /**
          * Obtenemos el rol del usuario logeado
          */
-        $rol = $user->getRoleNames(); 
+        $rol = $user->getRoleNames();
         /**
          * Obtenemos las categorias relacionadas al usuario
          */
@@ -42,7 +42,7 @@ class HomeController extends Controller
          */
         session(['categorias' => $categorias]);
         session(['rol'        => $rol[0] ]);
-           
+
         /**
          * Si el rol es Super Administrador o  administrador lo redireccionamos a la vista administrador
          */
@@ -52,6 +52,5 @@ class HomeController extends Controller
         } else {
             return view('home');
         }
-    
     }
 }
