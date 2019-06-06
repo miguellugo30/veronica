@@ -3,7 +3,7 @@ $(function() {
     let currentURL = window.location.href;
 
     /**
-     * Evento para ver el formulario de nuevo usuario
+     * Evento para ver las sub categorias de la categoria seleccionada
      */
     $(".viewResult").on("click", "#tableMenus tbody tr", function(e) {
         let id = $(this).data("id");
@@ -12,6 +12,7 @@ $(function() {
         $(".viewIndex").addClass('col-md-6');
 
         let url = currentURL + '/menus/' + id;
+
         $.get(url, function(data, textStatus, jqXHR) {
 
             $(".viewSubCat").html(data);
@@ -21,8 +22,231 @@ $(function() {
                     [2, "asc"]
                 ]
             });
+
+            /**
+             * Evento para crear una nueva sub categoria
+             */
+            $(".viewSubCat").on("click", ".newSubCat", function(e) {
+
+                e.preventDefault();
+                $(".viewIndex").slideUp();
+                $(".viewSubCat").slideUp();
+                $(".viewCreate").slideDown();
+
+                let url = currentURL + '/submenus/create';
+
+                $.get(url, function(data, textStatus, jqXHR) {
+                    $(".viewCreate").html(data);
+
+                });
+            });
+
+            /**
+             * Evento para cancelar el alta de nuevo sub menu
+             */
+            $(".viewCreate").on("click", ".cancelSubMenu", function(e) {
+                $(".viewIndex").slideDown();
+                $(".viewSubCat").slideDown();
+                $(".viewCreate").slideUp();
+                $(".viewCreate").html('');
+            });
+
+            /**
+             * Evento para guardar el nuevo sub menu
+             */
+            $('.viewCreate').on('click', '.saveSubMenu', function(event) {
+                event.preventDefault();
+
+                let id_categoria = $("#id_categoria").val();
+                let nombre = $("#nombre").val();
+                let descripcion = $("#descripcion").val();
+                let tipo = $("#tipo").val();
+                let _token = $("input[name=_token]").val();
+                let url = currentURL + '/submenus';
+
+                $.post(url, {
+                    nombre: nombre,
+                    descripcion: descripcion,
+                    tipo: tipo,
+                    id_categoria: id_categoria,
+                    _token: _token
+                }, function(data, textStatus, xhr) {
+
+                    $('.viewSubCat').html(data);
+                    $('.viewCreate').slideUp();
+                    $(".viewCreate").html('');
+
+                    $(".viewSubCat").slideDown();
+                    $('.viewIndex').slideDown();
+
+                    $('.viewSubCat #tableSubMenus').DataTable({
+                        "lengthChange": true,
+                        "order": [
+                            [2, "asc"]
+                        ]
+                    });
+                });
+            });
         });
     });
+
+    $(".viewResult").on('dblclick', '#tableSubMenus tbody tr', function(e) {
+        e.preventDefault();
+
+        $(".viewIndex").slideUp();
+        $(".viewSubCat").slideUp();
+        $(".viewCreate").slideDown();
+
+        let id = $(this).data("id");
+        let url = currentURL + "/submenus/" + id + "/edit";
+
+        $.get(url, function(data, textStatus, jqXHR) {
+            $(".viewCreate").html(data);
+        });
+        /**
+         * Evento para editar un sub menu
+         */
+        $('.viewCreate').on('click', '.editSubMenu', function(event) {
+            event.preventDefault();
+
+            let id_subCategoria = $("#id_subCate").val();
+            let id_categoria = $("#id_categoria").val();
+            let nombre = $("#nombre").val();
+            let descripcion = $("#descripcion").val();
+            let tipo = $("#tipo").val();
+            let _method = $("input[name=_method]").val();
+            let _token = $("input[name=_token]").val();
+            let url = currentURL + '/submenus/' + id_subCategoria;
+
+            $.post(url, {
+                nombre: nombre,
+                descripcion: descripcion,
+                tipo: tipo,
+                id_categoria: id_categoria,
+                id_subCategoria: id_subCategoria,
+                _token: _token,
+                _method: _method
+            }, function(data, textStatus, xhr) {
+
+                $('.viewSubCat').html(data);
+                $('.viewCreate').slideUp();
+                $(".viewCreate").html('');
+
+                $(".viewSubCat").slideDown();
+                $('.viewIndex').slideDown();
+
+                $('.viewSubCat #tableSubMenus').DataTable({
+                    "lengthChange": true,
+                    "order": [
+                        [2, "asc"]
+                    ]
+                });
+            });
+        });
+
+        /**
+         * Evento para eliminar una categoria
+         */
+        $('.viewCreate').on('click', '.deleteSubMenu', function(event) {
+            event.preventDefault();
+            let id = $("#id_subCate").val();
+            let id_categoria = $("#id_categoria").val();
+            let _token = $("input[name=_token]").val();
+            let url = currentURL + '/submenus/' + id;
+
+            $.ajax({
+                url: url,
+                type: 'DELETE',
+                data: {
+                    id_categoria: id_categoria,
+                    _token: _token
+                },
+                success: function(data) {
+                    $('.viewSubCat').html(data);
+                    $('.viewCreate').slideUp();
+                    $(".viewCreate").html('');
+
+                    $(".viewSubCat").slideDown();
+                    $('.viewIndex').slideDown();
+
+                    $('.viewSubCat #tableSubMenus').DataTable({
+                        "lengthChange": true,
+                        "order": [
+                            [2, "asc"]
+                        ]
+                    });
+                }
+            });
+        });
+    });
+
+    /**
+     * Evento para order las sub categorias
+     */
+    $('.viewResult').on('click', '.orderignSubCat', function(e) {
+        e.preventDefault();
+        $(".viewIndex").slideUp();
+        $(".viewSubCat").slideUp();
+        $(".viewCreate").slideDown();
+
+        let id_categoria = $("#id_categoria").val();
+        let url = currentURL + "/submenus/ordering/" + id_categoria;
+
+        $.get(url, id_categoria, function(data, textStatus, jqXHR) {
+
+            $(".viewCreate").html(data);
+
+            $("#sortable").sortable();
+
+            /**
+             * Evento para cancelar la edicion del menu
+             */
+            $(".viewCreate").on("click", ".cancelMenu", function(e) {
+                $(".viewIndex").slideDown();
+                $(".viewSubCat").slideDown();
+                $(".viewCreate").slideUp();
+            });
+
+            /**
+             * Evento para editar el menu
+             */
+            $('.viewCreate').on('click', '.saveOrdeSubrMenu', function(event) {
+                event.preventDefault();
+
+                var ordenElementos = $("#sortable").sortable("toArray").toString();
+                let _token = $("input[name=_token]").val();
+                let url = currentURL + "/submenus/updateOrdering";
+
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: {
+                        ordenElementos: ordenElementos,
+                        id_categoria: id_categoria,
+                        _token: _token
+                    },
+                    success: function(result) {
+                        $('.viewSubCat').html(result);
+                        $('.viewCreate').slideUp();
+                        $(".viewCreate").html('');
+
+                        $(".viewSubCat").slideDown();
+                        $('.viewIndex').slideDown();
+
+                        $('.viewSubCat #tableSubMenus').DataTable({
+                            "lengthChange": true,
+                            "order": [
+                                [2, "asc"]
+                            ]
+                        });
+                    }
+                });
+            });
+
+        });
+
+    });
+
 
     /**
      * Evento para crear una nueva categoria
@@ -39,7 +263,7 @@ $(function() {
             $(".viewCreate").html(data);
 
             /**
-             * Evento para cancelar el alta de nuevo usuario
+             * Evento para cancelar el alta de la categoria
              */
             $(".viewCreate").on("click", ".cancelMenu", function(e) {
                 $(".viewIndex").slideDown();
@@ -50,7 +274,7 @@ $(function() {
         });
 
         /**
-         * Evento para guardar el nuevo usuario
+         * Evento para guardar la nueva categoria
          */
         $('.viewCreate').on('click', '.saveMenu', function(event) {
             event.preventDefault();
@@ -82,7 +306,7 @@ $(function() {
     });
 
     /**
-     * Evento para editar un usuario
+     * Evento para editar una categoria
      */
     $(".viewResult").on('dblclick', '#tableMenus tbody tr', function(e) {
         e.preventDefault();
@@ -145,7 +369,7 @@ $(function() {
             });
 
             /**
-             * Evento para eliminar el  usuario
+             * Evento para eliminar una categoria
              */
             $('.viewCreate').on('click', '.deleteMenu', function(event) {
                 event.preventDefault();
@@ -179,7 +403,7 @@ $(function() {
     });
 
     /**
-     * Evento para editar un usuario
+     * Evento para order las categorias
      */
     $('.viewResult').on('click', '.orderignCat', function(e) {
         e.preventDefault();
@@ -238,4 +462,4 @@ $(function() {
         });
 
     });
-});
+});;

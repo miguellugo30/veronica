@@ -14,8 +14,7 @@ const mix = require('laravel-mix');
 mix.js([
     'resources/js/app.js',
     'resources/js/usuarios.js',
-    'resources/js/menus.js',
-    'resources/js/submenus.js'
+    'resources/js/menus.js'
 ], 'public/js/');
 /*
 mix.js('resources/js/app.js', 'public/js/all.js')

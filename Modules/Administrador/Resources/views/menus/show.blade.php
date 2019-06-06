@@ -10,6 +10,7 @@
             <i class="fas fa-sort-numeric-down"></i>
             Ordenar sub menu
         </button>
+        <input type="hidden" name="id_categoria" id="id_categoria" value="{{ $id }}">
     </legend>
     <table id="tableSubMenus" class="display table table-striped table-condensed" style="width:100%">
             <thead>

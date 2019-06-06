@@ -15,6 +15,6 @@ class Categorias extends Model
      */
     public function Sub_Categorias()
     {
-        return $this->hasMany('Nimbus\Sub_Categorias', 'id_categoria');
+        return $this->hasMany('Nimbus\Sub_Categorias', 'id_categoria')->orderBy('prioridad');;
     }
 }

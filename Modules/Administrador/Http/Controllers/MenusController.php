@@ -69,7 +69,7 @@ class MenusController extends Controller
                                         ->get();
 
 
-        return view('administrador::menus.show', compact('subCategorias'));
+        return view('administrador::menus.show', compact('subCategorias','id'));
     }
 
     /**
@@ -96,7 +96,7 @@ class MenusController extends Controller
     public function update(Request $request, $id)
     {
          /**
-         * Si el pass, viene vacio no lo actualizamos
+         * Actualizamos el menu
          */
 
          Categorias::where( 'id', $id )

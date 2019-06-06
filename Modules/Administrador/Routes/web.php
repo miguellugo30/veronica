@@ -36,7 +36,10 @@ Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix'
 });
 
 Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
-    Route::post('/submenus/updateOrdering', 'MenusController@updateOrdering')->name('submenus.updateOrdering');
-    Route::get('/submenus/ordering', 'MenusController@ordering')->name('submenus.ordering');
-    Route::resource('submenus','MenusController');
+    Route::post('/submenus/updateOrdering', 'SubMenusController@updateOrdering')->name('submenus.updateOrdering');
+    Route::get('/submenus/ordering/{id}', 'SubMenusController@ordering')->name('submenus.ordering');
+    Route::resource('submenus','SubMenusController');
 });
+
+
+Route::get('pruebas', 'UsuariosController@index');

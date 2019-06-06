@@ -1,8 +1,8 @@
 <div class="col-12 viewIndex">
     <fieldset>
-        <legend> 
+        <legend>
             <i class="fas fa-users"></i> Usuarios
-            <button type="button" class="btn btn-primary newUser" style="float: right;">
+            <button type="button" class="btn btn-primary btn-xs newUser" style="float: right;">
                 <i class="fas fa-user-plus"></i>
                 Nuevo usuario
             </button>
@@ -40,9 +40,9 @@
         </div>
     </fieldset>
 
-</div>  
+</div>
 
 <div class="col-12 viewCreate">
-    
-    
-</div>  
+
+
+</div>

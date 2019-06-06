@@ -2,6 +2,7 @@
 
 namespace Modules\Administrador\Http\Controllers;
 
+use Nimbus\Sub_Categorias;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -33,7 +34,28 @@ class SubMenuscontroller extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        //dd( $request );
+
+       /**
+         * Obtenemos todos los datos del formulario de alta
+         */
+        $input = $request->all();
+        /**
+         * Insertamos la informacion del formulario
+         */
+        $user = Sub_Categorias::create($input);
+         /**
+         * Obtenemos los menus con estatus 1
+         */
+        $id = $request->input('id_categoria');
+
+        $subCategorias = Sub_Categorias::where('id_categoria', $id )
+                                        ->where('activo', 1)
+                                        ->orderBy('prioridad', 'asc')
+                                        ->get();
+
+        return view('administrador::menus.show', compact('subCategorias','id'));
     }
 
     /**
@@ -53,7 +75,13 @@ class SubMenuscontroller extends Controller
      */
     public function edit($id)
     {
-        return view('administrador::submenus.edit');
+
+        /**
+         * Obtenemos la informacion del menu a editar
+         */
+        $subCategoria = Sub_Categorias::findOrFail( $id );
+
+        return view('administrador::submenus.edit', compact( 'subCategoria', 'id' ) );
     }
 
     /**
@@ -64,7 +92,22 @@ class SubMenuscontroller extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Sub_Categorias::where( 'id', $id )
+                    ->update([
+                        'nombre' => $request->input('nombre'),
+                        'descripcion' => $request->input('descripcion'),
+                        'tipo' => $request->input('tipo'),
+                    ]);
+
+        $id = $request->input('id_categoria');
+
+        $subCategorias = Sub_Categorias::where('id_categoria', $id )
+        ->where('activo', 1)
+        ->orderBy('prioridad', 'asc')
+        ->get();
+
+        return view('administrador::menus.show', compact('subCategorias','id'));
+
     }
 
     /**
@@ -72,8 +115,63 @@ class SubMenuscontroller extends Controller
      * @param int $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy( Request $request, $id)
     {
-        //
+        Sub_Categorias::where( 'id', $id )
+        ->update([
+            'activo' => 0
+            ]);
+
+        $id = $request->input('id_categoria');
+        /**
+         * Obtenemos los menus con estatus 1
+         */
+        $subCategorias = Sub_Categorias::where('id_categoria', $id )
+        ->where('activo', 1)
+        ->orderBy('prioridad', 'asc')
+        ->get();
+
+        return view('administrador::menus.show', compact('subCategorias','id'));
+    }
+
+    public function ordering( $id )
+    {
+        /**
+         * Obtenemos los menus con estatus 1
+         */
+        $subCategorias = Sub_Categorias::where('id_categoria', $id )->where('activo', 1)->orderByRaw('prioridad ASC')->get();
+
+        return view('administrador::submenus.ordering', compact('subCategorias') );
+
+    }
+
+    public function updateOrdering(Request $request)
+    {
+
+        $elementos = explode(',', $request->input('ordenElementos') );
+        $prioridad = 1;
+
+        for ($i=0; $i < count( $elementos ); $i++) {
+
+            $id = explode('_',$elementos[$i] );
+
+            Sub_Categorias::where( 'id', $id[1] )
+                        ->update([
+                            'prioridad' => $prioridad
+                        ]);
+            $prioridad++;
+        }
+
+        $id = $request->input('id_categoria');
+        /**
+         * Obtenemos los menus con estatus 1
+         */
+        $subCategorias = Sub_Categorias::where('id_categoria', $id )
+        ->where('activo', 1)
+        ->orderBy('prioridad', 'asc')
+        ->get();
+
+        return view('administrador::menus.show', compact('subCategorias','id'));
+
     }
 }
