@@ -2,6 +2,7 @@
 
 namespace Modules\Administrador\Http\Controllers;
 
+use Nimbus\Modulos;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -14,7 +15,14 @@ class Moduloscontroller extends Controller
      */
     public function index()
     {
-        return view('administrador::modulos.index');
+        /**
+         * Recuperamos todos los modulos que esten activos
+         */
+        $modulos = Modulos::where('activo', 1)
+                            ->orderBy('prioridad', 'asc')
+                            ->get();
+
+        return view('administrador::modulos.index', compact('modulos') );
     }
 
     /**
@@ -33,7 +41,22 @@ class Moduloscontroller extends Controller
      */
     public function store(Request $request)
     {
-        //
+        /**
+         * Obtenemos todos los datos del formulario de alta
+         */
+        $input = $request->all();
+        /**
+         * Insertamos la informacion del formulario
+         */
+        Modulos::create($input);
+         /**
+         * Recuperamos todos los modulos que esten activos
+         */
+        $modulos = Modulos::where('activo', 1)
+                            ->orderBy('prioridad', 'asc')
+                            ->get();
+
+        return view('administrador::modulos.index', compact('modulos') );
     }
 
     /**
@@ -53,7 +76,11 @@ class Moduloscontroller extends Controller
      */
     public function edit($id)
     {
-        return view('administrador::modulos.edit');
+         /**
+         * Obtenemos la informacion del menu a editar
+         */
+        $modulo = Modulos::findOrFail( $id );
+        return view('administrador::modulos.edit', compact( 'modulo', 'id' ));
     }
 
     /**
@@ -64,7 +91,19 @@ class Moduloscontroller extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Modulos::where( 'id', $id )
+        ->update([
+            'nombre' => $request->input('nombre'),
+            'descripcion' => $request->input('descripcion')
+        ]);
+        /**
+         * Recuperamos todos los modulos que esten activos
+         */
+        $modulos = Modulos::where('activo', 1)
+                            ->orderBy('prioridad', 'asc')
+                            ->get();
+
+        return view('administrador::modulos.index', compact('modulos') );
     }
 
     /**
@@ -74,6 +113,50 @@ class Moduloscontroller extends Controller
      */
     public function destroy($id)
     {
-        //
+        Modulos::where( 'id', $id )
+                ->update(['activo' => 0]);
+        /**
+         * Recuperamos todos los modulos que esten activos
+         */
+        $modulos = Modulos::where('activo', 1)
+                            ->orderBy('prioridad')
+                            ->get();
+        return view('administrador::modulos.index', compact('modulos') );
+    }
+
+    public function ordering()
+    {
+        /**
+         * Obtenemos los menus con estatus 1
+         */
+        $categorias = Modulos::where('activo', 1)->orderBy('prioridad', 'ASC')->get();
+
+        return view('administrador::modulos.ordering', compact('categorias') );
+    }
+
+    public function updateOrdering(Request $request)
+    {
+
+        $elementos = explode(',', $request->input('ordenElementos') );
+        $prioridad = 1;
+
+        for ($i=0; $i < count( $elementos ); $i++) {
+
+            $id = explode('_',$elementos[$i] );
+
+            Modulos::where( 'id', $id[1] )
+                        ->update([
+                            'prioridad' => $prioridad
+                        ]);
+            $prioridad++;
+        }
+        /**
+         * Recuperamos todos los modulos que esten activos
+         */
+        $modulos = Modulos::where('activo', 1)
+                            ->orderBy('prioridad', 'asc')
+                            ->get();
+        return view('administrador::modulos.index', compact('modulos') );
+
     }
 }

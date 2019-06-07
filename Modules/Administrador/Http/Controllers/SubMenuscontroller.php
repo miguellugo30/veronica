@@ -34,10 +34,7 @@ class SubMenuscontroller extends Controller
      */
     public function store(Request $request)
     {
-
-        //dd( $request );
-
-       /**
+        /**
          * Obtenemos todos los datos del formulario de alta
          */
         $input = $request->all();

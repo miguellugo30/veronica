@@ -39,10 +39,6 @@
             </table>
         </div>
     </fieldset>
-
 </div>
 
-<div class="col-12 viewCreate">
-
-
-</div>
+<div class="col-12 viewCreate"></div>

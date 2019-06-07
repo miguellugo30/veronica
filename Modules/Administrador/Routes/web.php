@@ -41,5 +41,11 @@ Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix'
     Route::resource('submenus','SubMenusController');
 });
 
+Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
+    Route::post('/modulos/updateOrdering', 'Moduloscontroller@updateOrdering');
+    Route::get('/modulos/ordering', 'Moduloscontroller@ordering');
+    Route::resource('modulos','Moduloscontroller');
+});
+
 
 Route::get('pruebas', 'UsuariosController@index');
