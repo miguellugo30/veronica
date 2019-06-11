@@ -14,11 +14,7 @@
 Route::prefix('administrador')->group(function() {
     Route::get('/', 'AdministradorController@index');
 });
-/*
-Route::prefix('administrador')->name('administrador.')->group(function () {
-    Route::resource('usuarios/', 'UsuariosController');
-});
-*/
+
 Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
     // Rutas de los controladores dentro del Namespace "App\Http\Controllers\Admin"
     Route::get('usuarios', 'UsuariosController@index')->name('usuarios.index');

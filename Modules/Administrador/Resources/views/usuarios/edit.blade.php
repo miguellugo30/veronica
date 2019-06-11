@@ -4,7 +4,7 @@
 		Editar usuario
 	</legend>
 	<div class="col-md-6">
-		<fieldset>	
+		<fieldset>
 			<legend>Informacion usuario</legend>
 			<div class="form-group">
 				<label for="name">Nombre</label>
@@ -57,13 +57,13 @@
 					{{ $categoria->nombre }}
 				</label>
 			</div>
-			@endforeach			
+			@endforeach
 		</fieldset>
 	</div>
 	<div class="col-md-12" style="text-align:center">
-			<button type="submit" class="btn btn-primary saveClient">Guardar</button>
-			<button type="submit" class="btn btn-danger cancelClient">Cancelar</button>
-			<button type="submit" class="btn btn-danger deleteClient">Eliminar</button>
+			<button type="submit" class="btn btn-primary saveClient"><i class="fas fa-save"></i> Guardar</button>
+			<button type="submit" class="btn btn-warning cancelClient"><i class="fas fa-times"></i> Cancelar</button>
+			<button type="submit" class="btn btn-danger deleteClient"><i class="fas fa-trash-alt"></i> Eliminar</button>
 			<br>
 			<br>
 	</div>

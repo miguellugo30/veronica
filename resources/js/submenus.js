@@ -1,4 +1,6 @@
 $(function() {
+
+    var currentURL = window.location.href;
     /**
      * Evento para crear una nueva sub categoria
      */

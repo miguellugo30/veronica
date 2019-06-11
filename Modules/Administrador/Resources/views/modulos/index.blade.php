@@ -4,7 +4,7 @@
             <i class="fas fa-th"></i>
             Modulos
             <button type="button" class="btn btn-primary btn-xs newModule" style="float: right;margin-left: 5px;">
-                <i class="fas fa-user-plus"></i>
+                <i class="fas fa-plus"></i>
                 Nuevo modulo
             </button>
             <button type="button" class="btn btn-primary btn-xs orderignModule" style="float: right;">

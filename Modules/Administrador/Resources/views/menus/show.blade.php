@@ -3,7 +3,7 @@
         <i class="fas fa-align-justify"></i>
         Sub Menu
         <button type="button" class="btn btn-primary btn-xs newSubCat" style="float: right;margin-left: 5px;">
-            <i class="fas fa-user-plus"></i>
+            <i class="fas fa-plus"></i>
             Nuevo sub menu
         </button>
         <button type="button" class="btn btn-primary btn-xs orderignSubCat" style="float: right;">

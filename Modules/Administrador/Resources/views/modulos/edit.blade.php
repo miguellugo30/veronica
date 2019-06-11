@@ -16,9 +16,9 @@
         </div>
     </div>
     <div class="col-md-12" style="text-align:center">
-        <button type="submit" class="btn btn-primary saveModulo">Guardar</button>
-        <button type="submit" class="btn btn-danger cancelModulo">Cancelar</button>
-        <button type="submit" class="btn btn-danger deleteModulo">Eliminar</button>
+        <button type="submit" class="btn btn-primary saveModulo"><i class="fas fa-save"></i> Guardar</button>
+        <button type="submit" class="btn btn-warning cancelModulo"><i class="fas fa-times"></i> Cancelar</button>
+        <button type="submit" class="btn btn-danger deleteModulo"><i class="fas fa-trash-alt"></i> Eliminar</button>
     </div>
     <br>
     <br>

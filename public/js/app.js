@@ -519,9 +519,11 @@ $(function () {
 /***/ (function(module, exports) {
 
 $(function () {
+  var currentURL = window.location.href;
   /**
    * Evento para crear una nueva sub categoria
    */
+
   $(document).on("click", ".newSubCat", function (e) {
     e.preventDefault();
     $(".viewIndex").slideUp();

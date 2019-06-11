@@ -12,8 +12,8 @@
         @csrf
     </div>
     <div class="col-md-12" style="text-align:center">
-        <button type="submit" class="btn btn-primary saveOrderMenu">Guardar</button>
-        <button type="submit" class="btn btn-danger cancelMenu">Cancelar</button>
+        <button type="submit" class="btn btn-primary saveOrderMenu"><i class="fas fa-save"></i> Guardar</button>
+        <button type="submit" class="btn btn-warning cancelMenu"><i class="fas fa-times"></i> Cancelar</button>
     </div>
     <br>
     <br>
