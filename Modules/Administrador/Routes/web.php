@@ -11,18 +11,15 @@
 |
 */
 
+Route::resource('pruebaGet','EjemplosController');
+
 Route::prefix('administrador')->group(function() {
     Route::get('/', 'AdministradorController@index');
 });
 
 Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
     // Rutas de los controladores dentro del Namespace "App\Http\Controllers\Admin"
-    Route::get('usuarios', 'UsuariosController@index')->name('usuarios.index');
-    Route::get('/usuarios/{id}/edit', 'UsuariosController@edit')->name('usuarios.edit');
-    Route::get('/usuarios/create', 'UsuariosController@create')->name('usuarios.create');
-    Route::post('usuarios', 'UsuariosController@store')->name('usuarios.store');
-    Route::put('usuarios/{id}', 'UsuariosController@update')->name('usuarios.update');
-    Route::delete('usuarios/{id}', 'UsuariosController@destroy')->name('usuarios.delete');
+    Route::resource('usuarios','UsuariosController');
 });
 
 Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
@@ -42,6 +39,3 @@ Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix'
     Route::get('/modulos/ordering', 'Moduloscontroller@ordering');
     Route::resource('modulos','Moduloscontroller');
 });
-
-
-Route::get('pruebas', 'UsuariosController@index');
