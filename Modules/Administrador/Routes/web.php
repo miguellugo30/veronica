@@ -43,5 +43,8 @@ Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix'
     Route::resource('modulos','Moduloscontroller');
 });
 
+Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
+    Route::resource('distribuidor','DistribuidoresController');
+});
 
 Route::get('pruebas', 'UsuariosController@index');
