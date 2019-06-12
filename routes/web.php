@@ -11,6 +11,10 @@
 |
 */
 
+Route::resource('pruebaGet', 'EjemploController');
+
+##-------
+
 Route::get('/', function () {
     return view('auth.login');
 });
