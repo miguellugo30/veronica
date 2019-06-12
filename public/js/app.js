@@ -127,17 +127,6 @@
 
 /***/ }),
 
-/***/ "./resources/js/did.js":
-/*!*****************************!*\
-  !*** ./resources/js/did.js ***!
-  \*****************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nError: ENOENT: no such file or directory, open 'C:\\xampp\\htdocs\\Nimbus\\resources\\js\\did.js'");
-
-/***/ }),
-
 /***/ "./resources/js/menus.js":
 /*!*******************************!*\
   !*** ./resources/js/menus.js ***!
@@ -944,9 +933,9 @@ $(function () {
 /***/ }),
 
 /***/ 0:
-/*!*****************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/js/usuarios.js ./resources/js/modulos.js ./resources/js/submenus.js ./resources/js/menus.js ./resources/js/did.js ***!
-  \*****************************************************************************************************************************************************************/
+/*!*******************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/js/usuarios.js ./resources/js/modulos.js ./resources/js/submenus.js ./resources/js/menus.js ***!
+  \*******************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -954,8 +943,7 @@ __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\app.js */"./resource
 __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\usuarios.js */"./resources/js/usuarios.js");
 __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\modulos.js */"./resources/js/modulos.js");
 __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\submenus.js */"./resources/js/submenus.js");
-__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\menus.js */"./resources/js/menus.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\did.js */"./resources/js/did.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\menus.js */"./resources/js/menus.js");
 
 
 /***/ })
