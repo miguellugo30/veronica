@@ -127,6 +127,17 @@
 
 /***/ }),
 
+/***/ "./resources/js/did.js":
+/*!*****************************!*\
+  !*** ./resources/js/did.js ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nError: ENOENT: no such file or directory, open 'C:\\xampp\\htdocs\\Nimbus\\resources\\js\\did.js'");
+
+/***/ }),
+
 /***/ "./resources/js/menus.js":
 /*!*******************************!*\
   !*** ./resources/js/menus.js ***!
@@ -769,6 +780,16 @@ $(function () {
           "order": [[2, "asc"]]
         });
       });
+    } else if (id == 8) {
+      var _url3 = currentURL + '/did';
+
+      $.get(_url3, function (data, textStatus, jqXHR) {
+        $(".viewResult").html(data);
+        $('.viewResult #tableModulos').DataTable({
+          "lengthChange": true,
+          "order": [[2, "asc"]]
+        });
+      });
     }
   });
   /**
@@ -923,17 +944,18 @@ $(function () {
 /***/ }),
 
 /***/ 0:
-/*!*******************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/js/usuarios.js ./resources/js/modulos.js ./resources/js/submenus.js ./resources/js/menus.js ***!
-  \*******************************************************************************************************************************************/
+/*!*****************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/js/usuarios.js ./resources/js/modulos.js ./resources/js/submenus.js ./resources/js/menus.js ./resources/js/did.js ***!
+  \*****************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\usuarios.js */"./resources/js/usuarios.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\modulos.js */"./resources/js/modulos.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\submenus.js */"./resources/js/submenus.js");
-module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\menus.js */"./resources/js/menus.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\usuarios.js */"./resources/js/usuarios.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\modulos.js */"./resources/js/modulos.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\submenus.js */"./resources/js/submenus.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\menus.js */"./resources/js/menus.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\did.js */"./resources/js/did.js");
 
 
 /***/ })
