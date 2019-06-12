@@ -39,3 +39,12 @@ Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix'
     Route::get('/modulos/ordering', 'Moduloscontroller@ordering');
     Route::resource('modulos','Moduloscontroller');
 });
+<<<<<<< HEAD
+=======
+
+Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
+    Route::resource('distribuidor','DistribuidoresController');
+});
+
+Route::get('pruebas', 'UsuariosController@index');
+>>>>>>> origin/master
