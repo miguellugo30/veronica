@@ -1,68 +1,44 @@
 <fieldset>
 	<legend>
-		<i class="fas fa-user"></i>
-		Nuevo usuario
+		<i class="fas fa-truck"></i>
+		Nuevo distribuidor
 	</legend>
-	<div class="col-md-6">
+	<div class="col-md-6" style="float:none; margin:auto">
 		<fieldset>
 			<legend>
-				<i class="fas fa-user"></i>
-				Informacion usuario
+				<i class="fas fa-truck"></i>
+				Informacion distribuidor
 			</legend>
-			<div class="form-group">
-				<label for="name">Nombre</label>
-				<input type="text" class="form-control" id="name" placeholder="Nombre usuario">
-				@csrf
-			</div>
-			<div class="form-group">
-				<label for="email">Email</label>
-				<input type="text" class="form-control" id="email" placeholder="Email">
-			</div>
-			<div class="form-group">
-				<label for="pass_1">Contraseña</label>
-				<input type="password" class="form-control" id="pass_1" placeholder="Contraseña">
-			</div>
-			<div class="form-group">
-				<label for="pass_2">Confirmar contraseña</label>
-				<input type="password" class="form-control" id="pass_2" placeholder="Contraseña">
-			</div>
-			<div class="form-group">
-				<label for="cliente">Empresa</label>
-				<select name="cliente" id="cliente" class="form-control">
-					<option value="">Selecciona una empresa</option>
-					@foreach( $clientes as $cliente )
-					<option value="{{ $cliente->id }}">{{ $cliente->nombre }}</option>
-					@endforeach
-				</select>
-			</div>
-			<div class="form-group">
-				<label for="rol">Roles</label>
-				<select name="rol" id="rol" class="form-control">
-					<option value="">Selecciona un rol</option>
-					@foreach( $roles as $rol )
-						<option value="{{ $rol->id }}">{{ $rol->name }}</option>
-					@endforeach
-				</select>
-			</div>
-		</fieldset>
-	</div>
-	<div class="col-md-6">
-		<fieldset >
-			<legend>Categorias</legend>
-			@foreach( $categorias as $categoria )
-			<div class="checkbox">
-				<label>
-					<input type="checkbox" name="cats[]" value="{{ $categoria->id }}">
-					{{ $categoria->nombre }}
-				</label>
-			</div>
-			@endforeach
-		</fieldset>
-	</div>
-	<div class="col-md-12" style="text-align:center">
-		<button type="submit" class="btn btn-primary saveClient"><i class="fas fa-save"></i> Guardar</button>
-		<button type="submit" class="btn btn-warning cancelClient"><i class="fas fa-times"></i> Cancelar</button>
-	</div>
+			<form enctype="multipart/form-data" id="altadistribuidores" method="post">
+				<div class="form-group">
+					<label for="servicio">Servicio</label>
+					<input type="text" class="form-control" id="servicio" placeholder="Servicio">
+					@csrf
+				</div>
+				<div class="form-group">
+					<label for="distribuidor">Distribuidor</label>
+					<input type="text" class="form-control" id="distribuidor" placeholder="Distribuidor">
+				</div>
+				<div class="form-group">
+					<label for="numero_soporte">Numero Soporte</label>
+					<input type="text" class="form-control" id="numero_soporte" placeholder="Numero Soporte">
+				</div>
+				<div class="form-group">
+					<label for="img_header">Imagen header</label>
+					<input type="file" class="form-control" id="img_header" name="img_header" placeholder="Imagen header">
+				</div>
+				<div class="form-group">
+					<label for="img_pie">Imagen pie</label>
+					<input type="file" class="form-control" id="img_pie" name="img_pie" placeholder="Imagen pie">
+				</div>
+			</fieldset>
+		</div>
+		
+		<div class="col-md-12" style="text-align:center">
+			<button type="submit" class="btn btn-warning cancelDistribuidor"><i class="fas fa-times"></i> Cancelar</button>
+			<button type="submit" class="btn btn-primary saveDistribuidor"><i class="fas fa-save"></i> Guardar</button>
+		</div>
+	</form>
 	<br>
 	<br>
 </fieldset>
