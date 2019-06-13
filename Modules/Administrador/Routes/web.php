@@ -44,4 +44,5 @@ Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix'
     Route::resource('distribuidor','DistribuidoresController');
 });
 
+
 Route::get('pruebas', 'UsuariosController@index');

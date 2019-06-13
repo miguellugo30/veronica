@@ -45,6 +45,18 @@ $(function() {
             });
         } else if (id == 3) {
             let url = currentURL + '/modulos';
+
+            $.get(url, function(data, textStatus, jqXHR) {
+                $(".viewResult").html(data);
+                $('.viewResult #tableModulos').DataTable({
+                    "lengthChange": true,
+                    "order": [
+                        [2, "asc"]
+                    ]
+                });
+            });
+        }else if (id == 1) {
+            let url = currentURL + '/distribuidor';
             $.get(url, function(data, textStatus, jqXHR) {
                 $(".viewResult").html(data);
                 $('.viewResult #tableModulos').DataTable({

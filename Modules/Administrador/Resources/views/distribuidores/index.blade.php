@@ -1,9 +1,9 @@
 <div class="col-12 viewIndex">
     <fieldset>
         <legend>
-            <i class="fas fa-users"></i> Usuarios
-            <button type="button" class="btn btn-primary btn-xs newUser" style="float: right;">
-                <i class="fas fa-user-plus"></i>
+            <i class="fas fa-truck"></i> Distribuidor
+            <button type="button" class="btn btn-primary btn-xs nuevoDistribuidor" style="float: right;">
+                <i class="fas fa-plus"></i>
                 Nuevo distribuidor
             </button>
         </legend>
@@ -15,7 +15,7 @@
                         <th>Servicio</th>
                         <th>Distribuidor</th>
                         <th>Numero Soporte</th>
-                        <th>Imagen Alta</th>
+                        <th>Imagen encabezado</th>
                         <th>Imagen pie</th>
                     </tr>
                 </thead>
@@ -25,8 +25,8 @@
                             <td>{{ $distribuidor->servicio }}</td>
                             <td>{{ $distribuidor->distribuidor }}</td>
                             <td>{{ $distribuidor->numero_soporte }}</td>
-                            <td>{{ $distribuidor->img_header }}</td>
-                            <td>{{ $distribuidor->img_pie }}</td>
+                            <td><a href="{{ Storage::url($distribuidor->img_header)}}" class="btn btn-primary active" target="_blank"><i class="far fa-eye"></i></a></td>
+                            <td><a href="{{ Storage::url($distribuidor->img_pie) }}" class="btn btn-primary active" target="_blank"><i class="far fa-eye"></i></td>
                         </tr>
                     @endforeach
                 </tbody>

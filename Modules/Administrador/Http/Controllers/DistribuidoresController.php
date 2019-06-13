@@ -28,7 +28,7 @@ class DistribuidoresController extends Controller
      */
     public function create()
     {
-        return view('administrador::create');
+        return view('administrador::distribuidores.create');
     }
 
     /**
@@ -38,7 +38,35 @@ class DistribuidoresController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request);
+        $file = $request->file('img_header');
+        $nombre = $file->getClientOriginalName();
+        \Storage::disk('public') -> put($nombre,\File::get($file));
+
+        $file2 = $request->file('img_pie');
+        $nombre2 = $file2->getClientOriginalName();
+        \Storage::disk('public') -> put($nombre2,\File::get($file2));
+        /**
+         * Obtenemos todos los datos del formulario de alta
+         */
+        $input = $request->all();
+        /**
+         * Insertamos la informacion del formulario
+         */
+        $distribuidor = new Cat_Distribuidor;
+
+        $distribuidor -> servicio = $request -> servicio;
+        $distribuidor -> distribuidor = $request -> distribuidor;
+        $distribuidor -> numero_soporte = $request -> numero_soporte;
+        $distribuidor -> img_header = $nombre;
+        $distribuidor -> img_pie = $nombre2;
+
+        $distribuidor -> save();
+        //Cat_Distribuidor::create($input);
+
+        $Distribuidores = Cat_Distribuidor::where('activo', 1)->get();
+
+        return view('administrador::distribuidores.index', compact('Distribuidores'));
     }
 
     /**
@@ -58,7 +86,8 @@ class DistribuidoresController extends Controller
      */
     public function edit($id)
     {
-        return view('administrador::edit');
+        $distribuidor = Cat_Distribuidor::find($id);
+        return view('administrador::distribuidores.edit',compact('distribuidor'));
     }
 
     /**
@@ -69,7 +98,28 @@ class DistribuidoresController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $file = $request->file('img_header');
+        $nombre = $file->getClientOriginalName();
+        \Storage::disk('public') -> put($nombre,\File::get($file));
+
+        $file2 = $request->file('img_pie');
+        $nombre2 = $file2->getClientOriginalName();
+        \Storage::disk('public') -> put($nombre2,\File::get($file2));
+
+
+        $distribuidor = Cat_Distribuidor::find($id);
+
+        $distribuidor -> servicio = $request -> servicio;
+        $distribuidor -> distribuidor = $request -> distribuidor;
+        $distribuidor -> numero_soporte = $request -> numero_soporte;
+        $distribuidor -> img_header = $nombre;
+        $distribuidor -> img_pie = $nombre2;
+
+        $distribuidor -> save();
+
+        $Distribuidores = Cat_Distribuidor::where('activo', 1)->get();
+
+        return view('administrador::distribuidores.index', compact('Distribuidores'));
     }
 
     /**
@@ -79,6 +129,10 @@ class DistribuidoresController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Cat_Distribuidor::where( 'id', $id )->update(['activo' => 0]);
+
+        $Distribuidores = Cat_Distribuidor::where('activo', 1)->get();
+
+        return view('administrador::distribuidores.index', compact('Distribuidores'));
     }
 }
