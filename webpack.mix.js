@@ -17,7 +17,8 @@ mix.js([
     'resources/js/modulos.js',
     'resources/js/submenus.js',
     'resources/js/menus.js',
-    'resources/js/distribuidores.js'
+    'resources/js/distribuidores.js',
+    'resources/js/dids.js'
 ], 'public/js/');
 /*
 mix.js('resources/js/app.js', 'public/js/all.js')
