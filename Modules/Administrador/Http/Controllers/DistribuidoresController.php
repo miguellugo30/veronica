@@ -15,12 +15,18 @@ class DistribuidoresController extends Controller
      */
     public function index()
     {
+<<<<<<< HEAD
         /**
          * Consultar distribuidores activos 
         */
+||||||| merged common ancestors
+        
+=======
+
+>>>>>>> d13b7225508f19609de2793d40ab1056f0cd8a58
         $Distribuidores = Cat_Distribuidor::where('activo', 1)->get();
         return view('administrador::distribuidores.index', compact('Distribuidores'));
-        
+
     }
 
     /**

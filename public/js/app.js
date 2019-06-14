@@ -925,6 +925,16 @@ $(function () {
           "order": [[2, "asc"]]
         });
       });
+    } else if (id == 8) {
+      var _url4 = currentURL + '/did';
+
+      $.get(_url4, function (data, textStatus, jqXHR) {
+        $(".viewResult").html(data);
+        $('.viewResult #tableModulos').DataTable({
+          "lengthChange": true,
+          "order": [[2, "asc"]]
+        });
+      });
     }
   });
   /**

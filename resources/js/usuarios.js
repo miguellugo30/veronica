@@ -66,6 +66,18 @@ $(function() {
                     ]
                 });
             });
+        } 
+        else if (id == 8) {
+            let url = currentURL + '/did';
+            $.get(url, function(data, textStatus, jqXHR) {
+                $(".viewResult").html(data);
+                $('.viewResult #tableModulos').DataTable({
+                    "lengthChange": true,
+                    "order": [
+                        [2, "asc"]
+                    ]
+                });
+            });
         }
     });
 
