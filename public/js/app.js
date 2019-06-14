@@ -920,7 +920,7 @@ $(function () {
 
       $.get(_url3, function (data, textStatus, jqXHR) {
         $(".viewResult").html(data);
-        $('.viewResult #tableModulos').DataTable({
+        $('.viewResult #tableDistribuidor').DataTable({
           "lengthChange": true,
           "order": [[2, "asc"]]
         });

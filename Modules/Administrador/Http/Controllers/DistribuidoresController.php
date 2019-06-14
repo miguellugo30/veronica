@@ -15,9 +15,10 @@ class DistribuidoresController extends Controller
      */
     public function index()
     {
-        
+        /**
+         * Consultar distribuidores activos 
+        */
         $Distribuidores = Cat_Distribuidor::where('activo', 1)->get();
-        //dd($Distribuidores);
         return view('administrador::distribuidores.index', compact('Distribuidores'));
         
     }
@@ -38,7 +39,6 @@ class DistribuidoresController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request);
         $file = $request->file('img_header');
         $nombre = $file->getClientOriginalName();
         \Storage::disk('public') -> put($nombre,\File::get($file));
@@ -55,6 +55,9 @@ class DistribuidoresController extends Controller
          */
         $distribuidor = new Cat_Distribuidor;
 
+        /**
+         * 
+         */
         $distribuidor -> servicio = $request -> servicio;
         $distribuidor -> distribuidor = $request -> distribuidor;
         $distribuidor -> numero_soporte = $request -> numero_soporte;
@@ -62,7 +65,6 @@ class DistribuidoresController extends Controller
         $distribuidor -> img_pie = $nombre2;
 
         $distribuidor -> save();
-        //Cat_Distribuidor::create($input);
 
         $Distribuidores = Cat_Distribuidor::where('activo', 1)->get();
 
