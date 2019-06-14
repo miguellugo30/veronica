@@ -47,5 +47,13 @@ Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix'
     Route::resource('distribuidor','DistribuidoresController');
 });
 
-
 Route::get('pruebas', 'UsuariosController@index');
+
+
+// Crear las rutas del modulo 'resource' para tener las rutas a tu controlador DID
+Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
+    Route::resource('did','DidController');
+});
+
+
+
