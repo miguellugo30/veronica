@@ -7,6 +7,9 @@ use Nimbus\Sub_Categorias;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
 
 class MenusController extends Controller
 {
@@ -16,6 +19,18 @@ class MenusController extends Controller
      */
     public function index()
     {
+        $log = new Logger('Nimbus');
+        $log->pushHandler(new StreamHandler('log/prueba.log', Logger::WARNING));
+
+        // add records to the log
+        $log->debug('Foo');
+        $log->info('INFORMATIVO');
+        $log->notice('Foo');
+        $log->warning('Foo');
+        $log->error('INFORMATIVO');
+        $log->critical('INFORMATIVO');
+        $log->alert('INFORMATIVO');
+        $log->emergency('INFORMATIVO');
         /**
          * Obtenemos los menus con estatus 1
          */

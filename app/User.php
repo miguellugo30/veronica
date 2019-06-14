@@ -10,7 +10,7 @@ class User extends Authenticatable
 {
     use Notifiable;
     use HasRoles;
-   
+
     /**
      * The attributes that are mass assignable.
      *
@@ -39,7 +39,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    /** 
+    /**
      * Relacion muchos a muchos con Categorias
      */
     public function categorias()

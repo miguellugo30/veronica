@@ -15,11 +15,11 @@ class DistribuidoresController extends Controller
      */
     public function index()
     {
-        
+
         $Distribuidores = Cat_Distribuidor::where('activo', 1)->get();
         //dd($Distribuidores);
         return view('administrador::distribuidores.index', compact('Distribuidores'));
-        
+
     }
 
     /**
