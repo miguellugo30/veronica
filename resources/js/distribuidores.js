@@ -15,7 +15,6 @@ $(function() {
             $(".viewCreate").html(data);
         });
     });
-    
     /**
      * Evento para guardar el nuevo distribuidores
      */
@@ -29,27 +28,27 @@ $(function() {
         let img_pie = $("#img_pie").val();
         let _token = $("input[name=_token]").val();
 
-        formData.append("servicio",servicio);
-        formData.append("distribuidor",distribuidor);
-        formData.append("numero_soporte",numero_soporte);
-        formData.append("img_header",img_header);
-        formData.append("img_pie",img_pie);
-        formData.append("_token",_token);
-        
+        formData.append("servicio", servicio);
+        formData.append("distribuidor", distribuidor);
+        formData.append("numero_soporte", numero_soporte);
+        formData.append("img_header", img_header);
+        formData.append("img_pie", img_pie);
+        formData.append("_token", _token);
+
         let url = currentURL + '/distribuidor';
 
         $.ajax({
-            url: url,
-            type: "post",
-            dataType:"html",
-            data: formData,
-            cache: false,
-            contentType: false,
-            processData: false
-        })
-        .done(function(data){
-            $('.viewResult').html(data);
-        });
+                url: url,
+                type: "post",
+                dataType: "html",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false
+            })
+            .done(function(data) {
+                $('.viewResult').html(data);
+            });
     });
     /**
      * Evento para mostrar el formulario editar distribuidores
@@ -91,30 +90,30 @@ $(function() {
         let _token = $("input[name=_token]").val();
         let url = currentURL + '/distribuidor/' + id_distribuidor;
 
-        formData.append("servicio",servicio);
-        formData.append("distribuidor",distribuidor);
-        formData.append("numero_soporte",numero_soporte);
-        formData.append("img_header",img_header);
-        formData.append("img_pie",img_pie);
-        formData.append("_token",_token);
-        formData.append("_method","PUT");
-        
-       $.ajax({
-            url: url,
-            type: "POST",
-            dataType:"html",
-            data: formData,
-            cache: false,
-            contentType: false,
-            processData: false
-        })
-        .done(function(data){
-            $('.viewResult').html(data);
-        });
+        formData.append("servicio", servicio);
+        formData.append("distribuidor", distribuidor);
+        formData.append("numero_soporte", numero_soporte);
+        formData.append("img_header", img_header);
+        formData.append("img_pie", img_pie);
+        formData.append("_token", _token);
+        formData.append("_method", "PUT");
+
+        $.ajax({
+                url: url,
+                type: "POST",
+                dataType: "html",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false
+            })
+            .done(function(data) {
+                $('.viewResult').html(data);
+            });
     });
     /**
      * Evento para eliminar el distribuidores
-     * 
+     *
      */
     $(document).on('click', '.deleteDistribuidor', function(event) {
         event.preventDefault();

@@ -11,10 +11,6 @@
 |
 */
 
-Route::resource('pruebaGet', 'EjemploController');
-
-##-------
-
 Route::get('/', function () {
     return view('auth.login');
 });
@@ -24,11 +20,11 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::prefix('administrador/')->group(function() {
-    Route::get('categoria/{id}', 'subCategoriaController@index')->name('categoria');
+    Route::get('categoria/{id}', 'subCategoriaController@index')->name('categoria')->middleware('auth');
 });
 
 Route::prefix('administrador/')->group(function() {
-    Route::get('subcategoria/{id}', 'subCategoriaController@index')->name('subcategoria');
+    Route::get('subcategoria/{id}', 'subCategoriaController@index')->name('subcategoria')->middleware('auth');
 });
 
 //Route::resource('usuarios/', 'UsuariosController');

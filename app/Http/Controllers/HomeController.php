@@ -5,6 +5,7 @@ namespace Nimbus\Http\Controllers;
 use Illuminate\Http\Request;
 use Nimbus\User;
 use Illuminate\Support\Facades\Auth;
+use Nimbus\Http\Controllers\Redirect;
 
 class HomeController extends Controller
 {
@@ -30,27 +31,32 @@ class HomeController extends Controller
          */
         $user = User::find( Auth::id() );
         /**
-         * Obtenemos el rol del usuario logeado
+         * Verificamos que sea un usuario activo
          */
-        $rol = $user->getRoleNames();
-        /**
-         * Obtenemos las categorias relacionadas al usuario
-         */
-        $categorias = $user->categorias;
-        /**
-         * Almacenamos las categorias y rol del usuaro en variable de sesion
-         */
-        session(['categorias' => $categorias]);
-        session(['rol'        => $rol[0] ]);
-
-        /**
-         * Si el rol es Super Administrador o  administrador lo redireccionamos a la vista administrador
-         */
-
-        if ( $rol[0] == 'Super Administrador' ) {
-            return redirect('administrador');
+        if ( $user->status == 1 ) {
+            /**
+             * Obtenemos el rol del usuario logeado
+             */
+            $rol = $user->getRoleNames();
+            /**
+             * Obtenemos las categorias relacionadas al usuario
+             */
+            $categorias = $user->categorias;
+            /**
+             * Almacenamos las categorias y rol del usuaro en variable de sesion
+             */
+            session(['categorias' => $categorias]);
+            session(['rol'        => $rol[0] ]);
+            /**
+             * Si el rol es Super Administrador o  administrador lo redireccionamos a la vista administrador
+             */
+            if ( $rol[0] == 'Super Administrador' ) {
+                return redirect('administrador');
+            } else {
+                return view('home');
+            }
         } else {
-            return view('home');
+            return redirect('/')->withErrors('Usuario inactivo', 'message');
         }
     }
 }

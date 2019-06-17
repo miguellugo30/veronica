@@ -60,11 +60,13 @@
 			@endforeach
 		</fieldset>
 	</div>
-	<div class="col-md-12" style="text-align:center">
-			<button type="submit" class="btn btn-primary saveClient"><i class="fas fa-save"></i> Guardar</button>
-			<button type="submit" class="btn btn-warning cancelClient"><i class="fas fa-times"></i> Cancelar</button>
+    <div class="col-md-12" style="text-align:center">
+        <div class="col-md-6" style="text-align:left">
+            <button type="submit" class="btn btn-warning cancelClient"><i class="fas fa-times"></i> Cancelar</button>
 			<button type="submit" class="btn btn-danger deleteClient"><i class="fas fa-trash-alt"></i> Eliminar</button>
-			<br>
-			<br>
+        </div>
+        <div class="col-md-6" style="text-align:right">
+            <button type="submit" class="btn btn-primary saveClient"><i class="fas fa-save"></i> Guardar</button>
+        </div>
 	</div>
 </fieldset>

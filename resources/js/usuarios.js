@@ -55,7 +55,7 @@ $(function() {
                     ]
                 });
             });
-        }else if (id == 1) {
+        } else if (id == 1) {
             let url = currentURL + '/distribuidor';
             $.get(url, function(data, textStatus, jqXHR) {
                 $(".viewResult").html(data);
@@ -66,8 +66,7 @@ $(function() {
                     ]
                 });
             });
-        } 
-        else if (id == 8) {
+        } else if (id == 8) {
             let url = currentURL + '/did';
             $.get(url, function(data, textStatus, jqXHR) {
                 $(".viewResult").html(data);
@@ -177,6 +176,7 @@ $(function() {
                 let cliente = $("#cliente").val();
                 let rol = $("#rol").val();
                 let _token = $("input[name=_token]").val();
+                let _method = "PUT";
                 let url = currentURL + '/usuarios/' + id_user;
                 let arr = $('[name="cats[]"]:checked').map(function() {
                     return this.value;
@@ -192,7 +192,8 @@ $(function() {
                         id_cliente: cliente,
                         rol: rol,
                         arr: arr,
-                        _token: _token
+                        _token: _token,
+                        _method: _method
                     },
                     success: function(result) {
                         $('.viewResult').html(result);

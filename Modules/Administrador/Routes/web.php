@@ -10,37 +10,34 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::resource('pruebaGet','EjemplosController');
-
 Route::prefix('administrador')->group(function() {
-    Route::get('/', 'AdministradorController@index');
+    Route::get('/', 'AdministradorController@index')->middleware('auth');
 });
 
-Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
+Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador', 'middleware' => 'auth'], function() {
     // Rutas de los controladores dentro del Namespace "App\Http\Controllers\Admin"
     Route::resource('usuarios','UsuariosController');
 });
 
-Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
+Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador', 'middleware' => 'auth'], function() {
     Route::post('/menus/updateOrdering', 'MenusController@updateOrdering')->name('menus.updateOrdering');
     Route::get('/menus/ordering', 'MenusController@ordering')->name('menus.ordering');
     Route::resource('menus','MenusController');
 });
 
-Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
+Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador', 'middleware' => 'auth'], function() {
     Route::post('/submenus/updateOrdering', 'SubMenusController@updateOrdering')->name('submenus.updateOrdering');
     Route::get('/submenus/ordering/{id}', 'SubMenusController@ordering')->name('submenus.ordering');
     Route::resource('submenus','SubMenusController');
 });
 
-Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
+Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador', 'middleware' => 'auth'], function() {
     Route::post('/modulos/updateOrdering', 'Moduloscontroller@updateOrdering');
     Route::get('/modulos/ordering', 'Moduloscontroller@ordering');
     Route::resource('modulos','Moduloscontroller');
 });
 
-Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
+Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador', 'middleware' => 'auth'], function() {
     Route::resource('distribuidor','DistribuidoresController');
 });
 
