@@ -16,7 +16,12 @@ Route::prefix('administrador')->group(function() {
 
 Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador', 'middleware' => 'auth'], function() {
     // Rutas de los controladores dentro del Namespace "App\Http\Controllers\Admin"
-    Route::resource('usuarios','UsuariosController');
+    Route::get('usuarios', 'UsuariosController@index')->name('usuarios.index');
+    Route::get('/usuarios/{id}/edit', 'UsuariosController@edit')->name('usuarios.edit');
+    Route::get('/usuarios/create', 'UsuariosController@create')->name('usuarios.create');
+    Route::post('usuarios', 'UsuariosController@store')->name('usuarios.store');
+    Route::put('usuarios/{id}', 'UsuariosController@update')->name('usuarios.update');
+    Route::delete('usuarios/{id}', 'UsuariosController@destroy')->name('usuarios.delete');
 });
 
 Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador', 'middleware' => 'auth'], function() {
@@ -41,5 +46,13 @@ Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix'
     Route::resource('distribuidor','DistribuidoresController');
 });
 
-
 Route::get('pruebas', 'UsuariosController@index');
+
+
+// Crear las rutas del modulo 'resource' para tener las rutas a tu controlador DID
+Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
+    Route::resource('did','DidController');
+});
+
+
+

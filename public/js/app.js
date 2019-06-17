@@ -127,6 +127,175 @@
 
 /***/ }),
 
+<<<<<<< HEAD
+=======
+/***/ "./resources/js/dids.js":
+/*!******************************!*\
+  !*** ./resources/js/dids.js ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  var currentURL = window.location.href;
+  /**
+   * Evento para mostrar el formulario de crear un nuevo distribuidores
+   */
+
+  $(document).on("click", ".nuevoDid", function (e) {
+    e.preventDefault();
+    $(".viewIndex").slideUp();
+    $(".viewCreate").slideDown();
+    var url = currentURL + '/did/create';
+    $.get(url, function (data, textStatus, jqXHR) {
+      $(".viewCreate").html(data);
+    });
+  });
+  /**
+  * Evento para guardar el nuevo did
+  */
+
+  $(document).on('click', '.saveDid', function (event) {
+    event.preventDefault();
+    var id_empresa = $("#id_empresa").val();
+    var tipo = $("#tipo").val();
+    var prefijo = $("#prefijo").val();
+    var did = $("#did").val();
+    var descripcion = $("#descripcion").val();
+    var id_troncal_sansay = $("#id_troncal_sansay").val();
+    var gateway = $("#gateway").val();
+    var fakedid = $("#fakedid").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var url = currentURL + '/did';
+    var arr = $('[name="cats[]"]:checked').map(function () {
+      return this.value;
+    }).get();
+    $.post(url, {
+      id_empresa: id_empresa,
+      tipo: tipo,
+      prefijo: prefijo,
+      did: did,
+      descripcion: descripcion,
+      id_troncal_sansay: id_troncal_sansay,
+      gateway: gateway,
+      fakedid: fakedid,
+      arr: arr,
+      _token: _token
+    }, function (data, textStatus, xhr) {
+      $('.viewResult').html(data);
+      $('.viewCreate').slideUp();
+      $('.viewIndex').slideDown();
+      $('.viewResult #tableDids').DataTable({
+        "lengthChange": true
+      });
+    });
+  });
+  /**
+   * Evento para mostrar el formulario editar distribuidores
+   */
+
+  $(document).on('dblclick', '#tableDid tbody tr', function (event) {
+    event.preventDefault();
+    $(".viewIndex").slideUp();
+    $(".viewCreate").slideDown();
+    var id = $(this).data("id");
+    var url = currentURL + "/did/" + id + "/edit"; // alert(url);
+
+    $.get(url, function (data, textStatus, jqXHR) {
+      $(".viewCreate").html(data);
+    });
+  });
+  /**
+   * Evento para cancelar la creacion/edicion del distribuidores
+   */
+
+  $(document).on("click", ".cancelDid", function (e) {
+    $(".viewIndex").slideDown();
+    $(".viewCreate").slideUp();
+    $(".viewCreate").html('');
+  });
+  /**
+   * Evento para editar el distribuidores
+   */
+
+  $(document).on('click', '.updateDid', function (event) {
+    event.preventDefault(); // formdata es para down de IL
+
+    var id_empresa = $("#id_empresa").val();
+    var id_did = $("#id_did").val();
+    var tipo = $("#tipo").val();
+    var prefijo = $("#prefijo").val();
+    var did = $("#did").val();
+    var descripcion = $("#descripcion").val();
+    var id_troncal_sansay = $("#id_troncal_sansay").val();
+    var gateway = $("#gateway").val();
+    var fakedid = $("#fakedid").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var _method = 'PUT';
+    var url = currentURL + '/did/' + id_did;
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {
+        id_empresa: id_empresa,
+        id_did: id_did,
+        tipo: tipo,
+        prefijo: prefijo,
+        did: did,
+        descripcion: descripcion,
+        id_troncal_sansay: id_troncal_sansay,
+        gateway: gateway,
+        fakedid: fakedid,
+        _token: _token,
+        _method: _method
+      },
+      success: function success(result) {
+        $('.viewResult').html(result);
+        $('.viewCreate').slideUp();
+        $('.viewIndex').slideDown();
+        $('.viewResult #tableDid').DataTable({
+          "lengthChange": true,
+          "order": [[2, "asc"]]
+        });
+      }
+    });
+  });
+  /**
+   * Evento para eliminar el did
+   * 
+   */
+
+  $(document).on('click', '.deleteDid', function (event) {
+    event.preventDefault();
+    var id_did = $("#id_did").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var url = currentURL + '/did/' + id_did;
+    $.ajax({
+      url: url,
+      type: 'DELETE',
+      data: {
+        _token: _token
+      },
+      success: function success(result) {
+        $('.viewResult').html(result);
+        $('.viewIndex #tableDid').DataTable({
+          "lengthChange": true,
+          "order": [[2, "asc"]]
+        });
+      }
+    });
+  });
+});
+
+/***/ }),
+
+>>>>>>> a08c65043cec2bbe06885f5566bb5e59702e7199
 /***/ "./resources/js/distribuidores.js":
 /*!****************************************!*\
   !*** ./resources/js/distribuidores.js ***!
@@ -244,7 +413,11 @@ $(function () {
   });
   /**
    * Evento para eliminar el distribuidores
+<<<<<<< HEAD
    *
+=======
+   * 
+>>>>>>> a08c65043cec2bbe06885f5566bb5e59702e7199
    */
 
   $(document).on('click', '.deleteDistribuidor', function (event) {
@@ -817,7 +990,10 @@ $(function () {
     $(".viewCreate").slideDown();
     var id_categoria = $("#id_categoria").val();
     var url = currentURL + "/submenus/ordering/" + id_categoria;
+<<<<<<< HEAD
     console.log(id_categoria);
+=======
+>>>>>>> a08c65043cec2bbe06885f5566bb5e59702e7199
     $.get(url, id_categoria, function (data, textStatus, jqXHR) {
       $(".viewCreate").html(data);
       $("#sortable").sortable();
@@ -833,7 +1009,10 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
+<<<<<<< HEAD
     var id_categoria = $("#id_categoria").val();
+=======
+>>>>>>> a08c65043cec2bbe06885f5566bb5e59702e7199
     var url = currentURL + "/submenus/updateOrdering";
     $.ajax({
       url: url,
@@ -1031,7 +1210,10 @@ $(function () {
 
         var _token = $("input[name=_token]").val();
 
+<<<<<<< HEAD
         var _method = "PUT";
+=======
+>>>>>>> a08c65043cec2bbe06885f5566bb5e59702e7199
         var url = currentURL + '/usuarios/' + id_user;
         var arr = $('[name="cats[]"]:checked').map(function () {
           return this.value;
@@ -1046,8 +1228,12 @@ $(function () {
             id_cliente: cliente,
             rol: rol,
             arr: arr,
+<<<<<<< HEAD
             _token: _token,
             _method: _method
+=======
+            _token: _token
+>>>>>>> a08c65043cec2bbe06885f5566bb5e59702e7199
           },
           success: function success(result) {
             $('.viewResult').html(result);
@@ -1093,6 +1279,7 @@ $(function () {
 /***/ }),
 
 /***/ 0:
+<<<<<<< HEAD
 /*!****************************************************************************************************************************************************************************!*\
   !*** multi ./resources/js/app.js ./resources/js/usuarios.js ./resources/js/modulos.js ./resources/js/submenus.js ./resources/js/menus.js ./resources/js/distribuidores.js ***!
   \****************************************************************************************************************************************************************************/
@@ -1105,6 +1292,21 @@ __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\modulos.js */"./resour
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\submenus.js */"./resources/js/submenus.js");
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\menus.js */"./resources/js/menus.js");
 module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\distribuidores.js */"./resources/js/distribuidores.js");
+=======
+/*!***************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/js/usuarios.js ./resources/js/modulos.js ./resources/js/submenus.js ./resources/js/menus.js ./resources/js/distribuidores.js ./resources/js/dids.js ***!
+  \***************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(/*! c:\xampp\htdocs\Nimbus\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! c:\xampp\htdocs\Nimbus\resources\js\usuarios.js */"./resources/js/usuarios.js");
+__webpack_require__(/*! c:\xampp\htdocs\Nimbus\resources\js\modulos.js */"./resources/js/modulos.js");
+__webpack_require__(/*! c:\xampp\htdocs\Nimbus\resources\js\submenus.js */"./resources/js/submenus.js");
+__webpack_require__(/*! c:\xampp\htdocs\Nimbus\resources\js\menus.js */"./resources/js/menus.js");
+__webpack_require__(/*! c:\xampp\htdocs\Nimbus\resources\js\distribuidores.js */"./resources/js/distribuidores.js");
+module.exports = __webpack_require__(/*! c:\xampp\htdocs\Nimbus\resources\js\dids.js */"./resources/js/dids.js");
+>>>>>>> a08c65043cec2bbe06885f5566bb5e59702e7199
 
 
 /***/ })
