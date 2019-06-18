@@ -15,7 +15,8 @@ class CatEstadoEmpresaController extends Controller
      */
     public function index()
     {
-        return view('administrador::index');
+        $cat_empresas = Cat_Estado_Empresa::where('activo',1)->get();
+        return view('administrador::cat_empresa.index', compact('cat_empresas'));
     }
 
     /**
@@ -24,7 +25,7 @@ class CatEstadoEmpresaController extends Controller
      */
     public function create()
     {
-        return view('administrador::create');
+        return view('administrador::cat_empresa.create');
     }
 
     /**
@@ -34,7 +35,16 @@ class CatEstadoEmpresaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         /**
+         * Obtenemos todos los datos del formulario de alta y
+         * los insertamos la informacion del formulario
+         */
+        Cat_Estado_Empresa::create(  $request->all() );
+        /**
+        * Recuperamos todos los catalogos que esten activos
+        */
+        $cat_empresas = Cat_Estado_Empresa::where('activo',1)->get();
+        return view('administrador::cat_empresa.index', compact('cat_empresas'));
     }
 
     /**
@@ -44,9 +54,7 @@ class CatEstadoEmpresaController extends Controller
      */
     public function show($id)
     {
-        return view('administrador::show');
     }
-
     /**
      * Show the form for editing the specified resource.
      * @param int $id
@@ -54,7 +62,11 @@ class CatEstadoEmpresaController extends Controller
      */
     public function edit($id)
     {
-        return view('administrador::edit');
+        /**
+         * Obtenemos la informacion del catalogo a editar
+         */
+        $cat_empresa = Cat_Estado_Empresa::findOrFail( $id );
+        return view('administrador::cat_empresa.edit', compact('cat_empresa', 'id'));
     }
 
     /**
@@ -65,7 +77,18 @@ class CatEstadoEmpresaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        /**
+         * Actualizamos los campos
+         */
+        Cat_Estado_Empresa::where( 'id', $id )
+        ->update([
+            'nombre' => $request->input('nombre')
+        ]);
+         /**
+         * Obtenemos la informacion del catalogo a editar
+         */
+        $cat_empresas =  Cat_Estado_Empresa::where('activo',1)->get();
+        return view('administrador::cat_empresa.index', compact('cat_empresas'));
     }
 
     /**
@@ -75,6 +98,17 @@ class CatEstadoEmpresaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        /**
+         * Actualizamos los campos
+         */
+        Cat_Estado_Empresa::where( 'id', $id )
+        ->update([
+            'activo' => '0'
+        ]);
+         /**
+         * Obtenemos la informacion del catalogo a editar
+         */
+        $cat_empresas =  Cat_Estado_Empresa::where('activo',1)->get();
+        return view('administrador::cat_empresa.index', compact('cat_empresas'));
     }
 }
