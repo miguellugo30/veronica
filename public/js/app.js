@@ -127,12 +127,365 @@
 
 /***/ }),
 
-<<<<<<< HEAD
-=======
-/***/ "./resources/js/dids.js":
-/*!******************************!*\
-  !*** ./resources/js/dids.js ***!
-  \******************************/
+/***/ "./resources/js/module_administrador/cat_estado_agente.js":
+/*!****************************************************************!*\
+  !*** ./resources/js/module_administrador/cat_estado_agente.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  var currentURL = window.location.href;
+  /**
+   * Evento para mostrar el formulario de crear un nuevo modulo
+   */
+
+  $(document).on("click", ".newEdoAge", function (e) {
+    e.preventDefault();
+    $(".viewIndex").slideUp();
+    $(".viewCreate").slideDown();
+    var url = currentURL + '/cat_agente/create';
+    $.get(url, function (data, textStatus, jqXHR) {
+      $(".viewCreate").html(data);
+    });
+  });
+  /**
+   * Evento para guardar el nuevo modulo
+   */
+
+  $(document).on('click', '.saveEdoAge', function (event) {
+    event.preventDefault();
+    var nombre = $("#nombre").val();
+    var descripcion = $("#descripcion").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var recibir_llamada = $('input:radio[name=recibir_llamada]:checked').val();
+    var url = currentURL + '/cat_agente';
+    $.post(url, {
+      nombre: nombre,
+      descripcion: descripcion,
+      recibir_llamada: recibir_llamada,
+      _token: _token
+    }, function (data, textStatus, xhr) {
+      $('.viewResult').html(data);
+      $('.viewIndex #tableEdoAge').DataTable({
+        "lengthChange": true,
+        "order": [[2, "asc"]]
+      });
+    });
+  });
+  /**
+   * Evento para mostrar el formulario editar modulo
+   */
+
+  $(document).on('dblclick', '#tableEdoAge tbody tr', function (event) {
+    event.preventDefault();
+    $(".viewIndex").slideUp();
+    $(".viewCreate").slideDown();
+    var id = $(this).data("id");
+    var url = currentURL + "/cat_agente/" + id + "/edit";
+    $.get(url, function (data, textStatus, jqXHR) {
+      $(".viewCreate").html(data);
+    });
+  });
+  /**
+   * Evento para cancelar la creacion/edicion del modulo
+   */
+
+  $(document).on("click", ".cancelEdoAge", function (e) {
+    $(".viewIndex").slideDown();
+    $(".viewCreate").slideUp();
+    $(".viewCreate").html('');
+  });
+  /**
+   * Evento para editar el modulo
+   */
+
+  $(document).on('click', '.updateEdoAge', function (event) {
+    event.preventDefault();
+    var nombre = $("#nombre").val();
+    var descripcion = $("#descripcion").val();
+    var id = $("#id").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var recibir_llamada = $('input:radio[name=recibir_llamada]:checked').val();
+    var url = currentURL + '/cat_agente/' + id;
+    $.ajax({
+      url: url,
+      type: 'PUT',
+      data: {
+        nombre: nombre,
+        descripcion: descripcion,
+        recibir_llamada: recibir_llamada,
+        _token: _token
+      },
+      success: function success(result) {
+        $('.viewResult').html(result);
+        $('.viewCreate').slideUp();
+        $('.viewIndex #tableEdoAge').DataTable({
+          "lengthChange": true,
+          "order": [[2, "asc"]]
+        });
+      }
+    });
+  });
+  /**
+   * Evento para eliminar el modulo
+   */
+
+  $(document).on('click', '.deleteEdoAge', function (event) {
+    event.preventDefault();
+    var id = $("#id").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var url = currentURL + '/cat_agente/' + id;
+    $.ajax({
+      url: url,
+      type: 'DELETE',
+      data: {
+        _token: _token
+      },
+      success: function success(result) {
+        $('.viewResult').html(result);
+        $('.viewCreate').slideUp();
+        $('.viewIndex #tableEdoAge').DataTable({
+          "lengthChange": true,
+          "order": [[2, "asc"]]
+        });
+      }
+    });
+  });
+});
+
+/***/ }),
+
+/***/ "./resources/js/module_administrador/cat_estado_cliente.js":
+/*!*****************************************************************!*\
+  !*** ./resources/js/module_administrador/cat_estado_cliente.js ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  var currentURL = window.location.href;
+  /**
+   * Evento para mostrar el formulario de crear un nuevo modulo
+   */
+
+  $(document).on("click", ".newEdoCli", function (e) {
+    e.preventDefault();
+    $(".viewIndex").slideUp();
+    $(".viewCreate").slideDown();
+    var url = currentURL + '/cat_cliente/create';
+    $.get(url, function (data, textStatus, jqXHR) {
+      $(".viewCreate").html(data);
+    });
+  });
+  /**
+   * Evento para guardar el nuevo modulo
+   */
+
+  $(document).on('click', '.saveEdoCli', function (event) {
+    event.preventDefault();
+    var nombre = $("#nombre").val();
+    var descripcion = $("#descripcion").val();
+    var marcar = $('input:radio[name=marcar]:checked').val();
+    var mostrar_agente = $('input:radio[name=mostrar_agente]:checked').val();
+    var parametrizar = $('input:radio[name=parametrizar]:checked').val();
+
+    var _token = $("input[name=_token]").val();
+
+    var url = currentURL + '/cat_cliente';
+    $.post(url, {
+      nombre: nombre,
+      descripcion: descripcion,
+      marcar: marcar,
+      mostrar_agente: mostrar_agente,
+      parametrizar: parametrizar,
+      _token: _token
+    }, function (data, textStatus, xhr) {
+      $('.viewResult').html(data);
+      $('.viewIndex #tableEdoCli').DataTable({
+        "lengthChange": true,
+        "order": [[5, "asc"]]
+      });
+    });
+  });
+  /**
+   * Evento para mostrar el formulario editar modulo
+   */
+
+  $(document).on('dblclick', '#tableEdoCli tbody tr', function (event) {
+    event.preventDefault();
+    $(".viewIndex").slideUp();
+    $(".viewCreate").slideDown();
+    var id = $(this).data("id");
+    var url = currentURL + "/cat_cliente/" + id + "/edit";
+    $.get(url, function (data, textStatus, jqXHR) {
+      $(".viewCreate").html(data);
+    });
+  });
+  /**
+   * Evento para cancelar la creacion/edicion del modulo
+   */
+
+  $(document).on("click", ".cancelEdoCli", function (e) {
+    $(".viewIndex").slideDown();
+    $(".viewCreate").slideUp();
+    $(".viewCreate").html('');
+  });
+  /**
+   * Evento para editar el modulo
+   */
+
+  $(document).on('click', '.updateEdoCli', function (event) {
+    event.preventDefault();
+    var nombre = $("#nombre").val();
+    var descripcion = $("#descripcion").val();
+    var marcar = $('input:radio[name=marcar]:checked').val();
+    var mostrar_agente = $('input:radio[name=mostrar_agente]:checked').val();
+    var parametrizar = $('input:radio[name=parametrizar]:checked').val();
+    var id = $("#id").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var url = currentURL + '/cat_cliente/' + id;
+    $.ajax({
+      url: url,
+      type: 'PUT',
+      data: {
+        nombre: nombre,
+        descripcion: descripcion,
+        marcar: marcar,
+        mostrar_agente: mostrar_agente,
+        parametrizar: parametrizar,
+        _token: _token
+      },
+      success: function success(result) {
+        $('.viewResult').html(result);
+        $('.viewCreate').slideUp();
+        $('.viewIndex #tableEdoCli').DataTable({
+          "lengthChange": true,
+          "order": [[5, "asc"]]
+        });
+      }
+    });
+  });
+  /**
+   * Evento para eliminar el modulo
+   */
+
+  $(document).on('click', '.deleteEdoCli', function (event) {
+    event.preventDefault();
+    var id = $("#id").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var url = currentURL + '/cat_cliente/' + id;
+    $.ajax({
+      url: url,
+      type: 'DELETE',
+      data: {
+        _token: _token
+      },
+      success: function success(result) {
+        $('.viewResult').html(result);
+        $('.viewCreate').slideUp();
+        $('.viewIndex #tableEdoCli').DataTable({
+          "lengthChange": true,
+          "order": [[5, "asc"]]
+        });
+      }
+    });
+  });
+  /**
+   * Evento para order las categorias
+   */
+
+  $(document).on('click', '.orderignEdoCli', function (e) {
+    e.preventDefault();
+    $(".viewIndex").slideUp();
+    $(".viewSubCat").slideUp();
+    $(".viewCreate").slideDown();
+    var url = currentURL + "/cat_cliente/ordering";
+    $.get(url, function (data, textStatus, jqXHR) {
+      $(".viewCreate").html(data);
+      $("#sortable").sortable();
+    });
+  });
+  /**
+   * Evento para editar el menu
+   */
+
+  $(document).on('click', '.saveOrderEdoCli', function (event) {
+    event.preventDefault();
+    var ordenElementos = $("#sortable").sortable("toArray").toString();
+
+    var _token = $("input[name=_token]").val();
+
+    var url = currentURL + "/cat_cliente/updateOrdering";
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {
+        ordenElementos: ordenElementos,
+        _token: _token
+      },
+      success: function success(result) {
+        $('.viewResult').html(result);
+        $('.viewCreate').slideUp();
+        $('.viewIndex').slideDown();
+        $('.viewResult #tableMenus').DataTable({
+          "lengthChange": true,
+          "order": [[5, "asc"]]
+        });
+      }
+    });
+  });
+});
+
+/***/ }),
+
+/***/ "./resources/js/module_administrador/cat_estado_empresa.js":
+/*!*****************************************************************!*\
+  !*** ./resources/js/module_administrador/cat_estado_empresa.js ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
+
+/***/ }),
+
+/***/ "./resources/js/module_administrador/cat_ip_pbx.js":
+/*!*********************************************************!*\
+  !*** ./resources/js/module_administrador/cat_ip_pbx.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
+
+/***/ }),
+
+/***/ "./resources/js/module_administrador/cat_nas.js":
+/*!******************************************************!*\
+  !*** ./resources/js/module_administrador/cat_nas.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
+
+/***/ }),
+
+/***/ "./resources/js/module_administrador/dids.js":
+/*!***************************************************!*\
+  !*** ./resources/js/module_administrador/dids.js ***!
+  \***************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -295,11 +648,10 @@ $(function () {
 
 /***/ }),
 
->>>>>>> a08c65043cec2bbe06885f5566bb5e59702e7199
-/***/ "./resources/js/distribuidores.js":
-/*!****************************************!*\
-  !*** ./resources/js/distribuidores.js ***!
-  \****************************************/
+/***/ "./resources/js/module_administrador/distribuidores.js":
+/*!*************************************************************!*\
+  !*** ./resources/js/module_administrador/distribuidores.js ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -413,11 +765,7 @@ $(function () {
   });
   /**
    * Evento para eliminar el distribuidores
-<<<<<<< HEAD
    *
-=======
-   * 
->>>>>>> a08c65043cec2bbe06885f5566bb5e59702e7199
    */
 
   $(document).on('click', '.deleteDistribuidor', function (event) {
@@ -446,10 +794,10 @@ $(function () {
 
 /***/ }),
 
-/***/ "./resources/js/menus.js":
-/*!*******************************!*\
-  !*** ./resources/js/menus.js ***!
-  \*******************************/
+/***/ "./resources/js/module_administrador/menus.js":
+/*!****************************************************!*\
+  !*** ./resources/js/module_administrador/menus.js ***!
+  \****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -651,10 +999,10 @@ $(function () {
 
 /***/ }),
 
-/***/ "./resources/js/modulos.js":
-/*!*********************************!*\
-  !*** ./resources/js/modulos.js ***!
-  \*********************************/
+/***/ "./resources/js/module_administrador/modulos.js":
+/*!******************************************************!*\
+  !*** ./resources/js/module_administrador/modulos.js ***!
+  \******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -830,10 +1178,10 @@ $(function () {
 
 /***/ }),
 
-/***/ "./resources/js/submenus.js":
-/*!**********************************!*\
-  !*** ./resources/js/submenus.js ***!
-  \**********************************/
+/***/ "./resources/js/module_administrador/submenus.js":
+/*!*******************************************************!*\
+  !*** ./resources/js/module_administrador/submenus.js ***!
+  \*******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -990,10 +1338,7 @@ $(function () {
     $(".viewCreate").slideDown();
     var id_categoria = $("#id_categoria").val();
     var url = currentURL + "/submenus/ordering/" + id_categoria;
-<<<<<<< HEAD
     console.log(id_categoria);
-=======
->>>>>>> a08c65043cec2bbe06885f5566bb5e59702e7199
     $.get(url, id_categoria, function (data, textStatus, jqXHR) {
       $(".viewCreate").html(data);
       $("#sortable").sortable();
@@ -1009,10 +1354,7 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
-<<<<<<< HEAD
     var id_categoria = $("#id_categoria").val();
-=======
->>>>>>> a08c65043cec2bbe06885f5566bb5e59702e7199
     var url = currentURL + "/submenus/updateOrdering";
     $.ajax({
       url: url,
@@ -1039,10 +1381,10 @@ $(function () {
 
 /***/ }),
 
-/***/ "./resources/js/usuarios.js":
-/*!**********************************!*\
-  !*** ./resources/js/usuarios.js ***!
-  \**********************************/
+/***/ "./resources/js/module_administrador/usuarios.js":
+/*!*******************************************************!*\
+  !*** ./resources/js/module_administrador/usuarios.js ***!
+  \*******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -1069,54 +1411,43 @@ $(function () {
     var id = $(this).data("id");
 
     if (id == 6) {
-      var url = currentURL + '/usuarios';
-      $.get(url, function (data, textStatus, jqXHR) {
-        $(".viewResult").html(data);
-        $('.viewResult #tableUsuarios').DataTable({
-          "lengthChange": true
-        });
-      });
+      url = currentURL + '/usuarios';
+      table = ' #tableUsuarios';
     } else if (id == 4) {
-      var _url = currentURL + '/menus';
-
-      $.get(_url, function (data, textStatus, jqXHR) {
-        $(".viewResult").html(data);
-        $('.viewResult #tableMenus').DataTable({
-          "lengthChange": true,
-          "order": [[2, "asc"]]
-        });
-      });
+      url = currentURL + '/menus';
+      table = ' #tableMenus';
     } else if (id == 3) {
-      var _url2 = currentURL + '/modulos';
-
-      $.get(_url2, function (data, textStatus, jqXHR) {
-        $(".viewResult").html(data);
-        $('.viewResult #tableModulos').DataTable({
-          "lengthChange": true,
-          "order": [[2, "asc"]]
-        });
-      });
+      url = currentURL + '/modulos';
+      table = ' #tableDistribuidores';
     } else if (id == 1) {
-      var _url3 = currentURL + '/distribuidor';
-
-      $.get(_url3, function (data, textStatus, jqXHR) {
-        $(".viewResult").html(data);
-        $('.viewResult #tableModulos').DataTable({
-          "lengthChange": true,
-          "order": [[2, "asc"]]
-        });
-      });
+      url = currentURL + '/distribuidor';
+      table = ' #tableDistribuidores';
     } else if (id == 8) {
-      var _url4 = currentURL + '/did';
-
-      $.get(_url4, function (data, textStatus, jqXHR) {
-        $(".viewResult").html(data);
-        $('.viewResult #tableModulos').DataTable({
-          "lengthChange": true,
-          "order": [[2, "asc"]]
-        });
-      });
+      url = currentURL + '/did';
+      table = ' #tableDid';
+    } else if (id == 10) {
+      url = currentURL + '/cat_empresa';
+      table = ' #tableDid';
+    } else if (id == 11) {
+      url = currentURL + '/cat_ip_pbx';
+      table = ' #tableDid';
+    } else if (id == 12) {
+      url = currentURL + '/cat_nas';
+      table = ' #tableDid';
+    } else if (id == 13) {
+      url = currentURL + '/cat_agente';
+      table = ' #tableEdoAge';
+    } else if (id == 14) {
+      url = currentURL + '/cat_cliente';
+      table = ' #tableEdoCli';
     }
+
+    $.get(url, function (data, textStatus, jqXHR) {
+      $(".viewResult").html(data);
+      $('.viewResult' + table).DataTable({
+        "lengthChange": true
+      });
+    });
   });
   /**
    * Evento para ver el formulario de nuevo usuario
@@ -1210,10 +1541,7 @@ $(function () {
 
         var _token = $("input[name=_token]").val();
 
-<<<<<<< HEAD
         var _method = "PUT";
-=======
->>>>>>> a08c65043cec2bbe06885f5566bb5e59702e7199
         var url = currentURL + '/usuarios/' + id_user;
         var arr = $('[name="cats[]"]:checked').map(function () {
           return this.value;
@@ -1228,12 +1556,8 @@ $(function () {
             id_cliente: cliente,
             rol: rol,
             arr: arr,
-<<<<<<< HEAD
             _token: _token,
             _method: _method
-=======
-            _token: _token
->>>>>>> a08c65043cec2bbe06885f5566bb5e59702e7199
           },
           success: function success(result) {
             $('.viewResult').html(result);
@@ -1279,34 +1603,24 @@ $(function () {
 /***/ }),
 
 /***/ 0:
-<<<<<<< HEAD
-/*!****************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/js/usuarios.js ./resources/js/modulos.js ./resources/js/submenus.js ./resources/js/menus.js ./resources/js/distribuidores.js ***!
-  \****************************************************************************************************************************************************************************/
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/js/module_administrador/usuarios.js ./resources/js/module_administrador/modulos.js ./resources/js/module_administrador/submenus.js ./resources/js/module_administrador/menus.js ./resources/js/module_administrador/distribuidores.js ./resources/js/module_administrador/dids.js ./resources/js/module_administrador/cat_estado_agente.js ./resources/js/module_administrador/cat_estado_cliente.js ./resources/js/module_administrador/cat_estado_empresa.js ./resources/js/module_administrador/cat_ip_pbx.js ./resources/js/module_administrador/cat_nas.js ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\usuarios.js */"./resources/js/usuarios.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\modulos.js */"./resources/js/modulos.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\submenus.js */"./resources/js/submenus.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\menus.js */"./resources/js/menus.js");
-module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\distribuidores.js */"./resources/js/distribuidores.js");
-=======
-/*!***************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/js/usuarios.js ./resources/js/modulos.js ./resources/js/submenus.js ./resources/js/menus.js ./resources/js/distribuidores.js ./resources/js/dids.js ***!
-  \***************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(/*! c:\xampp\htdocs\Nimbus\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! c:\xampp\htdocs\Nimbus\resources\js\usuarios.js */"./resources/js/usuarios.js");
-__webpack_require__(/*! c:\xampp\htdocs\Nimbus\resources\js\modulos.js */"./resources/js/modulos.js");
-__webpack_require__(/*! c:\xampp\htdocs\Nimbus\resources\js\submenus.js */"./resources/js/submenus.js");
-__webpack_require__(/*! c:\xampp\htdocs\Nimbus\resources\js\menus.js */"./resources/js/menus.js");
-__webpack_require__(/*! c:\xampp\htdocs\Nimbus\resources\js\distribuidores.js */"./resources/js/distribuidores.js");
-module.exports = __webpack_require__(/*! c:\xampp\htdocs\Nimbus\resources\js\dids.js */"./resources/js/dids.js");
->>>>>>> a08c65043cec2bbe06885f5566bb5e59702e7199
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\usuarios.js */"./resources/js/module_administrador/usuarios.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\modulos.js */"./resources/js/module_administrador/modulos.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\submenus.js */"./resources/js/module_administrador/submenus.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\menus.js */"./resources/js/module_administrador/menus.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\distribuidores.js */"./resources/js/module_administrador/distribuidores.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\dids.js */"./resources/js/module_administrador/dids.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\cat_estado_agente.js */"./resources/js/module_administrador/cat_estado_agente.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\cat_estado_cliente.js */"./resources/js/module_administrador/cat_estado_cliente.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\cat_estado_empresa.js */"./resources/js/module_administrador/cat_estado_empresa.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\cat_ip_pbx.js */"./resources/js/module_administrador/cat_ip_pbx.js");
+module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\cat_nas.js */"./resources/js/module_administrador/cat_nas.js");
 
 
 /***/ })

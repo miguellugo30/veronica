@@ -25,59 +25,44 @@ $(function() {
         let id = $(this).data("id");
 
         if (id == 6) {
-            let url = currentURL + '/usuarios';
-            $.get(url, function(data, textStatus, jqXHR) {
-                $(".viewResult").html(data);
-                $('.viewResult #tableUsuarios').DataTable({
-                    "lengthChange": true
-                });
-            });
+            url = currentURL + '/usuarios';
+            table = ' #tableUsuarios';
         } else if (id == 4) {
-            let url = currentURL + '/menus';
-            $.get(url, function(data, textStatus, jqXHR) {
-                $(".viewResult").html(data);
-                $('.viewResult #tableMenus').DataTable({
-                    "lengthChange": true,
-                    "order": [
-                        [2, "asc"]
-                    ]
-                });
-            });
+            url = currentURL + '/menus';
+            table = ' #tableMenus';
         } else if (id == 3) {
-            let url = currentURL + '/modulos';
-
-            $.get(url, function(data, textStatus, jqXHR) {
-                $(".viewResult").html(data);
-                $('.viewResult #tableModulos').DataTable({
-                    "lengthChange": true,
-                    "order": [
-                        [2, "asc"]
-                    ]
-                });
-            });
+            url = currentURL + '/modulos';
+            table = ' #tableDistribuidores';
         } else if (id == 1) {
-            let url = currentURL + '/distribuidor';
-            $.get(url, function(data, textStatus, jqXHR) {
-                $(".viewResult").html(data);
-                $('.viewResult #tableModulos').DataTable({
-                    "lengthChange": true,
-                    "order": [
-                        [2, "asc"]
-                    ]
-                });
-            });
+            url = currentURL + '/distribuidor';
+            table = ' #tableDistribuidores';
         } else if (id == 8) {
-            let url = currentURL + '/did';
-            $.get(url, function(data, textStatus, jqXHR) {
-                $(".viewResult").html(data);
-                $('.viewResult #tableModulos').DataTable({
-                    "lengthChange": true,
-                    "order": [
-                        [2, "asc"]
-                    ]
-                });
-            });
+            url = currentURL + '/did';
+            table = ' #tableDid';
+        } else if (id == 10) {
+            url = currentURL + '/cat_empresa';
+            table = ' #tableDid';
+        } else if (id == 11) {
+            url = currentURL + '/cat_ip_pbx';
+            table = ' #tableDid';
+        } else if (id == 12) {
+            url = currentURL + '/cat_nas';
+            table = ' #tableDid';
+        } else if (id == 13) {
+            url = currentURL + '/cat_agente';
+            table = ' #tableEdoAge';
+        } else if (id == 14) {
+            url = currentURL + '/cat_cliente';
+            table = ' #tableEdoCli';
         }
+
+        $.get(url, function(data, textStatus, jqXHR) {
+            $(".viewResult").html(data);
+            $('.viewResult' + table).DataTable({
+                "lengthChange": true
+            });
+        });
+
     });
 
     /**

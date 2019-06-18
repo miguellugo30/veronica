@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 
-class Moduloscontroller extends Controller
+class ModulosController extends Controller
 {
     /**
      * Display a listing of the resource.

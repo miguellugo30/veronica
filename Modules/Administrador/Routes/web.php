@@ -37,9 +37,9 @@ Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix'
 });
 
 Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador', 'middleware' => 'auth'], function() {
-    Route::post('/modulos/updateOrdering', 'Moduloscontroller@updateOrdering');
-    Route::get('/modulos/ordering', 'Moduloscontroller@ordering');
-    Route::resource('modulos','Moduloscontroller');
+    Route::post('/modulos/updateOrdering', 'ModulosController@updateOrdering');
+    Route::get('/modulos/ordering', 'ModulosController@ordering');
+    Route::resource('modulos','ModulosController');
 });
 
 Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador', 'middleware' => 'auth'], function() {
@@ -48,11 +48,29 @@ Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix'
 
 Route::get('pruebas', 'UsuariosController@index');
 
-
 // Crear las rutas del modulo 'resource' para tener las rutas a tu controlador DID
 Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
     Route::resource('did','DidController');
 });
 
+Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
+    Route::resource('cat_agente','CatEstadoAgenteController');
+});
 
+Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
+    Route::post('/cat_cliente/updateOrdering', 'CatEstadoClienteController@updateOrdering');
+    Route::get('/cat_cliente/ordering', 'CatEstadoClienteController@ordering');
+    Route::resource('cat_cliente','CatEstadoClienteController');
+});
 
+Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
+    Route::resource('cat_empresa','CatEstadoEmpresaController');
+});
+
+Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
+    Route::resource('cat_ip_pbx','CatIpPbxController');
+});
+
+Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
+    Route::resource('cat_nas','CatNasController');
+});
