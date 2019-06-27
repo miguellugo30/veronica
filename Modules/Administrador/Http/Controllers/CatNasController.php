@@ -15,7 +15,11 @@ class CatNasController extends Controller
      */
     public function index()
     {
-        return view('administrador::index');
+        /**
+        * Recuperamos todos los catalogos que esten activos
+        */
+        $cat_nas = Cat_NAS::where('activo',1)->get();
+        return view('administrador::cat_nas.index', compact('cat_nas'));
     }
 
     /**
@@ -24,7 +28,7 @@ class CatNasController extends Controller
      */
     public function create()
     {
-        return view('administrador::create');
+        return view('administrador::cat_nas.create');
     }
 
     /**
@@ -34,7 +38,16 @@ class CatNasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         /**
+         * Obtenemos todos los datos del formulario de alta y
+         * los insertamos la informacion del formulario
+         */
+        Cat_NAS::create(  $request->all() );
+        /**
+        * Recuperamos todos los catalogos que esten activos
+        */
+        $cat_nas = Cat_NAS::where('activo',1)->get();
+        return view('administrador::cat_nas.index', compact('cat_nas'));
     }
 
     /**
@@ -54,7 +67,11 @@ class CatNasController extends Controller
      */
     public function edit($id)
     {
-        return view('administrador::edit');
+       /**
+         * Obtenemos la informacion del catalogo a editar
+         */
+        $cat_nas = Cat_NAS::findOrFail( $id );
+        return view('administrador::cat_nas.edit', compact('cat_nas', 'id'));
     }
 
     /**
@@ -65,7 +82,19 @@ class CatNasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        /**
+         * Actualizamos los campos
+         */
+        Cat_NAS::where( 'id', $id )
+        ->update([
+            'nombre' => $request->input('nombre'),
+            'ip_nas' => $request->input('ip_nas')
+        ]);
+         /**
+         * Obtenemos la informacion del catalogo a editar
+         */
+        $cat_nas =  Cat_NAS::where('activo',1)->get();
+        return view('administrador::cat_nas.index', compact('cat_nas'));
     }
 
     /**
@@ -75,6 +104,17 @@ class CatNasController extends Controller
      */
     public function destroy($id)
     {
-        //
+        /**
+         * Actualizamos los campos
+         */
+        Cat_NAS::where( 'id', $id )
+        ->update([
+            'activo' => '0'
+        ]);
+         /**
+         * Obtenemos la informacion del catalogo a editar
+         */
+        $cat_nas =  Cat_NAS::where('activo',1)->get();
+        return view('administrador::cat_nas.index', compact('cat_nas'));
     }
 }

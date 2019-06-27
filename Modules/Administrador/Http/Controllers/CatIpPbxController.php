@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Nimbus\Cat_IP_PBX;
+use Nimbus\Cat_NAS;
+use DB;
 
 class CatIpPbxController extends Controller
 {
@@ -15,7 +17,11 @@ class CatIpPbxController extends Controller
      */
     public function index()
     {
-        return view('administrador::index');
+        /**
+        * Recuperamos todos los catalogos que esten activos
+        */
+        $cat_ip_pbx = Cat_IP_PBX::where('activo',1)->get();
+        return view('administrador::ip_pbx.index', compact('cat_ip_pbx'));
     }
 
     /**
@@ -24,7 +30,11 @@ class CatIpPbxController extends Controller
      */
     public function create()
     {
-        return view('administrador::create');
+        /**
+        * Recuperamos todos las NAS que esten activos
+        */
+        $cat_nas = Cat_NAS::where('activo',1)->get();
+        return view('administrador::ip_pbx.create', compact('cat_nas'));
     }
 
     /**
@@ -34,7 +44,26 @@ class CatIpPbxController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        /**
+         * Obtenemos todos los datos del formulario de alta y
+         * los insertamos la informacion del formulario
+         */
+        $pbx = Cat_IP_PBX::create(  $request->all() );
+        /**
+         * Asignamos las categorias al usuario
+         */
+        $data = $request->input('arr');
+        for ($i=0; $i < count( $data ); $i++) {
+            DB::table('Cat_IP_PBX_Cat_Nas')->insert(
+                ['Cat_IP_PBX_id' => $pbx->id, 'Cat_Nas_id' => $data[$i] ]
+            );
+        }
+        $cats_nas = $pbx->cat_nas;
+        /**
+        * Recuperamos todos los catalogos que esten activos
+        */
+        $cat_ip_pbx = Cat_IP_PBX::where('activo',1)->get();
+        return view('administrador::ip_pbx.index', compact('cat_ip_pbx'));
     }
 
     /**
@@ -44,7 +73,7 @@ class CatIpPbxController extends Controller
      */
     public function show($id)
     {
-        return view('administrador::show');
+        return view('administrador::ip_pbx.show');
     }
 
     /**
@@ -54,7 +83,7 @@ class CatIpPbxController extends Controller
      */
     public function edit($id)
     {
-        return view('administrador::edit');
+        return view('administrador::ip_pbx.edit');
     }
 
     /**

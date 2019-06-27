@@ -35,7 +35,7 @@ class CatEstadoEmpresaController extends Controller
      */
     public function store(Request $request)
     {
-         /**
+        /**
          * Obtenemos todos los datos del formulario de alta y
          * los insertamos la informacion del formulario
          */
