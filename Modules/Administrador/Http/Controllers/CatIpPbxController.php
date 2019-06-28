@@ -58,12 +58,10 @@ class CatIpPbxController extends Controller
                 ['Cat_IP_PBX_id' => $pbx->id, 'Cat_Nas_id' => $data[$i] ]
             );
         }
-        $cats_nas = $pbx->cat_nas;
         /**
         * Recuperamos todos los catalogos que esten activos
         */
-        $cat_ip_pbx = Cat_IP_PBX::where('activo',1)->get();
-        return view('administrador::ip_pbx.index', compact('cat_ip_pbx'));
+        return redirect()->route('cat_ip_pbx.index');
     }
 
     /**
@@ -83,7 +81,16 @@ class CatIpPbxController extends Controller
      */
     public function edit($id)
     {
-        return view('administrador::ip_pbx.edit');
+        /**
+         * Obtenemos la informacion del PBX a editar
+         */
+        $pbx = Cat_IP_PBX::findOrFail( $id );
+        $pbxNas = $pbx->cat_nas->pluck('id')->toArray();
+        /**
+        * Recuperamos todos las NAS que esten activos
+        */
+        $cat_nas = Cat_NAS::where('activo',1)->get();
+        return view('administrador::ip_pbx.edit', compact('pbx', 'id', 'cat_nas', 'pbxNas'));
     }
 
     /**
@@ -94,7 +101,36 @@ class CatIpPbxController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        /**
+         * Recuperamos la informacion del PBX ha editar
+         */
+        $pbx = Cat_IP_PBX::findOrFail( $id );
+        /**
+        * Eliminamos las NAS que tiene el PBX
+        */
+        DB::table('Cat_IP_PBX_Cat_Nas')->where('Cat_IP_PBX_id', $pbx->id )->delete();
+        /**
+         * Le asignamos las NAS seleccionada
+         */
+        $cats = $request->input('arr');
+
+        if ( $cats != NULL ) {
+            for ($i=0; $i < count( $cats ); $i++) {
+                DB::table('Cat_IP_PBX_Cat_Nas')->insert(
+                    ['Cat_Nas_id' => $cats[$i], 'Cat_IP_PBX_id' => $pbx->id]
+                );
+            }
+        }
+        /**
+         * Actualizamos la informacion del PBX
+         */
+        Cat_IP_PBX::where( 'id', $id )
+                    ->update([
+                        'ip_pbx' => $request->input('ip_pbx'),
+                        'media_server'   => $request->input('media_server')
+                    ]);
+
+        return redirect()->route('cat_ip_pbx.index');
     }
 
     /**
@@ -104,6 +140,11 @@ class CatIpPbxController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Cat_IP_PBX::where( 'id', $id )
+                ->update([
+                    'activo' => '0'
+                ]);
+
+        return redirect()->route('cat_ip_pbx.index');
     }
 }

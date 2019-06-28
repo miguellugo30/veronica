@@ -620,9 +620,8 @@ $(function () {
       _token: _token
     }, function (data, textStatus, xhr) {
       $('.viewResult').html(data);
-      $('.viewIndex #tableNas').DataTable({
-        "lengthChange": true,
-        "order": [[5, "asc"]]
+      $('.viewIndex #tablePbx').DataTable({
+        "lengthChange": true
       });
     });
   });
@@ -630,7 +629,7 @@ $(function () {
    * Evento para mostrar el formulario editar modulo
    */
 
-  $(document).on('dblclick', '#tableNas tbody tr', function (event) {
+  $(document).on('dblclick', '#tablePbx tbody tr', function (event) {
     event.preventDefault();
     $(".viewIndex").slideUp();
     $(".viewCreate").slideDown();
@@ -653,29 +652,35 @@ $(function () {
    * Evento para editar el modulo
    */
 
-  $(document).on('click', '.updateNas', function (event) {
+  $(document).on('click', '.updatePbx', function (event) {
     event.preventDefault();
-    var nombre = $("#nombre").val();
-    var ip_nas = $("#ip_nas").val();
+    var media_server = $("#media_server").val();
+    var ip_pbx = $("#ip_pbx").val();
+    var arr = $('[name="nas[]"]:checked').map(function () {
+      return this.value;
+    }).get();
     var id = $("#id").val();
 
     var _token = $("input[name=_token]").val();
 
+    var _method = "PUT";
     var url = currentURL + '/cat_ip_pbx/' + id;
     $.ajax({
       url: url,
-      type: 'PUT',
+      type: 'POST',
       data: {
-        nombre: nombre,
-        ip_nas: ip_nas,
-        _token: _token
+        media_server: media_server,
+        ip_pbx: ip_pbx,
+        arr: arr,
+        id: id,
+        _token: _token,
+        _method: _method
       },
       success: function success(result) {
         $('.viewResult').html(result);
         $('.viewCreate').slideUp();
-        $('.viewIndex #tableNas').DataTable({
-          "lengthChange": true,
-          "order": [[5, "asc"]]
+        $('.viewIndex #tablePbx').DataTable({
+          "lengthChange": true
         });
       }
     });
@@ -684,25 +689,26 @@ $(function () {
    * Evento para eliminar el modulo
    */
 
-  $(document).on('click', '.deleteNas', function (event) {
+  $(document).on('click', '.deletePbx', function (event) {
     event.preventDefault();
     var id = $("#id").val();
+    var _method = "DELETE";
 
     var _token = $("input[name=_token]").val();
 
     var url = currentURL + '/cat_ip_pbx/' + id;
     $.ajax({
       url: url,
-      type: 'DELETE',
+      type: 'POST',
       data: {
-        _token: _token
+        _token: _token,
+        _method: _method
       },
       success: function success(result) {
         $('.viewResult').html(result);
         $('.viewCreate').slideUp();
-        $('.viewIndex #tableNas').DataTable({
-          "lengthChange": true,
-          "order": [[5, "asc"]]
+        $('.viewIndex #tablePbx').DataTable({
+          "lengthChange": true
         });
       }
     });
@@ -1741,6 +1747,138 @@ $(function () {
 
 /***/ }),
 
+/***/ "./resources/js/module_administrador/troncales.js":
+/*!********************************************************!*\
+  !*** ./resources/js/module_administrador/troncales.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  var currentURL = window.location.href;
+  /**
+   * Evento para mostrar el formulario de crear un nuevo modulo
+   */
+
+  $(document).on("click", ".newTroncal", function (e) {
+    e.preventDefault();
+    $(".viewIndex").slideUp();
+    $(".viewCreate").slideDown();
+    var url = currentURL + '/troncales/create';
+    $.get(url, function (data, textStatus, jqXHR) {
+      $(".viewCreate").html(data);
+    });
+  });
+  /**
+   * Evento para guardar el nuevo modulo
+   */
+
+  $(document).on('click', '.saveTroncal', function (event) {
+    event.preventDefault();
+    var nombre = $("#nombre").val();
+    var troncal_sansay = $("#troncal_sansay").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var url = currentURL + '/troncales';
+    $.post(url, {
+      nombre: nombre,
+      troncal_sansay: troncal_sansay,
+      _token: _token
+    }, function (data, textStatus, xhr) {
+      $('.viewResult').html(data);
+      $('.viewIndex #tableTroncales').DataTable({
+        "lengthChange": true
+      });
+    });
+  });
+  /**
+   * Evento para mostrar el formulario editar modulo
+   */
+
+  $(document).on('dblclick', '#tableTroncales tbody tr', function (event) {
+    event.preventDefault();
+    $(".viewIndex").slideUp();
+    $(".viewCreate").slideDown();
+    var id = $(this).data("id");
+    var url = currentURL + "/troncales/" + id + "/edit";
+    $.get(url, function (data, textStatus, jqXHR) {
+      $(".viewCreate").html(data);
+    });
+  });
+  /**
+   * Evento para cancelar la creacion/edicion del modulo
+   */
+
+  $(document).on("click", ".cancelTroncal", function (e) {
+    $(".viewIndex").slideDown();
+    $(".viewCreate").slideUp();
+    $(".viewCreate").html('');
+  });
+  /**
+   * Evento para editar el modulo
+   */
+
+  $(document).on('click', '.updateTrocal', function (event) {
+    event.preventDefault();
+    var nombre = $("#nombre").val();
+    var troncal_sansay = $("#troncal_sansay").val();
+    var id = $("#id").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var _method = "PUT";
+    var url = currentURL + '/troncales/' + id;
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {
+        nombre: nombre,
+        troncal_sansay: troncal_sansay,
+        _token: _token,
+        _method: _method
+      },
+      success: function success(result) {
+        $('.viewResult').html(result);
+        $('.viewCreate').slideUp();
+        $('.viewIndex #tableTroncales').DataTable({
+          "lengthChange": true
+        });
+      }
+    });
+  });
+  /**
+   * Evento para eliminar el modulo
+   */
+
+  $(document).on('click', '.deleteTroncal', function (event) {
+    event.preventDefault();
+    var id = $("#id").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var _method = "DELETE";
+    var url = currentURL + '/troncales/' + id;
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {
+        _token: _token,
+        _method: _method
+      },
+      success: function success(result) {
+        $('.viewResult').html(result);
+        $('.viewCreate').slideUp();
+        $('.viewIndex #tableTroncales').DataTable({
+          "lengthChange": true
+        });
+      }
+    });
+  });
+});
+
+/***/ }),
+
 /***/ "./resources/js/module_administrador/usuarios.js":
 /*!*******************************************************!*\
   !*** ./resources/js/module_administrador/usuarios.js ***!
@@ -1800,6 +1938,9 @@ $(function () {
     } else if (id == 14) {
       url = currentURL + '/cat_cliente';
       table = ' #tableEdoCli';
+    } else if (id == 9) {
+      url = currentURL + '/troncales';
+      table = ' #tableTroncales';
     }
 
     $.get(url, function (data, textStatus, jqXHR) {
@@ -1963,9 +2104,9 @@ $(function () {
 /***/ }),
 
 /***/ 0:
-/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/js/module_administrador/usuarios.js ./resources/js/module_administrador/modulos.js ./resources/js/module_administrador/submenus.js ./resources/js/module_administrador/menus.js ./resources/js/module_administrador/distribuidores.js ./resources/js/module_administrador/dids.js ./resources/js/module_administrador/cat_estado_agente.js ./resources/js/module_administrador/cat_estado_cliente.js ./resources/js/module_administrador/cat_estado_empresa.js ./resources/js/module_administrador/cat_ip_pbx.js ./resources/js/module_administrador/cat_nas.js ***!
-  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/js/module_administrador/usuarios.js ./resources/js/module_administrador/modulos.js ./resources/js/module_administrador/submenus.js ./resources/js/module_administrador/menus.js ./resources/js/module_administrador/distribuidores.js ./resources/js/module_administrador/dids.js ./resources/js/module_administrador/cat_estado_agente.js ./resources/js/module_administrador/cat_estado_cliente.js ./resources/js/module_administrador/cat_estado_empresa.js ./resources/js/module_administrador/cat_ip_pbx.js ./resources/js/module_administrador/cat_nas.js ./resources/js/module_administrador/troncales.js ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1980,7 +2121,8 @@ __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\c
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\cat_estado_cliente.js */"./resources/js/module_administrador/cat_estado_cliente.js");
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\cat_estado_empresa.js */"./resources/js/module_administrador/cat_estado_empresa.js");
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\cat_ip_pbx.js */"./resources/js/module_administrador/cat_ip_pbx.js");
-module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\cat_nas.js */"./resources/js/module_administrador/cat_nas.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\cat_nas.js */"./resources/js/module_administrador/cat_nas.js");
+module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\troncales.js */"./resources/js/module_administrador/troncales.js");
 
 
 /***/ })

@@ -110,10 +110,9 @@ class MenusController extends Controller
      */
     public function update(Request $request, $id)
     {
-         /**
+        /**
          * Actualizamos el menu
          */
-
          Categorias::where( 'id', $id )
                     ->update([
                         'nombre' => $request->input('nombre'),

@@ -54,6 +54,9 @@ $(function() {
         } else if (id == 14) {
             url = currentURL + '/cat_cliente';
             table = ' #tableEdoCli';
+        } else if (id == 9) {
+            url = currentURL + '/troncales';
+            table = ' #tableTroncales';
         }
 
         $.get(url, function(data, textStatus, jqXHR) {
