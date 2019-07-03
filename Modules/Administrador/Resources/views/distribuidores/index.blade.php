@@ -15,6 +15,7 @@
                         <th>Servicio</th>
                         <th>Distribuidor</th>
                         <th>Numero Soporte</th>
+                        <th>Prefijo</th>
                         <th>Imagen encabezado</th>
                         <th>Imagen pie</th>
                     </tr>
@@ -25,8 +26,9 @@
                             <td>{{ $distribuidor->servicio }}</td>
                             <td>{{ $distribuidor->distribuidor }}</td>
                             <td>{{ $distribuidor->numero_soporte }}</td>
-                            <td><a href="{{ Storage::url($distribuidor->img_header)}}" class="btn btn-primary active" target="_blank"><i class="far fa-eye"></i></a></td>
-                            <td><a href="{{ Storage::url($distribuidor->img_pie) }}" class="btn btn-primary active" target="_blank"><i class="far fa-eye"></i></td>
+                            <td>{{ $distribuidor->prefijo }}</td>
+                            <td><a href="{{ Storage::url($distribuidor->img_header)}}" target="_blank"><img width="100px"  src="/storage/{{$distribuidor->img_header}}"></a></td>
+                            <td><a href="{{ Storage::url($distribuidor->img_pie) }}" target="_blank"><img width="100px" src="/storage/{{$distribuidor->img_pie}}"></a></td>
                         </tr>
                     @endforeach
                 </tbody>

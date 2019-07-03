@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Nimbus\Cat_Distribuidor;
+use Storage;
+use File;
 
 class DistribuidoresController extends Controller
 {
@@ -15,15 +17,9 @@ class DistribuidoresController extends Controller
      */
     public function index()
     {
-<<<<<<< HEAD
         /**
-         * Consultar distribuidores activos 
+         * Consultar distribuidores activos para mostrarlos en el indice
         */
-||||||| merged common ancestors
-        
-=======
-
->>>>>>> d13b7225508f19609de2793d40ab1056f0cd8a58
         $Distribuidores = Cat_Distribuidor::where('activo', 1)->get();
         return view('administrador::distribuidores.index', compact('Distribuidores'));
 
@@ -35,6 +31,9 @@ class DistribuidoresController extends Controller
      */
     public function create()
     {
+        /**
+         * Retorna la vista de creacion para distribuidores
+         */
         return view('administrador::distribuidores.create');
     }
 
@@ -45,36 +44,51 @@ class DistribuidoresController extends Controller
      */
     public function store(Request $request)
     {
-        $file = $request->file('img_header');
-        $nombre = $file->getClientOriginalName();
-        \Storage::disk('public') -> put($nombre,\File::get($file));
-
-        $file2 = $request->file('img_pie');
-        $nombre2 = $file2->getClientOriginalName();
-        \Storage::disk('public') -> put($nombre2,\File::get($file2));
         /**
-         * Obtenemos todos los datos del formulario de alta
-         */
-        $input = $request->all();
-        /**
-         * Insertamos la informacion del formulario
+         * Obtener los valores recibidos del formulario
          */
         $distribuidor = new Cat_Distribuidor;
-
-        /**
-         * 
-         */
         $distribuidor -> servicio = $request -> servicio;
         $distribuidor -> distribuidor = $request -> distribuidor;
         $distribuidor -> numero_soporte = $request -> numero_soporte;
-        $distribuidor -> img_header = $nombre;
-        $distribuidor -> img_pie = $nombre2;
+        $distribuidor -> prefijo = $request -> prefijo;
 
-        $distribuidor -> save();
+        /**
+         * Imagen por defecto de c3ntro que se agregara en caso de no elegir una
+         */
+        $img_default = "c3ntro.jpeg";
 
-        $Distribuidores = Cat_Distribuidor::where('activo', 1)->get();
+        /**
+         * Validar que el campo file_input_header tenga algun valor, para poder asignarle nombre a la imagen header
+         */        
+        if( $request->file('file_input_header') != NULL){
+            $file = $request->file('file_input_header');
+            $nombre = $file->getClientOriginalName();
+            $distribuidor -> img_header = $nombre;
 
-        return view('administrador::distribuidores.index', compact('Distribuidores'));
+        }else{
+            $nombre = $img_default;
+        }
+
+        if(  $request->file('file_input_pie') != NULL){
+            $file2 = $request->file('file_input_pie');
+            $nombre2 = $file2->getClientOriginalName();
+            $distribuidor -> img_pie = $nombre2;
+        }else{
+            $nombre2 = $img_default;
+        }
+       
+        $distribuidor -> save();  
+        
+        
+        $directorio_imagenes = "/dist/".$distribuidor -> id;
+        /*
+        if(!File::exists($directorio_imagenes)){
+            Storage::makeDirectory($directorio_imagenes);
+        }*/
+        Storage::disk('public') -> put($directorio_imagenes."/".$nombre,($file) ? File::get($file) : $nombre);
+        Storage::disk('public') -> put($directorio_imagenes."/".$nombre2,($file2) ? File::get($file2) : $nombre2);
+        return redirect()->route('distribuidor.index');
     }
 
     /**
@@ -106,28 +120,29 @@ class DistribuidoresController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $file = $request->file('img_header');
-        $nombre = $file->getClientOriginalName();
-        \Storage::disk('public') -> put($nombre,\File::get($file));
-
-        $file2 = $request->file('img_pie');
-        $nombre2 = $file2->getClientOriginalName();
-        \Storage::disk('public') -> put($nombre2,\File::get($file2));
-
-
         $distribuidor = Cat_Distribuidor::find($id);
 
         $distribuidor -> servicio = $request -> servicio;
         $distribuidor -> distribuidor = $request -> distribuidor;
         $distribuidor -> numero_soporte = $request -> numero_soporte;
-        $distribuidor -> img_header = $nombre;
-        $distribuidor -> img_pie = $nombre2;
+        $distribuidor -> prefijo = $request -> prefijo;
+       
+        if( $request->file('file_input_header') != NULL){
+            $file = $request->file('file_input_header');
+            $nombre = $file->getClientOriginalName();
+            Storage::disk('public') -> put($nombre,File::get($file));
+            $distribuidor -> img_header = $nombre;
 
-        $distribuidor -> save();
-
-        $Distribuidores = Cat_Distribuidor::where('activo', 1)->get();
-
-        return view('administrador::distribuidores.index', compact('Distribuidores'));
+        } 
+        if(  $request->file('file_input_pie') != NULL){
+            $file2 = $request->file('file_input_pie');
+            $nombre2 = $file2->getClientOriginalName();
+            Storage::disk('public') -> put($nombre2,File::get($file2));
+            $distribuidor -> img_pie = $nombre2;
+        } 
+        
+        $distribuidor -> save();        
+        return redirect()->route('distribuidor.index');
     }
 
     /**
@@ -137,10 +152,20 @@ class DistribuidoresController extends Controller
      */
     public function destroy($id)
     {
+        /**
+         * Se realiza la actualizacion con referencia al id que se recibio
+         */
         Cat_Distribuidor::where( 'id', $id )->update(['activo' => 0]);
 
-        $Distribuidores = Cat_Distribuidor::where('activo', 1)->get();
+        /**
+         * Se realiza la busqueda del registro para poder obtener el nombre del archivo y realizar su eliminacion del servidor
+         */
 
+        $distribuidor = Cat_Distribuidor::find($id);
+
+        Storage:: delete([$distribuidor -> img_header],[$distribuidor -> img_pie]);
+
+        $Distribuidores = Cat_Distribuidor::where('activo', 1)->get();
         return view('administrador::distribuidores.index', compact('Distribuidores'));
     }
 }

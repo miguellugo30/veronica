@@ -59,8 +59,8 @@ $(function() {
             let url = currentURL + '/distribuidor';
             $.get(url, function(data, textStatus, jqXHR) {
                 $(".viewResult").html(data);
-                $('.viewResult #tableDistribuidor').DataTable({
-                    "lengthChange": true,
+                $('.viewResult #tableDistribuidores').DataTable({
+                    "lengthChange": false,
                     "order": [
                         [2, "asc"]
                     ]
