@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Nimbus\Troncales;
-use Nimbus\Empresas;
+use Nimbus\Cat_Distribuidor;
 
 class TroncalesController extends Controller
 {
@@ -19,7 +19,7 @@ class TroncalesController extends Controller
         /**
          * Recuperamos todos las troncales que esten activos
          */
-        $troncales = Troncales::with('Empresas')->where('activo',1)->get();
+        $troncales = Troncales::where('activo',1)->get();
         return view('administrador::troncales.index', compact('troncales'));
     }
 
@@ -32,8 +32,8 @@ class TroncalesController extends Controller
         /**
          * Recuperamos todos las troncales que esten activos
          */
-        $empresas = Empresas::where('activo',1)->get();
-        return view('administrador::troncales.create', compact('empresas'));
+        $distribuidores = Cat_Distribuidor::where('activo',1)->get();
+        return view('administrador::troncales.create', compact('distribuidores'));
     }
 
     /**
@@ -47,11 +47,11 @@ class TroncalesController extends Controller
          * Obtenemos todos los datos del formulario de alta y
          * los insertamos la informacion del formulario
          */
-        $troncal = Troncales::create(  $request->all() );
+        $troncal = Troncales::create( $request->all() );
         /**
          * Vinculamos la troncal a las empresas seleccionadas
          */
-        $troncal->empresas()->attach( $request->input('id_empresa') );
+        //$troncal->empresas()->attach( $request->input('id_empresa') );
         /**
          * Redirigimos a la ruta index
          */
@@ -81,17 +81,13 @@ class TroncalesController extends Controller
         /**
          * Recuperamos todos las troncales que esten activos
          */
-        $empresas = Empresas::where('activo',1)->get();
+        $distribuidores = Cat_Distribuidor::where('activo',1)->get();
         /**
          * Obtenemos la informacion de la troncal a editar
          */
         $troncal = Troncales::findOrFail( $id );
-        /**
-         * Creamos arreglo para las empresas que estan vinculadas a la troncal
-         */
-        $selectEmpresa = $troncal->Empresas->pluck('id')->toArray();
 
-        return view('administrador::troncales.edit', compact('troncal', 'id', 'empresas', 'selectEmpresa') );
+        return view('administrador::troncales.edit', compact('troncal', 'id', 'distribuidores') );
     }
 
     /**
@@ -105,21 +101,22 @@ class TroncalesController extends Controller
         /**
          * Actualizamos la trocal
          */
-        $troncal = Troncales::where( 'id', $id )
+        Troncales::where( 'id', $id )
                                 ->update([
                                     'nombre' => $request->input('nombre'),
-                                    'troncal_sansay' => $request->input('troncal_sansay')
+                                    'ip' => $request->input('ip'),
+                                    'Cat_Distribuidor_id' => $request->input('Cat_Distribuidor_id'),
                                 ]);
 
         /**
          * Buscamos la trocal para asociosar/desaciosar empresas
          */
-        $troncal = Troncales::findOrFail( $id );
+        //$troncal = Troncales::findOrFail( $id );
         /**
          * Vinculamos la troncal a la empresa
          */
-        $troncal->empresas()->detach();//Desasociamos todas las empresas a la troncal
-        $troncal->empresas()->attach( $request->input('id_empresa') );//Asociamos todas las empresas a la troncal
+        //$troncal->empresas()->detach();//Desasociamos todas las empresas a la troncal
+        //$troncal->empresas()->attach( $request->input('id_empresa') );//Asociamos todas las empresas a la troncal
         /**
          * Redirigimos a la ruta index
          */

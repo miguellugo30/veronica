@@ -27,8 +27,8 @@ $(function() {
         let did = $("#did").val();
         let descripcion = $("#descripcion").val();
         let Troncales_id = $("#Troncales_id").val();
-        let gateway = $("#gateway").val();
-        let fakedid = $("#fakedid").val();
+        let gateway = $('input:radio[name=gateway]:checked').val();
+        let fakedid = $('input:radio[name=fakedid]:checked').val();
         let _token = $("input[name=_token]").val();
         let url = currentURL + '/did';
 
@@ -83,14 +83,15 @@ $(function() {
     $(document).on('click', '.updateDid', function(event) {
         event.preventDefault();
         // formdata es para down de IL
-        let id_empresa = $("#id_empresa").val();
+        let Empresas_id = $("#id_empresa").val();
+        let id_did = $("#id_did").val();
         let tipo = $("#tipo").val();
         let prefijo = $("#prefijo").val();
         let did = $("#did").val();
         let descripcion = $("#descripcion").val();
         let Troncales_id = $("#Troncales_id").val();
-        let gateway = $("#gateway").val();
-        let fakedid = $("#fakedid").val();
+        let gateway = $('input:radio[name=gateway]:checked').val();
+        let fakedid = $('input:radio[name=fakedid]:checked').val();
         let _token = $("input[name=_token]").val();
         let _method = 'PUT';
         let url = currentURL + '/did/' + id_did;
@@ -99,7 +100,7 @@ $(function() {
             url: url,
             type: 'POST',
             data: {
-                id_empresa: id_empresa,
+                Empresas_id: Empresas_id,
                 id_did: id_did,
                 tipo: tipo,
                 prefijo: prefijo,

@@ -28,10 +28,11 @@ class Empresas extends Model
         return $this->hasMany('Nimbus\Dids');
     }
     /**
-     * Relacion muchos a muchos con Troncales
+     * Relacion uno a muchos con Did
      */
-    public function Troncales()
+    public function Canales()
     {
-        return $this->belongsToMany('Nimbus\Troncales', 'Troncales_Empresas');
+        return $this->hasMany('Nimbus\Canales');
     }
+
 }

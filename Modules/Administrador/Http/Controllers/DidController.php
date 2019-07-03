@@ -54,7 +54,7 @@ class DidController extends Controller
     public function store(Request $request)
     {
         /**
-         * Insertamos la informacion del formulario
+         * Insertamos la información del formulario
          */
         Dids::create( $request->all() );
         /**
@@ -81,7 +81,7 @@ class DidController extends Controller
     public function edit($id)
     {
         /**
-         * Obtenemos la informacion del DID ha editar
+         * Obtenemos la información del DID ha editar
          */
         $Dids = Dids::find($id);
         /**
@@ -108,12 +108,12 @@ class DidController extends Controller
         $Dids = Dids::find($id);
 
         //Asignar los datos del Request del form a las variables asociadas
-        $Dids->id_empresa = $request->id_empresa;
+        $Dids->Empresas_id = $request->Empresas_id;
         $Dids->tipo = $request->tipo;
         $Dids->prefijo = $request->prefijo;
         $Dids->did = $request->did;
         $Dids->descripcion = $request->descripcion;
-        $Dids->id_troncal_sansay = $request->id_troncal_sansay;
+        $Dids->Troncales_id = $request->Troncales_id;
         $Dids->gateway = $request->gateway;
         $Dids->fakedid = $request->fakedid;
 

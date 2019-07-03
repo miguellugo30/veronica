@@ -27,13 +27,13 @@
                     @foreach( $Dids as $did )
                         <tr data-id="{{ $did->id }}">
                             <td>{{ $did->Empresas->nombre }}</td>
-                            <td>{{ $did->tipo }}</td>
+                            <td>{{ ( $did->tipo == 1 ) ? 'Did' : 'Analoga' }}</td>
                             <td>{{ $did->prefijo }}</td>
                             <td>{{ $did->did }}</td>
                             <td>{{ $did->descripcion }}</td>
                             <td>{{ $did->Troncales->nombre }}</td>
-                            <td>{{ $did->gateway }}</td>
-                            <td>{{ $did->fakedid }}</td>
+                            <td>{{ ( $did->gateway == 1 ) ? 'Habilitado' : 'Deshabilitado' }}</td>
+                            <td>{{ ( $did->fakedid == 1 ) ? 'Habilitado' : 'Deshabilitado' }}</td>
                         </tr>
                     @endforeach
                 </tbody>

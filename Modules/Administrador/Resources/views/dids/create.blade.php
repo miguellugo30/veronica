@@ -1,14 +1,14 @@
-    <fieldset>
+<fieldset>
 	<legend>
         <i class="fas fa-phone"></i>
 		Nuevo Did
 	</legend>
-        <div class="col-md-6" style="float:none; margin:auto">
+    <div class="col-md-6" style="float:none; margin:auto">
             <div class="form-group">
                 <label for="id_empresa">Empresa</label>
                 <select name="id_empresa" id="id_empresa" class="form-control">
-                <option value="">Selecciona una empresa</option>
-                @foreach( $empresas as $empresa )
+                    <option value="">Selecciona una empresa</option>
+                    @foreach( $empresas as $empresa )
                 <option value="{{ $empresa->id }}">{{ $empresa->nombre }}</option>
                 @endforeach
             </select>
@@ -17,7 +17,11 @@
             <!-- Esta variable genera un token Laravel se debe colocar en el form -->
             @csrf
             <label for="tipo">Tipo</label>
-            <input type="text" class="form-control" id="tipo" placeholder="Tipo"/>
+            <select name="tipo" id="tipo" class="form-control">
+                <option value="">Selecciona un tipo</option>
+                <option value="1" selected>Did</option>
+                <option value="2">Analogo</option>
+            </select>
         </div>
         <div class="form-group">
             <label for="prefijo">Prefijo</label>
@@ -32,24 +36,33 @@
             <input type="text" class="form-control" id="descripcion" placeholder="Descripcion"/>
         </div>
         <div class="form-group showTroncales">
-            <!--label for="Troncales_id">Troncal</label>
-            <select name="Troncales_id" id="Troncales_id" class="form-control">
-                <option value="">Selecciona una troncal</option>
-                {{--@foreach( $troncales as $troncal )
-                    <option value="{{ $troncal->id }}">{{ $troncal->nombre }}</option>
-                @endforeach--}}
-            </select-->
+
         </div>
         <div class="form-group">
             <label for="gateway">Gateway</label>
-            <input type="text" class="form-control" id="gateway" placeholder="Gateway"/>
+            <br>
+            <br>
+            <label class="radio-inline">
+                <input type="radio" name="gateway" id="gateway" value="1"> Habilitado
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="gateway" id="gateway" value="0" checked> Deshabilitado
+            </label>
         </div>
         <div class="form-group">
             <label for="fakedid">Fakedid</label>
-            <input type="text" class="form-control" id="fakedid" placeholder="Fakedid"/>
+            <br>
+            <br>
+            <label class="radio-inline">
+                <input type="radio" name="fakedid" id="fakedid" value="1" > Habilitado
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="fakedid" id="fakedid" value="0" checked> Deshabilitado
+            </label>
         </div>
     </div>
     <div class="col-md-12">
+        <br>
         <div class="col-md-6" style="float:none; margin:auto">
             <div class="col-md-6" style="text-align:left">
                 <button type="submit" class="btn btn-warning cancelDid"><i class="fas fa-times"></i> Cancelar</button>

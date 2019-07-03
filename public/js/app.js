@@ -882,8 +882,8 @@ $(function () {
     var did = $("#did").val();
     var descripcion = $("#descripcion").val();
     var Troncales_id = $("#Troncales_id").val();
-    var gateway = $("#gateway").val();
-    var fakedid = $("#fakedid").val();
+    var gateway = $('input:radio[name=gateway]:checked').val();
+    var fakedid = $('input:radio[name=fakedid]:checked').val();
 
     var _token = $("input[name=_token]").val();
 
@@ -937,14 +937,15 @@ $(function () {
   $(document).on('click', '.updateDid', function (event) {
     event.preventDefault(); // formdata es para down de IL
 
-    var id_empresa = $("#id_empresa").val();
+    var Empresas_id = $("#id_empresa").val();
+    var id_did = $("#id_did").val();
     var tipo = $("#tipo").val();
     var prefijo = $("#prefijo").val();
     var did = $("#did").val();
     var descripcion = $("#descripcion").val();
     var Troncales_id = $("#Troncales_id").val();
-    var gateway = $("#gateway").val();
-    var fakedid = $("#fakedid").val();
+    var gateway = $('input:radio[name=gateway]:checked').val();
+    var fakedid = $('input:radio[name=fakedid]:checked').val();
 
     var _token = $("input[name=_token]").val();
 
@@ -954,7 +955,7 @@ $(function () {
       url: url,
       type: 'POST',
       data: {
-        id_empresa: id_empresa,
+        Empresas_id: Empresas_id,
         id_did: id_did,
         tipo: tipo,
         prefijo: prefijo,
@@ -1783,16 +1784,16 @@ $(function () {
   $(document).on('click', '.saveTroncal', function (event) {
     event.preventDefault();
     var nombre = $("#nombre").val();
-    var troncal_sansay = $("#troncal_sansay").val();
-    var id_empresa = $("#id_empresa").val();
+    var ip = $("#ip").val();
+    var Cat_Distribuidor_id = $("#distribuidores").val();
 
     var _token = $("input[name=_token]").val();
 
     var url = currentURL + '/troncales';
     $.post(url, {
       nombre: nombre,
-      troncal_sansay: troncal_sansay,
-      id_empresa: id_empresa,
+      ip: ip,
+      Cat_Distribuidor_id: Cat_Distribuidor_id,
       _token: _token
     }, function (data, textStatus, xhr) {
       $('.viewResult').html(data);
@@ -1831,9 +1832,8 @@ $(function () {
   $(document).on('click', '.updateTrocal', function (event) {
     event.preventDefault();
     var nombre = $("#nombre").val();
-    var troncal_sansay = $("#troncal_sansay").val();
-    var id_empresa = $("#id_empresa").val();
-    var id_empresa_ant = $("#id_empresa_ant").val();
+    var ip = $("#ip").val();
+    var Cat_Distribuidor_id = $("#distribuidores").val();
     var id = $("#id").val();
 
     var _token = $("input[name=_token]").val();
@@ -1845,9 +1845,8 @@ $(function () {
       type: 'POST',
       data: {
         nombre: nombre,
-        troncal_sansay: troncal_sansay,
-        id_empresa: id_empresa,
-        id_empresa_ant: id_empresa_ant,
+        ip: ip,
+        Cat_Distribuidor_id: Cat_Distribuidor_id,
         _token: _token,
         _method: _method
       },
@@ -1887,6 +1886,16 @@ $(function () {
         });
       }
     });
+  });
+  /**
+   * Evento que autocompleta el valor del input Troncal Sansay
+   * en base a lo que se escriba en el input nombre
+   */
+
+  $(document).on('keyup', '#nombre', function (event) {
+    var nombre_troncal = $(this).val();
+    var nombre = nombre_troncal.replace(" ", "_");
+    $("#troncal_sansay").val("BUS > " + nombre + " > DID");
   });
 });
 

@@ -14,24 +14,24 @@ class Troncales extends Model
      * Campos que se usaran en el proceso de la vista
      */
     protected $fillable = [
-        'nombre', 'troncal_sansay',
+        'nombre', 'ip', 'Cat_Distribuidor_id',
     ];
     /**
      * Nombre de la tabla
      */
     protected $table = 'Troncales';
-     /**
-     * Relación uno a muchos con Troncales
-     */
-    public function Dids()
-    {
-        return $this->hasMany('Nimbus\Dids', 'Troncales_id');
-    }
     /**
      * Relación muchos a muchos con empresas
      */
-    public function Empresas()
+    public function Cat_Distribuidor()
     {
-        return $this->belongsToMany('Nimbus\Empresas', 'Troncales_Empresas');
+        return $this->belongsTo('Nimbus\Cat_Distribuidor', 'Cat_Distribuidor_id');
+    }
+    /**
+     * Relacion uno a muchos con Canales
+     */
+    public function Canales()
+    {
+        return $this->hasMany('Nimbus\Canales');
     }
 }

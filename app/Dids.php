@@ -27,11 +27,11 @@ class Dids extends Model
     {
        return $this->belongsTo('Nimbus\Empresas', 'Empresas_id', 'id');
     }
-    /**
-     * Relacion uno a muchos con Troncales
-     */
-    public function Troncales()
+     /**
+    * Relacion muchos a uno con Canales
+    */
+    public function Canales()
     {
-        return $this->belongsTo('Nimbus\Troncales', 'Troncales_id', 'id');
+       return $this->belongsTo('Nimbus\Canales', 'Canales_id', 'id');
     }
 }
