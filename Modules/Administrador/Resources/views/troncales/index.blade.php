@@ -13,13 +13,22 @@
                     <tr>
                         <th>Nombre</th>
                         <th>Troncal Sansay</th>
+                        <th>Empresas</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($troncales as $troncale)
-                        <tr data-id="{{ $troncale->id }}">
-                            <td>{{ $troncale->nombre }}</td>
-                            <td>{{ $troncale->troncal_sansay }}</td>
+
+                    @foreach ($troncales as $troncal)
+                        <tr data-id="{{ $troncal->id }}">
+                            <td>{{ $troncal->nombre }}</td>
+                            <td>{{ $troncal->troncal_sansay }}</td>
+                            <td>
+                                @if ( $troncal->Empresas != NULL )
+                                    @foreach ($troncal->Empresas as $item)
+                                        <span class="badge">{{ $item->nombre }}</span>
+                                    @endforeach
+                                @endif
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>

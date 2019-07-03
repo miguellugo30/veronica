@@ -9,7 +9,6 @@ class Categorias extends Model
     protected $fillable = [
         'nombre', 'descripcion', 'tipo',
     ];
-
     /**
      * Relacion uno a muchos con sub categoria
      */

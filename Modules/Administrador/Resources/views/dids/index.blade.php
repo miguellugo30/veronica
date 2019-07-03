@@ -1,6 +1,7 @@
 <div class="col-12 viewIndex">
     <fieldset>
         <legend>
+            <i class="fas fa-phone"></i>
             DID
             <button type="button" class="btn btn-primary btn-xs nuevoDid" style="float: right;">
                 <i class="fas fa-plus"></i>
@@ -25,14 +26,14 @@
                 <tbody>
                     @foreach( $Dids as $did )
                         <tr data-id="{{ $did->id }}">
-                            <td>{{ $did->id_empresa }}</td>
+                            <td>{{ $did->Empresas->nombre }}</td>
                             <td>{{ $did->tipo }}</td>
                             <td>{{ $did->prefijo }}</td>
                             <td>{{ $did->did }}</td>
                             <td>{{ $did->descripcion }}</td>
-                            <td>{{ $did->id_troncal_sansay }}</td>
+                            <td>{{ $did->Troncales->nombre }}</td>
                             <td>{{ $did->gateway }}</td>
-                            <td>{{ $did->fakedid }}</td>                           
+                            <td>{{ $did->fakedid }}</td>
                         </tr>
                     @endforeach
                 </tbody>

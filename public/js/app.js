@@ -871,42 +871,38 @@ $(function () {
     });
   });
   /**
-  * Evento para guardar el nuevo did
-  */
+   * Evento para guardar el nuevo did
+   */
 
   $(document).on('click', '.saveDid', function (event) {
     event.preventDefault();
-    var id_empresa = $("#id_empresa").val();
+    var Empresas_id = $("#id_empresa").val();
     var tipo = $("#tipo").val();
     var prefijo = $("#prefijo").val();
     var did = $("#did").val();
     var descripcion = $("#descripcion").val();
-    var id_troncal_sansay = $("#id_troncal_sansay").val();
+    var Troncales_id = $("#Troncales_id").val();
     var gateway = $("#gateway").val();
     var fakedid = $("#fakedid").val();
 
     var _token = $("input[name=_token]").val();
 
     var url = currentURL + '/did';
-    var arr = $('[name="cats[]"]:checked').map(function () {
-      return this.value;
-    }).get();
     $.post(url, {
-      id_empresa: id_empresa,
+      Empresas_id: Empresas_id,
       tipo: tipo,
       prefijo: prefijo,
       did: did,
       descripcion: descripcion,
-      id_troncal_sansay: id_troncal_sansay,
+      Troncales_id: Troncales_id,
       gateway: gateway,
       fakedid: fakedid,
-      arr: arr,
       _token: _token
     }, function (data, textStatus, xhr) {
       $('.viewResult').html(data);
       $('.viewCreate').slideUp();
       $('.viewIndex').slideDown();
-      $('.viewResult #tableDids').DataTable({
+      $('.viewResult #tableDid').DataTable({
         "lengthChange": true
       });
     });
@@ -920,8 +916,7 @@ $(function () {
     $(".viewIndex").slideUp();
     $(".viewCreate").slideDown();
     var id = $(this).data("id");
-    var url = currentURL + "/did/" + id + "/edit"; // alert(url);
-
+    var url = currentURL + "/did/" + id + "/edit";
     $.get(url, function (data, textStatus, jqXHR) {
       $(".viewCreate").html(data);
     });
@@ -943,12 +938,11 @@ $(function () {
     event.preventDefault(); // formdata es para down de IL
 
     var id_empresa = $("#id_empresa").val();
-    var id_did = $("#id_did").val();
     var tipo = $("#tipo").val();
     var prefijo = $("#prefijo").val();
     var did = $("#did").val();
     var descripcion = $("#descripcion").val();
-    var id_troncal_sansay = $("#id_troncal_sansay").val();
+    var Troncales_id = $("#Troncales_id").val();
     var gateway = $("#gateway").val();
     var fakedid = $("#fakedid").val();
 
@@ -966,7 +960,7 @@ $(function () {
         prefijo: prefijo,
         did: did,
         descripcion: descripcion,
-        id_troncal_sansay: id_troncal_sansay,
+        Troncales_id: Troncales_id,
         gateway: gateway,
         fakedid: fakedid,
         _token: _token,
@@ -985,7 +979,6 @@ $(function () {
   });
   /**
    * Evento para eliminar el did
-   * 
    */
 
   $(document).on('click', '.deleteDid', function (event) {
@@ -994,12 +987,14 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
+    var _method = 'DELETE';
     var url = currentURL + '/did/' + id_did;
     $.ajax({
       url: url,
-      type: 'DELETE',
+      type: 'POST',
       data: {
-        _token: _token
+        _token: _token,
+        _method: _method
       },
       success: function success(result) {
         $('.viewResult').html(result);
@@ -1008,6 +1003,18 @@ $(function () {
           "order": [[2, "asc"]]
         });
       }
+    });
+  });
+  /**
+   * Evento para mostrar las troncales en base a la empresa seleccionada
+   */
+
+  $(document).on('change', '#id_empresa', function (event) {
+    event.preventDefault();
+    var id_empresa = $(this).val();
+    var url = currentURL + '/troncales/' + id_empresa;
+    $.get(url, function (data, textStatus, xhr) {
+      $(".showTroncales").html(data);
     });
   });
 });
@@ -1777,6 +1784,7 @@ $(function () {
     event.preventDefault();
     var nombre = $("#nombre").val();
     var troncal_sansay = $("#troncal_sansay").val();
+    var id_empresa = $("#id_empresa").val();
 
     var _token = $("input[name=_token]").val();
 
@@ -1784,6 +1792,7 @@ $(function () {
     $.post(url, {
       nombre: nombre,
       troncal_sansay: troncal_sansay,
+      id_empresa: id_empresa,
       _token: _token
     }, function (data, textStatus, xhr) {
       $('.viewResult').html(data);
@@ -1823,6 +1832,8 @@ $(function () {
     event.preventDefault();
     var nombre = $("#nombre").val();
     var troncal_sansay = $("#troncal_sansay").val();
+    var id_empresa = $("#id_empresa").val();
+    var id_empresa_ant = $("#id_empresa_ant").val();
     var id = $("#id").val();
 
     var _token = $("input[name=_token]").val();
@@ -1835,6 +1846,8 @@ $(function () {
       data: {
         nombre: nombre,
         troncal_sansay: troncal_sansay,
+        id_empresa: id_empresa,
+        id_empresa_ant: id_empresa_ant,
         _token: _token,
         _method: _method
       },

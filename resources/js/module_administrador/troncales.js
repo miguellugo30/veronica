@@ -23,12 +23,14 @@ $(function() {
 
         let nombre = $("#nombre").val();
         let troncal_sansay = $("#troncal_sansay").val();
+        let id_empresa = $("#id_empresa").val();
         let _token = $("input[name=_token]").val();
         let url = currentURL + '/troncales';
 
         $.post(url, {
             nombre: nombre,
             troncal_sansay: troncal_sansay,
+            id_empresa: id_empresa,
             _token: _token
         }, function(data, textStatus, xhr) {
             $('.viewResult').html(data);
@@ -70,6 +72,8 @@ $(function() {
 
         let nombre = $("#nombre").val();
         let troncal_sansay = $("#troncal_sansay").val();
+        let id_empresa = $("#id_empresa").val();
+        let id_empresa_ant = $("#id_empresa_ant").val();
         let id = $("#id").val();
         let _token = $("input[name=_token]").val();
         let _method = "PUT";
@@ -81,6 +85,8 @@ $(function() {
             data: {
                 nombre: nombre,
                 troncal_sansay: troncal_sansay,
+                id_empresa: id_empresa,
+                id_empresa_ant: id_empresa_ant,
                 _token: _token,
                 _method: _method
             },
