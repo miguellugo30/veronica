@@ -6,11 +6,12 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 /*
-* Agregar el modelo de la tabla que debe usar nuestro modulo 
+* Agregar el modelo de la tabla que debe usar nuestro modulo
 */
 use Nimbus\Dids;
 // Agregar modelo Clientes para acceder a los datos
-use Nimbus\Clientes;
+use Nimbus\Empresas;
+use Nimbus\Troncales;
 
 class DidController extends Controller
 {
@@ -18,15 +19,15 @@ class DidController extends Controller
      * Display a listing of the resource.
      * @return Response
      */
-     
-    
+
+
     public function index()
     {
+        /**
+         * Recuperamos todos los did que esten activos
+         */
         $Dids = Dids::where('activo',1)->get();
-        //dd($Dids);
-        
-        // Esta es la ruta en donde esta vista y donde se va a enviar la respuesta del controlador
-       return view('administrador::dids.index', compact('Dids'));
+        return view('administrador::dids.index', compact('Dids'));
     }
 
     /**
@@ -36,12 +37,13 @@ class DidController extends Controller
     public function create()
     {
         /**
-         * Obtenemos todos los clientes ( Empresas )
+         * Obtenemos todos las Empresas
          * Crear tabla Empresas!
         */
-        $empresas = Clientes::all();
-        
-        return view('administrador::dids.create', compact('empresas'));
+        $empresas = Empresas::where('activo',1)->get();
+        $troncales = Troncales::where('activo',1)->get();
+
+        return view('administrador::dids.create', compact('empresas', 'troncales'));
     }
 
     /**
@@ -51,21 +53,14 @@ class DidController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        
-        $input = $request->all();
         /**
-         * Insertamos la informacion del formulario
+         * Insertamos la información del formulario
          */
-       
-        Dids::create($input);
-
-        $Dids = Dids::where('activo', 1)->get();
-
-        return view('administrador::dids.index', compact('Dids'));
-        
-        
-        
+        Dids::create( $request->all() );
+        /**
+         * Redirigimos a la ruta index
+         */
+        return redirect()->route('did.index');
     }
 
     /**
@@ -85,10 +80,20 @@ class DidController extends Controller
      */
     public function edit($id)
     {
+        /**
+         * Obtenemos la información del DID ha editar
+         */
         $Dids = Dids::find($id);
-        
-        //dd($Dids);
-        return view('administrador::dids.edit',compact('Dids'));
+        /**
+         * Obtenemos las empresas activas
+         */
+        $empresas = Empresas::where('activo',1)->get();
+        /**
+         * Obtenemos las troncales que estan vinculadas a la empresa vinculada al DID
+         */
+        $empresa = Empresas::findOrFail(  $Dids->Empresas->id );
+        $troncales = $empresa->troncales;
+        return view('administrador::dids.edit',compact('Dids', 'empresas', 'troncales'));
     }
 
     /**
@@ -100,24 +105,24 @@ class DidController extends Controller
     public function update(Request $request, $id)
     {
         //Obtener los datos del id_did que se envia
-        $Dids = Dids::find($id);     
- 
+        $Dids = Dids::find($id);
+
         //Asignar los datos del Request del form a las variables asociadas
-        $Dids -> id_empresa = $request -> id_empresa;
-        $Dids -> tipo = $request -> tipo;
-        $Dids -> prefijo = $request -> prefijo;
-        $Dids -> did = $request -> did;
-        $Dids -> descripcion = $request -> descripcion;
-        $Dids -> id_troncal_sansay = $request -> id_troncal_sansay;
-        $Dids -> gateway = $request -> gateway;
-        $Dids -> fakedid = $request -> fakedid;        
-       
+        $Dids->Empresas_id = $request->Empresas_id;
+        $Dids->tipo = $request->tipo;
+        $Dids->prefijo = $request->prefijo;
+        $Dids->did = $request->did;
+        $Dids->descripcion = $request->descripcion;
+        $Dids->Troncales_id = $request->Troncales_id;
+        $Dids->gateway = $request->gateway;
+        $Dids->fakedid = $request->fakedid;
+
         //Aplicar la funcion save y guardar los valor obtenidos
         $Dids -> save();
-         
-        $Dids = Dids::where('activo', 1)->get();
-        return view('administrador::dids.index', compact('Dids'));
-                
+        /**
+         * Redirigimos a la ruta index
+         */
+        return redirect()->route('did.index');
     }
 
     /**
@@ -128,8 +133,9 @@ class DidController extends Controller
     public function destroy($id)
     {
         Dids::where( 'id', $id )->update(['activo' => 0]);
-
-        $Dids = Dids::where('activo', 1)->get();
-        return view('administrador::dids.index', compact('Dids'));
+        /**
+         * Redirigimos a la ruta index
+         */
+        return redirect()->route('did.index');
     }
 }

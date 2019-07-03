@@ -165,6 +165,7 @@ $(function() {
 
         let id_categoria = $("#id_categoria").val();
         let url = currentURL + "/submenus/ordering/" + id_categoria;
+        console.log(id_categoria);
 
         $.get(url, id_categoria, function(data, textStatus, jqXHR) {
             $(".viewCreate").html(data);
@@ -177,8 +178,9 @@ $(function() {
     $(document).on('click', '.saveOrdeSubrMenu', function(event) {
         event.preventDefault();
 
-        var ordenElementos = $("#sortable").sortable("toArray").toString();
+        let ordenElementos = $("#sortable").sortable("toArray").toString();
         let _token = $("input[name=_token]").val();
+        let id_categoria = $("#id_categoria").val();
         let url = currentURL + "/submenus/updateOrdering";
 
         $.ajax({

@@ -138,7 +138,7 @@ class SubMenuscontroller extends Controller
          */
         $subCategorias = Sub_Categorias::where('id_categoria', $id )->where('activo', 1)->orderByRaw('prioridad ASC')->get();
 
-        return view('administrador::submenus.ordering', compact('subCategorias') );
+        return view('administrador::submenus.ordering', compact('subCategorias', "id") );
 
     }
 

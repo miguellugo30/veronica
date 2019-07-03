@@ -137,7 +137,6 @@ class UsuariosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //dd( $request );
         /**
          * Si el pass, viene vacio no lo actualizamos
          */

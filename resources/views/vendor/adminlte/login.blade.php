@@ -18,7 +18,12 @@
             <p class="login-box-msg">{{ trans('adminlte::adminlte.login_message') }}</p>
             <form action="{{ url(config('adminlte.login_url', 'login')) }}" method="post">
                 {!! csrf_field() !!}
-
+                {{ $errors->has('message') }}
+                @if ( $errors->getBag('message')->first() != '' )
+                    <div class="alert alert-danger" role="alert">
+                        {{ $errors->getBag('message')->first() }}
+                    </div>
+                @endif
                 <div class="form-group has-feedback {{ $errors->has('email') ? 'has-error' : '' }}">
                     <input type="email" name="email" class="form-control" value="{{ old('email') }}"
                            placeholder="{{ trans('adminlte::adminlte.email') }}">
@@ -40,13 +45,13 @@
                     @endif
                 </div>
                 <div class="row">
-                    <div class="col-xs-8">
+                    <!--div class="col-xs-8">
                         <div class="checkbox icheck">
                             <label>
                                 <input type="checkbox" name="remember"> {{ trans('adminlte::adminlte.remember_me') }}
                             </label>
                         </div>
-                    </div>
+                    </div-->
                     <!-- /.col -->
                     <div class="col-xs-4">
                         <button type="submit"
@@ -55,7 +60,7 @@
                     <!-- /.col -->
                 </div>
             </form>
-            <div class="auth-links">
+            <!--div class="auth-links">
                 <a href="{{ url(config('adminlte.password_reset_url', 'password/reset')) }}"
                    class="text-center"
                 >{{ trans('adminlte::adminlte.i_forgot_my_password') }}</a>
@@ -65,7 +70,7 @@
                        class="text-center"
                     >{{ trans('adminlte::adminlte.register_a_new_membership') }}</a>
                 @endif
-            </div>
+            </div-->
         </div>
         <!-- /.login-box-body -->
     </div><!-- /.login-box -->

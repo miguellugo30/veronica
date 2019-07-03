@@ -16,7 +16,6 @@ $(function() {
             $(".viewCreate").html(data);
         });
     });
-    
     /**
      * Evento para guardar el nuevo distribuidores
      */
@@ -121,7 +120,7 @@ $(function() {
     });
     /**
      * Evento para eliminar el distribuidores
-     * 
+     *
      */
     $(document).on('click', '.deleteDistribuidor', function(event) {
         event.preventDefault();
@@ -146,6 +145,7 @@ $(function() {
                 });
             }
         });
+        
     });
 
     //Actualiza la imagen header seleccionada en el input file

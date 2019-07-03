@@ -49,7 +49,7 @@
             <!-- Header Navbar -->
             <nav class="navbar navbar-static-top" role="navigation">
                 <!-- Sidebar toggle button-->
-               
+
             @endif
                 <!-- MENU DE CATEGORIAS -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="float:left">

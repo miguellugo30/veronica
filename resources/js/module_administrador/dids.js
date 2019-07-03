@@ -14,61 +14,45 @@ $(function() {
         $.get(url, function(data, textStatus, jqXHR) {
             $(".viewCreate").html(data);
         });
-    }); 
-      
-              
-      /**
-      * Evento para guardar el nuevo did
-      */
-            $(document).on('click', '.saveDid', function(event) {
-                event.preventDefault();
+    });
+    /**
+     * Evento para guardar el nuevo did
+     */
+    $(document).on('click', '.saveDid', function(event) {
+        event.preventDefault();
 
+        let Empresas_id = $("#id_empresa").val();
+        let tipo = $("#tipo").val();
+        let prefijo = $("#prefijo").val();
+        let did = $("#did").val();
+        let descripcion = $("#descripcion").val();
+        let Troncales_id = $("#Troncales_id").val();
+        let gateway = $('input:radio[name=gateway]:checked').val();
+        let fakedid = $('input:radio[name=fakedid]:checked').val();
+        let _token = $("input[name=_token]").val();
+        let url = currentURL + '/did';
 
-                let id_empresa = $("#id_empresa").val();
-                let tipo = $("#tipo").val();
-                let prefijo = $("#prefijo").val();
-                let did = $("#did").val();
-                let descripcion = $("#descripcion").val();
-                let id_troncal_sansay = $("#id_troncal_sansay").val();
-                let gateway = $("#gateway").val();
-                let fakedid = $("#fakedid").val();
-                
-                
-                let _token = $("input[name=_token]").val();
-                let url = currentURL + '/did';
-                let arr = $('[name="cats[]"]:checked').map(function() {
-                    return this.value;
-                }).get();
-
-                $.post(url, {
-                    id_empresa: id_empresa,
-                    tipo: tipo,
-                    prefijo: prefijo,
-                    did: did,
-                    descripcion: descripcion,
-                    
-                    id_troncal_sansay: id_troncal_sansay,
-                    gateway: gateway,
-                    fakedid: fakedid,
-                    
-                    arr: arr,
-                    _token: _token
-                }, function(data, textStatus, xhr) {
-                    $('.viewResult').html(data);
-                    $('.viewCreate').slideUp();
-                    $('.viewIndex').slideDown();
-                    $('.viewResult #tableDids').DataTable({
-                        "lengthChange": true
-                    });
-                });
-
+        $.post(url, {
+            Empresas_id: Empresas_id,
+            tipo: tipo,
+            prefijo: prefijo,
+            did: did,
+            descripcion: descripcion,
+            Troncales_id: Troncales_id,
+            gateway: gateway,
+            fakedid: fakedid,
+            _token: _token
+        }, function(data, textStatus, xhr) {
+            $('.viewResult').html(data);
+            $('.viewCreate').slideUp();
+            $('.viewIndex').slideDown();
+            $('.viewResult #tableDid').DataTable({
+                "lengthChange": true
             });
-    
-    
-    
-    
-    
-    
+        });
+
+    });
+
     /**
      * Evento para mostrar el formulario editar distribuidores
      */
@@ -80,9 +64,6 @@ $(function() {
 
         let id = $(this).data("id");
         let url = currentURL + "/did/" + id + "/edit";
-        
-       // alert(url);
-
         $.get(url, function(data, textStatus, jqXHR) {
             $(".viewCreate").html(data);
 
@@ -102,33 +83,32 @@ $(function() {
     $(document).on('click', '.updateDid', function(event) {
         event.preventDefault();
         // formdata es para down de IL
-              
-        let id_empresa = $("#id_empresa").val();        
+        let Empresas_id = $("#id_empresa").val();
         let id_did = $("#id_did").val();
         let tipo = $("#tipo").val();
         let prefijo = $("#prefijo").val();
         let did = $("#did").val();
         let descripcion = $("#descripcion").val();
-        let id_troncal_sansay = $("#id_troncal_sansay").val();
-        let gateway = $("#gateway").val();
-        let fakedid = $("#fakedid").val();
+        let Troncales_id = $("#Troncales_id").val();
+        let gateway = $('input:radio[name=gateway]:checked').val();
+        let fakedid = $('input:radio[name=fakedid]:checked').val();
         let _token = $("input[name=_token]").val();
         let _method = 'PUT';
         let url = currentURL + '/did/' + id_did;
-       
+
         $.ajax({
             url: url,
             type: 'POST',
             data: {
-               id_empresa: id_empresa,
-               id_did: id_did,
-               tipo: tipo,
-               prefijo: prefijo,
-               did: did,
-               descripcion: descripcion,                    
-               id_troncal_sansay: id_troncal_sansay,
-               gateway: gateway,
-               fakedid: fakedid,
+                Empresas_id: Empresas_id,
+                id_did: id_did,
+                tipo: tipo,
+                prefijo: prefijo,
+                did: did,
+                descripcion: descripcion,
+                Troncales_id: Troncales_id,
+                gateway: gateway,
+                fakedid: fakedid,
                 _token: _token,
                 _method: _method
             },
@@ -144,27 +124,24 @@ $(function() {
                 });
             }
         });
-        
-        
-        
-       
     });
     /**
      * Evento para eliminar el did
-     * 
      */
     $(document).on('click', '.deleteDid', function(event) {
         event.preventDefault();
 
         let id_did = $("#id_did").val();
         let _token = $("input[name=_token]").val();
+        let _method = 'DELETE';
         let url = currentURL + '/did/' + id_did;
 
         $.ajax({
             url: url,
-            type: 'DELETE',
+            type: 'POST',
             data: {
-                _token: _token
+                _token: _token,
+                _method: _method
             },
             success: function(result) {
                 $('.viewResult').html(result);
@@ -175,6 +152,18 @@ $(function() {
                     ]
                 });
             }
+        });
+    });
+    /**
+     * Evento para mostrar las troncales en base a la empresa seleccionada
+     */
+    $(document).on('change', '#id_empresa', function(event) {
+        event.preventDefault();
+        let id_empresa = $(this).val();
+        let url = currentURL + '/troncales/' + id_empresa;
+
+        $.get(url, function(data, textStatus, xhr) {
+            $(".showTroncales").html(data);
         });
     });
 });

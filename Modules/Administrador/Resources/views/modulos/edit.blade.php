@@ -15,10 +15,14 @@
             <input type="text" class="form-control" id="descripcionEdit" name="descripcionEdit" placeholder="Descripcion" value="{{ $modulo->descripcion }}">
         </div>
     </div>
-    <div class="col-md-12" style="text-align:center">
-        <button type="submit" class="btn btn-primary saveModulo"><i class="fas fa-save"></i> Guardar</button>
-        <button type="submit" class="btn btn-warning cancelModulo"><i class="fas fa-times"></i> Cancelar</button>
-        <button type="submit" class="btn btn-danger deleteModulo"><i class="fas fa-trash-alt"></i> Eliminar</button>
+    <div class="col-md-6"  style="float:none; margin:auto">
+        <div class="col-md-6" style="text-align:left">
+            <button type="submit" class="btn btn-warning cancelModulo"><i class="fas fa-times"></i> Cancelar</button>
+            <button type="submit" class="btn btn-danger deleteModulo"><i class="fas fa-trash-alt"></i> Eliminar</button>
+        </div>
+        <div class="col-md-6" style="text-align:right">
+            <button type="submit" class="btn btn-primary saveModulo"><i class="fas fa-save"></i> Guardar</button>
+        </div>
     </div>
     <br>
     <br>
