@@ -32,13 +32,20 @@ class Canales extends Model
     */
     public function Troncales()
     {
-       return $this->belongsTo('Nimbus\Troncales', 'Troncales_id', 'id');
+       return $this->belongsTo('Nimbus\Troncales', 'Troncales_id');
     }
     /**
     * Relacion muchos a uno con Distribuidores
     */
     public function Distribuidores()
     {
-       return $this->belongsTo('Nimbus\Cat_Distribuidor', 'Cat_Distribuidors_id', 'id');
+       return $this->belongsTo('Nimbus\Cat_Distribuidor', 'Cat_Distribuidor_id');
+    }
+    /**
+    * Relacion muchos a uno con Distribuidores
+    */
+    public function Empresas()
+    {
+       return $this->belongsTo('Nimbus\Empresas', 'Empresas_id');
     }
 }

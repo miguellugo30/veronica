@@ -5,10 +5,13 @@ namespace Modules\Administrador\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Nimbus\Troncales;
+use Nimbus\Canales;
+use Nimbus\Empresas;
 use Nimbus\Cat_Distribuidor;
+use Nimbus\Troncales;
+use Nimbus\Config_Empresas;
 
-class TroncalesController extends Controller
+class CanalesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +20,10 @@ class TroncalesController extends Controller
     public function index()
     {
         /**
-         * Recuperamos todos las troncales que esten activos
+         * Recuperamos todos los canales que esten activos
          */
-        $troncales = Troncales::where('activo',1)->get();
-        return view('administrador::troncales.index', compact('troncales'));
+        $canales = Canales::where('activo',1)->get();
+        return view('administrador::canales.index', compact('canales'));
     }
 
     /**
@@ -30,10 +33,10 @@ class TroncalesController extends Controller
     public function create()
     {
         /**
-         * Recuperamos todos las troncales que esten activos
+         * Recuperamos todos los distribuidores que esten activos
          */
         $distribuidores = Cat_Distribuidor::where('activo',1)->get();
-        return view('administrador::troncales.create', compact('distribuidores'));
+        return view('administrador::canales.create', compact('distribuidores') );
     }
 
     /**
@@ -43,15 +46,15 @@ class TroncalesController extends Controller
      */
     public function store(Request $request)
     {
-        /**
+       /**
          * Obtenemos todos los datos del formulario de alta y
          * los insertamos la informacion del formulario
          */
-        Troncales::create( $request->all() );
+        Canales::create( $request->all() );
         /**
          * Redirigimos a la ruta index
          */
-        return redirect()->route('troncales.index');
+        return redirect()->route('canales.index');
     }
 
     /**
@@ -61,10 +64,12 @@ class TroncalesController extends Controller
      */
     public function show($id)
     {
-        $empresas = Empresas::findOrFail($id);
-        $troncales = $empresas->troncales;
+        $distribuidor = Cat_Distribuidor::findOrFail($id);
 
-        return view('administrador::troncales.show', compact('troncales'));
+        $troncales = $distribuidor->Troncales;
+        $empresas = $distribuidor->Config_Empresas->all();
+
+        return view('administrador::canales.show', compact( 'troncales', 'empresas' ));
     }
 
     /**
@@ -75,15 +80,21 @@ class TroncalesController extends Controller
     public function edit($id)
     {
         /**
-         * Recuperamos todos las troncales que esten activos
+         * Recuperamos el canal ha editar
+         */
+        $canal = Canales::findOrFail($id);
+        /**
+         * Recuperamos todos los distribuidores que esten activos
          */
         $distribuidores = Cat_Distribuidor::where('activo',1)->get();
-        /**
-         * Obtenemos la informacion de la troncal a editar
-         */
-        $troncal = Troncales::findOrFail( $id );
 
-        return view('administrador::troncales.edit', compact('troncal', 'id', 'distribuidores') );
+        $distribuidor = Cat_Distribuidor::findOrFail( $canal->Cat_Distribuidor_id );
+
+        $troncales = $distribuidor->Troncales;
+        $empresas = $distribuidor->Config_Empresas->all();
+
+
+        return view('administrador::canales.edit', compact( 'canal', 'distribuidores', 'troncales', 'empresas'));
     }
 
     /**
@@ -97,16 +108,17 @@ class TroncalesController extends Controller
         /**
          * Actualizamos la troncal
          */
-        Troncales::where( 'id', $id )
+        Canales::where( 'id', $id )
                                 ->update([
-                                    'nombre' => $request->input('nombre'),
-                                    'ip' => $request->input('ip'),
+                                    'canal' => $request->input('canal'),
+                                    'Troncales_id' => $request->input('Troncales_id'),
                                     'Cat_Distribuidor_id' => $request->input('Cat_Distribuidor_id'),
+                                    'Empresas_id' => $request->input('Empresas_id'),
                                 ]);
         /**
          * Redirigimos a la ruta index
          */
-        return redirect()->route('troncales.index');
+        return redirect()->route('canales.index');
     }
 
     /**
@@ -116,16 +128,6 @@ class TroncalesController extends Controller
      */
     public function destroy($id)
     {
-        /**
-         * Actualizamos la trocal ha activo 0
-         */
-        Troncales::where( 'id', $id )
-                   ->update([
-                       'activo' => '0',
-                   ]);
-        /**
-         * Redirigimos a la ruta index
-         */
-        return redirect()->route('troncales.index');
+        //
     }
 }
