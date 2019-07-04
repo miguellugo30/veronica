@@ -25,7 +25,7 @@
 					</div>
 					<div class="form-group">
 						<label for="prefijo">Prefijo</label>
-						<input type="number" min="0" max="5" class="form-control" id="prefijo" placeholder="Prefijo">
+						<input type="number" min="0" maxlength="5" class="form-control" id="prefijo" placeholder="Prefijo" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"/>
 					</div>
 					<div class="form-group">
 						<label for="image_header">Imagen header<br><img src="" id='image_input_header' width="100px"/></label>

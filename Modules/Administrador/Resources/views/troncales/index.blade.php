@@ -12,7 +12,8 @@
                 <thead>
                     <tr>
                         <th>Nombre</th>
-                        <th>IP</th>
+                        <th>IP MEDIA</th>
+                        <th>IP HOST</th>
                         <th>Distribuidor</th>
                     </tr>
                 </thead>
@@ -20,7 +21,8 @@
                     @foreach ($troncales as $troncal)
                         <tr data-id="{{ $troncal->id }}">
                             <td>{{ $troncal->nombre }}</td>
-                            <td>{{ $troncal->ip }}</td>
+                            <td>{{ $troncal->ip_media }}</td>
+                            <td>{{ $troncal->ip_host }}</td>
                             <td>{{ $troncal->Cat_Distribuidor->servicio }}</td>
                         </tr>
                     @endforeach

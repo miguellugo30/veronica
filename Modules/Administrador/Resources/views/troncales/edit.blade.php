@@ -20,8 +20,12 @@
                 @csrf
             </div>
             <div class="form-group">
-                <label for="ip">IP</label>
-                <input type="text" class="form-control" id="ip" placeholder="IP" value="{{ $troncal->ip }}">
+                <label for="ip_media">IP Media</label>
+                <input type="text" class="form-control" id="ip_media" placeholder="IP Media" value="{{ $troncal->ip_media }}">
+            </div>
+            <div class="form-group">
+                <label for="ip_host">IP Host</label>
+                <input type="text" class="form-control" id="ip_host" placeholder="IP Host" value="{{ $troncal->ip_host }}">
             </div>
         </div>
         <div class="col-md-12">

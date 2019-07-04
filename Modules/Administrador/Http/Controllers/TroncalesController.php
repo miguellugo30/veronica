@@ -20,6 +20,7 @@ class TroncalesController extends Controller
          * Recuperamos todos las troncales que esten activos
          */
         $troncales = Troncales::where('activo',1)->get();
+        
         return view('administrador::troncales.index', compact('troncales'));
     }
 
@@ -104,7 +105,8 @@ class TroncalesController extends Controller
         Troncales::where( 'id', $id )
                                 ->update([
                                     'nombre' => $request->input('nombre'),
-                                    'ip' => $request->input('ip'),
+                                    'ip_media' => $request->input('ip_media'),
+                                    'ip_host' => $request->input('ip_host'),
                                     'Cat_Distribuidor_id' => $request->input('Cat_Distribuidor_id'),
                                 ]);
 

@@ -22,14 +22,16 @@ $(function() {
         event.preventDefault();
 
         let nombre = $("#nombre").val();
-        let ip = $("#ip").val();
+        let ip_media = $("#ip_media").val();
+        let ip_host = $("#ip_host").val();
         let Cat_Distribuidor_id = $("#distribuidores").val();
         let _token = $("input[name=_token]").val();
         let url = currentURL + '/troncales';
 
         $.post(url, {
             nombre: nombre,
-            ip: ip,
+            ip_media: ip_media,
+            ip_host: ip_host,
             Cat_Distribuidor_id: Cat_Distribuidor_id,
             _token: _token
         }, function(data, textStatus, xhr) {
@@ -71,7 +73,8 @@ $(function() {
         event.preventDefault();
 
         let nombre = $("#nombre").val();
-        let ip = $("#ip").val();
+        let ip_media = $("#ip_media").val();
+        let ip_host = $("#ip_host").val();
         let Cat_Distribuidor_id = $("#distribuidores").val();
         let id = $("#id").val();
         let _token = $("input[name=_token]").val();
@@ -83,7 +86,8 @@ $(function() {
             type: 'POST',
             data: {
                 nombre: nombre,
-                ip: ip,
+                ip_media: ip_media,
+                ip_host : ip_host,
                 Cat_Distribuidor_id: Cat_Distribuidor_id,
                 _token: _token,
                 _method: _method

@@ -1802,7 +1802,8 @@ $(function () {
   $(document).on('click', '.saveTroncal', function (event) {
     event.preventDefault();
     var nombre = $("#nombre").val();
-    var ip = $("#ip").val();
+    var ip_media = $("#ip_media").val();
+    var ip_host = $("#ip_host").val();
     var Cat_Distribuidor_id = $("#distribuidores").val();
 
     var _token = $("input[name=_token]").val();
@@ -1810,7 +1811,8 @@ $(function () {
     var url = currentURL + '/troncales';
     $.post(url, {
       nombre: nombre,
-      ip: ip,
+      ip_media: ip_media,
+      ip_host: ip_host,
       Cat_Distribuidor_id: Cat_Distribuidor_id,
       _token: _token
     }, function (data, textStatus, xhr) {
@@ -1850,7 +1852,8 @@ $(function () {
   $(document).on('click', '.updateTrocal', function (event) {
     event.preventDefault();
     var nombre = $("#nombre").val();
-    var ip = $("#ip").val();
+    var ip_media = $("#ip_media").val();
+    var ip_host = $("#ip_host").val();
     var Cat_Distribuidor_id = $("#distribuidores").val();
     var id = $("#id").val();
 
@@ -1863,7 +1866,8 @@ $(function () {
       type: 'POST',
       data: {
         nombre: nombre,
-        ip: ip,
+        ip_media: ip_media,
+        ip_host: ip_host,
         Cat_Distribuidor_id: Cat_Distribuidor_id,
         _token: _token,
         _method: _method
