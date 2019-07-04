@@ -11,7 +11,8 @@ use Illuminate\Routing\Controller;
 use Nimbus\Dids;
 // Agregar modelo Clientes para acceder a los datos
 use Nimbus\Empresas;
-use Nimbus\Troncales;
+use Nimbus\Canales;
+use Nimbus\Config_Empresas;
 
 class DidController extends Controller
 {
@@ -41,9 +42,10 @@ class DidController extends Controller
          * Crear tabla Empresas!
         */
         $empresas = Empresas::where('activo',1)->get();
-        $troncales = Troncales::where('activo',1)->get();
+        $canales = Canales::where('activo',1)->get();
+        $distribuidor = Config_Empresas::where('Cat_Distribuidor_id',11)->where($empresas->id)->get();
 
-        return view('administrador::dids.create', compact('empresas', 'troncales'));
+        return view('administrador::dids.create', compact('empresas', 'canales','distribuidor'));
     }
 
     /**
@@ -92,8 +94,8 @@ class DidController extends Controller
          * Obtenemos las troncales que estan vinculadas a la empresa vinculada al DID
          */
         $empresa = Empresas::findOrFail(  $Dids->Empresas->id );
-        $troncales = $empresa->troncales;
-        return view('administrador::dids.edit',compact('Dids', 'empresas', 'troncales'));
+        $canales = $empresa->canales;
+        return view('administrador::dids.edit',compact('Dids', 'empresas', 'canales'));
     }
 
     /**
@@ -113,7 +115,7 @@ class DidController extends Controller
         $Dids->prefijo = $request->prefijo;
         $Dids->did = $request->did;
         $Dids->descripcion = $request->descripcion;
-        $Dids->Troncales_id = $request->Troncales_id;
+        $Dids->Canales_id = $request->id_canal;
         $Dids->gateway = $request->gateway;
         $Dids->fakedid = $request->fakedid;
 

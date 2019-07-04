@@ -14,7 +14,7 @@ class Dids extends Model
      * Campos que pueden ser modificados
      */
    protected $fillable = [
-        'tipo', 'prefijo', 'did', 'descripcion','gateway','fakedid', 'Troncales_id', 'Empresas_id'
+        'prefijo', 'did', 'numero_real' , 'referencia','gateway','fakedid', 'Canales_id', 'Empresas_id'
     ];
     /**
      * Nombre de la tabla

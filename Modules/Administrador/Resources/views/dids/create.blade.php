@@ -16,34 +16,49 @@
         <div class="form-group">
             <!-- Esta variable genera un token Laravel se debe colocar en el form -->
             @csrf
-            <label for="tipo">Tipo</label>
-            <select name="tipo" id="tipo" class="form-control">
-                <option value="">Selecciona un tipo</option>
-                <option value="1" selected>Did</option>
-                <option value="2">Analogo</option>
-            </select>
-        </div>
-        <div class="form-group">
             <label for="prefijo">Prefijo</label>
-            <input type="text" class="form-control" id="prefijo" placeholder="Prefijo"/>
+            <input type="number" class="form-control" id="prefijo" placeholder="Prefijo" min="0" value="20"/>
         </div>
         <div class="form-group">
             <label for="did">Did</label>
-            <input type="text" class="form-control" id="did" placeholder="Did"/>
+            <div class="row">
+                <div class="col-xs-3">
+                    <input type="number" class="form-control" id="did" min="0" placeholder="Rango did inicio"/>
+                </div>
+                <div class="col-xs-1">
+                    <i class="fas fa-minus"></i>
+                </div>
+                <div class="col-xs-3">
+                    <input type="number" class="form-control" id="did" min="0" placeholder="Rango did fin"/>
+                </div>
+                <div class="col-xs-3">
+                    <button type="button" class="btn btn-sm btn-success glyphicon glyphicon-plus">
+                </div>
+            </div>
         </div>
         <div class="form-group">
-            <label for="descripcion">Descripcion</label>
-            <input type="text" class="form-control" id="descripcion" placeholder="Descripcion"/>
+            <label for="did">Canal</label>
+            <select name="id_canal" id="id_canal" class="form-control">
+                <option value="">Selecciona un canal</option>
+                @foreach( $canales as $canal )
+                    <option value="{{ $canal->id }}">{{ $canal->canal }}</option>
+                @endforeach
+            </select>
         </div>
-        <div class="form-group showTroncales">
-
+        <div class="form-group">
+            <label for="referencia">Referencia</label>
+            <input type="text" class="form-control" id="referencia" placeholder="Referencia"/>
+        </div>
+        <div class="form-group">
+            <label for="referencia">Numero Real</label>
+            <input type="text" class="form-control" id="numero_real" placeholder="Numero Real"/>
         </div>
         <div class="form-group">
             <label for="gateway">Gateway</label>
             <br>
             <br>
             <label class="radio-inline">
-                <input type="radio" name="gateway" id="gateway" value="1"> Habilitado
+                <input type="radio" name="gateway" id="gateway" value=""> Habilitado
             </label>
             <label class="radio-inline">
                 <input type="radio" name="gateway" id="gateway" value="0" checked> Deshabilitado
