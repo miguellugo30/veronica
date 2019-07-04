@@ -59,35 +59,48 @@ class DistribuidoresController extends Controller
         $img_default = "c3ntro.jpeg";
 
         /**
-         * Validar que el campo file_input_header tenga algun valor, para poder asignarle nombre a la imagen header
+         * Validar que el campo file_input_header tenga algun valor, para poder asignarle nombre a img_header
+         * de lo contrario se utilizara el nombre de la imagen por defecto.
          */        
-        if( $request->file('file_input_header') != NULL){
+        if($request->file('file_input_header') != NULL){
             $file = $request->file('file_input_header');
-            $nombre = $file->getClientOriginalName();
-            $distribuidor -> img_header = $nombre;
+            $nombre_img1 = $file->getClientOriginalName();
+            $distribuidor -> img_header = $nombre_img1;
 
         }else{
-            $nombre = $img_default;
+            $nombre_img1 = $img_default;
+            $file = $img_default;
         }
 
-        if(  $request->file('file_input_pie') != NULL){
+        /**
+         *Validar que el campo file_input_pie tenga algun valor, para poder asignarle nombre a img_pie
+         * de lo contrario se utilizara el nombre de la imagen por defecto.
+         */
+        if($request->file('file_input_pie') != NULL){
             $file2 = $request->file('file_input_pie');
-            $nombre2 = $file2->getClientOriginalName();
-            $distribuidor -> img_pie = $nombre2;
+            $nombre_img2 = $file2->getClientOriginalName();
+            $distribuidor -> img_pie = $nombre_img2;
         }else{
-            $nombre2 = $img_default;
+            $nombre_img2 = $img_default;
+            $file2 = $img_default;
         }
-       
+
+        /**
+         * Se guarda el nuevo registro
+         */       
         $distribuidor -> save();  
         
-        
+        /**
+         * Se arma la ruta en donde se guardaran las imagenes 
+         */
         $directorio_imagenes = "/dist/".$distribuidor -> id;
-        /*
+        
+        
         if(!File::exists($directorio_imagenes)){
             Storage::makeDirectory($directorio_imagenes);
-        }*/
-        Storage::disk('public') -> put($directorio_imagenes."/".$nombre,($file) ? File::get($file) : $nombre);
-        Storage::disk('public') -> put($directorio_imagenes."/".$nombre2,($file2) ? File::get($file2) : $nombre2);
+        }
+        Storage::disk('public') -> put($directorio_imagenes."/".$nombre_img1,($file) ? File::get($file) : $nombre_img1);
+        Storage::disk('public') -> put($directorio_imagenes."/".$nombre_img2,($file2) ? File::get($file2) : $nombre_img2);
         return redirect()->route('distribuidor.index');
     }
 

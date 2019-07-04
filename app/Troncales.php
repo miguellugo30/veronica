@@ -14,7 +14,7 @@ class Troncales extends Model
      * Campos que se usaran en el proceso de la vista
      */
     protected $fillable = [
-        'nombre', 'ip', 'Cat_Distribuidor_id',
+        'nombre', 'ip_media', 'ip_host' , 'Cat_Distribuidor_id',
     ];
     /**
      * Nombre de la tabla

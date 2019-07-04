@@ -27,7 +27,7 @@
 				</div>
 				<div class="form-group">
 					<label for="prefijo">Prefijo</label>
-					<input type="number" min="0" max="5" class="form-control" id="prefijo" value="{{$distribuidor->prefijo}}" placeholder="Prefijo">
+					<input type="number" min="0" maxlength="5" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" class="form-control" id="prefijo" value="{{$distribuidor->prefijo}}" placeholder="Prefijo"/>
 				</div>
 				<div class="form-group row">
 					<label for="image_header" class="col-md-2 col-form-label text-md-right">Imagen<br>

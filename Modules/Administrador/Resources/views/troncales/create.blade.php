@@ -19,8 +19,12 @@
             @csrf
         </div>
         <div class="form-group">
-            <label for="ip">IP</label>
-            <input type="text" class="form-control" id="ip" placeholder="IP">
+            <label for="ip_media">IP Media</label>
+            <input type="text" class="form-control" id="ip_media" placeholder="IP Media">
+        </div>
+        <div class="form-group">
+            <label for="ip_host">IP Host</label>
+            <input type="text" class="form-control" id="ip_host" placeholder="IP Host">
         </div>
     </div>
     <div class="col-md-12">
