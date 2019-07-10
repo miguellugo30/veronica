@@ -33,7 +33,7 @@
                 <input  value="{{$Dids->did}}" type="text" class="form-control" id="did" placeholder="Did"/>
             </div>
             <div class="form-group">
-                <label for="descripcion">Descripcion</label>
+                <label for="descripcion">Descripción</label>
                 <input  value="{{$Dids->descripcion}}" type="text" class="form-control" id="descripcion" placeholder="Descripcion"/>
             </div>
             <div class="form-group showTroncales">

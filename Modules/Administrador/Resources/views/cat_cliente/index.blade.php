@@ -16,7 +16,7 @@
                 <thead>
                     <tr>
                         <th>Nombre</th>
-                        <th>Descripcion</th>
+                        <th>Descripción</th>
                         <th>Marcar</th>
                         <th>Mostrar Agente</th>
                         <th>Parametrizar</th>

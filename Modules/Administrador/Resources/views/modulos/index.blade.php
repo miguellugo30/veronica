@@ -2,7 +2,7 @@
     <fieldset >
         <legend>
             <i class="fas fa-th"></i>
-            Modulos
+            Módulos
             <button type="button" class="btn btn-primary btn-xs newModule" style="float: right;margin-left: 5px;">
                 <i class="fas fa-plus"></i>
                 Nuevo modulo
@@ -16,7 +16,7 @@
                 <thead>
                     <tr>
                         <th>Nombre</th>
-                        <th>Descripcion</th>
+                        <th>Descripción</th>
                         <th>Prioridad</th>
                     </tr>
                 </thead>

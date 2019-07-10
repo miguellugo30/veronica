@@ -1,7 +1,7 @@
 <fieldset>
         <legend>
             <i class="fas fa-align-justify"></i>
-            Nuevo Sub Menu
+            Nuevo Sub Menú
         </legend>
         <div class="col-md-6" style="float:none; margin:auto">
             <div class="form-group">
@@ -10,7 +10,7 @@
                 @csrf
             </div>
             <div class="form-group">
-                <label for="email">Descripcion</label>
+                <label for="email">Descripción</label>
                 <input type="text" class="form-control" id="descripcion" placeholder="Descripcion">
             </div>
             <div class="form-group">

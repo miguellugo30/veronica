@@ -30,8 +30,15 @@ class Config_Empresas extends Model
     /**
     * Relacion uno a uno con Cat_Distribuidor
     */
-    public function Cat_Distribuidor()
+    public function Distribuidores()
     {
-        return $this->belongsTo('Nimbus\Cat_Distribuidor', 'Cat_Distribuidor_id');
+        return $this->belongsTo('Nimbus\Cat_Distribuidor', 'Cat_Distribuidor_id', 'id');
+    }
+    /**
+     * Relacion uno a uno con Base de Datos
+     */
+    public function BaseDatos()
+    {
+        return $this->belongsTo('Nimbus\BaseDatos', 'Cat_Base_Datos');
     }
 }

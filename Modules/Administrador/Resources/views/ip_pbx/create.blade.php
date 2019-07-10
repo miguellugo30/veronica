@@ -6,6 +6,15 @@
     <div class="col-md-6" style="float:none; margin:auto">
         <div class="col-md-6">
             <div class="form-group">
+                <label for="basedatos">Base de datos</label>
+                <select name="basedatos" id="basedatos" class="form-control">
+                    <option value="">Selecciona una base de datos</option>
+                    @foreach( $baseDatos as $baseDato )
+                    <option value="{{ $baseDato->id }}">{{ $baseDato->nombre }} || {{ $baseDato->ip }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group">
                 <label for="media_server">Media Server</label>
                 <input type="text" class="form-control" id="media_server" placeholder="Media Server">
                 @csrf

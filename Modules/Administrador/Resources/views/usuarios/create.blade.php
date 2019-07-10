@@ -7,7 +7,7 @@
 		<fieldset>
 			<legend>
 				<i class="fas fa-user"></i>
-				Informacion usuario
+				Información usuario
 			</legend>
 			<div class="form-group">
 				<label for="name">Nombre</label>

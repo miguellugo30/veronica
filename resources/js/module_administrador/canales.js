@@ -122,7 +122,7 @@ $(function() {
     /**
      * Evento para eliminar el modulo
      */
-    $(document).on('click', '.deleteTroncal', function(event) {
+    $(document).on('click', '.deleteCanal', function(event) {
         event.preventDefault();
 
         let id = $("#id").val();

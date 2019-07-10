@@ -1,13 +1,13 @@
 <fieldset>
 	<legend>
 		<i class="fas fa-truck"></i>
-		Edici&oacute;n distribuidor
+		Editar distribuidor
 	</legend>
 	<div class="col-md-6" style="float:none; margin:auto">
 		<fieldset>
 			<legend>
 				<i class="fas fa-truck"></i>
-				Informaci&oacute;n distribuidor
+				Información distribuidor
 			</legend>
 			<form enctype="multipart/form-data" id="editardistribuidores" method="post">
 				<div class="form-group">

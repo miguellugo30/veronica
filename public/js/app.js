@@ -255,7 +255,7 @@ $(function () {
    * Evento para eliminar el modulo
    */
 
-  $(document).on('click', '.deleteTroncal', function (event) {
+  $(document).on('click', '.deleteCanal', function (event) {
     event.preventDefault();
     var id = $("#id").val();
 
@@ -338,6 +338,142 @@ $(function () {
       }
     }
   }
+});
+
+/***/ }),
+
+/***/ "./resources/js/module_administrador/cat_base_datos.js":
+/*!*************************************************************!*\
+  !*** ./resources/js/module_administrador/cat_base_datos.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  var currentURL = window.location.href;
+  /**
+   * Evento para mostrar el formulario de crear un nuevo modulo
+   */
+
+  $(document).on("click", ".newDataBase", function (e) {
+    e.preventDefault();
+    $(".viewIndex").slideUp();
+    $(".viewCreate").slideDown();
+    var url = currentURL + '/basedatos/create';
+    $.get(url, function (data, textStatus, jqXHR) {
+      $(".viewCreate").html(data);
+    });
+  });
+  /**
+   * Evento para guardar el nuevo modulo
+   */
+
+  $(document).on('click', '.saveBaseDatos', function (event) {
+    event.preventDefault();
+    var nombre = $("#nombre").val();
+    var ubicacion = $("#ubicacion").val();
+    var ip = $("#ip").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var url = currentURL + '/basedatos';
+    $.post(url, {
+      nombre: nombre,
+      ubicacion: ubicacion,
+      ip: ip,
+      _token: _token
+    }, function (data, textStatus, xhr) {
+      $('.viewResult').html(data);
+      $('.viewIndex #tableBaseDatos').DataTable({
+        "lengthChange": true
+      });
+    });
+  });
+  /**
+   * Evento para mostrar el formulario editar modulo
+   */
+
+  $(document).on('dblclick', '#tableBaseDatos tbody tr', function (event) {
+    event.preventDefault();
+    $(".viewIndex").slideUp();
+    $(".viewCreate").slideDown();
+    var id = $(this).data("id");
+    var url = currentURL + "/basedatos/" + id + "/edit";
+    $.get(url, function (data, textStatus, jqXHR) {
+      $(".viewCreate").html(data);
+    });
+  });
+  /**
+   * Evento para cancelar la creacion/edicion del modulo
+   */
+
+  $(document).on("click", ".cancelBaseDatos", function (e) {
+    $(".viewIndex").slideDown();
+    $(".viewCreate").slideUp();
+    $(".viewCreate").html('');
+  });
+  /**
+   * Evento para editar el modulo
+   */
+
+  $(document).on('click', '.updateBaseDatos', function (event) {
+    event.preventDefault();
+    var nombre = $("#nombre").val();
+    var ubicacion = $("#ubicacion").val();
+    var ip = $("#ip").val();
+    var id = $("#id").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var _method = "PUT";
+    var url = currentURL + '/basedatos/' + id;
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {
+        nombre: nombre,
+        ubicacion: ubicacion,
+        ip: ip,
+        _token: _token,
+        _method: _method
+      },
+      success: function success(result) {
+        $('.viewResult').html(result);
+        $('.viewCreate').slideUp();
+        $('.viewIndex #tableBaseDatos').DataTable({
+          "lengthChange": true
+        });
+      }
+    });
+  });
+  /**
+   * Evento para eliminar el modulo
+   */
+
+  $(document).on('click', '.deleteBaseDatos', function (event) {
+    event.preventDefault();
+    var id = $("#id").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var _method = "DELETE";
+    var url = currentURL + '/basedatos/' + id;
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {
+        _token: _token,
+        _method: _method
+      },
+      success: function success(result) {
+        $('.viewResult').html(result);
+        $('.viewCreate').slideUp();
+        $('.viewIndex #tableBaseDatos').DataTable({
+          "lengthChange": true
+        });
+      }
+    });
+  });
 });
 
 /***/ }),
@@ -821,6 +957,7 @@ $(function () {
     event.preventDefault();
     var media_server = $("#media_server").val();
     var ip_pbx = $("#ip_pbx").val();
+    var Cat_Base_Datos_id = $("#basedatos").val();
     var arr = $('[name="nas[]"]:checked').map(function () {
       return this.value;
     }).get();
@@ -830,6 +967,7 @@ $(function () {
     var url = currentURL + '/cat_ip_pbx';
     $.post(url, {
       media_server: media_server,
+      Cat_Base_Datos_id: Cat_Base_Datos_id,
       ip_pbx: ip_pbx,
       arr: arr,
       _token: _token
@@ -871,6 +1009,7 @@ $(function () {
     event.preventDefault();
     var media_server = $("#media_server").val();
     var ip_pbx = $("#ip_pbx").val();
+    var Cat_Base_Datos_id = $("#basedatos").val();
     var arr = $('[name="nas[]"]:checked').map(function () {
       return this.value;
     }).get();
@@ -886,6 +1025,7 @@ $(function () {
       data: {
         media_server: media_server,
         ip_pbx: ip_pbx,
+        Cat_Base_Datos_id: Cat_Base_Datos_id,
         arr: arr,
         id: id,
         _token: _token,
@@ -1396,6 +1536,274 @@ $(function () {
   $(document).on('change', '#file_input_pie', function (e) {
     var TmpPath_pie = URL.createObjectURL(e.target.files[0]);
     $('#image_input_pie').attr('src', TmpPath_pie);
+  });
+});
+
+/***/ }),
+
+/***/ "./resources/js/module_administrador/empresas.js":
+/*!*******************************************************!*\
+  !*** ./resources/js/module_administrador/empresas.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  var currentURL = window.location.href;
+  /**
+   * Evento para mostrar el formulario de crear un nuevo modulo
+   */
+
+  $(document).on("click", ".newEmpresa", function (e) {
+    e.preventDefault();
+    $(".viewIndex").slideUp();
+    $(".viewCreate").slideDown();
+    var url = currentURL + '/empresas/create';
+    $.get(url, function (data, textStatus, jqXHR) {
+      $(".viewCreate").html(data);
+    });
+  });
+  /**
+   * Evento para guardar la nueva empresa
+   */
+
+  $(document).on('click', '.saveEmpresa', function (event) {
+    event.preventDefault();
+    var nombre = $("#nombre").val();
+    var contacto_cliente = $("#contacto_cliente").val();
+    var direccion = $("#direccion").val();
+    var ciudad = $("#ciudad").val();
+    var estado = $("#estado").val();
+    var pais = $("#pais").val();
+    var telefono = $("#telefono").val();
+    var movil = $("#movil").val();
+    var correo = $("#correo").val();
+    var action = $("#action").val();
+    var Cat_Distribuidor_id = $("#distribuidores_empresa").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var url = currentURL + '/empresas';
+    $.post(url, {
+      nombre: nombre,
+      contacto_cliente: contacto_cliente,
+      direccion: direccion,
+      ciudad: ciudad,
+      estado: estado,
+      pais: pais,
+      telefono: telefono,
+      movil: movil,
+      correo: correo,
+      Cat_Distribuidor_id: Cat_Distribuidor_id,
+      action: action,
+      _token: _token
+    }, function (data, textStatus, xhr) {
+      $('.viewResult').html(data);
+      $('.viewIndex #tableEmpresas').DataTable({
+        "lengthChange": true
+      });
+    });
+  });
+  /**
+   * Evento para guardar la informacion de infraestructura
+   */
+
+  $(document).on('click', '.saveEmpresaInfra', function (event) {
+    event.preventDefault();
+    var dominio = $("#dominio").val();
+    var id_empresa = $("#id_empresa").val();
+    var Cat_Distribuidor_id = $("#Cat_Distribuidor_id").val();
+    var action = $("#action").val();
+    var base_datos_empresa = $("#base_datos_empresa").val();
+    var media_server_empresas = $("#media_server_empresas").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var url = currentURL + '/empresas';
+    $.post(url, {
+      dominio: dominio,
+      id_empresa: id_empresa,
+      Cat_Distribuidor_id: Cat_Distribuidor_id,
+      action: action,
+      base_datos_empresa: base_datos_empresa,
+      media_server_empresas: media_server_empresas,
+      _token: _token
+    }, function (data, textStatus, xhr) {
+      $('.viewResult').html(data);
+      $('.viewIndex #tableEmpresas').DataTable({
+        "lengthChange": true
+      });
+    });
+  });
+  /**
+   * Evento para guardar la informacion de modulos
+   */
+
+  $(document).on('click', '.saveEmpresaModulos', function (event) {
+    event.preventDefault();
+    var id_empresa = $("#id_empresa").val();
+    var action = $("#action").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var arr = $('[name="modulos[]"]:checked').map(function () {
+      return this.value;
+    }).get();
+    var url = currentURL + '/empresas';
+    $.post(url, {
+      id_empresa: id_empresa,
+      arr: arr,
+      action: action,
+      _token: _token
+    }, function (data, textStatus, xhr) {
+      $('.viewResult').html(data);
+      $('.viewIndex #tableEmpresas').DataTable({
+        "lengthChange": true
+      });
+    });
+  });
+  /**
+   * Evento para mostrar el formulario editar modulo
+   */
+
+  $(document).on('dblclick', '#tableEmpresas tbody tr', function (event) {
+    event.preventDefault();
+    $(".viewIndex").slideUp();
+    $(".viewCreate").slideDown();
+    var id = $(this).data("id");
+    var url = currentURL + "/empresas/" + id + "/edit";
+    $.get(url, function (data, textStatus, jqXHR) {
+      $(".viewCreate").html(data);
+    });
+  });
+  /**
+   * Evento para cancelar la creacion/edicion del modulo
+   */
+
+  $(document).on("click", ".cancelEmpresa", function (e) {
+    $(".viewIndex").slideDown();
+    $(".viewCreate").slideUp();
+    $(".viewCreate").html('');
+  });
+  /**
+   * Evento para editar el modulo
+   */
+
+  $(document).on('click', '.updateCanal', function (event) {
+    event.preventDefault();
+    var Cat_Distribuidor_id = $("#distribuidores_canal").val();
+    var Empresas_id = $("#Empresas_id_canal").val();
+    var Troncales_id = $("#Troncales_id_canal").val();
+    var id = $("#id").val();
+    /**
+     * Valores para armar el canal
+     */
+
+    var canal_troncal = $("#canal_troncal").val();
+    var canal_prefijo = $("#canal_prefijo").val();
+    var canal_empresa = $("#canal_empresa").val();
+    var canal_tipo = $("#canal_tipo").val();
+    var canal = "SIP/" + canal_troncal + "/" + canal_prefijo + canal_empresa + canal_tipo;
+
+    var _token = $("input[name=_token]").val();
+
+    var _method = "PUT";
+    var url = currentURL + '/empresas/' + id;
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {
+        Empresas_id: Empresas_id,
+        Troncales_id: Troncales_id,
+        Cat_Distribuidor_id: Cat_Distribuidor_id,
+        canal: canal,
+        _token: _token,
+        _method: _method
+      },
+      success: function success(result) {
+        $('.viewResult').html(result);
+        $('.viewCreate').slideUp();
+        $('.viewIndex #tableEmpresas').DataTable({
+          "lengthChange": true
+        });
+      }
+    });
+  });
+  /**
+   * Evento para eliminar el modulo
+   */
+
+  $(document).on('click', '.deleteCanal', function (event) {
+    event.preventDefault();
+    var id = $("#id").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var _method = "DELETE";
+    var url = currentURL + '/empresas/' + id;
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {
+        _token: _token,
+        _method: _method
+      },
+      success: function success(result) {
+        $('.viewResult').html(result);
+        $('.viewCreate').slideUp();
+        $('.viewIndex #tableEmpresas').DataTable({
+          "lengthChange": true
+        });
+      }
+    });
+  });
+  /**
+   * Evento que obtiene el distribuidor y
+   */
+
+  $(document).on('change', '#distribuidores_empresa', function (event) {
+    var dist = $(this).val();
+
+    if (dist == 11) {
+      dominio = ".nimbuscca.mx";
+    } else {
+      dominio = ".nimbuscc.mx";
+    }
+
+    $('#basic-addon2').html(dominio);
+  });
+  $(document).on('keyup', '#nombre', function (event) {
+    var nombre_dominio = $(this).val();
+    $("#dominio").val(nombre_dominio.replace(" ", "_"));
+  });
+  $(document).on('click', '.modulosEmpresa', function (event) {
+    var id = $(this).val();
+
+    if ($(this).is(':checked')) {
+      if (id == 1) {
+        $('#agentes_entrada').removeAttr('disabled');
+      } else if (id == 2) {
+        $('#agentes_salida').removeAttr('disabled');
+      } else if (id == 7) {
+        $('#licencias_ivr_inteligente').removeAttr('disabled');
+      } else if (id == 8) {
+        $('#canal_generador_encuestas').removeAttr('disabled');
+      } else if (id == 10) {
+        $('#canal_mensajes_voz').removeAttr('disabled');
+      }
+    } else {
+      if (id == 1) {
+        $('#agentes_entrada').attr('disabled', true);
+      } else if (id == 2) {
+        $('#agentes_salida').attr('disabled', true);
+      } else if (id == 7) {
+        $('#licencias_ivr_inteligente').attr('disabled', true);
+      } else if (id == 8) {
+        $('#canal_generador_encuestas').attr('disabled', true);
+      } else if (id == 10) {
+        $('#canal_mensajes_voz').attr('disabled', true);
+      }
+    }
   });
 });
 
@@ -2203,6 +2611,12 @@ $(function () {
     } else if (id == 15) {
       url = currentURL + '/canales';
       table = ' #tableCanales';
+    } else if (id == 2) {
+      url = currentURL + '/empresas';
+      table = ' #tableEmpresas';
+    } else if (id == 16) {
+      url = currentURL + '/basedatos';
+      table = ' #tableBaseDatos';
     }
 
     $.get(url, function (data, textStatus, jqXHR) {
@@ -2366,9 +2780,9 @@ $(function () {
 /***/ }),
 
 /***/ 0:
-/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/js/module_administrador/usuarios.js ./resources/js/module_administrador/modulos.js ./resources/js/module_administrador/submenus.js ./resources/js/module_administrador/menus.js ./resources/js/module_administrador/distribuidores.js ./resources/js/module_administrador/dids.js ./resources/js/module_administrador/cat_estado_agente.js ./resources/js/module_administrador/cat_estado_cliente.js ./resources/js/module_administrador/cat_estado_empresa.js ./resources/js/module_administrador/cat_ip_pbx.js ./resources/js/module_administrador/cat_nas.js ./resources/js/module_administrador/troncales.js ./resources/js/module_administrador/canales.js ***!
-  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/js/module_administrador/usuarios.js ./resources/js/module_administrador/modulos.js ./resources/js/module_administrador/submenus.js ./resources/js/module_administrador/menus.js ./resources/js/module_administrador/distribuidores.js ./resources/js/module_administrador/dids.js ./resources/js/module_administrador/cat_estado_agente.js ./resources/js/module_administrador/cat_estado_cliente.js ./resources/js/module_administrador/cat_estado_empresa.js ./resources/js/module_administrador/cat_ip_pbx.js ./resources/js/module_administrador/cat_nas.js ./resources/js/module_administrador/troncales.js ./resources/js/module_administrador/canales.js ./resources/js/module_administrador/empresas.js ./resources/js/module_administrador/cat_base_datos.js ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2385,7 +2799,9 @@ __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\c
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\cat_ip_pbx.js */"./resources/js/module_administrador/cat_ip_pbx.js");
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\cat_nas.js */"./resources/js/module_administrador/cat_nas.js");
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\troncales.js */"./resources/js/module_administrador/troncales.js");
-module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\canales.js */"./resources/js/module_administrador/canales.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\canales.js */"./resources/js/module_administrador/canales.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\empresas.js */"./resources/js/module_administrador/empresas.js");
+module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\cat_base_datos.js */"./resources/js/module_administrador/cat_base_datos.js");
 
 
 /***/ })

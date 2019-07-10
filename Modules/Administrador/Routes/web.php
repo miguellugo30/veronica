@@ -102,3 +102,15 @@ Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix'
 Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
     Route::resource('canales','CanalesController');
 });
+/**
+ * Rutas de CRUD de EMRPRESAS
+ */
+Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
+    Route::resource('empresas','EmpresasController');
+});
+/**
+ * Rutas de CRUD de Base de Datos
+ */
+Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
+    Route::resource('basedatos','BasesDatosController');
+});

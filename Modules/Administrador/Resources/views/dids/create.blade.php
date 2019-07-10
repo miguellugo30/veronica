@@ -20,7 +20,7 @@
             <select name="tipo" id="tipo" class="form-control">
                 <option value="">Selecciona un tipo</option>
                 <option value="1" selected>Did</option>
-                <option value="2">Analogo</option>
+                <option value="2">Análogo</option>
             </select>
         </div>
         <div class="form-group">
@@ -32,7 +32,7 @@
             <input type="text" class="form-control" id="did" placeholder="Did"/>
         </div>
         <div class="form-group">
-            <label for="descripcion">Descripcion</label>
+            <label for="descripcion">Descripción</label>
             <input type="text" class="form-control" id="descripcion" placeholder="Descripcion"/>
         </div>
         <div class="form-group showTroncales">

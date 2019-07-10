@@ -5,7 +5,7 @@
 	</legend>
 	<div class="col-md-6">
 		<fieldset>
-			<legend>Informacion usuario</legend>
+			<legend>Información usuario</legend>
 			<div class="form-group">
 				<label for="name">Nombre</label>
 				<input type="text" class="form-control" id="name" placeholder="Nombre usuario" value="{{$user->name}}">
@@ -49,7 +49,7 @@
 	</div>
 	<div class="col-md-6">
 		<fieldset>
-			<legend>Categorias</legend>
+			<legend>Categorías</legend>
 			@foreach( $categorias as $categoria )
 			<div class="checkbox">
 				<label>

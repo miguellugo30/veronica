@@ -87,7 +87,7 @@ $(function() {
             data: {
                 nombre: nombre,
                 ip_media: ip_media,
-                ip_host : ip_host,
+                ip_host: ip_host,
                 Cat_Distribuidor_id: Cat_Distribuidor_id,
                 _token: _token,
                 _method: _method

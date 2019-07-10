@@ -17,7 +17,7 @@
                         <th>Tipo</th>
                         <th>Prefijo</th>
                         <th>Did</th>
-                        <th>Descripcion</th>
+                        <th>Descripción</th>
                         <th>Troncal Sansay</th>
                         <th>Gateway</th>
                         <th>Fakedid</th>

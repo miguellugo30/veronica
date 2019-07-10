@@ -65,6 +65,7 @@
         <div class="col-md-6" style="float:none; margin:auto">
             <div class="col-md-6" style="text-align:left">
                 <button type="submit" class="btn btn-warning cancelCanal"><i class="fas fa-times"></i> Cancelar</button>
+                <button type="submit" class="btn btn-danger deleteCanal"><i class="fas fa-trash-alt"></i> Eliminar</button>
             </div>
             <div class="col-md-6" style="text-align:right">
                 <button type="submit" class="btn btn-primary updateCanal"><i class="fas fa-save"></i> Guardar</button>
@@ -87,7 +88,7 @@
         $("#canal_empresa").val(zfill(id_Empresa, 3));
 
         /**
-         * Funcion para formatear el id de la empresa a 3 digitos
+         * Funcion para formatear el id de la empresa a 3 dígitos
          * @param {id_empresa} number
          * @param {tamanio} width
          */
