@@ -1213,7 +1213,7 @@ $(function () {
 $(function () {
   var currentURL = window.location.href;
   /**
-   * Evento para mostrar el formulario de crear un nuevo distribuidores
+   * Evento para mostrar el formulario de crear un nuevo dids
    */
 
   $(document).on("click", ".nuevoDid", function (e) {
@@ -1231,27 +1231,27 @@ $(function () {
 
   $(document).on('click', '.saveDid', function (event) {
     event.preventDefault();
-    var Empresas_id = $("#id_empresa").val();
-    var tipo = $("#tipo").val();
     var prefijo = $("#prefijo").val();
     var did = $("#did").val();
-    var descripcion = $("#descripcion").val();
-    var Troncales_id = $("#Troncales_id").val();
+    var numero_real = $("#numero_real").val();
+    var referencia = $("#referencia").val();
     var gateway = $('input:radio[name=gateway]:checked').val();
     var fakedid = $('input:radio[name=fakedid]:checked').val();
+    var Canales_id = $("#Canal_id").val();
+    var Empresas_id = $("#id_empresa").val();
 
     var _token = $("input[name=_token]").val();
 
     var url = currentURL + '/did';
     $.post(url, {
-      Empresas_id: Empresas_id,
-      tipo: tipo,
       prefijo: prefijo,
-      did: did,
-      descripcion: descripcion,
-      Troncales_id: Troncales_id,
+      dids: did,
+      numero_real: numero_real,
+      referencia: referencia,
       gateway: gateway,
       fakedid: fakedid,
+      Canales_id: Canales_id,
+      Empresas_id: Empresas_id,
       _token: _token
     }, function (data, textStatus, xhr) {
       $('.viewResult').html(data);
@@ -1290,35 +1290,35 @@ $(function () {
    */
 
   $(document).on('click', '.updateDid', function (event) {
-    event.preventDefault(); // formdata es para down de IL
+    event.preventDefault(); // Datos obtenidos del formulario
 
-    var Empresas_id = $("#id_empresa").val();
-    var id_did = $("#id_did").val();
-    var tipo = $("#tipo").val();
+    var id = $("#id").val();
     var prefijo = $("#prefijo").val();
-    var did = $("#did").val();
-    var descripcion = $("#descripcion").val();
-    var Troncales_id = $("#Troncales_id").val();
+    var dids = $("#did").val();
+    var did = dids.replace("\n", ";");
+    var numero_real = $("#numero_real").val();
+    var referencia = $("#referencia").val();
     var gateway = $('input:radio[name=gateway]:checked').val();
     var fakedid = $('input:radio[name=fakedid]:checked').val();
+    var Canales_id = $("#Canal_id").val();
+    var Empresas_id = $("#id_empresa").val();
 
     var _token = $("input[name=_token]").val();
 
     var _method = 'PUT';
-    var url = currentURL + '/did/' + id_did;
+    var url = currentURL + '/did/' + id;
     $.ajax({
       url: url,
       type: 'POST',
       data: {
-        Empresas_id: Empresas_id,
-        id_did: id_did,
-        tipo: tipo,
         prefijo: prefijo,
         did: did,
-        descripcion: descripcion,
-        Troncales_id: Troncales_id,
+        numero_real: numero_real,
+        referencia: referencia,
         gateway: gateway,
         fakedid: fakedid,
+        Canales_id: Canales_id,
+        Empresas_id: Empresas_id,
         _token: _token,
         _method: _method
       },
@@ -1362,15 +1362,21 @@ $(function () {
     });
   });
   /**
-   * Evento para mostrar las troncales en base a la empresa seleccionada
+   * Evento que obtiene el distribuidor y los canales
    */
 
   $(document).on('change', '#id_empresa', function (event) {
-    event.preventDefault();
     var id_empresa = $(this).val();
-    var url = currentURL + '/troncales/' + id_empresa;
+    var Cat_Distribuidor_id = $("#id_empresa option:selected").data('cat_distribuidor_id');
+    var url = currentURL + '/did/' + id_empresa;
     $.get(url, function (data, textStatus, xhr) {
-      $(".showTroncales").html(data);
+      $(".resultEmpresa").html(data);
+
+      if (Cat_Distribuidor_id == 11) {
+        $(".resultEmpresa #gatewayhabilitado").attr('checked', true);
+      } else {
+        $(".resultEmpresa #gatewaydeshabilitado").attr('checked', true);
+      }
     });
   });
 });

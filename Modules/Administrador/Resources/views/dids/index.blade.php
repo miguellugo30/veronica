@@ -1,5 +1,6 @@
 <div class="col-12 viewIndex">
     <fieldset>
+        <!-- Nombre del apartado -->
         <legend>
             <i class="fas fa-phone"></i>
             DID
@@ -11,27 +12,44 @@
 
         <div class="col-md-12">
             <table id="tableDid" class="display table table-striped table-condensed" style="width:100%">
+                <!-- Encabezados de la tabla que se mostrara al inicio -->
                 <thead>
                     <tr>
                         <th>Empresa</th>
-                        <th>Tipo</th>
+                        <th>Canal</th>
                         <th>Prefijo</th>
                         <th>Did</th>
+<<<<<<< HEAD
                         <th>Descripción</th>
                         <th>Troncal Sansay</th>
+=======
+                        <th>Referencia</th>
+                        <th>Numero Real</th>
+>>>>>>> 81fcec682f8e6ded6aa1dbb00ba9269c93e90ef9
                         <th>Gateway</th>
                         <th>Fakedid</th>
                     </tr>
                 </thead>
+                <!-- Iterar el arreglo $Dids que contiene el resultado de consultar todos los registros que contiene la tabla de Dids
+                :: ID
+                :: Nombre 
+                :: Canal
+                :: Prefijo
+                :: DID
+                :: Referencia
+                :: Numero Real
+                :: Gateway
+                :: Fakedid
+                -->
                 <tbody>
                     @foreach( $Dids as $did )
                         <tr data-id="{{ $did->id }}">
                             <td>{{ $did->Empresas->nombre }}</td>
-                            <td>{{ ( $did->tipo == 1 ) ? 'Did' : 'Analoga' }}</td>
+                            <td>{{ $did->Canales->canal }}</td>
                             <td>{{ $did->prefijo }}</td>
                             <td>{{ $did->did }}</td>
-                            <td>{{ $did->descripcion }}</td>
-                            <td>{{ $did->Troncales->nombre }}</td>
+                            <td>{{ $did->referencia }}</td>
+                            <td>{{ $did->numero_real }}</td>
                             <td>{{ ( $did->gateway == 1 ) ? 'Habilitado' : 'Deshabilitado' }}</td>
                             <td>{{ ( $did->fakedid == 1 ) ? 'Habilitado' : 'Deshabilitado' }}</td>
                         </tr>
