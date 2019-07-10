@@ -57,6 +57,9 @@ $(function() {
         } else if (id == 9) {
             url = currentURL + '/troncales';
             table = ' #tableTroncales';
+        } else if (id == 15) {
+            url = currentURL + '/canales';
+            table = ' #tableCanales';
         }
 
         $.get(url, function(data, textStatus, jqXHR) {

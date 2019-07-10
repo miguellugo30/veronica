@@ -25,6 +25,7 @@ mix.js([
     'resources/js/module_administrador/cat_ip_pbx.js',
     'resources/js/module_administrador/cat_nas.js',
     'resources/js/module_administrador/troncales.js',
+    'resources/js/module_administrador/canales.js',
 ], 'public/js/');
 /*
 mix.js('resources/js/app.js', 'public/js/all.js')

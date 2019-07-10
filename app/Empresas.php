@@ -34,5 +34,12 @@ class Empresas extends Model
     {
         return $this->hasMany('Nimbus\Canales');
     }
+    /**
+     * Relacion uno a uno con Config Empresas
+     */
+    public function Config_Empresas()
+    {
+        return $this->hasOne('Nimbus\Config_Empresas', 'Empresas_id', 'id');
+    }
 
 }

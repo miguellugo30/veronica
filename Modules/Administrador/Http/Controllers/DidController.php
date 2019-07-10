@@ -42,10 +42,8 @@ class DidController extends Controller
          * Crear tabla Empresas!
         */
         $empresas = Empresas::where('activo',1)->get();
-        $canales = Canales::where('activo',1)->get();
-        $distribuidor = Config_Empresas::where('Cat_Distribuidor_id',11)->where($empresas->id)->get();
 
-        return view('administrador::dids.create', compact('empresas', 'canales','distribuidor'));
+        return view('administrador::dids.create', compact('empresas'));
     }
 
     /**
@@ -56,9 +54,30 @@ class DidController extends Controller
     public function store(Request $request)
     {
         /**
-         * Insertamos la información del formulario
+         * Obtener los dids que se van a insertar separados por ;
          */
-        Dids::create( $request->all() );
+        $dids = $request->dids;
+        $dids_store = str_replace("\n",";",$dids);
+        
+        
+        /**
+         * Crear un array de los elementos donde se separan por ;
+         */
+        $dids = explode(";",$dids_store);        
+        /**
+         * Se recorre arreglo de dids
+         */
+        foreach ($dids as $did => $value) {
+            Dids::create(['prefijo'=>$request->prefijo,
+                    'numero_real'=>$request->numero_real,
+                    'did'=>trim($value),
+                    'referencia'=>$request->referencia,
+                    'gateway'=>$request->gateway,
+                    'fakedid'=>$request->fakedid,
+                    'Canales_id'=> $request->Canales_id,
+                    'Empresas_id'=>$request->Empresas_id]);
+        }       
+        
         /**
          * Redirigimos a la ruta index
          */
@@ -71,8 +90,11 @@ class DidController extends Controller
      * @return Response
      */
     public function show($id)
-    {
-        return view('administrador::show');
+    { 
+        $empresa = Empresas::findOrFail($id);
+        $canales = $empresa->Canales;
+        
+        return view('administrador::dids.show',compact('canales'));
     }
 
     /**
@@ -91,7 +113,7 @@ class DidController extends Controller
          */
         $empresas = Empresas::where('activo',1)->get();
         /**
-         * Obtenemos las troncales que estan vinculadas a la empresa vinculada al DID
+         * Obtenemos los canales que estan vinculadas a la empresa vinculada al DID
          */
         $empresa = Empresas::findOrFail(  $Dids->Empresas->id );
         $canales = $empresa->canales;
@@ -107,15 +129,14 @@ class DidController extends Controller
     public function update(Request $request, $id)
     {
         //Obtener los datos del id_did que se envia
-        $Dids = Dids::find($id);
-
+        $Dids = Dids::findOrFail($id);
         //Asignar los datos del Request del form a las variables asociadas
         $Dids->Empresas_id = $request->Empresas_id;
-        $Dids->tipo = $request->tipo;
         $Dids->prefijo = $request->prefijo;
         $Dids->did = $request->did;
-        $Dids->descripcion = $request->descripcion;
-        $Dids->Canales_id = $request->id_canal;
+        $Dids->numero_real = $request->numero_real;
+        $Dids->referencia = $request->referencia;
+        $Dids->Canales_id = $request->Canales_id;
         $Dids->gateway = $request->gateway;
         $Dids->fakedid = $request->fakedid;
 

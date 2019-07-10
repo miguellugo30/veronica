@@ -14,7 +14,7 @@ class Dids extends Model
      * Campos que pueden ser modificados
      */
    protected $fillable = [
-        'prefijo', 'did', 'numero_real' , 'referencia','gateway','fakedid', 'Canales_id', 'Empresas_id'
+        'prefijo', 'did', 'numero_real' , 'referencia','gateway','fakedid', 'Empresas_id','Canales_id',
     ];
     /**
      * Nombre de la tabla
@@ -23,15 +23,17 @@ class Dids extends Model
    /**
     * Relacion muchos a uno con Empresas
     */
-    public function Empresas()
-    {
-       return $this->belongsTo('Nimbus\Empresas', 'Empresas_id', 'id');
-    }
-     /**
-    * Relacion muchos a uno con Canales
-    */
-    public function Canales()
-    {
-       return $this->belongsTo('Nimbus\Canales', 'Canales_id', 'id');
-    }
+   public function Empresas()
+   {
+      return $this->belongsTo('Nimbus\Empresas', 'Empresas_id', 'id');
+   }
+   /**
+   * Relacion muchos a uno con Canales
+   */
+   public function Canales()
+   {
+      return $this->belongsTo('Nimbus\Canales', 'Canales_id', 'id');
+   }
 }
+
+?>

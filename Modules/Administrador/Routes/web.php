@@ -96,3 +96,9 @@ Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix'
 Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
     Route::resource('troncales','TroncalesController');
 });
+/**
+ * Rutas de CRUD de CANALES
+ */
+Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
+    Route::resource('canales','CanalesController');
+});
