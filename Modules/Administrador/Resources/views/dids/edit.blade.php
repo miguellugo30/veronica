@@ -17,7 +17,7 @@
             </div>
             <input type="hidden" class="form-control" id="id_did" value="{{$Dids->id}}"/>
             <!-- Esta variable genera un token Laravel se debe colocar en el form -->
-           
+
             <label for="Canal_id">Canal</label>
             <select name="Canal_id" id="Canal_id" class="form-control">
             <option value="{{$Dids->Canales->canal}}">Selecciona un canal</option>
@@ -34,13 +34,8 @@
                 <input  value="{{$Dids->did}}" type="text" class="form-control" id="did" placeholder="Did"/>
             </div>
             <div class="form-group">
-<<<<<<< HEAD
-                <label for="descripcion">Descripción</label>
-                <input  value="{{$Dids->descripcion}}" type="text" class="form-control" id="descripcion" placeholder="Descripcion"/>
-=======
                 <label for="referencia">Referencia</label>
                 <input  value="{{$Dids->referencia}}" type="text" class="form-control" id="referencia" placeholder="Referencia"/>
->>>>>>> 81fcec682f8e6ded6aa1dbb00ba9269c93e90ef9
             </div>
             <div class="form-group">
                 <label for="numero_real">Numero Real</label>

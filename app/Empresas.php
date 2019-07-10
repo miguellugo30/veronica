@@ -40,7 +40,6 @@ class Empresas extends Model
     public function Config_Empresas()
     {
         return $this->hasOne('Nimbus\Config_Empresas', 'Empresas_id', 'id');
-<<<<<<< HEAD
     }
     /**
      * Relacion muchos a muchos con Modulos
@@ -48,8 +47,6 @@ class Empresas extends Model
     public function Modulos()
     {
         return $this->belongsToMany('Nimbus\Modulos', 'Modulos_Empresas')->orderBy('prioridad');
-=======
->>>>>>> 81fcec682f8e6ded6aa1dbb00ba9269c93e90ef9
     }
 
 }

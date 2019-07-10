@@ -141,22 +141,12 @@ $(function() {
     /**
      * Evento para editar el modulo
      */
-    $(document).on('click', '.updateCanal', function(event) {
+    $(document).on('click', '.updateEmpresa', function(event) {
         event.preventDefault();
 
-        let Cat_Distribuidor_id = $("#distribuidores_canal").val();
-        let Empresas_id = $("#Empresas_id_canal").val();
-        let Troncales_id = $("#Troncales_id_canal").val();
+        let dataForm = $("#formDataEmpresa").serializeArray();
         let id = $("#id").val();
-        /**
-         * Valores para armar el canal
-         */
-        let canal_troncal = $("#canal_troncal").val();
-        let canal_prefijo = $("#canal_prefijo").val();
-        let canal_empresa = $("#canal_empresa").val();
-        let canal_tipo = $("#canal_tipo").val();
-
-        let canal = "SIP/" + canal_troncal + "/" + canal_prefijo + canal_empresa + canal_tipo;
+        console.log(dataForm);
 
         let _token = $("input[name=_token]").val();
         let _method = "PUT";
@@ -166,10 +156,7 @@ $(function() {
             url: url,
             type: 'POST',
             data: {
-                Empresas_id: Empresas_id,
-                Troncales_id: Troncales_id,
-                Cat_Distribuidor_id: Cat_Distribuidor_id,
-                canal: canal,
+                dataForm: dataForm,
                 _token: _token,
                 _method: _method
             },

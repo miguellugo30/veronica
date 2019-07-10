@@ -135,7 +135,15 @@ class EmpresasController extends Controller
      */
     public function edit($id)
     {
-        return view('administrador::empresas.edit');
+        /**
+         * Recuperamos todos los distribuidores que esten activos
+         */
+        $distribuidores = Cat_Distribuidor::where('activo',1)->get();
+        /**
+         * Buscamos la empresa ha editar
+         */
+        $empresa = Empresas::findOrFail($id);
+        return view('administrador::empresas.edit', compact('empresa', 'distribuidores'));
     }
 
     /**
@@ -146,7 +154,74 @@ class EmpresasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = array();
+        $dataForm = $request->input('dataForm');
+        for ($i=0; $i < count( $dataForm ); $i++) {
+            $data[ $dataForm[$i]['name'] ] = $dataForm[$i]['value'];
+        }
+        /**
+         *
+         */
+        if ($data['action'] == "dataEmpresa" ) {
+            /**
+             * Buscamos la empresa a editar
+             */
+            $empresa = Empresas::findOrFail($id);
+            /**
+             * Asignamos los nuevos valores
+             */
+            $empresa->nombre = $data['nombre'];
+            $empresa->contacto_cliente = $data['contacto_cliente'];
+            $empresa->direccion = $data['direccion'];
+            $empresa->ciudad = $data['ciudad'];
+            $empresa->estado = $data['estado'];
+            $empresa->pais = $data['pais'];
+            $empresa->telefono = $data['telefono'];
+            $empresa->movil = $data['movil'];
+            $empresa->correo = $data['correo'];
+            /**
+             * Guardamos la nueva informacion
+             */
+            $empresa->save();
+
+        } else if($data['action'] == 'dataInfra') {
+            /**
+             * Creamos el nuevo dominio
+             */
+            if ($data['Cat_Distribuidor_id'] == 11) {
+                $dominio = str_replace(' ', '_', $data['dominio']).".nimbuscca.mx";
+            } else {
+                $dominio = str_replace(' ', '_', $data['dominio']).".nimbuscca.mx";
+            }
+            /**
+             * Guardamos la informacion del nuevo dominio
+             */
+            $dominios = new Dominios;
+            $dominios->dominio = $dominio;
+            $dominios->dominio_bria = $dominio;
+            $dominios->save();
+            /**
+             * Insertamos la configuracion inicial de la empresa
+             */
+            $config = new Config_Empresas();
+            $config->Empresas_id = $data['id_empresa'];
+            $config->Cat_IP_PBX_id = $data['media_server_empresas'];
+            $config->Cat_Base_Datos_id = $data['base_datos_empresa'];
+            $config->Dominios_id = $dominios->id;
+            $config->Cat_distribuidor_id = $data['Cat_Distribuidor_id'];
+            $config->save();
+
+
+        } else if($data['action'] == 'dataModulo') {
+            /**
+             * Buscamos la empresa
+             */
+            $empresa = Empresas::findOrFail($request->input('id_empresa'));
+            $empresa->modulos()->attach( $request->input('arr') );
+        }
+
+        print_r( $data['action'] );
+        //dd( $dataForm );
     }
 
     /**

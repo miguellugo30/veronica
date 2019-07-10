@@ -28,9 +28,9 @@ $(function() {
         let gateway = $('input:radio[name=gateway]:checked').val();
         let fakedid = $('input:radio[name=fakedid]:checked').val();
         let Canales_id = $("#Canal_id").val();
-        let Empresas_id = $("#id_empresa").val();       
+        let Empresas_id = $("#id_empresa").val();
         let _token = $("input[name=_token]").val();
-        
+
         let url = currentURL + '/did';
 
         $.post(url, {
@@ -41,7 +41,7 @@ $(function() {
             gateway: gateway,
             fakedid: fakedid,
             Canales_id: Canales_id,
-            Empresas_id: Empresas_id,           
+            Empresas_id: Empresas_id,
             _token: _token
         }, function(data, textStatus, xhr) {
             $('.viewResult').html(data);
@@ -87,14 +87,14 @@ $(function() {
         let id = $("#id").val();
         let prefijo = $("#prefijo").val();
         let dids = $("#did").val();
-        let did = dids.replace("\n",";");
+        let did = dids.replace("\n", ";");
         let numero_real = $("#numero_real").val();
         let referencia = $("#referencia").val();
         let gateway = $('input:radio[name=gateway]:checked').val();
         let fakedid = $('input:radio[name=fakedid]:checked').val();
         let Canales_id = $("#Canal_id").val();
-        let Empresas_id = $("#id_empresa").val();       
-        
+        let Empresas_id = $("#id_empresa").val();
+
         let _token = $("input[name=_token]").val();
         let _method = 'PUT';
 
@@ -111,9 +111,9 @@ $(function() {
                 gateway: gateway,
                 fakedid: fakedid,
                 Canales_id: Canales_id,
-                Empresas_id: Empresas_id,           
+                Empresas_id: Empresas_id,
                 _token: _token,
-                _method:_method
+                _method: _method
             },
             success: function(result) {
                 $('.viewResult').html(result);
@@ -164,14 +164,14 @@ $(function() {
         let id_empresa = $(this).val();
         let Cat_Distribuidor_id = $("#id_empresa option:selected").data('cat_distribuidor_id');
 
-        let url = currentURL + '/did/' + id_empresa;      
+        let url = currentURL + '/did/' + id_empresa;
 
         $.get(url, function(data, textStatus, xhr) {
             $(".resultEmpresa").html(data);
             if (Cat_Distribuidor_id == 11) {
-                $(".resultEmpresa #gatewayhabilitado").attr('checked',true);
-            }else{
-                $(".resultEmpresa #gatewaydeshabilitado").attr('checked',true);
+                $(".resultEmpresa #gatewayhabilitado").attr('checked', true);
+            } else {
+                $(".resultEmpresa #gatewaydeshabilitado").attr('checked', true);
             }
         });
     });

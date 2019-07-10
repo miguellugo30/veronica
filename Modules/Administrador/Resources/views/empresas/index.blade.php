@@ -19,7 +19,7 @@
                 </thead>
                 <tbody>
                     @foreach ($empresas as $empresa)
-                        <tr>
+                        <tr data-id="{{ $empresa->id }}">
                             <td>{{ $empresa->Config_Empresas->Distribuidores->servicio }}</td>
                             <td>{{$empresa->id}}</td>
                             <td>{{$empresa->nombre}}</td>

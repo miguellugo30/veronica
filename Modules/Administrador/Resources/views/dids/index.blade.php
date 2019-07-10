@@ -19,20 +19,15 @@
                         <th>Canal</th>
                         <th>Prefijo</th>
                         <th>Did</th>
-<<<<<<< HEAD
-                        <th>Descripción</th>
-                        <th>Troncal Sansay</th>
-=======
                         <th>Referencia</th>
                         <th>Numero Real</th>
->>>>>>> 81fcec682f8e6ded6aa1dbb00ba9269c93e90ef9
                         <th>Gateway</th>
                         <th>Fakedid</th>
                     </tr>
                 </thead>
                 <!-- Iterar el arreglo $Dids que contiene el resultado de consultar todos los registros que contiene la tabla de Dids
                 :: ID
-                :: Nombre 
+                :: Nombre
                 :: Canal
                 :: Prefijo
                 :: DID
