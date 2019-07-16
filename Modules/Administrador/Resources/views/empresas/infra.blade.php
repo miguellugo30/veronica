@@ -1,8 +1,4 @@
 <fieldset>
-    <legend>
-        <i class="far fa-building"></i>
-        <b>Empresa: {{$empresa->nombre}}</b>
-    </legend>
     <div class="col-md-6" style="float:none; margin:auto">
         <div class="form-group ">
             <label for="dominio">Dominio</label>
@@ -19,29 +15,31 @@
             <label for="base_datos_empresa">Base de datos</label>
             <select name="base_datos_empresa" id="base_datos_empresa" class="form-control input-sm">
                 <option value="" >Selecciona una Base de datos</option>
-                @foreach( $baseDatos as $baseDato )
-                    <option value="{{ $baseDato->id }}" >{{ $baseDato->ip }} || {{ $baseDato->nombre }}</option>
-                @endforeach
+                @if ( $empresa->Config_Empresas != null )
+                    @foreach( $baseDatos as $baseDato )
+                        <option value="{{ $baseDato->id }}" {{ $empresa->Config_Empresas->Cat_Base_Datos_id == $baseDato->id ? 'selected="selected"' : ''  }}>{{ $baseDato->ip }} || {{ $baseDato->nombre }}</option>
+                    @endforeach
+                @else
+                    @foreach( $baseDatos as $baseDato )
+                        <option value="{{ $baseDato->id }}" >{{ $baseDato->ip }} || {{ $baseDato->nombre }}</option>
+                    @endforeach
+                @endif
             </select>
         </div>
         <div class="form-group">
             <label for="media_server_empresas">Media Server</label>
             <select name="media_server_empresas" id="media_server_empresas" class="form-control input-sm">
                 <option value="" >Selecciona un Media Server</option>
-                @foreach( $medias as $media )
-                    <option value="{{ $media->id }}" >{{ $media->ip_pbx }} || {{ $media->media_server }}</option>
-                @endforeach
+                @if ( $empresa->Config_Empresas != null )
+                    @foreach( $medias as $media )
+                        <option value="{{ $media->id }}" {{ $empresa->Config_Empresas->Cat_IP_PBX_id == $media->id ? 'selected="selected"' : ''  }}>{{ $media->ip_pbx }} || {{ $media->media_server }}</option>
+                    @endforeach
+                @else
+                    @foreach( $medias as $media )
+                        <option value="{{ $media->id }}" >{{ $media->ip_pbx }} || {{ $media->media_server }}</option>
+                    @endforeach
+                @endif
             </select>
-        </div>
-    </div>
-    <div class="col-md-12">
-        <div class="col-md-6" style="float:none; margin:auto">
-            <div class="col-md-6" style="text-align:left">
-                <button type="submit" class="btn btn-warning cancelEmpresa"><i class="fas fa-times"></i> Cancelar</button>
-            </div>
-            <div class="col-md-6" style="text-align:right">
-                <button type="submit" class="btn btn-primary saveEmpresaInfra">Siguiente <i class="fas fa-arrow-alt-circle-right"></i></button>
-            </div>
         </div>
     </div>
     <br>

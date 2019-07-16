@@ -11,8 +11,8 @@
         <table id="tableEmpresas" class="display table table-striped table-condensed" style="width:100%">
                 <thead>
                     <tr>
-                        <th>Distribuidor</th>
                         <th>ID Cliente</th>
+                        <th>Distribuidor</th>
                         <th>Nombre</th>
                         <th>Ubicación</th>
                     </tr>
@@ -20,8 +20,8 @@
                 <tbody>
                     @foreach ($empresas as $empresa)
                         <tr data-id="{{ $empresa->id }}">
-                            <td>{{ $empresa->Config_Empresas->Distribuidores->servicio }}</td>
                             <td>{{$empresa->id}}</td>
+                            <td>{{ $empresa->Config_Empresas->Distribuidores->servicio }}</td>
                             <td>{{$empresa->nombre}}</td>
                             <td>{{$empresa->nombre}}</td>
                         </tr>

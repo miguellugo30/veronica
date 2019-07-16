@@ -1,54 +1,39 @@
 <fieldset>
-        <legend>
-        <i class="far fa-building"></i>
-        <b>Empresa: {{$nombreEmpresa}}</b>
-    </legend>
     <div class="col-md-6" style="float:none; margin:auto">
         @csrf
+        <input type="hidden" name="action" id="action" value="dataPosiciones">
         <div class="form-group">
             <label for="agentes_entrada">Agentes entrada</label>
-            <input type="text" class="form-control input-sm" id="agentes_entrada" name="agentes_entrada" placeholder="Agentes entrada" disabled>
+            <input type="hidden" name="id_empresa" id="id_empresa" value="{{$idEmpresa}}">
+            <input type="number" min="1" max="200" class="form-control input-sm" id="agentes_entrada" name="agentes_entrada" value="{{ $configEmpresa->agentes_entrada }}" placeholder="Agentes entrada"  {{  in_array( 1, $modulos ) ? '' : 'readonly' }}>
         </div>
         <div class="form-group">
             <label for="agentes_salida">Agentes salida</label>
-            <input type="text" class="form-control input-sm" id="agentes_salida" name="agentes_salida" placeholder="Agentes salida" disabled>
+            <input type="number" min="1" max="200" class="form-control input-sm" id="agentes_salida" name="agentes_salida" value="{{ $configEmpresa->agentes_salida }}" placeholder="Agentes salida" {{  in_array( 2, $modulos ) ? '' : 'readonly' }}>
         </div>
         <div class="form-group">
             <label for="agentes_full">Agentes dual</label>
-            <input type="text" class="form-control input-sm" id="agentes_full" name="agentes_full" placeholder="Agentes dual" disabled>
+            <input type="number" min="1" max="200" class="form-control input-sm" id="agentes_full" name="agentes_full" value="{{ $configEmpresa->agentes_salida }}" placeholder="Agentes dual" {{  in_array( 1, $modulos ) && in_array( 2, $modulos )  ? '' : 'readonly' }}>
         </div>
         <div class="form-group">
             <label for="canal_mensajes_voz">Mensajes de voz</label>
-            <input type="text" class="form-control input-sm" id="canal_mensajes_voz" name="canal_mensajes_voz" placeholder="Mensajes de voz" disabled>
+            <input type="number" min="1" max="200" class="form-control input-sm" id="canal_mensajes_voz" name="canal_mensajes_voz" value="{{ $configEmpresa->canal_mensajes_voz }}" placeholder="Mensajes de voz" {{  in_array( 10, $modulos ) ? '' : 'readonly' }}>
         </div>
         <div class="form-group">
             <label for="canal_generador_encuestas">Generador de encuestas</label>
-            <input type="text" class="form-control input-sm" id="canal_generador_encuestas" name="canal_generador_encuestas" placeholder="Generador de encuestas" disabled>
+            <input type="number" min="1" max="200" class="form-control input-sm" id="canal_generador_encuestas" name="canal_generador_encuestas" value="{{ $configEmpresa->canal_generardor_encuestas }}" placeholder="Generador de encuestas" {{  in_array( 8, $modulos ) ? '' : 'readonly' }}>
         </div>
         <div class="form-group">
             <label for="agentes_administrador">Licencias administrador</label>
-            <input type="text" class="form-control input-sm" id="agentes_administrador" name="agentes_administrador" placeholder="Agentes administrador" disabled>
+            <input type="number" min="1" max="10" class="form-control input-sm" id="agentes_administrador" name="agentes_administrador" value="{{ $configEmpresa->licencias_administrador }}" placeholder="Agentes administrador" value="1">
         </div>
         <div class="form-group">
             <label for="licencias_ivr_inteligente">Licencias IVR inteligente</label>
-            <input type="text" class="form-control input-sm" id="licencias_ivr_inteligente" name="licencias_ivr_inteligente" placeholder="Licencias IVR inteligente" disabled>
+            <input type="number" min="1" max="200" class="form-control input-sm" id="licencias_ivr_inteligente" name="licencias_ivr_inteligente" value="{{ $configEmpresa->licencias_ivr_inteligente }}" placeholder="Licencias IVR inteligente" {{  in_array( 7, $modulos ) ? '' : 'readonly' }}>
         </div>
         <div class="form-group">
             <label for="licencias_softphone">Licencias Softphone</label>
-            <input type="text" class="form-control input-sm" id="licencias_softphone" name="licencias_softphone" placeholder="Licencias Softphone">
-        </div>
-
-    </div>
-    <div class="col-md-12">
-        <div class="col-md-6" style="float:none; margin:auto">
-            <div class="col-md-6" style="text-align:left">
-                <button type="submit" class="btn btn-warning cancelEmpresa"><i class="fas fa-times"></i> Cancelar</button>
-            </div>
-            <div class="col-md-6" style="text-align:right">
-                <button type="submit" class="btn btn-primary saveEmpresaModulos">Siguiente <i class="fas fa-arrow-alt-circle-right"></i></button>
-            </div>
+            <input type="number" min="1" max="200" class="form-control input-sm" id="licencias_softphone" name="licencias_softphone" value="{{ $configEmpresa->licencias_softphone }}" placeholder="Licencias Softphone">
         </div>
     </div>
-    <br>
-    <br>
 </fieldset>

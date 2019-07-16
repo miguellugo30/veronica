@@ -1564,112 +1564,182 @@ $(function () {
     e.preventDefault();
     $(".viewIndex").slideUp();
     $(".viewCreate").slideDown();
+    /**
+     * Seteamos el valor inicioa para la opcion siguiente y anterior
+     */
+
+    opcionSiguiente = 0;
+    opcionAnterior = -1;
+    regresos = 0;
     var url = currentURL + '/empresas/create';
     $.get(url, function (data, textStatus, jqXHR) {
       $(".viewCreate").html(data);
+      var dato = 0 + ".dataEmpresa";
+      var url = currentURL + '/empresas/' + dato;
+      $.ajax({
+        url: url,
+        type: 'GET',
+        success: function success(result) {
+          $('#formDataEmpresa').html(result);
+        }
+      });
     });
   });
+  /**
+   * Declaramos las opciones para la creacion de una nueva cuenta
+   */
+
+  var opciones = ['dataEmpresa', 'dataInfra', 'dataModulo', 'dataPosiciones', 'dataAlmacenamiento', 'dataExtensiones'];
   /**
    * Evento para guardar la nueva empresa
    */
 
-  $(document).on('click', '.saveEmpresa', function (event) {
+  $(document).on('click', '#siguiente', function (event) {
     event.preventDefault();
-    var nombre = $("#nombre").val();
-    var contacto_cliente = $("#contacto_cliente").val();
-    var direccion = $("#direccion").val();
-    var ciudad = $("#ciudad").val();
-    var estado = $("#estado").val();
-    var pais = $("#pais").val();
-    var telefono = $("#telefono").val();
-    var movil = $("#movil").val();
-    var correo = $("#correo").val();
-    var action = $("#action").val();
-    var Cat_Distribuidor_id = $("#distribuidores_empresa").val();
+    $('#anterior').slideDown();
+    $('.cancelEmpresa').slideUp();
+    /**
+     * Recuperamos la accion a relizar y la opcion a relaizar
+     */
 
-    var _token = $("input[name=_token]").val();
+    var accion = $(this).attr("data-accion");
+    var opcion = $(this).attr("data-opcion-siguiente");
+    /**
+     * Se setea a crear si viene de un accion de actualizar
+     */
 
-    var url = currentURL + '/empresas';
-    $.post(url, {
-      nombre: nombre,
-      contacto_cliente: contacto_cliente,
-      direccion: direccion,
-      ciudad: ciudad,
-      estado: estado,
-      pais: pais,
-      telefono: telefono,
-      movil: movil,
-      correo: correo,
-      Cat_Distribuidor_id: Cat_Distribuidor_id,
-      action: action,
-      _token: _token
-    }, function (data, textStatus, xhr) {
-      $('.viewResult').html(data);
-      $('.viewIndex #tableEmpresas').DataTable({
-        "lengthChange": true
-      });
+    if (regresos > 0) {
+      $(this).attr("data-accion", "actualizar");
+      regresos--;
+    } else {
+      $(this).attr("data-accion", "crear");
+    }
+    /**
+     * Si aun es menor al tamaño del arreglo seguimos
+     * incrementando.
+     */
+
+
+    if (opcionSiguiente < opciones.length) {
+      opcionAnterior = opcionAnterior + 1;
+      opcionSiguiente = opcionSiguiente + 1;
+    }
+    /**
+     * Cuando lleguemos al final del arreglo ponermos
+     * el boton con la leyenda de finalizar
+     */
+
+
+    if (opcionSiguiente == 5) {
+      $('#siguiente').html('Finalizar');
+    }
+    /**
+     * Seteamos el valor de la siguiente opcion y anterior
+     */
+
+
+    $('#anterior').attr('data-opcion-anterior', opciones[opcionAnterior]);
+    $('#siguiente').attr('data-opcion-siguiente', opciones[opcionSiguiente]); //console.log(accion + " " + opcion + " " + opcionSiguiente + " " + opciones.length);
+    //console.log("Regresa Vista" + opciones[opcionSiguiente]);
+
+    $('#formDataEmpresa').html(opciones[opcionSiguiente]);
+    console.log("Regresos " + regresos);
+    /**
+     * Dependiendo de la accion a realizar, se define
+     * la RUL y metodo que se usara
+     *
+    if (accion.indexOf("actualizar") > -1) {
+        let id = $("#id_empresa").val(); //Recuperamos el id de la empresa ha editar
+        url = currentURL + '/empresas/' + id; //Definimos la url de edicion
+        method = "POST";
+        _method = "PUT";
+        console.log("envia ha actualizar");
+    } else {
+        url = currentURL + '/empresas'; //Definimos la URL para crear
+        method = "POST";
+        _method = "POST";
+        console.log("envia ha crear");
+    }
+    /**
+     * Recuperamos la informacion del formulario
+     *
+    let dataForm = $("#formDataEmpresa").serializeArray();
+    let _token = $("input[name=_token]").val();
+    /**
+     * Enviamos la informacion
+     *
+    $.ajax({
+        url: url,
+        type: method,
+        data: {
+            _token: _token,
+            _method: _method,
+            dataForm: dataForm,
+            accion: accion
+        },
+        success: function(result) {
+            $('#formDataEmpresa').html(result);
+        }
     });
+    */
   });
   /**
-   * Evento para guardar la informacion de infraestructura
+   * Evento para regresar a la opcion anterior
    */
 
-  $(document).on('click', '.saveEmpresaInfra', function (event) {
+  $(document).on('click', '#anterior', function (event) {
     event.preventDefault();
-    var dominio = $("#dominio").val();
-    var id_empresa = $("#id_empresa").val();
-    var Cat_Distribuidor_id = $("#Cat_Distribuidor_id").val();
-    var action = $("#action").val();
-    var base_datos_empresa = $("#base_datos_empresa").val();
-    var media_server_empresas = $("#media_server_empresas").val();
+    /**
+     * Recuperamos la accion a relizar y la opcion a relaizar
+     */
 
-    var _token = $("input[name=_token]").val();
+    var accion = $(this).attr("data-accion");
+    var opcion = $(this).attr("data-opcion-anterior");
+    $('#siguiente').attr("data-accion", "actualizar");
+    /**
+     * Seteamos el valor de la siguiente opcion y anterior
+     */
 
-    var url = currentURL + '/empresas';
-    $.post(url, {
-      dominio: dominio,
-      id_empresa: id_empresa,
-      Cat_Distribuidor_id: Cat_Distribuidor_id,
-      action: action,
-      base_datos_empresa: base_datos_empresa,
-      media_server_empresas: media_server_empresas,
-      _token: _token
-    }, function (data, textStatus, xhr) {
-      $('.viewResult').html(data);
-      $('.viewIndex #tableEmpresas').DataTable({
-        "lengthChange": true
-      });
+    if (opcionSiguiente == 5) {
+      $('#siguiente').html('Siguiente');
+    }
+
+    if (opcionAnterior == 0) {
+      $('#anterior').slideUp();
+    }
+
+    if (opcionSiguiente > 0) {
+      regresos++;
+      opcionAnterior = opcionAnterior - 1;
+      opcionSiguiente = opcionSiguiente - 1;
+    }
+
+    $('#anterior').attr('data-opcion-anterior', opciones[opcionAnterior]);
+    $('#siguiente').attr('data-opcion-siguiente', opciones[opcionSiguiente]); //console.log(accion + " " + opcion + " " + opcionAnterior + " " + opciones.length);
+    //console.log("Regresa Vista " + opciones[opcionSiguiente]);
+
+    $('#formDataEmpresa').html(opciones[opcionSiguiente]);
+    console.log("Regresos " + regresos);
+    /*
+    let id = $("#id_empresa").val();
+    let _token = $("input[name=_token]").val();
+    let dato = id + "." + opcion;
+     let url = currentURL + '/empresas/' + dato;
+     $.ajax({
+        url: url,
+        type: 'GET',
+        data: {
+            _token: _token,
+            accion: accion
+        },
+        success: function(result) {
+            $('#formDataEmpresa').html(result);
+        }
     });
+    */
   });
   /**
-   * Evento para guardar la informacion de modulos
-   */
-
-  $(document).on('click', '.saveEmpresaModulos', function (event) {
-    event.preventDefault();
-    var id_empresa = $("#id_empresa").val();
-    var action = $("#action").val();
-
-    var _token = $("input[name=_token]").val();
-
-    var arr = $('[name="modulos[]"]:checked').map(function () {
-      return this.value;
-    }).get();
-    var url = currentURL + '/empresas';
-    $.post(url, {
-      id_empresa: id_empresa,
-      arr: arr,
-      action: action,
-      _token: _token
-    }, function (data, textStatus, xhr) {
-      $('.viewResult').html(data);
-      $('.viewIndex #tableEmpresas').DataTable({
-        "lengthChange": true
-      });
-    });
-  });
-  /**
-   * Evento para mostrar el formulario editar modulo
+   * Evento para mostrar el formulario editar empresa
    */
 
   $(document).on('dblclick', '#tableEmpresas tbody tr', function (event) {
@@ -1680,6 +1750,15 @@ $(function () {
     var url = currentURL + "/empresas/" + id + "/edit";
     $.get(url, function (data, textStatus, jqXHR) {
       $(".viewCreate").html(data);
+      var dato = id + ".dataGeneral";
+      var url = currentURL + '/empresas/' + dato;
+      $.ajax({
+        url: url,
+        type: 'GET',
+        success: function success(result) {
+          $('#formDataEmpresa').html(result);
+        }
+      });
     });
   });
   /**
@@ -1699,7 +1778,6 @@ $(function () {
     event.preventDefault();
     var dataForm = $("#formDataEmpresa").serializeArray();
     var id = $("#id").val();
-    console.log(dataForm);
 
     var _token = $("input[name=_token]").val();
 
@@ -1714,10 +1792,18 @@ $(function () {
         _method: _method
       },
       success: function success(result) {
-        $('.viewResult').html(result);
-        $('.viewCreate').slideUp();
-        $('.viewIndex #tableEmpresas').DataTable({
-          "lengthChange": true
+        var url = currentURL + "/empresas/" + id + "/edit";
+        $.get(url, function (data, textStatus, jqXHR) {
+          $(".viewCreate").html(data);
+          var dato = id + ".dataGeneral";
+          var url = currentURL + '/empresas/' + dato;
+          $.ajax({
+            url: url,
+            type: 'GET',
+            success: function success(result) {
+              $('#formDataEmpresa').html(result);
+            }
+          });
         });
       }
     });
@@ -1751,52 +1837,29 @@ $(function () {
     });
   });
   /**
-   * Evento que obtiene el distribuidor y
+   * Evento para obtener la opcion ha mostrar de el menu
    */
 
-  $(document).on('change', '#distribuidores_empresa', function (event) {
-    var dist = $(this).val();
+  $(document).on('click', '.menuEmpresa > li', function (event) {
+    $('.menuEmpresa > li').removeClass('active');
+    $(this).addClass('active');
+    var id = $("#id").val();
+    var opcion = $(this).data("opcion");
 
-    if (dist == 11) {
-      dominio = ".nimbuscca.mx";
-    } else {
-      dominio = ".nimbuscc.mx";
-    }
+    var _token = $("input[name=_token]").val();
 
-    $('#basic-addon2').html(dominio);
-  });
-  $(document).on('keyup', '#nombre', function (event) {
-    var nombre_dominio = $(this).val();
-    $("#dominio").val(nombre_dominio.replace(" ", "_"));
-  });
-  $(document).on('click', '.modulosEmpresa', function (event) {
-    var id = $(this).val();
-
-    if ($(this).is(':checked')) {
-      if (id == 1) {
-        $('#agentes_entrada').removeAttr('disabled');
-      } else if (id == 2) {
-        $('#agentes_salida').removeAttr('disabled');
-      } else if (id == 7) {
-        $('#licencias_ivr_inteligente').removeAttr('disabled');
-      } else if (id == 8) {
-        $('#canal_generador_encuestas').removeAttr('disabled');
-      } else if (id == 10) {
-        $('#canal_mensajes_voz').removeAttr('disabled');
+    var dato = id + "." + opcion;
+    var url = currentURL + '/empresas/' + dato;
+    $.ajax({
+      url: url,
+      type: 'GET',
+      data: {
+        _token: _token
+      },
+      success: function success(result) {
+        $('#formDataEmpresa').html(result);
       }
-    } else {
-      if (id == 1) {
-        $('#agentes_entrada').attr('disabled', true);
-      } else if (id == 2) {
-        $('#agentes_salida').attr('disabled', true);
-      } else if (id == 7) {
-        $('#licencias_ivr_inteligente').attr('disabled', true);
-      } else if (id == 8) {
-        $('#canal_generador_encuestas').attr('disabled', true);
-      } else if (id == 10) {
-        $('#canal_mensajes_voz').attr('disabled', true);
-      }
-    }
+    });
   });
 });
 
