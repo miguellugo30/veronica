@@ -137,4 +137,18 @@ $(function() {
         let nombre = nombre_troncal.replace(" ", "_");
         $("#troncal_sansay").val("BUS > " + nombre + " > DID")
     });
+
+    /**
+     * Evento para invocar a la ventana modal para visualizar la configuracion
+     */
+    $(document).on('click', '.show-modal', function(event) {
+        let id = $(this).val();
+        //alert(id);
+        let url = currentURL + '/troncales/' + 1;
+
+        $.get(url, function(data, textStatus, xhr) {
+            $("#configuracionmodal").html(data);
+            $("#configuracionmodal").modal("show");
+        });
+    });
 });
