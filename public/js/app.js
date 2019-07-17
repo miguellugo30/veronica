@@ -1608,11 +1608,12 @@ $(function () {
      * Se setea a crear si viene de un accion de actualizar
      */
 
-    if (regresos > 0) {
+    if (regresos > 1) {
       $(this).attr("data-accion", "actualizar");
       regresos--;
     } else {
       $(this).attr("data-accion", "crear");
+      regresos = 0;
     }
     /**
      * Si aun es menor al tamaño del arreglo seguimos
@@ -1641,47 +1642,54 @@ $(function () {
     $('#anterior').attr('data-opcion-anterior', opciones[opcionAnterior]);
     $('#siguiente').attr('data-opcion-siguiente', opciones[opcionSiguiente]); //console.log(accion + " " + opcion + " " + opcionSiguiente + " " + opciones.length);
     //console.log("Regresa Vista" + opciones[opcionSiguiente]);
+    //$('#formDataEmpresa').html(opciones[opcionSiguiente]);
 
-    $('#formDataEmpresa').html(opciones[opcionSiguiente]);
-    console.log("Regresos " + regresos);
     /**
      * Dependiendo de la accion a realizar, se define
-     * la RUL y metodo que se usara
-     *
+     * la URL y metodo que se usara
+     */
+
     if (accion.indexOf("actualizar") > -1) {
-        let id = $("#id_empresa").val(); //Recuperamos el id de la empresa ha editar
-        url = currentURL + '/empresas/' + id; //Definimos la url de edicion
-        method = "POST";
-        _method = "PUT";
-        console.log("envia ha actualizar");
+      var id = $("#id_empresa").val(); //Recuperamos el id de la empresa ha editar
+
+      url = currentURL + '/empresas/' + id; //Definimos la url de edicion
+
+      method = "POST";
+      _method = "PUT";
+      console.log("envia ha actualizar");
     } else {
-        url = currentURL + '/empresas'; //Definimos la URL para crear
-        method = "POST";
-        _method = "POST";
-        console.log("envia ha crear");
+      url = currentURL + '/empresas'; //Definimos la URL para crear
+
+      method = "POST";
+      _method = "POST";
+      console.log("envia ha crear");
     }
     /**
      * Recuperamos la informacion del formulario
-     *
-    let dataForm = $("#formDataEmpresa").serializeArray();
-    let _token = $("input[name=_token]").val();
+     */
+
+
+    var dataForm = $("#formDataEmpresa").serializeArray();
+
+    var _token = $("input[name=_token]").val();
     /**
      * Enviamos la informacion
-     *
+     */
+
+
     $.ajax({
-        url: url,
-        type: method,
-        data: {
-            _token: _token,
-            _method: _method,
-            dataForm: dataForm,
-            accion: accion
-        },
-        success: function(result) {
-            $('#formDataEmpresa').html(result);
-        }
+      url: url,
+      type: method,
+      data: {
+        _token: _token,
+        _method: _method,
+        dataForm: dataForm,
+        accion: accion
+      },
+      success: function success(result) {
+        $('#formDataEmpresa').html(result);
+      }
     });
-    */
   });
   /**
    * Evento para regresar a la opcion anterior
@@ -1717,26 +1725,25 @@ $(function () {
     $('#anterior').attr('data-opcion-anterior', opciones[opcionAnterior]);
     $('#siguiente').attr('data-opcion-siguiente', opciones[opcionSiguiente]); //console.log(accion + " " + opcion + " " + opcionAnterior + " " + opciones.length);
     //console.log("Regresa Vista " + opciones[opcionSiguiente]);
+    //$('#formDataEmpresa').html(opciones[opcionSiguiente]);
 
-    $('#formDataEmpresa').html(opciones[opcionSiguiente]);
-    console.log("Regresos " + regresos);
-    /*
-    let id = $("#id_empresa").val();
-    let _token = $("input[name=_token]").val();
-    let dato = id + "." + opcion;
-     let url = currentURL + '/empresas/' + dato;
-     $.ajax({
-        url: url,
-        type: 'GET',
-        data: {
-            _token: _token,
-            accion: accion
-        },
-        success: function(result) {
-            $('#formDataEmpresa').html(result);
-        }
+    var id = $("#id_empresa").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var dato = id + "." + opcion;
+    var url = currentURL + '/empresas/' + dato;
+    $.ajax({
+      url: url,
+      type: 'GET',
+      data: {
+        _token: _token,
+        accion: accion
+      },
+      success: function success(result) {
+        $('#formDataEmpresa').html(result);
+      }
     });
-    */
   });
   /**
    * Evento para mostrar el formulario editar empresa

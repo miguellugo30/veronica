@@ -13,7 +13,9 @@
                 <li data-opcion="dataModulo" class="list-group-item">Modulos</li>
                 <li data-opcion="dataPosiciones" class="list-group-item">Posiciones en modulos</li>
                 <li data-opcion="dataAlmacenamiento" class="list-group-item">Almacenamiento</li>
+                <li data-opcion="dataCanales" class="list-group-item">Canales</li>
                 <li data-opcion="dataExtensiones" class="list-group-item">Catalogo de extensiones</li>
+                <li data-opcion="dataDids" class="list-group-item">Dids</li>
             </ul>
         </div>
         <div class="col-md-10 viewForm" >

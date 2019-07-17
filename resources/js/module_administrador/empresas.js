@@ -51,11 +51,12 @@ $(function() {
         /**
          * Se setea a crear si viene de un accion de actualizar
          */
-        if (regresos > 0) {
+        if (regresos > 1) {
             $(this).attr("data-accion", "actualizar");
             regresos--;
         } else {
             $(this).attr("data-accion", "crear");
+            regresos = 0;
         }
         /**
          * Si aun es menor al tamaño del arreglo seguimos
@@ -80,12 +81,12 @@ $(function() {
 
         //console.log(accion + " " + opcion + " " + opcionSiguiente + " " + opciones.length);
         //console.log("Regresa Vista" + opciones[opcionSiguiente]);
-        $('#formDataEmpresa').html(opciones[opcionSiguiente]);
-        console.log("Regresos " + regresos);
+        //$('#formDataEmpresa').html(opciones[opcionSiguiente]);
+
         /**
          * Dependiendo de la accion a realizar, se define
-         * la RUL y metodo que se usara
-         *
+         * la URL y metodo que se usara
+         */
         if (accion.indexOf("actualizar") > -1) {
             let id = $("#id_empresa").val(); //Recuperamos el id de la empresa ha editar
             url = currentURL + '/empresas/' + id; //Definimos la url de edicion
@@ -100,12 +101,12 @@ $(function() {
         }
         /**
          * Recuperamos la informacion del formulario
-         *
+         */
         let dataForm = $("#formDataEmpresa").serializeArray();
         let _token = $("input[name=_token]").val();
         /**
          * Enviamos la informacion
-         *
+         */
         $.ajax({
             url: url,
             type: method,
@@ -119,7 +120,6 @@ $(function() {
                 $('#formDataEmpresa').html(result);
             }
         });
-        */
     });
     /**
      * Evento para regresar a la opcion anterior
@@ -154,9 +154,8 @@ $(function() {
 
         //console.log(accion + " " + opcion + " " + opcionAnterior + " " + opciones.length);
         //console.log("Regresa Vista " + opciones[opcionSiguiente]);
-        $('#formDataEmpresa').html(opciones[opcionSiguiente]);
-        console.log("Regresos " + regresos);
-        /*
+        //$('#formDataEmpresa').html(opciones[opcionSiguiente]);
+
         let id = $("#id_empresa").val();
         let _token = $("input[name=_token]").val();
         let dato = id + "." + opcion;
@@ -174,7 +173,6 @@ $(function() {
                 $('#formDataEmpresa').html(result);
             }
         });
-        */
     });
     /**
      * Evento para mostrar el formulario editar empresa
