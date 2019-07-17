@@ -1,7 +1,7 @@
 <fieldset>
     <legend>
         <i class="fas fa-th"></i>
-        Ordenar Menu
+        Ordenar Modulo
     </legend>
     <div class="col-md-6" style="float:none; margin:auto">
         <ul  id="sortable" class="list-group">

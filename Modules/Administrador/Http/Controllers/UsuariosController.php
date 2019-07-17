@@ -4,7 +4,7 @@ namespace Modules\Administrador\Http\Controllers;
 
 use DB;
 use Nimbus\User;
-use Nimbus\Clientes;
+use Nimbus\Empresas;
 use Nimbus\Categorias;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -42,11 +42,11 @@ class UsuariosController extends Controller
         /**
          * Obtenemos todos los clientes ( Empresas )
          */
-        $clientes = Clientes::all();
+        $clientes = Empresas::where('activo', 1)->get();
         /**
          * Obtenemos todas la categorias
          */
-        $categorias = Categorias::all();
+        $categorias = Categorias::where('activo', 1)->get();
 
         return view('administrador::usuarios.create', compact( 'roles', 'clientes', 'categorias' ) );
     }
@@ -120,7 +120,7 @@ class UsuariosController extends Controller
         /**
          * Obtenemos todos los clientes ( Empresas )
          */
-        $clientes = Clientes::all();
+        $clientes =  Empresas::where('activo', 1)->get();
         /**
          * Obtenemos todas la categorias
          */

@@ -11,7 +11,7 @@
             @csrf
         </div>
         <div class="form-group">
-            <label for="email">Descripcion</label>
+            <label for="email">Descripción</label>
             <input type="text" class="form-control" id="descripcionEdit" name="descripcionEdit" placeholder="Descripcion" value="{{ $modulo->descripcion }}">
         </div>
     </div>

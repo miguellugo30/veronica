@@ -1,14 +1,14 @@
 <div class="col-12 viewIndex">
     <fieldset>
         <legend>
-            <i class="fas fa-align-justify"></i> Menus
+            <i class="fas fa-align-justify"></i> Menús
             <button type="button" class="btn btn-primary btn-xs newCat" style="float: right;margin-left: 5px;">
                 <i class="fas fa-plus"></i>
-                Nuevo menu
+                Nuevo menú
             </button>
             <button type="button" class="btn btn-primary btn-xs orderignCat" style="float: right;">
                 <i class="fas fa-sort-numeric-down"></i>
-                Ordenar menu
+                Ordenar menú
             </button>
         </legend>
 
@@ -17,7 +17,7 @@
                 <thead>
                     <tr>
                         <th>Nombre</th>
-                        <th>Descripcion</th>
+                        <th>Descripción</th>
                         <th>Prioridad</th>
                         <th>tipo</th>
                     </tr>

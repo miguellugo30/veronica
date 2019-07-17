@@ -60,6 +60,12 @@ $(function() {
         } else if (id == 15) {
             url = currentURL + '/canales';
             table = ' #tableCanales';
+        } else if (id == 2) {
+            url = currentURL + '/empresas';
+            table = ' #tableEmpresas';
+        } else if (id == 16) {
+            url = currentURL + '/basedatos';
+            table = ' #tableBaseDatos';
         }
 
         $.get(url, function(data, textStatus, jqXHR) {

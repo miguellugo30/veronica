@@ -17,7 +17,7 @@
             </div>
             <input type="hidden" class="form-control" id="id_did" value="{{$Dids->id}}"/>
             <!-- Esta variable genera un token Laravel se debe colocar en el form -->
-           
+
             <label for="Canal_id">Canal</label>
             <select name="Canal_id" id="Canal_id" class="form-control">
             <option value="{{$Dids->Canales->canal}}">Selecciona un canal</option>

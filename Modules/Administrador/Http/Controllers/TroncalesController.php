@@ -21,7 +21,6 @@ class TroncalesController extends Controller
          * Recuperamos todos las troncales que esten activos
          */
         $troncales = Troncales::where('activo',1)->get();
-        
         return view('administrador::troncales.index', compact('troncales'));
     }
 

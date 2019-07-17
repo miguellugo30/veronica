@@ -16,7 +16,7 @@
                         <th>Correo</th>
                         <th>Rol</th>
                         <th>Fecha alta</th>
-                        <th>Fecha actualizacion</th>
+                        <th>Fecha actualización</th>
                     </tr>
                 </thead>
                 <tbody>

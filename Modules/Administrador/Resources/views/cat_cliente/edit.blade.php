@@ -11,7 +11,7 @@
             @csrf
         </div>
         <div class="form-group">
-            <label for="email">Descripcion</label>
+            <label for="email">Descripción</label>
             <input type="text" class="form-control" id="descripcion" placeholder="Descripcion" value="{{ $cat_cliente->descripcion }}">
         </div>
         <div class="form-group">

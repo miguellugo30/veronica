@@ -253,7 +253,7 @@ $(function () {
    * Evento para eliminar el modulo
    */
 
-  $(document).on('click', '.deleteTroncal', function (event) {
+  $(document).on('click', '.deleteCanal', function (event) {
     event.preventDefault();
     var id = $("#id").val();
 
@@ -863,6 +863,7 @@ $(function () {
     event.preventDefault();
     var media_server = $("#media_server").val();
     var ip_pbx = $("#ip_pbx").val();
+    var Cat_Base_Datos_id = $("#basedatos").val();
     var arr = $('[name="nas[]"]:checked').map(function () {
       return this.value;
     }).get();
@@ -872,6 +873,7 @@ $(function () {
     var url = currentURL + '/cat_ip_pbx';
     $.post(url, {
       media_server: media_server,
+      Cat_Base_Datos_id: Cat_Base_Datos_id,
       ip_pbx: ip_pbx,
       arr: arr,
       _token: _token
@@ -913,6 +915,7 @@ $(function () {
     event.preventDefault();
     var media_server = $("#media_server").val();
     var ip_pbx = $("#ip_pbx").val();
+    var Cat_Base_Datos_id = $("#basedatos").val();
     var arr = $('[name="nas[]"]:checked').map(function () {
       return this.value;
     }).get();
@@ -928,6 +931,7 @@ $(function () {
       data: {
         media_server: media_server,
         ip_pbx: ip_pbx,
+        Cat_Base_Datos_id: Cat_Base_Datos_id,
         arr: arr,
         id: id,
         _token: _token,
@@ -2264,6 +2268,12 @@ $(function () {
     } else if (id == 15) {
       url = currentURL + '/canales';
       table = ' #tableCanales';
+    } else if (id == 2) {
+      url = currentURL + '/empresas';
+      table = ' #tableEmpresas';
+    } else if (id == 16) {
+      url = currentURL + '/basedatos';
+      table = ' #tableBaseDatos';
     }
 
     $.get(url, function (data, textStatus, jqXHR) {

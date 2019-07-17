@@ -1,7 +1,7 @@
 <fieldset>
     <legend>
         <i class="fas fa-align-justify"></i>
-        Editar Menu
+        Editar Menú
     </legend>
     <div class="col-md-6" style="float:none; margin:auto">
         <div class="form-group">
@@ -12,7 +12,7 @@
             @method('PUT')
         </div>
         <div class="form-group">
-            <label for="descripcion">Descripcion</label>
+            <label for="descripcion">Descripción</label>
             <input type="text" class="form-control" id="descripcion" placeholder="Descripcion" value="{{ $categoria->descripcion}}">
         </div>
         <div class="form-group">

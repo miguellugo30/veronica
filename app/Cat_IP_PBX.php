@@ -14,7 +14,7 @@ class Cat_IP_PBX extends Model
      * Campos que pueden ser modificados
      */
     protected $fillable = [
-        'ip_pbx', 'media_server',
+        'ip_pbx', 'media_server', 'Cat_Base_Datos_id',
     ];
     /**
      * Nombre de la tabla
@@ -26,5 +26,12 @@ class Cat_IP_PBX extends Model
     public function cat_nas()
     {
         return $this->belongsToMany('Nimbus\Cat_NAS', 'Cat_IP_PBX_Cat_Nas', 'Cat_IP_PBX_id', 'Cat_Nas_id');
+    }
+    /**
+     * Relacion muchos a uno con Base de Datos
+     */
+    public function BaseDatos()
+    {
+        return $this->belongsTo('Nimbus\BaseDatos', 'Cat_Base_Datos_id');
     }
 }

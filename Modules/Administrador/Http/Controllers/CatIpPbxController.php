@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Nimbus\Cat_IP_PBX;
 use Nimbus\Cat_NAS;
+use Nimbus\BaseDatos;
 use DB;
 
 class CatIpPbxController extends Controller
@@ -34,7 +35,12 @@ class CatIpPbxController extends Controller
         * Recuperamos todos las NAS que esten activos
         */
         $cat_nas = Cat_NAS::where('activo',1)->get();
-        return view('administrador::ip_pbx.create', compact('cat_nas'));
+        /**
+        * Recuperamos todos las Base de datos que esten activos
+        */
+        $baseDatos = BaseDatos::where('activo',1)->get();
+
+        return view('administrador::ip_pbx.create', compact('cat_nas', 'baseDatos'));
     }
 
     /**
@@ -90,7 +96,12 @@ class CatIpPbxController extends Controller
         * Recuperamos todos las NAS que esten activos
         */
         $cat_nas = Cat_NAS::where('activo',1)->get();
-        return view('administrador::ip_pbx.edit', compact('pbx', 'id', 'cat_nas', 'pbxNas'));
+        /**
+        * Recuperamos todos las Base de datos que esten activos
+        */
+        $baseDatos = BaseDatos::where('activo',1)->get();
+
+        return view('administrador::ip_pbx.edit', compact('pbx', 'id', 'cat_nas', 'pbxNas', 'baseDatos'));
     }
 
     /**
@@ -127,7 +138,8 @@ class CatIpPbxController extends Controller
         Cat_IP_PBX::where( 'id', $id )
                     ->update([
                         'ip_pbx' => $request->input('ip_pbx'),
-                        'media_server'   => $request->input('media_server')
+                        'media_server' => $request->input('media_server'),
+                        'Cat_Base_Datos_id' => $request->input('Cat_Base_Datos_id'),
                     ]);
 
         return redirect()->route('cat_ip_pbx.index');

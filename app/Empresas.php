@@ -14,7 +14,7 @@ class Empresas extends Model
      * Campos que pueden ser modificados
      */
     protected $fillable = [
-        'nombre', 'contacto_cliente', 'direccion', 'ciudad', 'pais', 'telefono', 'movil', 'correo', 'fecha_creacion',
+        'nombre', 'contacto_cliente', 'direccion', 'ciudad', 'estado', 'pais', 'telefono', 'movil', 'correo', 'fecha_creacion',
     ];
     /**
      * Nombre de la tabla
@@ -40,6 +40,13 @@ class Empresas extends Model
     public function Config_Empresas()
     {
         return $this->hasOne('Nimbus\Config_Empresas', 'Empresas_id', 'id');
+    }
+    /**
+     * Relacion muchos a muchos con Modulos
+     */
+    public function Modulos()
+    {
+        return $this->belongsToMany('Nimbus\Modulos', 'Modulos_Empresas')->orderBy('prioridad');
     }
 
 }

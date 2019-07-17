@@ -15,7 +15,7 @@
             <!-- Esta variable genera un token Laravel se debe colocar en el form -->
             @csrf
         </div>
-        
+
         <div class="form-group">
             <div class="resultEmpresa">
             </div>

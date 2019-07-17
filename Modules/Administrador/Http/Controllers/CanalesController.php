@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Nimbus\Canales;
-use Nimbus\Empresas;
 use Nimbus\Cat_Distribuidor;
 use Nimbus\Troncales;
 use Nimbus\Config_Empresas;
@@ -151,6 +150,16 @@ class CanalesController extends Controller
      */
     public function destroy($id)
     {
-        //
+         /**
+         * Actualizamos la trocal ha activo 0
+         */
+        Canales::where( 'id', $id )
+                   ->update([
+                       'activo' => '0',
+                   ]);
+        /**
+         * Redirigimos a la ruta index
+         */
+        return redirect()->route('canales.index');
     }
 }

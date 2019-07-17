@@ -12,7 +12,7 @@
                 <thead>
                     <tr>
                         <th>Nombre</th>
-                        <th>Descripcion</th>
+                        <th>Descripción</th>
                         <th>Recibir Llamada</th>
                     </tr>
                 </thead>
