@@ -1,6 +1,6 @@
 <div class="col-12 viewIndex">
     <fieldset>
-        <!-- Nombre del apartado -->
+        <!-- Nombre del apartado DID -->
         <legend>
             <i class="fas fa-phone"></i>
             DID
@@ -25,8 +25,7 @@
                     </tr>
                 </thead>
                 <!-- Iterar el arreglo $Dids que contiene el resultado de consultar todos los registros que contiene la tabla de Dids
-                :: ID
-                :: Nombre
+                :: Nombre de Empresa
                 :: Canal
                 :: Prefijo
                 :: DID

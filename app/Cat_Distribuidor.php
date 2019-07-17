@@ -44,10 +44,10 @@ class Cat_Distribuidor extends Model
         return $this->hasManyThrough( 'Nimbus\Empresas', 'Nimbus\Config_Empresas', 'Cat_Distribuidor_id', 'id', 'id', 'Empresas_id' );
     }
     /**
-     * Relacion uno a muchos con Canales
+     * Relacion uno a muchos con Tipo_Canales
      */
-    public function Cat_Tipo_Canles()
+    public function Cat_Tipo_Canales()
     {
-        return $this->hasMany('Nimbus\Cat_Tipo_Canles');
+        return $this->hasMany('Nimbus\Cat_Tipo_Canales','id','Cat_Distribuidor_id');
     }
 }

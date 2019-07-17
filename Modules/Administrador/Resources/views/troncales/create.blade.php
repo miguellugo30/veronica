@@ -15,16 +15,21 @@
         </div>
         <div class="form-group">
             <label for="nombre">Nombre</label>
-            <input type="text" class="form-control" id="nombre" placeholder="Nombre">
+            <input type="text" class="form-control" id="nombre" placeholder="Nombre" required>
             @csrf
         </div>
         <div class="form-group">
             <label for="ip_media">IP Media</label>
-            <input type="text" class="form-control" id="ip_media" placeholder="IP Media">
+            <select name="ip_media" id="ip_media" class="form-control">
+                <option value="" >Selecciona un Media</option>
+                @foreach( $medias as $media )
+                    <option value="{{ $media->id }}" >{{ $media->ip_pbx." :: ".$media->media_server }}</option>
+                @endforeach
+            </select>
         </div>
         <div class="form-group">
             <label for="ip_host">IP Host</label>
-            <input type="text" class="form-control" id="ip_host" placeholder="IP Host">
+            <input type="text" class="form-control" id="ip_host" placeholder="IP Host" required>
         </div>
     </div>
     <div class="col-md-12">

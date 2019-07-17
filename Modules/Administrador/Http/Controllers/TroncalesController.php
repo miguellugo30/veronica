@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Nimbus\Troncales;
 use Nimbus\Cat_Distribuidor;
+use Nimbus\Cat_IP_PBX;
 
 class TroncalesController extends Controller
 {
@@ -33,7 +34,9 @@ class TroncalesController extends Controller
          * Recuperamos todos las troncales que esten activos
          */
         $distribuidores = Cat_Distribuidor::where('activo',1)->get();
-        return view('administrador::troncales.create', compact('distribuidores'));
+
+        $medias = Cat_IP_PBX::where('activo',1)->get();
+        return view('administrador::troncales.create', compact('distribuidores','medias'));
     }
 
     /**
@@ -61,10 +64,10 @@ class TroncalesController extends Controller
      */
     public function show($id)
     {
-        $empresas = Empresas::findOrFail($id);
-        $troncales = $empresas->troncales;
+        $configuracion = Troncales::findOrFail($id);
+        
 
-        return view('administrador::troncales.show', compact('troncales'));
+        return view('administrador::troncales.show', compact('configuracion'));
     }
 
     /**
@@ -83,7 +86,9 @@ class TroncalesController extends Controller
          */
         $troncal = Troncales::findOrFail( $id );
 
-        return view('administrador::troncales.edit', compact('troncal', 'id', 'distribuidores') );
+        $medias = Cat_IP_PBX::where('activo',1)->get();
+
+        return view('administrador::troncales.edit', compact('troncal', 'id', 'distribuidores','medias') );
     }
 
     /**
