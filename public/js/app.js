@@ -1203,6 +1203,142 @@ $(function () {
 
 /***/ }),
 
+/***/ "./resources/js/module_administrador/cat_tipo_canal.js":
+/*!*************************************************************!*\
+  !*** ./resources/js/module_administrador/cat_tipo_canal.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  var currentURL = window.location.href;
+  /**
+   * Evento para mostrar el formulario de crear un nuevo canal
+   */
+
+  $(document).on("click", ".newTipoCanal", function (e) {
+    e.preventDefault();
+    $(".viewIndex").slideUp();
+    $(".viewCreate").slideDown();
+    var url = currentURL + '/cat_tipo_canales/create';
+    $.get(url, function (data, textStatus, jqXHR) {
+      $(".viewCreate").html(data);
+    });
+  });
+  /**
+   * Evento para guardar el nuevo modulo
+   */
+
+  $(document).on('click', '.saveTipoCanales', function (event) {
+    event.preventDefault();
+    var nombre = $("#nombre").val();
+    var prefijo = $("#prefijo").val();
+    var distribuidor = $("#distribuidor").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var url = currentURL + '/cat_tipo_canales';
+    $.post(url, {
+      nombre: nombre,
+      prefijo: prefijo,
+      Cat_Distribuidor_id: distribuidor,
+      _token: _token
+    }, function (data, textStatus, xhr) {
+      $('.viewResult').html(data);
+      $('.viewIndex #tableTiposCanal').DataTable({
+        "lengthChange": true
+      });
+    });
+  });
+  /**
+   * Evento para mostrar el formulario editar modulo
+   */
+
+  $(document).on('dblclick', '#tableTiposCanal tbody tr', function (event) {
+    event.preventDefault();
+    $(".viewIndex").slideUp();
+    $(".viewCreate").slideDown();
+    var id = $(this).data("id");
+    var url = currentURL + "/cat_tipo_canales/" + id + "/edit";
+    $.get(url, function (data, textStatus, jqXHR) {
+      $(".viewCreate").html(data);
+    });
+  });
+  /**
+   * Evento para cancelar la creacion/edicion del modulo
+   */
+
+  $(document).on("click", ".cancelTipoCanal", function (e) {
+    $(".viewIndex").slideDown();
+    $(".viewCreate").slideUp();
+    $(".viewCreate").html('');
+  });
+  /**
+   * Evento para editar el modulo
+   */
+
+  $(document).on('click', '.updateTipoCanal', function (event) {
+    event.preventDefault();
+    var nombre = $("#nombre").val();
+    var prefijo = $("#prefijo").val();
+    var distribuidor = $("#distribuidor").val();
+    var id = $("#id").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var _method = 'PUT';
+    var url = currentURL + '/cat_tipo_canales/' + id;
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {
+        nombre: nombre,
+        prefijo: prefijo,
+        Cat_Distribuidor_id: distribuidor,
+        _token: _token,
+        _method: _method
+      },
+      success: function success(result) {
+        $('.viewResult').html(result);
+        $('.viewCreate').slideUp();
+        $('.viewIndex #tableTiposCanal').DataTable({
+          "lengthChange": true
+        });
+      }
+    });
+  });
+  /**
+   * Evento para eliminar el modulo
+   */
+
+  $(document).on('click', '.deleteTipoCanal', function (event) {
+    event.preventDefault();
+    var id = $("#id").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var _method = "DELETE";
+    var url = currentURL + '/cat_tipo_canales/' + id;
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {
+        _token: _token,
+        _method: _method
+      },
+      success: function success(result) {
+        $('.viewResult').html(result);
+        $('.viewCreate').slideUp();
+        $('.viewIndex #tableTiposCanal').DataTable({
+          "lengthChange": true
+        });
+      }
+    });
+  });
+});
+
+/***/ }),
+
 /***/ "./resources/js/module_administrador/dids.js":
 /*!***************************************************!*\
   !*** ./resources/js/module_administrador/dids.js ***!
@@ -1724,8 +1860,8 @@ $(function () {
     let id = $("#id_empresa").val();
     let _token = $("input[name=_token]").val();
     let dato = id + "." + opcion;
-     let url = currentURL + '/empresas/' + dato;
-     $.ajax({
+      let url = currentURL + '/empresas/' + dato;
+      $.ajax({
         url: url,
         type: 'GET',
         data: {
@@ -2673,6 +2809,9 @@ $(function () {
     } else if (id == 16) {
       url = currentURL + '/basedatos';
       table = ' #tableBaseDatos';
+    } else if (id == 17) {
+      url = currentURL + '/cat_tipo_canales';
+      table = ' #tableTipoanal';
     }
 
     $.get(url, function (data, textStatus, jqXHR) {
@@ -2836,28 +2975,29 @@ $(function () {
 /***/ }),
 
 /***/ 0:
-/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/js/module_administrador/usuarios.js ./resources/js/module_administrador/modulos.js ./resources/js/module_administrador/submenus.js ./resources/js/module_administrador/menus.js ./resources/js/module_administrador/distribuidores.js ./resources/js/module_administrador/dids.js ./resources/js/module_administrador/cat_estado_agente.js ./resources/js/module_administrador/cat_estado_cliente.js ./resources/js/module_administrador/cat_estado_empresa.js ./resources/js/module_administrador/cat_ip_pbx.js ./resources/js/module_administrador/cat_nas.js ./resources/js/module_administrador/troncales.js ./resources/js/module_administrador/canales.js ./resources/js/module_administrador/empresas.js ./resources/js/module_administrador/cat_base_datos.js ***!
-  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/js/module_administrador/usuarios.js ./resources/js/module_administrador/modulos.js ./resources/js/module_administrador/submenus.js ./resources/js/module_administrador/menus.js ./resources/js/module_administrador/distribuidores.js ./resources/js/module_administrador/dids.js ./resources/js/module_administrador/cat_estado_agente.js ./resources/js/module_administrador/cat_estado_cliente.js ./resources/js/module_administrador/cat_estado_empresa.js ./resources/js/module_administrador/cat_ip_pbx.js ./resources/js/module_administrador/cat_nas.js ./resources/js/module_administrador/troncales.js ./resources/js/module_administrador/canales.js ./resources/js/module_administrador/empresas.js ./resources/js/module_administrador/cat_base_datos.js ./resources/js/module_administrador/cat_tipo_canal.js ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\usuarios.js */"./resources/js/module_administrador/usuarios.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\modulos.js */"./resources/js/module_administrador/modulos.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\submenus.js */"./resources/js/module_administrador/submenus.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\menus.js */"./resources/js/module_administrador/menus.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\distribuidores.js */"./resources/js/module_administrador/distribuidores.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\dids.js */"./resources/js/module_administrador/dids.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\cat_estado_agente.js */"./resources/js/module_administrador/cat_estado_agente.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\cat_estado_cliente.js */"./resources/js/module_administrador/cat_estado_cliente.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\cat_estado_empresa.js */"./resources/js/module_administrador/cat_estado_empresa.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\cat_ip_pbx.js */"./resources/js/module_administrador/cat_ip_pbx.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\cat_nas.js */"./resources/js/module_administrador/cat_nas.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\troncales.js */"./resources/js/module_administrador/troncales.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\canales.js */"./resources/js/module_administrador/canales.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\empresas.js */"./resources/js/module_administrador/empresas.js");
-module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\cat_base_datos.js */"./resources/js/module_administrador/cat_base_datos.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\usuarios.js */"./resources/js/module_administrador/usuarios.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\modulos.js */"./resources/js/module_administrador/modulos.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\submenus.js */"./resources/js/module_administrador/submenus.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\menus.js */"./resources/js/module_administrador/menus.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\distribuidores.js */"./resources/js/module_administrador/distribuidores.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\dids.js */"./resources/js/module_administrador/dids.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\cat_estado_agente.js */"./resources/js/module_administrador/cat_estado_agente.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\cat_estado_cliente.js */"./resources/js/module_administrador/cat_estado_cliente.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\cat_estado_empresa.js */"./resources/js/module_administrador/cat_estado_empresa.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\cat_ip_pbx.js */"./resources/js/module_administrador/cat_ip_pbx.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\cat_nas.js */"./resources/js/module_administrador/cat_nas.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\troncales.js */"./resources/js/module_administrador/troncales.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\canales.js */"./resources/js/module_administrador/canales.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\empresas.js */"./resources/js/module_administrador/empresas.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\cat_base_datos.js */"./resources/js/module_administrador/cat_base_datos.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\cat_tipo_canal.js */"./resources/js/module_administrador/cat_tipo_canal.js");
 
 
 /***/ })

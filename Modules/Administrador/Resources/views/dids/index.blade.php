@@ -17,7 +17,6 @@
                     <tr>
                         <th>Empresa</th>
                         <th>Canal</th>
-                        <th>Prefijo</th>
                         <th>Did</th>
                         <th>Referencia</th>
                         <th>Numero Real</th>
@@ -41,7 +40,6 @@
                         <tr data-id="{{ $did->id }}">
                             <td>{{ $did->Empresas->nombre }}</td>
                             <td>{{ $did->Canales->canal }}</td>
-                            <td>{{ $did->prefijo }}</td>
                             <td>{{ $did->did }}</td>
                             <td>{{ $did->referencia }}</td>
                             <td>{{ $did->numero_real }}</td>

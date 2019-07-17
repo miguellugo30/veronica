@@ -91,6 +91,12 @@ Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix'
     Route::resource('cat_nas','CatNasController');
 });
 /**
+ * Rutas de CRUD de Catalogo de TiposCanal
+ */
+Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
+    Route::resource('cat_tipo_canales','TipoCanalcontroller');
+});
+/**
  * Rutas de CRUD de Troncales
  */
 Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
