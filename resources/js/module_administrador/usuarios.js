@@ -66,6 +66,9 @@ $(function() {
         } else if (id == 16) {
             url = currentURL + '/basedatos';
             table = ' #tableBaseDatos';
+        }else if (id == 17) {
+            url = currentURL + '/cat_tipo_canales';
+            table = ' #tableTipoanal';
         }
 
         $.get(url, function(data, textStatus, jqXHR) {
