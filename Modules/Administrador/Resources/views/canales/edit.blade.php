@@ -6,33 +6,15 @@
     <div class="col-md-6" style="float:none; margin:auto">
         <div class="form-group">
             <label for="distribuidores">Distribuidor</label>
-            <select name="distribuidores_canal" id="distribuidores_canal" class="form-control" autofocus>
+            <select name="distribuidores_canal_editar" id="distribuidores_canal_editar" class="form-control" autofocus>
                 <option value="" >Selecciona un distribuidor</option>
                 @foreach( $distribuidores as $distribuidor )
                     <option value="{{ $distribuidor->id }}" data-prefijo="{{ $distribuidor->prefijo }}" {{ ( $canal->Cat_Distribuidor_id == $distribuidor->id )  ? 'selected' : '' }}>{{ $distribuidor->servicio }}</option>
                 @endforeach
             </select>
-        </div>
-        @csrf
-        <input type="hidden" name="id" id="id" value="{{ $canal->id }}">
-        <div class="form-group">
-            <div class="resultDistribuidor">  
-                <label for="Troncales_id_canal">Troncal</label>
-                <select name="Troncales_id_canal" id="Troncales_id_canal" class="form-control" autofocus>
-                    <option value="">Selecciona una troncal</option>
-                    @foreach( $troncales as $troncal )
-                        <option value="{{ $troncal->id }}"  {{ ( $canal->Troncales_id == $troncal->id )  ? 'selected="selected"' : '' }}>{{ $troncal->nombre }}</option>
-                    @endforeach
-                </select>
-                <br>
-                <label for="Empresas_id_canal">Empresas</label>
-                <select name="Empresas_id_canal" id="Empresas_id_canal" class="form-control" autofocus>
-                    <option value="">Selecciona una empresa</option>
-                    @foreach( $empresas as $empresa )
-                        <option value="{{ $empresa->id }}" {{ ( $canal->Empresas_id == $empresa->id )  ? 'selected="selected"' : '' }}>{{ $empresa->nombre }}</option>
-                    @endforeach
-                </select>
-            </div>
+            @csrf
+            <br>
+            <input type="hidden" name="id" id="id" value="{{ $canal->id }}">
         </div>
     </div>
     <div class="col-md-12" style="padding:10px;">

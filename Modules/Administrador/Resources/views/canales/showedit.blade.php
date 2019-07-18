@@ -2,7 +2,7 @@
 <select name="Troncales_id_canal" id="Troncales_id_canal" class="form-control" autofocus>
     <option value="">Selecciona una troncal</option>
     @foreach( $troncales as $troncal )
-        <option value="{{ $troncal->id }}">{{($troncal->nombre == "") ? "AMD" : $troncal->nombre }}</option>
+        <option value="{{ $troncal->id }}">{{ $troncal->nombre }}</option>
     @endforeach
 </select>
 <br>
@@ -26,23 +26,15 @@
         <div class="col-md-1">
             <input type="checkbox" id="checkcanal" name="checkcanal" value="{{$canal->id}}" checked>
         </div>
-        @if($canal->nombre == "AMD")
-            <div class="col-md-5" style="width: 10%;padding: 0px;font-size: 20px;">
-                <label for="">LOCAL/</label>
-            </div>
-        @else
-            <div class="col-md-1" style="width: 4%;padding: 0px;font-size: 20px;">
-                <label for="">SIP/</label>
-            </div>
-            <div class="col-md-3">
-                <input type="text" class="form-control" name="canal_troncal{{$canal->id}}" id="canal_troncal{{$canal->id}}" placeholder="{ TRONCAL }" readonly>
-            </div>
-            <div class="col-md-1" style="width: 0%;padding: 0px;font-size: 20px;">
-                <label for="">/</label>
-            </div>
-        @endif
-        
-        
+        <div class="col-md-1" style="width: 4%;padding: 0px;font-size: 20px;">
+            <label for="">SIP/</label>
+        </div>
+        <div class="col-md-3">
+            <input type="text" class="form-control" name="canal_troncal{{$canal->id}}" id="canal_troncal{{$canal->id}}" placeholder="{ TRONCAL }" readonly>
+        </div>
+        <div class="col-md-1" style="width: 0%;padding: 0px;font-size: 20px;">
+            <label for="">/</label>
+        </div>
         <div class="col-md-2">
             <input type="text" class="form-control canal_prefijo{{$canal->id}}" name="canal_prefijo{{$canal->id}}" id="canal_prefijo{{$canal->id}}" placeholder="{ PREFIJO }" readonly>
         </div>

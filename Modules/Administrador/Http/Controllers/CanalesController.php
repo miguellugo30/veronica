@@ -46,20 +46,23 @@ class CanalesController extends Controller
      */
     public function store(Request $request)
     {
+        
        /**
          * Obtenemos todos los datos del formulario de alta y
          * los insertamos la informacion del formulario
          */
-        $canales_recibidos = $request->canales;
+        $prefijos = $request->prefijos;
+        $prefijos = explode(";",$prefijos);
 
-        $canales = explode(";",$canales_recibidos);
-
-        /*foreach($canales as $canal=> $value){
-            Canales::create(['canal'
-            ,'Empresas_id'=>$request->Empresas_id
-            ,'Troncales_id' = $request->Troncales_id;
-            ,'Cat_Distribuidor_id' = $request->Cat_Distribuidor_id;
-        }*/
+        for($c=0;$c<count($prefijos);$c++){
+            $prefijo = explode(",",$prefijos[$c]);
+            Canales::create(['protocolo'=>$request->protocolo,
+                    'prefijo'=>$prefijo[0],
+                    'Troncales_id'=>$request->Troncales_id,
+                    'Cat_Distribuidor_id'=>$request->Cat_Distribuidor_id,
+                    'Cat_Canales_Tipo_id'=>$prefijo[1],
+                    'Empresas_id'=>$request->Empresas_id]);
+        }       
 
         /**
          * Redirigimos a la ruta index
@@ -106,17 +109,8 @@ class CanalesController extends Controller
         $troncales = $distribuidor->Troncales;
         $empresas = $distribuidor->Config_Empresas->all();
 
-        /**
-         * Arreglos que almacenan el tipo de canal el primer arreglo almacena los de telmex y el segundo almacena los de c3ntro.
-         */
-        $tipo_canal_telmex = array(['id' => '1','tipo' => 'Offnet(Salida)'],['id' => '2','tipo' => 'Onnet (Interno  entre Ext)'],['id' => '3','tipo' => 'DID (Entrante)']);      
-        
-        $tipo_canal_c3ntro = array(['id' => '1','tipo' => 'Offnet(Salida)'],['id' => '3','tipo' => 'DID (Entrante)'],['id' => '4','tipo' => 'Onnet (Integracion)'],['id' => '5','tipo' => 'DIDFAKE (Integracion)']);  
-
-        foreach($tipo_canal_telmex as $tipo_canal => $value){
-            echo $tipo_canal[$value];
-        }
-        return view('administrador::canales.edit', compact( 'canal', 'distribuidores', 'troncales', 'empresas','tipo_canal_telmex','tipo_canal_c3ntro'));
+        $tipo_canales = Cat_Tipo_Canales::where('Cat_Distribuidor_id',$distribuidor->id)->get();
+        return view('administrador::canales.edit', compact( 'canal', 'distribuidores', 'troncales', 'empresas','tipo_canales'));
     }
 
     /**

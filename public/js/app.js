@@ -155,25 +155,32 @@ $(function () {
 
   $(document).on('click', '.saveCanal', function (event) {
     event.preventDefault();
-    var Cat_Distribuidor_id = $("#distribuidores_canal").val();
+    var protocolo = "SIP/";
+    var prefijos = "";
+    var Cat_Canales_Tipo_id;
+    var id_distribuidor = $("#distribuidores_canal").val();
+    $("input[type=checkbox]:checked").each(function () {
+      indice = $(this).val();
+      distribuidor = $("#canal_prefijo" + indice).val();
+      empresa = $("#canal_empresa" + indice).val();
+      tipo = $("#canal_tipo" + indice).val();
+      prefijo = distribuidor + empresa + tipo;
+      prefijos = prefijos + prefijo + "," + indice + ";";
+    });
+    prefijos = prefijos.substring(0, prefijos.length - 1);
     var Empresas_id = $("#Empresas_id_canal").val();
     var Troncales_id = $("#Troncales_id_canal").val();
-    /**
-     * Valores para armar los canales
-     */
-
-    var canal_prefijo = $("#canal_prefijo1").val();
-    var canal_empresa = $("#canal_empresa1").val();
-    var canal_tipo = $("#canal_tipo1").val();
+    var Cat_Distribuidor_id = $("#distribuidores_canal").val();
 
     var _token = $("input[name=_token]").val();
 
     var url = currentURL + '/canales';
     $.post(url, {
+      protocolo: protocolo,
+      prefijos: prefijos,
       Empresas_id: Empresas_id,
       Troncales_id: Troncales_id,
       Cat_Distribuidor_id: Cat_Distribuidor_id,
-      canales: canales,
       _token: _token
     }, function (data, textStatus, xhr) {
       $('.viewResult').html(data);
@@ -278,6 +285,20 @@ $(function () {
     });
   });
   /**
+   * Evento que obtiene el distribuidor al momento de editar
+   */
+
+  $(document).on('change', '#distribuidores_canal_editar', function (event) {
+    var prefijo = $("#distribuidores_canal_editar option:selected").data('prefijo');
+    var id_empresa = $(this).val();
+    var url = currentURL + '/canales/' + id_empresa;
+    var id_distribuidor = $("#distribuidores_canal_editar").val();
+    $.get(url, function (data, textStatus, xhr) {
+      $(".resultDistribuidor").html(data);
+      $("#canal_prefijo").val(prefijo);
+    });
+  });
+  /**
    * Evento que obtiene el distribuidor y
    */
 
@@ -330,6 +351,33 @@ $(function () {
       $("#canal_troncal6").val(prefijo);
       $("#canal_troncal7").val(prefijo);
     }
+  });
+  /**
+   * Evento para obtener el nombre de la troncal al editar
+   */
+
+  $(document).on('change', '#Troncales_id_canal', function (event) {
+    var id_distribuidor = $("#distribuidores_canal").val();
+    var prefijo = $("#Troncales_id_canal option:selected").text();
+    $("#canal_troncal").val(prefijo);
+  });
+  /**
+   * Evento para asignar el id de la empresa al editar
+   */
+
+  $(document).on('change', '#Empresas_id_canal', function (event) {
+    var id_distribuidor = $("#distribuidores_canal").val();
+    var id_Empresa = $("#Empresas_id_canal option:selected").val();
+    $("#canal_empresa").val(zfill(id_Empresa, 3));
+  });
+  /**
+   * Evento para asignar el tipo de canal al editar
+   */
+
+  $(document).on('change', '#Tipo_canal', function (event) {
+    var id_distribuidor = $("#distribuidores_canal").val();
+    var id_Empresa = $("#Empresas_id_canal option:selected").val();
+    $("#canal_empresa").val(zfill(id_Empresa, 3));
   });
   /**
    * Evento para asignar el id de la empresa
