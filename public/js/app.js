@@ -1245,6 +1245,142 @@ $(function () {
 
 /***/ }),
 
+/***/ "./resources/js/module_administrador/cat_tipo_canal.js":
+/*!*************************************************************!*\
+  !*** ./resources/js/module_administrador/cat_tipo_canal.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  var currentURL = window.location.href;
+  /**
+   * Evento para mostrar el formulario de crear un nuevo canal
+   */
+
+  $(document).on("click", ".newTipoCanal", function (e) {
+    e.preventDefault();
+    $(".viewIndex").slideUp();
+    $(".viewCreate").slideDown();
+    var url = currentURL + '/cat_tipo_canales/create';
+    $.get(url, function (data, textStatus, jqXHR) {
+      $(".viewCreate").html(data);
+    });
+  });
+  /**
+   * Evento para guardar el nuevo modulo
+   */
+
+  $(document).on('click', '.saveTipoCanales', function (event) {
+    event.preventDefault();
+    var nombre = $("#nombre").val();
+    var prefijo = $("#prefijo").val();
+    var distribuidor = $("#distribuidor").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var url = currentURL + '/cat_tipo_canales';
+    $.post(url, {
+      nombre: nombre,
+      prefijo: prefijo,
+      Cat_Distribuidor_id: distribuidor,
+      _token: _token
+    }, function (data, textStatus, xhr) {
+      $('.viewResult').html(data);
+      $('.viewIndex #tableTiposCanal').DataTable({
+        "lengthChange": true
+      });
+    });
+  });
+  /**
+   * Evento para mostrar el formulario editar modulo
+   */
+
+  $(document).on('dblclick', '#tableTiposCanal tbody tr', function (event) {
+    event.preventDefault();
+    $(".viewIndex").slideUp();
+    $(".viewCreate").slideDown();
+    var id = $(this).data("id");
+    var url = currentURL + "/cat_tipo_canales/" + id + "/edit";
+    $.get(url, function (data, textStatus, jqXHR) {
+      $(".viewCreate").html(data);
+    });
+  });
+  /**
+   * Evento para cancelar la creacion/edicion del modulo
+   */
+
+  $(document).on("click", ".cancelTipoCanal", function (e) {
+    $(".viewIndex").slideDown();
+    $(".viewCreate").slideUp();
+    $(".viewCreate").html('');
+  });
+  /**
+   * Evento para editar el modulo
+   */
+
+  $(document).on('click', '.updateTipoCanal', function (event) {
+    event.preventDefault();
+    var nombre = $("#nombre").val();
+    var prefijo = $("#prefijo").val();
+    var distribuidor = $("#distribuidor").val();
+    var id = $("#id").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var _method = 'PUT';
+    var url = currentURL + '/cat_tipo_canales/' + id;
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {
+        nombre: nombre,
+        prefijo: prefijo,
+        Cat_Distribuidor_id: distribuidor,
+        _token: _token,
+        _method: _method
+      },
+      success: function success(result) {
+        $('.viewResult').html(result);
+        $('.viewCreate').slideUp();
+        $('.viewIndex #tableTiposCanal').DataTable({
+          "lengthChange": true
+        });
+      }
+    });
+  });
+  /**
+   * Evento para eliminar el modulo
+   */
+
+  $(document).on('click', '.deleteTipoCanal', function (event) {
+    event.preventDefault();
+    var id = $("#id").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var _method = "DELETE";
+    var url = currentURL + '/cat_tipo_canales/' + id;
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {
+        _token: _token,
+        _method: _method
+      },
+      success: function success(result) {
+        $('.viewResult').html(result);
+        $('.viewCreate').slideUp();
+        $('.viewIndex #tableTiposCanal').DataTable({
+          "lengthChange": true
+        });
+      }
+    });
+  });
+});
+
+/***/ }),
+
 /***/ "./resources/js/module_administrador/dids.js":
 /*!***************************************************!*\
   !*** ./resources/js/module_administrador/dids.js ***!
@@ -1682,10 +1818,7 @@ $(function () {
 
 
     $('#anterior').attr('data-opcion-anterior', opciones[opcionAnterior]);
-    $('#siguiente').attr('data-opcion-siguiente', opciones[opcionSiguiente]); //console.log(accion + " " + opcion + " " + opcionSiguiente + " " + opciones.length);
-    //console.log("Regresa Vista" + opciones[opcionSiguiente]);
-    //$('#formDataEmpresa').html(opciones[opcionSiguiente]);
-
+    $('#siguiente').attr('data-opcion-siguiente', opciones[opcionSiguiente]);
     /**
      * Dependiendo de la accion a realizar, se define
      * la URL y metodo que se usara
@@ -1765,10 +1898,7 @@ $(function () {
     }
 
     $('#anterior').attr('data-opcion-anterior', opciones[opcionAnterior]);
-    $('#siguiente').attr('data-opcion-siguiente', opciones[opcionSiguiente]); //console.log(accion + " " + opcion + " " + opcionAnterior + " " + opciones.length);
-    //console.log("Regresa Vista " + opciones[opcionSiguiente]);
-    //$('#formDataEmpresa').html(opciones[opcionSiguiente]);
-
+    $('#siguiente').attr('data-opcion-siguiente', opciones[opcionSiguiente]);
     var id = $("#id_empresa").val();
 
     var _token = $("input[name=_token]").val();
@@ -1841,19 +1971,21 @@ $(function () {
         _method: _method
       },
       success: function success(result) {
-        var url = currentURL + "/empresas/" + id + "/edit";
-        $.get(url, function (data, textStatus, jqXHR) {
-          $(".viewCreate").html(data);
-          var dato = id + ".dataGeneral";
-          var url = currentURL + '/empresas/' + dato;
-          $.ajax({
-            url: url,
-            type: 'GET',
-            success: function success(result) {
-              $('#formDataEmpresa').html(result);
-            }
-          });
-        });
+        $('#formDataEmpresa').html(result);
+        /*
+                        let url = currentURL + "/empresas/" + id + "/edit";
+                         $.get(url, function(data, textStatus, jqXHR) {
+                            $(".viewCreate").html(data);
+                            let dato = id + ".dataGeneral";
+                            let url = currentURL + '/empresas/' + dato;
+                             $.ajax({
+                                url: url,
+                                type: 'GET',
+                                success: function(result) {
+                                    $('#formDataEmpresa').html(result);
+                                }
+                            });
+                        });*/
       }
     });
   });
@@ -1898,6 +2030,13 @@ $(function () {
     var _token = $("input[name=_token]").val();
 
     var dato = id + "." + opcion;
+
+    if (opcion == 'dataGeneral') {
+      $('.updateEmpresa').slideUp();
+    } else {
+      $('.updateEmpresa').slideDown();
+    }
+
     var url = currentURL + '/empresas/' + dato;
     $.ajax({
       url: url,
@@ -1908,6 +2047,103 @@ $(function () {
       success: function success(result) {
         $('#formDataEmpresa').html(result);
       }
+    });
+  });
+  /**
+   * Evento para habilitar la edicion del canal seleccionado
+   */
+
+  $(document).on('click', '.editar_canal', function (event) {
+    var id = $(this).val();
+    /**
+     * Habilitamos los inputs para editar
+     */
+
+    if ($(this).prop('checked')) {
+      $("#tipo_Canal_" + id).prop("disabled", false);
+      $("#troncal_" + id).prop("disabled", false);
+      $("#prefijo_" + id).prop("disabled", false);
+      $("#prefijo_completo_" + id).prop("disabled", false);
+    } else {
+      $("#tipo_Canal_" + id).prop("disabled", true);
+      $("#troncal_" + id).prop("disabled", true);
+      $("#prefijo_" + id).prop("disabled", true);
+      $("#prefijo_completo_" + id).prop("disabled", true);
+    }
+  });
+});
+
+/***/ }),
+
+/***/ "./resources/js/module_administrador/menu.js":
+/*!***************************************************!*\
+  !*** ./resources/js/module_administrador/menu.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  var currentURL = window.location.href;
+  /**
+   * Evento para el menu de sub categorias y mostrar la vista
+   */
+
+  $(document).on("click", ".sub-menu li", function (e) {
+    e.preventDefault();
+    var id = $(this).data("id");
+
+    if (id == 6) {
+      url = currentURL + '/usuarios';
+      table = ' #tableUsuarios';
+    } else if (id == 4) {
+      url = currentURL + '/menus';
+      table = ' #tableMenus';
+    } else if (id == 3) {
+      url = currentURL + '/modulos';
+      table = ' #tableModulos';
+    } else if (id == 1) {
+      url = currentURL + '/distribuidor';
+      table = ' #tableDistribuidores';
+    } else if (id == 8) {
+      url = currentURL + '/did';
+      table = ' #tableDid';
+    } else if (id == 10) {
+      url = currentURL + '/cat_empresa';
+      table = ' #tableEdoEmp';
+    } else if (id == 11) {
+      url = currentURL + '/cat_ip_pbx';
+      table = ' #tablePbx';
+    } else if (id == 12) {
+      url = currentURL + '/cat_nas';
+      table = ' #tableNas';
+    } else if (id == 13) {
+      url = currentURL + '/cat_agente';
+      table = ' #tableEdoAge';
+    } else if (id == 14) {
+      url = currentURL + '/cat_cliente';
+      table = ' #tableEdoCli';
+    } else if (id == 9) {
+      url = currentURL + '/troncales';
+      table = ' #tableTroncales';
+    } else if (id == 15) {
+      url = currentURL + '/canales';
+      table = ' #tableCanales';
+    } else if (id == 2) {
+      url = currentURL + '/empresas';
+      table = ' #tableEmpresas';
+    } else if (id == 16) {
+      url = currentURL + '/basedatos';
+      table = ' #tableBaseDatos';
+    } else if (id == 17) {
+      url = currentURL + '/cat_tipo_canales';
+      table = ' #tableTiposCanal';
+    }
+
+    $.get(url, function (data, textStatus, jqXHR) {
+      $(".viewResult").html(data);
+      $('.viewResult' + table).DataTable({
+        "lengthChange": true
+      });
     });
   });
 });
@@ -2686,68 +2922,6 @@ $(function () {
     });
   });
   /**
-   * Evento para el menu de sub categorias y mostrar la vista
-   */
-
-  $(".sub-categorias").on("click", ".subCat a", function (e) {
-    e.preventDefault();
-    var id = $(this).data("id");
-
-    if (id == 6) {
-      url = currentURL + '/usuarios';
-      table = ' #tableUsuarios';
-    } else if (id == 4) {
-      url = currentURL + '/menus';
-      table = ' #tableMenus';
-    } else if (id == 3) {
-      url = currentURL + '/modulos';
-      table = ' #tableDistribuidores';
-    } else if (id == 1) {
-      url = currentURL + '/distribuidor';
-      table = ' #tableDistribuidores';
-    } else if (id == 8) {
-      url = currentURL + '/did';
-      table = ' #tableDid';
-    } else if (id == 10) {
-      url = currentURL + '/cat_empresa';
-      table = ' #tableDid';
-    } else if (id == 11) {
-      url = currentURL + '/cat_ip_pbx';
-      table = ' #tableDid';
-    } else if (id == 12) {
-      url = currentURL + '/cat_nas';
-      table = ' #tableDid';
-    } else if (id == 13) {
-      url = currentURL + '/cat_agente';
-      table = ' #tableEdoAge';
-    } else if (id == 14) {
-      url = currentURL + '/cat_cliente';
-      table = ' #tableEdoCli';
-    } else if (id == 9) {
-      url = currentURL + '/troncales';
-      table = ' #tableTroncales';
-    } else if (id == 15) {
-      url = currentURL + '/canales';
-      table = ' #tableCanales';
-    } else if (id == 2) {
-      url = currentURL + '/empresas';
-      table = ' #tableEmpresas';
-    } else if (id == 16) {
-      url = currentURL + '/basedatos';
-      table = ' #tableBaseDatos';
-    } else if (id == 17) {
-      url = currentURL + '/cat_tipo_canales';
-      table = ' #tableTipoanal';
-    }
-
-    $.get(url, function (data, textStatus, jqXHR) {
-      $(".viewResult").html(data);
-      $('.viewResult' + table).DataTable({
-        "lengthChange": true
-      });
-    });
-  });
-  /**
    * Evento para ver el formulario de nuevo usuario
    */
 
@@ -2901,9 +3075,9 @@ $(function () {
 /***/ }),
 
 /***/ 0:
-/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/js/module_administrador/usuarios.js ./resources/js/module_administrador/modulos.js ./resources/js/module_administrador/submenus.js ./resources/js/module_administrador/menus.js ./resources/js/module_administrador/distribuidores.js ./resources/js/module_administrador/dids.js ./resources/js/module_administrador/cat_estado_agente.js ./resources/js/module_administrador/cat_estado_cliente.js ./resources/js/module_administrador/cat_estado_empresa.js ./resources/js/module_administrador/cat_ip_pbx.js ./resources/js/module_administrador/cat_nas.js ./resources/js/module_administrador/troncales.js ./resources/js/module_administrador/canales.js ./resources/js/module_administrador/empresas.js ./resources/js/module_administrador/cat_base_datos.js ***!
-  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/js/module_administrador/usuarios.js ./resources/js/module_administrador/modulos.js ./resources/js/module_administrador/submenus.js ./resources/js/module_administrador/menus.js ./resources/js/module_administrador/distribuidores.js ./resources/js/module_administrador/dids.js ./resources/js/module_administrador/cat_estado_agente.js ./resources/js/module_administrador/cat_estado_cliente.js ./resources/js/module_administrador/cat_estado_empresa.js ./resources/js/module_administrador/cat_ip_pbx.js ./resources/js/module_administrador/cat_nas.js ./resources/js/module_administrador/troncales.js ./resources/js/module_administrador/canales.js ./resources/js/module_administrador/empresas.js ./resources/js/module_administrador/cat_base_datos.js ./resources/js/module_administrador/cat_tipo_canal.js ./resources/js/module_administrador/menu.js ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2922,7 +3096,9 @@ __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\c
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\troncales.js */"./resources/js/module_administrador/troncales.js");
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\canales.js */"./resources/js/module_administrador/canales.js");
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\empresas.js */"./resources/js/module_administrador/empresas.js");
-module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\cat_base_datos.js */"./resources/js/module_administrador/cat_base_datos.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\cat_base_datos.js */"./resources/js/module_administrador/cat_base_datos.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\cat_tipo_canal.js */"./resources/js/module_administrador/cat_tipo_canal.js");
+module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\menu.js */"./resources/js/module_administrador/menu.js");
 
 
 /***/ })

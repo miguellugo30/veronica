@@ -49,16 +49,18 @@
             <!-- Header Navbar -->
             <nav class="navbar navbar-static-top" role="navigation">
                 <!-- Sidebar toggle button-->
-
+                <a href="#" class="sidebar-toggle fa5" data-toggle="push-menu" role="button">
+                        <span class="sr-only">{{ trans('adminlte::adminlte.toggle_navigation') }}</span>
+                    </a>
             @endif
                 <!-- MENU DE CATEGORIAS -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="float:left">
+                <!--div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="float:left">
                     <ul class="nav navbar-nav menu-categorias">
-                        @foreach ($categorias as $categoria)
+                        {{--@foreach ($categorias as $categoria)
                             <li><a href="{{ route('categoria', $categoria->id ) }}">{{ $categoria->nombre }}</span></a></li>
-                        @endforeach
+                        @endforeach--}}
                     </ul>
-                </div><!-- /.navbar-collapse -->
+                </div--><!-- /.navbar-collapse -->
                  <!-- FIN MENU DE CATEGORIAS -->
                 <!-- Navbar Right Menu -->
                 <div class="navbar-custom-menu">
@@ -91,16 +93,43 @@
             </nav>
         </header>
 
+        @if(config('adminlte.layout') != 'top-nav')
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="main-sidebar">
+
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+                <!-- Sidebar Menu -->
+                <ul class="sidebar-menu tree" data-widget="tree">
+                    @foreach ($categorias as $categoria)
+                        <li class="treeview">
+                            <a>
+                                <i class="{{ $categoria->class_icon }} fa-2x"> </i>
+                                <span> {{ $categoria->nombre }}</span>
+                            </a>
+                            <ul class="treeview-menu sub-menu">
+                                @foreach ($categoria->Sub_Categorias as $sub)
+                                    <li data-id="{{ $sub->id }}"><a href="#"><i class="far fa-building"></i> {{ $sub->nombre }}</a></li>
+                                @endforeach
+                            </ul>
+                        </li>
+                    @endforeach
+                </ul>
+                <!-- /.sidebar-menu -->
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+        @endif
 
         <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper" style="margin-left:0px; min-height: 800px;">
+        <div class="content-wrapper" >
             @if(config('adminlte.layout') == 'top-nav')
             <div class="container">
             @endif
 
             <!-- Content Header (Page header) -->
-            <section class="content-header sub-categorias" style="padding:0px">
-                @yield('content_header')
+            <section class="content-header sub-categorias">
+                {{--@yield('content_header')--}}
             </section>
 
             <!-- Main content -->
@@ -116,7 +145,11 @@
             @endif
         </div>
         <!-- /.content-wrapper -->
-
+        @hasSection('footer')
+        <footer class="main-footer">
+            @yield('footer')
+        </footer>
+        @endif
     </div>
     <!-- ./wrapper -->
 @stop

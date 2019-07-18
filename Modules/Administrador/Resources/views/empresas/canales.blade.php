@@ -1,7 +1,7 @@
 <fieldset>
-    <div class="col-md-6" style="float:none; margin:auto">
+    <div class="col-md-12" style="float:none; margin:auto">
         @csrf
-        <input type="hidden" name="action" id="action" value="dataPosiciones">
+        <input type="hidden" name="action" id="action" value="dataCanales">
         <input type="hidden" name="id_empresa" id="id_empresa" value="{{$idEmpresa}}">
         <table  class="table table-striped">
             <thead>
@@ -17,17 +17,29 @@
             <tbody>
                 @foreach ($canales as $canal)
                     <tr>
-                        <td><input type="checkbox" name="id" id="id" value="{{ $canal->id }}"></td>
+                        <td><input type="checkbox" class="editar_canal" name="editar_canal_{{ $canal->id }}" id="editar_canal_{{ $canal->id }}" value="{{ $canal->id }}"></td>
                         <td>{{ $canal->Distribuidores->servicio }}</td>
                         <td>
-                            <select name="" id="" readonly="readonly">
+                            <select name="tipo_Canal_{{ $canal->id }}" id="tipo_Canal_{{ $canal->id }}" class="form-control input-sm" disabled>
                                 @foreach ($TipoCanales as $tipoCanal)
                                     <option value="{{ $tipoCanal->id }}" {{ $tipoCanal->id == $canal->Cat_Canales_Tipo_id ? 'selected' : '' }}>{{ $tipoCanal->nombre }}</option>
                                 @endforeach
                             </select>
                         <td>{{ $canal->protocolo }}</td>
-                        <td>{{ $canal->Troncales->nombre }}</td>
-                        <td>{{ $canal->prefijo }}</td>
+                        <td>
+                            <select name="troncal_{{ $canal->id }}" id="troncal_{{ $canal->id }}"  class="form-control input-sm" disabled>
+                                @foreach ($troncales as $troncal)
+                                    <option value="{{ $troncal->id }}" {{ $troncal->id == $canal->Troncales_id ? 'selected' : '' }}>{{ $troncal->nombre }}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                        <td>
+                            <div class="input-group col-sm-6">
+                                <span class="input-group-addon">{{ substr( $canal->prefijo, 0, -2 ) }}</span>
+                                <input type="text" class="form-control input-sm" name="prefijo_{{ $canal->id }}" id="prefijo_{{ $canal->id }}" value="{{ substr( $canal->prefijo, -2 ) }}" disabled>
+                                <input type="hidden" name="prefijo_completo_{{ $canal->id }}" id="prefijo_completo_{{ $canal->id }}" value="{{ substr( $canal->prefijo, 0, -2 ) }}" disabled>
+                            </div>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

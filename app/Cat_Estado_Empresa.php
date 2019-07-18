@@ -20,4 +20,11 @@ class Cat_Estado_Empresa extends Model
      * Nombre de la tabla
      */
     protected $table = 'Cat_Estado_Empresa';
+        /**
+     * Relacion uno a uno con Cat_Estado_Empresas
+     */
+    public function Empresa()
+    {
+        return $this->hasOne('Nimbus\Empresas');
+    }
 }

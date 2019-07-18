@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Categorias extends Model
 {
     protected $fillable = [
-        'nombre', 'descripcion', 'tipo',
+        'nombre', 'descripcion', 'class_icon', 'tipo',
     ];
     /**
      * Relacion uno a muchos con sub categoria

@@ -79,10 +79,6 @@ $(function() {
         $('#anterior').attr('data-opcion-anterior', opciones[opcionAnterior]);
         $('#siguiente').attr('data-opcion-siguiente', opciones[opcionSiguiente]);
 
-        //console.log(accion + " " + opcion + " " + opcionSiguiente + " " + opciones.length);
-        //console.log("Regresa Vista" + opciones[opcionSiguiente]);
-        //$('#formDataEmpresa').html(opciones[opcionSiguiente]);
-
         /**
          * Dependiendo de la accion a realizar, se define
          * la URL y metodo que se usara
@@ -151,10 +147,6 @@ $(function() {
 
         $('#anterior').attr('data-opcion-anterior', opciones[opcionAnterior]);
         $('#siguiente').attr('data-opcion-siguiente', opciones[opcionSiguiente]);
-
-        //console.log(accion + " " + opcion + " " + opcionAnterior + " " + opciones.length);
-        //console.log("Regresa Vista " + opciones[opcionSiguiente]);
-        //$('#formDataEmpresa').html(opciones[opcionSiguiente]);
 
         let id = $("#id_empresa").val();
         let _token = $("input[name=_token]").val();
@@ -229,23 +221,23 @@ $(function() {
                 _method: _method
             },
             success: function(result) {
+                $('#formDataEmpresa').html(result);
+                /*
+                                let url = currentURL + "/empresas/" + id + "/edit";
 
-                let url = currentURL + "/empresas/" + id + "/edit";
+                                $.get(url, function(data, textStatus, jqXHR) {
+                                    $(".viewCreate").html(data);
+                                    let dato = id + ".dataGeneral";
+                                    let url = currentURL + '/empresas/' + dato;
 
-                $.get(url, function(data, textStatus, jqXHR) {
-                    $(".viewCreate").html(data);
-                    let dato = id + ".dataGeneral";
-                    let url = currentURL + '/empresas/' + dato;
-
-                    $.ajax({
-                        url: url,
-                        type: 'GET',
-                        success: function(result) {
-                            $('#formDataEmpresa').html(result);
-                        }
-                    });
-                });
-
+                                    $.ajax({
+                                        url: url,
+                                        type: 'GET',
+                                        success: function(result) {
+                                            $('#formDataEmpresa').html(result);
+                                        }
+                                    });
+                                });*/
             }
         });
     });
@@ -289,6 +281,12 @@ $(function() {
         let _token = $("input[name=_token]").val();
         let dato = id + "." + opcion;
 
+        if (opcion == 'dataGeneral') {
+            $('.updateEmpresa').slideUp();
+        } else {
+            $('.updateEmpresa').slideDown();
+        }
+
         let url = currentURL + '/empresas/' + dato;
 
         $.ajax({
@@ -302,5 +300,25 @@ $(function() {
             }
         });
 
+    });
+    /**
+     * Evento para habilitar la edicion del canal seleccionado
+     */
+    $(document).on('click', '.editar_canal', function(event) {
+        let id = $(this).val();
+        /**
+         * Habilitamos los inputs para editar
+         */
+        if ($(this).prop('checked')) {
+            $("#tipo_Canal_" + id).prop("disabled", false);
+            $("#troncal_" + id).prop("disabled", false);
+            $("#prefijo_" + id).prop("disabled", false);
+            $("#prefijo_completo_" + id).prop("disabled", false);
+        } else {
+            $("#tipo_Canal_" + id).prop("disabled", true);
+            $("#troncal_" + id).prop("disabled", true);
+            $("#prefijo_" + id).prop("disabled", true);
+            $("#prefijo_completo_" + id).prop("disabled", true);
+        }
     });
 });

@@ -300,6 +300,7 @@ class EmpresasController extends Controller
              * Devolvemos la informacion de los tipos de canales de la empresa
              */
             $canales = Canales::where('Empresas_id', $idEmpresa )->get();
+            //dd( $canales );
             /**
              * Recuperamos los tipo de canales
              */
@@ -307,10 +308,13 @@ class EmpresasController extends Controller
             /**
              * Recuperamos las troncales asociadas a la empresa
              */
-            $troncales = Troncales::where('Cat_Distribuidor_id', $canales->Cat_Distribuidor_id )->get();
+            $troncales = Troncales::where([
+                                            ['activo', '=', '1'],
+                                            ['Cat_Distribuidor_id', '=',  $canales[0]->Cat_Distribuidor_id]
+                                        ])->get();
 
 
-            return view('administrador::empresas.canales', compact('canales', 'idEmpresa', 'TipoCanales') );
+            return view('administrador::empresas.canales', compact('canales', 'idEmpresa', 'TipoCanales', 'troncales') );
 
         } else if( $data[1] == 'dataExtensiones' ) {
 
@@ -531,7 +535,32 @@ class EmpresasController extends Controller
             ]);
             if ($request->input('accion') == "actualizar") {
             }
+        } else if( $data['action'] == 'dataCanales' ) {
+            $idEmpresa = $data['id_empresa'];
+            array_shift($data);
+            array_shift($data);
+            array_shift($data);
+            $info = array_chunk( $data, 5 );
+            /**
+             * Editamos el canal
+             */
+            for ($i=0; $i < count( $info ); $i++) {
+                Canales::where([
+                                ['Empresas_id', '=', $idEmpresa],
+                                ['id', '=',  $info[$i][0] ]
+                            ])->update([
+                                'prefijo' => $info[$i][4].$info[$i][3],
+                                'Troncales_id' => $info[$i][2],
+                                'Cat_Canales_Tipo_id' => $info[$i][1]
+                            ]);
+            }
+
         } else if( $data['action'] == 'dataExtensiones' ) {
+
+            for ($i=0; $i < (int)$data['posiciones']; $i++) {
+                echo (int)$data['extension'] + $i."<br>";
+            }
+
         }
 
     }

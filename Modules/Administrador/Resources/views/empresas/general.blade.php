@@ -11,11 +11,14 @@
                     <br>
                     <label>Distribuidor:</label>
                     <br>
+                    <label>Estado:</label>
+                    <br>
                 </div>
                 <div class="col-md-9">
                     <p>{{ $empresa->id }}</p>
                     <p>{{ $empresa->nombre }}</p>
                     <p>{{  $empresa->Config_Empresas->Distribuidores->servicio  }}</p>
+                    <p>{{ str_replace( '-', ' ', $empresa->Cat_Estado_Empresa->nombre ) }}</p>
                 </div>
             </div>
         </div>

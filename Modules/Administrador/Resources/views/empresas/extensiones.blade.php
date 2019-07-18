@@ -1,8 +1,8 @@
 <fieldset>
     <div class="col-md-6" style="float:none; margin:auto">
         <div class="form-group">
-            <label for="base_datos_empresa">Canal</label>
-            <select name="base_datos_empresa" id="base_datos_empresa" class="form-control input-sm">
+            <label for="canal_id">Canal</label>
+            <select name="canal_id" id="canal_id" class="form-control input-sm">
                 <option value="" >Selecciona un canal</option>
                 @foreach ($canales as $canal)
                     <option value="{{$canal->id}}">{{ $canal->protocolo }}{{ $canal->Troncales->nombre }}/{{ $canal->prefijo }}</option>
@@ -13,15 +13,15 @@
             @csrf
         </div>
         <div class="form-group">
-            <label for="base_datos_empresa">Rango de extensiones</label>
+            <label for="">Rango de extensiones</label>
             <div class="form-inline" style="text-align:center">
                 <div class="form-group">
-                    <label for="exampleInputName2">Inicio</label>
-                    <input type="number" min="1" class="form-control" id="inicioExtension" placeholder="Incio">
+                    <label for="extension">Extension</label>
+                    <input type="number" min="1" class="form-control" id="extension" name="extension" placeholder="Extension">
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputEmail2">Fin</label>
-                    <input type="number" min="1" class="form-control" id="finExtension" placeholder="Fin">
+                    <label for="posiciones">Numero de posiciones</label>
+                    <input type="number" min="1" max="99" class="form-control" id="posiciones" name="posiciones" placeholder="Num. Posiciones">
                 </div>
             </div>
         </div>
