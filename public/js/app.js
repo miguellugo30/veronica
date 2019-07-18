@@ -159,14 +159,12 @@ $(function () {
     var Empresas_id = $("#Empresas_id_canal").val();
     var Troncales_id = $("#Troncales_id_canal").val();
     /**
-     * Valores para armar el canal
+     * Valores para armar los canales
      */
 
-    var canal_troncal = $("#canal_troncal").val();
-    var canal_prefijo = $("#canal_prefijo").val();
-    var canal_empresa = $("#canal_empresa").val();
-    var canal_tipo = $("#canal_tipo").val();
-    var canal = "SIP/" + canal_troncal + "/" + canal_prefijo + canal_empresa + canal_tipo;
+    var canal_prefijo = $("#canal_prefijo1").val();
+    var canal_empresa = $("#canal_empresa1").val();
+    var canal_tipo = $("#canal_tipo1").val();
 
     var _token = $("input[name=_token]").val();
 
@@ -175,7 +173,7 @@ $(function () {
       Empresas_id: Empresas_id,
       Troncales_id: Troncales_id,
       Cat_Distribuidor_id: Cat_Distribuidor_id,
-      canal: canal,
+      canales: canales,
       _token: _token
     }, function (data, textStatus, xhr) {
       $('.viewResult').html(data);
@@ -284,12 +282,34 @@ $(function () {
    */
 
   $(document).on('change', '#distribuidores_canal', function (event) {
+    //Al cambiar de distribuidor se limpiara el campo de la troncal y el id de la empresa
+    $('#canal_troncal').val('');
+    $('#canal_empresa').val(''); //Obtener el valor del prefijo seleccionado y settearlo para el armado de canal en "canal_prefijo"
+
     var prefijo = $("#distribuidores_canal option:selected").data('prefijo');
-    $("#canal_prefijo").val(prefijo);
     var id_empresa = $(this).val();
     var url = currentURL + '/canales/' + id_empresa;
+    var id_distribuidor = $("#distribuidores_canal").val();
     $.get(url, function (data, textStatus, xhr) {
       $(".resultDistribuidor").html(data);
+
+      if (id_distribuidor == 2) {
+        $('.canal1').show();
+        $('.canal2').show();
+        $('.canal3').show();
+        $("#canal_prefijo1").val(prefijo);
+        $("#canal_prefijo2").val(prefijo);
+        $("#canal_prefijo3").val(prefijo);
+      } else if (id_distribuidor == 1) {
+        $('.canal4').show();
+        $('.canal5').show();
+        $('.canal6').show();
+        $('.canal7').show();
+        $("#canal_prefijo4").val(prefijo);
+        $("#canal_prefijo5").val(prefijo);
+        $("#canal_prefijo6").val(prefijo);
+        $("#canal_prefijo7").val(prefijo);
+      }
     });
   });
   /**
@@ -297,16 +317,38 @@ $(function () {
    */
 
   $(document).on('change', '#Troncales_id_canal', function (event) {
+    var id_distribuidor = $("#distribuidores_canal").val();
     var prefijo = $("#Troncales_id_canal option:selected").text();
-    $("#canal_troncal").val(prefijo);
+
+    if (id_distribuidor == 2) {
+      $("#canal_troncal1").val(prefijo);
+      $("#canal_troncal2").val(prefijo);
+      $("#canal_troncal3").val(prefijo);
+    } else if (id_distribuidor == 1) {
+      $("#canal_troncal4").val(prefijo);
+      $("#canal_troncal5").val(prefijo);
+      $("#canal_troncal6").val(prefijo);
+      $("#canal_troncal7").val(prefijo);
+    }
   });
   /**
-   * Evento para poder el id de la empresa
+   * Evento para asignar el id de la empresa
    */
 
   $(document).on('change', '#Empresas_id_canal', function (event) {
+    var id_distribuidor = $("#distribuidores_canal").val();
     var id_Empresa = $("#Empresas_id_canal option:selected").val();
-    $("#canal_empresa").val(zfill(id_Empresa, 3));
+
+    if (id_distribuidor == 2) {
+      $("#canal_empresa1").val(zfill(id_Empresa, 3));
+      $("#canal_empresa2").val(zfill(id_Empresa, 3));
+      $("#canal_empresa3").val(zfill(id_Empresa, 3));
+    } else if (id_distribuidor == 1) {
+      $("#canal_empresa4").val(zfill(id_Empresa, 3));
+      $("#canal_empresa5").val(zfill(id_Empresa, 3));
+      $("#canal_empresa6").val(zfill(id_Empresa, 3));
+      $("#canal_empresa7").val(zfill(id_Empresa, 3));
+    }
   });
   /**
    * Funcion para formatear el id de la empresa a 3 digitos
@@ -2604,6 +2646,19 @@ $(function () {
     var nombre_troncal = $(this).val();
     var nombre = nombre_troncal.replace(" ", "_");
     $("#troncal_sansay").val("BUS > " + nombre + " > DID");
+  });
+  /**
+   * Evento para invocar a la ventana modal para visualizar la configuracion
+   */
+
+  $(document).on('click', '.show-modal', function (event) {
+    var id = $(this).val(); //alert(id);
+
+    var url = currentURL + '/troncales/' + 1;
+    $.get(url, function (data, textStatus, xhr) {
+      $("#configuracionmodal").html(data);
+      $("#configuracionmodal").modal("show");
+    });
   });
 });
 

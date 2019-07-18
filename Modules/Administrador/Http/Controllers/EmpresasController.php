@@ -12,6 +12,9 @@ use Nimbus\Modulos;
 use Nimbus\BaseDatos;
 use Nimbus\Dominios;
 use Nimbus\Config_Empresas;
+use Nimbus\Canales;
+use Nimbus\Cat_Tipo_Canales;
+use Nimbus\Troncales;
 
 class EmpresasController extends Controller
 {
@@ -285,7 +288,6 @@ class EmpresasController extends Controller
             return view('administrador::empresas.posiciones', compact('modulos', 'configEmpresa', 'idEmpresa') );
 
         } else if( $data[1] == 'dataAlmacenamiento' ) {
-        } else if( $data[1] == 'dataCanales' ) {
             /**
              * Devolvemos la informacion de la infraestructura de la empresa
              */
@@ -293,9 +295,31 @@ class EmpresasController extends Controller
 
             return view('administrador::empresas.almacenamiento', compact('configEmpresa', 'idEmpresa') );
 
+        } else if( $data[1] == 'dataCanales' ) {
+            /**
+             * Devolvemos la informacion de los tipos de canales de la empresa
+             */
+            $canales = Canales::where('Empresas_id', $idEmpresa )->get();
+            /**
+             * Recuperamos los tipo de canales
+             */
+            $TipoCanales = Cat_Tipo_Canales::where('activo',1)->get();
+            /**
+             * Recuperamos las troncales asociadas a la empresa
+             */
+            $troncales = Troncales::where('Cat_Distribuidor_id', $canales->Cat_Distribuidor_id )->get();
+
+
+            return view('administrador::empresas.canales', compact('canales', 'idEmpresa', 'TipoCanales') );
+
         } else if( $data[1] == 'dataExtensiones' ) {
 
-            return view('administrador::empresas.extensiones', compact( 'idEmpresa') );
+            /**
+             * Devolvemos la informacion de los tipos de canales de la empresa
+             */
+            $canales = Canales::where('Empresas_id', $idEmpresa )->get();
+
+            return view('administrador::empresas.extensiones',compact( 'idEmpresa', 'canales') );
 
         }
     }

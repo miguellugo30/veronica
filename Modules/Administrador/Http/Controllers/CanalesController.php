@@ -7,6 +7,9 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Nimbus\Canales;
 use Nimbus\Cat_Distribuidor;
+use Nimbus\Troncales;
+use Nimbus\Config_Empresas;
+use Nimbus\Cat_Tipo_Canales;
 
 class CanalesController extends Controller
 {
@@ -47,7 +50,17 @@ class CanalesController extends Controller
          * Obtenemos todos los datos del formulario de alta y
          * los insertamos la informacion del formulario
          */
-        Canales::create( $request->all() );
+        $canales_recibidos = $request->canales;
+
+        $canales = explode(";",$canales_recibidos);
+
+        /*foreach($canales as $canal=> $value){
+            Canales::create(['canal'
+            ,'Empresas_id'=>$request->Empresas_id
+            ,'Troncales_id' = $request->Troncales_id;
+            ,'Cat_Distribuidor_id' = $request->Cat_Distribuidor_id;
+        }*/
+
         /**
          * Redirigimos a la ruta index
          */
@@ -65,8 +78,10 @@ class CanalesController extends Controller
 
         $troncales = $distribuidor->Troncales;
         $empresas = $distribuidor->Config_Empresas->all();
-
-        return view('administrador::canales.show', compact( 'troncales', 'empresas' ));
+            
+        $canales = Cat_Tipo_Canales::where('Cat_Distribuidor_id',$id)->get();
+        
+        return view('administrador::canales.show', compact( 'troncales', 'empresas','distribuidor','canales'));
     }
 
     /**
@@ -80,6 +95,7 @@ class CanalesController extends Controller
          * Recuperamos el canal ha editar
          */
         $canal = Canales::findOrFail($id);
+
         /**
          * Recuperamos todos los distribuidores que esten activos
          */
@@ -90,8 +106,17 @@ class CanalesController extends Controller
         $troncales = $distribuidor->Troncales;
         $empresas = $distribuidor->Config_Empresas->all();
 
+        /**
+         * Arreglos que almacenan el tipo de canal el primer arreglo almacena los de telmex y el segundo almacena los de c3ntro.
+         */
+        $tipo_canal_telmex = array(['id' => '1','tipo' => 'Offnet(Salida)'],['id' => '2','tipo' => 'Onnet (Interno  entre Ext)'],['id' => '3','tipo' => 'DID (Entrante)']);      
+        
+        $tipo_canal_c3ntro = array(['id' => '1','tipo' => 'Offnet(Salida)'],['id' => '3','tipo' => 'DID (Entrante)'],['id' => '4','tipo' => 'Onnet (Integracion)'],['id' => '5','tipo' => 'DIDFAKE (Integracion)']);  
 
-        return view('administrador::canales.edit', compact( 'canal', 'distribuidores', 'troncales', 'empresas'));
+        foreach($tipo_canal_telmex as $tipo_canal => $value){
+            echo $tipo_canal[$value];
+        }
+        return view('administrador::canales.edit', compact( 'canal', 'distribuidores', 'troncales', 'empresas','tipo_canal_telmex','tipo_canal_c3ntro'));
     }
 
     /**

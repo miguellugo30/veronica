@@ -4,6 +4,9 @@
             <label for="base_datos_empresa">Canal</label>
             <select name="base_datos_empresa" id="base_datos_empresa" class="form-control input-sm">
                 <option value="" >Selecciona un canal</option>
+                @foreach ($canales as $canal)
+                    <option value="{{$canal->id}}">{{ $canal->protocolo }}{{ $canal->Troncales->nombre }}/{{ $canal->prefijo }}</option>
+                @endforeach
             </select>
             <input type="hidden" name="id_empresa" id="id_empresa" value="{{ $idEmpresa }}">
             <input type="hidden" name="action" id="action" value="dataExtensiones">

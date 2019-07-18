@@ -14,7 +14,7 @@ class Canales extends Model
      * Campos que pueden ser modificados
      */
     protected $fillable = [
-       'canal', 'Troncales_id', 'Empresas_id', 'Cat_Distribuidor_id',
+       'canal', 'tipo' , 'Troncales_id', 'Empresas_id', 'Cat_Distribuidor_id',
     ];
     /**
      * Nombre de la tabla
@@ -47,5 +47,12 @@ class Canales extends Model
     public function Empresas()
     {
        return $this->belongsTo('Nimbus\Empresas', 'Empresas_id');
+    }
+     /**
+    * Relacion uno a uno con Cat_Tipo_Canales
+    */
+    public function Cat_Tipo_Canales()
+    {
+        return $this->hasOne('Nimbus\Cat_Tipo_Canales', 'id', 'Cat_Canales_Tipo_id');
     }
 }
