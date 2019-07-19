@@ -14,7 +14,7 @@
  * Ruta Home del modulo de Administrador
  */
 Route::prefix('administrador')->group(function() {
-    Route::get('/', 'AdministradorController@index')->middleware('auth');
+    Route::get('/', 'AdministradorController@index')->middleware('auth')->name('administrador');
 });
 /**
  * Rutas para CRUD de Usuarios

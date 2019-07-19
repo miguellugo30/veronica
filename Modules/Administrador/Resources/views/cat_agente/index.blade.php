@@ -1,6 +1,6 @@
 <div class="box box-primary">
     <div class="box-header with-border">
-        <h3 class="box-title"><i class="fas fa-phone"></i> Estados de Agentes</h3>
+        <h3 class="box-title"><b><i class="fas fa-phone"></i> Estados de Agentes</b></h3>
         <div class="box-tools pull-right">
             <button type="button" class="btn btn-primary btn-xs newEdoAge" data-widget="remove"><i class="fas fa-plus"></i> Nuevo catalogo</button>
         </div>

@@ -1,6 +1,6 @@
 <div class="box box-primary">
     <div class="box-header with-border">
-        <h3 class="box-title"><i class="fas fa-phone"></i> Estados de Cliente</h3>
+        <h3 class="box-title"><b><i class="fas fa-phone"></i> Estados de Cliente</b></h3>
         <div class="box-tools pull-right">
             <button type="button" class="btn btn-primary btn-xs newEdoCli" data-widget="remove"><i class="fas fa-plus"></i> Nuevo Catalogo</button>
             <button type="button" class="btn btn-primary btn-xs orderignEdoCli" data-widget="remove"><i class="fas fa-sort-numeric-down"></i> Ordenar Catalogo</button>
