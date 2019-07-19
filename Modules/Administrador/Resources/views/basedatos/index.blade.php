@@ -1,32 +1,34 @@
-<div class="col-12 viewIndex">
-    <fieldset >
-        <legend>
-            <i class="fas fa-database"></i>
-            Base de Datos
-            <button type="button" class="btn btn-primary btn-xs newDataBase" style="float: right;margin-left: 5px;">
-                <i class="fas fa-plus"></i>
-                Nueva Base de Datos
-            </button>
-        </legend>
-        <table id="tableBaseDatos" class="display table table-striped table-condensed" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>Ubicación</th>
-                        <th>Nombre</th>
-                        <th>IP</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($basesDatos as $basesDato)
-                        <tr data-id="{{ $basesDato->id }}">
-                            <td>{{$basesDato->ubicacion}}</td>
-                            <td>{{$basesDato->nombre}}</td>
-                            <td>{{$basesDato->ip}}</td>
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title"> <i class="fas fa-database"></i> Bases de Datos</h3>
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-primary btn-xs newDataBase" data-widget="remove"><i class="fas fa-plus"></i> Nueva Base de Datos</button>
+        </div>
+    </div><!-- /.box-header -->
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-12 viewIndex">
+                <table id="tableBaseDatos" class="display table table-striped table-condensed" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Ubicación</th>
+                            <th>Nombre</th>
+                            <th>IP</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
-    </fieldset>
-</div>
+                    </thead>
+                    <tbody>
+                        @foreach ($basesDatos as $basesDato)
+                            <tr data-id="{{ $basesDato->id }}">
+                                <td>{{$basesDato->ubicacion}}</td>
+                                <td>{{$basesDato->nombre}}</td>
+                                <td>{{$basesDato->ip}}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
 
-<div class="col-12 viewCreate"></div>
+            <div class="col-12 viewCreate"></div>
+        </div><!-- /.row -->
+    </div><!-- ./box-body -->
+</div>

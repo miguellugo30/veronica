@@ -12,6 +12,9 @@ use Nimbus\Modulos;
 use Nimbus\BaseDatos;
 use Nimbus\Dominios;
 use Nimbus\Config_Empresas;
+use Nimbus\Canales;
+use Nimbus\Cat_Tipo_Canales;
+use Nimbus\Troncales;
 
 class EmpresasController extends Controller
 {
@@ -272,11 +275,11 @@ class EmpresasController extends Controller
             /**
              * Devolvemos la informacion de la infraestructura de la empresa
              */
-            $configEmpresa = Config_Empresas::findOrFail( $data[0] );
+            $configEmpresa = Config_Empresas::findOrFail( $idEmpresa );
             /**
              * Buscamos la empresa ha editar
              */
-            $empresa = Empresas::findOrFail( $data[0] );
+            $empresa = Empresas::findOrFail( $idEmpresa );
             /**
              * Obtenemos los modulos de la empresa
              */
@@ -292,9 +295,37 @@ class EmpresasController extends Controller
 
             return view('administrador::empresas.almacenamiento', compact('configEmpresa', 'idEmpresa') );
 
-        } else if( $data[1] == 'dataExtensiones' ) {
-        }
+        } else if( $data[1] == 'dataCanales' ) {
+            /**
+             * Devolvemos la informacion de los tipos de canales de la empresa
+             */
+            $canales = Canales::where('Empresas_id', $idEmpresa )->get();
+            //dd( $canales );
+            /**
+             * Recuperamos los tipo de canales
+             */
+            $TipoCanales = Cat_Tipo_Canales::where('activo',1)->get();
+            /**
+             * Recuperamos las troncales asociadas a la empresa
+             */
+            $troncales = Troncales::where([
+                                            ['activo', '=', '1'],
+                                            ['Cat_Distribuidor_id', '=',  $canales[0]->Cat_Distribuidor_id]
+                                        ])->get();
 
+
+            return view('administrador::empresas.canales', compact('canales', 'idEmpresa', 'TipoCanales', 'troncales') );
+
+        } else if( $data[1] == 'dataExtensiones' ) {
+
+            /**
+             * Devolvemos la informacion de los tipos de canales de la empresa
+             */
+            $canales = Canales::where('Empresas_id', $idEmpresa )->get();
+
+            return view('administrador::empresas.extensiones',compact( 'idEmpresa', 'canales') );
+
+        }
     }
 
     /**
@@ -409,17 +440,20 @@ class EmpresasController extends Controller
                 'Cat_distribuidor_id' => $data['Cat_Distribuidor_id'],
             ]);
 
-            if ($request->input('action') == "update") {
+            if ($request->input('accion') == "actualizar") {
+                 /**
+                 * Buscamos la empresa ha editar
+                 */
+                $empresa = Empresas::find( $data['id_empresa'] );
                 /**
                  * Recuperamos todos los modulos que esten activos
                  */
                 $modulos = Modulos::where('activo',1)->get();
-                /**
-                 * Reciclamos variables
-                 */
+                $modulosEmpresa = $empresa->Modulos->pluck('id')->toArray();
+
                 $idEmpresa = $data['id_empresa'];
 
-                return view('administrador::empresas.modulos', compact('idEmpresa', 'modulos') );
+                return view('administrador::empresas.modulos', compact( 'modulos', 'modulosEmpresa', 'idEmpresa') );
             }
 
         } else if($data['action'] == 'dataModulo') {
@@ -436,6 +470,25 @@ class EmpresasController extends Controller
              */
             $empresa->modulos()->attach( $dataModulos );
 
+            if ($request->input('accion') == "actualizar") {
+                /**
+                 * Devolvemos la informacion de la infraestructura de la empresa
+                 */
+                $configEmpresa = Config_Empresas::findOrFail( $data['id_empresa'] );
+                /**
+                 * Buscamos la empresa ha editar
+                 */
+                $empresa = Empresas::findOrFail( $data['id_empresa'] );
+                /**
+                 * Obtenemos los modulos de la empresa
+                 */
+                $modulos = $empresa->Modulos->pluck('id')->toArray();
+
+                $idEmpresa = $data['id_empresa'];
+
+                return view('administrador::empresas.posiciones', compact('modulos', 'configEmpresa', 'idEmpresa') );
+            }
+
         } else if( $data['action'] == 'dataPosiciones' ) {
             /**
              * Calculamos el espacion de almacenamiento en base
@@ -445,7 +498,7 @@ class EmpresasController extends Controller
             /**
              * Buscamos la empresa ha editar
              */
-            Config_Empresas::where('Empresas_id', $data['idEmpresa'] )->update([
+            Config_Empresas::where('Empresas_id', $data['id_empresa'] )->update([
                 'agentes_entrada' => $data['agentes_entrada'],
                 'agentes_salida'   => $data['agentes_salida'],
                 'agentes_dual' => $data['agentes_full'],
@@ -456,11 +509,17 @@ class EmpresasController extends Controller
                 'licencias_softphone'   =>  $data['licencias_softphone'],
                 'almacenamiento_posiciones'   =>  $almaPosiciones
             ]);
-            /**
-             * Obtenemos los modulos de la empresa
-            */
-            //$modulos = $empresa->Modulos->pluck('id')->toArray();
-            //return view('administrador::empresas.posiciones', compact('modulos') );
+
+            if ($request->input('accion') == "actualizar") {
+                /**
+                 * Devolvemos la informacion de la infraestructura de la empresa
+                 */
+                $configEmpresa = Config_Empresas::findOrFail( $data['id_empresa'] );
+
+                $idEmpresa = $data['id_empresa'];
+
+                return view('administrador::empresas.almacenamiento', compact('configEmpresa', 'idEmpresa') );
+            }
 
         } else if( $data['action'] == 'dataAlmacenamiento' ) {
             /**
@@ -474,7 +533,34 @@ class EmpresasController extends Controller
             Config_Empresas::where('Empresas_id', $data['idEmpresa'] )->update([
                 'almacenamiento_adicional'   =>   $almaAdicional
             ]);
+            if ($request->input('accion') == "actualizar") {
+            }
+        } else if( $data['action'] == 'dataCanales' ) {
+            $idEmpresa = $data['id_empresa'];
+            array_shift($data);
+            array_shift($data);
+            array_shift($data);
+            $info = array_chunk( $data, 5 );
+            /**
+             * Editamos el canal
+             */
+            for ($i=0; $i < count( $info ); $i++) {
+                Canales::where([
+                                ['Empresas_id', '=', $idEmpresa],
+                                ['id', '=',  $info[$i][0] ]
+                            ])->update([
+                                'prefijo' => $info[$i][4].$info[$i][3],
+                                'Troncales_id' => $info[$i][2],
+                                'Cat_Canales_Tipo_id' => $info[$i][1]
+                            ]);
+            }
+
         } else if( $data['action'] == 'dataExtensiones' ) {
+
+            for ($i=0; $i < (int)$data['posiciones']; $i++) {
+                echo (int)$data['extension'] + $i."<br>";
+            }
+
         }
 
     }

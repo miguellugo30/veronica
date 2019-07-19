@@ -153,11 +153,10 @@ body {
     min-height: 250px;
     padding: 15px;
     margin: 0px;
-    /*margin-right:auto;margin-left:auto;*/
+    margin-right: auto;
+    margin-left: auto;
     padding-left: 15px;
     padding-right: 15px;
-    background-color: #fff;
-    overflow: auto;
 }
 
 h1,
@@ -625,7 +624,7 @@ a:focus {
     .sidebar-mini.sidebar-collapse .content-wrapper,
     .sidebar-mini.sidebar-collapse .right-side,
     .sidebar-mini.sidebar-collapse .main-footer {
-        margin-left: 50px !important;
+        margin-left: 70px !important;
         z-index: 840
     }
     .sidebar-mini.sidebar-collapse .main-sidebar {

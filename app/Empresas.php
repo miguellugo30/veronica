@@ -48,5 +48,18 @@ class Empresas extends Model
     {
         return $this->belongsToMany('Nimbus\Modulos', 'Modulos_Empresas')->orderBy('prioridad');
     }
-
+    /**
+     * Relacion uno a uno con Cat_Estado_Empresas
+     */
+    public function Cat_Estado_Empresa()
+    {
+        return $this->hasOne('Nimbus\Cat_Estado_Empresa', 'id', 'Cat_Estado_Empresa_id');
+    }
+     /**
+     * Relacion uno a muchos con Cat_Extensiones
+     */
+    public function Cat_Extensiones()
+    {
+        return $this->hasMany('Nimbus\Cat_Extensiones');
+    }
 }

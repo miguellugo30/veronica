@@ -48,11 +48,11 @@ class Canales extends Model
     {
        return $this->belongsTo('Nimbus\Empresas', 'Empresas_id');
     }
-     /**
-    * Relacion uno a uno con Cat_Tipo_Canales
-    */
+    /**
+     * Relacion uno a uno con Cat_Tipo_Canales
+     */
     public function Cat_Tipo_Canales()
     {
-        return $this->hasOne('Nimbus\Cat_Tipo_Canales', 'id','Cat_Canales_Tipo_id');
+        return $this->hasOne('Nimbus\Cat_Tipo_Canales', 'Cat_Tipo_Canales_id', 'id');
     }
 }

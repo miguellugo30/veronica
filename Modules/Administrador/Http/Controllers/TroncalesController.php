@@ -65,7 +65,6 @@ class TroncalesController extends Controller
     public function show($id)
     {
         $configuracion = Troncales::findOrFail($id);
-        
 
         return view('administrador::troncales.show', compact('configuracion'));
     }

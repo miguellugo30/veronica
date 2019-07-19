@@ -51,11 +51,12 @@ $(function() {
         /**
          * Se setea a crear si viene de un accion de actualizar
          */
-        if (regresos > 0) {
+        if (regresos > 1) {
             $(this).attr("data-accion", "actualizar");
             regresos--;
         } else {
             $(this).attr("data-accion", "crear");
+            regresos = 0;
         }
         /**
          * Si aun es menor al tamaño del arreglo seguimos
@@ -78,14 +79,10 @@ $(function() {
         $('#anterior').attr('data-opcion-anterior', opciones[opcionAnterior]);
         $('#siguiente').attr('data-opcion-siguiente', opciones[opcionSiguiente]);
 
-        //console.log(accion + " " + opcion + " " + opcionSiguiente + " " + opciones.length);
-        //console.log("Regresa Vista" + opciones[opcionSiguiente]);
-        $('#formDataEmpresa').html(opciones[opcionSiguiente]);
-        console.log("Regresos " + regresos);
         /**
          * Dependiendo de la accion a realizar, se define
-         * la RUL y metodo que se usara
-         *
+         * la URL y metodo que se usara
+         */
         if (accion.indexOf("actualizar") > -1) {
             let id = $("#id_empresa").val(); //Recuperamos el id de la empresa ha editar
             url = currentURL + '/empresas/' + id; //Definimos la url de edicion
@@ -100,12 +97,12 @@ $(function() {
         }
         /**
          * Recuperamos la informacion del formulario
-         *
+         */
         let dataForm = $("#formDataEmpresa").serializeArray();
         let _token = $("input[name=_token]").val();
         /**
          * Enviamos la informacion
-         *
+         */
         $.ajax({
             url: url,
             type: method,
@@ -119,7 +116,6 @@ $(function() {
                 $('#formDataEmpresa').html(result);
             }
         });
-        */
     });
     /**
      * Evento para regresar a la opcion anterior
@@ -152,11 +148,6 @@ $(function() {
         $('#anterior').attr('data-opcion-anterior', opciones[opcionAnterior]);
         $('#siguiente').attr('data-opcion-siguiente', opciones[opcionSiguiente]);
 
-        //console.log(accion + " " + opcion + " " + opcionAnterior + " " + opciones.length);
-        //console.log("Regresa Vista " + opciones[opcionSiguiente]);
-        $('#formDataEmpresa').html(opciones[opcionSiguiente]);
-        console.log("Regresos " + regresos);
-        /*
         let id = $("#id_empresa").val();
         let _token = $("input[name=_token]").val();
         let dato = id + "." + opcion;
@@ -174,7 +165,6 @@ $(function() {
                 $('#formDataEmpresa').html(result);
             }
         });
-        */
     });
     /**
      * Evento para mostrar el formulario editar empresa
@@ -231,23 +221,23 @@ $(function() {
                 _method: _method
             },
             success: function(result) {
+                $('#formDataEmpresa').html(result);
+                /*
+                                let url = currentURL + "/empresas/" + id + "/edit";
 
-                let url = currentURL + "/empresas/" + id + "/edit";
+                                $.get(url, function(data, textStatus, jqXHR) {
+                                    $(".viewCreate").html(data);
+                                    let dato = id + ".dataGeneral";
+                                    let url = currentURL + '/empresas/' + dato;
 
-                $.get(url, function(data, textStatus, jqXHR) {
-                    $(".viewCreate").html(data);
-                    let dato = id + ".dataGeneral";
-                    let url = currentURL + '/empresas/' + dato;
-
-                    $.ajax({
-                        url: url,
-                        type: 'GET',
-                        success: function(result) {
-                            $('#formDataEmpresa').html(result);
-                        }
-                    });
-                });
-
+                                    $.ajax({
+                                        url: url,
+                                        type: 'GET',
+                                        success: function(result) {
+                                            $('#formDataEmpresa').html(result);
+                                        }
+                                    });
+                                });*/
             }
         });
     });
@@ -291,6 +281,12 @@ $(function() {
         let _token = $("input[name=_token]").val();
         let dato = id + "." + opcion;
 
+        if (opcion == 'dataGeneral') {
+            $('.updateEmpresa').slideUp();
+        } else {
+            $('.updateEmpresa').slideDown();
+        }
+
         let url = currentURL + '/empresas/' + dato;
 
         $.ajax({
@@ -304,5 +300,25 @@ $(function() {
             }
         });
 
+    });
+    /**
+     * Evento para habilitar la edicion del canal seleccionado
+     */
+    $(document).on('click', '.editar_canal', function(event) {
+        let id = $(this).val();
+        /**
+         * Habilitamos los inputs para editar
+         */
+        if ($(this).prop('checked')) {
+            $("#tipo_Canal_" + id).prop("disabled", false);
+            $("#troncal_" + id).prop("disabled", false);
+            $("#prefijo_" + id).prop("disabled", false);
+            $("#prefijo_completo_" + id).prop("disabled", false);
+        } else {
+            $("#tipo_Canal_" + id).prop("disabled", true);
+            $("#troncal_" + id).prop("disabled", true);
+            $("#prefijo_" + id).prop("disabled", true);
+            $("#prefijo_completo_" + id).prop("disabled", true);
+        }
     });
 });

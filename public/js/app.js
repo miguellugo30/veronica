@@ -2273,65 +2273,6 @@ $(function () {
     });
   });
   /**
-   * Evento para el menu de sub categorias y mostrar la vista
-   */
-
-  $(".sub-categorias").on("click", ".subCat a", function (e) {
-    e.preventDefault();
-    var id = $(this).data("id");
-
-    if (id == 6) {
-      url = currentURL + '/usuarios';
-      table = ' #tableUsuarios';
-    } else if (id == 4) {
-      url = currentURL + '/menus';
-      table = ' #tableMenus';
-    } else if (id == 3) {
-      url = currentURL + '/modulos';
-      table = ' #tableDistribuidores';
-    } else if (id == 1) {
-      url = currentURL + '/distribuidor';
-      table = ' #tableDistribuidores';
-    } else if (id == 8) {
-      url = currentURL + '/did';
-      table = ' #tableDid';
-    } else if (id == 10) {
-      url = currentURL + '/cat_empresa';
-      table = ' #tableDid';
-    } else if (id == 11) {
-      url = currentURL + '/cat_ip_pbx';
-      table = ' #tableDid';
-    } else if (id == 12) {
-      url = currentURL + '/cat_nas';
-      table = ' #tableDid';
-    } else if (id == 13) {
-      url = currentURL + '/cat_agente';
-      table = ' #tableEdoAge';
-    } else if (id == 14) {
-      url = currentURL + '/cat_cliente';
-      table = ' #tableEdoCli';
-    } else if (id == 9) {
-      url = currentURL + '/troncales';
-      table = ' #tableTroncales';
-    } else if (id == 15) {
-      url = currentURL + '/canales';
-      table = ' #tableCanales';
-    } else if (id == 2) {
-      url = currentURL + '/empresas';
-      table = ' #tableEmpresas';
-    } else if (id == 16) {
-      url = currentURL + '/basedatos';
-      table = ' #tableBaseDatos';
-    }
-
-    $.get(url, function (data, textStatus, jqXHR) {
-      $(".viewResult").html(data);
-      $('.viewResult' + table).DataTable({
-        "lengthChange": true
-      });
-    });
-  });
-  /**
    * Evento para ver el formulario de nuevo usuario
    */
 
