@@ -12,16 +12,16 @@
                     <thead>
                         <tr>
                             <th>Nombre</th>
-                            <th>Prefjo</th>
                             <th>Distribuidor</th>
+                            <th>Prefjo</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($tipocanales as $tipocanal)
                             <tr data-id="{{ $tipocanal->id }}">
                                 <td>{{$tipocanal->nombre}}</td>
-                                <td>{{$tipocanal->prefijo}}</td>
                                 <td>{{$tipocanal->Cat_Distribuidor->servicio}}</td>
+                                <td>{{$tipocanal->prefijo}}</td>
                             </tr>
                         @endforeach
                     </tbody>
