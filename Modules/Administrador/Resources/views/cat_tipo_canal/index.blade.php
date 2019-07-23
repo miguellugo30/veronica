@@ -1,6 +1,6 @@
 <div class="box box-primary">
     <div class="box-header with-border">
-        <h3 class="box-title"><i class="fas fa-phone"></i> Tipos de Canales</h3>
+        <h3 class="box-title"><b><i class="fas fa-phone"></i> Tipos de Canales</b></h3>
         <div class="box-tools pull-right">
             <button type="button" class="btn btn-primary btn-xs newTipoCanal" data-widget="remove"><i class="fas fa-plus"></i>  Nuevo Tipo Canal</button>
         </div>
@@ -12,16 +12,16 @@
                     <thead>
                         <tr>
                             <th>Nombre</th>
-                            <th>Prefjo</th>
                             <th>Distribuidor</th>
+                            <th>Prefjo</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($tipocanales as $tipocanal)
                             <tr data-id="{{ $tipocanal->id }}">
                                 <td>{{$tipocanal->nombre}}</td>
-                                <td>{{$tipocanal->prefijo}}</td>
                                 <td>{{$tipocanal->Cat_Distribuidor->servicio}}</td>
+                                <td>{{$tipocanal->prefijo}}</td>
                             </tr>
                         @endforeach
                     </tbody>

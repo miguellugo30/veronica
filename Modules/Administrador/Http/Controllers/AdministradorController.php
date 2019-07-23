@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Session;
+use Nimbus\User;
+use Illuminate\Support\Facades\Auth;
 
 class AdministradorController extends Controller
 {
@@ -15,11 +17,20 @@ class AdministradorController extends Controller
      */
     public function index()
     {
-        $rol        = Session::get('rol');
-        $categorias = Session::get('categorias');
+        /**
+         * Obtenemos los datos del usuario logeado
+         */
+        $user = User::find( Auth::id() );
+        /**
+         * Obtenemos el rol del usuario logeado
+         */
+        $rol = $user->getRoleNames();
+         /**
+         * Obtenemos las categorias relacionadas al usuario
+         */
+        $categorias = $user->categorias;
 
         return view('administrador::index', compact( 'rol', 'categorias' ) );
-
     }
 
     /**

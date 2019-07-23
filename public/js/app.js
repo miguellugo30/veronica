@@ -3070,6 +3070,7 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+<<<<<<< HEAD
 __webpack_require__(/*! C:\xampp\htdocs\nimbus\resources\js\app.js */"./resources/js/app.js");
 __webpack_require__(/*! C:\xampp\htdocs\nimbus\resources\js\module_administrador\usuarios.js */"./resources/js/module_administrador/usuarios.js");
 __webpack_require__(/*! C:\xampp\htdocs\nimbus\resources\js\module_administrador\modulos.js */"./resources/js/module_administrador/modulos.js");
@@ -3088,6 +3089,41 @@ __webpack_require__(/*! C:\xampp\htdocs\nimbus\resources\js\module_administrador
 __webpack_require__(/*! C:\xampp\htdocs\nimbus\resources\js\module_administrador\cat_base_datos.js */"./resources/js/module_administrador/cat_base_datos.js");
 __webpack_require__(/*! C:\xampp\htdocs\nimbus\resources\js\module_administrador\cat_tipo_canal.js */"./resources/js/module_administrador/cat_tipo_canal.js");
 module.exports = __webpack_require__(/*! C:\xampp\htdocs\nimbus\resources\js\module_administrador\menu.js */"./resources/js/module_administrador/menu.js");
+||||||| merged common ancestors
+__webpack_require__(/*! C:\xampp\htdocs\nimbus\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! C:\xampp\htdocs\nimbus\resources\js\module_administrador\usuarios.js */"./resources/js/module_administrador/usuarios.js");
+__webpack_require__(/*! C:\xampp\htdocs\nimbus\resources\js\module_administrador\modulos.js */"./resources/js/module_administrador/modulos.js");
+__webpack_require__(/*! C:\xampp\htdocs\nimbus\resources\js\module_administrador\submenus.js */"./resources/js/module_administrador/submenus.js");
+__webpack_require__(/*! C:\xampp\htdocs\nimbus\resources\js\module_administrador\menus.js */"./resources/js/module_administrador/menus.js");
+__webpack_require__(/*! C:\xampp\htdocs\nimbus\resources\js\module_administrador\distribuidores.js */"./resources/js/module_administrador/distribuidores.js");
+__webpack_require__(/*! C:\xampp\htdocs\nimbus\resources\js\module_administrador\dids.js */"./resources/js/module_administrador/dids.js");
+__webpack_require__(/*! C:\xampp\htdocs\nimbus\resources\js\module_administrador\cat_estado_agente.js */"./resources/js/module_administrador/cat_estado_agente.js");
+__webpack_require__(/*! C:\xampp\htdocs\nimbus\resources\js\module_administrador\cat_estado_cliente.js */"./resources/js/module_administrador/cat_estado_cliente.js");
+__webpack_require__(/*! C:\xampp\htdocs\nimbus\resources\js\module_administrador\cat_estado_empresa.js */"./resources/js/module_administrador/cat_estado_empresa.js");
+__webpack_require__(/*! C:\xampp\htdocs\nimbus\resources\js\module_administrador\cat_ip_pbx.js */"./resources/js/module_administrador/cat_ip_pbx.js");
+__webpack_require__(/*! C:\xampp\htdocs\nimbus\resources\js\module_administrador\cat_nas.js */"./resources/js/module_administrador/cat_nas.js");
+__webpack_require__(/*! C:\xampp\htdocs\nimbus\resources\js\module_administrador\troncales.js */"./resources/js/module_administrador/troncales.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\nimbus\resources\js\module_administrador\canales.js */"./resources/js/module_administrador/canales.js");
+=======
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\usuarios.js */"./resources/js/module_administrador/usuarios.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\modulos.js */"./resources/js/module_administrador/modulos.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\submenus.js */"./resources/js/module_administrador/submenus.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\menus.js */"./resources/js/module_administrador/menus.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\distribuidores.js */"./resources/js/module_administrador/distribuidores.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\dids.js */"./resources/js/module_administrador/dids.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\cat_estado_agente.js */"./resources/js/module_administrador/cat_estado_agente.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\cat_estado_cliente.js */"./resources/js/module_administrador/cat_estado_cliente.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\cat_estado_empresa.js */"./resources/js/module_administrador/cat_estado_empresa.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\cat_ip_pbx.js */"./resources/js/module_administrador/cat_ip_pbx.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\cat_nas.js */"./resources/js/module_administrador/cat_nas.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\troncales.js */"./resources/js/module_administrador/troncales.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\canales.js */"./resources/js/module_administrador/canales.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\empresas.js */"./resources/js/module_administrador/empresas.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\cat_base_datos.js */"./resources/js/module_administrador/cat_base_datos.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\cat_tipo_canal.js */"./resources/js/module_administrador/cat_tipo_canal.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\menu.js */"./resources/js/module_administrador/menu.js");
+>>>>>>> 0ea023cb2149e8f3d3181fb0d668c12416ac49a7
 
 
 /***/ })

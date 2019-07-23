@@ -1,6 +1,6 @@
 <div class="box box-primary">
     <div class="box-header with-border">
-        <h3 class="box-title"> <i class="fas fa-database"></i> Bases de Datos</h3>
+        <h3 class="box-title"><b><i class="fas fa-database"></i> Bases de Datos</b></h3>
         <div class="box-tools pull-right">
             <button type="button" class="btn btn-primary btn-xs newDataBase" data-widget="remove"><i class="fas fa-plus"></i> Nueva Base de Datos</button>
         </div>

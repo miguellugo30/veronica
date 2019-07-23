@@ -1,7 +1,7 @@
 <fieldset >
     <legend>
-        <i class="fas fa-align-justify"></i>
-        Sub Menú
+        <b><i class="fas fa-align-justify"></i>
+        Sub Menú</b>
         <button type="button" class="btn btn-primary btn-xs newSubCat" style="float: right;margin-left: 5px;">
             <i class="fas fa-plus"></i>
             Nuevo sub menú

@@ -9,11 +9,6 @@
             <input type="text" class="form-control" id="nombre" placeholder="Nombre" value='{{ $tipocanales->nombre }}'>
             <input type="hidden" class="form-control" id="id" value='{{ $tipocanales->id }}'>
             @csrf
-        </div>
-        <div class="form-group">
-            <label for="prefijo">prefijo</label>
-            <input type="text" class="form-control" id="prefijo" placeholder="prefijo" value='{{ $tipocanales->prefijo }}'>
-        </div>
         <div class="form-group">
             <label for="distribuidor">Distribuidor</label>
             <select name="distribuidor" id="distribuidor" class="form-control">
@@ -22,6 +17,11 @@
                     <option value="{{ $distribuidor->id }}" {{ $distribuidor->id == $tipocanales->Cat_Distribuidor_id ? 'selected' : ''}}>{{ $distribuidor->servicio }}</option>
                 @endforeach
             </select>
+        </div>
+        </div>
+        <div class="form-group">
+            <label for="prefijo">prefijo</label>
+            <input type="text" class="form-control" id="prefijo" placeholder="prefijo" value='{{ $tipocanales->prefijo }}'>
         </div>
     </div>
     <div class="col-md-12">

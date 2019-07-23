@@ -1,6 +1,6 @@
 <div class="box box-primary">
     <div class="box-header with-border">
-        <h3 class="box-title"><i class="far fa-hdd"></i> NAS</h3>
+        <h3 class="box-title"><b><i class="far fa-hdd"></i> NAS</b></h3>
         <div class="box-tools pull-right">
             <button type="button" class="btn btn-primary btn-xs newNas" data-widget="remove"><i class="fas fa-plus"></i> Nueva NAS</button>
         </div>
