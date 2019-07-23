@@ -12,7 +12,7 @@ use Nimbus\Dids;
 // Agregar modelo Clientes para acceder a los datos
 use Nimbus\Empresas;
 use Nimbus\Canales;
-use Nimbus\Config_Empresas;
+
 
 class DidController extends Controller
 {
@@ -27,7 +27,7 @@ class DidController extends Controller
         /**
          * Recuperamos todos los did que esten activos
          */
-        $Dids = Dids::where('activo',1)->get();
+        $Dids = Dids::active()->get();
         return view('administrador::dids.index', compact('Dids'));
     }
 
@@ -35,15 +35,14 @@ class DidController extends Controller
      * Show the form for creating a new resource.
      * @return Response
      */
-    public function create()
+    public function create($id)
     {
         /**
-         * Obtenemos todos las Empresas
-         * Crear tabla Empresas!
-        */
-        $empresas = Empresas::where('activo',1)->get();
+         * Obtenemos los canales de la empresa
+         */
+        $canales = Canales::active()->where('Empresas_id', $id)->get();
 
-        return view('administrador::dids.create', compact('empresas'));
+        return view('administrador::dids.create', compact( 'canales', 'id'));
     }
 
     /**
@@ -53,35 +52,30 @@ class DidController extends Controller
      */
     public function store(Request $request)
     {
+        $dataForm = $request->input('dataForm');
+
+        for ($i=0; $i < count( $dataForm ); $i++) {
+            $data[ $dataForm[$i]['name'] ] = $dataForm[$i]['value'];
+        }
+        //dd($data);
         /**
          * Obtener los dids que se van a insertar separados por ;
          */
-        $dids = $request->dids;
-        $dids_store = str_replace("\n",";",$dids);
-        
-        
-        /**
-         * Crear un array de los elementos donde se separan por ;
-         */
-        $dids = explode(";",$dids_store);        
+        $dids_store = explode(";", str_replace("\n",";",$data['did'] ));
         /**
          * Se recorre arreglo de dids
          */
-        foreach ($dids as $did => $value) {
-            Dids::create(['prefijo'=>$request->prefijo,
-                    'numero_real'=>$request->numero_real,
-                    'did'=>trim($value),
-                    'referencia'=>$request->referencia,
-                    'gateway'=>$request->gateway,
-                    'fakedid'=>$request->fakedid,
-                    'Canales_id'=> $request->Canales_id,
-                    'Empresas_id'=>$request->Empresas_id]);
-        }       
-        
-        /**
-         * Redirigimos a la ruta index
-         */
-        return redirect()->route('did.index');
+        for ($i=0; $i < count($dids_store); $i++) {
+            Dids::create([
+                            'did'=>trim($dids_store[$i]),
+                            'numero_real'=>$data['numero_real'],
+                            'referencia'=>$data['referencia'],
+                            'gateway'=>$data['gateway'],
+                            'fakedid'=>$data['fakedid'],
+                            'Canales_id'=> $data['Canal_id'],
+                            'Empresas_id'=>$data['id_empresa']
+                        ]);
+        }
     }
 
     /**
@@ -90,11 +84,17 @@ class DidController extends Controller
      * @return Response
      */
     public function show($id)
-    { 
-        $empresa = Empresas::findOrFail($id);
-        $canales = $empresa->Canales;
-        
-        return view('administrador::dids.show',compact('canales'));
+    {
+        /**
+         * Obtenemos los Dids de la empresa
+         */
+        $dids = Dids::active()->where('Empresas_id', $id)->get();
+        /**
+         * Obtenemos los canales de la empresa
+         */
+        $canales = Canales::active()->where('Empresas_id', $id)->get();
+
+        return view('administrador::dids.show',compact('dids', 'canales', 'id'));
     }
 
     /**
@@ -128,24 +128,34 @@ class DidController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //Obtener los datos del id_did que se envia
-        $Dids = Dids::findOrFail($id);
-        //Asignar los datos del Request del form a las variables asociadas
-        $Dids->Empresas_id = $request->Empresas_id;
-        $Dids->prefijo = $request->prefijo;
-        $Dids->did = $request->did;
-        $Dids->numero_real = $request->numero_real;
-        $Dids->referencia = $request->referencia;
-        $Dids->Canales_id = $request->Canales_id;
-        $Dids->gateway = $request->gateway;
-        $Dids->fakedid = $request->fakedid;
 
-        //Aplicar la funcion save y guardar los valor obtenidos
-        $Dids -> save();
-        /**
-         * Redirigimos a la ruta index
-         */
-        return redirect()->route('did.index');
+        $dataForm = $request->input('dataForm');
+
+        for ($i=0; $i < count( $dataForm ); $i++) {
+            $data[ $dataForm[$i]['name'] ] = $dataForm[$i]['value'];
+        }
+
+        array_shift( $data );
+        array_shift( $data );
+        array_shift( $data );
+
+        $info = array_chunk( $data, 7 );
+
+        for($i=0;$i<count($info);$i++){
+
+            Dids::where([
+                ['Empresas_id', '=', $id],
+                ['id', '=', $info[$i][0]],
+            ])
+                    ->update([
+                        'did' => $info[$i][2],
+                        'numero_real' => $info[$i][4],
+                        'referencia' => $info[$i][3],
+                        'gateway' => $info[$i][5],
+                        'fakedid' => $info[$i][6],
+                        'Canales_id' => $info[$i][1],
+                    ]);
+        }
     }
 
     /**

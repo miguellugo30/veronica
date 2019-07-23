@@ -24,7 +24,7 @@
         <!--button type="submit" class="btn btn-danger deleteEmpresa"><i class="fas fa-trash-alt"></i> Eliminar</button-->
     </div>
     <div class="col-md-6" style="text-align:right">
-        <button type="submit" class="btn btn-primary updateEmpresa" style="display:none"><i class="fas fa-save"></i> Guardar</button>
+        <button type="submit" class="btn btn-primary" id="accionActualizar" style="display:none"><i class="fas fa-save"></i> Guardar</button>
     </div>
     <!--/div-->
 </div>

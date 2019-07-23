@@ -2,7 +2,7 @@
     <div class="box-header with-border">
         <h3 class="box-title"><i class="fas fa-phone"></i> DID's</h3>
         <div class="box-tools pull-right">
-            <button type="button" class="btn btn-primary btn-xs nuevoDid" data-widget="remove"><i class="fas fa-plus"></i> Nuevo Did</button>
+            <!--button type="button" class="btn btn-primary btn-xs nuevoDid" data-widget="remove"><i class="fas fa-plus"></i> Nuevo Did</button-->
         </div>
     </div><!-- /.box-header -->
     <div class="box-body">
@@ -36,7 +36,7 @@
                             @foreach( $Dids as $did )
                                 <tr data-id="{{ $did->id }}">
                                     <td>{{ $did->Empresas->nombre }}</td>
-                                    <td>{{ $did->Canales->canal }}</td>
+                                    <td>{{ $did->Canales->protocolo }}</td>
                                     <td>{{ $did->did }}</td>
                                     <td>{{ $did->referencia }}</td>
                                     <td>{{ $did->numero_real }}</td>
@@ -53,5 +53,3 @@
         </div><!-- /.row -->
     </div><!-- ./box-body -->
 </div>
-
-

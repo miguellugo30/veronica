@@ -1,66 +1,55 @@
-    <div class="col-md-12">
-        <input type="hidden" name="Empresa_id" id="Empresa_id" value="{{ $empresas->id }}">
-        <input type="hidden" name="action" id="action" value="dataCanales">
-        <input type="hidden" name="Cat_Distribuidor_id" id="Cat_Distribuidor_id" value="{{ $empresas->Config_Empresas->Cat_Distribuidor_id }}">
-        <input type="hidden" name="preDist" id="preDist" value="{{ $distribuidor->prefijo }}">
-        <input type="hidden" name="preEmp" id="preEmp" value="{{ str_pad( $empresas->id, 3, 0, STR_PAD_LEFT ) }}">
-        @csrf
-    </div>
-    <br>
-    <br>
-    <div class="col-md-12">
-        <table  class="table table-striped tableNewCanal">
-            <thead>
-                <tr>
-                    <th>Tipo</th>
-                    <th>Protocolo</th>
-                    <th>Troncal</th>
-                    <th>Prefijo</th>
-                    <td><input type = "button" class = "a" id = "add" value = "Agregar canal" /></td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr id="tr_1">
-                    <td>
-                        <select name="tipo_canal_1" id="tipo_canal" class="form-control tipo_canal" data-pos="1">
-                            <option value="">Selecciona un tipo de canal</option>
-                            @foreach( $canales as $canal )
-                            <option value="{{ $canal->id }}" data-pre_tipo="{{ $canal->prefijo }}">{{ $canal->nombre }}</option>
-                            @endforeach
-                        </select>
-                    <td>
-                        <input type="text" class="form-control input-sm protocolo" name="protocolo_1" id="protocolo_1" value="" readonly>
-                    </td>
-                    <td>
-                        <select name="Troncales_id_canal_1" id="Troncales_id_canal_1" class="form-control Troncales_id_canal" >
-                            <option value="">Selecciona una troncal</option>
-                            @foreach( $troncales as $troncal )
-                                <option value="{{ $troncal->id }}">{{($troncal->nombre == "") ? "AMD" : $troncal->nombre }}</option>
-                            @endforeach
-                        </select>
-                        <input type="hidden" class="Troncales_id" name="Troncales_id_1" id="Troncales_id_1" value="1" disabled>
-                    </td>
-                    <td>
-                        <div class="input-group col-sm-6">
-                            <span class="input-group-addon">
-                                <label class="preDist">{{ $distribuidor->prefijo }}</label>
-                                <label class="preEmp">{{ str_pad( $empresas->id, 3, 0, STR_PAD_LEFT ) }}</label>
-                            </span>
-                            <input type="text" class="form-control input-sm prefijo" name="prefijo_1" id="prefijo_1" value="">
-                        </div>
-                    </td>
-                    <td class="delete">
-                        <input type="button" name="remove" value="Eliminar" class="tr_clone_remove">
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-<div class="col-md-12" style="padding:10px;">
-    <div class="col-md-6" style="text-align:left">
-        <!--button type="submit" class="btn btn-warning cancelCanal"><i class="fas fa-times"></i> Cancelar</button-->
-    </div>
-    <div class="col-md-6" style="text-align:right">
-        <button type="submit" class="btn btn-primary saveCanal"><i class="fas fa-save"></i> Guardar</button>
-    </div>
+<div class="col-md-12" style="text-align: right;">
+    <button type="button" class="btn btn-primary btn-xs newCanal" data-widget="remove"><i class="fas fa-plus"></i> Nuevo Canal</button>
+</div>
+
+<div class="col-md-12">
+@csrf
+<input type="hidden" name="action" id="action" value="dataCanales">
+<input type="hidden" name="id_empresa" id="id_empresa" value="{{$idEmpresa}}">
+<table  class="table table-striped">
+    <thead>
+        <tr>
+            <th>Editar</th>
+            <th>Distribuidor</th>
+            <th>Tipo</th>
+            <th>Protocolo</th>
+            <th>Troncal</th>
+            <th>Prefijo</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($canales as $canal)
+            <tr>
+                <td><input type="checkbox" class="editar_canal" name="editar_canal_{{ $canal->id }}" id="editar_canal_{{ $canal->id }}" value="{{ $canal->id }}"></td>
+                <td>{{ $canal->Distribuidores->servicio }}</td>
+                <td>
+                    <select name="tipo_Canal_{{ $canal->id }}" id="tipo_Canal_{{ $canal->id }}" class="form-control input-sm tipo_canal" data-pos="{{ $canal->id }}" disabled>
+                        @foreach ($TipoCanales as $tipoCanal)
+                            <option value="{{ $tipoCanal->id }}" {{ $tipoCanal->id == $canal->Cat_Canales_Tipo_id ? 'selected' : '' }}>{{ $tipoCanal->nombre }}</option>
+                        @endforeach
+                    </select>
+                <td><input type="text" name="protocolo_{{ $canal->id }}" id="protocolo_{{ $canal->id }}" value="{{ $canal->protocolo }}" class="form-control input-sm" disabled></td>
+                <td>
+                    <select name="Troncales_id_canal_{{ $canal->id }}" id="Troncales_id_canal_{{ $canal->id }}"  class="form-control input-sm" disabled>
+                        @foreach ($troncales as $troncal)
+                            <option value="{{ $troncal->id }}" {{ $troncal->id == $canal->Troncales_id ? 'selected' : '' }}>{{ $troncal->nombre }}</option>
+                        @endforeach
+                    </select>
+                    <input type="hidden" class="Troncales_id" name="Troncales_id_{{ $canal->id }}" id="Troncales_id_{{ $canal->id }}" value="1" disabled>
+                </td>
+                <td>
+                    <div class="input-group col-sm-6">
+                        <span class="input-group-addon">{{ substr( $canal->prefijo, 0, -2 ) }}</span>
+                        <input type="text" class="form-control input-sm" name="prefijo_{{ $canal->id }}" id="prefijo_{{ $canal->id }}" value="{{ substr( $canal->prefijo, -2 ) }}" disabled>
+                        <input type="hidden" name="prefijo_completo_{{ $canal->id }}" id="prefijo_completo_{{ $canal->id }}" value="{{ substr( $canal->prefijo, 0, -2 ) }}" disabled>
+                    </div>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-danger btn-xs deleteCanal" id="delete_{{ $canal->id }}" style="display:none"><i class="fas fa-plus"></i> Eliminar Canal</button>
+                </td>
+            </tr>
+        @endforeach
+    </tbody>
+</table>
 </div>

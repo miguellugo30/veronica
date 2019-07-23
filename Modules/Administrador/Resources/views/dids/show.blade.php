@@ -1,35 +1,53 @@
-<!-- Mostrando los canales de la empresa seleccionada -->
-<label for="Canal_id">Canal</label>
-<select name="Canal_id" id="Canal_id" class="form-control">
-    <option value="">Selecciona un canal</option>
-    @foreach( $canales as $canal )
-        <option value="{{ $canal->id }}">{{ $canal->canal }}</option>
-    @endforeach
-</select>
-<!-- Mostrar el prefijo por defecto 20-->
-<label for="prefijo">Prefijo</label>
-<input type="number" class="form-control" id="prefijo" placeholder="Prefijo" min="0" value="20"/>
-<!-- Agregar los nuevos dids --> 
-<label for="did">Did</label>
-<textarea class="form-control" style="resize:none;" rows="10" id="did" name="did" placeholder="Ingresa la lista de prefijos en esta area separados por enter."></textarea>
-<!-- Agregar la referencia -->
-<label for="referencia">Referencia</label>
-<input type="text" class="form-control" id="referencia" placeholder="Referencia"/>
-<!-- Agregar numero real -->
-<label for="numero_real">Numero Real</label>
-<input type="text" class="form-control" id="numero_real" placeholder="Numero Real"/>
-
-<label for="gateway">Gateway</label><br>
-<label class="radio-inline">
-    <input type="radio" id="gatewayhabilitado" name="gateway" value="1" > Habilitado
-</label>
-<label class="radio-inline">
-    <input type="radio" id="gatewaydeshabilitado" name="gateway" value="0" > Deshabilitado
-</label><br>
-<label for="fakedid">Fakedid</label><br>
-<label class="radio-inline">
-    <input type="radio" name="fakedid" id="fakedid" value="1" > Habilitado
-</label>
-<label class="radio-inline">
-    <input type="radio" name="fakedid" id="fakedid" value="0" checked> Deshabilitado
-</label>
+<div class="col-md-12" style="text-align: right;">
+        <button type="button" class="btn btn-primary btn-xs newDid" data-widget="remove"><i class="fas fa-plus"></i> Nuevo DID</button>
+    </div>
+    <br><br>
+<div class="col-md-12">
+    <input type="hidden" name="id_empresa" id="id_empresa" value="{{ $id }}">
+    @csrf
+    <table id="TableCatExts" class="display table table-striped table-condensed" style="width:100%">
+        <!-- Encabezados de la tabla que se mostrara al inicio -->
+        <thead>
+            <tr>
+                <th>Editar</th>
+                <th>Canal</th>
+                <th>Did</th>
+                <th>Referencia</th>
+                <th>Numero Real</th>
+                <th>Gateway</th>
+                <th>Fakedid</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach( $dids as $did )
+                <tr>
+                    <td>
+                        <input type="checkbox" name="editar_did_{{$did->id}}" id="editar_did" class="editar_did" value="{{ $did->id }}">
+                    </td>
+                    <td>
+                        <select name="canal_did_{{$did->id}}" id="canal_did" class="form-control input-sm did_edi_{{ $did->id }}" disabled>
+                            @foreach ($canales as $canal)
+                                <option value="{{$canal->id}}" {{ ( $did->Canales_id == $canal->id ) ? 'selected' : '' }}>{{ $canal->protocolo }}{{ $canal->Troncales->nombre }}/{{ $canal->prefijo }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td><input type="text" id="did"        name="did_{{$did->id}}"        value=" {{ $did->did }}"       class="form-control input-sm did_edi_{{ $did->id }}" disabled></td>
+                    <td><input type="text" id="referencia" name="referencia_{{$did->id}}" value="{{ $did->referencia }}" class="form-control input-sm did_edi_{{ $did->id }}" disabled></td>
+                    <td><input type="text" id="num_real"   name="num_real_{{$did->id}}"  value="{{ $did->numero_real }}" class="form-control input-sm did_edi_{{ $did->id }}" disabled></td>
+                    <td>
+                        <select name="gateway_{{$did->id}}" id="gateway" class="form-control input-sm did_edi_{{ $did->id }}" disabled>
+                            <option value="1" {{ ( $did->gateway == 1 ) ? 'selected' : '' }}>Habilitado</option>
+                            <option value="0" {{ ( $did->gateway == 0 ) ? 'selected' : '' }}>Deshabilitado</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select name="fakedid_{{$did->id}}" id="fakedid" class="form-control input-sm did_edi_{{ $did->id }}" disabled>
+                            <option value="1" {{ ( $did->fakedid == 1 ) ? 'selected' : '' }}>Habilitado</option>
+                            <option value="0" {{ ( $did->fakedid == 0 ) ? 'selected' : '' }}>Deshabilitado</option>
+                        </select>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>

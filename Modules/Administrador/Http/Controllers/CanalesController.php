@@ -9,6 +9,7 @@ use Nimbus\Canales;
 use Nimbus\Cat_Distribuidor;
 use Nimbus\Cat_Tipo_Canales;
 use Nimbus\Empresas;
+use Nimbus\Troncales;
 
 class CanalesController extends Controller
 {
@@ -39,7 +40,7 @@ class CanalesController extends Controller
         $troncales = $distribuidor->Troncales;
         $canales = Cat_Tipo_Canales::where('Cat_Distribuidor_id', $empresas->Config_Empresas->Cat_Distribuidor_id)->get();
 
-        return view('administrador::canales.show', compact( 'troncales', 'empresas','distribuidor','canales') );
+        return view('administrador::canales.create', compact( 'troncales', 'empresas','distribuidor','canales') );
     }
 
     /**
@@ -85,11 +86,6 @@ class CanalesController extends Controller
                 'Empresas_id'=>$id_Empresa
            ]);
        }
-
-        /**
-         * Redirigimos a la ruta index
-         */
-        //return redirect()->route('canales.index');
     }
 
     /**
@@ -97,33 +93,31 @@ class CanalesController extends Controller
      * @param int $id
      * @return Response
      */
-    public function show($id)
+    public function show($idEmpresa)
     {
-        $distribuidor = Cat_Distribuidor::findOrFail($id);
-        
-        $troncales = $distribuidor->Troncales;
-        $empresas = $distribuidor->Config_Empresas->all();
-        $canales = Cat_Tipo_Canales::where('Cat_Distribuidor_id',$id)->get();
+        /**
+         * Buscamos la informacion de la empresa
+         */
+        $empresas = Empresas::findOrFail($idEmpresa);
+        /**
+         * Devolvemos la informacion de los canales de la empresa
+         */
+        $canales = Canales::active()->where('Empresas_id', $idEmpresa )->get();
+        /**
+         * Recuperamos los tipo de canales en base al distribuidor que esta dado de alta la empresa
+         */
+        $TipoCanales = Cat_Tipo_Canales::active()->where('Cat_Distribuidor_id', $empresas->Config_Empresas->Cat_Distribuidor_id)->get();
+        /**
+         * Recuperamos las troncales asociadas a la empresa
+         */
+        $troncales = Troncales::where([
+                                        ['activo', '=', '1'],
+                                        ['Cat_Distribuidor_id', '=',  $empresas->Config_Empresas->Cat_Distribuidor_id]
+                                    ])->get();
 
-        return view('administrador::canales.show', compact( 'troncales', 'empresas','distribuidor','canales'));
+
+        return view('administrador::canales.show', compact('canales', 'idEmpresa', 'TipoCanales', 'troncales') );
     }
-    /**
-     * Show the specified resource editar.
-     * @param int $id
-     * @return Response
-     */
-    public function showeditar($id)
-    {
-        $distribuidor = Cat_Distribuidor::findOrFail($id);
-
-        $troncales = $distribuidor->Troncales;
-        $empresas = $distribuidor->Config_Empresas->all();
-            
-        $canales = Cat_Tipo_Canales::where('Cat_Distribuidor_id',$id)->get();
-        
-        return view('administrador::canales.showedit', compact( 'troncales', 'empresas','distribuidor','canales'));
-    }
-
     /**
      * Show the form for editing the specified resource.
      * @param int $id
@@ -158,20 +152,37 @@ class CanalesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        /**
-         * Actualizamos la troncal
-         */
-        Canales::where( 'id', $id )
-                                ->update([
-                                    'canal' => $request->input('canal'),
-                                    'Troncales_id' => $request->input('Troncales_id'),
-                                    'Cat_Distribuidor_id' => $request->input('Cat_Distribuidor_id'),
-                                    'Empresas_id' => $request->input('Empresas_id'),
-                                ]);
-        /**
-         * Redirigimos a la ruta index
-         */
-        return redirect()->route('canales.index');
+        $dataForm = $request->input('dataForm');
+
+        for ($i=0; $i < count( $dataForm ); $i++) {
+            $data[ $dataForm[$i]['name'] ] = $dataForm[$i]['value'];
+        }
+        array_shift( $data );
+        array_shift( $data );
+        array_shift( $data );
+
+        $info = array_chunk( $data, 6 );
+
+        for($i=0;$i<count($info);$i++){
+            /**
+             * Actualizamos el canal
+             */
+            if ( $info[$i][2] == 'LOCAL/' ) {
+                $Troncales_id = 1;
+            } else {
+                $Troncales_id = $info[$i][3];
+            }
+            Canales::where([
+                                ['Empresas_id', '=', $id],
+                                ['id', '=', $info[$i][0]],
+                            ])
+                                    ->update([
+                                        'protocolo' => $info[$i][2],
+                                        'prefijo' => $info[$i][5].$info[$i][4],
+                                        'Troncales_id' => $Troncales_id,
+                                        'Cat_Canales_Tipo_id' => $info[$i][1],
+                                    ]);
+        }
     }
 
     /**

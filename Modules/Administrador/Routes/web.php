@@ -16,11 +16,67 @@
 Route::prefix('administrador')->group(function() {
     Route::get('/', 'AdministradorController@index')->middleware('auth')->name('administrador');
 });
+/*
+|--------------------------------------------------------------------------
+| RUTAS PARA EL SUB MODULO DE CUENTAS
+|--------------------------------------------------------------------------
+*/
 /**
- * Rutas para CRUD de Usuarios
+ * Rutas para CRUD de Distribuidores
  */
 Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador', 'middleware' => 'auth'], function() {
-    Route::resource('usuarios','UsuariosController');
+    Route::resource('distribuidor','DistribuidoresController');
+});
+/**
+ * Rutas de CRUD de EMRPRESAS
+ */
+Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
+    Route::resource('empresas','EmpresasController');
+});
+/**
+ * Rutas de CRUD de Extensiones
+ */
+Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
+    Route::get('/extensiones/create/{id}', 'catExtensionesController@create');
+    Route::resource('extensiones','catExtensionesController');
+});
+/*
+|--------------------------------------------------------------------------
+| RUTAS PARA EL SUB MODULO DE VOZ
+|--------------------------------------------------------------------------
+*/
+/**
+ * Rutas de CRUD de Troncales
+ */
+Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
+    Route::resource('troncales','TroncalesController');
+});
+/**
+ * Rutas de CRUD de CANALES
+ */
+Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
+    Route::get('/canales/create/{id}', 'CanalesController@create');
+    Route::resource('canales','CanalesController');
+});
+/**
+ * Rutas para CRUD de DID
+ */
+Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
+    Route::get('/did/create/{id}', 'DidController@create');
+    Route::resource('did','DidController');
+});
+/*
+|--------------------------------------------------------------------------
+| RUTAS PARA EL SUB MODULO DE CONFIGURACION DEL SISTEMA
+|--------------------------------------------------------------------------
+*/
+/**
+ * Rutas para CRUD de Modulos
+ */
+Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador', 'middleware' => 'auth'], function() {
+    Route::post('/modulos/updateOrdering', 'ModulosController@updateOrdering');
+    Route::get('/modulos/ordering', 'ModulosController@ordering');
+    Route::resource('modulos','ModulosController');
 });
 /**
  * Rutas para CRUD de Menus
@@ -39,24 +95,21 @@ Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix'
     Route::resource('submenus','SubMenusController');
 });
 /**
- * Rutas para CRUD de Modulos
+ * Rutas para CRUD de Usuarios
  */
 Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador', 'middleware' => 'auth'], function() {
-    Route::post('/modulos/updateOrdering', 'ModulosController@updateOrdering');
-    Route::get('/modulos/ordering', 'ModulosController@ordering');
-    Route::resource('modulos','ModulosController');
+    Route::resource('usuarios','UsuariosController');
 });
+/*
+|--------------------------------------------------------------------------
+| RUTAS PARA EL SUB MODULO DE CATALOGOS
+|--------------------------------------------------------------------------
+*/
 /**
- * Rutas para CRUD de Distribuidores
- */
-Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador', 'middleware' => 'auth'], function() {
-    Route::resource('distribuidor','DistribuidoresController');
-});
-/**
- * Rutas para CRUD de Dids
+ * Rutas de CRUD de Catalogo de TiposCanal
  */
 Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
-    Route::resource('did','DidController');
+    Route::resource('cat_tipo_canales','TipoCanalcontroller');
 });
 /**
  * Rutas de CRUD de Catalogos Estado de Agentes
@@ -79,6 +132,12 @@ Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix'
     Route::resource('cat_empresa','CatEstadoEmpresaController');
 });
 /**
+ * Rutas de CRUD de Base de Datos
+ */
+Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
+    Route::resource('basedatos','BasesDatosController');
+});
+/**
  * Rutas de CRUD de Catalogos de PBX
  */
 Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
@@ -89,35 +148,4 @@ Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix'
  */
 Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
     Route::resource('cat_nas','CatNasController');
-});
-/**
- * Rutas de CRUD de Catalogo de TiposCanal
- */
-Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
-    Route::resource('cat_tipo_canales','TipoCanalcontroller');
-});
-/**
- * Rutas de CRUD de Troncales
- */
-Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
-    Route::resource('troncales','TroncalesController');
-});
-/**
- * Rutas de CRUD de CANALES
- */
-Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
-    Route::get('/canales/create/{id}', 'CanalesController@create');
-    Route::resource('canales','CanalesController');
-});
-/**
- * Rutas de CRUD de EMRPRESAS
- */
-Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
-    Route::resource('empresas','EmpresasController');
-});
-/**
- * Rutas de CRUD de Base de Datos
- */
-Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
-    Route::resource('basedatos','BasesDatosController');
 });

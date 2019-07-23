@@ -30,6 +30,7 @@ mix.js([
     'resources/js/module_administrador/cat_base_datos.js',
     'resources/js/module_administrador/cat_tipo_canal.js',
     'resources/js/module_administrador/menu.js',
+    'resources/js/module_administrador/cat_extensiones.js',
 ], 'public/js/');
 /*
 mix.js('resources/js/app.js', 'public/js/all.js')

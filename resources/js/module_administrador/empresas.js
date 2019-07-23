@@ -255,13 +255,27 @@ $(function() {
         let _token = $("input[name=_token]").val();
         let dato = id + "." + opcion;
 
+        $("#accionActualizar").removeClass('updateExtension updateCanal updateEmpresa updateDid');
+
         if (opcion == 'dataGeneral') {
             $('.updateEmpresa').slideUp();
+        } else if (opcion == 'dataExtensiones') {
+            url = currentURL + '/extensiones/' + id;
+            $("#accionActualizar").addClass('updateExtension');
+            $('#accionActualizar').slideDown();
+        } else if (opcion == 'dataCanales') {
+            url = currentURL + '/canales/' + id;
+            $("#accionActualizar").addClass('updateCanal');
+            $('#accionActualizar').slideDown();
+        } else if (opcion == 'dataDids') {
+            url = currentURL + '/did/' + id;
+            $("#accionActualizar").addClass('updateDid');
+            $('#accionActualizar').slideDown();
         } else {
-            $('.updateEmpresa').slideDown();
+            url = currentURL + '/empresas/' + dato;
+            $("#accionActualizar").addClass('updateEmpresa');
+            $('#accionActualizar').slideDown();
         }
-
-        let url = currentURL + '/empresas/' + dato;
 
         $.ajax({
             url: url,
@@ -277,45 +291,5 @@ $(function() {
             }
         });
 
-    });
-    /**
-     * Evento para habilitar la edicion del canal seleccionado
-     */
-    $(document).on('click', '.editar_canal', function(event) {
-        let id = $(this).val();
-        /**
-         * Habilitamos los inputs para editar
-         */
-        if ($(this).prop('checked')) {
-            $("#tipo_Canal_" + id).prop("disabled", false);
-            $("#troncal_" + id).prop("disabled", false);
-            $("#prefijo_" + id).prop("disabled", false);
-            $("#prefijo_completo_" + id).prop("disabled", false);
-            $("#delete_" + id).slideDown();
-        } else {
-            $("#tipo_Canal_" + id).prop("disabled", true);
-            $("#troncal_" + id).prop("disabled", true);
-            $("#prefijo_" + id).prop("disabled", true);
-            $("#prefijo_completo_" + id).prop("disabled", true);
-            $("#delete_" + id).slideUp();
-        }
-    });
-    /**
-     * Evento para habilitar la edicion de la extension seleccionado
-     */
-    $(document).on('click', '.editar_extension', function(event) {
-        let id = $(this).val();
-        /**
-         * Habilitamos los inputs para editar
-         */
-        if ($(this).prop('checked')) {
-            $("#canal_extension_" + id).prop("disabled", false);
-            $("#extension_" + id).prop("disabled", false);
-            $("#extension_id_" + id).prop("disabled", false);
-        } else {
-            $("#canal_extension_" + id).prop("disabled", false);
-            $("#extension_" + id).prop("disabled", false);
-            $("#extension_id_" + id).prop("disabled", false);
-        }
     });
 });

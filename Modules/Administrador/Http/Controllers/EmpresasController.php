@@ -204,22 +204,6 @@ class EmpresasController extends Controller
                 'almacenamiento_adicional'   =>   $almaAdicional
             ]);
 
-        } else if($data['action'] == 'dataCanales') {
-
-
-
-
-        } else if($data['action'] == 'dataExtensiones') {
-            /**
-             * Guardamos la informacion del nuevo dominio
-             */
-            for ($i=0; $i < (int)$data['posiciones']; $i++) {
-                $catExtension = new Cat_Extensiones;
-                $catExtension->extension = (int)$data['extension'] + $i;
-                $catExtension->Empresas_id = $data['id_empresa'];
-                $catExtension->Canales_id = $data['canal_id'];
-                $catExtension->save();
-            }
         }
     }
     /**
@@ -311,46 +295,6 @@ class EmpresasController extends Controller
 
             return view('administrador::empresas.almacenamiento', compact('configEmpresa', 'idEmpresa') );
 
-        } else if( $data[1] == 'dataCanales' ) {
-            /**
-             * Devolvemos la informacion de los tipos de canales de la empresa
-             */
-            $canales = Canales::where('Empresas_id', $idEmpresa )->get();
-            //dd( $canales );
-            /**
-             * Recuperamos los tipo de canales
-             */
-            $TipoCanales = Cat_Tipo_Canales::where('activo',1)->get();
-            /**
-             * Recuperamos las troncales asociadas a la empresa
-             */
-            $troncales = Troncales::where([
-                                            ['activo', '=', '1'],
-                                            ['Cat_Distribuidor_id', '=',  $canales[0]->Cat_Distribuidor_id]
-                                        ])->get();
-
-
-            return view('administrador::empresas.canales', compact('canales', 'idEmpresa', 'TipoCanales', 'troncales') );
-
-        } else if( $data[1] == 'dataExtensiones' ) {
-            /**
-             * Obtenemos las extensiones que ya tiene la empresa
-             */
-            $extensiones = Cat_Extensiones::where('Empresas_id', $idEmpresa)->get();
-            $extCreadas = $extensiones->count();
-            /**
-             * Obtenemos las posiciones asignadas para la empresa
-             */
-            $configEmpresa = Config_Empresas::where('Empresas_id', $idEmpresa )->get();
-            $numExtensiones = $configEmpresa[0]->agentes_entrada + $configEmpresa[0]->agentes_salida + $configEmpresa[0]->agentes_dual;
-
-            /**
-             * Devolvemos la informacion de los tipos de canales de la empresa
-             */
-            $canales = Canales::where('Empresas_id', $idEmpresa )->get();
-
-            return view('administrador::empresas.extensiones',compact( 'idEmpresa', 'canales', 'numExtensiones', 'extCreadas', 'extensiones') );
-
         }
     }
 
@@ -382,7 +326,6 @@ class EmpresasController extends Controller
                 array_push( $dataModulos, $dataForm[$i]['value'] );
             }
         }
-        dd( $data );
         /**
          *
          */
@@ -553,45 +496,6 @@ class EmpresasController extends Controller
                 'almacenamiento_adicional'   =>   $almaAdicional
             ]);
             if ($request->input('accion') == "actualizar") {
-            }
-        } else if( $data['action'] == 'dataCanales' ) {
-            $idEmpresa = $data['id_empresa'];
-            array_shift($data);
-            array_shift($data);
-            array_shift($data);
-            $info = array_chunk( $data, 5 );
-            /**
-             * Editamos el canal
-             */
-            for ($i=0; $i < count( $info ); $i++) {
-                Canales::where([
-                                ['Empresas_id', '=', $idEmpresa],
-                                ['id', '=',  $info[$i][0] ]
-                            ])->update([
-                                'prefijo' => $info[$i][4].$info[$i][3],
-                                'Troncales_id' => $info[$i][2],
-                                'Cat_Canales_Tipo_id' => $info[$i][1]
-                            ]);
-            }
-
-        } else if( $data['action'] == 'dataExtensiones' ) {
-            $idEmpresa = $data['id_empresa'];
-            array_shift($data);
-            array_shift($data);
-            array_shift($data);
-            array_shift($data);
-            $info = array_chunk( $data, 3 );
-            /**
-             * Editamos la extension
-             */
-            for ($i=0; $i < count( $info ); $i++) {
-                Cat_Extensiones::where([
-                                ['Empresas_id', '=', $idEmpresa],
-                                ['id', '=',  $info[$i][0] ]
-                            ])->update([
-                                'extension' => $info[$i][2],
-                                'Canales_id' => $info[$i][1]
-                            ]);
             }
         }
     }

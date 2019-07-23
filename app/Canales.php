@@ -19,7 +19,18 @@ class Canales extends Model
     /**
      * Nombre de la tabla
      */
-   protected $table = 'Canales';
+    protected $table = 'Canales';
+    /**
+     * Funcion para obtener solo los registros activos
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('activo', 1);
+    }
+    /*
+    |--------------------------------------------------------------------------
+    | RELACIONES DE BASE DE DATOS
+    |--------------------------------------------------------------------------
    /**
      * Relacion uno a muchos con Did
      */

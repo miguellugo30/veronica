@@ -19,10 +19,21 @@ class Cat_Tipo_Canales extends Model
     /**
      * Nombre de la tabla
      */
-   protected $table = 'Cat_Tipo_Canales';
-   /**
-    * Relacion muchos a uno con Cat_Distribuidor
-    */
+    protected $table = 'Cat_Tipo_Canales';
+     /**
+     * Funcion para obtener solo los registros activos
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('activo', 1);
+    }
+    /*
+    |--------------------------------------------------------------------------
+    | RELACIONES DE BASE DE DATOS
+    |-----------------------------------------------------------------------
+    /**
+     * Relacion muchos a uno con Cat_Distribuidor
+     */
     public function Cat_Distribuidor()
     {
        return $this->belongsTo('Nimbus\Cat_Distribuidor', 'Cat_Distribuidor_id', 'id');

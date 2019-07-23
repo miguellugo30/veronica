@@ -21,6 +21,17 @@ class Cat_Extensiones extends Model
      */
     protected $table = 'Cat_Extensiones';
     /**
+     * Funcion para obtener solo los registros activos
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('activo', 1);
+    }
+    /*
+    |--------------------------------------------------------------------------
+    | RELACIONES DE BASE DE DATOS
+    |--------------------------------------------------------------------------
+    /**
      * Relacion uno a uno con Cat_Estado_Empresas
      */
     public function Canales()

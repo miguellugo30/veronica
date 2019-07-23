@@ -20,6 +20,17 @@ class Dids extends Model
      * Nombre de la tabla
      */
    protected $table = 'Dids';
+    /**
+     * Funcion para obtener solo los registros activos
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('activo', 1);
+    }
+    /*
+    |--------------------------------------------------------------------------
+    | RELACIONES DE BASE DE DATOS
+    |--------------------------------------------------------------------------
    /**
     * Relacion muchos a uno con Empresas
     */

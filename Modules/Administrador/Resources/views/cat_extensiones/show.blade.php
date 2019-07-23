@@ -1,6 +1,10 @@
-<div class="col-md-6">
+<div class="col-md-12" style="text-align: right;">
+    <button type="button" class="btn btn-primary btn-xs newExtension" data-widget="remove"><i class="fas fa-plus"></i> Nueva Extension</button>
+</div>
+<br><br>
+<div class="col-md-12">
     <input type="hidden" name="id_empresa" id="id_empresa" value="{{ $idEmpresa }}">
-    <input type="hidden" name="action" id="action" value="dataExtensiones">
+    <input type="hidden" name="action" id="action" value="updateDataExtensiones">
     @csrf
     <table id="TableCatExts" class="table table-striped">
         <thead>
@@ -8,6 +12,7 @@
                 <th>Editar</th>
                 <th>Canal</th>
                 <th>Extension</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -24,36 +29,11 @@
                     <td>
                         <input class="form-control input-sm" type="text" name="extension_{{ $extension->id }}" id="extension_{{ $extension->id }}" value="{{ $extension->extension }}" disabled>
                     </td>
+                    <td>
+                        <button type="button" class="btn btn-danger btn-xs deleteExtension" id="delete_{{ $extension->id }}" style="display:none"><i class="fas fa-plus"></i> Eliminar Extension</button>
+                    </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
 </div>
-<!--div class="col-md-6">
-    <div class="form-group">
-        <label for="canal_id">Canal</label>
-        <select name="canal_id" id="canal_id" class="form-control input-sm">
-            <option value="" >Selecciona un canal</option>
-            @foreach ($canales as $canal)
-                <option value="{{$canal->id}}">{{ $canal->protocolo }}{{ $canal->Troncales->nombre }}/{{ $canal->prefijo }}</option>
-            @endforeach
-        </select>
-        <input type="hidden" name="id_empresa" id="id_empresa" value="{{ $idEmpresa }}">
-        <input type="hidden" name="action" id="action" value="dataExtensiones">
-        @csrf
-    </div>
-    <div class="form-group">
-        <label for="">Extensiones
-        </label>
-        <div class="form-inline" style="text-align:center">
-            <div class="form-group">
-                <label for="extension">Extension:</label>
-                <input type="number" min="1" class="form-control" id="extension" name="extension" placeholder="Extension">
-            </div>
-            <div class="form-group">
-                <label for="posiciones">Posiciones:</label>
-                <input type="number" class="form-control" min="1" max="{{ $numExtensiones }}" id="posiciones" name="posiciones" value="{{ $numExtensiones }}">
-            </div>
-        </div>
-    </div>
-</div-->

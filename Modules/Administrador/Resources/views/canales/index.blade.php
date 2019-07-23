@@ -2,7 +2,7 @@
     <div class="box-header with-border">
         <h3 class="box-title"><i class="fas fa-project-diagram"></i> Canales</h3>
         <div class="box-tools pull-right">
-            <button type="button" class="btn btn-primary btn-xs newCanal" data-widget="remove"><i class="fas fa-plus"></i> Nuevo Canal</button>
+            <!--button type="button" class="btn btn-primary btn-xs newCanal" data-widget="remove"><i class="fas fa-plus"></i> Nuevo Canal</button-->
         </div>
     </div><!-- /.box-header -->
     <div class="box-body">
