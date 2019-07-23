@@ -13,6 +13,7 @@
                         <tr>
                             <th>Distribuidor</th>
                             <th>Troncal</th>
+                            <th>Descripci&oacute;n</th>
                             <th>IP MEDIA</th>
                             <th>IP HOST</th>
                             <th>Configuraci&oacute;n</th>
@@ -23,13 +24,13 @@
                             <tr data-id="{{ $troncal->id }}">
                                 <td>{{ $troncal->Cat_Distribuidor->servicio }}</td>
                                 <td>{{ $troncal->nombre }}</td>
+                                <td>{{ $troncal->configuracion }}</td>
                                 <td>{{ $troncal->ip_media }}</td>
                                 <td>{{ $troncal->ip_host }}</td>
                                 <input type="hidden" name="id" id="id" value="{{ $troncal->id }}">
                                 <td align="center">
-                                    <i class="fas fa-cog show-modal" value="{{$troncal->configuracion}}"></i>
-                                    <button type="button" value="{{$troncal->id}}" class="btn btn-info show-modal" data-toggle="modal" data-target="#modal-info">
-                                        Launch Info Modal
+                                    <button type="button" value="{{$troncal->id}}" class="btn bg-olive margin btn-sm show-modal" data-toggle="modal" data-target="#modal-info">
+                                        <i class="fas fa-cog show-modal"></i>
                                     </button>
                                 </td>
                             </tr>

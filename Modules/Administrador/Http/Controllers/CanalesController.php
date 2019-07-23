@@ -100,12 +100,28 @@ class CanalesController extends Controller
     public function show($id)
     {
         $distribuidor = Cat_Distribuidor::findOrFail($id);
-
+        
         $troncales = $distribuidor->Troncales;
         $empresas = $distribuidor->Config_Empresas->all();
         $canales = Cat_Tipo_Canales::where('Cat_Distribuidor_id',$id)->get();
 
         return view('administrador::canales.show', compact( 'troncales', 'empresas','distribuidor','canales'));
+    }
+    /**
+     * Show the specified resource editar.
+     * @param int $id
+     * @return Response
+     */
+    public function showeditar($id)
+    {
+        $distribuidor = Cat_Distribuidor::findOrFail($id);
+
+        $troncales = $distribuidor->Troncales;
+        $empresas = $distribuidor->Config_Empresas->all();
+            
+        $canales = Cat_Tipo_Canales::where('Cat_Distribuidor_id',$id)->get();
+        
+        return view('administrador::canales.showedit', compact( 'troncales', 'empresas','distribuidor','canales'));
     }
 
     /**
@@ -177,4 +193,5 @@ class CanalesController extends Controller
          */
         //return redirect()->route('canales.index');
     }
+
 }
