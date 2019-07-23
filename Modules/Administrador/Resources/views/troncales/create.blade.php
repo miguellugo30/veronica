@@ -14,9 +14,21 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="nombre">Nombre</label>
+            <label for="distribuidores">Protocolo</label>
+            <select name="distribuidores" id="distribuidores" class="form-control">
+                <option value="" >Selecciona un protocolo</option>
+                <option value="SIP" >SIP</option>
+                <option value="LOCAL/" >LOCAL/</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="nombre">Troncal</label>
             <input type="text" class="form-control" id="nombre" placeholder="Nombre" required>
             @csrf
+        </div>
+        <div class="form-group">
+            <label for="nombre">Descripci&oacute;n</label>
+            <input type="text" class="form-control" id="descripcion" placeholder="Descripcion" required>
         </div>
         <div class="form-group">
             <label for="ip_media">IP Media</label>

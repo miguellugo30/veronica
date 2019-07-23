@@ -1,7 +1,7 @@
 <fieldset>
         <legend>
             <i class="fas fa-project-diagram"></i>
-            Nueva Troncal
+            Editar Troncal
         </legend>
         <div class="col-md-6" style="float:none; margin:auto">
             <div class="form-group">
@@ -14,15 +14,18 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="nombre">Nombre</label>
+                <label for="nombre">Troncal</label>
                 <input type="text" class="form-control" id="nombre" placeholder="Nombre" value="{{ $troncal->nombre }}">
                 <input type="hidden" name="id" id="id" value="{{ $troncal->id }}">
                 @csrf
             </div>
             <div class="form-group">
+                <label for="descripcion">Descripci&oacute;n</label>
+                <input type="text" class="form-control" id="descripcion" placeholder="descripcion" value="{{ $troncal->configuracion }}">
+            </div>
+            <div class="form-group">
                 <label for="ip_media">IP Media</label>
                 <select name="ip_media" id="ip_media" class="form-control">
-                    <option value="" >Selecciona un Media</option>
                     @foreach( $medias as $media )
                         <option value="{{ $media->id }}" >{{ $media->id == $media->ip_pbx." :: ".$media->media_server }}</option>
                     @endforeach

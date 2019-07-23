@@ -106,7 +106,7 @@ Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix'
  * Rutas de CRUD de CANALES
  */
 Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
-    Route::get('/canales/id', 'CanalesController@id');
+    Route::get('/canales/id/{id}', 'CanalesController@showeditar');
     Route::resource('canales','CanalesController');
 });
 /**
