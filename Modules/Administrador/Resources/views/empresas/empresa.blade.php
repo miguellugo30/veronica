@@ -1,6 +1,6 @@
 <div class="form-group">
     <label for="distribuidores_empresa">Distribuidor</label>
-    <select name="distribuidores_empresa" id="distribuidores_empresa" class="form-control input-sm">
+    <select name="distribuidores_empresa" id="distribuidores_empresa" class="form-control input-sm" {{ isset($empresa->Config_Empresas) ? 'disabled' : '' }}  >
         <option value="" >Selecciona un distribuidor</option>
         @if ( isset( $empresa->Config_Empresas ))
             @foreach( $distribuidores as $distribuidor )
@@ -15,7 +15,7 @@
 </div>
 <div class="form-group">
     <label for="nombre">Nombre</label>
-    <input type="text" class="form-control input-sm" id="nombre" name="nombre" placeholder="Nombre" value="{{ isset( $empresa->nombre ) ? $empresa->nombre : '' }}">
+    <input type="text" class="form-control input-sm" id="nombre" name="nombre" placeholder="Nombre" value="{{ isset( $empresa->nombre ) ? $empresa->nombre : '' }}" {{ isset( $empresa->nombre ) ? 'disabled' : '' }} >
     <input type="hidden" name="id_empresa" id="id_empresa" value="{{    isset( $empresa->id ) ?  $empresa->id : "" }}">
     <input type="hidden" name="action" id="action" value="dataEmpresa">
     @csrf

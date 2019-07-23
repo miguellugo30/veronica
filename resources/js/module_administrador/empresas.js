@@ -34,7 +34,7 @@ $(function() {
     /**
      * Declaramos las opciones para la creacion de una nueva cuenta
      */
-    let opciones = ['dataEmpresa', 'dataInfra', 'dataModulo', 'dataPosiciones', 'dataAlmacenamiento', 'dataExtensiones'];
+    let opciones = ['dataEmpresa', 'dataInfra', 'dataModulo', 'dataPosiciones', 'dataAlmacenamiento', 'dataCanales', 'dataExtensiones', 'dataDids'];
     /**
      * Evento para guardar la nueva empresa
      */
@@ -70,7 +70,7 @@ $(function() {
          * Cuando lleguemos al final del arreglo ponermos
          * el boton con la leyenda de finalizar
          */
-        if (opcionSiguiente == 5) {
+        if (opcionSiguiente == 7) {
             $('#siguiente').html('Finalizar');
         }
         /**
@@ -88,12 +88,10 @@ $(function() {
             url = currentURL + '/empresas/' + id; //Definimos la url de edicion
             method = "POST";
             _method = "PUT";
-            console.log("envia ha actualizar");
         } else {
             url = currentURL + '/empresas'; //Definimos la URL para crear
             method = "POST";
             _method = "POST";
-            console.log("envia ha crear");
         }
         /**
          * Recuperamos la informacion del formulario
@@ -133,7 +131,7 @@ $(function() {
         /**
          * Seteamos el valor de la siguiente opcion y anterior
          */
-        if (opcionSiguiente == 5) {
+        if (opcionSiguiente == 7) {
             $('#siguiente').html('Siguiente');
         }
         if (opcionAnterior == 0) {
@@ -165,6 +163,7 @@ $(function() {
                 $('#formDataEmpresa').html(result);
             }
         });
+
     });
     /**
      * Evento para mostrar el formulario editar empresa
@@ -172,6 +171,7 @@ $(function() {
     $(document).on('dblclick', '#tableEmpresas tbody tr', function(event) {
         event.preventDefault();
 
+        $(".newEmpresa").slideUp();
         $(".viewIndex").slideUp();
         $(".viewCreate").slideDown();
 
@@ -196,6 +196,7 @@ $(function() {
      * Evento para cancelar la creacion/edicion del modulo
      */
     $(document).on("click", ".cancelEmpresa", function(e) {
+        $(".newEmpresa").slideDown();
         $(".viewIndex").slideDown();
         $(".viewCreate").slideUp();
         $(".viewCreate").html('');
@@ -221,8 +222,8 @@ $(function() {
                 _method: _method
             },
             success: function(result) {
-                $('#formDataEmpresa').html(result);
                 /*
+                $('#formDataEmpresa').html(result);
                                 let url = currentURL + "/empresas/" + id + "/edit";
 
                                 $.get(url, function(data, textStatus, jqXHR) {
@@ -238,33 +239,6 @@ $(function() {
                                         }
                                     });
                                 });*/
-            }
-        });
-    });
-    /**
-     * Evento para eliminar el modulo
-     */
-    $(document).on('click', '.deleteCanal', function(event) {
-        event.preventDefault();
-
-        let id = $("#id").val();
-        let _token = $("input[name=_token]").val();
-        let _method = "DELETE";
-        let url = currentURL + '/empresas/' + id;
-
-        $.ajax({
-            url: url,
-            type: 'POST',
-            data: {
-                _token: _token,
-                _method: _method
-            },
-            success: function(result) {
-                $('.viewResult').html(result);
-                $('.viewCreate').slideUp();
-                $('.viewIndex #tableEmpresas').DataTable({
-                    "lengthChange": true
-                });
             }
         });
     });
@@ -297,6 +271,9 @@ $(function() {
             },
             success: function(result) {
                 $('#formDataEmpresa').html(result);
+                $('#TableCatExts').DataTable({
+                    "lengthChange": true
+                });
             }
         });
 
@@ -314,11 +291,31 @@ $(function() {
             $("#troncal_" + id).prop("disabled", false);
             $("#prefijo_" + id).prop("disabled", false);
             $("#prefijo_completo_" + id).prop("disabled", false);
+            $("#delete_" + id).slideDown();
         } else {
             $("#tipo_Canal_" + id).prop("disabled", true);
             $("#troncal_" + id).prop("disabled", true);
             $("#prefijo_" + id).prop("disabled", true);
             $("#prefijo_completo_" + id).prop("disabled", true);
+            $("#delete_" + id).slideUp();
+        }
+    });
+    /**
+     * Evento para habilitar la edicion de la extension seleccionado
+     */
+    $(document).on('click', '.editar_extension', function(event) {
+        let id = $(this).val();
+        /**
+         * Habilitamos los inputs para editar
+         */
+        if ($(this).prop('checked')) {
+            $("#canal_extension_" + id).prop("disabled", false);
+            $("#extension_" + id).prop("disabled", false);
+            $("#extension_id_" + id).prop("disabled", false);
+        } else {
+            $("#canal_extension_" + id).prop("disabled", false);
+            $("#extension_" + id).prop("disabled", false);
+            $("#extension_id_" + id).prop("disabled", false);
         }
     });
 });

@@ -21,6 +21,18 @@ class Empresas extends Model
      */
     protected $table = 'Empresas';
     /**
+     * Funcion para obtener solo los registros activos
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('activo', 1);
+    }
+    /*
+    |--------------------------------------------------------------------------
+    | RELACIONES DE BASE DE DATOS
+    |--------------------------------------------------------------------------
+    */
+    /**
      * Relacion uno a muchos con Did
      */
     public function Dids()

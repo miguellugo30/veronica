@@ -15,6 +15,7 @@ use Nimbus\Config_Empresas;
 use Nimbus\Canales;
 use Nimbus\Cat_Tipo_Canales;
 use Nimbus\Troncales;
+use Nimbus\Cat_Extensiones;
 
 class EmpresasController extends Controller
 {
@@ -27,7 +28,7 @@ class EmpresasController extends Controller
         /**
          * Recuperamos todos las empresas que esten activos
          */
-        $empresas = Empresas::where('activo',1)->get();
+        $empresas = Empresas::active()->get();
         return view('administrador::empresas.index', compact('empresas'));
     }
 
@@ -203,7 +204,22 @@ class EmpresasController extends Controller
                 'almacenamiento_adicional'   =>   $almaAdicional
             ]);
 
+        } else if($data['action'] == 'dataCanales') {
+
+
+
+
         } else if($data['action'] == 'dataExtensiones') {
+            /**
+             * Guardamos la informacion del nuevo dominio
+             */
+            for ($i=0; $i < (int)$data['posiciones']; $i++) {
+                $catExtension = new Cat_Extensiones;
+                $catExtension->extension = (int)$data['extension'] + $i;
+                $catExtension->Empresas_id = $data['id_empresa'];
+                $catExtension->Canales_id = $data['canal_id'];
+                $catExtension->save();
+            }
         }
     }
     /**
@@ -317,13 +333,23 @@ class EmpresasController extends Controller
             return view('administrador::empresas.canales', compact('canales', 'idEmpresa', 'TipoCanales', 'troncales') );
 
         } else if( $data[1] == 'dataExtensiones' ) {
+            /**
+             * Obtenemos las extensiones que ya tiene la empresa
+             */
+            $extensiones = Cat_Extensiones::where('Empresas_id', $idEmpresa)->get();
+            $extCreadas = $extensiones->count();
+            /**
+             * Obtenemos las posiciones asignadas para la empresa
+             */
+            $configEmpresa = Config_Empresas::where('Empresas_id', $idEmpresa )->get();
+            $numExtensiones = $configEmpresa[0]->agentes_entrada + $configEmpresa[0]->agentes_salida + $configEmpresa[0]->agentes_dual;
 
             /**
              * Devolvemos la informacion de los tipos de canales de la empresa
              */
             $canales = Canales::where('Empresas_id', $idEmpresa )->get();
 
-            return view('administrador::empresas.extensiones',compact( 'idEmpresa', 'canales') );
+            return view('administrador::empresas.extensiones',compact( 'idEmpresa', 'canales', 'numExtensiones', 'extCreadas', 'extensiones') );
 
         }
     }
@@ -335,15 +361,7 @@ class EmpresasController extends Controller
      */
     public function edit($id)
     {
-        /**
-         * Recuperamos todos los distribuidores que esten activos
-         */
-        $distribuidores = Cat_Distribuidor::where('activo',1)->get();
-        /**
-         * Buscamos la empresa ha editar
-         */
-        $empresa = Empresas::findOrFail($id);
-        return view('administrador::empresas.edit', compact('empresa', 'distribuidores'));
+        return view('administrador::empresas.edit', compact('id'));
     }
 
     /**
@@ -364,6 +382,7 @@ class EmpresasController extends Controller
                 array_push( $dataModulos, $dataForm[$i]['value'] );
             }
         }
+        dd( $data );
         /**
          *
          */
@@ -556,15 +575,26 @@ class EmpresasController extends Controller
             }
 
         } else if( $data['action'] == 'dataExtensiones' ) {
-
-            for ($i=0; $i < (int)$data['posiciones']; $i++) {
-                echo (int)$data['extension'] + $i."<br>";
+            $idEmpresa = $data['id_empresa'];
+            array_shift($data);
+            array_shift($data);
+            array_shift($data);
+            array_shift($data);
+            $info = array_chunk( $data, 3 );
+            /**
+             * Editamos la extension
+             */
+            for ($i=0; $i < count( $info ); $i++) {
+                Cat_Extensiones::where([
+                                ['Empresas_id', '=', $idEmpresa],
+                                ['id', '=',  $info[$i][0] ]
+                            ])->update([
+                                'extension' => $info[$i][2],
+                                'Canales_id' => $info[$i][1]
+                            ]);
             }
-
         }
-
     }
-
     /**
      * Remove the specified resource from storage.
      * @param int $id

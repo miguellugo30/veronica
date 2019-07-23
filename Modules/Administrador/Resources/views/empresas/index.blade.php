@@ -1,6 +1,6 @@
 <div class="box box-primary">
     <div class="box-header with-border">
-        <h3 class="box-title"><i class="far fa-building"></i> Empresas</h3>
+        <h3 class="box-title"><i class="fas fa-building"></i> Empresas</h3>
         <div class="box-tools pull-right">
             <button type="button" class="btn btn-primary btn-xs newEmpresa" data-widget="remove"><i class="fas fa-plus"></i> Nueva empresa</button>
         </div>

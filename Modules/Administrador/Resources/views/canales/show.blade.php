@@ -1,58 +1,66 @@
-<label for="Troncales_id_canal">Troncal</label>
-<select name="Troncales_id_canal" id="Troncales_id_canal" class="form-control" autofocus>
-    <option value="">Selecciona una troncal</option>
-    @foreach( $troncales as $troncal )
-        <option value="{{ $troncal->id }}">{{($troncal->nombre == "") ? "AMD" : $troncal->nombre }}</option>
-    @endforeach
-</select>
-<br>
-<label for="Empresas_id_canal">Empresas</label>
-<select name="Empresas_id_canal" id="Empresas_id_canal" class="form-control" autofocus>
-    <option value="">Selecciona una empresa</option>
-    @foreach( $empresas as $empresa )
-        <option value="{{ $empresa->id }}">{{ $empresa->nombre }}</option>
-    @endforeach
-</select>
-<br>
-<div class="form-group">
-    <label for="Canal">Canales</label>
-    <h5> Mantener seleccionados solo los canales que se desean crear:</h5> 
-</div>
-<div>
-@foreach ($canales as $canal)
-    <div class="col-md-12 canal{{$canal->id}}" style="text-align:center;border:grey 1px solid;">
-        <label for="{{$canal->nombre}}" style="background-color:darkgray;text-align:left;">{{$canal->nombre}}</label>
-        <br>
-        <div class="col-md-1">
-            <input type="checkbox" id="checkcanal" name="checkcanal" value="{{$canal->id}}" checked>
-        </div>
-        @if($canal->nombre == "AMD")
-            <div class="col-md-5" style="width: 10%;padding: 0px;font-size: 20px;">
-                <label for="">LOCAL/</label>
-            </div>
-        @else
-            <div class="col-md-1" style="width: 4%;padding: 0px;font-size: 20px;">
-                <label for="">SIP/</label>
-            </div>
-            <div class="col-md-3">
-                <input type="text" class="form-control" name="canal_troncal{{$canal->id}}" id="canal_troncal{{$canal->id}}" placeholder="{ TRONCAL }" readonly>
-            </div>
-            <div class="col-md-1" style="width: 0%;padding: 0px;font-size: 20px;">
-                <label for="">/</label>
-            </div>
-        @endif
-        
-        
-        <div class="col-md-2">
-            <input type="text" class="form-control canal_prefijo{{$canal->id}}" name="canal_prefijo{{$canal->id}}" id="canal_prefijo{{$canal->id}}" placeholder="{ PREFIJO }" readonly>
-        </div>
-        <div class="col-md-3">
-            <input type="text" class="form-control" name="canal_empresa{{$canal->id}}" id="canal_empresa{{$canal->id}}" placeholder="{ ID_EMPRESA }" readonly>
-        </div>
-        <div class="col-md-2">
-            <input type="number" class="form-control" name="canal_tipo{{$canal->id}}" id="canal_tipo{{$canal->id}}" value="{{$canal->prefijo}}" placeholder="{ TIPO }">
-        </div>
-        <br><br>
+    <div class="col-md-12">
+        <input type="hidden" name="Empresa_id" id="Empresa_id" value="{{ $empresas->id }}">
+        <input type="hidden" name="action" id="action" value="dataCanales">
+        <input type="hidden" name="Cat_Distribuidor_id" id="Cat_Distribuidor_id" value="{{ $empresas->Config_Empresas->Cat_Distribuidor_id }}">
+        <input type="hidden" name="preDist" id="preDist" value="{{ $distribuidor->prefijo }}">
+        <input type="hidden" name="preEmp" id="preEmp" value="{{ str_pad( $empresas->id, 3, 0, STR_PAD_LEFT ) }}">
+        @csrf
     </div>
-@endforeach
+    <br>
+    <br>
+    <div class="col-md-12">
+        <table  class="table table-striped tableNewCanal">
+            <thead>
+                <tr>
+                    <th>Tipo</th>
+                    <th>Protocolo</th>
+                    <th>Troncal</th>
+                    <th>Prefijo</th>
+                    <td><input type = "button" class = "a" id = "add" value = "Agregar canal" /></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="tr_1">
+                    <td>
+                        <select name="tipo_canal_1" id="tipo_canal" class="form-control tipo_canal" data-pos="1">
+                            <option value="">Selecciona un tipo de canal</option>
+                            @foreach( $canales as $canal )
+                            <option value="{{ $canal->id }}" data-pre_tipo="{{ $canal->prefijo }}">{{ $canal->nombre }}</option>
+                            @endforeach
+                        </select>
+                    <td>
+                        <input type="text" class="form-control input-sm protocolo" name="protocolo_1" id="protocolo_1" value="" readonly>
+                    </td>
+                    <td>
+                        <select name="Troncales_id_canal_1" id="Troncales_id_canal_1" class="form-control Troncales_id_canal" >
+                            <option value="">Selecciona una troncal</option>
+                            @foreach( $troncales as $troncal )
+                                <option value="{{ $troncal->id }}">{{($troncal->nombre == "") ? "AMD" : $troncal->nombre }}</option>
+                            @endforeach
+                        </select>
+                        <input type="hidden" class="Troncales_id" name="Troncales_id_1" id="Troncales_id_1" value="1" disabled>
+                    </td>
+                    <td>
+                        <div class="input-group col-sm-6">
+                            <span class="input-group-addon">
+                                <label class="preDist">{{ $distribuidor->prefijo }}</label>
+                                <label class="preEmp">{{ str_pad( $empresas->id, 3, 0, STR_PAD_LEFT ) }}</label>
+                            </span>
+                            <input type="text" class="form-control input-sm prefijo" name="prefijo_1" id="prefijo_1" value="">
+                        </div>
+                    </td>
+                    <td class="delete">
+                        <input type="button" name="remove" value="Eliminar" class="tr_clone_remove">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+<div class="col-md-12" style="padding:10px;">
+    <div class="col-md-6" style="text-align:left">
+        <!--button type="submit" class="btn btn-warning cancelCanal"><i class="fas fa-times"></i> Cancelar</button-->
+    </div>
+    <div class="col-md-6" style="text-align:right">
+        <button type="submit" class="btn btn-primary saveCanal"><i class="fas fa-save"></i> Guardar</button>
+    </div>
 </div>

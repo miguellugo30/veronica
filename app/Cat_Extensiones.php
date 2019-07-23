@@ -25,7 +25,7 @@ class Cat_Extensiones extends Model
      */
     public function Canales()
     {
-        return $this->hasOne('Nimbus\Canales');
+        return $this->hasOne('Nimbus\Canales', 'id', 'Canales_id');
     }
     /**
      * Relacion muchos a uno con Empresas

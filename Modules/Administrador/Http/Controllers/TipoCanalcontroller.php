@@ -57,7 +57,13 @@ class TipoCanalcontroller extends Controller
      */
     public function show($id)
     {
-        return view('administrador::show');
+        /**
+         * Esta funcion se utilizara para poder mostrar los tipo de canales
+         * al seleccionar el distribuidor, esto a la hora de dar de alta un canal
+         */
+        $tipocanales = Cat_Tipo_Canales::where('Cat_Distribuidor_id', $id)->get();
+
+        return view('administrador::cat_tipo_canal.show', compact('tipocanales'));
     }
 
     /**

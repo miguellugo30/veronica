@@ -7,9 +7,8 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Nimbus\Canales;
 use Nimbus\Cat_Distribuidor;
-use Nimbus\Troncales;
-use Nimbus\Config_Empresas;
 use Nimbus\Cat_Tipo_Canales;
+use Nimbus\Empresas;
 
 class CanalesController extends Controller
 {
@@ -30,13 +29,17 @@ class CanalesController extends Controller
      * Show the form for creating a new resource.
      * @return Response
      */
-    public function create()
+    public function create($id)
     {
         /**
          * Recuperamos todos los distribuidores que esten activos
          */
-        $distribuidores = Cat_Distribuidor::where('activo',1)->get();
-        return view('administrador::canales.create', compact('distribuidores') );
+        $empresas = Empresas::findOrFail($id);
+        $distribuidor = Cat_Distribuidor::findOrFail( $empresas->Config_Empresas->Cat_Distribuidor_id );
+        $troncales = $distribuidor->Troncales;
+        $canales = Cat_Tipo_Canales::where('Cat_Distribuidor_id', $empresas->Config_Empresas->Cat_Distribuidor_id)->get();
+
+        return view('administrador::canales.show', compact( 'troncales', 'empresas','distribuidor','canales') );
     }
 
     /**
@@ -46,28 +49,47 @@ class CanalesController extends Controller
      */
     public function store(Request $request)
     {
-        
-       /**
-         * Obtenemos todos los datos del formulario de alta y
-         * los insertamos la informacion del formulario
-         */
-        $prefijos = $request->prefijos;
-        $prefijos = explode(";",$prefijos);
+        $dataForm = $request->input('dataForm');
 
-        for($c=0;$c<count($prefijos);$c++){
-            $prefijo = explode(",",$prefijos[$c]);
-            Canales::create(['protocolo'=>$request->protocolo,
-                    'prefijo'=>$prefijo[0],
-                    'Troncales_id'=>$request->Troncales_id,
-                    'Cat_Distribuidor_id'=>$request->Cat_Distribuidor_id,
-                    'Cat_Canales_Tipo_id'=>$prefijo[1],
-                    'Empresas_id'=>$request->Empresas_id]);
-        }       
+        for ($i=0; $i < count( $dataForm ); $i++) {
+            $data[ $dataForm[$i]['name'] ] = $dataForm[$i]['value'];
+        }
+        $id_Distribuidor = $data['Cat_Distribuidor_id'];
+        $id_Empresa = $data['Empresa_id'];
+        $prefijo = $data['preDist'].$data['preEmp'];
+
+        array_shift( $data );
+        array_shift( $data );
+        array_shift( $data );
+        array_shift( $data );
+        array_shift( $data );
+        array_shift( $data );
+
+        $info = array_chunk( $data, 4 );
+
+        for($i=0;$i<count($info);$i++){
+
+            if ( $info[$i][1] == 'LOCAL/' ) {
+                $Troncales_id = 1;
+            } else {
+                $Troncales_id = $info[$i][2];
+            }
+
+
+           Canales::create([
+                'protocolo'=>$info[$i][1],
+                'prefijo'=>$prefijo.$info[$i][3],
+                'Troncales_id'=>$Troncales_id,
+                'Cat_Distribuidor_id'=>$id_Distribuidor,
+                'Cat_Canales_Tipo_id'=>$info[$i][0],
+                'Empresas_id'=>$id_Empresa
+           ]);
+       }
 
         /**
          * Redirigimos a la ruta index
          */
-        return redirect()->route('canales.index');
+        //return redirect()->route('canales.index');
     }
 
     /**
@@ -81,9 +103,8 @@ class CanalesController extends Controller
 
         $troncales = $distribuidor->Troncales;
         $empresas = $distribuidor->Config_Empresas->all();
-            
         $canales = Cat_Tipo_Canales::where('Cat_Distribuidor_id',$id)->get();
-        
+
         return view('administrador::canales.show', compact( 'troncales', 'empresas','distribuidor','canales'));
     }
 
@@ -154,6 +175,6 @@ class CanalesController extends Controller
         /**
          * Redirigimos a la ruta index
          */
-        return redirect()->route('canales.index');
+        //return redirect()->route('canales.index');
     }
 }
