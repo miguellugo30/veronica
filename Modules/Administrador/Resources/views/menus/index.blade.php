@@ -2,15 +2,15 @@
     <div class="box-header with-border">
         <h3 class="box-title"><b><i class="fas fa-align-justify"></i> Menús</b></h3>
         <div class="box-tools pull-right">
-            <button type="button" class="btn btn-primary btn-xs newCat" data-widget="remove"><i class="fas fa-plus"></i> Nuevo Menú</button>
-            <button type="button" class="btn btn-primary btn-xs orderignCat" data-widget="remove"><i class="fas fa-plus"></i> Ordenar Menú</button>
+            <button type="button" class="btn btn-primary btn-sm orderignCat" data-widget="remove"><i class="fas fa-sort-numeric-down"></i> Ordenar Menú</button>
+            <button type="button" class="btn btn-primary btn-sm newCat" data-widget="remove"><i class="fas fa-plus"></i> Nuevo Menú</button>
         </div>
     </div><!-- /.box-header -->
     <div class="box-body">
         <div class="row">
             <div class="col-12 viewIndex">
                 <div class="col-md-12 viewTable">
-                    <table id="tableMenus" class="display table table-striped table-condensed" style="width:100%">
+                    <table id="tableMenus" class="display table table-striped table-sm" style="width:100%">
                         <thead>
                             <tr>
                                 <th>Nombre</th>

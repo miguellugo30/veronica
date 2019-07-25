@@ -2,17 +2,17 @@
     <legend>
         <b><i class="fas fa-align-justify"></i>
         Sub Menú</b>
-        <button type="button" class="btn btn-primary btn-xs newSubCat" style="float: right;margin-left: 5px;">
+        <button type="button" class="btn btn-primary btn-sm newSubCat" style="float: right;margin-left: 5px;">
             <i class="fas fa-plus"></i>
             Nuevo sub menú
         </button>
-        <button type="button" class="btn btn-primary btn-xs orderignSubCat" style="float: right;">
+        <button type="button" class="btn btn-primary btn-sm orderignSubCat" style="float: right;">
             <i class="fas fa-sort-numeric-down"></i>
             Ordenar sub menú
         </button>
         <input type="hidden" name="id_categoria" id="id_categoria" value="{{ $id }}">
     </legend>
-    <table id="tableSubMenus" class="display table table-striped table-condensed" style="width:100%">
+    <table id="tableSubMenus" class="display table table-striped table-sm" style="width:100%">
             <thead>
                 <tr>
                     <th>Nombre</th>

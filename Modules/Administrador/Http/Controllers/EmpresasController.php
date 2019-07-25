@@ -632,7 +632,7 @@ class EmpresasController extends Controller
             }
 
         } else if( $data['action'] == 'dataCanales' ) {
-
+            dd( $data );
             $id = $data['id_empresa'];
 
             array_shift( $data );
@@ -726,6 +726,13 @@ class EmpresasController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Empresas::where( 'id', $id )
+        ->update([
+            'activo' => 0
+        ]);
+        /**
+         * Redirigimos a la ruta index
+         */
+        return redirect()->route('empresas.index');
     }
 }

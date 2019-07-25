@@ -2,13 +2,13 @@
     <div class="box-header with-border">
         <h3 class="box-title"><i class="fas fa-project-diagram"></i> Troncales</h3>
         <div class="box-tools pull-right">
-            <button type="button" class="btn btn-primary btn-xs newTroncal" data-widget="remove"><i class="fas fa-plus"></i> Nueva Troncal</button>
+            <button type="button" class="btn btn-primary btn-sm newTroncal" data-widget="remove"><i class="fas fa-plus"></i> Nueva Troncal</button>
         </div>
     </div><!-- /.box-header -->
     <div class="box-body">
         <div class="row">
             <div class="col-md-12 viewIndex">
-                <table id="tableTroncales" class="display table table-striped table-condensed" style="width:100%">
+                <table id="tableTroncales" class="display table table-striped table-sm" style="width:100%">
                     <thead>
                         <tr>
                             <th>Distribuidor</th>

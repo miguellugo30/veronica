@@ -2,13 +2,13 @@
     <div class="box-header with-border">
         <h3 class="box-title"><i class="fas fa-truck"></i> Distribuidores</h3>
         <div class="box-tools pull-right">
-            <button type="button" class="btn btn-primary btn-xs nuevoDistribuidor" data-widget="remove"><i class="fas fa-plus"></i> Nuevo distribuidor</button>
+            <button type="button" class="btn btn-primary btn-sm nuevoDistribuidor" data-widget="remove"><i class="fas fa-plus"></i> Nuevo distribuidor</button>
         </div>
     </div><!-- /.box-header -->
     <div class="box-body">
         <div class="row">
             <div class="col-md-12 viewIndex" >
-                <table id="tableDistribuidores" class="display table table-striped table-condensed" style="width:100%">
+                <table id="tableDistribuidores" class="display table table-striped table-sm" style="width:100%">
                     <thead>
                         <tr>
                             <th>Servicio</th>

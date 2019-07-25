@@ -2,14 +2,14 @@
     <div class="box-header with-border">
         <h3 class="box-title"><b><i class="fas fa-th"></i> Módulos</b></h3>
         <div class="box-tools pull-right">
-            <button type="button" class="btn btn-primary btn-xs newModule" data-widget="remove"><i class="fas fa-plus"></i> Nuevo Modulo</button>
-            <button type="button" class="btn btn-primary btn-xs orderignModule" data-widget="remove"> <i class="fas fa-sort-numeric-down"></i> Ordenar Modulo</button>
+            <button type="button" class="btn btn-primary btn-sm newModule" data-widget="remove"><i class="fas fa-plus"></i> Nuevo Modulo</button>
+            <button type="button" class="btn btn-primary btn-sm orderignModule" data-widget="remove"> <i class="fas fa-sort-numeric-down"></i> Ordenar Modulo</button>
         </div>
     </div><!-- /.box-header -->
     <div class="box-body">
         <div class="row">
             <div class="col-md-12 viewIndex">
-                <table id="tableModulos" class="display table table-striped table-condensed" style="width:100%">
+                <table id="tableModulos" class="display table table-striped table-sm" style="width:100%">
                     <thead>
                         <tr>
                             <th>Nombre</th>

@@ -1,5 +1,5 @@
-<div class="col-md-12" style="float:none; margin:auto">
-    <div class="col-md-2">
+<div class="row" style="float:none; margin:auto">
+    <div class="col-2">
         <ul class="list-group menuEmpresa">
             <li data-opcion="dataGeneral" class="list-group-item active">Vista General</li>
             <li data-opcion="dataEmpresa" class="list-group-item">Informacion empresa</li>
@@ -11,20 +11,25 @@
             <li data-opcion="dataExtensiones" class="list-group-item">Catalogo de extensiones</li>
             <li data-opcion="dataDids" class="list-group-item">Dids</li>
         </ul>
+        <br><br>
     </div>
-    <div class="col-md-10 viewForm" >
+    <div class="col-10 viewForm" >
         <input type="hidden" id="id" name="id" value="{{ $id }}">
+        @csrf
         <form id="formDataEmpresa" method="post"></form>
+        <br>
+        <br>
+        <br>
     </div>
 </div>
-<div class="col-md-12">
+<div class="row">
     <!--div class="col-md-6" style="float:none; margin:auto"-->
-    <div class="col-md-6" style="text-align:left">
-        <button type="submit" class="btn btn-primary cancelEmpresa"><i class="glyphicon glyphicon-arrow-left"></i> Regresar</button>
+    <div class="col" style="text-align:left">
+        <button type="submit" class="btn btn-primary btn-sm cancelEmpresa"><i class="glyphicon glyphicon-arrow-left"></i> Regresar</button>
         <!--button type="submit" class="btn btn-danger deleteEmpresa"><i class="fas fa-trash-alt"></i> Eliminar</button-->
     </div>
-    <div class="col-md-6" style="text-align:right">
-        <button type="submit" class="btn btn-primary" id="accionActualizar" style="display:none"><i class="fas fa-save"></i> Guardar</button>
+    <div class="col" style="text-align:right">
+        <button type="submit" class="btn btn-primary btn-sm" id="accionActualizar" style="display:none"><i class="fas fa-save"></i> Guardar</button>
     </div>
     <!--/div-->
 </div>

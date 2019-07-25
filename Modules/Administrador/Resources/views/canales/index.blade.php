@@ -8,7 +8,7 @@
     <div class="box-body">
         <div class="row">
             <div class="col-md-12 viewIndex">
-                <table id="tableCanales" class="display table table-striped table-condensed" style="width:100%">
+                <table id="tableCanales" class="display table table-striped table-sm" style="width:100%">
                     <thead>
                         <tr>
                             <th>Distribuidor</th>

@@ -243,23 +243,21 @@ $(function() {
                 _method: _method
             },
             success: function(result) {
-                /*
-                $('#formDataEmpresa').html(result);
-                                let url = currentURL + "/empresas/" + id + "/edit";
+                let url = currentURL + "/empresas/" + id + "/edit";
 
-                                $.get(url, function(data, textStatus, jqXHR) {
-                                    $(".viewCreate").html(data);
-                                    let dato = id + ".dataGeneral";
-                                    let url = currentURL + '/empresas/' + dato;
+                $.get(url, function(data, textStatus, jqXHR) {
+                    $(".viewCreate").html(data);
+                    let dato = id + ".dataGeneral";
+                    let url = currentURL + '/empresas/' + dato;
 
-                                    $.ajax({
-                                        url: url,
-                                        type: 'GET',
-                                        success: function(result) {
-                                            $('#formDataEmpresa').html(result);
-                                        }
-                                    });
-                                });*/
+                    $.ajax({
+                        url: url,
+                        type: 'GET',
+                        success: function(result) {
+                            $('#formDataEmpresa').html(result);
+                        }
+                    });
+                });
             }
         });
     });
@@ -280,6 +278,7 @@ $(function() {
 
         if (opcion == 'dataGeneral') {
             $('.updateEmpresa').slideUp();
+            url = currentURL + '/empresas/' + dato;
         } else if (opcion == 'dataExtensiones') {
             url = currentURL + '/extensiones/' + id;
             $("#accionActualizar").addClass('updateExtension');
@@ -311,6 +310,31 @@ $(function() {
                 });
             }
         });
+    });
+    /**
+     * Evento para eliminar una categoria
+     */
+    $(document).on('click', '.deleteEmpresa', function(event) {
+        event.preventDefault();
 
+        let id = $("#id").val();
+        let _token = $("input[name=_token]").val();
+        let _method = "DELETE";
+        let url = currentURL + '/empresas/' + id;
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: {
+                _token: _token,
+                _method: _method
+            },
+            success: function(result) {
+                $('.viewResult').html(result);
+                $('#tableEmpresas').DataTable({
+                    "lengthChange": true
+                });
+            }
+        });
     });
 });

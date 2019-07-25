@@ -2,13 +2,13 @@
     <div class="box-header with-border">
         <h3 class="box-title"><b><i class="fas fa-database"></i> Bases de Datos</b></h3>
         <div class="box-tools pull-right">
-            <button type="button" class="btn btn-primary btn-xs newDataBase" data-widget="remove"><i class="fas fa-plus"></i> Nueva Base de Datos</button>
+            <button type="button" class="btn btn-primary btn-sm newDataBase" data-widget="remove"><i class="fas fa-plus"></i> Nueva Base de Datos</button>
         </div>
     </div><!-- /.box-header -->
     <div class="box-body">
         <div class="row">
             <div class="col-md-12 viewIndex">
-                <table id="tableBaseDatos" class="display table table-striped table-condensed" style="width:100%">
+                <table id="tableBaseDatos" class="display table table-striped table-sm" style="width:100%">
                     <thead>
                         <tr>
                             <th>Ubicación</th>

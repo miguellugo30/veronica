@@ -2,14 +2,14 @@
     <div class="box-header with-border">
         <h3 class="box-title"><b><i class="fas fa-phone"></i> Estados de Cliente</b></h3>
         <div class="box-tools pull-right">
-            <button type="button" class="btn btn-primary btn-xs newEdoCli" data-widget="remove"><i class="fas fa-plus"></i> Nuevo Catalogo</button>
-            <button type="button" class="btn btn-primary btn-xs orderignEdoCli" data-widget="remove"><i class="fas fa-sort-numeric-down"></i> Ordenar Catalogo</button>
+            <button type="button" class="btn btn-primary btn-sm newEdoCli" data-widget="remove"><i class="fas fa-plus"></i> Nuevo Catalogo</button>
+            <button type="button" class="btn btn-primary btn-sm orderignEdoCli" data-widget="remove"><i class="fas fa-sort-numeric-down"></i> Ordenar Catalogo</button>
         </div>
     </div><!-- /.box-header -->
     <div class="box-body">
         <div class="row">
             <div class="col-md-12 viewIndex">
-                <table id="tableEdoCli" class="display table table-striped table-condensed" style="width:100%">
+                <table id="tableEdoCli" class="display table table-striped table-sm" style="width:100%">
                     <thead>
                         <tr>
                             <th>Nombre</th>

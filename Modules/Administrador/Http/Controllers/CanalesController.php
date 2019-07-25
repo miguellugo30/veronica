@@ -25,7 +25,6 @@ class CanalesController extends Controller
         $canales = Canales::where('activo',1)->get();
         return view('administrador::canales.index', compact('canales'));
     }
-
     /**
      * Show the form for creating a new resource.
      * @return Response
@@ -42,7 +41,6 @@ class CanalesController extends Controller
 
         return view('administrador::canales.create', compact( 'troncales', 'empresas','distribuidor','canales') );
     }
-
     /**
      * Store a newly created resource in storage.
      * @param Request $request
@@ -76,7 +74,6 @@ class CanalesController extends Controller
                 $Troncales_id = $info[$i][2];
             }
 
-
            Canales::create([
                 'protocolo'=>$info[$i][1],
                 'prefijo'=>$prefijo.$info[$i][3],
@@ -87,7 +84,6 @@ class CanalesController extends Controller
            ]);
        }
     }
-
     /**
      * Show the specified resource.
      * @param int $id
@@ -129,7 +125,6 @@ class CanalesController extends Controller
          * Recuperamos el canal ha editar
          */
         $canal = Canales::findOrFail($id);
-
         /**
          * Recuperamos todos los distribuidores que esten activos
          */
@@ -143,7 +138,6 @@ class CanalesController extends Controller
         $tipo_canales = Cat_Tipo_Canales::where('Cat_Distribuidor_id',$distribuidor->id)->get();
         return view('administrador::canales.edit', compact( 'canal', 'distribuidores', 'troncales', 'empresas','tipo_canales'));
     }
-
     /**
      * Update the specified resource in storage.
      * @param Request $request
@@ -183,7 +177,6 @@ class CanalesController extends Controller
                             ]);
         }
     }
-
     /**
      * Remove the specified resource from storage.
      * @param int $id
@@ -198,10 +191,6 @@ class CanalesController extends Controller
                    ->update([
                        'activo' => '0',
                    ]);
-        /**
-         * Redirigimos a la ruta index
-         */
-        //return redirect()->route('canales.index');
     }
 
 }

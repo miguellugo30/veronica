@@ -1,8 +1,8 @@
-<div class="col-md-6" style="float:none; margin:auto">
-    <div class="col-md-6">
+<div class="row justify-content-md-center">
+    <div class="col col-lg-4">
         <div class="form-group">
             <label for="basedatos">Base de datos</label>
-            <select name="basedatos" id="basedatos" class="form-control input-sm">
+            <select name="basedatos" id="basedatos" class="form-control form-control-sm">
                 <option value="">Selecciona una base de datos</option>
                 @foreach( $baseDatos as $baseDato )
                 <option value="{{ $baseDato->id }}">{{ $baseDato->nombre }} || {{ $baseDato->ip }}</option>
@@ -11,16 +11,16 @@
         </div>
         <div class="form-group">
             <label for="media_server">Media Server</label>
-            <input type="text" class="form-control input-sm" id="media_server" placeholder="Media Server">
+            <input type="text" class="form-control form-control-sm" id="media_server" placeholder="Media Server">
             @csrf
         </div>
         <div class="form-group">
             <label for="ip_pbx">IP PBX</label>
-            <input type="text" class="form-control input-sm" id="ip_pbx" placeholder="IP PBX">
+            <input type="text" class="form-control form-control-sm" id="ip_pbx" placeholder="IP PBX">
             @csrf
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col col-lg-4">
         <fieldset>
             <legend>
                 <i class="far fa-hdd"></i>
@@ -37,13 +37,8 @@
         </fieldset>
     </div>
 </div>
-<div class="col-md-12">
-    <div class="col-md-6" style="float:none; margin:auto">
-        <div class="col-md-6" style="text-align:left">
-            <button type="submit" class="btn btn-warning btn-sm cancelPbx"><i class="fas fa-times"></i> Cancelar</button>
-        </div>
-        <div class="col-md-6" style="text-align:right">
-            <button type="submit" class="btn btn-primary btn-sm savePbx"><i class="fas fa-save"></i> Guardar</button>
-        </div>
-    </div>
+<div class="col-8" style="float:none; margin:auto">
+        <button type="submit" class="btn btn-warning btn-sm cancelPbx"><i class="fas fa-times"></i> Cancelar</button>
+        <button type="submit" class="btn btn-primary btn-sm savePbx float-right"><i class="fas fa-save"></i> Guardar</button>
 </div>
+

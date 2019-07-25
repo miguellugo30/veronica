@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-12 viewIndex">
                 <div class="col-md-12">
-                    <table id="tableDid" class="display table table-striped table-condensed" style="width:100%">
+                    <table id="tableDid" class="display table table-striped table-sm" style="width:100%">
                         <!-- Encabezados de la tabla que se mostrara al inicio -->
                         <thead>
                             <tr>

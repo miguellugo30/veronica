@@ -214,6 +214,7 @@ $(function () {
         _method: _method
       },
       success: function success(result) {
+        //$('#formDataEmpresa').html(result);
         var url = currentURL + "/canales/" + id;
         $.get(url, function (data, textStatus, jqXHR) {
           $('#formDataEmpresa').html(data);
@@ -337,7 +338,10 @@ $(function () {
     if ($(this).prop('checked')) {
       $("#tipo_Canal_" + id).prop("disabled", false);
       $("#Troncales_id_canal_" + id).prop("disabled", false);
-      $("#protocolo_" + id).prop("disabled", false);
+      $("#protocolo_" + id).prop({
+        "disabled": false,
+        'readonly': true
+      });
       $("#prefijo_" + id).prop("disabled", false);
       $("#prefijo_completo_" + id).prop("disabled", false);
       $("#delete_" + id).slideDown();
@@ -2139,21 +2143,19 @@ $(function () {
         _method: _method
       },
       success: function success(result) {
-        /*
-        $('#formDataEmpresa').html(result);
-                        let url = currentURL + "/empresas/" + id + "/edit";
-                         $.get(url, function(data, textStatus, jqXHR) {
-                            $(".viewCreate").html(data);
-                            let dato = id + ".dataGeneral";
-                            let url = currentURL + '/empresas/' + dato;
-                             $.ajax({
-                                url: url,
-                                type: 'GET',
-                                success: function(result) {
-                                    $('#formDataEmpresa').html(result);
-                                }
-                            });
-                        });*/
+        var url = currentURL + "/empresas/" + id + "/edit";
+        $.get(url, function (data, textStatus, jqXHR) {
+          $(".viewCreate").html(data);
+          var dato = id + ".dataGeneral";
+          var url = currentURL + '/empresas/' + dato;
+          $.ajax({
+            url: url,
+            type: 'GET',
+            success: function success(result) {
+              $('#formDataEmpresa').html(result);
+            }
+          });
+        });
       }
     });
   });
@@ -2174,6 +2176,7 @@ $(function () {
 
     if (opcion == 'dataGeneral') {
       $('.updateEmpresa').slideUp();
+      url = currentURL + '/empresas/' + dato;
     } else if (opcion == 'dataExtensiones') {
       url = currentURL + '/extensiones/' + id;
       $("#accionActualizar").addClass('updateExtension');
@@ -2201,6 +2204,33 @@ $(function () {
       success: function success(result) {
         $('#formDataEmpresa').html(result);
         $('#TableCatExts').DataTable({
+          "lengthChange": true
+        });
+      }
+    });
+  });
+  /**
+   * Evento para eliminar una categoria
+   */
+
+  $(document).on('click', '.deleteEmpresa', function (event) {
+    event.preventDefault();
+    var id = $("#id").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var _method = "DELETE";
+    var url = currentURL + '/empresas/' + id;
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {
+        _token: _token,
+        _method: _method
+      },
+      success: function success(result) {
+        $('.viewResult').html(result);
+        $('#tableEmpresas').DataTable({
           "lengthChange": true
         });
       }

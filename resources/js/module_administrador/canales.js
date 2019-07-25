@@ -80,6 +80,7 @@ $(function() {
                 _method: _method
             },
             success: function(result) {
+                //$('#formDataEmpresa').html(result);
                 let url = currentURL + "/canales/" + id;
 
                 $.get(url, function(data, textStatus, jqXHR) {
@@ -179,7 +180,7 @@ $(function() {
         if ($(this).prop('checked')) {
             $("#tipo_Canal_" + id).prop("disabled", false);
             $("#Troncales_id_canal_" + id).prop("disabled", false);
-            $("#protocolo_" + id).prop("disabled", false);
+            $("#protocolo_" + id).prop({ "disabled": false, 'readonly': true });
             $("#prefijo_" + id).prop("disabled", false);
             $("#prefijo_completo_" + id).prop("disabled", false);
             $("#delete_" + id).slideDown();

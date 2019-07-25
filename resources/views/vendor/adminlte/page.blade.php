@@ -19,7 +19,7 @@
         <!-- Main Header -->
         <header class="main-header">
             @if(config('adminlte.layout') == 'top-nav')
-            <nav class="navbar navbar-static-top">
+            <nav class="navbar navbar-static-top" style="height: 50px !important;">
                 <div class="container">
                     <div class="navbar-header">
                         <a href="{{ url(config('adminlte.dashboard_url', 'home')) }}" class="navbar-brand">
@@ -47,9 +47,9 @@
             </a>
 
             <!-- Header Navbar -->
-            <nav class="navbar navbar-static-top" role="navigation">
+            <nav class="navbar navbar-static-top" role="navigation" style="height: 50px !important;">
                 <!-- Sidebar toggle button-->
-                <a href="#" class="sidebar-toggle fa5" data-toggle="push-menu" role="button">
+                <a href="#" class="sidebar-toggle fa5" data-toggle="push-menu" role="button" style="padding: 5px 5px !important;">
                         <span class="sr-only">{{ trans('adminlte::adminlte.toggle_navigation') }}</span>
                     </a>
             @endif
