@@ -33,11 +33,9 @@ $(function() {
             _token: _token
         }, function(data, textStatus, xhr) {
 
-            $('.viewIndex').html(data);
-            $('.viewCreate').slideUp();
-            $(".viewCreate").html('');
-            $('.viewIndex').slideDown();
-            $('.viewIndex #tableModulos').DataTable({
+            $('.viewResult').html(data);
+
+            $('.viewResult #tableModulos').DataTable({
                 "lengthChange": true,
                 "order": [
                     [2, "asc"]
@@ -73,27 +71,28 @@ $(function() {
     /**
      * Evento para editar el modulo
      */
-    $(document).on('click', '.saveModulo', function(event) {
+    $(document).on('click', '.updateModulo', function(event) {
         event.preventDefault();
 
         let nombre = $("#nombreEdit").val();
         let descripcion = $("#descripcionEdit").val();
         let id_modulo = $("#id_modulo").val();
         let _token = $("input[name=_token]").val();
+        let _method = "PUT";
         let url = currentURL + '/modulos/' + id_modulo;
 
         $.ajax({
             url: url,
-            type: 'PUT',
+            type: 'POST',
             data: {
                 nombre: nombre,
                 descripcion: descripcion,
-                _token: _token
+                _token: _token,
+                _method: _method
             },
             success: function(result) {
                 $('.viewResult').html(result);
-                $('.viewCreate').slideUp();
-                $('.viewIndex #tableModulos').DataTable({
+                $('.viewResult #tableModulos').DataTable({
                     "lengthChange": true,
                     "order": [
                         [2, "asc"]
@@ -110,18 +109,19 @@ $(function() {
 
         let id_modulo = $("#id_modulo").val();
         let _token = $("input[name=_token]").val();
+        let _method = "DELETE";
         let url = currentURL + '/modulos/' + id_modulo;
 
         $.ajax({
             url: url,
-            type: 'DELETE',
+            type: 'POST',
             data: {
-                _token: _token
+                _token: _token,
+                _method: _method,
             },
             success: function(result) {
                 $('.viewResult').html(result);
-                $('.viewCreate').slideUp();
-                $('.viewIndex #tableModulos').DataTable({
+                $('.viewResult #tableModulos').DataTable({
                     "lengthChange": true,
                     "order": [
                         [2, "asc"]

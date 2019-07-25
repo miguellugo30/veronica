@@ -603,16 +603,18 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
+    var _method = "PUT";
     var recibir_llamada = $('input:radio[name=recibir_llamada]:checked').val();
     var url = currentURL + '/cat_agente/' + id;
     $.ajax({
       url: url,
-      type: 'PUT',
+      type: 'POST',
       data: {
         nombre: nombre,
         descripcion: descripcion,
         recibir_llamada: recibir_llamada,
-        _token: _token
+        _token: _token,
+        _method: _method
       },
       success: function success(result) {
         $('.viewResult').html(result);
@@ -631,15 +633,17 @@ $(function () {
   $(document).on('click', '.deleteEdoAge', function (event) {
     event.preventDefault();
     var id = $("#id").val();
+    var _method = "DELETE";
 
     var _token = $("input[name=_token]").val();
 
     var url = currentURL + '/cat_agente/' + id;
     $.ajax({
       url: url,
-      type: 'DELETE',
+      type: 'POST',
       data: {
-        _token: _token
+        _token: _token,
+        _method: _method
       },
       success: function success(result) {
         $('.viewResult').html(result);
@@ -745,17 +749,19 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
+    var _method = "PUT";
     var url = currentURL + '/cat_cliente/' + id;
     $.ajax({
       url: url,
-      type: 'PUT',
+      type: 'POST',
       data: {
         nombre: nombre,
         descripcion: descripcion,
         marcar: marcar,
         mostrar_agente: mostrar_agente,
         parametrizar: parametrizar,
-        _token: _token
+        _token: _token,
+        _method: _method
       },
       success: function success(result) {
         $('.viewResult').html(result);
@@ -777,12 +783,14 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
+    var _method = "DELETE";
     var url = currentURL + '/cat_cliente/' + id;
     $.ajax({
       url: url,
-      type: 'DELETE',
+      type: 'POST',
       data: {
-        _token: _token
+        _token: _token,
+        _method: _method
       },
       success: function success(result) {
         $('.viewResult').html(result);
@@ -881,8 +889,7 @@ $(function () {
     }, function (data, textStatus, xhr) {
       $('.viewResult').html(data);
       $('.viewIndex #tableEdoEmp').DataTable({
-        "lengthChange": true,
-        "order": [[5, "asc"]]
+        "lengthChange": true
       });
     });
   });
@@ -917,23 +924,24 @@ $(function () {
     event.preventDefault();
     var nombre = $("#nombre").val();
     var id = $("#id").val();
+    var _method = "PUT";
 
     var _token = $("input[name=_token]").val();
 
     var url = currentURL + '/cat_empresa/' + id;
     $.ajax({
       url: url,
-      type: 'PUT',
+      type: 'POST',
       data: {
         nombre: nombre,
-        _token: _token
+        _token: _token,
+        _method: _method
       },
       success: function success(result) {
         $('.viewResult').html(result);
         $('.viewCreate').slideUp();
         $('.viewIndex #tableEdoEmp').DataTable({
-          "lengthChange": true,
-          "order": [[5, "asc"]]
+          "lengthChange": true
         });
       }
     });
@@ -948,19 +956,20 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
+    var _method = "DELETE";
     var url = currentURL + '/cat_empresa/' + id;
     $.ajax({
       url: url,
-      type: 'DELETE',
+      type: 'POST',
       data: {
-        _token: _token
+        _token: _token,
+        _method: _method
       },
       success: function success(result) {
         $('.viewResult').html(result);
         $('.viewCreate').slideUp();
         $('.viewIndex #tableEdoEmp').DataTable({
-          "lengthChange": true,
-          "order": [[5, "asc"]]
+          "lengthChange": true
         });
       }
     });
@@ -1291,8 +1300,7 @@ $(function () {
     }, function (data, textStatus, xhr) {
       $('.viewResult').html(data);
       $('.viewIndex #tableNas').DataTable({
-        "lengthChange": true,
-        "order": [[5, "asc"]]
+        "lengthChange": true
       });
     });
   });
@@ -1331,21 +1339,22 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
+    var _method = "PUT";
     var url = currentURL + '/cat_nas/' + id;
     $.ajax({
       url: url,
-      type: 'PUT',
+      type: 'POST',
       data: {
         nombre: nombre,
         ip_nas: ip_nas,
-        _token: _token
+        _token: _token,
+        _method: _method
       },
       success: function success(result) {
         $('.viewResult').html(result);
         $('.viewCreate').slideUp();
         $('.viewIndex #tableNas').DataTable({
-          "lengthChange": true,
-          "order": [[5, "asc"]]
+          "lengthChange": true
         });
       }
     });
@@ -1360,19 +1369,20 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
+    var _method = "DELETE";
     var url = currentURL + '/cat_nas/' + id;
     $.ajax({
       url: url,
-      type: 'DELETE',
+      type: 'POST',
       data: {
-        _token: _token
+        _token: _token,
+        _method: _method
       },
       success: function success(result) {
         $('.viewResult').html(result);
         $('.viewCreate').slideUp();
         $('.viewIndex #tableNas').DataTable({
-          "lengthChange": true,
-          "order": [[5, "asc"]]
+          "lengthChange": true
         });
       }
     });
@@ -1972,6 +1982,13 @@ $(function () {
       _method = "POST";
     }
     /**
+     * Si la opcion es dataCanales, dataExtensiones o dataDids
+     * se define una URL para mostrar el formulario de creacion
+     */
+
+
+    if (opcion == 'dataCanales') {} else if (opcion == 'dataExtensiones') {} else if (opcion == 'dataDids') {}
+    /**
      * Recuperamos la informacion del formulario
      */
 
@@ -1994,7 +2011,14 @@ $(function () {
         accion: accion
       },
       success: function success(result) {
-        $('#formDataEmpresa').html(result);
+        if (opcion == 'dataDids') {
+          $('.viewResult').html(result);
+        } else {
+          $('#formDataEmpresa').html(result);
+          $("#formDataEmpresa .saveExtension").slideUp();
+          $("#formDataEmpresa .saveDid").slideUp();
+          $("#formDataEmpresa .saveCanal").slideUp();
+        }
       }
     });
   });
@@ -2036,7 +2060,17 @@ $(function () {
     var _token = $("input[name=_token]").val();
 
     var dato = id + "." + opcion;
-    var url = currentURL + '/empresas/' + dato;
+
+    if (opcion == 'dataExtensiones') {
+      url = currentURL + '/extensiones/' + id;
+    } else if (opcion == 'dataCanales') {
+      url = currentURL + '/canales/' + id;
+    } else if (opcion == 'dataDids') {
+      url = currentURL + '/did/' + id;
+    } else {
+      url = currentURL + '/empresas/' + dato;
+    }
+
     $.ajax({
       url: url,
       type: 'GET',
@@ -2347,7 +2381,7 @@ $(function () {
    * Evento para editar el menu
    */
 
-  $(document).on('click', '.editMenu', function (event) {
+  $(document).on('click', '.updateMenu', function (event) {
     event.preventDefault();
     var nombre = $("#nombre").val();
     var id = $("#id_categoria").val();
@@ -2390,12 +2424,14 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
+    var _method = "DELETE";
     var url = currentURL + '/menus/' + id;
     $.ajax({
       url: url,
-      type: 'DELETE',
+      type: 'POST',
       data: {
-        _token: _token
+        _token: _token,
+        _method: _method
       },
       success: function success(result) {
         $('.viewResult').html(result);
@@ -2495,11 +2531,8 @@ $(function () {
       descripcion: descripcion,
       _token: _token
     }, function (data, textStatus, xhr) {
-      $('.viewIndex').html(data);
-      $('.viewCreate').slideUp();
-      $(".viewCreate").html('');
-      $('.viewIndex').slideDown();
-      $('.viewIndex #tableModulos').DataTable({
+      $('.viewResult').html(data);
+      $('.viewResult #tableModulos').DataTable({
         "lengthChange": true,
         "order": [[2, "asc"]]
       });
@@ -2532,7 +2565,7 @@ $(function () {
    * Evento para editar el modulo
    */
 
-  $(document).on('click', '.saveModulo', function (event) {
+  $(document).on('click', '.updateModulo', function (event) {
     event.preventDefault();
     var nombre = $("#nombreEdit").val();
     var descripcion = $("#descripcionEdit").val();
@@ -2540,19 +2573,20 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
+    var _method = "PUT";
     var url = currentURL + '/modulos/' + id_modulo;
     $.ajax({
       url: url,
-      type: 'PUT',
+      type: 'POST',
       data: {
         nombre: nombre,
         descripcion: descripcion,
-        _token: _token
+        _token: _token,
+        _method: _method
       },
       success: function success(result) {
         $('.viewResult').html(result);
-        $('.viewCreate').slideUp();
-        $('.viewIndex #tableModulos').DataTable({
+        $('.viewResult #tableModulos').DataTable({
           "lengthChange": true,
           "order": [[2, "asc"]]
         });
@@ -2569,17 +2603,18 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
+    var _method = "DELETE";
     var url = currentURL + '/modulos/' + id_modulo;
     $.ajax({
       url: url,
-      type: 'DELETE',
+      type: 'POST',
       data: {
-        _token: _token
+        _token: _token,
+        _method: _method
       },
       success: function success(result) {
         $('.viewResult').html(result);
-        $('.viewCreate').slideUp();
-        $('.viewIndex #tableModulos').DataTable({
+        $('.viewResult #tableModulos').DataTable({
           "lengthChange": true,
           "order": [[2, "asc"]]
         });
@@ -2763,13 +2798,15 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
+    var _method = "DELETE";
     var url = currentURL + '/submenus/' + id;
     $.ajax({
       url: url,
-      type: 'DELETE',
+      type: 'POST',
       data: {
         id_categoria: id_categoria,
-        _token: _token
+        _token: _token,
+        _method: _method
       },
       success: function success(data) {
         $('.viewSubCat').html(data);
@@ -2795,7 +2832,6 @@ $(function () {
     $(".viewCreate").slideDown();
     var id_categoria = $("#id_categoria").val();
     var url = currentURL + "/submenus/ordering/" + id_categoria;
-    console.log(id_categoria);
     $.get(url, id_categoria, function (data, textStatus, jqXHR) {
       $(".viewCreate").html(data);
       $("#sortable").sortable();
@@ -2867,8 +2903,9 @@ $(function () {
   $(document).on('click', '.saveTroncal', function (event) {
     event.preventDefault();
     var nombre = $("#nombre").val();
-    var ip_media = $("#ip_media").val();
+    var descripcion = $("#descripcion").val();
     var ip_host = $("#ip_host").val();
+    var Cat_IP_PBX_id = $("#ip_media").val();
     var Cat_Distribuidor_id = $("#distribuidores").val();
 
     var _token = $("input[name=_token]").val();
@@ -2876,7 +2913,8 @@ $(function () {
     var url = currentURL + '/troncales';
     $.post(url, {
       nombre: nombre,
-      ip_media: ip_media,
+      descripcion: descripcion,
+      Cat_IP_PBX_id: Cat_IP_PBX_id,
       ip_host: ip_host,
       Cat_Distribuidor_id: Cat_Distribuidor_id,
       _token: _token
@@ -2917,13 +2955,14 @@ $(function () {
   $(document).on('click', '.updateTrocal', function (event) {
     event.preventDefault();
     var nombre = $("#nombre").val();
-    var ip_media = $("#ip_media").val();
+    var descripcion = $("#descripcion").val();
     var ip_host = $("#ip_host").val();
+    var Cat_IP_PBX_id = $("#ip_media").val();
     var Cat_Distribuidor_id = $("#distribuidores").val();
-    var id = $("#id").val();
 
     var _token = $("input[name=_token]").val();
 
+    var id = $("#id").val();
     var _method = "PUT";
     var url = currentURL + '/troncales/' + id;
     $.ajax({
@@ -2931,8 +2970,9 @@ $(function () {
       type: 'POST',
       data: {
         nombre: nombre,
-        ip_media: ip_media,
+        descripcion: descripcion,
         ip_host: ip_host,
+        Cat_IP_PBX_id: Cat_IP_PBX_id,
         Cat_Distribuidor_id: Cat_Distribuidor_id,
         _token: _token,
         _method: _method
@@ -3011,78 +3051,67 @@ $(function () {
 $(function () {
   var currentURL = window.location.href;
   /**
-   * Evento para el menu categorias y mostrar las sub categorias
-   */
-
-  $(".menu-categorias li a").click(function (e) {
-    e.preventDefault();
-    $(".viewResult").html('');
-    var url = $(this).attr('href');
-    $.get(url, function (data, textStatus, jqXHR) {
-      $(".sub-categorias").html(data);
-    });
-  });
-  /**
    * Evento para ver el formulario de nuevo usuario
    */
 
-  $(".viewResult").on("click", ".newUser", function (e) {
+  $(document).on("click", ".newUser", function (e) {
     e.preventDefault();
     $(".viewIndex").slideUp();
     $(".viewCreate").slideDown();
     var url = currentURL + '/usuarios/create';
     $.get(url, function (data, textStatus, jqXHR) {
       $(".viewCreate").html(data);
-      /**
-       * Evento para cancelar el alta de nuevo usuario
-       */
+    });
+  });
+  /**
+   * Evento para guardar el nuevo usuario
+   */
 
-      $(".viewCreate").on("click", ".cancelClient", function (e) {
-        $(".viewIndex").slideDown();
-        $(".viewCreate").slideUp();
-      });
-      /**
-       * Evento para guardar el nuevo usuario
-       */
+  $(document).on("click", '.saveClient', function (event) {
+    event.preventDefault();
+    var name = $("#name").val();
+    var email = $("#email").val();
+    var pass_1 = $("#pass_1").val();
+    var cliente = $("#cliente").val();
+    var rol = $("#rol").val();
 
-      $('.viewCreate').on('click', '.saveClient', function (event) {
-        event.preventDefault();
-        var name = $("#name").val();
-        var email = $("#email").val();
-        var pass_1 = $("#pass_1").val();
-        var cliente = $("#cliente").val();
-        var rol = $("#rol").val();
+    var _token = $("input[name=_token]").val();
 
-        var _token = $("input[name=_token]").val();
-
-        var url = currentURL + '/usuarios';
-        var arr = $('[name="cats[]"]:checked').map(function () {
-          return this.value;
-        }).get();
-        $.post(url, {
-          name: name,
-          email: email,
-          password: pass_1,
-          id_cliente: cliente,
-          rol: rol,
-          arr: arr,
-          _token: _token
-        }, function (data, textStatus, xhr) {
-          $('.viewResult').html(data);
-          $('.viewCreate').slideUp();
-          $('.viewIndex').slideDown();
-          $('.viewResult #tableUsuarios').DataTable({
-            "lengthChange": true
-          });
-        });
+    var url = currentURL + '/usuarios';
+    var arr = $('[name="cats[]"]:checked').map(function () {
+      return this.value;
+    }).get();
+    $.post(url, {
+      name: name,
+      email: email,
+      password: pass_1,
+      id_cliente: cliente,
+      rol: rol,
+      arr: arr,
+      _token: _token
+    }, function (data, textStatus, xhr) {
+      $('.viewResult').html(data);
+      $('.viewCreate').slideUp();
+      $('.viewIndex').slideDown();
+      $('.viewResult #tableUsuarios').DataTable({
+        "lengthChange": true
       });
     });
+  });
+  /**
+   * Evento para cancelar el alta de nuevo usuario
+   */
+
+  $(document).on("click", ".cancelClient", function (e) {
+    $(".viewIndex").slideDown();
+    $(".viewCreate").slideUp();
+    $(".viewCreate").html('');
   });
   /**
    * Evento para editar un usuario
    */
 
-  $(".viewResult").on('dblclick', '#tableUsuarios tbody tr', function (event) {
+  $(document).on('dblclick', '#tableUsuarios tbody tr', function (event) {
     event.preventDefault();
     $(".viewIndex").slideUp();
     $(".viewCreate").slideDown();
@@ -3090,85 +3119,78 @@ $(function () {
     var url = currentURL + "/usuarios/" + id + "/edit";
     $.get(url, function (data, textStatus, jqXHR) {
       $(".viewCreate").html(data);
-      /**
-       * Evento para cancelar la edicion del usuario
-       */
+    });
+  });
+  /**
+   * Evento para editar el usuario
+   */
 
-      $(".viewCreate").on("click", ".cancelClient", function (e) {
-        $(".viewIndex").slideDown();
-        $(".viewCreate").slideUp();
-        $(".viewCreate").html('');
-      });
-      /**
-       * Evento para editar el usuario
-       */
+  $(document).on('click', '.updateClient', function (event) {
+    event.preventDefault();
+    var name = $("#name").val();
+    var id_user = $("#id_user").val();
+    var email = $("#email").val();
+    var pass_1 = $("#pass_1").val();
+    var cliente = $("#cliente").val();
+    var rol = $("#rol").val();
 
-      $('.viewCreate').on('click', '.saveClient', function (event) {
-        event.preventDefault();
-        var name = $("#name").val();
-        var id_user = $("#id_user").val();
-        var email = $("#email").val();
-        var pass_1 = $("#pass_1").val();
-        var cliente = $("#cliente").val();
-        var rol = $("#rol").val();
+    var _token = $("input[name=_token]").val();
 
-        var _token = $("input[name=_token]").val();
-
-        var _method = "PUT";
-        var url = currentURL + '/usuarios/' + id_user;
-        var arr = $('[name="cats[]"]:checked').map(function () {
-          return this.value;
-        }).get();
-        $.ajax({
-          url: url,
-          type: 'PUT',
-          data: {
-            name: name,
-            email: email,
-            password: pass_1,
-            id_cliente: cliente,
-            rol: rol,
-            arr: arr,
-            _token: _token,
-            _method: _method
-          },
-          success: function success(result) {
-            $('.viewResult').html(result);
-            $('.viewCreate').slideUp();
-            $('.viewIndex').slideDown();
-            $('.viewResult #tableUsuarios').DataTable({
-              "lengthChange": true
-            });
-          }
+    var _method = "PUT";
+    var url = currentURL + '/usuarios/' + id_user;
+    var arr = $('[name="cats[]"]:checked').map(function () {
+      return this.value;
+    }).get();
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {
+        name: name,
+        email: email,
+        password: pass_1,
+        id_cliente: cliente,
+        rol: rol,
+        arr: arr,
+        _token: _token,
+        _method: _method
+      },
+      success: function success(result) {
+        $('.viewResult').html(result);
+        $('.viewCreate').slideUp();
+        $('.viewIndex').slideDown();
+        $('.viewResult #tableUsuarios').DataTable({
+          "lengthChange": true
         });
-      });
-      /**
-       * Evento para eliminar el  usuario
-       */
+      }
+    });
+  });
+  /**
+   * Evento para eliminar el  usuario
+   */
 
-      $('.viewCreate').on('click', '.deleteClient', function (event) {
-        event.preventDefault();
-        var id_user = $("#id_user").val();
+  $(document).on('click', '.deleteClient', function (event) {
+    event.preventDefault();
+    var id_user = $("#id_user").val();
 
-        var _token = $("input[name=_token]").val();
+    var _token = $("input[name=_token]").val();
 
-        var url = currentURL + '/usuarios/' + id_user;
-        $.ajax({
-          url: url,
-          type: 'DELETE',
-          data: {
-            _token: _token
-          },
-          success: function success(result) {
-            $('.viewResult').html(result);
-            $('.viewCreate').slideUp();
-            $('.viewIndex').slideDown();
-            $('.viewResult #tableUsuarios').DataTable({
-              "lengthChange": true
-            });
-          }
+    var _method = "DELETE";
+    var url = currentURL + '/usuarios/' + id_user;
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {
+        _token: _token,
+        _method: _method
+      },
+      success: function success(result) {
+        $('.viewResult').html(result);
+        $('.viewCreate').slideUp();
+        $('.viewIndex').slideDown();
+        $('.viewResult #tableUsuarios').DataTable({
+          "lengthChange": true
         });
-      });
+      }
     });
   });
 });

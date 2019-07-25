@@ -44,10 +44,9 @@ class CatEstadoClienteController extends Controller
          */
         Cat_Estado_Cliente::create(  $request->all() );
         /**
-        * Recuperamos todos los catalogos que esten activos
-        */
-       $cat_clientes =  Cat_Estado_Cliente::where('activo',1)->get();
-       return view('administrador::cat_cliente.index', compact('cat_clientes'));
+         * Redirigimos a la ruta index
+         */
+        return redirect()->route('cat_cliente.index');
     }
 
     /**
@@ -93,11 +92,10 @@ class CatEstadoClienteController extends Controller
             'mostrar_agente' => $request->input('mostrar_agente'),
             'parametrizar' => $request->input('parametrizar'),
         ]);
-         /**
-         * Obtenemos la informacion del catalogo a editar
+        /**
+         * Redirigimos a la ruta index
          */
-        $cat_clientes =  Cat_Estado_Cliente::where('activo',1)->get();
-        return view('administrador::cat_cliente.index', compact('cat_clientes'));
+        return redirect()->route('cat_cliente.index');
     }
 
     /**
@@ -114,11 +112,10 @@ class CatEstadoClienteController extends Controller
         ->update([
             'activo' => '0'
         ]);
-         /**
-         * Obtenemos la informacion del catalogo a editar
+        /**
+         * Redirigimos a la ruta index
          */
-        $cat_clientes =  Cat_Estado_Cliente::where('activo',1)->get();
-        return view('administrador::cat_cliente.index', compact('cat_clientes'));
+        return redirect()->route('cat_cliente.index');
     }
 
     public function ordering()
@@ -147,12 +144,9 @@ class CatEstadoClienteController extends Controller
                         ]);
             $prioridad++;
         }
-
         /**
-         * Obtenemos los menus con estatus 1
+         * Redirigimos a la ruta index
          */
-        $cat_clientes = Cat_Estado_Cliente::where('activo', 1)->get();
-        return view('administrador::cat_cliente.index', compact('cat_clientes') );
-
+        return redirect()->route('cat_cliente.index');
     }
 }

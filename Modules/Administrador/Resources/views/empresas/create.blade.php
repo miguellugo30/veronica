@@ -1,4 +1,4 @@
-<div class="col-md-6" style="float:none; margin:auto">
+<div class="col-md-10" style="float:none; margin:auto">
     <form id="formDataEmpresa">
 
     </form>

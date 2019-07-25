@@ -44,10 +44,9 @@ class CatEstadoAgenteController extends Controller
          */
         Cat_Estado_Agente::create(  $request->all() );
         /**
-         * Recuperamos todos los catalogos que esten activos
+         * Redirigimos a la ruta index
          */
-        $cat_agentes =  Cat_Estado_Agente::where('activo',1)->get();
-        return view('administrador::cat_agente.index', compact('cat_agentes'));
+        return redirect()->route('cat_agente.index');
     }
 
     /**
@@ -91,11 +90,10 @@ class CatEstadoAgenteController extends Controller
             'descripcion' => $request->input('descripcion'),
             'recibir_llamada' => $request->input('recibir_llamada')
         ]);
-        /**
-         * Recuperamos todos los catalogos que esten activos
+         /**
+         * Redirigimos a la ruta index
          */
-        $cat_agentes =  Cat_Estado_Agente::where('activo',1)->get();
-        return view('administrador::cat_agente.index', compact('cat_agentes'));
+        return redirect()->route('cat_agente.index');
     }
 
     /**
@@ -106,10 +104,9 @@ class CatEstadoAgenteController extends Controller
     public function destroy($id)
     {
         Cat_Estado_Agente::where( 'id', $id )->update(['activo' => 0]);
-        /**
-         * Recuperamos todos los catalogos que esten activos
+         /**
+         * Redirigimos a la ruta index
          */
-        $cat_agentes =  Cat_Estado_Agente::where('activo',1)->get();
-        return view('administrador::cat_agente.index', compact('cat_agentes'));
+        return redirect()->route('cat_agente.index');
     }
 }

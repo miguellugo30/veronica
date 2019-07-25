@@ -34,10 +34,7 @@ $(function() {
 
             $('.viewResult').html(data);
             $('.viewIndex #tableNas').DataTable({
-                "lengthChange": true,
-                "order": [
-                    [5, "asc"]
-                ]
+                "lengthChange": true
             });
         });
     });
@@ -76,24 +73,23 @@ $(function() {
         let ip_nas = $("#ip_nas").val();
         let id = $("#id").val();
         let _token = $("input[name=_token]").val();
+        let _method = "PUT";
         let url = currentURL + '/cat_nas/' + id;
 
         $.ajax({
             url: url,
-            type: 'PUT',
+            type: 'POST',
             data: {
                 nombre: nombre,
                 ip_nas: ip_nas,
-                _token: _token
+                _token: _token,
+                _method: _method
             },
             success: function(result) {
                 $('.viewResult').html(result);
                 $('.viewCreate').slideUp();
                 $('.viewIndex #tableNas').DataTable({
-                    "lengthChange": true,
-                    "order": [
-                        [5, "asc"]
-                    ]
+                    "lengthChange": true
                 });
             }
         });
@@ -106,22 +102,21 @@ $(function() {
 
         let id = $("#id").val();
         let _token = $("input[name=_token]").val();
+        let _method = "DELETE";
         let url = currentURL + '/cat_nas/' + id;
 
         $.ajax({
             url: url,
-            type: 'DELETE',
+            type: 'POST',
             data: {
-                _token: _token
+                _token: _token,
+                _method: _method
             },
             success: function(result) {
                 $('.viewResult').html(result);
                 $('.viewCreate').slideUp();
                 $('.viewIndex #tableNas').DataTable({
-                    "lengthChange": true,
-                    "order": [
-                        [5, "asc"]
-                    ]
+                    "lengthChange": true
                 });
             }
         });

@@ -24,12 +24,12 @@
                             <tr data-id="{{ $troncal->id }}">
                                 <td>{{ $troncal->Cat_Distribuidor->servicio }}</td>
                                 <td>{{ $troncal->nombre }}</td>
-                                <td>{{ $troncal->configuracion }}</td>
-                                <td>{{ $troncal->ip_media }}</td>
+                                <td>{{ $troncal->descripcion }}</td>
+                                <td>{{ $troncal->PBX->media_server." || ". $troncal->PBX->ip_pbx }}</td>
                                 <td>{{ $troncal->ip_host }}</td>
                                 <input type="hidden" name="id" id="id" value="{{ $troncal->id }}">
                                 <td align="center">
-                                    <button type="button" value="{{$troncal->id}}" class="btn bg-olive margin btn-sm show-modal" data-toggle="modal" data-target="#modal-info">
+                                    <button type="button" value="{{$troncal->id}}" class="btn bg-olive margin btn-sm show-modal" data-toggle="modal" data-target="#modal-info" style="margin: 0px;">
                                         <i class="fas fa-cog show-modal"></i>
                                     </button>
                                 </td>

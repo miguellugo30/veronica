@@ -79,17 +79,19 @@ $(function() {
         let descripcion = $("#descripcion").val();
         let id = $("#id").val();
         let _token = $("input[name=_token]").val();
+        let _method = "PUT";
         let recibir_llamada = $('input:radio[name=recibir_llamada]:checked').val();
         let url = currentURL + '/cat_agente/' + id;
 
         $.ajax({
             url: url,
-            type: 'PUT',
+            type: 'POST',
             data: {
                 nombre: nombre,
                 descripcion: descripcion,
                 recibir_llamada: recibir_llamada,
-                _token: _token
+                _token: _token,
+                _method: _method
             },
             success: function(result) {
                 $('.viewResult').html(result);
@@ -110,14 +112,16 @@ $(function() {
         event.preventDefault();
 
         let id = $("#id").val();
+        let _method = "DELETE";
         let _token = $("input[name=_token]").val();
         let url = currentURL + '/cat_agente/' + id;
 
         $.ajax({
             url: url,
-            type: 'DELETE',
+            type: 'POST',
             data: {
-                _token: _token
+                _token: _token,
+                _method: _method
             },
             success: function(result) {
                 $('.viewResult').html(result);

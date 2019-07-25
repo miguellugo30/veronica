@@ -128,14 +128,16 @@ $(function() {
         let id = $("#id_subCate").val();
         let id_categoria = $("#id_categoria").val();
         let _token = $("input[name=_token]").val();
+        let _method = "DELETE";
         let url = currentURL + '/submenus/' + id;
 
         $.ajax({
             url: url,
-            type: 'DELETE',
+            type: 'POST',
             data: {
                 id_categoria: id_categoria,
-                _token: _token
+                _token: _token,
+                _method: _method
             },
             success: function(data) {
                 $('.viewSubCat').html(data);
@@ -165,7 +167,6 @@ $(function() {
 
         let id_categoria = $("#id_categoria").val();
         let url = currentURL + "/submenus/ordering/" + id_categoria;
-        console.log(id_categoria);
 
         $.get(url, id_categoria, function(data, textStatus, jqXHR) {
             $(".viewCreate").html(data);

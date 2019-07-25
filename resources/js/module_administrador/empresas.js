@@ -94,6 +94,12 @@ $(function() {
             _method = "POST";
         }
         /**
+         * Si la opcion es dataCanales, dataExtensiones o dataDids
+         * se define una URL para mostrar el formulario de creacion
+         */
+        if (opcion == 'dataCanales') {} else if (opcion == 'dataExtensiones') {} else if (opcion == 'dataDids') {}
+
+        /**
          * Recuperamos la informacion del formulario
          */
         let dataForm = $("#formDataEmpresa").serializeArray();
@@ -111,7 +117,14 @@ $(function() {
                 accion: accion
             },
             success: function(result) {
-                $('#formDataEmpresa').html(result);
+                if (opcion == 'dataDids') {
+                    $('.viewResult').html(result);
+                } else {
+                    $('#formDataEmpresa').html(result);
+                    $("#formDataEmpresa .saveExtension").slideUp();
+                    $("#formDataEmpresa .saveDid").slideUp();
+                    $("#formDataEmpresa .saveCanal").slideUp();
+                }
             }
         });
     });
@@ -150,7 +163,15 @@ $(function() {
         let _token = $("input[name=_token]").val();
         let dato = id + "." + opcion;
 
-        let url = currentURL + '/empresas/' + dato;
+        if (opcion == 'dataExtensiones') {
+            url = currentURL + '/extensiones/' + id;
+        } else if (opcion == 'dataCanales') {
+            url = currentURL + '/canales/' + id;
+        } else if (opcion == 'dataDids') {
+            url = currentURL + '/did/' + id;
+        } else {
+            url = currentURL + '/empresas/' + dato;
+        }
 
         $.ajax({
             url: url,

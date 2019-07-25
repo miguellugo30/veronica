@@ -36,10 +36,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
     /**
-     * Relacion muchos a muchos con Categorias
+     * Relacion muchos a muchos con Categorías
      */
     public function categorias()
     {
-        return $this->belongsToMany('Nimbus\Categorias')->orderBy('prioridad');
+        return $this->belongsToMany('Nimbus\Categorias')->where('activo',  1)->orderBy('prioridad');
     }
 }

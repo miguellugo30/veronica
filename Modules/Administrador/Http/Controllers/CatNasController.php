@@ -44,10 +44,9 @@ class CatNasController extends Controller
          */
         Cat_NAS::create(  $request->all() );
         /**
-        * Recuperamos todos los catalogos que esten activos
-        */
-        $cat_nas = Cat_NAS::where('activo',1)->get();
-        return view('administrador::cat_nas.index', compact('cat_nas'));
+         * Redirigimos a la ruta index
+         */
+        return redirect()->route('cat_nas.index');
     }
 
     /**
@@ -90,11 +89,10 @@ class CatNasController extends Controller
             'nombre' => $request->input('nombre'),
             'ip_nas' => $request->input('ip_nas')
         ]);
-         /**
-         * Obtenemos la informacion del catalogo a editar
+        /**
+         * Redirigimos a la ruta index
          */
-        $cat_nas =  Cat_NAS::where('activo',1)->get();
-        return view('administrador::cat_nas.index', compact('cat_nas'));
+        return redirect()->route('cat_nas.index');
     }
 
     /**
@@ -111,10 +109,9 @@ class CatNasController extends Controller
         ->update([
             'activo' => '0'
         ]);
-         /**
-         * Obtenemos la informacion del catalogo a editar
+        /**
+         * Redirigimos a la ruta index
          */
-        $cat_nas =  Cat_NAS::where('activo',1)->get();
-        return view('administrador::cat_nas.index', compact('cat_nas'));
+        return redirect()->route('cat_nas.index');
     }
 }

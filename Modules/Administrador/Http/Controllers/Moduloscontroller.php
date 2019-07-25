@@ -49,14 +49,10 @@ class ModulosController extends Controller
          * Insertamos la informacion del formulario
          */
         Modulos::create($input);
-         /**
-         * Recuperamos todos los modulos que esten activos
+        /**
+         * Redirigimos a la ruta index
          */
-        $modulos = Modulos::where('activo', 1)
-                            ->orderBy('prioridad', 'asc')
-                            ->get();
-
-        return view('administrador::modulos.index', compact('modulos') );
+        return redirect()->route('modulos.index');
     }
 
     /**
@@ -97,13 +93,9 @@ class ModulosController extends Controller
             'descripcion' => $request->input('descripcion')
         ]);
         /**
-         * Recuperamos todos los modulos que esten activos
+         * Redirigimos a la ruta index
          */
-        $modulos = Modulos::where('activo', 1)
-                            ->orderBy('prioridad', 'asc')
-                            ->get();
-
-        return view('administrador::modulos.index', compact('modulos') );
+        return redirect()->route('modulos.index');
     }
 
     /**
@@ -115,13 +107,10 @@ class ModulosController extends Controller
     {
         Modulos::where( 'id', $id )
                 ->update(['activo' => 0]);
-        /**
-         * Recuperamos todos los modulos que esten activos
+       /**
+         * Redirigimos a la ruta index
          */
-        $modulos = Modulos::where('activo', 1)
-                            ->orderBy('prioridad')
-                            ->get();
-        return view('administrador::modulos.index', compact('modulos') );
+        return redirect()->route('modulos.index');
     }
 
     public function ordering()
@@ -151,12 +140,9 @@ class ModulosController extends Controller
             $prioridad++;
         }
         /**
-         * Recuperamos todos los modulos que esten activos
+         * Redirigimos a la ruta index
          */
-        $modulos = Modulos::where('activo', 1)
-                            ->orderBy('prioridad', 'asc')
-                            ->get();
-        return view('administrador::modulos.index', compact('modulos') );
+        return redirect()->route('modulos.index');
 
     }
 }

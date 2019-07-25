@@ -45,8 +45,8 @@
                     <p>{{ $empresa->Config_Empresas->Dominio->dominio }}</p>
                     <p>{{ $empresa->Config_Empresas->BaseDatos->ubicacion }}</p>
                     <p>{{ $empresa->Config_Empresas->BaseDatos->ip }}</p>
-                    <p>{{  $empresa->Config_Empresas->ms->media_server  }}</p>
-                    <p>{{  $empresa->Config_Empresas->ms->ip_pbx  }}</p>
+                    <p>{{ $empresa->Config_Empresas->ms->media_server }}</p>
+                    <p>{{ $empresa->Config_Empresas->ms->ip_pbx }}</p>
                 </div>
             </div>
         </div>

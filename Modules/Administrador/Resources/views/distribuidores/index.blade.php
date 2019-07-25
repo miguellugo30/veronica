@@ -26,8 +26,8 @@
                                 <td>{{ $distribuidor->distribuidor }}</td>
                                 <td>{{ $distribuidor->numero_soporte }}</td>
                                 <td>{{ $distribuidor->prefijo }}</td>
-                                <td><a href="{{ Storage::url($distribuidor->img_header)}}" target="_blank"><img width="100px"  src="/storage/{{$distribuidor->img_header}}"></a></td>
-                                <td><a href="{{ Storage::url($distribuidor->img_pie) }}" target="_blank"><img width="100px" src="/storage/{{$distribuidor->img_pie}}"></a></td>
+                                <td><a href="{{ Storage::url($distribuidor->img_header)}}" target="_blank"><img width="100px" src="{{ Storage::url($distribuidor->img_header) }}"></a></td>
+                                <td><a href="{{ Storage::url($distribuidor->img_pie) }}"   target="_blank"><img width="100px" src="{{ Storage::url($distribuidor->img_pie) }}"></a></td>
                             </tr>
                         @endforeach
                     </tbody>

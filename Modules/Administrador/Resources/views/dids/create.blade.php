@@ -1,13 +1,14 @@
 <div class="col-md-12">
     @csrf
     <input type="hidden" name="id_empresa" id="id_empresa" value="{{ $id }}">
+    <input type="hidden" name="action" id="action" value="dataDids">
     <!-- Mostrando los canales de la empresa seleccionada -->
     <div class="form-group">
         <label for="Canal_id">Canal</label>
         <select name="Canal_id" id="Canal_id" class="form-control">
             <option value="">Selecciona un canal</option>
             @foreach ($canales as $canal)
-            <option value="{{$canal->id}}">{{ $canal->protocolo }}{{ $canal->Troncales->nombre }}/{{ $canal->prefijo }}</option>
+            <option value="{{$canal->id}}">{{ $canal->protocolo.$canal->Troncales->nombre."/".$canal->prefijo }}</option>
             @endforeach
         </select>
     </div>

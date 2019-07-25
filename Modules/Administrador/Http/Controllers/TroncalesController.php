@@ -20,7 +20,7 @@ class TroncalesController extends Controller
         /**
          * Recuperamos todos las troncales que esten activos
          */
-        $troncales = Troncales::where('activo',1)->get();
+        $troncales = Troncales::active()->get();
         return view('administrador::troncales.index', compact('troncales'));
     }
 
@@ -33,7 +33,7 @@ class TroncalesController extends Controller
         /**
          * Recuperamos todos las troncales que esten activos
          */
-        $distribuidores = Cat_Distribuidor::where('activo',1)->get();
+        $distribuidores = Cat_Distribuidor::active()->get();
 
         $medias = Cat_IP_PBX::where('activo',1)->get();
         return view('administrador::troncales.create', compact('distribuidores','medias'));
@@ -79,13 +79,13 @@ class TroncalesController extends Controller
         /**
          * Recuperamos todos las troncales que esten activos
          */
-        $distribuidores = Cat_Distribuidor::where('activo',1)->get();
+        $distribuidores = Cat_Distribuidor::active()->get();
         /**
          * Obtenemos la informacion de la troncal a editar
          */
         $troncal = Troncales::findOrFail( $id );
 
-        $medias = Cat_IP_PBX::where('activo',1)->get();
+        $medias = Cat_IP_PBX::active()->get();
 
         return view('administrador::troncales.edit', compact('troncal', 'id', 'distribuidores','medias') );
     }
@@ -104,9 +104,10 @@ class TroncalesController extends Controller
         Troncales::where( 'id', $id )
                                 ->update([
                                     'nombre' => $request->input('nombre'),
-                                    'ip_media' => $request->input('ip_media'),
+                                    'descripcion' => $request->input('descripcion'),
                                     'ip_host' => $request->input('ip_host'),
                                     'Cat_Distribuidor_id' => $request->input('Cat_Distribuidor_id'),
+                                    'Cat_IP_PBX_id' => $request->input('Cat_IP_PBX_id'),
                                 ]);
         /**
          * Redirigimos a la ruta index

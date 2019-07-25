@@ -4,7 +4,7 @@
 <br><br>
 <div class="col-md-12">
     <input type="hidden" name="id_empresa" id="id_empresa" value="{{ $idEmpresa }}">
-    <input type="hidden" name="action" id="action" value="updateDataExtensiones">
+    <input type="hidden" name="action" id="action" value="dataExtensiones">
     @csrf
     <table id="TableCatExts" class="table table-striped">
         <thead>

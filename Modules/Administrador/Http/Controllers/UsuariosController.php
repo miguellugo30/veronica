@@ -83,12 +83,10 @@ class UsuariosController extends Controller
                 ['categorias_id' => $data[$i], 'user_id' => $user->id]
             );
         }
-        /**
-         * Obtenemos todos los usuarios para regresar la vista
+       /**
+         * Redirigimos a la ruta index
          */
-        $users = User::where('status', 1)->get();
-
-        return view('administrador::usuarios.index', compact('users'));
+        return redirect()->route('usuarios.index');
     }
 
     /**
@@ -181,13 +179,10 @@ class UsuariosController extends Controller
                 ['categorias_id' => $cats[$i], 'user_id' => $user->id]
             );
         }
-
-         /**
-         * Obtenemos todos los usuarios para regresar la vista
+        /**
+         * Redirigimos a la ruta index
          */
-        $users = User::where('status', 1)->get();
-
-        return view('administrador::usuarios.index', compact('users'));
+        return redirect()->route('usuarios.index');
     }
 
     /**
@@ -201,12 +196,9 @@ class UsuariosController extends Controller
         ->update([
             'status' => 0
         ]);
-
-         /**
-         * Obtenemos todos los usuarios para regresar la vista
+        /**
+         * Redirigimos a la ruta index
          */
-        $users = User::where('status', 1)->get();
-
-        return view('administrador::usuarios.index', compact('users'));
+        return redirect()->route('usuarios.index');
     }
 }

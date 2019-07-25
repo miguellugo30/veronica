@@ -22,21 +22,11 @@
                                 <th>Fakedid</th>
                             </tr>
                         </thead>
-                        <!-- Iterar el arreglo $Dids que contiene el resultado de consultar todos los registros que contiene la tabla de Dids
-                        :: Nombre de Empresa
-                        :: Canal
-                        :: Prefijo
-                        :: DID
-                        :: Referencia
-                        :: Numero Real
-                        :: Gateway
-                        :: Fakedid
-                        -->
                         <tbody>
                             @foreach( $Dids as $did )
                                 <tr data-id="{{ $did->id }}">
                                     <td>{{ $did->Empresas->nombre }}</td>
-                                    <td>{{ $did->Canales->protocolo }}</td>
+                                    <td>{{$did->Canales->Troncales->nombre."/".$did->Canales->prefijo }}</td>
                                     <td>{{ $did->did }}</td>
                                     <td>{{ $did->referencia }}</td>
                                     <td>{{ $did->numero_real }}</td>

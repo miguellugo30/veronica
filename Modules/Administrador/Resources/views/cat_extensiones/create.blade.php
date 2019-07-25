@@ -1,4 +1,7 @@
 <div class="col-md-12">
+    <input type="hidden" name="id_empresa" id="id_empresa" value="{{ $id }}">
+    <input type="hidden" name="action" id="action" value="dataExtensiones">
+    @csrf
     <div class="form-group">
         <label for="canal_id">Canal</label>
         <select name="canal_id" id="canal_id" class="form-control input-sm">
@@ -7,8 +10,6 @@
                 <option value="{{$canal->id}}">{{ $canal->protocolo }}{{ $canal->Troncales->nombre }}/{{ $canal->prefijo }}</option>
             @endforeach
         </select>
-        <input type="hidden" name="id_empresa" id="id_empresa" value="{{ $id }}">
-        @csrf
     </div>
     <div class="form-group">
         <label for="">Extensiones

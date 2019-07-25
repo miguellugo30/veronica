@@ -94,7 +94,7 @@ $(function() {
     /**
      * Evento para editar el menu
      */
-    $(document).on('click', '.editMenu', function(event) {
+    $(document).on('click', '.updateMenu', function(event) {
         event.preventDefault();
 
         let nombre = $("#nombre").val();
@@ -136,13 +136,15 @@ $(function() {
 
         let id = $("#id_categoria").val();
         let _token = $("input[name=_token]").val();
+        let _method = "DELETE";
         let url = currentURL + '/menus/' + id;
 
         $.ajax({
             url: url,
-            type: 'DELETE',
+            type: 'POST',
             data: {
-                _token: _token
+                _token: _token,
+                _method: _method
             },
             success: function(result) {
                 $('.viewResult').html(result);

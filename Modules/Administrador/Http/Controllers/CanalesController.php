@@ -56,7 +56,7 @@ class CanalesController extends Controller
             $data[ $dataForm[$i]['name'] ] = $dataForm[$i]['value'];
         }
         $id_Distribuidor = $data['Cat_Distribuidor_id'];
-        $id_Empresa = $data['Empresa_id'];
+        $id_Empresa = $data['id_empresa'];
         $prefijo = $data['preDist'].$data['preEmp'];
 
         array_shift( $data );
@@ -175,13 +175,12 @@ class CanalesController extends Controller
             Canales::where([
                                 ['Empresas_id', '=', $id],
                                 ['id', '=', $info[$i][0]],
-                            ])
-                                    ->update([
-                                        'protocolo' => $info[$i][2],
-                                        'prefijo' => $info[$i][5].$info[$i][4],
-                                        'Troncales_id' => $Troncales_id,
-                                        'Cat_Canales_Tipo_id' => $info[$i][1],
-                                    ]);
+                            ])->update([
+                                'protocolo' => $info[$i][2],
+                                'prefijo' => $info[$i][5].$info[$i][4],
+                                'Troncales_id' => $Troncales_id,
+                                'Cat_Canales_Tipo_id' => $info[$i][1],
+                            ]);
         }
     }
 

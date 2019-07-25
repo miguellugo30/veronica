@@ -14,6 +14,7 @@ use Nimbus\Dominios;
 use Nimbus\Config_Empresas;
 use Nimbus\Canales;
 use Nimbus\Cat_Tipo_Canales;
+use Nimbus\Dids;
 use Nimbus\Troncales;
 use Nimbus\Cat_Extensiones;
 
@@ -204,6 +205,111 @@ class EmpresasController extends Controller
                 'almacenamiento_adicional'   =>   $almaAdicional
             ]);
 
+            /**
+             * Recuperamos todos los distribuidores que esten activos
+             */
+            $empresas = Empresas::findOrFail($data['id_empresa']);
+            $distribuidor = Cat_Distribuidor::findOrFail( $empresas->Config_Empresas->Cat_Distribuidor_id );
+            $troncales = $distribuidor->Troncales;
+            $canales = Cat_Tipo_Canales::where('Cat_Distribuidor_id', $empresas->Config_Empresas->Cat_Distribuidor_id)->get();
+
+            return view('administrador::canales.create', compact( 'troncales', 'empresas','distribuidor','canales') );
+
+        } else if($data['action'] == 'dataCanales') {
+
+            $id_Distribuidor = $data['Cat_Distribuidor_id'];
+            $prefijo = $data['preDist'].$data['preEmp'];
+            $id_Empresa = $data['id_empresa'];
+            $id = $data['id_empresa'];
+
+            array_shift( $data );
+            array_shift( $data );
+            array_shift( $data );
+            array_shift( $data );
+            array_shift( $data );
+            array_shift( $data );
+
+            $info = array_chunk( $data, 4 );
+
+            for($i=0;$i<count($info);$i++){
+
+                if ( $info[$i][1] == 'LOCAL/' ) {
+                    $Troncales_id = 1;
+                } else {
+                    $Troncales_id = $info[$i][2];
+                }
+                Canales::create([
+                        'protocolo'=>$info[$i][1],
+                        'prefijo'=>$prefijo.$info[$i][3],
+                        'Troncales_id'=>$Troncales_id,
+                        'Cat_Distribuidor_id'=>$id_Distribuidor,
+                        'Cat_Canales_Tipo_id'=>$info[$i][0],
+                        'Empresas_id'=>$id_Empresa
+                ]);
+            }
+
+            /**
+             * Recuperamos los canales que estan asocioados a la empresa
+             */
+            $canales = Canales::active()->where('Empresas_id', $id_Empresa )->get();
+
+            /**
+             * Obtenemos las extensiones que ya tiene la empresa
+             */
+            $extensiones = Cat_Extensiones::active()->where('Empresas_id', $id_Empresa)->get();
+            $extCreadas = $extensiones->count();
+            /**
+             * Obtenemos las posiciones asignadas para la empresa
+             */
+            $configEmpresa = Config_Empresas::where('Empresas_id', $id_Empresa )->get();
+            $numExtensiones = $configEmpresa[0]->agentes_entrada + $configEmpresa[0]->agentes_salida + $configEmpresa[0]->agentes_dual;
+
+
+            return view('administrador::cat_extensiones.create', compact('id', 'canales', 'numExtensiones', 'extCreadas', 'extensiones') );
+
+        } else if($data['action'] == 'dataExtensiones') {
+            $id = $data['id_empresa'];
+             /**
+             * Guardamos la informacion del nuevo dominio
+             */
+            for ($i=0; $i < (int)$data['posiciones']; $i++) {
+                $catExtension = new Cat_Extensiones;
+                $catExtension->extension = (int)$data['extension'] + $i;
+                $catExtension->Empresas_id = $data['id_empresa'];
+                $catExtension->Canales_id = $data['canal_id'];
+                $catExtension->save();
+            }
+
+            /**
+             * Obtenemos los canales de la empresa
+             */
+            $canales = Canales::active()->where('Empresas_id', $id)->get();
+
+            return view('administrador::dids.create', compact( 'canales', 'id'));
+
+        } else if($data['action'] == 'dataDids') {
+
+             /**
+             * Obtener los dids que se van a insertar separados por ;
+             */
+            $dids_store = explode(";", str_replace("\n",";",$data['did'] ));
+            /**
+             * Se recorre arreglo de dids
+             */
+            for ($i=0; $i < count($dids_store); $i++) {
+                Dids::create([
+                                'did'=>trim($dids_store[$i]),
+                                'numero_real'=>$data['numero_real'],
+                                'referencia'=>$data['referencia'],
+                                'gateway'=>$data['gateway'],
+                                'fakedid'=>$data['fakedid'],
+                                'Canales_id'=> $data['Canal_id'],
+                                'Empresas_id'=>$data['id_empresa']
+                            ]);
+            }
+
+            return redirect()->route('empresas.index');
+
         }
     }
     /**
@@ -326,6 +432,7 @@ class EmpresasController extends Controller
                 array_push( $dataModulos, $dataForm[$i]['value'] );
             }
         }
+
         /**
          *
          */
@@ -492,11 +599,124 @@ class EmpresasController extends Controller
             /**
              * Buscamos la empresa ha editar
              */
-            Config_Empresas::where('Empresas_id', $data['idEmpresa'] )->update([
-                'almacenamiento_adicional'   =>   $almaAdicional
-            ]);
+            Config_Empresas::where('Empresas_id', $data['id_empresa'] )->update([
+                        'almacenamiento_adicional'   =>   $almaAdicional
+                    ]);
+            /**
+             * Regreamos la informacion para mostrar la vista de editar canales
+             */
             if ($request->input('accion') == "actualizar") {
+                /**
+                 * Buscamos la informacion de la empresa
+                 */
+                $empresas = Empresas::findOrFail($data['id_empresa']);
+                /**
+                 * Devolvemos la informacion de los canales de la empresa
+                 */
+                $canales = Canales::active()->where('Empresas_id', $data['id_empresa'] )->get();
+                /**
+                 * Recuperamos los tipo de canales en base al distribuidor que esta dado de alta la empresa
+                 */
+                $TipoCanales = Cat_Tipo_Canales::active()->where('Cat_Distribuidor_id', $empresas->Config_Empresas->Cat_Distribuidor_id)->get();
+                /**
+                 * Recuperamos las troncales asociadas a la empresa
+                 */
+                $troncales = Troncales::where([
+                                                ['activo', '=', '1'],
+                                                ['Cat_Distribuidor_id', '=',  $empresas->Config_Empresas->Cat_Distribuidor_id]
+                                            ])->get();
+
+                $idEmpresa = $data['id_empresa'];
+
+                return view('administrador::canales.show', compact('canales', 'idEmpresa', 'TipoCanales', 'troncales') );
             }
+
+        } else if( $data['action'] == 'dataCanales' ) {
+
+            $id = $data['id_empresa'];
+
+            array_shift( $data );
+            array_shift( $data );
+            array_shift( $data );
+
+            $info = array_chunk( $data, 6 );
+
+            for($i=0;$i<count($info);$i++){
+                /**
+                 * Actualizamos el canal
+                 */
+                if ( $info[$i][2] == 'LOCAL/' ) {
+                    $Troncales_id = 1;
+                } else {
+                    $Troncales_id = $info[$i][3];
+                }
+                Canales::where([
+                                    ['Empresas_id', '=', $id],
+                                    ['id', '=', $info[$i][0]],
+                                ])->update([
+                                    'protocolo' => $info[$i][2],
+                                    'prefijo' => $info[$i][5].$info[$i][4],
+                                    'Troncales_id' => $Troncales_id,
+                                    'Cat_Canales_Tipo_id' => $info[$i][1],
+                                ]);
+            }
+
+            /**
+             * Regreamos la informacion para mostrar la vista de editar canales
+             */
+            if ($request->input('accion') == "actualizar") {
+                /**
+                 * Recuperamos los canales que estan asocioados a la empresa
+                 */
+                $canales = Canales::active()->where('Empresas_id', $id )->get();
+
+                /**
+                 * Obtenemos las extensiones que ya tiene la empresa
+                 */
+                $extensiones = Cat_Extensiones::active()->where('Empresas_id', $id)->get();
+                $extCreadas = $extensiones->count();
+                /**
+                 * Obtenemos las posiciones asignadas para la empresa
+                 */
+                $configEmpresa = Config_Empresas::where('Empresas_id', $id )->get();
+                $numExtensiones = $configEmpresa[0]->agentes_entrada + $configEmpresa[0]->agentes_salida + $configEmpresa[0]->agentes_dual;
+
+                return view('administrador::cat_extensiones.create', compact('id', 'canales', 'numExtensiones', 'extCreadas', 'extensiones') );
+
+            }
+
+        } else if( $data['action'] == 'dataExtensiones' ) {
+
+            $id = $data['id_empresa'];
+
+            array_shift( $data );
+            array_shift( $data );
+            array_shift( $data );
+
+            $info = array_chunk( $data, 3 );
+
+            for($i=0;$i<count($info);$i++){
+                /**
+                 * Actualizamos la extension
+                 */
+                Cat_Extensiones::where( [
+                                            ['id', '=',  $info[$i][0] ],
+                                            ['Empresas_id', '=', $id]
+                                        ])->update([
+                                            'extension' => $info[$i][2],
+                                            'Canales_id' =>  $info[$i][1]
+                                        ]);
+            }
+
+            if ($request->input('accion') == "actualizar") {
+                 /**
+                 * Obtenemos los canales de la empresa
+                 */
+                $canales = Canales::active()->where('Empresas_id', $id)->get();
+
+                return view('administrador::dids.create', compact( 'canales', 'id'));
+            }
+
         }
     }
     /**

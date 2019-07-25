@@ -22,15 +22,17 @@ $(function() {
         event.preventDefault();
 
         let nombre = $("#nombre").val();
-        let ip_media = $("#ip_media").val();
+        let descripcion = $("#descripcion").val();
         let ip_host = $("#ip_host").val();
+        let Cat_IP_PBX_id = $("#ip_media").val();
         let Cat_Distribuidor_id = $("#distribuidores").val();
         let _token = $("input[name=_token]").val();
         let url = currentURL + '/troncales';
 
         $.post(url, {
             nombre: nombre,
-            ip_media: ip_media,
+            descripcion: descripcion,
+            Cat_IP_PBX_id: Cat_IP_PBX_id,
             ip_host: ip_host,
             Cat_Distribuidor_id: Cat_Distribuidor_id,
             _token: _token
@@ -73,11 +75,12 @@ $(function() {
         event.preventDefault();
 
         let nombre = $("#nombre").val();
-        let ip_media = $("#ip_media").val();
+        let descripcion = $("#descripcion").val();
         let ip_host = $("#ip_host").val();
+        let Cat_IP_PBX_id = $("#ip_media").val();
         let Cat_Distribuidor_id = $("#distribuidores").val();
-        let id = $("#id").val();
         let _token = $("input[name=_token]").val();
+        let id = $("#id").val();
         let _method = "PUT";
         let url = currentURL + '/troncales/' + id;
 
@@ -86,8 +89,9 @@ $(function() {
             type: 'POST',
             data: {
                 nombre: nombre,
-                ip_media: ip_media,
+                descripcion: descripcion,
                 ip_host: ip_host,
+                Cat_IP_PBX_id: Cat_IP_PBX_id,
                 Cat_Distribuidor_id: Cat_Distribuidor_id,
                 _token: _token,
                 _method: _method

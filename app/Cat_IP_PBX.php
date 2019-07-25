@@ -21,6 +21,17 @@ class Cat_IP_PBX extends Model
      */
     protected $table = 'Cat_IP_PBX';
     /**
+     * Funcion para obtener solo los registros activos
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('activo', 1);
+    }
+    /*
+    |--------------------------------------------------------------------------
+    | RELACIONES DE BASE DE DATOS
+    |--------------------------------------------------------------------------
+    /**
      * Relacion muchos a muchos con Cat_Nas
      */
     public function cat_nas()

@@ -85,18 +85,20 @@ $(function() {
         let parametrizar = $('input:radio[name=parametrizar]:checked').val();
         let id = $("#id").val();
         let _token = $("input[name=_token]").val();
+        let _method = "PUT";
         let url = currentURL + '/cat_cliente/' + id;
 
         $.ajax({
             url: url,
-            type: 'PUT',
+            type: 'POST',
             data: {
                 nombre: nombre,
                 descripcion: descripcion,
                 marcar: marcar,
                 mostrar_agente: mostrar_agente,
                 parametrizar: parametrizar,
-                _token: _token
+                _token: _token,
+                _method: _method
             },
             success: function(result) {
                 $('.viewResult').html(result);
@@ -118,13 +120,15 @@ $(function() {
 
         let id = $("#id").val();
         let _token = $("input[name=_token]").val();
+        let _method = "DELETE";
         let url = currentURL + '/cat_cliente/' + id;
 
         $.ajax({
             url: url,
-            type: 'DELETE',
+            type: 'POST',
             data: {
-                _token: _token
+                _token: _token,
+                _method: _method
             },
             success: function(result) {
                 $('.viewResult').html(result);

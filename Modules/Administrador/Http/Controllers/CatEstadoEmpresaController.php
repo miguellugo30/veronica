@@ -41,10 +41,9 @@ class CatEstadoEmpresaController extends Controller
          */
         Cat_Estado_Empresa::create(  $request->all() );
         /**
-        * Recuperamos todos los catalogos que esten activos
-        */
-        $cat_empresas = Cat_Estado_Empresa::where('activo',1)->get();
-        return view('administrador::cat_empresa.index', compact('cat_empresas'));
+         * Redirigimos a la ruta index
+         */
+        return redirect()->route('cat_empresa.index');
     }
 
     /**
@@ -84,11 +83,10 @@ class CatEstadoEmpresaController extends Controller
         ->update([
             'nombre' => $request->input('nombre')
         ]);
-         /**
-         * Obtenemos la informacion del catalogo a editar
+        /**
+         * Redirigimos a la ruta index
          */
-        $cat_empresas =  Cat_Estado_Empresa::where('activo',1)->get();
-        return view('administrador::cat_empresa.index', compact('cat_empresas'));
+        return redirect()->route('cat_empresa.index');
     }
 
     /**
@@ -105,10 +103,9 @@ class CatEstadoEmpresaController extends Controller
         ->update([
             'activo' => '0'
         ]);
-         /**
-         * Obtenemos la informacion del catalogo a editar
+        /**
+         * Redirigimos a la ruta index
          */
-        $cat_empresas =  Cat_Estado_Empresa::where('activo',1)->get();
-        return view('administrador::cat_empresa.index', compact('cat_empresas'));
+        return redirect()->route('cat_empresa.index');
     }
 }

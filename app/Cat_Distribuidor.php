@@ -14,7 +14,17 @@ class Cat_Distribuidor extends Model
     ];
 
     protected $table = 'Cat_Distribuidor';
-
+    /**
+     * Funcion para obtener solo los registros activos
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('activo', 1);
+    }
+    /*
+    |--------------------------------------------------------------------------
+    | RELACIONES DE BASE DE DATOS
+    |--------------------------------------------------------------------------
     /**
      * Relacion uno a muchos con Troncales
      */

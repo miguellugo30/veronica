@@ -1,5 +1,5 @@
 <div class="col-md-12">
-    <input type="hidden" name="Empresa_id" id="Empresa_id" value="{{ $empresas->id }}">
+    <input type="hidden" name="id_empresa" id="id_empresa" value="{{ $empresas->id }}">
     <input type="hidden" name="action" id="action" value="dataCanales">
     <input type="hidden" name="Cat_Distribuidor_id" id="Cat_Distribuidor_id" value="{{ $empresas->Config_Empresas->Cat_Distribuidor_id }}">
     <input type="hidden" name="preDist" id="preDist" value="{{ $distribuidor->prefijo }}">
