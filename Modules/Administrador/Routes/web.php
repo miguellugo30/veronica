@@ -37,8 +37,8 @@ Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix'
  * Rutas de CRUD de Extensiones
  */
 Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
-    Route::get('/extensiones/create/{id}', 'catExtensionesController@create');
-    Route::resource('extensiones','catExtensionesController');
+    Route::get('/extensiones/create/{id}', 'CatExtensionesController@create');
+    Route::resource('extensiones','CatExtensionesController');
 });
 /*
 |--------------------------------------------------------------------------
