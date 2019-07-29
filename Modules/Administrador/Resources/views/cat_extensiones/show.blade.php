@@ -12,6 +12,7 @@
                 <th>Editar</th>
                 <th>Canal</th>
                 <th>Extension</th>
+                <th>Licencia Bria</th>
                 <th></th>
             </tr>
         </thead>
@@ -22,12 +23,20 @@
                     <td>
                         <select  class="form-control form-control-sm" name="canal_extension_{{ $extension->id }}" id="canal_extension_{{ $extension->id }}" disabled>
                             @foreach ($canales as $canal)
-                                <option value="{{$canal->id}}" {{ $canal->id == $extension->Canales_id ? "selected" : "" }}>{{ $canal->protocolo }}{{ $canal->Troncales->nombre }}/{{ $canal->prefijo }}</option>
+                                <option value="{{$canal->id}}" {{ $canal->id == $extension->Canales_id ? "selected" : "" }}>{{ $canal->protocolo.$canal->Troncales->nombre."/".$canal->prefijo }}</option>
                             @endforeach
                         </select>
                     </td>
                     <td>
                         <input class="form-control form-control-sm" type="text" name="extension_{{ $extension->id }}" id="extension_{{ $extension->id }}" value="{{ $extension->extension }}" disabled>
+                    </td>
+                    <td>
+                        <select  class="form-control form-control-sm" name="licencia_extension_{{ $extension->id }}" id="licencia_extension_{{ $extension->id }}" disabled>
+                            <option value="0">Selecciona una licencia</option>
+                            @foreach ($licencias as $licencia)
+                                <option value="{{$licencia->id}}" {{ $licencia->id == $extension->Cat_Licencias_Bria_id ? "selected" : "" }}>{{ $licencia->licencia }}</option>
+                            @endforeach
+                        </select>
                     </td>
                     <td>
                         <button type="button" class="btn btn-danger btn-sm deleteExtension" id="delete_{{ $extension->id }}" style="display:none"><i class="fas fa-trash-alt"></i></button>

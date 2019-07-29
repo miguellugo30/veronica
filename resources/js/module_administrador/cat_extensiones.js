@@ -53,10 +53,12 @@ $(function() {
          */
         if ($(this).prop('checked')) {
             $("#canal_extension_" + id).prop("disabled", false);
+            $("#licencia_extension_" + id).prop("disabled", false);
             $("#extension_" + id).prop("disabled", false);
             $("#delete_" + id).slideDown();
         } else {
             $("#canal_extension_" + id).prop("disabled", "disabled");
+            $("#licencia_extension_" + id).prop("disabled", "disabled");
             $("#extension_" + id).prop("disabled", "disabled");
             $("#delete_" + id).slideUp();
         }
@@ -112,7 +114,7 @@ $(function() {
                 _method: _method
             },
             success: function(result) {
-
+                //$('#formDataEmpresa').html(result);
                 let url = currentURL + "/extensiones/" + id;
 
                 $.get(url, function(data, textStatus, jqXHR) {
@@ -121,7 +123,6 @@ $(function() {
                         "lengthChange": true
                     });
                 });
-
             }
         });
     });

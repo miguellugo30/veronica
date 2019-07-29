@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 use Nimbus\Canales;
 use Nimbus\Cat_Extensiones;
 use Nimbus\Config_Empresas;
+use Nimbus\LicenciasBria;
 
 class CatExtensionesController extends Controller
 {
@@ -78,6 +79,10 @@ class CatExtensionesController extends Controller
     public function show($id)
     {
         /**
+         * Obtenemos las licencias bria activas
+         */
+        $licencias = LicenciasBria::active()->get();
+        /**
          * Obtenemos las extensiones que ya tiene la empresa
          */
         $extensiones = Cat_Extensiones::active()->where('Empresas_id', $id)->get();
@@ -93,7 +98,7 @@ class CatExtensionesController extends Controller
         $canales = Canales::active()->where('Empresas_id', $id )->get();
         $idEmpresa = $id;
         //return view('administrador::empresas.extensiones',compact( 'id', 'canales', 'numExtensiones', 'extCreadas', 'extensiones') );
-        return view('administrador::cat_extensiones.show', compact( 'idEmpresa', 'canales', 'numExtensiones', 'extCreadas', 'extensiones'));
+        return view('administrador::cat_extensiones.show', compact( 'idEmpresa', 'canales', 'numExtensiones', 'extCreadas', 'extensiones', 'licencias'));
     }
 
     /**
@@ -125,7 +130,7 @@ class CatExtensionesController extends Controller
         array_shift( $data );
         array_shift( $data );
 
-        $info = array_chunk( $data, 3 );
+        $info = array_chunk( $data, 4 );
 
         for($i=0;$i<count($info);$i++){
             /**
@@ -136,7 +141,8 @@ class CatExtensionesController extends Controller
                                         ['Empresas_id', '=', $id]
                                     ])->update([
                                         'extension' => $info[$i][2],
-                                        'Canales_id' =>  $info[$i][1]
+                                        'Canales_id' =>  $info[$i][1],
+                                        'Cat_Licencias_Bria_id' =>  $info[$i][3],
                                     ]);
         }
     }

@@ -149,3 +149,9 @@ Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix'
 Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
     Route::resource('cat_nas','CatNasController');
 });
+/**
+ * Rutas de CRUD de Licencias Bria
+ */
+Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
+    Route::resource('licencias_bria','LicenciasBriaController');
+});

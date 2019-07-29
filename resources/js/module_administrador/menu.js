@@ -54,6 +54,9 @@ $(function() {
         } else if (id == 17) {
             url = currentURL + '/cat_tipo_canales';
             table = ' #tableTiposCanal';
+        } else if (id == 19) {
+            url = currentURL + '/licencias_bria';
+            table = ' #licencias_bria';
         }
 
         $.get(url, function(data, textStatus, jqXHR) {
@@ -62,8 +65,5 @@ $(function() {
                 "lengthChange": true
             });
         });
-
     });
-
-
 });
