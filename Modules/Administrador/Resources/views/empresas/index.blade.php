@@ -8,7 +8,7 @@
     <div class="box-body">
         <div class="row">
             <div class="col viewIndex table-responsive">
-                <table id="tableEmpresas" class="table table-striped table-hover table-sm" >
+                <table id="tableEmpresas" class="display table table-bordered table-hover table-sm" >
                     <thead>
                         <tr>
                             <th>ID Cliente</th>
@@ -19,7 +19,7 @@
                     </thead>
                     <tbody>
                         @foreach ($empresas as $empresa)
-                            <tr data-id="{{ $empresa->id }}" data-toggle="tooltip" data-placement="top" title="Doble click para editar" style="cursor:pointer">
+                            <tr data-id="{{ $empresa->id }}" data-toggle="tooltip" data-placement="top" title="Click para visualizar el detalle" style="cursor:pointer">
                                 <td>{{$empresa->id}}</td>
                                 <td>{{ $empresa->Config_Empresas->Distribuidores->servicio }}</td>
                                 <td>{{$empresa->nombre}}</td>

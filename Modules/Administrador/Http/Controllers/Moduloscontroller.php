@@ -118,9 +118,9 @@ class ModulosController extends Controller
         /**
          * Obtenemos los menus con estatus 1
          */
-        $categorias = Modulos::where('activo', 1)->orderBy('prioridad', 'ASC')->get();
+        $modulos = Modulos::where('activo', 1)->orderBy('prioridad', 'ASC')->get();
 
-        return view('administrador::modulos.ordering', compact('categorias') );
+        return view('administrador::modulos.ordering', compact('modulos') );
     }
 
     public function updateOrdering(Request $request)

@@ -35,24 +35,14 @@ class SubMenuscontroller extends Controller
     public function store(Request $request)
     {
         /**
-         * Obtenemos todos los datos del formulario de alta
-         */
-        $input = $request->all();
-        /**
          * Insertamos la informacion del formulario
          */
-        $user = Sub_Categorias::create($input);
-         /**
-         * Obtenemos los menus con estatus 1
+        Sub_Categorias::create($request->all());
+        /**
+         * Redirigimos a la ruta index
          */
-        $id = $request->input('id_categoria');
+        return redirect()->route('menus.index');
 
-        $subCategorias = Sub_Categorias::where('id_categoria', $id )
-                                        ->where('activo', 1)
-                                        ->orderBy('prioridad', 'asc')
-                                        ->get();
-
-        return view('administrador::menus.show', compact('subCategorias','id'));
     }
 
     /**
@@ -98,12 +88,10 @@ class SubMenuscontroller extends Controller
 
         $id = $request->input('id_categoria');
 
-        $subCategorias = Sub_Categorias::where('id_categoria', $id )
-        ->where('activo', 1)
-        ->orderBy('prioridad', 'asc')
-        ->get();
-
-        return view('administrador::menus.show', compact('subCategorias','id'));
+        /**
+         * Redirigimos a la ruta index
+         */
+        return redirect()->route('menus.index');
 
     }
 
@@ -121,14 +109,9 @@ class SubMenuscontroller extends Controller
 
         $id = $request->input('id_categoria');
         /**
-         * Obtenemos los menus con estatus 1
+         * Redirigimos a la ruta index
          */
-        $subCategorias = Sub_Categorias::where('id_categoria', $id )
-        ->where('activo', 1)
-        ->orderBy('prioridad', 'asc')
-        ->get();
-
-        return view('administrador::menus.show', compact('subCategorias','id'));
+        return redirect()->route('menus.index');
     }
 
     public function ordering( $id )
@@ -158,17 +141,9 @@ class SubMenuscontroller extends Controller
                         ]);
             $prioridad++;
         }
-
-        $id = $request->input('id_categoria');
         /**
-         * Obtenemos los menus con estatus 1
+         * Redirigimos a la ruta index
          */
-        $subCategorias = Sub_Categorias::where('id_categoria', $id )
-        ->where('activo', 1)
-        ->orderBy('prioridad', 'asc')
-        ->get();
-
-        return view('administrador::menus.show', compact('subCategorias','id'));
-
+        return redirect()->route('menus.index');
     }
 }

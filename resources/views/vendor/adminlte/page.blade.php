@@ -134,10 +134,9 @@
 
             <!-- Main content -->
             <section class="content viewResult">
-
                 @yield('content')
-
             </section>
+
             <!-- /.content -->
             @if(config('adminlte.layout') == 'top-nav')
             </div>

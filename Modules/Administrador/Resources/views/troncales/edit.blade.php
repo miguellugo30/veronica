@@ -1,4 +1,4 @@
-<div class="col-6" style="float:none; margin:auto">
+<div class="col-12" style="float:none; margin:auto">
     <div class="form-group">
         <label for="distribuidores">Distribuidor</label>
         <select name="distribuidores" id="distribuidores" class="form-control form-control-sm">
@@ -31,10 +31,10 @@
         <input type="text" class="form-control form-control-sm" id="ip_host" placeholder="IP Host" value="{{ $troncal->ip_host }}">
     </div>
 </div>
-<div class="col-12">
+<!--div class="col-12">
     <div class="col-6" style="float:none; margin:auto">
         <button type="submit" class="btn btn-warning btn-sm cancelTroncal"><i class="fas fa-times"></i> Cancelar</button>
         <button type="submit" class="btn btn-danger btn-sm deleteTroncal"><i class="fas fa-trash-alt"></i> Eliminar</button>
         <button type="submit" class="btn btn-primary btn-sm updateTrocal float-right"><i class="fas fa-save"></i> Guardar</button>
     </div>
-</div>
+</div-->

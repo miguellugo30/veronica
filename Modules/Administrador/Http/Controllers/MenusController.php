@@ -34,7 +34,7 @@ class MenusController extends Controller
         /**
          * Obtenemos los menus con estatus 1
          */
-        $categorias = Categorias::where('activo', 1)->get();
+        $categorias = Categorias::active()->get();
 
         return view('administrador::menus.index', compact('categorias') );
     }
@@ -45,7 +45,12 @@ class MenusController extends Controller
      */
     public function create()
     {
-        return view('administrador::menus.create');
+         /**
+         * Obtenemos los menus con estatus 1
+         */
+        $categorias = Categorias::active()->get();
+
+        return view('administrador::menus.create', compact('categorias'));
     }
 
     /**
@@ -56,19 +61,13 @@ class MenusController extends Controller
     public function store(Request $request)
     {
         /**
-         * Obtenemos todos los datos del formulario de alta
-         */
-        $input = $request->all();
-        /**
          * Insertamos la informacion del formulario
          */
-        $user = Categorias::create($input);
-         /**
-         * Obtenemos los menus con estatus 1
+        Categorias::create($request->all());
+        /**
+         * Redirigimos a la ruta index
          */
-        $categorias = Categorias::where('activo', 1)->get();
-
-        return view('administrador::menus.index', compact('categorias') );
+        return redirect()->route('menus.index');
     }
 
     /**
@@ -120,11 +119,9 @@ class MenusController extends Controller
                         'tipo' => $request->input('tipo'),
                     ]);
         /**
-         * Obtenemos los menus con estatus 1
+         * Redirigimos a la ruta index
          */
-        $categorias = Categorias::where('activo', 1)->get();
-
-        return view('administrador::menus.index', compact('categorias') );
+        return redirect()->route('menus.index');
 
     }
 
@@ -139,13 +136,10 @@ class MenusController extends Controller
         ->update([
             'activo' => 0
         ]);
-
         /**
-         * Obtenemos los menus con estatus 1
+         * Redirigimos a la ruta index
          */
-        $categorias = Categorias::where('activo', 1)->get();
-
-        return view('administrador::menus.index', compact('categorias') );
+        return redirect()->route('menus.index');
 
     }
 
@@ -178,11 +172,9 @@ class MenusController extends Controller
         }
 
         /**
-         * Obtenemos los menus con estatus 1
+         * Redirigimos a la ruta index
          */
-        $categorias = Categorias::where('activo', 1)->get();
-
-        return view('administrador::menus.index', compact('categorias') );
+        return redirect()->route('menus.index');
 
     }
 }

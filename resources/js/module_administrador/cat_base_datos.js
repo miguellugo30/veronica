@@ -6,13 +6,34 @@ $(function() {
     $(document).on("click", ".newDataBase", function(e) {
 
         e.preventDefault();
-        $(".viewIndex").slideUp();
-        $(".viewCreate").slideDown();
+        $('#tituloModal').html('Nuevo Base de Datos');
+        $('#action').removeClass('updateBaseDatos');
+        $('#action').addClass('saveBaseDatos');
 
         let url = currentURL + '/basedatos/create';
 
         $.get(url, function(data, textStatus, jqXHR) {
-            $(".viewCreate").html(data);
+            $('#modal').modal('show');
+            $("#modal-body").html(data);
+        });
+    });
+    /**
+     * Evento para mostrar el formulario de edicion de un canal
+     */
+    $(document).on("click", ".editDataBase", function(e) {
+
+        e.preventDefault();
+        $('#tituloModal').html('Editar Tipo Canal');
+        $('#action').removeClass('saveBaseDatos');
+        $('#action').addClass('updateBaseDatos');
+
+        let id = $("#idSeleccionado").val();
+
+        let url = currentURL + "/basedatos/" + id + "/edit";
+
+        $.get(url, function(data, textStatus, jqXHR) {
+            $('#modal').modal('show');
+            $("#modal-body").html(data);
         });
     });
     /**
@@ -20,6 +41,7 @@ $(function() {
      */
     $(document).on('click', '.saveBaseDatos', function(event) {
         event.preventDefault();
+        $('#modal').modal('hide');
 
         let nombre = $("#nombre").val();
         let ubicacion = $("#ubicacion").val();
@@ -37,38 +59,34 @@ $(function() {
             $('.viewIndex #tableBaseDatos').DataTable({
                 "lengthChange": true
             });
+            Swal.fire(
+                'Correcto!',
+                'El registro ha sido guardado.',
+                'success'
+            )
         });
     });
     /**
      * Evento para mostrar el formulario editar modulo
      */
-    $(document).on('dblclick', '#tableBaseDatos tbody tr', function(event) {
+    $(document).on('click', '#tableBaseDatos tbody tr', function(event) {
         event.preventDefault();
 
-        $(".viewIndex").slideUp();
-        $(".viewCreate").slideDown();
-
         let id = $(this).data("id");
-        let url = currentURL + "/basedatos/" + id + "/edit";
+        $(".editDataBase").slideDown();
+        $(".deleteDataBase").slideDown();
 
-        $.get(url, function(data, textStatus, jqXHR) {
-            $(".viewCreate").html(data);
+        $("#idSeleccionado").val(id);
 
-        });
-    });
-    /**
-     * Evento para cancelar la creacion/edicion del modulo
-     */
-    $(document).on("click", ".cancelBaseDatos", function(e) {
-        $(".viewIndex").slideDown();
-        $(".viewCreate").slideUp();
-        $(".viewCreate").html('');
+        $("#tableBaseDatos tbody tr").removeClass('table-primary');
+        $(this).addClass('table-primary');
     });
     /**
      * Evento para editar el modulo
      */
     $(document).on('click', '.updateBaseDatos', function(event) {
         event.preventDefault();
+        $('#modal').modal('hide');
 
         let nombre = $("#nombre").val();
         let ubicacion = $("#ubicacion").val();
@@ -94,35 +112,56 @@ $(function() {
                 $('.viewIndex #tableBaseDatos').DataTable({
                     "lengthChange": true
                 });
+                Swal.fire(
+                    'Correcto!',
+                    'El registro ha sido actualizado.',
+                    'success'
+                )
             }
         });
     });
     /**
      * Evento para eliminar el modulo
      */
-    $(document).on('click', '.deleteBaseDatos', function(event) {
+    $(document).on('click', '.deleteDataBase', function(event) {
         event.preventDefault();
+        Swal.fire({
+            title: 'Estas seguro?',
+            text: "Deseas eliminar el registro seleccionado!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, Eliminar!',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.value) {
+                let id = $("#idSeleccionado").val();
+                let _token = $("input[name=_token]").val();
+                let _method = "DELETE";
+                let url = currentURL + '/basedatos/' + id;
 
-        let id = $("#id").val();
-        let _token = $("input[name=_token]").val();
-        let _method = "DELETE";
-        let url = currentURL + '/basedatos/' + id;
-
-        $.ajax({
-            url: url,
-            type: 'POST',
-            data: {
-                _token: _token,
-                _method: _method
-            },
-            success: function(result) {
-                $('.viewResult').html(result);
-                $('.viewCreate').slideUp();
-                $('.viewIndex #tableBaseDatos').DataTable({
-                    "lengthChange": true
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: {
+                        _token: _token,
+                        _method: _method
+                    },
+                    success: function(result) {
+                        $('.viewResult').html(result);
+                        $('.viewCreate').slideUp();
+                        $('.viewIndex #tableBaseDatos').DataTable({
+                            "lengthChange": true
+                        });
+                        Swal.fire(
+                            'Eliminado!',
+                            'El registro ha sido eliminado.',
+                            'success'
+                        )
+                    }
                 });
             }
         });
     });
-
 });

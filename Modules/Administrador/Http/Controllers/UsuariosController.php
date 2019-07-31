@@ -42,11 +42,11 @@ class UsuariosController extends Controller
         /**
          * Obtenemos todos los clientes ( Empresas )
          */
-        $clientes = Empresas::where('activo', 1)->get();
+        $clientes = Empresas::active()->get();
         /**
          * Obtenemos todas la categorias
          */
-        $categorias = Categorias::where('activo', 1)->get();
+        $categorias = Categorias::active()->get();
 
         return view('administrador::usuarios.create', compact( 'roles', 'clientes', 'categorias' ) );
     }

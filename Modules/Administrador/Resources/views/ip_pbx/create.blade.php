@@ -1,5 +1,5 @@
 <div class="row justify-content-md-center">
-    <div class="col col-lg-4">
+    <div class="col col-6">
         <div class="form-group">
             <label for="basedatos">Base de datos</label>
             <select name="basedatos" id="basedatos" class="form-control form-control-sm">
@@ -20,7 +20,7 @@
             @csrf
         </div>
     </div>
-    <div class="col col-lg-4">
+    <div class="col col-6">
         <fieldset>
             <legend>
                 <i class="far fa-hdd"></i>
@@ -37,8 +37,8 @@
         </fieldset>
     </div>
 </div>
-<div class="col-8" style="float:none; margin:auto">
+<!--div class="col-8" style="float:none; margin:auto">
         <button type="submit" class="btn btn-warning btn-sm cancelPbx"><i class="fas fa-times"></i> Cancelar</button>
         <button type="submit" class="btn btn-primary btn-sm savePbx float-right"><i class="fas fa-save"></i> Guardar</button>
-</div>
+</div-->
 
