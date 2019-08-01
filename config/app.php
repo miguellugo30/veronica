@@ -174,6 +174,7 @@ return [
         Nimbus\Providers\AuthServiceProvider::class,
         // Nimbus\Providers\BroadcastServiceProvider::class,
         Nimbus\Providers\EventServiceProvider::class,
+        Nimbus\Providers\TelescopeServiceProvider::class,
         Nimbus\Providers\RouteServiceProvider::class,
         JeroenNoten\LaravelAdminLte\ServiceProvider::class,
 

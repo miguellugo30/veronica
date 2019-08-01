@@ -57,6 +57,9 @@ $(function() {
         } else if (id == 19) {
             url = currentURL + '/licencias_bria';
             table = ' #licencias_bria';
+        } else if (id == 20) {
+            url = currentURL + '/logs';
+            table = ' #tableLogs';
         }
 
         $.get(url, function(data, textStatus, jqXHR) {

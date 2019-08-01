@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 use Nimbus\Cat_Distribuidor;
 use Storage;
 use File;
+use Nimbus\Http\Controllers\LogController;
 
 class DistribuidoresController extends Controller
 {
@@ -97,6 +98,13 @@ class DistribuidoresController extends Controller
         $distribuidor->img_pie = $directorio_imagenes."/".$nom2;//Asignamos el nuevo nombre al registro ha actualizar
         $distribuidor->save();
 
+        /**
+         * Creamos el logs
+         */
+        $mensaje = 'Se creo un nuevo registro, informacion capturada:'.var_export($request->all(), true);
+        $log = new LogController;
+        $log->store('Insercion', 'Cat_Distribuidor',$mensaje, $distribuidor->id);
+
         return redirect()->route('distribuidor.index');
     }
 
@@ -165,6 +173,13 @@ class DistribuidoresController extends Controller
         }
 
         $distribuidor->save();
+        /**
+         * Creamos el logs
+         */
+        $mensaje = 'Se edito un registro con id: '.$id.', informacion editada: '.var_export($request->all(), true);
+        $log = new LogController;
+        $log->store('Actualizacion', 'Cat_Distribuidor',$mensaje, $id);
+
         return redirect()->route('distribuidor.index');
     }
 
@@ -179,6 +194,12 @@ class DistribuidoresController extends Controller
          * Se realiza la actualizacion con referencia al id que se recibio
          */
         Cat_Distribuidor::where( 'id', $id )->update(['activo' => 0]);
+        /**
+         * Creamos el logs
+         */
+        $mensaje = 'Se Elimino un registro con id: '.$id;
+        $log = new LogController;
+        $log->store('Eliminacion', 'Cat_Distribuidor',$mensaje, $id);
 
         /**
          * Se realiza la busqueda del registro para poder obtener el nombre del archivo y realizar su eliminacion del servidor

@@ -6,6 +6,7 @@ use Nimbus\Sub_Categorias;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Nimbus\Http\Controllers\LogController;
 
 class SubMenuscontroller extends Controller
 {
@@ -37,7 +38,13 @@ class SubMenuscontroller extends Controller
         /**
          * Insertamos la informacion del formulario
          */
-        Sub_Categorias::create($request->all());
+        $cat = Sub_Categorias::create($request->all());
+         /**
+         * Creamos el logs
+         */
+        $mensaje = 'Se creo un nuevo registro, informacion capturada:'.var_export($request->all(), true);
+        $log = new LogController;
+        $log->store('Insercion', 'Sub_Categorias',$mensaje, $cat->id);
         /**
          * Redirigimos a la ruta index
          */
@@ -86,8 +93,12 @@ class SubMenuscontroller extends Controller
                         'tipo' => $request->input('tipo'),
                     ]);
 
-        $id = $request->input('id_categoria');
-
+        /**
+         * Creamos el logs
+         */
+        $mensaje = 'Se edito un registro con id: '.$id.', informacion editada: '.var_export($request->all(), true);
+        $log = new LogController;
+        $log->store('Actualizacion', 'Sub_Categorias',$mensaje, $id);
         /**
          * Redirigimos a la ruta index
          */
@@ -106,7 +117,12 @@ class SubMenuscontroller extends Controller
         ->update([
             'activo' => 0
             ]);
-
+        /**
+         * Creamos el logs
+         */
+        $mensaje = 'Se Elimino un registro con id: '.$id;
+        $log = new LogController;
+        $log->store('Eliminacion', 'Sub_Categorias',$mensaje, $id);
         $id = $request->input('id_categoria');
         /**
          * Redirigimos a la ruta index

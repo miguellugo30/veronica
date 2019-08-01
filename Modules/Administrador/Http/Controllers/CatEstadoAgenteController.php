@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Nimbus\Cat_Estado_Agente;
+use Nimbus\Http\Controllers\LogController;
 
 class CatEstadoAgenteController extends Controller
 {
@@ -43,6 +44,12 @@ class CatEstadoAgenteController extends Controller
          * los insertamos la informacion del formulario
          */
         Cat_Estado_Agente::create(  $request->all() );
+         /**
+         * Creamos el logs
+         */
+        $cat = $mensaje = 'Se creo un nuevo registro, informacion capturada:'.var_export($request->all(), true);
+        $log = new LogController;
+        $log->store('Insercion', 'Cat_Estado_Agente',$mensaje, $cat->id);
         /**
          * Redirigimos a la ruta index
          */
@@ -90,6 +97,12 @@ class CatEstadoAgenteController extends Controller
             'descripcion' => $request->input('descripcion'),
             'recibir_llamada' => $request->input('recibir_llamada')
         ]);
+        /**
+         * Creamos el logs
+         */
+        $mensaje = 'Se edito un registro con id: '.$id.', informacion editada: '.var_export($request->all(), true);
+        $log = new LogController;
+        $log->store('Actualizacion', 'Cat_Estado_Agente',$mensaje, $id);
          /**
          * Redirigimos a la ruta index
          */
@@ -104,6 +117,12 @@ class CatEstadoAgenteController extends Controller
     public function destroy($id)
     {
         Cat_Estado_Agente::where( 'id', $id )->update(['activo' => 0]);
+        /**
+         * Creamos el logs
+         */
+        $mensaje = 'Se Elimino un registro con id: '.$id;
+        $log = new LogController;
+        $log->store('Eliminacion', 'Cat_Estado_Agente',$mensaje, $id);
          /**
          * Redirigimos a la ruta index
          */

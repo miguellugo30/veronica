@@ -10,6 +10,7 @@ use Nimbus\Cat_Distribuidor;
 use Nimbus\Cat_Tipo_Canales;
 use Nimbus\Empresas;
 use Nimbus\Troncales;
+use Nimbus\Http\Controllers\LogController;
 
 class CanalesController extends Controller
 {
@@ -74,7 +75,7 @@ class CanalesController extends Controller
                 $Troncales_id = $info[$i][2];
             }
 
-           Canales::create([
+            $can = Canales::create([
                 'protocolo'=>$info[$i][1],
                 'prefijo'=>$prefijo.$info[$i][3],
                 'Troncales_id'=>$Troncales_id,
@@ -82,6 +83,13 @@ class CanalesController extends Controller
                 'Cat_Canales_Tipo_id'=>$info[$i][0],
                 'Empresas_id'=>$id_Empresa
            ]);
+
+            /**
+             * Creamos el logs
+             */
+            $mensaje = 'Se creo un nuevo registro, informacion capturada:'.var_export($info[$i], true);
+            $log = new LogController;
+            $log->store('Insercion', 'Canales',$mensaje, $can->id);
        }
     }
     /**
@@ -175,6 +183,12 @@ class CanalesController extends Controller
                                 'Troncales_id' => $Troncales_id,
                                 'Cat_Canales_Tipo_id' => $info[$i][1],
                             ]);
+            /**
+             * Creamos el logs
+             */
+            $mensaje = 'Se edito un registro con id: '.$info[$i][0].', informacion editada: '.var_export($info[$i], true);
+            $log = new LogController;
+            $log->store('Actualizacion', 'Canales', $mensaje, $info[$i][0]);
         }
     }
     /**
@@ -191,6 +205,12 @@ class CanalesController extends Controller
                    ->update([
                        'activo' => '0',
                    ]);
+        /**
+         * Creamos el logs
+         */
+        $mensaje = 'Se Elimino un registro con id: '.$id;
+        $log = new LogController;
+        $log->store('Eliminacion', 'Canales', $mensaje, $id);
     }
 
 }

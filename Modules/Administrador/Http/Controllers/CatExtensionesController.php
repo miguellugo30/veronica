@@ -9,6 +9,7 @@ use Nimbus\Canales;
 use Nimbus\Cat_Extensiones;
 use Nimbus\Config_Empresas;
 use Nimbus\LicenciasBria;
+use Nimbus\Http\Controllers\LogController;
 
 class CatExtensionesController extends Controller
 {
@@ -68,6 +69,12 @@ class CatExtensionesController extends Controller
             $catExtension->Empresas_id = $data['id_empresa'];
             $catExtension->Canales_id = $data['canal_id'];
             $catExtension->save();
+             /**
+             * Creamos el logs
+             */
+            $mensaje = 'Se creo un nuevo registro, informacion capturada:'.var_export($data, true);
+            $log = new LogController;
+            $log->store('Insercion', 'Cat_Extensiones',$mensaje, $catExtension->id);
         }
     }
 
@@ -144,6 +151,12 @@ class CatExtensionesController extends Controller
                                         'Canales_id' =>  $info[$i][1],
                                         'Cat_Licencias_Bria_id' =>  $info[$i][3],
                                     ]);
+            /**
+             * Creamos el logs
+             */
+            $mensaje = 'Se edito un registro con id: '.$info[$i][0].', informacion editada: '.var_export($info[$i], true);
+            $log = new LogController;
+            $log->store('Actualizacion', 'Cat_Extensiones',$mensaje, $id);
         }
     }
     /**
@@ -160,5 +173,11 @@ class CatExtensionesController extends Controller
                                 ->update([
                                     'activo' => 0
                                 ]);
+        /**
+         * Creamos el logs
+         */
+        $mensaje = 'Se Elimino un registro con id: '.$id;
+        $log = new LogController;
+        $log->store('Eliminacion', 'Cat_Extensiones',$mensaje, $id);
     }
 }

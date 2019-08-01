@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Nimbus\BaseDatos;
+use Nimbus\Http\Controllers\LogController;
 
 class BasesDatosController extends Controller
 {
@@ -42,7 +43,13 @@ class BasesDatosController extends Controller
          * Obtenemos todos los datos del formulario de alta y
          * los insertamos la informacion del formulario
          */
-        BaseDatos::create( $request->all() );
+        $db = BaseDatos::create( $request->all() );
+        /**
+         * Creamos el logs
+         */
+        $mensaje = 'Se creo un nuevo registro, informacion capturada:'.var_export($request->all(), true);
+        $log = new LogController;
+        $log->store('Insercion', 'BaseDatos',$mensaje, $db->id);
         /**
          * Redirigimos a la ruta index
          */
@@ -92,6 +99,12 @@ class BasesDatosController extends Controller
                                     'ubicacion' => $request->input('ubicacion')
                                 ]);
         /**
+         * Creamos el logs
+         */
+        $mensaje = 'Se edito un registro con id: '.$id.', informacion editada: '.var_export($request->all(), true);
+        $log = new LogController;
+        $log->store('Actualizacion', 'BaseDatos',$mensaje, $id);
+        /**
          * Redirigimos a la ruta index
          */
         return redirect()->route('basedatos.index');
@@ -111,6 +124,12 @@ class BasesDatosController extends Controller
                                 ->update([
                                     'activo' => 0,
                                 ]);
+        /**
+         * Creamos el logs
+         */
+        $mensaje = 'Se Elimino un registro con id: '.$id;
+        $log = new LogController;
+        $log->store('Eliminacion', 'BaseDatos',$mensaje, $id);
         /**
          * Redirigimos a la ruta index
          */

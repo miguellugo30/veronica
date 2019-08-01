@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 use Nimbus\Troncales;
 use Nimbus\Cat_Distribuidor;
 use Nimbus\Cat_IP_PBX;
+use Nimbus\Http\Controllers\LogController;
 
 class TroncalesController extends Controller
 {
@@ -50,7 +51,13 @@ class TroncalesController extends Controller
          * Obtenemos todos los datos del formulario de alta y
          * los insertamos la informacion del formulario
          */
-        Troncales::create( $request->all() );
+        $cat = Troncales::create( $request->all() );
+        /**
+         * Creamos el logs
+         */
+        $mensaje = 'Se creo un nuevo registro, informacion capturada:'.var_export($request->all(), true);
+        $log = new LogController;
+        $log->store('Insercion', 'Troncales',$mensaje, $cat->id);
         /**
          * Redirigimos a la ruta index
          */
@@ -109,6 +116,12 @@ class TroncalesController extends Controller
                                     'Cat_Distribuidor_id' => $request->input('Cat_Distribuidor_id'),
                                     'Cat_IP_PBX_id' => $request->input('Cat_IP_PBX_id'),
                                 ]);
+                /**
+         * Creamos el logs
+         */
+        $mensaje = 'Se edito un registro con id: '.$id.', informacion editada: '.var_export($request->all(), true);
+        $log = new LogController;
+        $log->store('Actualizacion', 'Troncales',$mensaje, $id);
         /**
          * Redirigimos a la ruta index
          */
@@ -129,6 +142,12 @@ class TroncalesController extends Controller
                    ->update([
                        'activo' => '0',
                    ]);
+         /**
+         * Creamos el logs
+         */
+        $mensaje = 'Se Elimino un registro con id: '.$id;
+        $log = new LogController;
+        $log->store('Eliminacion', 'Troncales',$mensaje, $id);
         /**
          * Redirigimos a la ruta index
          */

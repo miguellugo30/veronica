@@ -9,6 +9,7 @@ use Nimbus\Cat_IP_PBX;
 use Nimbus\Cat_NAS;
 use Nimbus\BaseDatos;
 use DB;
+use Nimbus\Http\Controllers\LogController;
 
 class CatIpPbxController extends Controller
 {
@@ -54,7 +55,13 @@ class CatIpPbxController extends Controller
          * Obtenemos todos los datos del formulario de alta y
          * los insertamos la informacion del formulario
          */
-        $pbx = Cat_IP_PBX::create(  $request->all() );
+        $cat = $pbx = Cat_IP_PBX::create(  $request->all() );
+        /**
+         * Creamos el logs
+         */
+        $mensaje = 'Se creo un nuevo registro, informacion capturada:'.var_export($request->all(), true);
+        $log = new LogController;
+        $log->store('Insercion', 'Cat_IP_PBX',$mensaje, $cat->id);
         /**
          * Asignamos las categorias al usuario
          */
@@ -141,6 +148,12 @@ class CatIpPbxController extends Controller
                         'media_server' => $request->input('media_server'),
                         'Cat_Base_Datos_id' => $request->input('Cat_Base_Datos_id'),
                     ]);
+        /**
+         * Creamos el logs
+         */
+        $mensaje = 'Se edito un registro con id: '.$id.', informacion editada: '.var_export($request->all(), true);
+        $log = new LogController;
+        $log->store('Actualizacion', 'Cat_IP_PBX',$mensaje, $id);
 
         return redirect()->route('cat_ip_pbx.index');
     }
@@ -156,6 +169,12 @@ class CatIpPbxController extends Controller
                 ->update([
                     'activo' => '0'
                 ]);
+        /**
+         * Creamos el logs
+         */
+        $mensaje = 'Se Elimino un registro con id: '.$id;
+        $log = new LogController;
+        $log->store('Eliminacion', 'Cat_IP_PBX',$mensaje, $id);
 
         return redirect()->route('cat_ip_pbx.index');
     }

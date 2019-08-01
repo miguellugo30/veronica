@@ -5,6 +5,7 @@ namespace Modules\Administrador\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Nimbus\Http\Controllers\LogController;
 /*
 * Agregar el modelo de la tabla que debe usar nuestro modulo
 */
@@ -66,15 +67,21 @@ class DidController extends Controller
          * Se recorre arreglo de dids
          */
         for ($i=0; $i < count($dids_store); $i++) {
-            Dids::create([
-                            'did'=>trim($dids_store[$i]),
-                            'numero_real'=>$data['numero_real'],
-                            'referencia'=>$data['referencia'],
-                            'gateway'=>$data['gateway'],
-                            'fakedid'=>$data['fakedid'],
-                            'Canales_id'=> $data['Canal_id'],
-                            'Empresas_id'=>$data['id_empresa']
-                        ]);
+            $cat = Dids::create([
+                                    'did'=>trim($dids_store[$i]),
+                                    'numero_real'=>$data['numero_real'],
+                                    'referencia'=>$data['referencia'],
+                                    'gateway'=>$data['gateway'],
+                                    'fakedid'=>$data['fakedid'],
+                                    'Canales_id'=> $data['Canal_id'],
+                                    'Empresas_id'=>$data['id_empresa']
+                                ]);
+            /**
+             * Creamos el logs
+             */
+            $mensaje = 'Se creo un nuevo registro, informacion capturada:'.var_export($data, true);
+            $log = new LogController;
+            $log->store('Insercion', 'Dids',$mensaje, $cat->id);
         }
     }
 
@@ -144,17 +151,22 @@ class DidController extends Controller
         for($i=0;$i<count($info);$i++){
 
             Dids::where([
-                ['Empresas_id', '=', $id],
-                ['id', '=', $info[$i][0]],
-            ])
-                    ->update([
-                        'did' => $info[$i][2],
-                        'numero_real' => $info[$i][4],
-                        'referencia' => $info[$i][3],
-                        'gateway' => $info[$i][5],
-                        'fakedid' => $info[$i][6],
-                        'Canales_id' => $info[$i][1],
-                    ]);
+                            ['Empresas_id', '=', $id],
+                            ['id', '=', $info[$i][0]],
+                        ])->update([
+                            'did' => $info[$i][2],
+                            'numero_real' => $info[$i][4],
+                            'referencia' => $info[$i][3],
+                            'gateway' => $info[$i][5],
+                            'fakedid' => $info[$i][6],
+                            'Canales_id' => $info[$i][1],
+                        ]);
+            /**
+             * Creamos el logs
+             */
+            $mensaje = 'Se edito un registro con id: '.$info[$i][0].', informacion editada: '.var_export($info[$i], true);
+            $log = new LogController;
+            $log->store('Actualizacion', 'Categorias',$mensaje, $info[$i][0]);
         }
     }
 
@@ -166,6 +178,12 @@ class DidController extends Controller
     public function destroy($id)
     {
         Dids::where( 'id', $id )->update(['activo' => 0]);
+        /**
+         * Creamos el logs
+         */
+        $mensaje = 'Se Elimino un registro con id: '.$id;
+        $log = new LogController;
+        $log->store('Eliminacion', 'Dids',$mensaje, $id);
         /**
          * Redirigimos a la ruta index
          */

@@ -26,6 +26,10 @@ Route::prefix('administrador/')->group(function() {
 Route::prefix('administrador/')->group(function() {
     Route::get('subcategoria/{id}', 'subCategoriaController@index')->name('subcategoria')->middleware('auth');
 });
+/**
+ * Rutas para CRUD de Logs
+ */
+Route::group(['prefix' => 'administrador', 'middleware' => 'auth'], function() {
+    Route::resource('logs','LogController');
+});
 
-//Route::resource('usuarios/', 'UsuariosController');
-//Route::resource('administrador/usuarios/', '\Modules\Administrador\Http\Controllers\UsuariosController');
