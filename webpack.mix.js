@@ -34,7 +34,7 @@ mix.js([
     'resources/js/module_administrador/licenciasBria.js',
 ], 'public/js/');
 /*
+.sass('resources/sass/app.scss', 'public/css');
 mix.js('resources/js/app.js', 'public/js/all.js')
     .js('resources/js/usuarios.js', 'public/js/all.js')
-    .sass('resources/sass/app.scss', 'public/css');
     */

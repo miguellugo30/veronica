@@ -35,13 +35,23 @@ class HomeController extends Controller
              * Obtenemos el rol del usuario logeado
              */
             $rol = $user->getRoleNames();
+            //dd( $rol );
             /**
              * Si el rol es Super Administrador o  administrador lo redireccionamos a la vista administrador
              */
             if ( $rol[0] == 'Super Administrador' ) {
                 return redirect('administrador');
             } else {
-                return view('home');
+                /**
+                 * Obtenemos el rol del usuario logeado
+                 */
+                $rol = $user->getRoleNames();
+                /**
+                 * Obtenemos las categorias relacionadas al usuario
+                 */
+                $categorias = array();
+
+                return view('home', compact( 'rol', 'categorias' ));
             }
         } else {
             return redirect('/')->withErrors('Usuario inactivo', 'message');

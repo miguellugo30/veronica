@@ -1,0 +1,52 @@
+.bg-primary:hover {
+    cursor: pointer;
+    background-color: #114782 !important;
+}
+
+.bg-secondary:hover {
+    cursor: pointer;
+    background-color: #495056 !important;
+}
+
+.bg-success:hover {
+    cursor: pointer;
+    background-color: #1a732f !important;
+}
+
+.bg-danger:hover {
+    cursor: pointer;
+    background-color: #ad3540 !important;
+}
+
+.bg-info:hover {
+    cursor: pointer;
+    background-color: #1a8292 !important;
+}
+
+.thumbnail:hover h6 {
+    animation-duration: 0.5s;
+    animation-name: moveFromRight;
+}
+
+.thumbnail:hover i {
+    animation-duration: 0.5s;
+    animation-name: slidein;
+}
+
+@keyframes slidein {
+    from {
+        -webkit-transform: translateX(-100%);
+    }
+    to {
+        -webkit-transform: translateX(0%);
+    }
+}
+
+@keyframes moveFromRight {
+    from {
+        -webkit-transform: translateX(100%);
+    }
+    to {
+        -webkit-transform: translateX(0%);
+    }
+}
