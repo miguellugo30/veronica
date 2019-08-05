@@ -189,7 +189,7 @@ $(function() {
     /**
      * Evento para mostrar el formulario editar empresa
      */
-    $(document).on('dblclick', '#tableEmpresas tbody tr', function(event) {
+    $(document).on('click', '#tableEmpresas tbody tr', function(event) {
         event.preventDefault();
 
         $(".newEmpresa").slideUp();

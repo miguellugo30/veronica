@@ -42,4 +42,12 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('Nimbus\Categorias')->where('activo',  1)->orderBy('prioridad');
     }
+    /**
+     * Relación muchos a uno con Empresas
+     */
+    public function Empresas()
+    {
+        return $this->belongsTo('Nimbus\Empresas', 'Empresas_id');
+    }
+
 }

@@ -11,6 +11,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
+use Nimbus\Http\Controllers\LogController;
 
 class UsuariosController extends Controller
 {
@@ -42,11 +43,11 @@ class UsuariosController extends Controller
         /**
          * Obtenemos todos los clientes ( Empresas )
          */
-        $clientes = Empresas::where('activo', 1)->get();
+        $clientes = Empresas::active()->get();
         /**
          * Obtenemos todas la categorias
          */
-        $categorias = Categorias::where('activo', 1)->get();
+        $categorias = Categorias::active()->get();
 
         return view('administrador::usuarios.create', compact( 'roles', 'clientes', 'categorias' ) );
     }
@@ -70,6 +71,12 @@ class UsuariosController extends Controller
          * Insertamos la informacion del formulario
          */
         $user = User::create($input);
+        /**
+         * Creamos el logs
+         */
+        $mensaje = 'Se creo un nuevo registro, informacion capturada:'.var_export($request->all(), true);
+        $log = new LogController;
+        $log->store('Insercion', 'User',$mensaje, $user->id);
         /**
          * Asignamos el rol elegido
          */
@@ -180,6 +187,12 @@ class UsuariosController extends Controller
             );
         }
         /**
+         * Creamos el logs
+         */
+        $mensaje = 'Se edito un registro con id: '.$id.', informacion editada: '.var_export($request->all(), true);
+        $log = new LogController;
+        $log->store('Actualizacion', 'User',$mensaje, $id);
+        /**
          * Redirigimos a la ruta index
          */
         return redirect()->route('usuarios.index');
@@ -196,6 +209,12 @@ class UsuariosController extends Controller
         ->update([
             'status' => 0
         ]);
+         /**
+         * Creamos el logs
+         */
+        $mensaje = 'Se Elimino un registro con id: '.$id;
+        $log = new LogController;
+        $log->store('Eliminacion', 'User', $mensaje, $id);
         /**
          * Redirigimos a la ruta index
          */

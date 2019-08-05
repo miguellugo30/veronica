@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Nimbus\LicenciasBria;
+use Nimbus\Http\Controllers\LogController;
 
 class LicenciasBriaController extends Controller
 {
@@ -43,7 +44,13 @@ class LicenciasBriaController extends Controller
          * Obtenemos todos los datos del formulario de alta y
          * los insertamos la informacion del formulario
          */
-        LicenciasBria::create(  $request->all() );
+        $cat = LicenciasBria::create(  $request->all() );
+         /**
+         * Creamos el logs
+         */
+        $mensaje = 'Se creo un nuevo registro, informacion capturada:'.var_export($request->all(), true);
+        $log = new LogController;
+        $log->store('Insercion', 'LicenciasBria',$mensaje, $cat->id);
         /**
          * Redirigimos a la ruta index
          */

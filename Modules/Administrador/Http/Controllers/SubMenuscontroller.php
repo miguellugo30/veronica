@@ -6,6 +6,7 @@ use Nimbus\Sub_Categorias;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Nimbus\Http\Controllers\LogController;
 
 class SubMenuscontroller extends Controller
 {
@@ -35,24 +36,20 @@ class SubMenuscontroller extends Controller
     public function store(Request $request)
     {
         /**
-         * Obtenemos todos los datos del formulario de alta
-         */
-        $input = $request->all();
-        /**
          * Insertamos la informacion del formulario
          */
-        $user = Sub_Categorias::create($input);
+        $cat = Sub_Categorias::create($request->all());
          /**
-         * Obtenemos los menus con estatus 1
+         * Creamos el logs
          */
-        $id = $request->input('id_categoria');
+        $mensaje = 'Se creo un nuevo registro, informacion capturada:'.var_export($request->all(), true);
+        $log = new LogController;
+        $log->store('Insercion', 'Sub_Categorias',$mensaje, $cat->id);
+        /**
+         * Redirigimos a la ruta index
+         */
+        return redirect()->route('menus.index');
 
-        $subCategorias = Sub_Categorias::where('id_categoria', $id )
-                                        ->where('activo', 1)
-                                        ->orderBy('prioridad', 'asc')
-                                        ->get();
-
-        return view('administrador::menus.show', compact('subCategorias','id'));
     }
 
     /**
@@ -96,14 +93,16 @@ class SubMenuscontroller extends Controller
                         'tipo' => $request->input('tipo'),
                     ]);
 
-        $id = $request->input('id_categoria');
-
-        $subCategorias = Sub_Categorias::where('id_categoria', $id )
-        ->where('activo', 1)
-        ->orderBy('prioridad', 'asc')
-        ->get();
-
-        return view('administrador::menus.show', compact('subCategorias','id'));
+        /**
+         * Creamos el logs
+         */
+        $mensaje = 'Se edito un registro con id: '.$id.', informacion editada: '.var_export($request->all(), true);
+        $log = new LogController;
+        $log->store('Actualizacion', 'Sub_Categorias',$mensaje, $id);
+        /**
+         * Redirigimos a la ruta index
+         */
+        return redirect()->route('menus.index');
 
     }
 
@@ -118,17 +117,17 @@ class SubMenuscontroller extends Controller
         ->update([
             'activo' => 0
             ]);
-
+        /**
+         * Creamos el logs
+         */
+        $mensaje = 'Se Elimino un registro con id: '.$id;
+        $log = new LogController;
+        $log->store('Eliminacion', 'Sub_Categorias',$mensaje, $id);
         $id = $request->input('id_categoria');
         /**
-         * Obtenemos los menus con estatus 1
+         * Redirigimos a la ruta index
          */
-        $subCategorias = Sub_Categorias::where('id_categoria', $id )
-        ->where('activo', 1)
-        ->orderBy('prioridad', 'asc')
-        ->get();
-
-        return view('administrador::menus.show', compact('subCategorias','id'));
+        return redirect()->route('menus.index');
     }
 
     public function ordering( $id )
@@ -158,17 +157,9 @@ class SubMenuscontroller extends Controller
                         ]);
             $prioridad++;
         }
-
-        $id = $request->input('id_categoria');
         /**
-         * Obtenemos los menus con estatus 1
+         * Redirigimos a la ruta index
          */
-        $subCategorias = Sub_Categorias::where('id_categoria', $id )
-        ->where('activo', 1)
-        ->orderBy('prioridad', 'asc')
-        ->get();
-
-        return view('administrador::menus.show', compact('subCategorias','id'));
-
+        return redirect()->route('menus.index');
     }
 }

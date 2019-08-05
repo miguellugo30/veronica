@@ -6,13 +6,34 @@ $(function() {
     $(document).on("click", ".newEdoEmp", function(e) {
 
         e.preventDefault();
-        $(".viewIndex").slideUp();
-        $(".viewCreate").slideDown();
+        $('#tituloModal').html('Nuevo Estado Empresa');
+        $('#action').removeClass('updateEdoEmp');
+        $('#action').addClass('saveEdoEmp');
 
         let url = currentURL + '/cat_empresa/create';
 
         $.get(url, function(data, textStatus, jqXHR) {
-            $(".viewCreate").html(data);
+            $('#modal').modal('show');
+            $("#modal-body").html(data);
+        });
+    });
+    /**
+     * Evento para mostrar el formulario de edicion de un canal
+     */
+    $(document).on("click", ".editEdoEmp", function(e) {
+
+        e.preventDefault();
+        $('#tituloModal').html('Editar Estado Empresa');
+        $('#action').removeClass('saveEdoEmp');
+        $('#action').addClass('updateEdoEmp');
+
+        let id = $("#idSeleccionado").val();
+
+        let url = currentURL + "/cat_empresa/" + id + "/edit";
+
+        $.get(url, function(data, textStatus, jqXHR) {
+            $('#modal').modal('show');
+            $("#modal-body").html(data);
         });
     });
     /**
@@ -20,6 +41,7 @@ $(function() {
      */
     $(document).on('click', '.saveEdoEmp', function(event) {
         event.preventDefault();
+        $('#modal').modal('hide');
 
         let nombre = $("#nombre").val();
         let _token = $("input[name=_token]").val();
@@ -34,24 +56,27 @@ $(function() {
             $('.viewIndex #tableEdoEmp').DataTable({
                 "lengthChange": true
             });
+            Swal.fire(
+                'Correcto!',
+                'El registro ha sido guardado.',
+                'success'
+            )
         });
     });
     /**
      * Evento para mostrar el formulario editar modulo
      */
-    $(document).on('dblclick', '#tableEdoEmp tbody tr', function(event) {
+    $(document).on('click', '#tableEdoEmp tbody tr', function(event) {
         event.preventDefault();
 
-        $(".viewIndex").slideUp();
-        $(".viewCreate").slideDown();
-
         let id = $(this).data("id");
-        let url = currentURL + "/cat_empresa/" + id + "/edit";
+        $(".editEdoEmp").slideDown();
+        $(".deleteEdoEmp").slideDown();
 
-        $.get(url, function(data, textStatus, jqXHR) {
-            $(".viewCreate").html(data);
+        $("#idSeleccionado").val(id);
 
-        });
+        $("#tableEdoEmp tbody tr").removeClass('table-primary');
+        $(this).addClass('table-primary');
     });
     /**
      * Evento para cancelar la creacion/edicion del modulo
@@ -66,6 +91,7 @@ $(function() {
      */
     $(document).on('click', '.updateEdoEmp', function(event) {
         event.preventDefault();
+        $('#modal').modal('hide');
 
         let nombre = $("#nombre").val();
         let id = $("#id").val();
@@ -87,6 +113,11 @@ $(function() {
                 $('.viewIndex #tableEdoEmp').DataTable({
                     "lengthChange": true
                 });
+                Swal.fire(
+                    'Correcto!',
+                    'El registro ha sido actualizado.',
+                    'success'
+                )
             }
         });
     });
@@ -95,24 +126,41 @@ $(function() {
      */
     $(document).on('click', '.deleteEdoEmp', function(event) {
         event.preventDefault();
+        Swal.fire({
+            title: 'Estas seguro?',
+            text: "Deseas eliminar el registro seleccionado!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, Eliminar!',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.value) {
+                let id = $("#idSeleccionado").val();
+                let _token = $("input[name=_token]").val();
+                let _method = "DELETE";
+                let url = currentURL + '/cat_empresa/' + id;
 
-        let id = $("#id").val();
-        let _token = $("input[name=_token]").val();
-        let _method = "DELETE";
-        let url = currentURL + '/cat_empresa/' + id;
-
-        $.ajax({
-            url: url,
-            type: 'POST',
-            data: {
-                _token: _token,
-                _method: _method
-            },
-            success: function(result) {
-                $('.viewResult').html(result);
-                $('.viewCreate').slideUp();
-                $('.viewIndex #tableEdoEmp').DataTable({
-                    "lengthChange": true
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: {
+                        _token: _token,
+                        _method: _method
+                    },
+                    success: function(result) {
+                        $('.viewResult').html(result);
+                        $('.viewCreate').slideUp();
+                        $('.viewIndex #tableEdoEmp').DataTable({
+                            "lengthChange": true
+                        });
+                        Swal.fire(
+                            'Eliminado!',
+                            'El registro ha sido eliminado.',
+                            'success'
+                        )
+                    }
                 });
             }
         });

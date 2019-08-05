@@ -6,6 +6,7 @@ use Nimbus\Modulos;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Nimbus\Http\Controllers\LogController;
 
 class ModulosController extends Controller
 {
@@ -42,13 +43,15 @@ class ModulosController extends Controller
     public function store(Request $request)
     {
         /**
-         * Obtenemos todos los datos del formulario de alta
-         */
-        $input = $request->all();
-        /**
          * Insertamos la informacion del formulario
          */
-        Modulos::create($input);
+        $cat = Modulos::create($request->all());
+        /**
+         * Creamos el logs
+         */
+        $mensaje = 'Se creo un nuevo registro, informacion capturada:'.var_export($request->all(), true);
+        $log = new LogController;
+        $log->store('Insercion', 'Modulos',$mensaje, $cat->id);
         /**
          * Redirigimos a la ruta index
          */
@@ -93,11 +96,16 @@ class ModulosController extends Controller
             'descripcion' => $request->input('descripcion')
         ]);
         /**
+         * Creamos el logs
+         */
+        $mensaje = 'Se edito un registro con id: '.$id.', informacion editada: '.var_export($request->all(), true);
+        $log = new LogController;
+        $log->store('Actualizacion', 'Modulos',$mensaje, $id);
+        /**
          * Redirigimos a la ruta index
          */
         return redirect()->route('modulos.index');
     }
-
     /**
      * Remove the specified resource from storage.
      * @param int $id
@@ -107,6 +115,12 @@ class ModulosController extends Controller
     {
         Modulos::where( 'id', $id )
                 ->update(['activo' => 0]);
+        /**
+         * Creamos el logs
+         */
+        $mensaje = 'Se Elimino un registro con id: '.$id;
+        $log = new LogController;
+        $log->store('Eliminacion', 'Modulos', $mensaje, $id);
        /**
          * Redirigimos a la ruta index
          */
@@ -118,9 +132,9 @@ class ModulosController extends Controller
         /**
          * Obtenemos los menus con estatus 1
          */
-        $categorias = Modulos::where('activo', 1)->orderBy('prioridad', 'ASC')->get();
+        $modulos = Modulos::where('activo', 1)->orderBy('prioridad', 'ASC')->get();
 
-        return view('administrador::modulos.ordering', compact('categorias') );
+        return view('administrador::modulos.ordering', compact('modulos') );
     }
 
     public function updateOrdering(Request $request)

@@ -58,8 +58,8 @@
     </div>
 </div>
 
-<div class="col-12" style="text-align:center">
+<!--div class="col-12" style="text-align:center">
     <button type="submit" class="btn btn-warning btn-sm cancelClient float-left"><i class="fas fa-times"></i> Cancelar</button>
     <button type="submit" class="btn btn-danger btn-sm deleteClient float-left"><i class="fas fa-trash-alt"></i> Eliminar</button>
     <button type="submit" class="btn btn-primary btn-sm updateClient float-right"><i class="fas fa-save"></i> Guardar</button>
-</div>
+</div-->

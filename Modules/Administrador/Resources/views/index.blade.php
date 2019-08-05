@@ -10,4 +10,5 @@
 
 @section('content')
     <p></p>
-@stop
+    @stop
+

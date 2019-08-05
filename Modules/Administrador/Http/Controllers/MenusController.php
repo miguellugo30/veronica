@@ -7,9 +7,7 @@ use Nimbus\Sub_Categorias;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
-
+use Nimbus\Http\Controllers\LogController;
 
 class MenusController extends Controller
 {
@@ -19,22 +17,10 @@ class MenusController extends Controller
      */
     public function index()
     {
-        $log = new Logger('Nimbus');
-        $log->pushHandler(new StreamHandler('log/prueba.log', Logger::WARNING));
-
-        // add records to the log
-        $log->debug('Foo');
-        $log->info('INFORMATIVO');
-        $log->notice('Foo');
-        $log->warning('Foo');
-        $log->error('INFORMATIVO');
-        $log->critical('INFORMATIVO');
-        $log->alert('INFORMATIVO');
-        $log->emergency('INFORMATIVO');
         /**
          * Obtenemos los menus con estatus 1
          */
-        $categorias = Categorias::where('activo', 1)->get();
+        $categorias = Categorias::active()->get();
 
         return view('administrador::menus.index', compact('categorias') );
     }
@@ -45,7 +31,12 @@ class MenusController extends Controller
      */
     public function create()
     {
-        return view('administrador::menus.create');
+         /**
+         * Obtenemos los menus con estatus 1
+         */
+        $categorias = Categorias::active()->get();
+
+        return view('administrador::menus.create', compact('categorias'));
     }
 
     /**
@@ -56,19 +47,19 @@ class MenusController extends Controller
     public function store(Request $request)
     {
         /**
-         * Obtenemos todos los datos del formulario de alta
-         */
-        $input = $request->all();
-        /**
          * Insertamos la informacion del formulario
          */
-        $user = Categorias::create($input);
-         /**
-         * Obtenemos los menus con estatus 1
+        $cat = Categorias::create($request->all());
+        /**
+         * Creamos el logs
          */
-        $categorias = Categorias::where('activo', 1)->get();
-
-        return view('administrador::menus.index', compact('categorias') );
+        $mensaje = 'Se creo un nuevo registro, informacion capturada:'.var_export($request->all(), true);
+        $log = new LogController;
+        $log->store('Insercion', 'Categorias',$mensaje, $cat->id);
+        /**
+         * Redirigimos a la ruta index
+         */
+        return redirect()->route('menus.index');
     }
 
     /**
@@ -120,11 +111,15 @@ class MenusController extends Controller
                         'tipo' => $request->input('tipo'),
                     ]);
         /**
-         * Obtenemos los menus con estatus 1
+         * Creamos el logs
          */
-        $categorias = Categorias::where('activo', 1)->get();
-
-        return view('administrador::menus.index', compact('categorias') );
+        $mensaje = 'Se edito un registro con id: '.$id.', informacion editada: '.var_export($request->all(), true);
+        $log = new LogController;
+        $log->store('Actualizacion', 'Categorias',$mensaje, $id);
+        /**
+         * Redirigimos a la ruta index
+         */
+        return redirect()->route('menus.index');
 
     }
 
@@ -135,17 +130,23 @@ class MenusController extends Controller
      */
     public function destroy($id)
     {
+        /**
+         * Ponemos en desactivo el registro seleccionado
+         */
         Categorias::where( 'id', $id )
         ->update([
             'activo' => 0
-        ]);
-
+            ]);
         /**
-         * Obtenemos los menus con estatus 1
+         * Creamos el logs
          */
-        $categorias = Categorias::where('activo', 1)->get();
-
-        return view('administrador::menus.index', compact('categorias') );
+        $mensaje = 'Se Elimino un registro con id: '.$id;
+        $log = new LogController;
+        $log->store('Eliminacion', 'Categorias',$mensaje, $id);
+        /**
+         * Redirigimos a la ruta index
+         */
+        return redirect()->route('menus.index');
 
     }
 
@@ -178,11 +179,9 @@ class MenusController extends Controller
         }
 
         /**
-         * Obtenemos los menus con estatus 1
+         * Redirigimos a la ruta index
          */
-        $categorias = Categorias::where('activo', 1)->get();
-
-        return view('administrador::menus.index', compact('categorias') );
+        return redirect()->route('menus.index');
 
     }
 }

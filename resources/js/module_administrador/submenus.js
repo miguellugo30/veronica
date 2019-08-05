@@ -1,84 +1,21 @@
 $(function() {
 
     var currentURL = window.location.href;
-    /**
-     * Evento para crear una nueva sub categoria
-     */
-    $(document).on("click", ".newSubCat", function(e) {
 
-        e.preventDefault();
-        $(".viewIndex").slideUp();
-        $(".viewSubCat").slideUp();
-        $(".viewCreate").slideDown();
-
-        let url = currentURL + '/submenus/create';
-
-        $.get(url, function(data, textStatus, jqXHR) {
-            $(".viewCreate").html(data);
-
-        });
-    });
-    /**
-     * Evento para cancelar el alta de nuevo sub menu
-     */
-    $(document).on("click", ".cancelSubMenu", function(e) {
-        $(".viewIndex").slideDown();
-        $(".viewSubCat").slideDown();
-        $(".viewCreate").slideUp();
-        $(".viewCreate").html('');
-    });
-    /**
-     * Evento para guardar el nuevo sub menu
-     */
-    $(document).on('click', '.saveSubMenu', function(event) {
-        event.preventDefault();
-
-        let id_categoria = $("#id_categoria").val();
-        let nombre = $("#nombre").val();
-        let descripcion = $("#descripcion").val();
-        let tipo = $("#tipo").val();
-        let _token = $("input[name=_token]").val();
-        let url = currentURL + '/submenus';
-
-        $.post(url, {
-            nombre: nombre,
-            descripcion: descripcion,
-            tipo: tipo,
-            id_categoria: id_categoria,
-            _token: _token
-        }, function(data, textStatus, xhr) {
-
-            $('.viewSubCat').html(data);
-            $('.viewCreate').slideUp();
-            $(".viewCreate").html('');
-
-            $(".viewSubCat").slideDown();
-            $('.viewIndex').slideDown();
-
-            $('.viewSubCat #tableSubMenus').DataTable({
-                "lengthChange": true,
-                "order": [
-                    [2, "asc"]
-                ]
-            });
-        });
-    });
     /**
      * Evento para mostrar el formulario de edicion de sub menu
      */
-    $(document).on('dblclick', '#tableSubMenus tbody tr', function(e) {
+    $(document).on('click', '#tableSubMenus tbody tr', function(e) {
         e.preventDefault();
 
-        $(".viewIndex").slideUp();
-        $(".viewSubCat").slideUp();
-        $(".viewCreate").slideDown();
+        $("#tableMenus tbody tr").removeClass('table-primary'); //Quitamos la clase de seleccion
+        $("#tableSubMenus tbody tr").removeClass('table-primary'); //Quitamos la clase de seleccion
+        $(this).addClass('table-primary') //Agregamos la clase de seleccion al tr
 
         let id = $(this).data("id");
-        let url = currentURL + "/submenus/" + id + "/edit";
+        $("#idSeleccionado").val(id); //Asignamos el valor del id, del elemento seleccionado
+        $("#tipoSeleccionado").val(2); //Asignamos el valor del id, del elemento seleccionado
 
-        $.get(url, function(data, textStatus, jqXHR) {
-            $(".viewCreate").html(data);
-        });
     });
     /**
      * Evento para editar un sub menu

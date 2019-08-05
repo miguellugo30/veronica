@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Nimbus\Cat_Estado_Cliente;
+use Nimbus\Http\Controllers\LogController;
 
 class CatEstadoClienteController extends Controller
 {
@@ -42,7 +43,13 @@ class CatEstadoClienteController extends Controller
          * Obtenemos todos los datos del formulario de alta y
          * los insertamos la informacion del formulario
          */
-        Cat_Estado_Cliente::create(  $request->all() );
+        $cat = Cat_Estado_Cliente::create(  $request->all() );
+         /**
+         * Creamos el logs
+         */
+        $mensaje = 'Se creo un nuevo registro, informacion capturada:'.var_export($request->all(), true);
+        $log = new LogController;
+        $log->store('Insercion', 'Cat_Estado_Cliente',$mensaje, $cat->id);
         /**
          * Redirigimos a la ruta index
          */
@@ -93,6 +100,12 @@ class CatEstadoClienteController extends Controller
             'parametrizar' => $request->input('parametrizar'),
         ]);
         /**
+         * Creamos el logs
+         */
+        $mensaje = 'Se edito un registro con id: '.$id.', informacion editada: '.var_export($request->all(), true);
+        $log = new LogController;
+        $log->store('Actualizacion', 'Cat_Estado_Cliente',$mensaje, $id);
+        /**
          * Redirigimos a la ruta index
          */
         return redirect()->route('cat_cliente.index');
@@ -112,6 +125,12 @@ class CatEstadoClienteController extends Controller
         ->update([
             'activo' => '0'
         ]);
+        /**
+         * Creamos el logs
+         */
+        $mensaje = 'Se Elimino un registro con id: '.$id;
+        $log = new LogController;
+        $log->store('Eliminacion', 'Cat_Estado_Cliente',$mensaje, $id);
         /**
          * Redirigimos a la ruta index
          */

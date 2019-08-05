@@ -685,7 +685,6 @@ class EmpresasController extends Controller
             }
 
         } else if( $data['action'] == 'dataExtensiones' ) {
-            dd( $data );
             $id = $data['id_empresa'];
 
             array_shift( $data );

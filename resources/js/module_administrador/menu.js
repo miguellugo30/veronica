@@ -14,7 +14,7 @@ $(function() {
             table = ' #tableUsuarios';
         } else if (id == 4) {
             url = currentURL + '/menus';
-            table = ' #tableMenus';
+            table = '';
         } else if (id == 3) {
             url = currentURL + '/modulos';
             table = ' #tableModulos';
@@ -57,13 +57,18 @@ $(function() {
         } else if (id == 19) {
             url = currentURL + '/licencias_bria';
             table = ' #licencias_bria';
+        } else if (id == 20) {
+            url = currentURL + '/logs';
+            table = ' #tableLogs';
         }
 
         $.get(url, function(data, textStatus, jqXHR) {
             $(".viewResult").html(data);
-            $('.viewResult' + table).DataTable({
-                "lengthChange": true
-            });
+            if (id != 4) {
+                $('.viewResult' + table).DataTable({
+                    "lengthChange": true
+                });
+            }
         });
     });
 });

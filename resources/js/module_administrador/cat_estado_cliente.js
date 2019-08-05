@@ -6,13 +6,36 @@ $(function() {
     $(document).on("click", ".newEdoCli", function(e) {
 
         e.preventDefault();
-        $(".viewIndex").slideUp();
-        $(".viewCreate").slideDown();
+        $('#tituloModal').html('Nuevo Estado Cliente');
+        $('#action').removeClass('updateEdoCli');
+        $('#action').removeClass('saveOrderEdoCli');
+        $('#action').addClass('saveEdoCli');
 
         let url = currentURL + '/cat_cliente/create';
 
         $.get(url, function(data, textStatus, jqXHR) {
-            $(".viewCreate").html(data);
+            $('#modal').modal('show');
+            $("#modal-body").html(data);
+        });
+    });
+    /**
+     * Evento para mostrar el formulario de edicion de un canal
+     */
+    $(document).on("click", ".editEdoCli", function(e) {
+
+        e.preventDefault();
+        $('#tituloModal').html('Editar Tipo Canal');
+        $('#action').removeClass('saveEdoCli');
+        $('#action').removeClass('saveOrderEdoCli');
+        $('#action').addClass('updateEdoCli');
+
+        let id = $("#idSeleccionado").val();
+
+        let url = currentURL + "/cat_cliente/" + id + "/edit";
+
+        $.get(url, function(data, textStatus, jqXHR) {
+            $('#modal').modal('show');
+            $("#modal-body").html(data);
         });
     });
     /**
@@ -20,6 +43,7 @@ $(function() {
      */
     $(document).on('click', '.saveEdoCli', function(event) {
         event.preventDefault();
+        $('#modal').modal('hide');
 
         let nombre = $("#nombre").val();
         let descripcion = $("#descripcion").val();
@@ -45,38 +69,34 @@ $(function() {
                     [5, "asc"]
                 ]
             });
+            Swal.fire(
+                'Correcto!',
+                'El registro ha sido guardado.',
+                'success'
+            )
         });
     });
     /**
      * Evento para mostrar el formulario editar modulo
      */
-    $(document).on('dblclick', '#tableEdoCli tbody tr', function(event) {
+    $(document).on('click', '#tableEdoCli tbody tr', function(event) {
         event.preventDefault();
 
-        $(".viewIndex").slideUp();
-        $(".viewCreate").slideDown();
-
         let id = $(this).data("id");
-        let url = currentURL + "/cat_cliente/" + id + "/edit";
+        $(".editEdoCli").slideDown();
+        $(".deleteEdoCli").slideDown();
 
-        $.get(url, function(data, textStatus, jqXHR) {
-            $(".viewCreate").html(data);
+        $("#idSeleccionado").val(id);
 
-        });
-    });
-    /**
-     * Evento para cancelar la creacion/edicion del modulo
-     */
-    $(document).on("click", ".cancelEdoCli", function(e) {
-        $(".viewIndex").slideDown();
-        $(".viewCreate").slideUp();
-        $(".viewCreate").html('');
+        $("#tableEdoCli tbody tr").removeClass('table-primary');
+        $(this).addClass('table-primary');
     });
     /**
      * Evento para editar el modulo
      */
     $(document).on('click', '.updateEdoCli', function(event) {
         event.preventDefault();
+        $('#modal').modal('hide');
 
         let nombre = $("#nombre").val();
         let descripcion = $("#descripcion").val();
@@ -109,6 +129,11 @@ $(function() {
                         [5, "asc"]
                     ]
                 });
+                Swal.fire(
+                    'Correcto!',
+                    'El registro ha sido actualizado.',
+                    'success'
+                )
             }
         });
     });
@@ -117,27 +142,44 @@ $(function() {
      */
     $(document).on('click', '.deleteEdoCli', function(event) {
         event.preventDefault();
+        Swal.fire({
+            title: 'Estas seguro?',
+            text: "Deseas eliminar el registro seleccionado!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, Eliminar!',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.value) {
+                let id = $("#idSeleccionado").val();
+                let _token = $("input[name=_token]").val();
+                let _method = "DELETE";
+                let url = currentURL + '/cat_cliente/' + id;
 
-        let id = $("#id").val();
-        let _token = $("input[name=_token]").val();
-        let _method = "DELETE";
-        let url = currentURL + '/cat_cliente/' + id;
-
-        $.ajax({
-            url: url,
-            type: 'POST',
-            data: {
-                _token: _token,
-                _method: _method
-            },
-            success: function(result) {
-                $('.viewResult').html(result);
-                $('.viewCreate').slideUp();
-                $('.viewIndex #tableEdoCli').DataTable({
-                    "lengthChange": true,
-                    "order": [
-                        [5, "asc"]
-                    ]
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: {
+                        _token: _token,
+                        _method: _method
+                    },
+                    success: function(result) {
+                        $('.viewResult').html(result);
+                        $('.viewCreate').slideUp();
+                        $('.viewIndex #tableEdoCli').DataTable({
+                            "lengthChange": true,
+                            "order": [
+                                [5, "asc"]
+                            ]
+                        });
+                        Swal.fire(
+                            'Eliminado!',
+                            'El registro ha sido eliminado.',
+                            'success'
+                        )
+                    }
                 });
             }
         });
@@ -147,14 +189,16 @@ $(function() {
      */
     $(document).on('click', '.orderignEdoCli', function(e) {
         e.preventDefault();
-        $(".viewIndex").slideUp();
-        $(".viewSubCat").slideUp();
-        $(".viewCreate").slideDown();
+        $('#tituloModal').html('Ordenar Estados');
+        $('#action').removeClass('saveEdoCli');
+        $('#action').removeClass('updateEdoCli');
+        $('#action').addClass('saveOrderEdoCli');
 
         let url = currentURL + "/cat_cliente/ordering";
 
         $.get(url, function(data, textStatus, jqXHR) {
-            $(".viewCreate").html(data);
+            $('#modal').modal('show');
+            $("#modal-body").html(data);
             $("#sortable").sortable();
         });
     });
@@ -163,6 +207,7 @@ $(function() {
      */
     $(document).on('click', '.saveOrderEdoCli', function(event) {
         event.preventDefault();
+        $('#modal').modal('hide');
 
         var ordenElementos = $("#sortable").sortable("toArray").toString();
         let _token = $("input[name=_token]").val();
@@ -177,14 +222,17 @@ $(function() {
             },
             success: function(result) {
                 $('.viewResult').html(result);
-                $('.viewCreate').slideUp();
-                $('.viewIndex').slideDown();
-                $('.viewResult #tableMenus').DataTable({
+                $('.viewIndex #tableEdoCli').DataTable({
                     "lengthChange": true,
                     "order": [
                         [5, "asc"]
                     ]
                 });
+                Swal.fire(
+                    'Muy bien!',
+                    'Los modulos han sido ordenados.',
+                    'success'
+                )
             }
         });
     });
