@@ -2,16 +2,16 @@
     <div class="box-header with-border">
         <h3 class="box-title"><b><i class="fas fa-phone"></i> Formularios</b></h3>
         <div class="box-tools pull-right">
-            <button type="button" class="btn btn-danger  btn-sm deleteEdoAge" style="display:none"><i class="fas fa-trash-alt"></i> Elminar</button>
-            <button type="button" class="btn btn-warning btn-sm editEdoAge" style="display:none"><i class="fas fa-edit"></i> Editar</button>
-            <button type="button" class="btn btn-primary btn-sm newEdoAge"><i class="fas fa-plus"></i> Nuevo</button>
+            <button type="button" class="btn btn-danger  btn-sm deleteFormulario" style="display:none"><i class="fas fa-trash-alt"></i> Elminar</button>
+            <button type="button" class="btn btn-warning btn-sm editFormulario" style="display:none"><i class="fas fa-edit"></i> Editar</button>
+            <button type="button" class="btn btn-primary btn-sm newFormulario"><i class="fas fa-plus"></i> Nuevo</button>
             <input type="hidden" name="idSeleccionado" id="idSeleccionado" value="">
         </div>
     </div><!-- /.box-header -->
     <div class="box-body">
         <div class="row">
             <div class="col-md-12 viewIndex">
-                <table id="tableEdoAge" class="display table table-bordered table-hover table-sm" style="width:100%">
+                <table id="tableFormulario" class="display table table-bordered table-hover table-sm" style="width:100%">
                     <thead>
                         <tr>
                             <th>Nombre</th>
