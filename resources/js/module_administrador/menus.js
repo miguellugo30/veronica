@@ -24,9 +24,11 @@ $(function() {
     $(document).on("change", "#tipo_id", function(e) {
         let tipo = $(this).val();
         if (tipo == 2) {
+            $(".selectModulo").slideUp();
             $(".selectMenu").slideDown();
         } else {
             $(".selectMenu").slideUp();
+            $(".selectModulo").slideDown();
         }
     });
     /**
@@ -37,6 +39,7 @@ $(function() {
         $('#modal').modal('hide');
 
         let tipo_id = $("#tipo_id").val();
+        let modulo_id = $("#modulo_id").val();
         let menu_id = $("#menu_id").val();
         let nombre = $("#nombre").val();
         let descripcion = $("#descripcion").val();
@@ -52,6 +55,7 @@ $(function() {
                 nombre: nombre,
                 descripcion: descripcion,
                 tipo: nivel_id,
+                modulos_id: modulo_id,
                 _token: _token
             }, function(data, textStatus, xhr) {
                 $('.viewResult').html(data);

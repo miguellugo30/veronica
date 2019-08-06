@@ -12,18 +12,20 @@
                     <div class="row col-lg-12 ">
 
                         <div class="col col-sm-2 col-md-2 ca-menu text-center card m-1 bg-primary text-white thumbnail">
+                            <a href="http://localhost:8000/inbound">
+
                                 <div class="pt-3">
                                     <i class="fas fa-phone-volume fa-5x"></i>
                                     <i class="fas fa-caret-left fa-3x"></i>
                                     <i class="fas fa-caret-left fa-3x"></i>
-
                                 </div>
                                 <div class="pt-3">
-                                    <h5>Inbound</h5>
+                                    <h6>Inbound</h6>
                                 </div>
-                            </div>
+                            </a>
+                        </div>
 
-                            <div class="col  text-center card m-1 bg-secondary text-white thumbnail">
+                            <div class="col  text-center card m-1 bg-secondary text-white disabled">
                                 <div class="pt-3">
                                     <i class="fas fa-phone-volume fa-5x"></i>
                                     <i class="fas fa-caret-right fa-3x"></i>
@@ -82,7 +84,7 @@
                                 <h6>Voice Message Broadcasting</h6>
                             </div>
                         </div>
-                        <div class="col  text-center card m-1 bg-danger text-white thumbnail">
+                        <div class="col  text-center card m-1 bg-danger text-white disabled">
                             <div class="pt-3">
                                 <i class="fas fa-envelope-square fa-5x"></i>
                             </div>
@@ -90,7 +92,7 @@
                                 <h6>Vioce Mail</h6>
                             </div>
                         </div>
-                        <div class="col  text-center card m-1 bg-info text-white thumbnail">
+                        <div class="col  text-center card m-1 bg-info text-white disabled">
                             <div class="pt-3">
                                 <i class="fas fa-users fa-5x"></i>
                             </div>
@@ -107,21 +109,31 @@
                             </div>
                         </div>
                         <div class="col  text-center card m-1 bg-success text-white thumbnail">
-                            <div class="pt-3">
-                                <i class="fas fa-cogs fa-5x"></i>
-                            </div>
-                            <div class="pt-3">
-                                <h6>Settings</h6>
-                            </div>
+                            <a href="http://localhost:8000/settings">
+                                <div class="pt-3">
+                                    <i class="fas fa-cogs fa-5x"></i>
+                                </div>
+                                <div class="pt-3">
+                                    <h6>Settings</h6>
+                                </div>
+                            </a>
                         </div>
                         <div class="w-100 d-none d-md-block"></div><!-- Salto de linea -->
                         <div class="col  text-center card m-1 bg-danger text-white thumbnail">
-                            <div class="pt-3">
-                                <i class="fas fa-sign-out-alt fa-5x"></i>
-                            </div>
-                            <div class="pt-3">
-                                <h6>Logout</h6>
-                            </div>
+                            <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <div class="pt-3">
+                                    <i class="fas fa-sign-out-alt fa-5x"></i>
+                                </div>
+                                <div class="pt-3">
+                                    <h6>Logout</h6>
+                                </div>
+                            </a>
+                             <form id="logout-form" action="{{ url(config('adminlte.logout_url', 'auth/logout')) }}" method="POST" style="display: none;">
+                                 @if(config('adminlte.logout_method'))
+                                     {{ method_field(config('adminlte.logout_method')) }}
+                                 @endif
+                                 {{ csrf_field() }}
+                             </form>
                         </div>
                     </div>
                 </div><!-- card-body -->

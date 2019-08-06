@@ -60,6 +60,9 @@ $(function() {
         } else if (id == 20) {
             url = currentURL + '/logs';
             table = ' #tableLogs';
+        } else if (id == 21) {
+            url = currentURL + '/formularios';
+            table = ' #tableFormularios';
         }
 
         $.get(url, function(data, textStatus, jqXHR) {

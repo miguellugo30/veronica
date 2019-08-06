@@ -14,7 +14,7 @@ class Categorias extends Model
      * Campos que pueden ser modificados
      */
     protected $fillable = [
-        'nombre', 'descripcion', 'class_icon', 'tipo',
+        'nombre', 'descripcion', 'class_icon', 'tipo', 'modulos_id',
     ];
     /**
      * Funcion para obtener solo los registros activos
@@ -33,5 +33,12 @@ class Categorias extends Model
     public function Sub_Categorias()
     {
         return $this->hasMany('Nimbus\Sub_Categorias', 'id_categoria')->where('activo',  1)->orderBy('prioridad');
+    }
+     /**
+     * Relacion muchos a uno con sub Modulos
+     */
+    public function Modulos()
+    {
+       return $this->belongsTo('Nimbus\Modulos', 'modulos_id', 'id');
     }
 }

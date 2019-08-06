@@ -40,7 +40,7 @@ class User extends Authenticatable
      */
     public function categorias()
     {
-        return $this->belongsToMany('Nimbus\Categorias')->where('activo',  1)->orderBy('prioridad');
+        return $this->belongsToMany('Nimbus\Categorias')->active()->orderBy('prioridad');
     }
     /**
      * Relación muchos a uno con Empresas

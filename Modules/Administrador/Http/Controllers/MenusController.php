@@ -4,6 +4,7 @@ namespace Modules\Administrador\Http\Controllers;
 
 use Nimbus\Categorias;
 use Nimbus\Sub_Categorias;
+use Nimbus\Modulos;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -31,12 +32,18 @@ class MenusController extends Controller
      */
     public function create()
     {
+        /**
+         * Recuperamos todos los modulos que esten activos
+         */
+        $modulos = Modulos::active()
+                            ->orderBy('prioridad', 'asc')
+                            ->get();
          /**
          * Obtenemos los menus con estatus 1
          */
         $categorias = Categorias::active()->get();
 
-        return view('administrador::menus.create', compact('categorias'));
+        return view('administrador::menus.create', compact('categorias', 'modulos'));
     }
 
     /**
