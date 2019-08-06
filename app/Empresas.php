@@ -74,4 +74,11 @@ class Empresas extends Model
     {
         return $this->hasMany('Nimbus\Cat_Extensiones');
     }
+    /**
+     * Relacion uno a muchos con Sub_Formularios
+     */
+    public function Formularios()
+    {
+        return $this->hasMany('Nimbus\Formularios');
+    }
 }

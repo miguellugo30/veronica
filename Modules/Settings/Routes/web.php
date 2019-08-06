@@ -14,3 +14,14 @@
 Route::prefix('settings')->group(function() {
     Route::get('/', 'SettingsController@index');
 });
+/*
+|--------------------------------------------------------------------------
+| RUTAS PARA EL MODULO DE Tipificaciones
+|--------------------------------------------------------------------------
+*/
+/**
+ * Rutas para CRUD de Formularios
+ */
+Route::group(['namespace' => '\Modules\Settings\Http\Controllers', 'prefix' => 'settings', 'middleware' => 'auth'], function() {
+    Route::resource('formularios','FormulariosController');
+});

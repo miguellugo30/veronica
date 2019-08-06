@@ -1,0 +1,27 @@
+<?php
+
+namespace Nimbus;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Cat_Tipo_Marcacion extends Model
+{
+    //
+    public $timestamps = false;
+
+    protected $fillable = [
+        'tipo'
+    ];
+    /**
+     * Nombre de la tabla que se ocupra
+     */
+    protected $table = 'Cat_Tipo_Marcacion';
+
+     /**
+     * Relacion uno a muchos con Formularios
+     */
+    public function Formularios()
+    {
+        return $this->hasMany('Nimbus\Formularios');
+    }
+}
