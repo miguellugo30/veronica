@@ -25,7 +25,7 @@ class AdministradorController extends Controller
          * Obtenemos el rol del usuario logeado
          */
         $rol = $user->getRoleNames();
-         /**
+        /**
          * Obtenemos las categorias relacionadas al usuario
          */
         $categorias = $user->categorias;

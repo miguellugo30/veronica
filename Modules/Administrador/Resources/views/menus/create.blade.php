@@ -7,6 +7,15 @@
             <option value="2">Sub-Menu</option>
         </select>
     </div>
+    <div class="form-group selectModulo"  style="display:none">
+        <label for="modulo_id"><b>Modulo</b></label>
+        <select name="modulo_id" id="modulo_id" class="form-control form-control-sm">
+            <option value="">Selecciona un modulo</option>
+            @foreach( $modulos as $modulo )
+                <option value="{{ $modulo->id }}">{{ $modulo->nombre }}</option>
+            @endforeach
+        </select>
+    </div>
     <div class="form-group selectMenu" style="display:none">
         <label for="menu_id"><b>Menu</b></label>
         <select name="menu_id" id="menu_id" class="form-control form-control-sm">

@@ -50,3 +50,15 @@
         -webkit-transform: translateX(0%);
     }
 }
+
+.disabled {
+    background-color: #d6d6d6!important;
+    color: #b1b1b1!important;
+    cursor: not-allowed;
+}
+
+.disabled:hover {
+    background-color: #d6d6d6!important;
+    color: #b1b1b1!important;
+    cursor: not-allowed;
+}

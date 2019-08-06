@@ -5,6 +5,8 @@ namespace Modules\Settings\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
+use Nimbus\User;
 
 class SettingsController extends Controller
 {
@@ -14,7 +16,20 @@ class SettingsController extends Controller
      */
     public function index()
     {
-        return view('settings::index');
+        /**
+         * Obtenemos los datos del usuario logeado
+         */
+        $user = User::find( Auth::id() );
+        /**
+         * Obtenemos el rol del usuario logeado
+         */
+        $rol = $user->getRoleNames();
+        /**
+         * Obtenemos las categorias relacionadas al usuario
+         */
+        $categorias = $user->categorias->where('modulos_id', 17);
+
+        return view('settings::index', compact( 'rol', 'categorias' ));
     }
 
     /**

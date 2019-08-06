@@ -32,6 +32,7 @@ mix.js([
     'resources/js/module_administrador/menu.js',
     'resources/js/module_administrador/cat_extensiones.js',
     'resources/js/module_administrador/licenciasBria.js',
+    'resources/js/module_settings/menu.js',
 ], 'public/js/');
 /*
 .sass('resources/sass/app.scss', 'public/css');

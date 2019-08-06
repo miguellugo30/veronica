@@ -2623,6 +2623,9 @@ $(function () {
     } else if (id == 20) {
       url = currentURL + '/logs';
       table = ' #tableLogs';
+    } else if (id == 21) {
+      url = currentURL + '/formularios';
+      table = ' #tableFormularios';
     }
 
     $.get(url, function (data, textStatus, jqXHR) {
@@ -2672,9 +2675,11 @@ $(function () {
     var tipo = $(this).val();
 
     if (tipo == 2) {
+      $(".selectModulo").slideUp();
       $(".selectMenu").slideDown();
     } else {
       $(".selectMenu").slideUp();
+      $(".selectModulo").slideDown();
     }
   });
   /**
@@ -2685,6 +2690,7 @@ $(function () {
     event.preventDefault();
     $('#modal').modal('hide');
     var tipo_id = $("#tipo_id").val();
+    var modulo_id = $("#modulo_id").val();
     var menu_id = $("#menu_id").val();
     var nombre = $("#nombre").val();
     var descripcion = $("#descripcion").val();
@@ -2703,6 +2709,7 @@ $(function () {
         nombre: nombre,
         descripcion: descripcion,
         tipo: nivel_id,
+        modulos_id: modulo_id,
         _token: _token
       }, function (data, textStatus, xhr) {
         $('.viewResult').html(data);
