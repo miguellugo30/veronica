@@ -82,8 +82,14 @@
 
 @yield('adminlte_js')
 
-<script src="{{ asset('js/administrador.js') }}"></script>
-<script src="{{ asset('js/settings.js') }}"></script>
+@if ( isset( $modulo ) )
+    @if (  $modulo == 'Settings')
+        <script src="{{ asset('js/settings.js') }}"></script>
+    @elseif( $modulo == 'Administrador')
+        <script src="{{ asset('js/administrador.js') }}"></script>
+    @endif
+@endif
+
 
 <style>
 #cargando{

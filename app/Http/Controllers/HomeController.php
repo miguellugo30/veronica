@@ -51,7 +51,9 @@ class HomeController extends Controller
                  */
                 $categorias = array();
 
-                return view('home', compact( 'rol', 'categorias' ));
+                $modulo = "Home";
+
+                return view('home', compact( 'rol', 'categorias', 'modulo' ));
             }
         } else {
             return redirect('/')->withErrors('Usuario inactivo', 'message');

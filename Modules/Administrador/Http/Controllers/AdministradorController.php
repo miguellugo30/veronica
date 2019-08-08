@@ -29,8 +29,9 @@ class AdministradorController extends Controller
          * Obtenemos las categorias relacionadas al usuario
          */
         $categorias = $user->categorias;
+        $modulo = "Administrador";
 
-        return view('administrador::index', compact( 'rol', 'categorias' ) );
+        return view('administrador::index', compact( 'rol', 'categorias', 'modulo' ) );
     }
 
     /**

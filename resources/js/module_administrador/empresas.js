@@ -93,11 +93,6 @@ $(function() {
             method = "POST";
             _method = "POST";
         }
-        /**
-         * Si la opcion es dataCanales, dataExtensiones o dataDids
-         * se define una URL para mostrar el formulario de creacion
-         */
-        if (opcion == 'dataCanales') {} else if (opcion == 'dataExtensiones') {} else if (opcion == 'dataDids') {}
 
         /**
          * Recuperamos la informacion del formulario
@@ -133,7 +128,6 @@ $(function() {
      */
     $(document).on('click', '#anterior', function(event) {
         event.preventDefault();
-
         /**
          * Recuperamos la accion a relizar y la opcion a relaizar
          */
@@ -336,5 +330,43 @@ $(function() {
                 });
             }
         });
+    });
+
+    $(document).on('click', '.modulosEmpresa', function() {
+        var id = $(this).val();
+
+        if ($(this).prop('checked')) {
+            if (id == 1) {
+                $("#modulo_3").prop("checked", true);
+                $("#modulo_4").prop("checked", true);
+                $("#modulo_5").prop("checked", true);
+                $("#modulo_6").prop("checked", true);
+                $("#modulo_9").prop("checked", true);
+                $("#modulo_11").prop("checked", true);
+                $("#modulo_17").prop("checked", true);
+            } else if (id == 2) {
+                $("#modulo_3").prop("checked", true);
+                $("#modulo_4").prop("checked", true);
+                $("#modulo_6").prop("checked", true);
+                $("#modulo_9").prop("checked", true);
+                $("#modulo_17").prop("checked", true);
+            }
+        } else {
+            if (id == 1) {
+                $("#modulo_3").prop("checked", false);
+                $("#modulo_4").prop("checked", false);
+                $("#modulo_5").prop("checked", false);
+                $("#modulo_6").prop("checked", false);
+                $("#modulo_9").prop("checked", false);
+                $("#modulo_11").prop("checked", false);
+                $("#modulo_17").prop("checked", false);
+            } else if (id == 2) {
+                $("#modulo_3").prop("checked", false);
+                $("#modulo_4").prop("checked", false);
+                $("#modulo_6").prop("checked", false);
+                $("#modulo_9").prop("checked", false);
+                $("#modulo_17").prop("checked", false);
+            }
+        }
     });
 });

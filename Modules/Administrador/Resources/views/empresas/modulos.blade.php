@@ -13,7 +13,7 @@
                         @endif
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" name="modulos[]" class="modulosEmpresa" id="modulo" value="{{ $modulo->id }}" {{  in_array( $modulo->id, $modulosEmpresa ) ? 'checked="checked"' : '' }}>
+                                <input type="checkbox" name="modulos[]" class="modulosEmpresa" id="modulo_{{ $modulo->id }}" value="{{ $modulo->id }}" {{  in_array( $modulo->id, $modulosEmpresa ) ? 'checked="checked"' : '' }}>
                                 {{ $modulo->nombre }}
                             </label>
                         </div>
@@ -26,7 +26,7 @@
                         @endif
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" name="modulos[]" class="modulosEmpresa" id="modulo" value="{{ $modulo->id }}">
+                                <input type="checkbox" name="modulos[]" class="modulosEmpresa" id="modulo_{{ $modulo->id }}" value="{{ $modulo->id }}">
                                 {{ $modulo->nombre }}
                             </label>
                         </div>

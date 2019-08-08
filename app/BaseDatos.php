@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class BaseDatos extends Model
 {
-     /*
+    /*
     * Esto sirve para insertar la fecha tipo timestamp debido a la configuracion de Laravel
     */
     public $timestamps = false;

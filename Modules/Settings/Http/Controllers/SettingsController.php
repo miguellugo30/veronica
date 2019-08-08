@@ -28,8 +28,9 @@ class SettingsController extends Controller
          * Obtenemos las categorias relacionadas al usuario
          */
         $categorias = $user->categorias->where('modulos_id', 17);
+        $modulo = "Settings";
 
-        return view('settings::index', compact( 'rol', 'categorias' ));
+        return view('settings::index', compact( 'rol', 'categorias', 'modulo' ));
     }
 
     /**

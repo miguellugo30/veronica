@@ -36,6 +36,7 @@ mix.js([
     ], 'public/js/administrador.js')
     .js([
         'resources/js/module_settings/menu.js',
+        'resources/js/module_settings/formularios.js',
     ], 'public/js/settings.js');
 /*
 .sass('resources/sass/app.scss', 'public/css');

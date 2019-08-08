@@ -1,6 +1,6 @@
 <div class="row" style="float:none; margin:auto">
     <div class="col-2">
-        <ul class="list-group menuEmpresa">
+        <ul class="list-group menuEmpresa" style="cursor:pointer">
             <li data-opcion="dataGeneral" class="list-group-item active">Vista General</li>
             <li data-opcion="dataEmpresa" class="list-group-item">Informacion empresa</li>
             <li data-opcion="dataInfra" class="list-group-item">Informacion Infraestructura</li>
