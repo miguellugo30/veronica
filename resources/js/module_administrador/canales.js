@@ -157,8 +157,6 @@ $(function() {
         let pos = $(this).data('pos');
         let id_Tipo_Canal = $(this).val();
 
-        console.log(pos);
-
         if (id_Tipo_Canal == 12 || id_Tipo_Canal == 11) {
             $("#protocolo_" + pos).val("LOCAL/");
             $("#Troncales_id_canal_" + pos).prop('disabled', 'disabled');

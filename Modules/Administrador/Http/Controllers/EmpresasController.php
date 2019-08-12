@@ -119,6 +119,10 @@ class EmpresasController extends Controller
             $dominios->dominio_bria = $dominio;
             $dominios->save();
             /**
+             * Generamos la Clave de Aprovisionamiento
+             */
+            $claveApro = $this->contra(10);
+            /**
              * Insertamos la configuracion inicial de la empresa
              */
             $config = new Config_Empresas();
@@ -127,6 +131,7 @@ class EmpresasController extends Controller
             $config->Cat_Base_Datos_id = $data['base_datos_empresa'];
             $config->Dominios_id = $dominios->id;
             $config->Cat_distribuidor_id = $data['Cat_Distribuidor_id'];
+            $config->clave_aprov = $claveApro;
             $config->save();
             /**
              * Recuperamos todos los modulos que esten activos
@@ -732,5 +737,23 @@ class EmpresasController extends Controller
          * Redirigimos a la ruta index
          */
         return redirect()->route('empresas.index');
+    }
+    /**
+     * Funcion para generar una contrasenia, el tamanio se
+     * define en el parametro que se le pasa ( Largo )
+     */
+    public function contra($largo){
+        $cadena_base =  'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+        $cadena_base .= '0123456789';
+        $cadena_base .= '!@#%&*()_/<>?=+';
+
+        $password = '';
+        $limite = strlen($cadena_base) - 1;
+
+        for ($i=0; $i < $largo; $i++){
+            $password .= $cadena_base[rand(0, $limite)];
+        }
+
+        return $password;
     }
 }

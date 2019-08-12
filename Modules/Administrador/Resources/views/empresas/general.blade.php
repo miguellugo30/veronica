@@ -54,11 +54,25 @@
                     <div class="col">
                         <ol>
                         @foreach ($empresa->Modulos as $item)
-                        @if ($loop->iteration == 10)
-                            </div>
-                            <div class="col6">
-                        @endif
-                        <li>{{ $item->nombre }}</li>
+                            @if ($loop->iteration == 10)
+                                </div>
+                                <div class="col6">
+                            @endif
+                            <li>
+                                @if ($item->nombre == 'Inbound')
+                                    {{ $item->nombre }} || <b>Posiciones: </b> {{ $empresa->Config_Empresas->agentes_entrada }}
+                                @elseif( $item->nombre == 'Outbound' )
+                                    {{ $item->nombre }} || <b>Posiciones: </b> {{ $empresa->Config_Empresas->agentes_salida }}
+                                @elseif( $item->nombre == 'Voice Message' )
+                                    {{ $item->nombre }} || <b>Posiciones: </b> {{ $empresa->Config_Empresas->canal_mensajes_voz }}
+                                @elseif( $item->nombre == 'Intelligent IVR' )
+                                    {{ $item->nombre }} || <b>Posiciones: </b> {{ $empresa->Config_Empresas->licencias_ivr_inteligente }}
+                                @elseif( $item->nombre == 'Survey Generator' )
+                                    {{ $item->nombre }} || <b>Posiciones: </b> {{ $empresa->Config_Empresas->canal_generador_encuestas }}
+                                @else
+                                    {{ $item->nombre }}
+                                @endif
+                            </li>
                         @endforeach
                         <ol>
                     </div>
