@@ -53,15 +53,6 @@
                         <span class="sr-only">{{ trans('adminlte::adminlte.toggle_navigation') }}</span>
                     </a>
             @endif
-                <!-- MENU DE CATEGORIAS -->
-                <!--div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="float:left">
-                    <ul class="nav navbar-nav menu-categorias">
-                        {{--@foreach ($categorias as $categoria)
-                            <li><a href="{{ route('categoria', $categoria->id ) }}">{{ $categoria->nombre }}</span></a></li>
-                        @endforeach--}}
-                    </ul>
-                </div--><!-- /.navbar-collapse -->
-                 <!-- FIN MENU DE CATEGORIAS -->
                 <!-- Navbar Right Menu -->
                 <div class="navbar-custom-menu">
 
@@ -69,14 +60,19 @@
                         <li>
                             @if(config('adminlte.logout_method') == 'GET' || !config('adminlte.logout_method') && version_compare(\Illuminate\Foundation\Application::VERSION, '5.3.0', '<'))
                                 <a href="{{ url(config('adminlte.logout_url', 'auth/logout')) }}">
-                                    <i class="fa fa-fw fa-power-off"></i> {{ trans('adminlte::adminlte.log_out') }}
+                                    <i class="fas fa-sign-out-alt"></i> Salir
                                 </a>
                             @else
-                                <a href="#"
-                                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                                >
-                                     {{ Auth::user()->name }} - <?php $rol = Auth::user()->getRoleNames(); echo $rol[0]; ?> || <i class="fa fa-fw fa-power-off"></i> {{ trans('adminlte::adminlte.log_out') }}
-                                </a>
+                                <a>{{ Auth::user()->name }} - <?php $rol = Auth::user()->getRoleNames(); echo $rol[0]; ?> ||</a>
+                                @if ($modulo == "Administrador")
+                                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" >
+                                        <i class="fas fa-sign-out-alt"></i> Salir
+                                    </a>
+                                @else
+                                    <a href="{{ url(config('adminlte.dashboard_url', 'home')) }}" >
+                                            <i class="fas fa-home"></i> Inicio
+                                    </a>
+                                @endif
                                 <form id="logout-form" action="{{ url(config('adminlte.logout_url', 'auth/logout')) }}" method="POST" style="display: none;">
                                     @if(config('adminlte.logout_method'))
                                         {{ method_field(config('adminlte.logout_method')) }}

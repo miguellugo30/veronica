@@ -181,4 +181,24 @@ $(function() {
             }
         });
     });
+    /**
+     * Accion para setear el rol en base a la empresa
+     * Y mostrar los modulos contratados por la empresa
+     */
+    $(document).on('change', '#cliente', function(event) {
+
+        let id = $(this).val();
+
+        let url = currentURL + "/usuarios/" + id;
+
+        $.get(url, function(data, textStatus, jqXHR) {
+            $(".modulosEmpresa").html(data);
+        });
+
+        if (id == 30) {
+            $("#rol").val(1);
+        } else {
+            $("#rol").val(2);
+        }
+    });
 });

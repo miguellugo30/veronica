@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col">
+    <div class="col-3">
         <div class="form-group">
             <label for="name">Nombre</label>
             <input type="text" class="form-control form-control-sm" id="name" placeholder="Nombre usuario">
@@ -21,6 +21,7 @@
             <label for="cliente">Empresa</label>
             <select name="cliente" id="cliente" class="form-control form-control-sm">
                 <option value="">Selecciona una empresa</option>
+                <option value="30">C3NTRO</option>
                 @foreach( $clientes as $cliente )
                 <option value="{{ $cliente->id }}">{{ $cliente->nombre }}</option>
                 @endforeach
@@ -36,22 +37,7 @@
             </select>
         </div>
     </div>
-    <div class="col">
-        <fieldset>
-            <legend>Categorias</legend>
-            @foreach( $categorias as $categoria )
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" name="cats[]" value="{{ $categoria->id }}">
-                    {{ $categoria->nombre }}
-                </label>
-            </div>
-            @endforeach
-        </fieldset>
+    <div class="col modulosEmpresa">
+
     </div>
 </div>
-
-<!--div class="col-12" style="text-align:center">
-    <button type="submit" class="btn btn-warning btn-sm cancelClient float-left"><i class="fas fa-times"></i> Cancelar</button>
-    <button type="submit" class="btn btn-primary btn-sm saveClient float-right"><i class="fas fa-save"></i> Guardar</button>
-</div-->

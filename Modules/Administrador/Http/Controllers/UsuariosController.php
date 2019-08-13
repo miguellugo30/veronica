@@ -103,7 +103,13 @@ class UsuariosController extends Controller
      */
     public function show($id)
     {
-        return view('administrador::show');
+        /**
+         * Ocupamos esta funcion para mostrar los modulos contrarados por la empresa
+         * para que puedan ser seleccionados al dar de alta un usuario nuevo
+         */
+        $empresa = Empresas::find( $id );
+        $modulos = $empresa->Modulos;
+        return view('administrador::usuarios.show', compact('modulos'));
     }
 
     /**

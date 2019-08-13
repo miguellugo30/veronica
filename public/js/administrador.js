@@ -313,7 +313,6 @@ $(function () {
   $(document).on('change', '.tipo_canal', function (event) {
     var pos = $(this).data('pos');
     var id_Tipo_Canal = $(this).val();
-    console.log(pos);
 
     if (id_Tipo_Canal == 12 || id_Tipo_Canal == 11) {
       $("#protocolo_" + pos).val("LOCAL/");
@@ -3688,6 +3687,24 @@ $(function () {
         });
       }
     });
+  });
+  /**
+   * Accion para setear el rol en base a la empresa
+   * Y mostrar los modulos contratados por la empresa
+   */
+
+  $(document).on('change', '#cliente', function (event) {
+    var id = $(this).val();
+    var url = currentURL + "/usuarios/" + id;
+    $.get(url, function (data, textStatus, jqXHR) {
+      $(".modulosEmpresa").html(data);
+    });
+
+    if (id == 30) {
+      $("#rol").val(1);
+    } else {
+      $("#rol").val(2);
+    }
   });
 });
 
