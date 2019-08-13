@@ -2,8 +2,23 @@
     <div class="box-header with-border">
         <h3 class="box-title"><b><i class="fas fa-phone"></i> Formularios</b></h3>
         <div class="box-tools pull-right">
+            <!--
             <button type="button" class="btn btn-danger  btn-sm deleteFormulario" style="display:none"><i class="fas fa-trash-alt"></i> Elminar</button>
             <button type="button" class="btn btn-warning btn-sm editFormulario" style="display:none"><i class="fas fa-edit"></i> Editar</button>
+            -->
+            <div class="btn-group dropleft" style="display:none" >
+            <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Action
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item editFormulario" href="#"><i class="fas fa-pen-square"></i> Editar</a>
+                <a class="dropdown-item cloneFormulario" href="#"><i class="fas fa-clone"></i> Clonar</a>
+                <a class="dropdown-item viewFormulario" href="#"><i class="fas fa-eye"></i> Visualizar</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item deleteFormulario" href="#"><i class="fas fa-trash-alt"></i> Eliminar</a>
+            </div>
+            </div>
+
             <button type="button" class="btn btn-primary btn-sm newFormulario"><i class="fas fa-plus"></i> Nuevo</button>
             <input type="hidden" name="idSeleccionado" id="idSeleccionado" value="">
         </div>

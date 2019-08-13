@@ -23,7 +23,7 @@
         <div class="col-md-12">
             <fieldset>
                 <legend>Campos de formulario</legend>
-                <table  class="table table-striped table-sm tableNewForm">
+                <table id='formulario' class="table table-striped table-sm tableNewForm">
                     <thead>
                         <tr>
                             <th>Nombre Campo</th>
@@ -52,7 +52,10 @@
                                     <option value="texto">Texto Escrito</option>
                                     <option value="buscador">Buscador</option>
                                     <option value="buscador_historio">Buscador Historio</option>
+                                    
                                     <option value="asignador_folios">Asignador de Folios</option>
+
+                                    
                                     <option value="bloqueInicio">Bloque Inicio</option>
                                     <option value="bloqueFin">Bloque Termino</option>
                                 </select>
