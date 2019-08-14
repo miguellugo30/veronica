@@ -98,7 +98,11 @@ class FormulariosController extends Controller
      */
     public function show($id)
     {
-        return view('settings::show');
+        $formulario = Formularios::find( $id );
+        $campos = $formulario->Formularios_Campos;
+        //dd($formulario->Formularios_Campos);
+        return view('settings::Formularios.show', compact('campos'));
+
     }
 
     /**
@@ -108,7 +112,12 @@ class FormulariosController extends Controller
      */
     public function edit($id)
     {
-        return view('settings::edit');
+        $formulario = Formularios::find( $id );
+        $campos = $formulario->Formularios_Campos;
+        $TipoMarcacion = Cat_Tipo_Marcacion::all();
+
+        //dd($campos);
+        return view('settings::Formularios.edit', compact('campos','formulario','TipoMarcacion'));
     }
 
     /**

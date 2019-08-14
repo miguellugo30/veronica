@@ -102,8 +102,9 @@ $(function () {
   $(document).on('click', '#tableFormulario tbody tr', function (event) {
     event.preventDefault();
     var id = $(this).data("id");
-    $(".editFormulario").slideDown();
-    $(".deleteFormulario").slideDown();
+    /*$(".editFormulario").slideDown();*/
+
+    $(".dropleft").slideDown();
     $("#idSeleccionado").val(id);
     $("#tableFormulario tbody tr").removeClass('table-primary');
     $(this).addClass('table-primary');
@@ -232,6 +233,55 @@ $(function () {
       $('.viewResult').html(data);
     });
   });
+  /** 
+   * Evento para visualizar detalles del Formulario
+   */
+
+  $(document).on('click', '.viewFormulario', function (event) {
+    event.preventDefault();
+    var id = $("#idSeleccionado").val();
+    $('#tituloModal').html('Detalles de Formulario');
+    var url = currentURL + '/formularios/' + id;
+    $('#action').removeClass('updateFormulario');
+    $('#action').addClass('saveFormulario');
+    $.ajax({
+      url: url,
+      type: 'GET',
+      success: function success(result) {
+        $('#modal').modal('show');
+        $("#modal-body").html(result);
+      }
+    });
+  });
+  $(document).on("change", "#tipo_campo", function (e) {
+    var tipo = $(this).val(); //console.log(tipo);
+
+    if (tipo == 'asignador_folios') {
+      $("#formulario > tbody").append('<tr class="folio"><td><input type="text" class="form-control form-control-sm" name="tamano_1" id="tamano"></td><td>more data</td></tr>');
+    } else {
+      $(".folio").remove();
+    }
+  });
+  /**
+     * Evento para visualizar la configuracion de formulario
+     */
+
+  $(document).on('click', '.editFormulario', function (event) {
+    event.preventDefault();
+    var id = $("#idSeleccionado").val();
+    $('#tituloModal').html('Detalles de Formulario');
+    var url = currentURL + '/formularios/' + id + '/edit';
+    $('#action').addClass('updateFormulario');
+    $('#action').removeClass('saveFormulario');
+    $.ajax({
+      url: url,
+      type: 'GET',
+      success: function success(result) {
+        $('#modal').modal('show');
+        $("#modal-body").html(result);
+      }
+    });
+  });
 });
 
 /***/ }),
@@ -276,8 +326,8 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\menu.js */"./resources/js/module_settings/menu.js");
-module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\formularios.js */"./resources/js/module_settings/formularios.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\menu.js */"./resources/js/module_settings/menu.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\formularios.js */"./resources/js/module_settings/formularios.js");
 
 
 /***/ })
