@@ -98,10 +98,17 @@
                                                             @foreach ($categoria->Sub_Categorias as $sub)
                                                                 <tr>
                                                                     <td>{{ $sub->nombre }}</td>
-                                                                    <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( $sub->permiso ) ? 'checked' : '' }} value="{{ $sub->permiso }}"></td>
-                                                                    <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( str_replace( 'view', 'create',$sub->permiso) ) ? 'checked' : '' }} value="{{ str_replace( 'view', 'create',$sub->permiso) }}"></td>
-                                                                    <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( str_replace( 'view', 'edit',$sub->permiso) ) ? 'checked' : '' }} value="{{ str_replace( 'view', 'edit',$sub->permiso) }}"></td>
-                                                                    <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( str_replace( 'view', 'delete',$sub->permiso) ) ? 'checked' : '' }} value="{{ str_replace( 'view', 'delete',$sub->permiso) }}"></td>
+                                                                    @if ($sub->nombre == 'Logs')
+                                                                        <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( $sub->permiso ) ? 'checked' : '' }} value="{{ $sub->permiso }}"></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                    @else
+                                                                        <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( $sub->permiso ) ? 'checked' : '' }} value="{{ $sub->permiso }}"></td>
+                                                                        <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( str_replace( 'view', 'create',$sub->permiso) ) ? 'checked' : '' }} value="{{ str_replace( 'view', 'create',$sub->permiso) }}"></td>
+                                                                        <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( str_replace( 'view', 'edit',$sub->permiso) ) ? 'checked' : '' }} value="{{ str_replace( 'view', 'edit',$sub->permiso) }}"></td>
+                                                                        <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( str_replace( 'view', 'delete',$sub->permiso) ) ? 'checked' : '' }} value="{{ str_replace( 'view', 'delete',$sub->permiso) }}"></td>
+                                                                    @endif
                                                                 </tr>
                                                             @endforeach
                                                         </tbody>

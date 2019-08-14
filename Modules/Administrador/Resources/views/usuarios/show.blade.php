@@ -51,10 +51,17 @@
                                                         @foreach ($categoria->Sub_Categorias as $sub)
                                                             <tr>
                                                                 <td>{{ $sub->nombre }}</td>
-                                                                <td><input type="checkbox" name="permisos[]" id="permisos[]" value="{{ $sub->permiso }}"></td>
-                                                                <td><input type="checkbox" name="permisos[]" id="permisos[]" value="create{{ str_replace( 'view', '',$sub->permiso) }}"></td>
-                                                                <td><input type="checkbox" name="permisos[]" id="permisos[]" value="edit{{ str_replace( 'view', '',$sub->permiso) }}"></td>
-                                                                <td><input type="checkbox" name="permisos[]" id="permisos[]" value="delete{{ str_replace( 'view', '',$sub->permiso) }}"></td>
+                                                                @if ($sub->nombre == 'Logs')
+                                                                        <td><input type="checkbox" name="permisos[]" id="permisos[]" value="{{ $sub->permiso }}"></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                    @else
+                                                                        <td><input type="checkbox" name="permisos[]" id="permisos[]" value="{{ $sub->permiso }}"></td>
+                                                                        <td><input type="checkbox" name="permisos[]" id="permisos[]" value="{{ str_replace( 'view', 'create',$sub->permiso) }}"></td>
+                                                                        <td><input type="checkbox" name="permisos[]" id="permisos[]" value="{{ str_replace( 'view', 'edit',$sub->permiso) }}"></td>
+                                                                        <td><input type="checkbox" name="permisos[]" id="permisos[]" value="{{ str_replace( 'view', 'delete',$sub->permiso) }}"></td>
+                                                                    @endif
                                                             </tr>
                                                         @endforeach
                                                     </tbody>
