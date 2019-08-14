@@ -2,9 +2,15 @@
     <div class="box-header with-border">
         <h3 class="box-title"><i class="fas fa-project-diagram"></i> Troncales</h3>
         <div class="box-tools pull-right">
-            <button type="button" class="btn btn-danger  btn-sm deleteTroncal" style="display:none"><i class="fas fa-trash-alt"></i> Elminar</button>
-            <button type="button" class="btn btn-warning btn-sm editTroncal" style="display:none"><i class="fas fa-edit"></i> Editar</button>
-            <button type="button" class="btn btn-primary btn-sm newTroncal" data-widget="remove"><i class="fas fa-plus"></i> Nueva</button>
+            @can('delete troncales')
+                <button type="button" class="btn btn-danger  btn-sm deleteTroncal" style="display:none"><i class="fas fa-trash-alt"></i> Elminar</button>
+            @endcan
+            @can('edit troncales')
+                <button type="button" class="btn btn-warning btn-sm editTroncal" style="display:none"><i class="fas fa-edit"></i> Editar</button>
+            @endcan
+            @can('create troncales')
+                <button type="button" class="btn btn-primary btn-sm newTroncal" data-widget="remove"><i class="fas fa-plus"></i> Nueva</button>
+            @endcan
             <input type="hidden" name="idSeleccionado" id="idSeleccionado" value="">
         </div>
     </div><!-- /.box-header -->

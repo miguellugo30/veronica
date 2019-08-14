@@ -98,17 +98,21 @@
                 <!-- Sidebar Menu -->
                 <ul class="sidebar-menu tree" data-widget="tree">
                     @foreach ($categorias as $categoria)
-                        <li class="treeview">
-                            <a>
-                                <i class="{{ $categoria->class_icon }} fa-2x"> </i>
-                                <span> {{ $categoria->nombre }}</span>
-                            </a>
-                            <ul class="treeview-menu sub-menu">
-                                @foreach ($categoria->Sub_Categorias as $sub)
-                                    <li data-id="{{ $sub->id }}"><a href="#"><i class="far fa-building"></i> {{ $sub->nombre }}</a></li>
-                                @endforeach
-                            </ul>
-                        </li>
+                        @can( $categoria->permiso )
+                            <li class="treeview">
+                                <a>
+                                    <i class="{{ $categoria->class_icon }} fa-2x"> </i>
+                                    <span> {{ $categoria->nombre }}</span>
+                                </a>
+                                <ul class="treeview-menu sub-menu">
+                                    @foreach ($categoria->Sub_Categorias as $sub)
+                                        @can( $sub->permiso )
+                                            <li data-id="{{ $sub->id }}"><a href="#"><i class="far fa-building"></i> {{ $sub->nombre }}</a></li>
+                                        @endcan
+                                    @endforeach
+                                </ul>
+                            </li>
+                        @endcan
                     @endforeach
                 </ul>
                 <!-- /.sidebar-menu -->

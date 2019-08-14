@@ -2,10 +2,16 @@
     <div class="box-header with-border">
         <h3 class="box-title"><b><i class="fas fa-phone"></i> Estados de Cliente</b></h3>
         <div class="box-tools pull-right">
-            <button type="button" class="btn btn-danger  btn-sm deleteEdoCli" style="display:none"><i class="fas fa-trash-alt"></i> Elminar</button>
-            <button type="button" class="btn btn-warning btn-sm editEdoCli" style="display:none"><i class="fas fa-edit"></i> Editar</button>
-            <button type="button" class="btn btn-primary btn-sm newEdoCli" data-widget="remove"><i class="fas fa-plus"></i> Nuevo</button>
-            <button type="button" class="btn btn-primary btn-sm orderignEdoCli" data-widget="remove"><i class="fas fa-sort-numeric-down"></i> Ordenar</button>
+            @can('delete edo cliente')
+                <button type="button" class="btn btn-danger  btn-sm deleteEdoCli" style="display:none"><i class="fas fa-trash-alt"></i> Elminar</button>
+            @endcan
+            @can('edit edo cliente')
+                <button type="button" class="btn btn-warning btn-sm editEdoCli" style="display:none"><i class="fas fa-edit"></i> Editar</button>
+                <button type="button" class="btn btn-primary btn-sm orderignEdoCli" data-widget="remove"><i class="fas fa-sort-numeric-down"></i> Ordenar</button>
+            @endcan
+            @can('create edo cliente')
+                <button type="button" class="btn btn-primary btn-sm newEdoCli" data-widget="remove"><i class="fas fa-plus"></i> Nuevo</button>
+            @endcan
             <input type="hidden" name="idSeleccionado" id="idSeleccionado" value="">
         </div>
     </div><!-- /.box-header -->

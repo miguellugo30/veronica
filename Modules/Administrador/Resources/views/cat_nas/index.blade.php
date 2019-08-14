@@ -2,9 +2,15 @@
     <div class="box-header with-border">
         <h3 class="box-title"><b><i class="far fa-hdd"></i> NAS</b></h3>
         <div class="box-tools pull-right">
-            <button type="button" class="btn btn-danger  btn-sm deleteNas" style="display:none"><i class="fas fa-trash-alt"></i> Elminar</button>
-            <button type="button" class="btn btn-warning btn-sm editNas" style="display:none"><i class="fas fa-edit"></i> Editar</button>
-            <button type="button" class="btn btn-primary btn-sm newNas" data-widget="remove"><i class="fas fa-plus"></i> Nuevo</button>
+            @can('delete nas')
+                <button type="button" class="btn btn-danger  btn-sm deleteNas" style="display:none"><i class="fas fa-trash-alt"></i> Elminar</button>
+            @endcan
+            @can('edit nas')
+                <button type="button" class="btn btn-warning btn-sm editNas" style="display:none"><i class="fas fa-edit"></i> Editar</button>
+            @endcan
+            @can('create nas')
+                <button type="button" class="btn btn-primary btn-sm newNas" data-widget="remove"><i class="fas fa-plus"></i> Nuevo</button>
+            @endcan
             <input type="hidden" name="idSeleccionado" id="idSeleccionado" value="">
         </div>
     </div><!-- /.box-header -->

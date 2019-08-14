@@ -13,7 +13,7 @@ $(function() {
         let url = currentURL + '/usuarios/create';
 
         $.get(url, function(data, textStatus, jqXHR) {
-            $('#modal').modal('show');
+            $('#modal').modal({ show: true, keyboard: false });
             $("#modal-body").html(data);
         });
     });
@@ -31,7 +31,7 @@ $(function() {
         let rol = $("#rol").val();
         let _token = $("input[name=_token]").val();
         let url = currentURL + '/usuarios';
-        let arr = $('[name="cats[]"]:checked').map(function() {
+        let arr = $('[name="permisos[]"]:checked').map(function() {
             return this.value;
         }).get();
 
@@ -77,7 +77,7 @@ $(function() {
     $(document).on("click", ".editUser", function(e) {
 
         e.preventDefault();
-        $('#tituloModal').html('Editar NAS');
+        $('#tituloModal').html('Editar Usuarios');
         $('#action').removeClass('saveClient');
         $('#action').addClass('updateClient');
 
@@ -106,7 +106,7 @@ $(function() {
         let _token = $("input[name=_token]").val();
         let _method = "PUT";
         let url = currentURL + '/usuarios/' + id_user;
-        let arr = $('[name="cats[]"]:checked').map(function() {
+        let arr = $('[name="permisos[]"]:checked').map(function() {
             return this.value;
         }).get();
 
@@ -201,4 +201,14 @@ $(function() {
             $("#rol").val(2);
         }
     });
+
+    $(document).on('click', '.modulo', function() {
+        var id = $(this).data("value");
+        if ($(this).prop('checked')) {
+            $("#sub_cat_" + id).slideDown();
+        } else {
+            $("#sub_cat_" + id).slideUp();
+        }
+    });
+
 });

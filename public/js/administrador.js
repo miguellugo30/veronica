@@ -3534,7 +3534,10 @@ $(function () {
     $('#action').addClass('saveClient');
     var url = currentURL + '/usuarios/create';
     $.get(url, function (data, textStatus, jqXHR) {
-      $('#modal').modal('show');
+      $('#modal').modal({
+        show: true,
+        keyboard: false
+      });
       $("#modal-body").html(data);
     });
   });
@@ -3554,7 +3557,7 @@ $(function () {
     var _token = $("input[name=_token]").val();
 
     var url = currentURL + '/usuarios';
-    var arr = $('[name="cats[]"]:checked').map(function () {
+    var arr = $('[name="permisos[]"]:checked').map(function () {
       return this.value;
     }).get();
     $.post(url, {
@@ -3592,7 +3595,7 @@ $(function () {
 
   $(document).on("click", ".editUser", function (e) {
     e.preventDefault();
-    $('#tituloModal').html('Editar NAS');
+    $('#tituloModal').html('Editar Usuarios');
     $('#action').removeClass('saveClient');
     $('#action').addClass('updateClient');
     var id = $("#idSeleccionado").val();
@@ -3620,7 +3623,7 @@ $(function () {
 
     var _method = "PUT";
     var url = currentURL + '/usuarios/' + id_user;
-    var arr = $('[name="cats[]"]:checked').map(function () {
+    var arr = $('[name="permisos[]"]:checked').map(function () {
       return this.value;
     }).get();
     $.ajax({
@@ -3704,6 +3707,15 @@ $(function () {
       $("#rol").val(1);
     } else {
       $("#rol").val(2);
+    }
+  });
+  $(document).on('click', '.modulo', function () {
+    var id = $(this).data("value");
+
+    if ($(this).prop('checked')) {
+      $("#sub_cat_" + id).slideDown();
+    } else {
+      $("#sub_cat_" + id).slideUp();
     }
   });
 });

@@ -2,9 +2,15 @@
     <div class="box-header with-border">
         <h3 class="box-title"><b><i class="fas fa-phone"></i> PBX's</b></h3>
         <div class="box-tools pull-right">
-            <button type="button" class="btn btn-danger  btn-sm deletePbx" style="display:none"><i class="fas fa-trash-alt"></i> Elminar</button>
-            <button type="button" class="btn btn-warning btn-sm editPbx" style="display:none"><i class="fas fa-edit"></i> Editar</button>
-            <button type="button" class="btn btn-primary btn-sm newPbx" data-widget="remove"><i class="fas fa-plus"></i> Nuevo</button>
+            @can('delete pbx')
+                <button type="button" class="btn btn-danger  btn-sm deletePbx" style="display:none"><i class="fas fa-trash-alt"></i> Elminar</button>
+            @endcan
+            @can('edit pbx')
+                <button type="button" class="btn btn-warning btn-sm editPbx" style="display:none"><i class="fas fa-edit"></i> Editar</button>
+            @endcan
+            @can('create pbx')
+                <button type="button" class="btn btn-primary btn-sm newPbx" data-widget="remove"><i class="fas fa-plus"></i> Nuevo</button>
+            @endcan
             <input type="hidden" name="idSeleccionado" id="idSeleccionado" value="">
         </div>
     </div><!-- /.box-header -->

@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col">
+    <div class="col-3">
         <fieldset>
             <legend>Información usuario</legend>
             <div class="form-group">
@@ -24,9 +24,10 @@
                 <label for="cliente">Empresa</label>
                 <select name="cliente" id="cliente" class="form-control form-control-sm">
                     <option value="">Selecciona una empresa</option>
-                        @foreach( $clientes as $cliente )
-                            <option value="{{ $cliente->id }}" {{ $user->id_cliente == $cliente->id ? 'selected="selected"' : '' }}>{{ $cliente->nombre }}</option>
-                        @endforeach
+                    <option value="30">C3NTRO</option>
+                    @foreach( $clientes as $cliente )
+                        <option value="{{ $cliente->id }}" {{ $user->id_cliente == $cliente->id ? 'selected="selected"' : '' }}>{{ $cliente->nombre }}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="form-group">
@@ -43,23 +44,79 @@
             </div>
         </fieldset>
     </div>
-    <div class="col">
-        <fieldset>
-            <legend>Categorías</legend>
-            @foreach( $categorias as $categoria )
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" name="cats[]" value="{{ $categoria->id }}" {{ in_array( $categoria->id, $catUser ) ? 'checked="checked"' : '' }}>
-                    {{ $categoria->nombre }}
-                </label>
-            </div>
-            @endforeach
-        </fieldset>
+    <div class="col modulosEmpresa">
+        <h5><b>Modulos</b></h5>
+        <div class="col">
+            <!-- Custom Tabs -->
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    @foreach( $modulos as $modulo )
+                        @if ($loop->first)
+                            <li class="nav-item active"><a href="#tab_{{ Str::snake( $modulo->nombre ) }}" class="nav-link" data-toggle="tab">{{ $modulo->nombre }}</a></li>
+                        @else
+                            <li class="nav-item"><a href="#tab_{{ Str::snake( $modulo->nombre ) }}" class="nav-link" data-toggle="tab">{{ $modulo->nombre }}</a></li>
+                        @endif
+                    @endforeach
+                </ul>
+                <div class="tab-content">
+                    @foreach( $modulos as $modulo )
+                        @if ($loop->first)
+                            <div class="tab-pane active" id="tab_{{ Str::snake( $modulo->nombre ) }}">
+                        @else
+                            <div class="tab-pane" id="tab_{{ Str::snake( $modulo->nombre ) }}">
+                        @endif
+                            <h3>{{ $modulo->nombre }}</h3>
+                            <table class="table table-bordered table-sm">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th></th>
+                                        <th>Categoria</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($modulo->categorias as $categoria)
+                                        <tr>
+                                            <td><input type="checkbox" class="modulo" name="permisos[]" id="permisos[]" data-value="{{ $categoria->id }}" value="{{ $categoria->permiso }}" {{ $user->hasPermissionTo( $categoria->permiso ) ? 'checked' : '' }}></td>
+                                            <td>
+                                                {{ $categoria->nombre }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" id="sub_cat_{{ $categoria->id }}" {{ $user->hasPermissionTo( $categoria->permiso ) ? 'style="display:"' : 'style="display:none"' }} >
+                                                <div class="col" >
+                                                    <table class="table table-bordered table-sm">
+                                                        <thead class="thead-light">
+                                                            <tr>
+                                                                <th>Sub Categoria</th>
+                                                                <th>Ver</th>
+                                                                <th>Crear</th>
+                                                                <th>Editar</th>
+                                                                <th>Eliminar</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ($categoria->Sub_Categorias as $sub)
+                                                                <tr>
+                                                                    <td>{{ $sub->nombre }}</td>
+                                                                    <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( $sub->permiso ) ? 'checked' : '' }} value="{{ $sub->permiso }}"></td>
+                                                                    <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( str_replace( 'view', 'create',$sub->permiso) ) ? 'checked' : '' }} value="{{ str_replace( 'view', 'create',$sub->permiso) }}"></td>
+                                                                    <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( str_replace( 'view', 'edit',$sub->permiso) ) ? 'checked' : '' }} value="{{ str_replace( 'view', 'edit',$sub->permiso) }}"></td>
+                                                                    <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( str_replace( 'view', 'delete',$sub->permiso) ) ? 'checked' : '' }} value="{{ str_replace( 'view', 'delete',$sub->permiso) }}"></td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div><!-- /.tab-pane -->
+                    @endforeach
+                </div><!-- /.tab-content -->
+            </div><!-- nav-tabs-custom -->
+        </div><!-- /.col -->
     </div>
 </div>
 
-<!--div class="col-12" style="text-align:center">
-    <button type="submit" class="btn btn-warning btn-sm cancelClient float-left"><i class="fas fa-times"></i> Cancelar</button>
-    <button type="submit" class="btn btn-danger btn-sm deleteClient float-left"><i class="fas fa-trash-alt"></i> Eliminar</button>
-    <button type="submit" class="btn btn-primary btn-sm updateClient float-right"><i class="fas fa-save"></i> Guardar</button>
-</div-->

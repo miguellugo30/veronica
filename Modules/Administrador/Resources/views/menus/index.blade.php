@@ -2,10 +2,16 @@
     <div class="box-header with-border">
         <h3 class="box-title"><b><i class="fas fa-align-justify"></i> Menús</b></h3>
         <div class="box-tools pull-right">
-            <button type="button" class="btn btn-danger  btn-sm deleteMenu" style="display:none"><i class="fas fa-trash-alt"></i> Eliminar</button>
-            <button type="button" class="btn btn-warning btn-sm editMenu" style="display:none"><i class="fas fa-edit"></i> Editar</button>
-            <button type="button" class="btn btn-primary btn-sm orderignCat" data-widget="remove"><i class="fas fa-sort-numeric-down"></i> Ordenar</button>
-            <button type="button" class="btn btn-primary btn-sm newMenu" data-widget="remove"><i class="fas fa-plus"></i> Nuevo</button>
+            @can('delete menus')
+                <button type="button" class="btn btn-danger  btn-sm deleteMenu" style="display:none"><i class="fas fa-trash-alt"></i> Eliminar</button>
+            @endcan
+            @can('edit menus')
+                <button type="button" class="btn btn-warning btn-sm editMenu" style="display:none"><i class="fas fa-edit"></i> Editar</button>
+                <button type="button" class="btn btn-primary btn-sm orderignCat" data-widget="remove"><i class="fas fa-sort-numeric-down"></i> Ordenar</button>
+            @endcan
+            @can('create menus')
+                <button type="button" class="btn btn-primary btn-sm newMenu" data-widget="remove"><i class="fas fa-plus"></i> Nuevo</button>
+            @endcan
             <input type="hidden" name="idSeleccionado" id="idSeleccionado" value="">
             <input type="hidden" name="tipoSeleccionado" id="tipoSeleccionado" value="">
             <input type="hidden" name="ordenSeleccionado" id="ordenSeleccionado" value="0">

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Hash;
 use Nimbus\Http\Controllers\LogController;
 
@@ -84,12 +85,15 @@ class UsuariosController extends Controller
         /**
          * Asignamos las categorias al usuario
          */
+        $user->syncPermissions( $request->input('arr'));
+        /*
         $data = $request->input('arr');
         for ($i=0; $i < count( $data ); $i++) {
             DB::table('categorias_user')->insert(
                 ['categorias_id' => $data[$i], 'user_id' => $user->id]
             );
         }
+        */
        /**
          * Redirigimos a la ruta index
          */
@@ -104,7 +108,7 @@ class UsuariosController extends Controller
     public function show($id)
     {
         /**
-         * Ocupamos esta funcion para mostrar los modulos contrarados por la empresa
+         * Ocupamos esta función para mostrar los módulos contratados por la empresa
          * para que puedan ser seleccionados al dar de alta un usuario nuevo
          */
         $empresa = Empresas::find( $id );
@@ -120,10 +124,11 @@ class UsuariosController extends Controller
     public function edit($id)
     {
         /**
-         * Obtenemos la informacion del usuario a editar
+         * Obtenemos la información del usuario a editar
          */
         $user = User::findOrFail( $id );
-        $catUser = $user->categorias->pluck('id')->toArray();//Categorias del usuario
+
+        $catUser = $user->categorias->pluck('id')->toArray();//Categorías del usuario
         /**
          * Obtenemos todos los roles
          */
@@ -131,13 +136,15 @@ class UsuariosController extends Controller
         /**
          * Obtenemos todos los clientes ( Empresas )
          */
-        $clientes =  Empresas::where('activo', 1)->get();
-        /**
-         * Obtenemos todas la categorias
-         */
-        $categorias = Categorias::where('activo', 1)->get();
+        $clientes =  Empresas::active()->get();
 
-        return view('administrador::usuarios.edit', compact( 'roles', 'clientes', 'user', 'categorias', 'catUser' ));
+        /**
+         * Obtenemos los modulos activos para la empresa
+         */
+        $empresa = Empresas::find( $user->id_cliente );
+        $modulos = $empresa->Modulos;
+
+        return view('administrador::usuarios.edit', compact( 'roles', 'clientes', 'user', 'modulos', 'catUser' ));
     }
 
     /**
@@ -182,9 +189,11 @@ class UsuariosController extends Controller
         }
 
         /**
-         * Eliminamos las categorias que tiene el usuairo
-         * y le asiganos las nuevas seleccionada
+         * Eliminamos las categorias que tiene el usuario
+         * y le asignamos las nuevas seleccionada
          */
+        $user->syncPermissions( $request->input('arr'));
+        /*
         DB::table('categorias_user')->where('user_id', $user->id )->delete();
         $cats = $request->input('arr');
         for ($i=0; $i < count( $cats ); $i++) {
@@ -192,6 +201,7 @@ class UsuariosController extends Controller
                 ['categorias_id' => $cats[$i], 'user_id' => $user->id]
             );
         }
+        */
         /**
          * Creamos el logs
          */
