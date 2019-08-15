@@ -99,18 +99,24 @@
                 <ul class="sidebar-menu tree" data-widget="tree">
                     @foreach ($categorias as $categoria)
                         @can( $categoria->permiso )
-                            <li class="treeview">
+                            @if( $categoria->Sub_Categorias->count() == 0 )
+                                <li class="sub-menu" data-id="{{ $categoria->id }}">
+                            @else
+                                <li class="treeview">
+                            @endif    
                                 <a>
                                     <i class="{{ $categoria->class_icon }} fa-2x"> </i>
-                                    <span> {{ $categoria->nombre }}</span>
+                                    <span> {{ $categoria->nombre }} </span>
                                 </a>
-                                <ul class="treeview-menu sub-menu">
-                                    @foreach ($categoria->Sub_Categorias as $sub)
-                                        @can( $sub->permiso )
-                                            <li data-id="{{ $sub->id }}"><a href="#"><i class="far fa-building"></i> {{ $sub->nombre }}</a></li>
-                                        @endcan
-                                    @endforeach
-                                </ul>
+                                @if( $categoria->Sub_Categorias->count() > 0 )
+                                    <ul class="treeview-menu">
+                                        @foreach ($categoria->Sub_Categorias as $sub)
+                                            @can( $sub->permiso )
+                                                <li class="sub-menu" data-id="{{ $sub->id }}"><a href="#"><i class="far fa-building"></i> {{ $sub->nombre }}</a></li>
+                                            @endcan
+                                        @endforeach
+                                    </ul>
+                                @endif 
                             </li>
                         @endcan
                     @endforeach

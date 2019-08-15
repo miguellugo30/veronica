@@ -18,7 +18,7 @@ $(function() {
     });
 
     /**
-     * Evento para eliminar el distribuidores
+     * Evento para eliminar el Formulario
      *
      */
     $(document).on('click', '.deleteFormulario', function(event) {

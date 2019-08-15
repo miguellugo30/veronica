@@ -9,8 +9,8 @@ $(function() {
         e.preventDefault();
         let id = $(this).data("id");
 
-        if (id == 21) {
-            url = currentURL + '/formularios';
+        if (id == 16) {
+            url = currentURL + '/campanas';
             table = ' #tableFormulario';
         }
 
