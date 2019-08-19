@@ -13,6 +13,13 @@ $(function() {
             url = currentURL + '/formularios';
             table = ' #tableFormulario';
         }
+        /*
+        ## Opcion Calificaciones
+        */
+        if (id == 23) {
+            url = currentURL + '/calificaciones';
+            table = ' #tableCalificaciones';
+        }
 
         $.get(url, function(data, textStatus, jqXHR) {
             $(".viewResult").html(data);

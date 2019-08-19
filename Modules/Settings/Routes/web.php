@@ -25,3 +25,11 @@ Route::prefix('settings')->group(function() {
 Route::group(['namespace' => '\Modules\Settings\Http\Controllers', 'prefix' => 'settings', 'middleware' => 'auth'], function() {
     Route::resource('formularios','FormulariosController');
 });
+
+
+/**
+ ## Rutas para CRUD de Calificaciones
+ */
+Route::group(['namespace' => '\Modules\Settings\Http\Controllers', 'prefix' => 'settings', 'middleware' => 'auth'], function() {
+    Route::resource('calificaciones','CalificacionesController');
+});
