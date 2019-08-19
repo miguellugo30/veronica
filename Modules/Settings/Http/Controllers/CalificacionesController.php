@@ -15,7 +15,7 @@ class CalificacionesController extends Controller
      */   
     public function index()
     {
-        $calificaciones = Calificaciones::active()->get();  // Formularios a que esta haciendo referencia aqui ?? >>> al Modelo
+        $calificaciones = Calificaciones::active()->get();  // Esta haciendo referencia >>> al Modelo
         return view('settings::Calificaciones.index',compact('calificaciones'));
 
     }

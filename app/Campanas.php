@@ -48,4 +48,16 @@ class Campanas extends Model
     {
         return $this->hasOne('Nimbus\Formularios', 'id', 'Formularios_id');
     }
+    
+    
+    /**
+    ## Relacion uno a muchos con Calificaciones
+    */
+    public function Calificaciones()
+    {
+        return $this->hasMany('Nimbus\Calificaciones');
+    }
+    
+    
+    
 }

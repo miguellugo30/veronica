@@ -14,7 +14,7 @@
                 <table id="tableCalificaciones" class="display table table-bordered table-hover table-sm" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Nombre Calificaciones</th>
+                            <th>Nombre</th>
                             <th>Tipo</th>
                         </tr>
                     </thead>
@@ -22,7 +22,7 @@
                         @foreach ($calificaciones as $calificacion)
                             <tr data-id="{{ $calificacion->id }}" style="cursor:pointer">
                                 <td>{{ $calificacion->nombre }}</td>
-                                <td>{{ $calificacion->Tipo_Marcacion->tipo }}</td>
+                                <td>{{ $calificacion->tipo_marcacion }}</td>
                             </tr>
                         @endforeach
                     </tbody>
