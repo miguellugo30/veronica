@@ -5,11 +5,9 @@ namespace Modules\Inbound\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Auth;
-use Nimbus\User;
-use Nimbus\Categorias;
+use Nimbus\Campanas;
 
-class InboundController extends Controller
+class CampanasController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,30 +15,17 @@ class InboundController extends Controller
      */
     public function index()
     {
-                /**
-         * Obtenemos los datos del usuario logeado
-         */
-        $user = User::find( Auth::id() );
-        /**
-         * Obtenemos el rol del usuario logeado
-         */
-        $rol = $user->getRoleNames();
-        /**
-         * Obtenemos las categorias relacionadas al usuario
-         */
-        $categorias = Categorias::where('modulos_id', 1)->get();
-        $modulo = "Inbound";
+        $campanas= Campanas::active()->get();
 
-        return view('inbound::index', compact( 'rol', 'categorias', 'modulo' ));
+        return view('inbound::campanas.index',compact('campanas'));
     }
-
     /**
      * Show the form for creating a new resource.
      * @return Response
      */
     public function create()
     {
-        return view('inbound::create');
+        return view('inbound::campanas.create');
     }
 
     /**
@@ -91,6 +76,10 @@ class InboundController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //dd($id);
+        Campanas::where('id',$id)
+        ->update(['activo'=>'0']);
+
+        return redirect()->route('campanas.index');
     }
 }

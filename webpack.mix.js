@@ -38,7 +38,11 @@ mix.js([
         'resources/js/module_settings/menu.js',
         'resources/js/module_settings/formularios.js',
         'resources/js/module_settings/acciones_formularios.js',
-    ], 'public/js/settings.js');
+    ], 'public/js/settings.js')
+    .js([
+        'resources/js/module_inbound/menu.js',
+        'resources/js/module_inbound/campanas.js',
+    ], 'public/js/inbound.js');
 /*
 .sass('resources/sass/app.scss', 'public/css');
 mix.js('resources/js/app.js', 'public/js/all.js')

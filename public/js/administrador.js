@@ -2597,7 +2597,7 @@ $(function () {
    * Evento para el menu de sub categorias y mostrar la vista
    */
 
-  $(document).on("click", ".sub-menu li", function (e) {
+  $(document).on("click", ".sub-menu", function (e) {
     e.preventDefault();
     var id = $(this).data("id");
 
@@ -3735,13 +3735,22 @@ $(function () {
    * Evento para el menu de sub categorias y mostrar la vista
    */
 
-  $(document).on("click", ".sub-menu li", function (e) {
+  $(document).on("click", ".sub-menu", function (e) {
     e.preventDefault();
     var id = $(this).data("id");
 
     if (id == 21) {
       url = currentURL + '/formularios';
       table = ' #tableFormulario';
+    }
+    /*
+    ## Opcion Calificaciones
+    */
+
+
+    if (id == 23) {
+      url = currentURL + '/calificaciones';
+      table = ' #tableCalificaciones';
     }
 
     $.get(url, function (data, textStatus, jqXHR) {

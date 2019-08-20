@@ -87,6 +87,8 @@
         <script src="{{ asset('js/settings.js') }}"></script>
     @elseif( $modulo == 'Administrador')
         <script src="{{ asset('js/administrador.js') }}"></script>
+    @elseif( $modulo == 'Inbound')
+        <script src="{{ asset('js/inbound.js') }}"></script>
     @endif
 @endif
 
