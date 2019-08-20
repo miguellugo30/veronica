@@ -128,7 +128,7 @@ class UsuariosController extends Controller
          */
         $user = User::findOrFail( $id );
 
-        $catUser = $user->categorias->pluck('id')->toArray();//Categorías del usuario
+        //$catUser = $user->categorias->pluck('id')->toArray();//Categorías del usuario
         /**
          * Obtenemos todos los roles
          */
@@ -144,7 +144,7 @@ class UsuariosController extends Controller
         $empresa = Empresas::find( $user->id_cliente );
         $modulos = $empresa->Modulos;
 
-        return view('administrador::usuarios.edit', compact( 'roles', 'clientes', 'user', 'modulos', 'catUser' ));
+        return view('administrador::usuarios.edit', compact( 'roles', 'clientes', 'user', 'modulos' ));
     }
 
     /**

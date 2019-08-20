@@ -15,7 +15,9 @@
             <div class="col">
                 <div class="form-group">
                     <label for="nombre"><b> Nombre Formulario</b></label>
-                    <input type="text" class="form-control form-control-sm" id="nombre" name="nombre" placeholder="Nombre Formulario" value='{{$formulario->nombre}}' readonly >
+                    <input type="text" class="form-control form-control-sm" id="nombre" name="nombre" placeholder="Nombre Formulario" value='{{$formulario->nombre}}' disabled >
+                    <input type="hidden" name="id_formulario" id="id_formulario" value="{{$formulario->id}}">
+                    <input type="hidden" name="registro_borrados" id="registros_borrados" value="">
                     @csrf
                 </div>
             </div>
@@ -38,10 +40,11 @@
                         @foreach ($campos as $campo)
                         <tr id="tr_1">
                             <td>
-                                <input type="text" class="form-control form-control-sm " name="nombre_campo_1" id="nombre_campo" value='{{$campo->nombre_campo }}'>
+                                <input type="hidden" name="id_campo_{{$campo->id }}" id="id_campo" value="{{$campo->id }}">
+                                <input type="text" class="form-control form-control-sm " name="nombre_campo_{{$campo->id }}" id="nombre_campo" value='{{$campo->nombre_campo }}'>
                             </td>
                             <td>
-                                <select name="tipo_campo_1" id="tipo_campo"  class="form-control form-control-sm">
+                                <select name="tipo_campo_{{$campo->id }}" id="tipo_campo"  class="form-control form-control-sm">
                                     <option value="">Selecciona un tipo</option>
                                     <option value="text" {{('text' == $campo->tipo_campo) ? 'selected = "selected"':'' }}>Texto Corto</option>
                                     <option value="textarea" {{('textarea' == $campo->tipo_campo) ? 'selected = "selected"':'' }}>Texto Largo</option>
@@ -53,28 +56,24 @@
                                     <option value="texto" {{('texto' == $campo->tipo_campo) ? 'selected = "selected"':'' }}>Texto Escrito</option>
                                     <option value="buscador" {{('buscador' == $campo->tipo_campo) ? 'selected = "selected"':'' }}>Buscador</option>
                                     <option value="buscador_historico" {{('buscador_historico' == $campo->tipo_campo) ? 'selected = "selected"':'' }}>Buscador Historio</option>
-                                    
                                     <option value="asignador_folios" {{('asignador_folios' == $campo->tipo_campo) ? 'selected = "selected"':'' }}>Asignador de Folios</option>
-
-                                    
                                     <option value="bloqueInicio" {{('bloqueInicio' == $campo->tipo_campo) ? 'selected = "selected"':'' }}>Bloque Inicio</option>
                                     <option value="bloqueFin" {{('bloqueFin' == $campo->tipo_campo) ? 'selected = "selected"':'' }}>Bloque Termino</option>
                                 </select>
                             </td>
                             <td>
-                                <input type="text" class="form-control form-control-sm" name="tamano_1" id="tamano" value='{{$campo->tamano }}'>
+                                <input type="text" class="form-control form-control-sm" name="tamano_{{$campo->id }}" id="tamano" value='{{$campo->tamano }}'>
                             </td>
                             <td>
-                                <input type="checkbox" class="micheckbox" name="obligatorio_1" id="obligatorio" {{('on' == $campo->obligatorio) ? 'checked':'' }} >
-                                <input type="hidden" name="obligatorio_1_hidden" id="obligatorio_hidden" value="off">
+                                <input type="checkbox" class="micheckbox" name="obligatorio_{{$campo->id }}" id="obligatorio" {{('on' == $campo->obligatorio) ? 'checked':'' }} >
+                                <input type="hidden" name="obligatorio_{{$campo->id }}_hidden" id="obligatorio_hidden" value="off" {{('on' == $campo->obligatorio) ? 'disabled':'' }}>
                             </td>
                             <td>
-                                <input type="checkbox" class="micheckbox" name="editable_1" id="editable" {{('on' == $campo->editable) ? 'checked':'' }} >
-                                <input type="hidden" name="editable_1_hidden" id="editable_hidden" value="off">
+                                <input type="checkbox" class="micheckbox" name="editable_{{$campo->id }}" id="editable" {{('on' == $campo->editable) ? 'checked':'' }} >
+                                <input type="hidden" name="editable_{{$campo->id }}_hidden" id="editable_hidden" value="off" {{('on' == $campo->editable) ? 'disabled':'' }}>
                             </td>
-                            <td class="tr_clone_remove">
-                                <button type="button" name="remove" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-                            <!--input type="button" name="remove" value="Eliminar" class="btn btn-danger btn-sm"-->
+                            <td class="">
+                                <button type="button" name="remove" class="btn btn-danger tr_edit_remove" data-id-campo="{{$campo->id }}"><i class="fas fa-trash-alt"></i></button>
                             </td>
                         </tr>
                         @endforeach

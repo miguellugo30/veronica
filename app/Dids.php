@@ -19,7 +19,7 @@ class Dids extends Model
     /**
      * Nombre de la tabla
      */
-   protected $table = 'Dids';
+    protected $table = 'Dids';
     /**
      * Funcion para obtener solo los registros activos
      */

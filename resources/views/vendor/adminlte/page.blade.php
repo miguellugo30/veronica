@@ -99,7 +99,7 @@
                 <ul class="sidebar-menu tree" data-widget="tree">
                     @foreach ($categorias as $categoria)
                         @can( $categoria->permiso )
-                            <li class="treeview">
+                            <li class="treeview" style="cursor:pointer">
                                 <a>
                                     <i class="{{ $categoria->class_icon }} fa-2x"> </i>
                                     <span> {{ $categoria->nombre }}</span>

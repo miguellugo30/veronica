@@ -4,22 +4,22 @@ namespace Nimbus;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Campos extends Model
+class Sub_Formularios extends Model
 {
-    /*
-    * Esto sirve para insertar la fecha tipo timestamp debido a la configuracion de Laravel
-    */
+    /**
+     * Esto sirve para insertar la fecha tipo timestamp debido a la configuracion de Laravel
+     */
     public $timestamps = false;
     /**
      * Campos que pueden ser modificados
      */
     protected $fillable = [
-       'nombre_campo', 'tipo_campo', 'opcines', 'tamano', 'obligatorio', 'prioridad', 'bnd_bloque', 'bnd_campo', 'num_posicion', 'editable', 'prefijo', 'folio', 'ultimo_folio',
+        'opcion', 'texto', 'Formularios_id', 'Campos_id',
     ];
     /**
      * Nombre de la tabla
      */
-    protected $table = 'Campos';
+    protected $table = 'Sub_Formulario';
     /**
      * Funcion para obtener solo los registros activos
      */
@@ -27,16 +27,23 @@ class Campos extends Model
     {
         return $query->where('activo', 1);
     }
-
     /*
     |--------------------------------------------------------------------------
     | RELACIONES DE BASE DE DATOS
     |--------------------------------------------------------------------------
+    */
     /**
-     * Relacion uno a muchos con Formularios_campos
+     * Relacion muchos a uno con Cat_Distribuidor
      */
     public function Formularios()
     {
-        return $this->belongsToMany('Nimbus\Formularios', 'Formularios_Campos');
+        return $this->belongsTo('Nimbus\Formularios', 'Formularios_id', 'id');
+    }
+    /**
+     * Relacion muchos a uno con Cat_Distribuidor
+     */
+    public function Campos()
+    {
+        return $this->belongsTo('Nimbus\Campos', 'Campos_id', 'id');
     }
 }

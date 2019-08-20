@@ -32,15 +32,16 @@
                             <th>Requerido</th>
                             <th>Editable</th>
                             <td><input type="button" class="btn btn-primary btn-sm" id = "add" value = "Agregar campo" /></td>
+                            <td></td>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr id="tr_1">
+                        <tr id="tr_1" class="clonar">
                             <td>
-                                <input type="text" class="form-control form-control-sm " name="nombre_campo_1" id="nombre_campo">
+                                <input type="text" class="form-control form-control-sm opciones" name="campo_1[]" id="nombre_campo" placeholder="Nombre Campo">
                             </td>
                             <td>
-                                <select name="tipo_campo_1" id="tipo_campo"  class="form-control form-control-sm ">
+                                <select name="campo_1[]" id="tipo_campo"  class="form-control form-control-sm opciones">
                                     <option value="">Selecciona un tipo</option>
                                     <option value="text">Texto Corto</option>
                                     <option value="textarea">Texto Largo</option>
@@ -52,28 +53,28 @@
                                     <option value="texto">Texto Escrito</option>
                                     <option value="buscador">Buscador</option>
                                     <option value="buscador_historio">Buscador Historio</option>
-                                    
                                     <option value="asignador_folios">Asignador de Folios</option>
-
-                                    
                                     <option value="bloqueInicio">Bloque Inicio</option>
                                     <option value="bloqueFin">Bloque Termino</option>
                                 </select>
                             </td>
                             <td>
-                                <input type="text" class="form-control form-control-sm" name="tamano_1" id="tamano">
+                                <input type="text" class="form-control form-control-sm opciones" name="campo_1[]" id="tamano" placeholder="Longitud">
                             </td>
                             <td>
-                                <input type="checkbox" class="micheckbox" name="obligatorio_1" id="obligatorio">
-                                <input type="hidden" name="obligatorio_1_hidden" id="obligatorio_hidden" value="off">
+                                <input type="checkbox" class="micheckbox opciones" name="campo_1[]" id="obligatorio" >
+                                <input type="hidden" name="campo_1[]" id="obligatorio_hidden_1" value="off" class="opciones">
                             </td>
                             <td>
-                                <input type="checkbox" class="micheckbox" name="editable_1" id="editable">
-                                <input type="hidden" name="editable_1_hidden" id="editable_hidden" value="off">
+                                <input type="checkbox" class="micheckbox opciones" name="campo_1[]" id="editable">
+                                <input type="hidden" name="campo_1[]" id="editable_hidden_1" value="off" class="opciones">
+                                <input type="hidden" name="campo_1[]" id="opciones_1" class="opciones" value="">
                             </td>
-                            <td class="tr_clone_remove">
+                            <td class="tr_clone_remove text-center">
                                 <button type="button" name="remove" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-                            <!--input type="button" name="remove" value="Eliminar" class="btn btn-danger btn-sm"-->
+                            </td>
+                            <td class="text-center">
+                                <button type="button" name="view" id="view_1" class="btn btn-info view" style="display:none"><i class="fas fa-eye"></i></button>
                             </td>
                         </tr>
                     </tbody>
@@ -82,3 +83,4 @@
         </div>
     </div>
 </form>
+

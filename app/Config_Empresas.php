@@ -13,7 +13,7 @@ class Config_Empresas extends Model
    /**
     * Campos que pueden ser modificados
     */
-  protected $fillable = [
+    protected $fillable = [
 
    ];
    /**
