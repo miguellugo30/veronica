@@ -151,8 +151,8 @@ class FormulariosController extends Controller
     {
         $formulario = Formularios::find( $id );
         $campos = $formulario->Formularios_Campos;
-        //dd($formulario->Formularios_Campos);
-        return view('settings::Formularios.show', compact('campos'));
+
+        return view('settings::Formularios.show', compact('formulario', 'campos'));
 
     }
 

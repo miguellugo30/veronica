@@ -83,37 +83,61 @@
                                         </tr>
                                         <tr>
                                             <td colspan="2" id="sub_cat_{{ $categoria->id }}" {{ $user->hasPermissionTo( $categoria->permiso ) ? 'style="display:"' : 'style="display:none"' }} >
-                                                <div class="col" >
+                                                @if ( $categoria->Sub_Categorias->count() == 0 )
+
                                                     <table class="table table-bordered table-sm">
                                                         <thead class="thead-light">
                                                             <tr>
-                                                                <th>Sub Categoria</th>
-                                                                <th>Ver</th>
                                                                 <th>Crear</th>
                                                                 <th>Editar</th>
                                                                 <th>Eliminar</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach ($categoria->Sub_Categorias as $sub)
-                                                                <tr>
-                                                                    <td>{{ $sub->nombre }}</td>
-                                                                    @if ($sub->nombre == 'Logs')
-                                                                        <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( $sub->permiso ) ? 'checked' : '' }} value="{{ $sub->permiso }}"></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                    @else
-                                                                        <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( $sub->permiso ) ? 'checked' : '' }} value="{{ $sub->permiso }}"></td>
-                                                                        <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( str_replace( 'view', 'create',$sub->permiso) ) ? 'checked' : '' }} value="{{ str_replace( 'view', 'create',$sub->permiso) }}"></td>
-                                                                        <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( str_replace( 'view', 'edit',$sub->permiso) ) ? 'checked' : '' }} value="{{ str_replace( 'view', 'edit',$sub->permiso) }}"></td>
-                                                                        <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( str_replace( 'view', 'delete',$sub->permiso) ) ? 'checked' : '' }} value="{{ str_replace( 'view', 'delete',$sub->permiso) }}"></td>
-                                                                    @endif
-                                                                </tr>
-                                                            @endforeach
+                                                            <tr>
+                                                                <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( str_replace( 'view', 'create', $categoria->permiso) ) ? 'checked' : '' }} value="{{ str_replace( 'view', 'create',$categoria->permiso) }}"></td>
+                                                                <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( str_replace( 'view', 'edit', $categoria->permiso) ) ? 'checked' : '' }} value="{{ str_replace( 'view', 'edit',$categoria->permiso) }}"></td>
+                                                                <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( str_replace( 'view', 'delete', $categoria->permiso) ) ? 'checked' : '' }} value="{{ str_replace( 'view', 'delete',$categoria->permiso) }}"></td>
+                                                            </tr>
                                                         </tbody>
                                                     </table>
-                                                </div>
+
+                                                @else
+
+                                                    <div class="col" >
+                                                        <table class="table table-bordered table-sm">
+                                                            <thead class="thead-light">
+                                                                <tr>
+                                                                    <th>Sub Categoria</th>
+                                                                    <th>Ver</th>
+                                                                    <th>Crear</th>
+                                                                    <th>Editar</th>
+                                                                    <th>Eliminar</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($categoria->Sub_Categorias as $sub)
+                                                                    <tr>
+                                                                        <td>{{ $sub->nombre }}</td>
+                                                                        @if ($sub->nombre == 'Logs')
+                                                                            <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( $sub->permiso ) ? 'checked' : '' }} value="{{ $sub->permiso }}"></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                        @else
+                                                                            <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( $sub->permiso ) ? 'checked' : '' }} value="{{ $sub->permiso }}"></td>
+                                                                            <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( str_replace( 'view', 'create',$sub->permiso) ) ? 'checked' : '' }} value="{{ str_replace( 'view', 'create',$sub->permiso) }}"></td>
+                                                                            <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( str_replace( 'view', 'edit',$sub->permiso) ) ? 'checked' : '' }} value="{{ str_replace( 'view', 'edit',$sub->permiso) }}"></td>
+                                                                            <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( str_replace( 'view', 'delete',$sub->permiso) ) ? 'checked' : '' }} value="{{ str_replace( 'view', 'delete',$sub->permiso) }}"></td>
+                                                                        @endif
+                                                                    </tr>
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+
+                                                @endif
+
                                             </td>
                                         </tr>
                                     @endforeach

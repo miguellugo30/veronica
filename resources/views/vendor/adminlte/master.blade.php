@@ -92,7 +92,6 @@
     @endif
 @endif
 
-
 <style>
 #cargando{
     position: fixed;
