@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Nimbus\User;
+use Nimbus\Categorias;
 
 class SettingsController extends Controller
 {
@@ -27,7 +28,8 @@ class SettingsController extends Controller
         /**
          * Obtenemos las categorias relacionadas al usuario
          */
-        $categorias = $user->categorias->where('modulos_id', 17);
+        $categorias = Categorias::active()->where('modulos_id', 17)->get();
+
         $modulo = "Settings";
 
         return view('settings::index', compact( 'rol', 'categorias', 'modulo' ));
