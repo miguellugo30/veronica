@@ -38,6 +38,7 @@ mix.js([
         'resources/js/module_settings/menu.js',
         'resources/js/module_settings/formularios.js',
         'resources/js/module_settings/acciones_formularios.js',
+        'resources/js/module_settings/audios.js',
     ], 'public/js/settings.js')
     .js([
         'resources/js/module_inbound/menu.js',
