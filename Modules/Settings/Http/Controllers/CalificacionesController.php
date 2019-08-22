@@ -20,6 +20,15 @@ class CalificacionesController extends Controller
 
     }
 
+    public function create()
+    {
+        /**
+         * Obtener los tipos de marcacion para el tipo de formulario
+         */
+      //  $TipoMarcacion = Cat_Tipo_Marcacion::all();
+
+        return view('settings::Calificaciones.create');
+    }
     
 
 }

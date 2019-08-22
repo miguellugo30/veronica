@@ -16,6 +16,28 @@ $(function() {
         $(this).addClass('table-primary');
     });
 
+    /**
+     * Evento para mostrar el formulario de crear un nueva calificacion
+     */
+    $(document).on("click", ".newCalificaciones", function(e) {
+        e.preventDefault();
+
+        $('#tituloModal').html('Nueva Calificacion');
+        let url = currentURL + '/calificaciones/create';
+
+        $('#action').removeClass('updateCalificaciones');
+        $('#action').addClass('saveCalificaciones');
+
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function(result) {
+                $('#modal').modal({ backdrop: 'static', keyboard: false });
+                $("#modal-body").html(result);
+            }
+        });
+    });
+
    
     
 });
