@@ -15,6 +15,7 @@ $(function() {
         $("#tableCalificaciones tbody tr").removeClass('table-primary');
         $(this).addClass('table-primary');
     });
+        
 
     /**
      * Evento para mostrar el formulario de crear un nueva calificacion
