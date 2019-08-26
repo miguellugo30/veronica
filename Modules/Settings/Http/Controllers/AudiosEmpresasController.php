@@ -50,7 +50,7 @@ class AudiosEmpresasController extends Controller
         /**
          * Insertar información el table de Formularios
          */
-        $request = Audios_Empresa::create(
+        Audios_Empresa::create(
             [
                 'nombre' => $request->input('nombre'),
                 'descripcion'   => $request->input('descripcion'),

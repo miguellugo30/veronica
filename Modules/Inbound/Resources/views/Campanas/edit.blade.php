@@ -1,35 +1,36 @@
 <div class="row">
-    <form enctype="multipart/form-data" id="altacampana" method="post">
+    <form enctype="multipart/form-data" id="formDataCampana" method="post">
         <div class="col">
             <fieldset>
                 <legend>Configuración:</legend>
                 <div class="form-group">
                     <label for="nombre">Nombre</label>
-                    <input type="text" class="form-control form-control-sm" id="nombre" placeholder="Nombre campaña" value="">
+                    <input type="hidden" id="id" value="{{$campana->id}}" >
+                    <input type="text" class="form-control form-control-sm" id="nombre" placeholder="Nombre campaña" value="{{$campana->nombre}}" disabled>
                     @csrf
                 </div>
                 <div class="form-group">
-                    <label for="mlogeo">Modalida de Logeo</label>
+                    <label for="mlogeo">Modalidad de Logeo</label>
                     <select name="mlogeo" id="mlogeo" class="form-control form-control-sm">
                         <option value="">Selecciona una opción</option>
-                        <option value="canal_cerrado">Sin Logeo Permanente</option>
-                        <option value="canal_abierto">Logeo Permanente</option>
+                        <option value="canal_cerrado" {{($campana->modalidad_logue == 'canal_cerrado' ) ? 'selected = "selected"':'' }}>Sin Logeo Permanente</option>
+                        <option value="canal_abierto" {{($campana->modalidad_logue == 'canal_abierto' ) ? 'selected = "selected"':'' }}>Logeo Permanente</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="strategy">Estrategia de Marcado</label>
                     <select name="strategy" id="strategy" class="form-control form-control-sm">
                         <option value="">Selecciona una opción</option>
-                        <option value="random">Aleatorio</option>
-                        <option value="fewestcalls">Incremental</option>
-                        <option value="ringall">Sonar Todas</option>
-                        <option value="roundrobin">Round Robin</option>
-                        <option value="rrmemory">Round Robin Memory</option>
+                        <option value="random" {{($campana->Campanas_Configuracion->strategy == 'random' ) ? 'selected = "selected"':'' }}>Aleatorio</option>
+                        <option value="fewestcalls" {{($campana->Campanas_Configuracion->strategy == 'fewestcalls' ) ? 'selected = "selected"':'' }}>Incremental</option>
+                        <option value="ringall" {{($campana->Campanas_Configuracion->strategy == 'ringall' ) ? 'selected = "selected"':'' }}>Sonar Todas</option>
+                        <option value="roundrobin" {{($campana->Campanas_Configuracion->strategy == 'roundrobin' ) ? 'selected = "selected"':'' }}>Round Robin</option>
+                        <option value="rrmemory" {{($campana->Campanas_Configuracion->strategy == 'rrmemory' ) ? 'selected = "selected"':'' }}>Round Robin Memory</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="wrapuptime">Tiempo de Ringeo Ext. Agente</label>
-                    <input type="text" class="form-control form-control-sm" id="wrapuptime" placeholder="15 - 100 segundos" value="">
+                    <input type="text" class="form-control form-control-sm" id="wrapuptime" placeholder="15 - 100 segundos" value="{{ $campana->Campanas_Configuracion->wrapuptime}}" >
                 </div>
                 <!-- Seccion Mesajes y sonidos -->
                 <div class="alert alert-dark" role="alert" style="height: 30px;padding: .3rem 1.25rem;">
@@ -40,7 +41,7 @@
                     <select name="msginical" id="msginical" class="form-control form-control-sm">
                         <option value="">Selecciona una opción</option>
                         @foreach ($Audios as $audio)
-                                <option value="{{$audio->ruta}}">{{ $audio->nombre }}</option>
+                            <option value="{{$audio->ruta}}" {{($audio->id == $campana->id_grabacion) ? 'selected = "selected"':'' }}>{{ $audio->nombre }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -49,7 +50,7 @@
                     <select name="periodic_announcee" id="periodic_announce" class="form-control form-control-sm">
                         <option value="call_center/agentes_no_disponibles">Selecciona una opción</option>
                         @foreach ($Audios as $audio)
-                                <option value="{{$audio->ruta}}">{{ $audio->nombre }}</option>
+                                <option value="{{$audio->ruta}}" {{($audio->id == $campana->id_grabacion) ? 'selected = "selected"':'' }}>{{ $audio->nombre }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -62,9 +63,7 @@
                     <label for="musicclass">Publicidad en la espera (opcional)</label>
                     <select name="musicclass" id="musicclass" class="form-control form-control-sm">
                         <option value="">Selecciona una opción</option>
-                        @foreach ($Mohs as $moh)
-                                <option value="{{$moh->id}}">{{ $moh->nombre }}</option>
-                        @endforeach
+
                     </select>
                 </div>
                 <div class="form-group">

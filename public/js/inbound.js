@@ -93,6 +93,8 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 $(function () {
   var currentURL = window.location.href;
   /**
@@ -167,6 +169,131 @@ $(function () {
         $('#modal').modal('show');
         $("#modal-body").html(result);
       }
+    });
+  });
+  /**
+   * Evento para guardar la nueva campana
+   *
+   */
+
+  $(document).on('click', '.saveCampana', function (event) {
+    event.preventDefault();
+    $('#modal').modal('hide');
+    var nombre = $("#nombre").val();
+    var mlogeo = $("#mlogeo").val();
+    var strategy = $("#strategy").val();
+    var wrapuptime = $("#wrapuptime").val();
+    var msginical = $("#msginical").val();
+    var periodic_announce = $("#periodic_announce").val();
+    var periodic_announce_frequency = $("#periodic_announce_frequency").val();
+    var musicclass = $("#musicclass").val();
+    var script = $("#script").val();
+    var alertstll = $("#alertstll").val();
+    var alertstdll = $("#alertstdll").val();
+    var libta = $("#libta").val();
+    var cal_lib = $("#cal_lib").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var url = currentURL + '/campanas';
+    $.ajax({
+      url: url,
+      type: "post",
+      data: {
+        nombre: nombre,
+        mlogeo: mlogeo,
+        strategy: strategy,
+        wrapuptime: wrapuptime,
+        msginical: msginical,
+        periodic_announce: periodic_announce,
+        periodic_announce_frequency: periodic_announce_frequency,
+        musicclass: musicclass,
+        script: script,
+        alertstll: alertstll,
+        alertstdll: alertstdll,
+        libta: libta,
+        cal_lib: cal_lib,
+        _token: _token
+      }
+    }).done(function (data) {
+      $('.viewResult').html(data);
+      $('.viewResult #tableCampanas').DataTable({
+        "lengthChange": false
+      });
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    });
+  });
+  /**
+   * Evento para visualizar la configuración de la campana
+   */
+
+  $(document).on('click', '.editCampana', function (event) {
+    event.preventDefault();
+    var id = $("#idSeleccionado").val();
+    $('#tituloModal').html('Detalles de Campana');
+    var url = currentURL + '/campanas/' + id + '/edit';
+    $('#action').addClass('updaCampanas');
+    $('#action').removeClass('saveCampana');
+    $.ajax({
+      url: url,
+      type: 'GET',
+      success: function success(result) {
+        $('#modal').modal({
+          backdrop: 'static',
+          keyboard: false
+        });
+        $("#modal-body").html(result);
+      }
+    });
+  });
+  /**
+   * Evento para guardar los cambios de la campana
+   */
+
+  $(document).on('click', '.updaCampanas', function (event) {
+    event.preventDefault();
+    $('#modal').modal('hide');
+    var id = $("#id").val();
+    var nombre = $("#nombre").val();
+    var mlogeo = $("#mlogeo").val();
+    var strategy = $("#strategy").val();
+    var wrapuptime = $("#wrapuptime").val();
+    var msginical = $("#msginical").val();
+    var periodic_announce = $("#periodic_announce").val();
+    var periodic_announce_frequency = $("#periodic_announce_frequency").val();
+    var musicclass = $("#musicclass").val();
+    var script = $("#script").val();
+    var alertstll = $("#alertstll").val();
+    var alertstdll = $("#alertstdll").val();
+    var libta = $("#libta").val();
+    var cal_lib = $("#cal_lib").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var _method = "PUT";
+    var url = currentURL + '/campanas/' + id;
+    $.post(url, _defineProperty({
+      nombre: nombre,
+      mlogeo: mlogeo,
+      strategy: strategy,
+      wrapuptime: wrapuptime,
+      msginical: msginical,
+      periodic_announce: periodic_announce,
+      periodic_announce_frequency: periodic_announce_frequency,
+      musicclass: musicclass,
+      script: script,
+      alertstll: alertstll,
+      alertstdll: alertstdll,
+      libta: libta,
+      cal_lib: cal_lib,
+      _token: _token,
+      _method: _method
+    }, "_token", _token), function (data, textStatus, xhr) {
+      $('.viewResult').html(data);
+      $('.viewResult #tableCampanas').DataTable({
+        "lengthChange": false
+      });
+      Swal.fire('Correcto!', 'El registro ha sido editado.', 'success');
     });
   });
 });

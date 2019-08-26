@@ -3752,6 +3752,9 @@ $(function () {
       } else if (id == 17) {
         url = currentURL + '/Audios';
         table = ' #tableAudios';
+      } else if (id == 19) {
+        url = currentURL + '/Agentes';
+        table = ' #tableAgentes';
       }
 
     $.get(url, function (data, textStatus, jqXHR) {

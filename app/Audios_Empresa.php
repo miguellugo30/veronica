@@ -10,7 +10,7 @@ class Audios_Empresa extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'nombre', 'descripcion','ruta','Empresas_id',
+        'nombre', 'descripcion','musica_en_espera','ruta','Empresas_id',
     ];
     /**
      * Nombre de la tabla que se ocupra
