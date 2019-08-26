@@ -410,12 +410,13 @@ $(function () {
     /*
     ## Opcion Calificaciones
     */
-
-
-    if (id == 23) {
-      url = currentURL + '/calificaciones';
-      table = ' #tableCalificaciones';
-    }
+    else if (id == 23) {
+        url = currentURL + '/calificaciones';
+        table = ' #tableCalificaciones';
+      } else if (id == 17) {
+        url = currentURL + '/Audios';
+        table = ' #tableAudios';
+      }
 
     $.get(url, function (data, textStatus, jqXHR) {
       $(".viewResult").html(data);
