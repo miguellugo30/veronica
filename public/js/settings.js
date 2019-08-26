@@ -167,6 +167,197 @@ $(function () {
 
 /***/ }),
 
+/***/ "./resources/js/module_settings/audios.js":
+/*!************************************************!*\
+  !*** ./resources/js/module_settings/audios.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  var currentURL = window.location.href;
+  /**
+   * Evento para mostrar el boton de eliminar seleccionando un audio
+   */
+
+  $(document).on('click', '#tableAudios tbody tr', function (event) {
+    event.preventDefault();
+    var id = $(this).data("id");
+    $(".deleteAudio").slideDown();
+    $("#idSeleccionado").val(id);
+    $("#tableAudios tbody tr").removeClass('table-primary');
+    $(this).addClass('table-primary');
+  });
+  /**
+   * Evento para eliminar el Formulario
+   *
+   */
+
+  $(document).on('click', '.deleteAudio', function (event) {
+    event.preventDefault();
+    Swal.fire({
+      title: 'Estas seguro?',
+      text: "Deseas eliminar el registro seleccionado!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Eliminar!',
+      cancelButtonText: 'Cancelar'
+    }).then(function (result) {
+      if (result.value) {
+        var id = $("#idSeleccionado").val();
+        var _method = "DELETE";
+
+        var _token = $("input[name=_token]").val();
+
+        var url = currentURL + '/Audios/' + id;
+        $.ajax({
+          url: url,
+          type: 'POST',
+          data: {
+            _token: _token,
+            _method: _method
+          },
+          success: function success(result) {
+            $('.viewResult').html(result);
+            $('.viewResult #tableAudios').DataTable({
+              "lengthChange": false
+            });
+            Swal.fire('Eliminado!', 'El registro ha sido eliminado.', 'success');
+          }
+        });
+      }
+    });
+  });
+  /**
+   * Evento para mostrar el formulario de crear un nuevo Audio
+   */
+
+  $(document).on("click", ".newAudio", function (e) {
+    event.preventDefault();
+    $('#tituloModal').html('Nuevo Audio');
+    $('#action').removeClass('deleteAudio');
+    $('#action').addClass('saveAudio');
+    var url = currentURL + "/Audios/create";
+    $.get(url, function (data, textStatus, jqXHR) {
+      $('#modal').modal('show');
+      $("#modal-body").html(data);
+    });
+  }); //Ingresa el nombre del archivo seleccionado en el campo del browser
+
+  $(document).on('change', '#file', function (e) {
+    $('#labelFile').html(e.target.files[0]['name']);
+  });
+  /**
+   * Evento para guardar el nuevo audio
+   */
+
+  $(document).on('click', '.saveAudio', function (event) {
+    event.preventDefault();
+    $('#modal').modal('hide');
+    var formData = new FormData(document.getElementById("altaaudio"));
+    var nombre = $("#name").val();
+    var descripcion = $("#descripcion").val();
+    var labelFile = $("#labelFile").text();
+    var file = $("#file").val();
+
+    var _token = $("input[name=_token]").val();
+
+    formData.append("nombre", nombre);
+    formData.append("descripcion", descripcion);
+    formData.append("ruta", labelFile);
+    formData.append("File", File);
+    formData.append("_token", _token);
+    var url = currentURL + '/Audios';
+    $.ajax({
+      url: url,
+      type: "post",
+      dataType: "html",
+      data: formData,
+      cache: false,
+      contentType: false,
+      processData: false
+    }).done(function (data) {
+      $('.viewResult').html(data);
+      $('.viewResult #tableAudios').DataTable({
+        "lengthChange": false
+      });
+    });
+    Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+  });
+  /**
+   * Evento para eliminar el distribuidores
+   *
+   */
+
+  $(document).on('click', '.deleteAudio', function (event) {
+    event.preventDefault();
+    Swal.fire({
+      title: 'Estas seguro?',
+      text: "Deseas eliminar el registro seleccionado!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Eliminar!',
+      cancelButtonText: 'Cancelar'
+    }).then(function (result) {
+      if (result.value) {
+        var id = $("#idSeleccionado").val();
+        var _method = "DELETE";
+
+        var _token = $("input[name=_token]").val();
+
+        var url = currentURL + '/Audios/' + id;
+        $.ajax({
+          url: url,
+          type: 'POST',
+          data: {
+            _token: _token,
+            _method: _method
+          },
+          success: function success(result) {
+            $('.viewResult').html(result);
+            $('.viewResult #tableAudios').DataTable({
+              "lengthChange": false
+            });
+            Swal.fire('Eliminado!', 'El registro ha sido eliminado.', 'success');
+          }
+        });
+      }
+    });
+  });
+});
+
+/***/ }),
+
+/***/ "./resources/js/module_settings/calificaciones.js":
+/*!********************************************************!*\
+  !*** ./resources/js/module_settings/calificaciones.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  var currentURL = window.location.href;
+  /**
+   * Evento que muestra elemento calificaciones
+   */
+
+  $(document).on('click', '#tableCalificaciones tbody tr', function (event) {
+    event.preventDefault();
+    var id = $(this).data("id");
+    $(".editCalificaciones").slideDown();
+    $(".deleteCalificaciones").slideDown();
+    $("#idSeleccionado").val(id);
+    $("#tableCalificaciones tbody tr").removeClass('table-primary');
+    $(this).addClass('table-primary');
+  });
+});
+
+/***/ }),
+
 /***/ "./resources/js/module_settings/formularios.js":
 /*!*****************************************************!*\
   !*** ./resources/js/module_settings/formularios.js ***!
@@ -705,16 +896,18 @@ $(function () {
 /***/ }),
 
 /***/ 1:
-/*!***********************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/module_settings/menu.js ./resources/js/module_settings/formularios.js ./resources/js/module_settings/sub_formularios.js ./resources/js/module_settings/acciones_formularios.js ***!
-  \***********************************************************************************************************************************************************************************************************/
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/module_settings/menu.js ./resources/js/module_settings/formularios.js ./resources/js/module_settings/sub_formularios.js ./resources/js/module_settings/acciones_formularios.js ./resources/js/module_settings/audios.js ./resources/js/module_settings/calificaciones.js ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\menu.js */"./resources/js/module_settings/menu.js");
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\formularios.js */"./resources/js/module_settings/formularios.js");
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\sub_formularios.js */"./resources/js/module_settings/sub_formularios.js");
-module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\acciones_formularios.js */"./resources/js/module_settings/acciones_formularios.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\acciones_formularios.js */"./resources/js/module_settings/acciones_formularios.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\audios.js */"./resources/js/module_settings/audios.js");
+module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\calificaciones.js */"./resources/js/module_settings/calificaciones.js");
 
 
 /***/ })
