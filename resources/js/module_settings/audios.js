@@ -13,50 +13,6 @@ $(function() {
         $(this).addClass('table-primary');
     });
     /**
-     * Evento para eliminar el Formulario
-     *
-     */
-    $(document).on('click', '.deleteAudio', function(event) {
-        event.preventDefault();
-        Swal.fire({
-            title: 'Estas seguro?',
-            text: "Deseas eliminar el registro seleccionado!",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Si, Eliminar!',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if (result.value) {
-                let id = $("#idSeleccionado").val();
-                let _method = "DELETE";
-                let _token = $("input[name=_token]").val();
-                let url = currentURL + '/Audios/' + id;
-
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    data: {
-                        _token: _token,
-                        _method: _method
-                    },
-                    success: function(result) {
-                        $('.viewResult').html(result);
-                        $('.viewResult #tableAudios').DataTable({
-                            "lengthChange": false
-                        });
-                        Swal.fire(
-                            'Eliminado!',
-                            'El registro ha sido eliminado.',
-                            'success'
-                        )
-                    }
-                });
-            }
-        });
-    });
-    /**
      * Evento para mostrar el formulario de crear un nuevo Audio
      */
     $(document).on("click", ".newAudio", function(e) {
@@ -120,7 +76,7 @@ $(function() {
         )
     });
     /**
-     * Evento para eliminar el distribuidores
+     * Evento para eliminar el Audio
      *
      */
     $(document).on('click', '.deleteAudio', function(event) {

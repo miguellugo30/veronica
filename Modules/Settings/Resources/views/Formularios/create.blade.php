@@ -38,10 +38,10 @@
                     <tbody>
                         <tr id="tr_1" class="clonar">
                             <td>
-                                <input type="text" class="form-control form-control-sm opciones" name="campo_1[]" id="nombre_campo" placeholder="Nombre Campo">
+                                <input type="text" class="form-control form-control-sm opciones" name="nombre_campo_1" id="nombre_campo" placeholder="Nombre Campo">
                             </td>
                             <td>
-                                <select name="campo_1[]" id="tipo_campo"  class="form-control form-control-sm opciones">
+                                <select name="tipo_campo_1" id="tipo_campo" data-action="create" class="form-control form-control-sm opciones subFormulario">
                                     <option value="">Selecciona un tipo</option>
                                     <option value="text">Texto Corto</option>
                                     <option value="textarea">Texto Largo</option>
@@ -59,22 +59,22 @@
                                 </select>
                             </td>
                             <td>
-                                <input type="text" class="form-control form-control-sm opciones" name="campo_1[]" id="tamano" placeholder="Longitud">
+                                <input type="text" class="form-control form-control-sm opciones" name="tamano_1" id="tamano" placeholder="Longitud">
                             </td>
                             <td>
-                                <input type="checkbox" class="micheckbox opciones" name="campo_1[]" id="obligatorio" >
-                                <input type="hidden" name="campo_1[]" id="obligatorio_hidden_1" value="off" class="opciones">
+                                <input type="checkbox" class="micheckbox opciones" name="obligatorio_1" id="obligatorio" >
+                                <input type="hidden" name="obligatorio_hidden_1" id="obligatorio_hidden" value="off" class="opciones">
                             </td>
                             <td>
-                                <input type="checkbox" class="micheckbox opciones" name="campo_1[]" id="editable">
-                                <input type="hidden" name="campo_1[]" id="editable_hidden_1" value="off" class="opciones">
-                                <input type="hidden" name="campo_1[]" id="opciones_1" class="opciones" value="">
+                                <input type="checkbox" class="micheckbox opciones" name="editable_1" id="editable">
+                                <input type="hidden" name="editable_hidden_1" id="editable_hidden" value="off" class="opciones">
+                                <input type="hidden" name="opciones_1" id="opciones" class="opciones " value="">
                             </td>
                             <td class="tr_clone_remove text-center">
                                 <button type="button" name="remove" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                             </td>
                             <td class="text-center">
-                                <button type="button" name="view" id="view_1" class="btn btn-info view" style="display:none"><i class="fas fa-eye"></i></button>
+                                <button type="button" name="view_1" id="view" class="btn btn-info view" style="display:none"><i class="fas fa-eye"></i></button>
                             </td>
                         </tr>
                     </tbody>

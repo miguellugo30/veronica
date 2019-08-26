@@ -1,16 +1,14 @@
 <?php
 
-namespace Modules\Administrador\Http\Controllers;
+namespace Modules\Settings\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Session;
-use Nimbus\User;
-use Nimbus\Categorias;
-use Illuminate\Support\Facades\Auth;
+use Nimbus\Campos;
+use Nimbus\Formularios;
 
-class AdministradorController extends Controller
+class CamposController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,21 +16,7 @@ class AdministradorController extends Controller
      */
     public function index()
     {
-        /**
-         * Obtenemos los datos del usuario logeado
-         */
-        $user = User::find( Auth::id() );
-        /**
-         * Obtenemos el rol del usuario logeado
-         */
-        $rol = $user->getRoleNames();
-        /**
-         * Obtenemos las categorias relacionadas al usuario
-         */
-        $categorias = Categorias::active()->where('modulos_id', 18)->get();
-        $modulo = "Administrador";
-
-        return view('administrador::index', compact( 'rol', 'categorias', 'modulo' ) );
+        return view('settings::index');
     }
 
     /**
@@ -41,10 +25,7 @@ class AdministradorController extends Controller
      */
     public function create()
     {
-        $rol        = Session::get('rol');
-        $categorias = Session::get('categorias');
-
-        return view('administrador::create', compact( 'rol', 'categorias' ));
+        return view('settings::create');
     }
 
     /**
@@ -64,7 +45,7 @@ class AdministradorController extends Controller
      */
     public function show($id)
     {
-        return view('administrador::show');
+        return view('settings::show');
     }
 
     /**
@@ -74,7 +55,7 @@ class AdministradorController extends Controller
      */
     public function edit($id)
     {
-        return view('administrador::edit');
+        return view('settings::edit');
     }
 
     /**
@@ -95,6 +76,9 @@ class AdministradorController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $ids = explode('&', $id);
+        $form = Formularios::find( $ids[1] );
+        $form->Formularios_Campos()->detach($ids[0]);
+
     }
 }

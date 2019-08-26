@@ -25,7 +25,6 @@ class FormulariosController extends Controller
         return view('settings::Formularios.index',compact('formularios'));
 
     }
-
     /**
      * Show the form for creating a new resource.
      * @return Response
@@ -39,7 +38,6 @@ class FormulariosController extends Controller
 
         return view('settings::Formularios.create', compact('TipoMarcacion'));
     }
-
     /**
      * Store a newly created resource in storage.
      * @param Request $request
@@ -50,10 +48,10 @@ class FormulariosController extends Controller
         $dataForm = $request->input('dataForm');
 
         for ($i=0; $i < count( $dataForm ); $i++) {
-            $data[ $dataForm[$i]['name']."_".$i ] = $dataForm[$i]['value'];
+            $data[ $dataForm[$i]['name']] = $dataForm[$i]['value'];
         }
 
-         /**
+        /**
          * Obtenemos los datos del usuario logeado
          */
         $user = User::find( Auth::id() );
@@ -61,44 +59,50 @@ class FormulariosController extends Controller
         /**
          * Insertar información el table de Formularios
          */
-         $formulario = Formularios::create([
-             'nombre'=> $data['nombre_1'],
-             'Cat_Tipo_Marcacion_id'=>$data['tipo_0'],
-             'Empresas_id'=>$empresa_id
-             ]);
+        $formulario = Formularios::create([
+                                            'nombre'=> $data['nombre'],
+                                            'Cat_Tipo_Marcacion_id'=>$data['tipo'],
+                                            'Empresas_id'=>$empresa_id
+                                        ]);
 
         array_shift( $data );
         array_shift( $data );
         array_shift( $data );
 
         $info = array_chunk( $data, 6 );
-
         /**
          * Insertamos la información de los campos
          */
-
         for ($i=0; $i < count( $info ); $i++) {
 
             if ( $info[$i][1] == 'asignador_folios' ) {
-
-                $folio = array();
-                $b =  explode( '&', $info[$i][5]);
-                for ($j=0; $j < count($b); $j++) {
-                    $c = explode('=',$b[$j]);
-                    array_push( $folio, $c[1] );
-                }
-
+                /**
+                 * Obtenemos las opciones que vienen en formato JSON
+                 * Y lo convertimos en un array
+                 */
+                $opciones = json_decode($info[$i][5], true);
+                /**
+                 * Insertamos el campo de tipo select
+                 */
                 $campo = Campos::create([
                                             'nombre_campo' => $info[$i][0],
                                             'tipo_campo' => $info[$i][1],
                                             'tamano' => $info[$i][2],
                                             'obligatorio' => $info[$i][3],
                                             'editable' => $info[$i][4],
-                                            'prefijo' => $folio[0],
-                                            'folio' => $folio[1]
+                                            'prefijo' => $opciones[0]['value'],
+                                            'folio' => $opciones[1]['value']
                                         ]);
-            } else if ( $info[$i][1] == 'select' ) {
 
+            } else if ( $info[$i][1] == 'select' ) {
+                /**
+                 * Obtenemos las opciones que vienen en formato JSON
+                 * Y lo convertimos en un array
+                 */
+                $opciones = json_decode($info[$i][5], true);
+                /**
+                 * Insertamos el campo de tipo select
+                 */
                 $campo = Campos::create([
                                             'nombre_campo' => $info[$i][0],
                                             'tipo_campo' => $info[$i][1],
@@ -106,24 +110,25 @@ class FormulariosController extends Controller
                                             'obligatorio' => $info[$i][3],
                                             'editable' => $info[$i][4]
                                         ]);
-
-                $b =  explode( '&', $info[$i][5]);
+                /**
+                 * Insertamos las opciones y las relacionamos al campo
+                 * y al formulario que llamara si eligen uno
+                 */
                 $k = 0;
-                for ($j=0; $j < ( count($b) / 2 ); $j++) {
-                    $c = explode('=',$b[$k]);
-                    $d = explode('=',$b[$k + 1]);
-
+                for ($j=0; $j < ( count($opciones) / 2 ); $j++) {
                     Sub_Formularios::create([
-                        'opcion' => urldecode( $c[1] ),
-                        'texto' => urldecode( $c[1] ),
-                        'Formularios_id' => $d[1],
-                        'Campos_id' =>$campo->id
-                    ]);
-
+                                                'opcion' => $opciones[$k]['value'],
+                                                'texto' => $opciones[$k]['value'],
+                                                'Formularios_id' => $opciones[$k+1]['value'],
+                                                'Campos_id' =>$campo->id
+                                            ]);
                     $k = $k + 2;
                 }
 
             } else {
+                /**
+                 * Insertamos un campo
+                 */
                 $campo = Campos::create([
                                             'nombre_campo' => $info[$i][0],
                                             'tipo_campo' => $info[$i][1],
@@ -131,6 +136,7 @@ class FormulariosController extends Controller
                                             'obligatorio' => $info[$i][3],
                                             'editable' => $info[$i][4]
                                         ]);
+
             }
 
             DB::table('Formularios_Campos')->insert(
@@ -138,7 +144,6 @@ class FormulariosController extends Controller
             );
 
         }
-
         return redirect()->route('formularios.index');
     }
 
@@ -179,7 +184,6 @@ class FormulariosController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $dataForm = $request->input('dataForm');
 
         for ($i=0; $i < count( $dataForm ); $i++) {
@@ -187,20 +191,8 @@ class FormulariosController extends Controller
         }
 
         $idFormulario = $data['id_formulario'];
-        $registrosEliminados = $data['registro_borrados'];
-
-        if( $registrosEliminados != '' ){
-            $registros = explode(',', $registrosEliminados);
-
-            $form = Formularios::find( $idFormulario );
-            $form->Formularios_Campos()->detach($registros);
-
-        }
 
         array_shift( $data );
-        array_shift( $data );
-        array_shift( $data );
-
         $info = array_chunk( $data, 6 );
 
         for ($i=0; $i < count( $info ); $i++) {
@@ -241,6 +233,34 @@ class FormulariosController extends Controller
     {
         Formularios::where('id',$id)
         ->update(['activo'=>'0']);
+
+        return redirect()->route('formularios.index');
+    }
+    /**
+     * Remove the specified resource from storage.
+     * @param int $id
+     * @return Response
+     */
+    public function duplicate(Request $request, $id)
+    {
+        /**
+         * Buscamos el formulario a duplicar
+         */
+        $form = Formularios::find( $id );
+        /**
+         * Insertar información el table de Formularios
+         */
+        $formulario = Formularios::create([
+                                            'nombre' => $request->input('nombreForm'),
+                                            'Cat_Tipo_Marcacion_id' => $form->Cat_Tipo_Marcacion_id,
+                                            'Empresas_id' => $form->Empresas_id
+                                        ]);
+
+        foreach ( $form->Formularios_Campos as $v) {
+            DB::table('Formularios_Campos')->insert(
+                ['Formularios_id' => $formulario->id, 'Campos_id' => $v->id]
+            );
+        }
 
         return redirect()->route('formularios.index');
     }

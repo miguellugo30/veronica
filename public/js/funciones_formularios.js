@@ -1,6 +1,5 @@
 $(function() {
 
-    idFormPr = $("#idForm").val();
     currentURL = window.location.href;
 
     $(document).on('click', '#btn_bloque_ocultos', function(event) {
@@ -8,18 +7,11 @@ $(function() {
         link.removeEventListener('click', clickHandler, false);
     });
 
-    console.log(idFormPr);
-
-    $(document).on('change', '#' + idFormPr + ' select', function(event) {
-
-        link.removeEventListener('click', clickHandler, false);
+    $(document).on('change', '.formularioView select', function(event) {
 
         event.preventDefault();
         idOpc = $(this).val();
         idCampo = $(this).data('id');
-
-        console.log(idOpc);
-        console.log(idCampo);
 
         let url = currentURL + '/formularios/' + idOpc;
 

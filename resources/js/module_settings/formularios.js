@@ -13,7 +13,6 @@ $(function() {
         $("#tableFormulario tbody tr").removeClass('table-primary');
         $(this).addClass('table-primary');
     });
-
     /**
      * Evento para eliminar el Formulario
      *
@@ -79,8 +78,6 @@ $(function() {
             }
         });
     });
-
-
     /**
      * Evento para guardar el nuevo modulo
      */
@@ -89,6 +86,7 @@ $(function() {
         $('#modal').modal('hide');
 
         let dataForm = $("#formDataFormulario").serializeArray();
+
         let _token = $("input[name=_token]").val();
         let url = currentURL + '/formularios';
 
@@ -121,7 +119,6 @@ $(function() {
             }
         });
     });
-
     /**
      * Evento para visualizar la configuración de formulario
      */
@@ -162,5 +159,50 @@ $(function() {
             $('.viewResult').html(data);
         });
 
+    });
+    /**
+     * Evento para duplicar el Formulario
+     *
+     */
+    $(document).on('click', '.cloneFormulario', function(event) {
+        event.preventDefault();
+        Swal.fire({
+            title: 'Nombre del nuevo formulario',
+            input: 'text',
+            inputAttributes: {
+                autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            cancelButtonText: 'Cancelar',
+            confirmButtonText: 'Duplicar',
+            showLoaderOnConfirm: true,
+            preConfirm: (nombreForm) => {
+                console.log(nombreForm)
+                let id = $("#idSeleccionado").val();
+                let url = currentURL + '/formularios/duplicar/' + id;
+                let _token = $("input[name=_token]").val();
+
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    data: {
+                        id: id,
+                        nombreForm: nombreForm,
+                        _token: _token,
+                    },
+                    success: function success(result) {
+                        $('.viewResult').html(result);
+                        $('.viewResult #tableFormulario').DataTable({
+                            "lengthChange": false
+                        });
+                        Swal.fire(
+                            'Duplicado!',
+                            'El registro ha sido duplicado.',
+                            'success'
+                        )
+                    }
+                });
+            }
+        });
     });
 });

@@ -37,8 +37,10 @@ mix.js([
     .js([
         'resources/js/module_settings/menu.js',
         'resources/js/module_settings/formularios.js',
+        'resources/js/module_settings/sub_formularios.js',
         'resources/js/module_settings/acciones_formularios.js',
         'resources/js/module_settings/audios.js',
+        'resources/js/module_settings/agentes.js',
     ], 'public/js/settings.js')
     .js([
         'resources/js/module_inbound/menu.js',

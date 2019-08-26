@@ -92,6 +92,8 @@
     @endif
 @endif
 
+<script src="{{ asset('js/funciones_formularios.js') }}"></script>
+
 <style>
 #cargando{
     position: fixed;
