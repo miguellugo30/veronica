@@ -39,3 +39,9 @@ Route::group(['namespace' => '\Modules\Settings\Http\Controllers', 'prefix' => '
 Route::group(['namespace' => '\Modules\Settings\Http\Controllers', 'prefix' => 'settings', 'middleware' => 'auth'], function() {
     Route::resource('Audios','AudiosEmpresasController');
 });
+/**
+ * Rutas para CRUD de Agentes
+ */
+Route::group(['namespace' => '\Modules\Settings\Http\Controllers', 'prefix' => 'settings', 'middleware' => 'auth'], function() {
+    Route::resource('Agentes','AgentesController');
+});

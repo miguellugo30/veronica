@@ -1,16 +1,18 @@
 <?php
 
-namespace Modules\Administrador\Http\Controllers;
+namespace Modules\Settings\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Session;
-use Nimbus\User;
-use Nimbus\Categorias;
+use Nimbus\Http\Controllers\LogController;
 use Illuminate\Support\Facades\Auth;
 
-class AdministradorController extends Controller
+use Nimbus\User;
+use Nimbus\Agentes;
+
+
+class AgentesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,20 +21,13 @@ class AdministradorController extends Controller
     public function index()
     {
         /**
-         * Obtenemos los datos del usuario logeado
+         * Sacamos los datos del agente y su empresa para obtener los agentes
          */
         $user = User::find( Auth::id() );
-        /**
-         * Obtenemos el rol del usuario logeado
-         */
-        $rol = $user->getRoleNames();
-        /**
-         * Obtenemos las categorias relacionadas al usuario
-         */
-        $categorias = Categorias::active()->where('modulos_id', 18)->get();
-        $modulo = "Administrador";
+        $empresa_id = $user->id_cliente;
 
-        return view('administrador::index', compact( 'rol', 'categorias', 'modulo' ) );
+        $agentes = Agentes::active()->where('Empresas_id',$empresa_id)->get();
+        return view('settings::Agentes.index',compact('agentes'));
     }
 
     /**
@@ -41,10 +36,7 @@ class AdministradorController extends Controller
      */
     public function create()
     {
-        $rol        = Session::get('rol');
-        $categorias = Session::get('categorias');
-
-        return view('administrador::create', compact( 'rol', 'categorias' ));
+        return view('settings::Agentes.create');
     }
 
     /**
@@ -55,6 +47,7 @@ class AdministradorController extends Controller
     public function store(Request $request)
     {
         //
+        dd($request);
     }
 
     /**
@@ -64,7 +57,7 @@ class AdministradorController extends Controller
      */
     public function show($id)
     {
-        return view('administrador::show');
+        return view('settings::show');
     }
 
     /**
@@ -74,7 +67,8 @@ class AdministradorController extends Controller
      */
     public function edit($id)
     {
-        return view('administrador::edit');
+        $agente = Agentes::where('id',$id)->first();
+        return view('settings::Agentes.edit',compact('agente'));
     }
 
     /**
@@ -86,6 +80,7 @@ class AdministradorController extends Controller
     public function update(Request $request, $id)
     {
         //
+        dd($request);
     }
 
     /**
@@ -95,6 +90,16 @@ class AdministradorController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Agentes::where('id',$id)
+        ->update(['activo'=>'0']);
+
+        return redirect()->route('Agentes.index');
+         /**
+         * Creamos el logs
+         */
+        $mensaje = 'Se Elimino un registro con id: '.$id;
+        $log = new LogController;
+        $log->store('Eliminacion', 'User', $mensaje, $id);
+
     }
 }
