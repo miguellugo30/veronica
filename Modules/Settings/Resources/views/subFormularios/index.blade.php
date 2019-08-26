@@ -4,11 +4,11 @@
         <div class="box-tools pull-right">
             <div class="btn-group dropleft" style="display:none" >
                 <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Accion
+                    Action
                 </button>
                 <div class="dropdown-menu">
                     <a class="dropdown-item editFormulario" href="#"><i class="fas fa-pen-square"></i> Editar</a>
-                    <a class="dropdown-item cloneFormulario" href="#"><i class="fas fa-clone"></i> Duplicar</a>
+                    <a class="dropdown-item cloneFormulario" href="#"><i class="fas fa-clone"></i> Clonar</a>
                     <a class="dropdown-item viewFormulario" href="#"><i class="fas fa-eye"></i> Visualizar</a>
                     <div class="dropdown-divider"></div>
                     @can('delete formularios')
