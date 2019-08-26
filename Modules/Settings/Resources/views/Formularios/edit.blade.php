@@ -17,8 +17,6 @@
                     <label for="nombre"><b> Nombre Formulario</b></label>
                     <input type="text" class="form-control form-control-sm" id="nombre" name="nombre" placeholder="Nombre Formulario" value='{{$formulario->nombre}}' disabled >
                     <input type="hidden" name="id_formulario" id="id_formulario" value="{{$formulario->id}}">
-                    <input type="hidden" name="registro_borrados" id="registros_borrados" value="">
-                    @csrf
                 </div>
             </div>
         </div>
@@ -33,18 +31,19 @@
                             <th>Longitud</th>
                             <th>Requerido</th>
                             <th>Editable</th>
-                            <td><input type="button" class="btn btn-primary btn-sm" id = "add" value = "Agregar campo" /></td>
+                            <td class="text-center"><input type="button" class="btn btn-primary btn-sm" id = "add" value = "Agregar campo" /></td>
+                            <td></td>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($campos as $campo)
-                        <tr id="tr_1">
+                        <tr id="tr_{{$campo->id }}" class="clonar">
                             <td>
-                                <input type="hidden" name="id_campo_{{$campo->id }}" id="id_campo" value="{{$campo->id }}">
-                                <input type="text" class="form-control form-control-sm " name="nombre_campo_{{$campo->id }}" id="nombre_campo" value='{{$campo->nombre_campo }}'>
+                                <input type="hidden" name="id_campo_{{$campo->id }}" class="opciones" id="id_campo" value="{{$campo->id }}">
+                                <input type="text" class="form-control form-control-sm opciones" name="nombre_campo_{{$campo->id }}" id="nombre_campo" value='{{$campo->nombre_campo }}'>
                             </td>
                             <td>
-                                <select name="tipo_campo_{{$campo->id }}" id="tipo_campo"  class="form-control form-control-sm">
+                                <select name="tipo_campo_{{$campo->id }}" id="tipo_campo" data-action="edit" class="form-control form-control-sm opciones">
                                     <option value="">Selecciona un tipo</option>
                                     <option value="text" {{('text' == $campo->tipo_campo) ? 'selected = "selected"':'' }}>Texto Corto</option>
                                     <option value="textarea" {{('textarea' == $campo->tipo_campo) ? 'selected = "selected"':'' }}>Texto Largo</option>
@@ -62,18 +61,21 @@
                                 </select>
                             </td>
                             <td>
-                                <input type="text" class="form-control form-control-sm" name="tamano_{{$campo->id }}" id="tamano" value='{{$campo->tamano }}'>
+                                <input type="text" class="form-control form-control-sm opciones" name="tamano_{{$campo->id }}" id="tamano" value='{{$campo->tamano }}'>
                             </td>
                             <td>
-                                <input type="checkbox" class="micheckbox" name="obligatorio_{{$campo->id }}" id="obligatorio" {{('on' == $campo->obligatorio) ? 'checked':'' }} >
-                                <input type="hidden" name="obligatorio_{{$campo->id }}_hidden" id="obligatorio_hidden" value="off" {{('on' == $campo->obligatorio) ? 'disabled':'' }}>
+                                <input type="checkbox" class="micheckbox opciones" name="obligatorio_{{$campo->id }}" id="obligatorio" {{('on' == $campo->obligatorio) ? 'checked':'' }} >
+                                <input type="hidden" name="obligatorio_hidden_{{$campo->id }}" class="opciones" id="obligatorio_hidden" value="off" {{('on' == $campo->obligatorio) ? 'disabled':'' }}>
                             </td>
                             <td>
-                                <input type="checkbox" class="micheckbox" name="editable_{{$campo->id }}" id="editable" {{('on' == $campo->editable) ? 'checked':'' }} >
-                                <input type="hidden" name="editable_{{$campo->id }}_hidden" id="editable_hidden" value="off" {{('on' == $campo->editable) ? 'disabled':'' }}>
+                                <input type="checkbox" class="micheckbox opciones" name="editable_{{$campo->id }}" id="editable" {{('on' == $campo->editable) ? 'checked':'' }} >
+                                <input type="hidden" name="editable_hidden_{{$campo->id }}" class="opciones campoEdi" id="editable_hidden" value="off" {{('on' == $campo->editable) ? 'disabled':'' }}>
                             </td>
-                            <td class="">
-                                <button type="button" name="remove" class="btn btn-danger tr_edit_remove" data-id-campo="{{$campo->id }}"><i class="fas fa-trash-alt"></i></button>
+                            <td class="text-center">
+                                <button type="button" name="remove" id="id_campo" class="btn btn-danger tr_edit_remove" data-id-campo="{{$campo->id }}"><i class="fas fa-trash-alt"></i></button>
+                            </td>
+                            <td class="text-center">
+                                <button type="button" name="view" id="view_{{$campo->id }}" class="btn btn-info edit_opciones" data-id-campo="{{$campo->id }}"  {{ ( ( $campo->Sub_Formularios->count() > 0 ) || ('asignador_folios' == $campo->tipo_campo) ) ? "" : 'style=display:none' }} > <i class="fas fa-eye"></i></button>
                             </td>
                         </tr>
                         @endforeach
