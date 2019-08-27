@@ -474,6 +474,32 @@ $(function () {
 
 /***/ }),
 
+/***/ "./resources/js/module_settings/calificaciones.js":
+/*!********************************************************!*\
+  !*** ./resources/js/module_settings/calificaciones.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  var currentURL = window.location.href;
+  /**
+   * Evento que muestra elemento calificaciones
+   */
+
+  $(document).on('click', '#tableCalificaciones tbody tr', function (event) {
+    event.preventDefault();
+    var id = $(this).data("id");
+    $(".editCalificaciones").slideDown();
+    $(".deleteCalificaciones").slideDown();
+    $("#idSeleccionado").val(id);
+    $("#tableCalificaciones tbody tr").removeClass('table-primary');
+    $(this).addClass('table-primary');
+  });
+});
+
+/***/ }),
+
 /***/ "./resources/js/module_settings/formularios.js":
 /*!*****************************************************!*\
   !*** ./resources/js/module_settings/formularios.js ***!
@@ -1429,6 +1455,7 @@ $(function () {
 /***/ }),
 
 /***/ 1:
+<<<<<<< HEAD
 /*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** multi ./resources/js/module_settings/menu.js ./resources/js/module_settings/formularios.js ./resources/js/module_settings/sub_formularios.js ./resources/js/module_settings/acciones_formularios.js ./resources/js/module_settings/audios.js ./resources/js/module_settings/agentes.js ./resources/js/module_settings/grupos.js ***!
   \***************************************************************************************************************************************************************************************************************************************************************************************************************************************/
@@ -1442,6 +1469,21 @@ __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\acci
 __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\audios.js */"./resources/js/module_settings/audios.js");
 __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\agentes.js */"./resources/js/module_settings/agentes.js");
 module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\grupos.js */"./resources/js/module_settings/grupos.js");
+=======
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/module_settings/menu.js ./resources/js/module_settings/formularios.js ./resources/js/module_settings/sub_formularios.js ./resources/js/module_settings/acciones_formularios.js ./resources/js/module_settings/audios.js ./resources/js/module_settings/calificaciones.js ./resources/js/module_settings/agentes.js ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\menu.js */"./resources/js/module_settings/menu.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\formularios.js */"./resources/js/module_settings/formularios.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\sub_formularios.js */"./resources/js/module_settings/sub_formularios.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\acciones_formularios.js */"./resources/js/module_settings/acciones_formularios.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\audios.js */"./resources/js/module_settings/audios.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\calificaciones.js */"./resources/js/module_settings/calificaciones.js");
+module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\agentes.js */"./resources/js/module_settings/agentes.js");
+>>>>>>> f7fb5fbcd124395906be33d092f9f31b02bbe058
 
 
 /***/ })

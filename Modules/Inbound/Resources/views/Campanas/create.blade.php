@@ -29,7 +29,7 @@
                 </div>
                 <div class="form-group">
                     <label for="wrapuptime">Tiempo de Ringeo Ext. Agente</label>
-                    <input type="wrapuptime" class="form-control form-control-sm" id="wrapuptime" placeholder="15 - 100 segundos" value="">
+                    <input type="text" class="form-control form-control-sm" id="wrapuptime" placeholder="15 - 100 segundos" value="">
                 </div>
                 <!-- Seccion Mesajes y sonidos -->
                 <div class="alert alert-dark" role="alert" style="height: 30px;padding: .3rem 1.25rem;">
@@ -55,8 +55,9 @@
                 </div>
                 <div class="form-group">
                     <label for="periodic_announce_frequency">Repetir mensaje "Agentes no disponibles" cada</label>
-                    <input type="periodic_announce_frequency" class="form-control form-control-sm" id="periodic_announce_frequency" placeholder="segundos" value="">
+                    <input type="text" class="form-control form-control-sm" id="periodic_announce_frequency" placeholder="segundos" value="">
                 </div>
+                <!--
                 <div class="form-group">
                     <label for="musicclass">Publicidad en la espera (opcional)</label>
                     <select name="musicclass" id="musicclass" class="form-control form-control-sm">
@@ -66,7 +67,6 @@
                         @endforeach
                     </select>
                 </div>
-                <!--
                 <div class="form-group">
                     <label for="periodic-announce-frequency">Repetir Publicidad cada</label>
                     <input type="periodic-announce-frequency" class="form-control form-control-sm" id="periodic-announce-frequency" placeholder="segundos" value="">
@@ -89,21 +89,21 @@
                 </div>
                 <div class="form-group">
                     <label for="alertstll">Alerta sonora tiempo en Llamada</label>
-                    <input type="alertstll" class="form-control form-control-sm" id="alertstll" placeholder="0 segundos" value="">
+                    <input type="text" class="form-control form-control-sm" id="alertstll" placeholder="0 segundos" value="">
                 </div>
                 <div class="form-group">
                     <label for="alertstdll">Alerta Sonora tiempo definiendo llamada</label>
-                    <input type="alertstdll" class="form-control form-control-sm" id="alertstdll" placeholder="0 segundos" value="">
+                    <input type="text" class="form-control form-control-sm" id="alertstdll" placeholder="0 segundos" value="">
                 </div>
                 <div class="form-group">
                     <label for="libta">Liberacion de Terminal (Regresar a Disponible agente)</label>
-                    <input type="libta" class="form-control form-control-sm" id="libta" placeholder="0 segundos" value="">
+                    <input type="text" class="form-control form-control-sm" id="libta" placeholder="0 segundos" value="">
                 </div>
                 <div class="form-group">
                     <label for="cal_lib">Calificacion de Liberacion (En caso de activar opcion anterior)</label>
                     <select name="cal_lib" id="cal_lib" class="form-control form-control-sm">
                         <option value="">Seleccione Calificacion</option>
-                        
+
 
                     </select>
                 </div>

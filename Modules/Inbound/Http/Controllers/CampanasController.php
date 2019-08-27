@@ -48,14 +48,11 @@ class CampanasController extends Controller
      */
     public function store(Request $request)
     {
-        //
         /**
          * Obtenemos los datos del usuario logeado
          */
         $user = User::find( Auth::id() );
         $empresa_id = $user->id_cliente;
-
-        //dd($request);
         /**
          * Insertar información el table de Formularios
          */
@@ -82,15 +79,15 @@ class CampanasController extends Controller
                 'Campanas_id'   => $campana->id
             ]
         );
-        return redirect()->route('campanas.index');
         /**
          * Creamos el logs
          */
         $mensaje = 'Se creo un nuevo registro, informacion capturada:'.var_export($request->all(), true);
         $log = new LogController;
         $log->store('Insercion', 'User',$mensaje, $user->id);
-    }
 
+        return redirect()->route('campanas.index');
+    }
     /**
      * Show the specified resource.
      * @param int $id
@@ -98,7 +95,7 @@ class CampanasController extends Controller
      */
     public function show($id)
     {
-        return view('inbound::show');
+        return view('inbound::campanas.show');
     }
 
     /**
@@ -114,9 +111,6 @@ class CampanasController extends Controller
 
         $Audios = Audios_Empresa::active()->where([['Empresas_id',$empresa_id],['musica_en_espera','=','0'],])->get();
 
-
-       
-
         return view('inbound::campanas.edit',compact('campana','Audios'));
     }
 
@@ -128,7 +122,38 @@ class CampanasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        /**
+         * Obtenemos los datos del usuario logeado
+         */
+        $user = User::find( Auth::id() );
+
+        Campanas::where('id', $id)->update([
+                                            'nombre' => $request->input('nombre'),
+                                            'modalidad_logue' => $request->input('mlogeo'),
+                                            'id_grabacion' =>  $request->input('msginical') ,
+                                            'tipo_marcacion' => 'Inbound',
+                                            //'id_speech' =>  $request->input('script') ,
+                                            'time_max_sonora' =>  $request->input('alertstll') ,
+                                            'time_max_llamada' =>  $request->input('alertstdll') ,
+                                            'time_liberacion' =>  $request->input('libta')
+                                        ]);
+
+        Campanas_Configuracion::where('Campanas_id', $id)->update([
+                                            'periodic_announce' => $request->input('periodic_announce'),
+                                            'periodic_announce_frequency' =>  $request->input('periodic_announce_frequency') ,
+                                            'wrapuptime' => $request->input('wrapuptime'),
+                                            'strategy' =>  $request->input('strategy')
+                                        ]);
+
+        /**
+         * Creamos el logs
+         */
+        $mensaje = 'Se creo un actualizo registro, informacion actualizada:'.var_export($request->all(), true);
+        $log = new LogController;
+        $log->store('Actualizacion', 'Camapanas',$mensaje, $user->id);
+
+        return redirect()->route('campanas.index');
+
     }
 
     /**
