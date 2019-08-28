@@ -7,12 +7,11 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Nimbus\Http\Controllers\LogController;
 use Illuminate\Support\Facades\Auth;
-
+use Nimbus\Grupos;
 use Nimbus\User;
-use Nimbus\Agentes;
 
 
-class AgentesController extends Controller
+class GruposController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -26,8 +25,8 @@ class AgentesController extends Controller
         $user = User::find( Auth::id() );
         $empresa_id = $user->id_cliente;
 
-        $agentes = Agentes::active()->where('Empresas_id',$empresa_id)->get();
-        return view('settings::Agentes.index',compact('agentes'));
+        $grupos = Grupos::active()->where('Empresas_id',$empresa_id)->get();
+        return view('settings::Grupos.index',compact('grupos'));
     }
 
     /**
@@ -36,7 +35,7 @@ class AgentesController extends Controller
      */
     public function create()
     {
-        return view('settings::Agentes.create');
+        return view('settings::Grupos.create');
     }
 
     /**
@@ -46,24 +45,24 @@ class AgentesController extends Controller
      */
     public function store(Request $request)
     {
-        /**
-         * Insertamos la informacion del Agente
-         */
+        //
         $user = User::find( Auth::id() );
         $empresa_id = $user->id_cliente;
         $datos = $request->all();
         $datos['Empresas_id']=$empresa_id;
-        $agente = Agentes::create($datos);
+        //dd($datos);
+        $grupo = Grupos::create($datos);
+        
         /**
          * Creamos el logs
          */
         $mensaje = 'Se creo un nuevo registro, informacion capturada:'.var_export($request->all(), true);
         $log = new LogController;
-        $log->store('Insercion', 'Agentes',$mensaje, $agente->id);
+        $log->store('Insercion', 'Grupos',$mensaje, $user->id);
         /**
          * Redirigimos a la ruta index
          */
-        return redirect()->route('Agentes.index');
+        return redirect()->route('Grupos.index');
     }
 
     /**
@@ -83,8 +82,9 @@ class AgentesController extends Controller
      */
     public function edit($id)
     {
-        $agente = Agentes::where('id',$id)->first();
-        return view('settings::Agentes.edit',compact('agente'));
+        $grupo = Grupos::where('id',$id)->first();
+        
+        return view('settings::Grupos.edit',compact('grupo'));
     }
 
     /**
@@ -95,16 +95,10 @@ class AgentesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //$dataForm = $request->input('dataForm');
-        //dd($request);
-        //for($i=0;$i<count($info);$i++){
-
-            Agentes::where( 'id', $id )
+        Grupos::where( 'id', $id )
             ->update([
                     'nombre' => $request->input('nombre'),
-                    'usuario' => $request->input('usuario'),
-                    'contrasena' => $request->input('contrasena'),
-                    'extension' => $request->input('extension')
+                    'descripcion' => $request->input('descripcion')
                 ]);
             /**
              * Creamos el logs
@@ -112,8 +106,7 @@ class AgentesController extends Controller
             $mensaje = 'Se edito un registro con id: '.$id.', informacion editada: '.var_export($request, true);
             $log = new LogController;
             $log->store('Actualizacion', 'Categorias',$mensaje, $id);
-            return redirect()->route('Agentes.index');
-        //}
+            return redirect()->route('Grupos.index');
     }
 
     /**
@@ -123,16 +116,15 @@ class AgentesController extends Controller
      */
     public function destroy($id)
     {
-        Agentes::where('id',$id)
+        Grupos::where('id',$id)
         ->update(['activo'=>'0']);
 
-        return redirect()->route('Agentes.index');
+        return redirect()->route('Grupos.index');
          /**
          * Creamos el logs
          */
         $mensaje = 'Se Elimino un registro con id: '.$id;
         $log = new LogController;
         $log->store('Eliminacion', 'User', $mensaje, $id);
-
     }
 }

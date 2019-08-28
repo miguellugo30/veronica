@@ -14,7 +14,7 @@ class Agentes extends Model
      * Campos que se usaran en el proceso de la vista
      */
     protected $fillable = [
-        'nombre', 'ususario', 'contrasena' , 'extension', 'extension_real','pin','mix_monitor','id_perfil_marcacion','calificar_lladada','tipo_licencia','envio_sms','id_direccion','editar_datos','activo','Cat_Estado_Agente_id','Empresa',
+        'nombre', 'usuario', 'contrasena' , 'extension', 'extension_real','pin','mix_monitor','id_perfil_marcacion','calificar_lladada','tipo_licencia','envio_sms','id_direccion','editar_datos','activo','Cat_Estado_Agente_id','Empresas_id',
     ];
     /**
      * Nombre de la tabla

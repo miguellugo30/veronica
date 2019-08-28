@@ -6,6 +6,7 @@
                 <div class="form-group">
                     <label for="grupo">Grupo</label>
                     <input type="text" class="form-control form-control-sm" name="grupo" id="grupo"  value="">
+                    <input type="hidden" name="id" id="id"  value="{{$agente->id}}">
                     @csrf
                 </div>
                 <div class="form-group">

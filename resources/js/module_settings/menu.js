@@ -18,11 +18,13 @@ $(function() {
         } else if (id == 17) {
             url = currentURL + '/Audios';
             table = ' #tableAudios';
-        } else if (id == 19) {
+        } else if (id == 28) {
             url = currentURL + '/Agentes';
             table = ' #tableAgentes';
+        } else if (id == 29) {
+            url = currentURL + '/Grupos';
+            table = ' #tableGrupos';
         }
-
         $.get(url, function(data, textStatus, jqXHR) {
             $(".viewResult").html(data);
             $('.viewResult' + table).DataTable({

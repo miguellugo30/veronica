@@ -177,7 +177,7 @@ $(function () {
 $(function () {
   var currentURL = window.location.href;
   /**
-   * Evento para mostrar el formulario editar agentes
+   * Evento para seleccionar agentes
    */
 
   $(document).on('click', '#tableAgentes tbody tr', function (event) {
@@ -277,19 +277,36 @@ $(function () {
   $(document).on('click', '.updateAgente', function (event) {
     event.preventDefault();
     $('#modal').modal('hide');
-    var id = $("#idSeleccionado").val();
-    var dataForm = $("#formDataAgente").serializeArray();
+    var id = $("#id").val();
+    var grupo = $("#grupo").val();
+    var nivel = $("#nivel").val();
+    var nombre = $("#nombre").val();
+    var usuario = $("#usuario").val();
+    var contrasena = $("#contrasena").val();
+    var extension = $("#extension").val();
+    var protocolo = $("#protocolo").val();
 
     var _token = $("input[name=_token]").val();
 
     var _method = "PUT";
     var url = currentURL + '/Agentes/' + id;
     $.post(url, {
-      dataForm: dataForm,
+      grupo: grupo,
+      nivel: nivel,
+      nombre: nombre,
+      usuario: usuario,
+      contrasena: contrasena,
+      extension: extension,
+      protocolo: protocolo,
       _method: _method,
       _token: _token
     }, function (data, textStatus, xhr) {
       $('.viewResult').html(data);
+      $('.viewResult #formDataAgente').DataTable({
+        "lengthChange": true,
+        "order": [[2, "asc"]]
+      });
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
     });
   });
   /**
@@ -299,16 +316,35 @@ $(function () {
   $(document).on('click', '.saveAgente', function (event) {
     event.preventDefault();
     $('#modal').modal('hide');
-    var dataForm = $("#altaagente").serializeArray();
+    var grupo = $("#grupo").val();
+    var nivel = $("#nivel").val();
+    var nombre = $("#nombre").val();
+    var usuario = $("#usuario").val();
+    var contrasena = $("#contrasena").val();
+    var extension = $("#extension").val();
+    var protocolo = $("#protocolo").val();
+    var Cat_Estado_Agente_id = $("#Cat_Estado_Agente_id").val();
 
     var _token = $("input[name=_token]").val();
 
     var url = currentURL + '/Agentes';
     $.post(url, {
-      dataForm: dataForm,
+      grupo: grupo,
+      nivel: nivel,
+      nombre: nombre,
+      usuario: usuario,
+      contrasena: contrasena,
+      extension: extension,
+      protocolo: protocolo,
+      Cat_Estado_Agente_id: Cat_Estado_Agente_id,
       _token: _token
     }, function (data, textStatus, xhr) {
       $('.viewResult').html(data);
+      $('.viewResult #formDataAgente').DataTable({
+        "lengthChange": true,
+        "order": [[2, "asc"]]
+      });
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
     });
   });
 });
@@ -709,9 +745,12 @@ $(function () {
     } else if (id == 17) {
       url = currentURL + '/Audios';
       table = ' #tableAudios';
-    } else if (id == 19) {
+    } else if (id == 28) {
       url = currentURL + '/Agentes';
       table = ' #tableAgentes';
+    } else if (id == 29) {
+      url = currentURL + '/Grupos';
+      table = ' #tableGrupos';
     }
 
     $.get(url, function (data, textStatus, jqXHR) {
