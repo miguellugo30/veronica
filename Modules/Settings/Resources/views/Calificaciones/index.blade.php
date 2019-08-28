@@ -8,9 +8,6 @@
             @can('create formularios')
                 <button type="button" class="btn btn-primary btn-sm newCalificaciones"><i class="fas fa-plus"></i> Nuevo</button>
             @endcan
-
-            
-            
             
             <input type="hidden" name="idSeleccionado" id="idSeleccionado" value="">
         </div>

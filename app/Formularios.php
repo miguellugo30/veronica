@@ -57,5 +57,14 @@ class Formularios extends Model
         return $this->hasMany('Nimbus\Sub_Formularios');
     }
 
+    /**
+    ## Relacion uno a uno con Calificaciones
+    */
+    public function Calificaciones()
+    {
+        return $this->hasOne('Nimbus\Calificaciones', 'id', 'Formularios_id');
+    }   
+    
 
 }
+

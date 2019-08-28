@@ -30,11 +30,21 @@ class Calificaciones extends Model
     ## Relacion muchos a uno con Grupo_Calificaciones_Calificacion
     -- Relacion con Campanas
      */
-    public function Grupo_Calificaciones_Calificaciones()
-    {
-        return $this->belongsTo('Nimbus\Grupo_Calificaciones', 'id');
-    }
-        
+   # public function Grupo_Calificacion()
+   # {
+   #     return $this->belongsTo('Nimbus\Grupo_Calificacion', 'Grupo_Calificacion','id');
+   # }
+    
+    /**
+     * 
+    ## Relacion muchos a uno con Tipo_Marcacion
+    */
+    #public function Tipo_Marcacion()
+    #{
+    #    return $this->belongsTo('Nimbus\Cat_Tipo_Marcacion', 'Cat_Tipo_Marcacion_id','id');
+    #}
+    
+   
     /**
     ## Relacion uno a uno con Formularios
      */
@@ -43,6 +53,7 @@ class Calificaciones extends Model
         return $this->hasOne('Nimbus\Formularios', 'id', 'Formularios_id');
     }   
     
+        
     /**
     ## Relacion uno a muchos con Sub_Calificaciones
     */

@@ -23,7 +23,8 @@ $(function() {
     $(document).on("click", ".newCalificaciones", function(e) {
         e.preventDefault();
 
-        $('#tituloModal').html('Nueva Calificacion');
+        $('#tituloModal').html('Nuevo Grupo Calificaciones');
+                
         let url = currentURL + '/calificaciones/create';
 
         $('#action').removeClass('updateCalificaciones');
