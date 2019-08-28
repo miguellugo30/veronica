@@ -1,35 +1,37 @@
 <div class="row">
-    <form enctype="multipart/form-data" id="formDataCampana" method="post">
+    <!--form enctype="multipart/form-data" id="formDataCampana" method="post"-->
         <div class="col">
             <fieldset>
                 <legend>Configuración:</legend>
                 <div class="form-group">
                     <label for="nombre">Nombre</label>
+                    <input type="hidden" id="id" value="{{$campana->id}}" >
                     <input type="text" class="form-control form-control-sm" id="nombre" placeholder="Nombre campaña" value="{{$campana->nombre}}" disabled>
+                    <input type="hidden" name="agentes_participantes" id="agentes_participantes" value="{{ json_encode($idAgentesCampana, true) }}">
                     @csrf
                 </div>
                 <div class="form-group">
-                    <label for="mlogeo">Modalida de Logeo</label>
+                    <label for="mlogeo">Modalidad de Logeo</label>
                     <select name="mlogeo" id="mlogeo" class="form-control form-control-sm">
                         <option value="">Selecciona una opción</option>
-                        <option value="canal_cerrado">Sin Logeo Permanente</option>
-                        <option value="canal_abierto">Logeo Permanente</option>
+                        <option value="canal_cerrado" {{($campana->modalidad_logue == 'canal_cerrado' ) ? 'selected = "selected"':'' }}>Sin Logeo Permanente</option>
+                        <option value="canal_abierto" {{($campana->modalidad_logue == 'canal_abierto' ) ? 'selected = "selected"':'' }}>Logeo Permanente</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="strategy">Estrategia de Marcado</label>
                     <select name="strategy" id="strategy" class="form-control form-control-sm">
                         <option value="">Selecciona una opción</option>
-                        <option value="random">Aleatorio</option>
-                        <option value="fewestcalls">Incremental</option>
-                        <option value="ringall">Sonar Todas</option>
-                        <option value="roundrobin">Round Robin</option>
-                        <option value="rrmemory">Round Robin Memory</option>
+                        <option value="random" {{($campana->Campanas_Configuracion->strategy == 'random' ) ? 'selected = "selected"':'' }}>Aleatorio</option>
+                        <option value="fewestcalls" {{($campana->Campanas_Configuracion->strategy == 'fewestcalls' ) ? 'selected = "selected"':'' }}>Incremental</option>
+                        <option value="ringall" {{($campana->Campanas_Configuracion->strategy == 'ringall' ) ? 'selected = "selected"':'' }}>Sonar Todas</option>
+                        <option value="roundrobin" {{($campana->Campanas_Configuracion->strategy == 'roundrobin' ) ? 'selected = "selected"':'' }}>Round Robin</option>
+                        <option value="rrmemory" {{($campana->Campanas_Configuracion->strategy == 'rrmemory' ) ? 'selected = "selected"':'' }}>Round Robin Memory</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="wrapuptime">Tiempo de Ringeo Ext. Agente</label>
-                    <input type="wrapuptime" class="form-control form-control-sm" id="wrapuptime" placeholder="15 - 100 segundos" value="{{ $campana->Campanas_Configuracion->wrapuptime}}" >
+                    <input type="text" class="form-control form-control-sm" id="wrapuptime" placeholder="15 - 100 segundos" value="{{ $campana->Campanas_Configuracion->wrapuptime}}" >
                 </div>
                 <!-- Seccion Mesajes y sonidos -->
                 <div class="alert alert-dark" role="alert" style="height: 30px;padding: .3rem 1.25rem;">
@@ -40,9 +42,7 @@
                     <select name="msginical" id="msginical" class="form-control form-control-sm">
                         <option value="">Selecciona una opción</option>
                         @foreach ($Audios as $audio)
-                                
-
-                                <option value="{{$audio->ruta}}" {{($audio->id == $campana->id_grabacion) ? 'selected = "selected"':'' }}>{{ $audio->nombre }}</option>
+                            <option value="{{$audio->ruta}}" {{($audio->ruta == $campana->id_grabacion) ? 'selected = "selected"':'' }}>{{ $audio->nombre }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -51,14 +51,15 @@
                     <select name="periodic_announcee" id="periodic_announce" class="form-control form-control-sm">
                         <option value="call_center/agentes_no_disponibles">Selecciona una opción</option>
                         @foreach ($Audios as $audio)
-                                <option value="{{$audio->ruta}}" {{($audio->id == $campana->id_grabacion) ? 'selected = "selected"':'' }}>{{ $audio->nombre }}</option>
+                                <option value="{{$audio->ruta}}" {{($audio->ruta == $campana->id_grabacion) ? 'selected = "selected"':'' }}>{{ $audio->nombre }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="periodic_announce_frequency">Repetir mensaje "Agentes no disponibles" cada</label>
-                    <input type="periodic_announce_frequency" class="form-control form-control-sm" id="periodic_announce_frequency" placeholder="segundos" value="">
+                    <input type="text" class="form-control form-control-sm" id="periodic_announce_frequency" placeholder="segundos" value="{{ $campana->Campanas_Configuracion->periodic_announce_frequency}}">
                 </div>
+                <!--
                 <div class="form-group">
                     <label for="musicclass">Publicidad en la espera (opcional)</label>
                     <select name="musicclass" id="musicclass" class="form-control form-control-sm">
@@ -66,7 +67,6 @@
 
                     </select>
                 </div>
-                <!--
                 <div class="form-group">
                     <label for="periodic-announce-frequency">Repetir Publicidad cada</label>
                     <input type="periodic-announce-frequency" class="form-control form-control-sm" id="periodic-announce-frequency" placeholder="segundos" value="">
@@ -89,22 +89,20 @@
                 </div>
                 <div class="form-group">
                     <label for="alertstll">Alerta sonora tiempo en Llamada</label>
-                    <input type="alertstll" class="form-control form-control-sm" id="alertstll" placeholder="0 segundos" value="">
+                    <input type="text" class="form-control form-control-sm" id="alertstll" placeholder="0 segundos" value="{{ $campana->time_max_sonora}}">
                 </div>
                 <div class="form-group">
                     <label for="alertstdll">Alerta Sonora tiempo definiendo llamada</label>
-                    <input type="alertstdll" class="form-control form-control-sm" id="alertstdll" placeholder="0 segundos" value="">
+                    <input type="text" class="form-control form-control-sm" id="alertstdll" placeholder="0 segundos" value="{{ $campana->time_max_llamada}}">
                 </div>
                 <div class="form-group">
                     <label for="libta">Liberacion de Terminal (Regresar a Disponible agente)</label>
-                    <input type="libta" class="form-control form-control-sm" id="libta" placeholder="0 segundos" value="">
+                    <input type="text" class="form-control form-control-sm" id="libta" placeholder="0 segundos" value="{{ $campana->time_liberacion}}">
                 </div>
                 <div class="form-group">
                     <label for="cal_lib">Calificacion de Liberacion (En caso de activar opcion anterior)</label>
                     <select name="cal_lib" id="cal_lib" class="form-control form-control-sm">
                         <option value="">Seleccione Calificacion</option>
-                        
-
                     </select>
                 </div>
                 <!-- Desvio de llamadas -->
@@ -116,5 +114,50 @@
             </fieldset>
         </div>
         <div class="col">
-    </form>
+            <fieldset >
+                <legend>Agentes que participan en la campaña <b><a class="nombreCampana"></a></b></legend>
+                <table class="table table-sm table-striped table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Grupo</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Extension</th>
+                        </tr>
+                    </thead>
+                    <tbody class="agentesSeleccionados">
+                        @foreach ($agentesCampana as $agente)
+                        <tr data-id="{{ $agente->Agentes->id }}">
+                            <td></td>
+                            <td>{{ $agente->Agentes->nombre }}</td>
+                            <td>{{ $agente->Agentes->extension }}</td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </fieldset>
+            <fieldset >
+                <legend>Agentes que no participan en la campaña <b><a class="nombreCampana"></a></b></legend>
+                <table class="table table-sm table-striped table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Grupo</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Extension</th>
+                        </tr>
+                    </thead>
+                    <tbody class="agentesNoSeleccionados">
+                        @foreach ($agentes as $agente)
+                            @if ( !in_array( $agente->id, $idAgentesCampana ) )
+                                <tr data-id="{{ $agente->id }}">
+                                    <td></td>
+                                    <td>{{ $agente->nombre }}</td>
+                                    <td>{{ $agente->extension }}</td>
+                                </tr>
+                            @endif
+                        @endforeach
+                    </tbody>
+                </table>
+            </fieldset>
+        </div>
+    <!--/form-->
 </div>

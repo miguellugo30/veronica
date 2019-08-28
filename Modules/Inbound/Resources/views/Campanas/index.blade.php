@@ -21,12 +21,16 @@
                     <thead>
                         <tr>
                             <th>Nombre</th>
+                            <th>Estrateguia de Marcado</th>
+                            <th>Modalidad de logeo</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($campanas as $campana)
                             <tr data-id="{{ $campana->id }}" style="cursor:pointer">
-                                <td>{{ $campana->nombre }}</td>
+                                <td>{{ Str::title( $campana->nombre ) }}</td>
+                                <td>{{ Str::title( $campana->Campanas_Configuracion->strategy ) }}</td>
+                                <td>{{ Str::title( str_replace( '_', ' ', $campana->modalidad_logue) ) }}</td>
                             </tr>
                         @endforeach
                     </tbody>

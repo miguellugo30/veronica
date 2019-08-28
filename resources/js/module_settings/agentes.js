@@ -2,7 +2,7 @@ $(function() {
 
     var currentURL = window.location.href;
     /**
-     * Evento para mostrar el formulario editar agentes
+     * Evento para seleccionar agentes
      */
     $(document).on('click', '#tableAgentes tbody tr', function(event) {
         event.preventDefault();
@@ -99,19 +99,43 @@ $(function() {
     $(document).on('click', '.updateAgente', function(event) {
         event.preventDefault();
         $('#modal').modal('hide');
-        let id = $("#idSeleccionado").val();
-        let dataForm = $("#formDataAgente").serializeArray();
+        let id = $("#id").val();
 
+        let grupo = $("#grupo").val();
+        let nivel = $("#nivel").val();
+        let nombre = $("#nombre").val();
+        let usuario = $("#usuario").val();
+        let contrasena = $("#contrasena").val();
+        let extension = $("#extension").val();
+        let protocolo = $("#protocolo").val();
         let _token = $("input[name=_token]").val();
         let _method = "PUT";
         let url = currentURL + '/Agentes/' + id;
 
         $.post(url, {
-            dataForm: dataForm,
+            grupo: grupo,
+            nivel: nivel,
+            nombre: nombre,
+            usuario: usuario,
+            contrasena: contrasena,
+            extension: extension,
+            protocolo: protocolo,
             _method: _method,
             _token: _token
         }, function(data, textStatus, xhr) {
             $('.viewResult').html(data);
+
+            $('.viewResult #formDataAgente').DataTable({
+                "lengthChange": true,
+                "order": [
+                    [2, "asc"]
+                ]
+            });
+            Swal.fire(
+                'Correcto!',
+                'El registro ha sido guardado.',
+                'success'
+            )
         });
 
     });
@@ -122,18 +146,43 @@ $(function() {
         event.preventDefault();
         $('#modal').modal('hide');
 
-        let dataForm = $("#altaagente").serializeArray();
+        let grupo = $("#grupo").val();
+        let nivel = $("#nivel").val();
+        let nombre = $("#nombre").val();
+        let usuario = $("#usuario").val();
+        let contrasena = $("#contrasena").val();
+        let extension = $("#extension").val();
+        let protocolo = $("#protocolo").val();
+        let Cat_Estado_Agente_id = $("#Cat_Estado_Agente_id").val();
         let _token = $("input[name=_token]").val();
         let url = currentURL + '/Agentes';
 
         $.post(url, {
-            dataForm: dataForm,
+            grupo: grupo,
+            nivel: nivel,
+            nombre: nombre,
+            usuario: usuario,
+            contrasena: contrasena,
+            extension: extension,
+            protocolo: protocolo,
+            Cat_Estado_Agente_id: Cat_Estado_Agente_id,
             _token: _token
         }, function(data, textStatus, xhr) {
+
             $('.viewResult').html(data);
+
+            $('.viewResult #formDataAgente').DataTable({
+                "lengthChange": true,
+                "order": [
+                    [2, "asc"]
+                ]
+            });
+            Swal.fire(
+                'Correcto!',
+                'El registro ha sido guardado.',
+                'success'
+            )
         });
-
     });
-
 
 });

@@ -14,7 +14,7 @@ class Agentes extends Model
      * Campos que se usaran en el proceso de la vista
      */
     protected $fillable = [
-        'nombre', 'ususario', 'contrasena' , 'extension', 'extension_real','pin','mix_monitor','id_perfil_marcacion','calificar_lladada','tipo_licencia','envio_sms','id_direccion','editar_datos','activo','Cat_Estado_Agente_id','Empresa',
+        'nombre', 'usuario', 'contrasena' , 'extension', 'extension_real','pin','mix_monitor','id_perfil_marcacion','calificar_lladada','tipo_licencia','envio_sms','id_direccion','editar_datos','activo','Cat_Estado_Agente_id','Empresas_id',
     ];
     /**
      * Nombre de la tabla
@@ -27,6 +27,10 @@ class Agentes extends Model
     {
         return $query->where('activo', 1);
     }
+    /*
+    |--------------------------------------------------------------------------
+    | RELACIONES DE BASE DE DATOS
+    |--------------------------------------------------------------------------
     /**
      * Muchos a uno con Empresas
      */
@@ -48,5 +52,12 @@ class Agentes extends Model
     {
         return $this->hasOne('Nimbus\Cat_Estdo_Agente', 'Cat_Estdo_Agente_id', 'id');
     }
-    
+    /**
+     * Uno a muchos con Agentes
+     */
+    public function Miembros_Campana()
+    {
+        return $this->belongsTo('Nimbus\Miembros_Campana');
+    }
+
 }

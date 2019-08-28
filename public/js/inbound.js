@@ -93,6 +93,8 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 $(function () {
   var currentURL = window.location.href;
   /**
@@ -158,6 +160,7 @@ $(function () {
     e.preventDefault();
     $('#tituloModal').html('Nueva Campaña');
     var url = currentURL + '/campanas/create';
+    agentesParticipantes = new Array();
     $('#action').removeClass('updateCampana');
     $('#action').addClass('saveCampana');
     $.ajax({
@@ -170,22 +173,22 @@ $(function () {
     });
   });
   /**
-  * Evento para guardar la nueva campana
-  * 
-  */
+   * Evento para guardar la nueva campana
+   *
+   */
 
   $(document).on('click', '.saveCampana', function (event) {
     event.preventDefault();
     $('#modal').modal('hide');
-    var formData = new FormData(document.getElementById("altacampana"));
     var nombre = $("#nombre").val();
+    var agentesParticipantes = $("#agentes_participantes").val();
     var mlogeo = $("#mlogeo").val();
     var strategy = $("#strategy").val();
     var wrapuptime = $("#wrapuptime").val();
     var msginical = $("#msginical").val();
     var periodic_announce = $("#periodic_announce").val();
-    var periodic_announce_frequency = $("#periodic_announce_frequency").val();
-    var musicclass = $("#musicclass").val();
+    var periodic_announce_frequency = $("#periodic_announce_frequency").val(); //let musicclass = $("#musicclass").val();
+
     var script = $("#script").val();
     var alertstll = $("#alertstll").val();
     var alertstdll = $("#alertstdll").val();
@@ -194,40 +197,39 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
-    formData.append("nombre", nombre);
-    formData.append("mlogeo", mlogeo);
-    formData.append("strategy", strategy);
-    formData.append("wrapuptime", wrapuptime);
-    formData.append("msginical", msginical);
-    formData.append("periodic_announce", periodic_announce);
-    formData.append("periodic_announce_frequency", periodic_announce_frequency);
-    formData.append("musicclass", musicclass);
-    formData.append("script", script);
-    formData.append("alertstll", alertstll);
-    formData.append("alertstdll", alertstdll);
-    formData.append("libta", libta);
-    formData.append("cal_lib", cal_lib);
-    formData.append("_token", _token);
     var url = currentURL + '/campanas';
     $.ajax({
       url: url,
       type: "post",
-      dataType: "html",
-      data: formData,
-      cache: false,
-      contentType: false,
-      processData: false
+      data: {
+        nombre: nombre,
+        agentesParticipantes: agentesParticipantes,
+        mlogeo: mlogeo,
+        strategy: strategy,
+        wrapuptime: wrapuptime,
+        msginical: msginical,
+        periodic_announce: periodic_announce,
+        periodic_announce_frequency: periodic_announce_frequency,
+        //musicclass: musicclass,
+        script: script,
+        alertstll: alertstll,
+        alertstdll: alertstdll,
+        libta: libta,
+        cal_lib: cal_lib,
+        _token: _token
+      }
     }).done(function (data) {
       $('.viewResult').html(data);
       $('.viewResult #tableCampanas').DataTable({
         "lengthChange": false
       });
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+      agentesParticipantes.length = 0;
     });
-    Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
   });
   /**
-  * Evento para visualizar la configuración de la campana
-  */
+   * Evento para visualizar la configuración de la campana
+   */
 
   $(document).on('click', '.editCampana', function (event) {
     event.preventDefault();
@@ -245,6 +247,7 @@ $(function () {
           keyboard: false
         });
         $("#modal-body").html(result);
+        agentesParticipantes = JSON.parse($("#agentes_participantes").val());
       }
     });
   });
@@ -255,20 +258,86 @@ $(function () {
   $(document).on('click', '.updaCampanas', function (event) {
     event.preventDefault();
     $('#modal').modal('hide');
-    var id = $("#idSeleccionado").val();
-    var dataForm = $("#formDataCampana").serializeArray();
+    var id = $("#id").val();
+    var nombre = $("#nombre").val();
+    var agentesParticipantes = $("#agentes_participantes").val();
+    var mlogeo = $("#mlogeo").val();
+    var strategy = $("#strategy").val();
+    var wrapuptime = $("#wrapuptime").val();
+    var msginical = $("#msginical").val();
+    var periodic_announce = $("#periodic_announce").val();
+    var periodic_announce_frequency = $("#periodic_announce_frequency").val(); //let musicclass = $("#musicclass").val();
+
+    var script = $("#script").val();
+    var alertstll = $("#alertstll").val();
+    var alertstdll = $("#alertstdll").val();
+    var libta = $("#libta").val();
+    var cal_lib = $("#cal_lib").val();
 
     var _token = $("input[name=_token]").val();
 
     var _method = "PUT";
     var url = currentURL + '/campanas/' + id;
-    $.post(url, {
-      dataForm: dataForm,
-      _method: _method,
-      _token: _token
-    }, function (data, textStatus, xhr) {
+    $.post(url, _defineProperty({
+      nombre: nombre,
+      agentesParticipantes: agentesParticipantes,
+      mlogeo: mlogeo,
+      strategy: strategy,
+      wrapuptime: wrapuptime,
+      msginical: msginical,
+      periodic_announce: periodic_announce,
+      periodic_announce_frequency: periodic_announce_frequency,
+      //musicclass: musicclass,
+      script: script,
+      alertstll: alertstll,
+      alertstdll: alertstdll,
+      libta: libta,
+      cal_lib: cal_lib,
+      _token: _token,
+      _method: _method
+    }, "_token", _token), function (data, textStatus, xhr) {
       $('.viewResult').html(data);
+      $('.viewResult #tableCampanas').DataTable({
+        "lengthChange": false
+      });
+      Swal.fire('Correcto!', 'El registro ha sido editado.', 'success');
     });
+  });
+  /**
+   * Evento para agregar agentes a la campana
+   */
+
+  $(document).on('click', '.agentesNoSeleccionados tr', function (event) {
+    $(this).clone().appendTo(".agentesSeleccionados"); //Clonamos la fila
+
+    var idAgente = $(this).data('id');
+    agentesParticipantes.push(idAgente);
+    $("#agentes_participantes").val(JSON.stringify(agentesParticipantes));
+    $(this).remove();
+  });
+  /**
+   * Evento para quitar agentes a la campana
+   */
+
+  $(document).on('click', '.agentesSeleccionados tr', function (event) {
+    $(this).clone().appendTo(".agentesNoSeleccionados"); //Clonamos la fila
+
+    var index = agentesParticipantes.indexOf($(this).data('id'));
+
+    if (index > -1) {
+      agentesParticipantes.splice(index, 1);
+    }
+
+    $("#agentes_participantes").val(JSON.stringify(agentesParticipantes));
+    $(this).remove();
+  });
+  /**
+   * Evento para capturar el nombre de la campana y mostrar en la etiqueta
+   */
+
+  $(document).on('keyup', '#nombre', function (event) {
+    var valor = $('#nombre').val();
+    $(".nombreCampana").text(valor);
   });
 });
 

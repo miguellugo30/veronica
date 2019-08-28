@@ -177,7 +177,7 @@ $(function () {
 $(function () {
   var currentURL = window.location.href;
   /**
-   * Evento para mostrar el formulario editar agentes
+   * Evento para seleccionar agentes
    */
 
   $(document).on('click', '#tableAgentes tbody tr', function (event) {
@@ -277,19 +277,36 @@ $(function () {
   $(document).on('click', '.updateAgente', function (event) {
     event.preventDefault();
     $('#modal').modal('hide');
-    var id = $("#idSeleccionado").val();
-    var dataForm = $("#formDataAgente").serializeArray();
+    var id = $("#id").val();
+    var grupo = $("#grupo").val();
+    var nivel = $("#nivel").val();
+    var nombre = $("#nombre").val();
+    var usuario = $("#usuario").val();
+    var contrasena = $("#contrasena").val();
+    var extension = $("#extension").val();
+    var protocolo = $("#protocolo").val();
 
     var _token = $("input[name=_token]").val();
 
     var _method = "PUT";
     var url = currentURL + '/Agentes/' + id;
     $.post(url, {
-      dataForm: dataForm,
+      grupo: grupo,
+      nivel: nivel,
+      nombre: nombre,
+      usuario: usuario,
+      contrasena: contrasena,
+      extension: extension,
+      protocolo: protocolo,
       _method: _method,
       _token: _token
     }, function (data, textStatus, xhr) {
       $('.viewResult').html(data);
+      $('.viewResult #formDataAgente').DataTable({
+        "lengthChange": true,
+        "order": [[2, "asc"]]
+      });
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
     });
   });
   /**
@@ -299,16 +316,35 @@ $(function () {
   $(document).on('click', '.saveAgente', function (event) {
     event.preventDefault();
     $('#modal').modal('hide');
-    var dataForm = $("#altaagente").serializeArray();
+    var grupo = $("#grupo").val();
+    var nivel = $("#nivel").val();
+    var nombre = $("#nombre").val();
+    var usuario = $("#usuario").val();
+    var contrasena = $("#contrasena").val();
+    var extension = $("#extension").val();
+    var protocolo = $("#protocolo").val();
+    var Cat_Estado_Agente_id = $("#Cat_Estado_Agente_id").val();
 
     var _token = $("input[name=_token]").val();
 
     var url = currentURL + '/Agentes';
     $.post(url, {
-      dataForm: dataForm,
+      grupo: grupo,
+      nivel: nivel,
+      nombre: nombre,
+      usuario: usuario,
+      contrasena: contrasena,
+      extension: extension,
+      protocolo: protocolo,
+      Cat_Estado_Agente_id: Cat_Estado_Agente_id,
       _token: _token
     }, function (data, textStatus, xhr) {
       $('.viewResult').html(data);
+      $('.viewResult #formDataAgente').DataTable({
+        "lengthChange": true,
+        "order": [[2, "asc"]]
+      });
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
     });
   });
 });
@@ -459,28 +495,6 @@ $(function () {
     $("#idSeleccionado").val(id);
     $("#tableCalificaciones tbody tr").removeClass('table-primary');
     $(this).addClass('table-primary');
-  });
-  /**
-   * Evento para mostrar el formulario de crear un nueva calificacion
-   */
-
-  $(document).on("click", ".newCalificaciones", function (e) {
-    e.preventDefault();
-    $('#tituloModal').html('Nuevo Grupo Calificaciones');
-    var url = currentURL + '/calificaciones/create';
-    $('#action').removeClass('updateCalificaciones');
-    $('#action').addClass('saveCalificaciones');
-    $.ajax({
-      url: url,
-      type: 'GET',
-      success: function success(result) {
-        $('#modal').modal({
-          backdrop: 'static',
-          keyboard: false
-        });
-        $("#modal-body").html(result);
-      }
-    });
   });
 });
 
@@ -725,20 +739,19 @@ $(function () {
     if (id == 21) {
       url = currentURL + '/formularios';
       table = ' #tableFormulario';
+    } else if (id == 23) {
+      url = currentURL + '/calificaciones';
+      table = ' #tableCalificaciones';
+    } else if (id == 17) {
+      url = currentURL + '/Audios';
+      table = ' #tableAudios';
+    } else if (id == 28) {
+      url = currentURL + '/Agentes';
+      table = ' #tableAgentes';
+    } else if (id == 29) {
+      url = currentURL + '/Grupos';
+      table = ' #tableGrupos';
     }
-    /*
-    ## Opcion Calificaciones
-    */
-    else if (id == 23) {
-        url = currentURL + '/calificaciones';
-        table = ' #tableCalificaciones';
-      } else if (id == 17) {
-        url = currentURL + '/Audios';
-        table = ' #tableAudios';
-      } else if (id == 19) {
-        url = currentURL + '/Agentes';
-        table = ' #tableAgentes';
-      }
 
     $.get(url, function (data, textStatus, jqXHR) {
       $(".viewResult").html(data);
@@ -1028,18 +1041,18 @@ $(function () {
 
 /***/ 1:
 /*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/module_settings/menu.js ./resources/js/module_settings/formularios.js ./resources/js/module_settings/sub_formularios.js ./resources/js/module_settings/acciones_formularios.js ./resources/js/module_settings/audios.js ./resources/js/module_settings/agentes.js ./resources/js/module_settings/calificaciones.js ***!
+  !*** multi ./resources/js/module_settings/menu.js ./resources/js/module_settings/formularios.js ./resources/js/module_settings/sub_formularios.js ./resources/js/module_settings/acciones_formularios.js ./resources/js/module_settings/audios.js ./resources/js/module_settings/calificaciones.js ./resources/js/module_settings/agentes.js ***!
   \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\menu.js */"./resources/js/module_settings/menu.js");
-__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\formularios.js */"./resources/js/module_settings/formularios.js");
-__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\sub_formularios.js */"./resources/js/module_settings/sub_formularios.js");
-__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\acciones_formularios.js */"./resources/js/module_settings/acciones_formularios.js");
-__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\audios.js */"./resources/js/module_settings/audios.js");
-__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\agentes.js */"./resources/js/module_settings/agentes.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\calificaciones.js */"./resources/js/module_settings/calificaciones.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\menu.js */"./resources/js/module_settings/menu.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\formularios.js */"./resources/js/module_settings/formularios.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\sub_formularios.js */"./resources/js/module_settings/sub_formularios.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\acciones_formularios.js */"./resources/js/module_settings/acciones_formularios.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\audios.js */"./resources/js/module_settings/audios.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\calificaciones.js */"./resources/js/module_settings/calificaciones.js");
+module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\agentes.js */"./resources/js/module_settings/agentes.js");
 
 
 /***/ })
