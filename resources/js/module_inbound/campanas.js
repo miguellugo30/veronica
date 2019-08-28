@@ -9,8 +9,6 @@ $(function() {
         let id = $(this).data("id");
         $(".editCampana").slideDown();
         $(".deleteCampana").slideDown();
-
-
         $("#idSeleccionado").val(id);
 
         $("#tableCampanas tbody tr").removeClass('table-primary');
@@ -68,6 +66,7 @@ $(function() {
 
         $('#tituloModal').html('Nueva Campaña');
         let url = currentURL + '/campanas/create';
+        agentesParticipantes = new Array();
 
         $('#action').removeClass('updateCampana');
         $('#action').addClass('saveCampana');
@@ -90,13 +89,14 @@ $(function() {
         $('#modal').modal('hide');
 
         let nombre = $("#nombre").val();
+        let agentesParticipantes = $("#agentes_participantes").val();
         let mlogeo = $("#mlogeo").val();
         let strategy = $("#strategy").val();
         let wrapuptime = $("#wrapuptime").val();
         let msginical = $("#msginical").val();
         let periodic_announce = $("#periodic_announce").val();
         let periodic_announce_frequency = $("#periodic_announce_frequency").val();
-        let musicclass = $("#musicclass").val();
+        //let musicclass = $("#musicclass").val();
         let script = $("#script").val();
         let alertstll = $("#alertstll").val();
         let alertstdll = $("#alertstdll").val();
@@ -111,13 +111,14 @@ $(function() {
                 type: "post",
                 data: {
                     nombre: nombre,
+                    agentesParticipantes: agentesParticipantes,
                     mlogeo: mlogeo,
                     strategy: strategy,
                     wrapuptime: wrapuptime,
                     msginical: msginical,
                     periodic_announce: periodic_announce,
                     periodic_announce_frequency: periodic_announce_frequency,
-                    musicclass: musicclass,
+                    //musicclass: musicclass,
                     script: script,
                     alertstll: alertstll,
                     alertstdll: alertstdll,
@@ -136,6 +137,7 @@ $(function() {
                     'El registro ha sido guardado.',
                     'success'
                 )
+                agentesParticipantes.length = 0;
             });
     });
     /**
@@ -146,14 +148,17 @@ $(function() {
         var id = $("#idSeleccionado").val();
         $('#tituloModal').html('Detalles de Campana');
         var url = currentURL + '/campanas/' + id + '/edit';
+
         $('#action').addClass('updaCampanas');
         $('#action').removeClass('saveCampana');
+
         $.ajax({
             url: url,
             type: 'GET',
             success: function success(result) {
                 $('#modal').modal({ backdrop: 'static', keyboard: false });
                 $("#modal-body").html(result);
+                agentesParticipantes = JSON.parse($("#agentes_participantes").val());
             }
         });
     });
@@ -165,13 +170,14 @@ $(function() {
         $('#modal').modal('hide');
         let id = $("#id").val();
         let nombre = $("#nombre").val();
+        let agentesParticipantes = $("#agentes_participantes").val();
         let mlogeo = $("#mlogeo").val();
         let strategy = $("#strategy").val();
         let wrapuptime = $("#wrapuptime").val();
         let msginical = $("#msginical").val();
         let periodic_announce = $("#periodic_announce").val();
         let periodic_announce_frequency = $("#periodic_announce_frequency").val();
-        let musicclass = $("#musicclass").val();
+        //let musicclass = $("#musicclass").val();
         let script = $("#script").val();
         let alertstll = $("#alertstll").val();
         let alertstdll = $("#alertstdll").val();
@@ -183,13 +189,14 @@ $(function() {
 
         $.post(url, {
             nombre: nombre,
+            agentesParticipantes: agentesParticipantes,
             mlogeo: mlogeo,
             strategy: strategy,
             wrapuptime: wrapuptime,
             msginical: msginical,
             periodic_announce: periodic_announce,
             periodic_announce_frequency: periodic_announce_frequency,
-            musicclass: musicclass,
+            //musicclass: musicclass,
             script: script,
             alertstll: alertstll,
             alertstdll: alertstdll,
@@ -209,6 +216,39 @@ $(function() {
                 'success'
             )
         });
+    });
+    /**
+     * Evento para agregar agentes a la campana
+     */
+    $(document).on('click', '.agentesNoSeleccionados tr', function(event) {
+        $(this).clone().appendTo(".agentesSeleccionados"); //Clonamos la fila
+        let idAgente = $(this).data('id');
 
+        agentesParticipantes.push(idAgente);
+        $("#agentes_participantes").val(JSON.stringify(agentesParticipantes));
+
+        $(this).remove();
+    });
+    /**
+     * Evento para quitar agentes a la campana
+     */
+    $(document).on('click', '.agentesSeleccionados tr', function(event) {
+        $(this).clone().appendTo(".agentesNoSeleccionados"); //Clonamos la fila
+
+        let index = agentesParticipantes.indexOf($(this).data('id'));
+
+        if (index > -1) {
+            agentesParticipantes.splice(index, 1);
+        }
+        $("#agentes_participantes").val(JSON.stringify(agentesParticipantes));
+
+        $(this).remove();
+    });
+    /**
+     * Evento para capturar el nombre de la campana y mostrar en la etiqueta
+     */
+    $(document).on('keyup', '#nombre', function(event) {
+        let valor = $('#nombre').val();
+        $(".nombreCampana").text(valor);
     });
 });

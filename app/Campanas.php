@@ -48,21 +48,26 @@ class Campanas extends Model
     {
         return $this->hasOne('Nimbus\Formularios', 'id', 'Formularios_id');
     }
-    
-    
     /**
-    *## Relacion uno a muchos con Calificaciones
-    */
-    public function Grupo_Calificaciones()
+     * Relacion uno a muchos con Calificaciones
+     */
+    public function Grupos()
     {
-        return $this->hasMany('Nimbus\Calificaciones');
+        return $this->hasMany('Nimbus\Grupos');
     }
     /**
-     *      * Relacion uno a uno con Campanas_Configuracion
+     * Relacion uno a uno con Campanas_Configuracion
      */
     public function Campanas_Configuracion()
     {
         return $this->hasOne('Nimbus\Campanas_Configuracion', 'Campanas_id','id');
     }
-   
+    /**
+     * Uno a muchos con Agentes
+     */
+    public function Miembros_Campana()
+    {
+        return $this->belongsTo('Nimbus\Miembros_Campana');
+    }
+
 }

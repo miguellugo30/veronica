@@ -27,6 +27,10 @@ class Agentes extends Model
     {
         return $query->where('activo', 1);
     }
+    /*
+    |--------------------------------------------------------------------------
+    | RELACIONES DE BASE DE DATOS
+    |--------------------------------------------------------------------------
     /**
      * Muchos a uno con Empresas
      */
@@ -48,5 +52,12 @@ class Agentes extends Model
     {
         return $this->hasOne('Nimbus\Cat_Estdo_Agente', 'Cat_Estdo_Agente_id', 'id');
     }
-    
+    /**
+     * Uno a muchos con Agentes
+     */
+    public function Miembros_Campana()
+    {
+        return $this->belongsTo('Nimbus\Miembros_Campana');
+    }
+
 }

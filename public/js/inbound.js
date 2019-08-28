@@ -160,6 +160,7 @@ $(function () {
     e.preventDefault();
     $('#tituloModal').html('Nueva Campaña');
     var url = currentURL + '/campanas/create';
+    agentesParticipantes = new Array();
     $('#action').removeClass('updateCampana');
     $('#action').addClass('saveCampana');
     $.ajax({
@@ -180,13 +181,14 @@ $(function () {
     event.preventDefault();
     $('#modal').modal('hide');
     var nombre = $("#nombre").val();
+    var agentesParticipantes = $("#agentes_participantes").val();
     var mlogeo = $("#mlogeo").val();
     var strategy = $("#strategy").val();
     var wrapuptime = $("#wrapuptime").val();
     var msginical = $("#msginical").val();
     var periodic_announce = $("#periodic_announce").val();
-    var periodic_announce_frequency = $("#periodic_announce_frequency").val();
-    var musicclass = $("#musicclass").val();
+    var periodic_announce_frequency = $("#periodic_announce_frequency").val(); //let musicclass = $("#musicclass").val();
+
     var script = $("#script").val();
     var alertstll = $("#alertstll").val();
     var alertstdll = $("#alertstdll").val();
@@ -201,13 +203,14 @@ $(function () {
       type: "post",
       data: {
         nombre: nombre,
+        agentesParticipantes: agentesParticipantes,
         mlogeo: mlogeo,
         strategy: strategy,
         wrapuptime: wrapuptime,
         msginical: msginical,
         periodic_announce: periodic_announce,
         periodic_announce_frequency: periodic_announce_frequency,
-        musicclass: musicclass,
+        //musicclass: musicclass,
         script: script,
         alertstll: alertstll,
         alertstdll: alertstdll,
@@ -221,6 +224,7 @@ $(function () {
         "lengthChange": false
       });
       Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+      agentesParticipantes.length = 0;
     });
   });
   /**
@@ -243,6 +247,7 @@ $(function () {
           keyboard: false
         });
         $("#modal-body").html(result);
+        agentesParticipantes = JSON.parse($("#agentes_participantes").val());
       }
     });
   });
@@ -255,13 +260,14 @@ $(function () {
     $('#modal').modal('hide');
     var id = $("#id").val();
     var nombre = $("#nombre").val();
+    var agentesParticipantes = $("#agentes_participantes").val();
     var mlogeo = $("#mlogeo").val();
     var strategy = $("#strategy").val();
     var wrapuptime = $("#wrapuptime").val();
     var msginical = $("#msginical").val();
     var periodic_announce = $("#periodic_announce").val();
-    var periodic_announce_frequency = $("#periodic_announce_frequency").val();
-    var musicclass = $("#musicclass").val();
+    var periodic_announce_frequency = $("#periodic_announce_frequency").val(); //let musicclass = $("#musicclass").val();
+
     var script = $("#script").val();
     var alertstll = $("#alertstll").val();
     var alertstdll = $("#alertstdll").val();
@@ -274,13 +280,14 @@ $(function () {
     var url = currentURL + '/campanas/' + id;
     $.post(url, _defineProperty({
       nombre: nombre,
+      agentesParticipantes: agentesParticipantes,
       mlogeo: mlogeo,
       strategy: strategy,
       wrapuptime: wrapuptime,
       msginical: msginical,
       periodic_announce: periodic_announce,
       periodic_announce_frequency: periodic_announce_frequency,
-      musicclass: musicclass,
+      //musicclass: musicclass,
       script: script,
       alertstll: alertstll,
       alertstdll: alertstdll,
@@ -295,6 +302,42 @@ $(function () {
       });
       Swal.fire('Correcto!', 'El registro ha sido editado.', 'success');
     });
+  });
+  /**
+   * Evento para agregar agentes a la campana
+   */
+
+  $(document).on('click', '.agentesNoSeleccionados tr', function (event) {
+    $(this).clone().appendTo(".agentesSeleccionados"); //Clonamos la fila
+
+    var idAgente = $(this).data('id');
+    agentesParticipantes.push(idAgente);
+    $("#agentes_participantes").val(JSON.stringify(agentesParticipantes));
+    $(this).remove();
+  });
+  /**
+   * Evento para quitar agentes a la campana
+   */
+
+  $(document).on('click', '.agentesSeleccionados tr', function (event) {
+    $(this).clone().appendTo(".agentesNoSeleccionados"); //Clonamos la fila
+
+    var index = agentesParticipantes.indexOf($(this).data('id'));
+
+    if (index > -1) {
+      agentesParticipantes.splice(index, 1);
+    }
+
+    $("#agentes_participantes").val(JSON.stringify(agentesParticipantes));
+    $(this).remove();
+  });
+  /**
+   * Evento para capturar el nombre de la campana y mostrar en la etiqueta
+   */
+
+  $(document).on('keyup', '#nombre', function (event) {
+    var valor = $('#nombre').val();
+    $(".nombreCampana").text(valor);
   });
 });
 

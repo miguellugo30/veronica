@@ -11,6 +11,8 @@ use Nimbus\Http\Controllers\LogController;
 use Nimbus\Campanas;
 use Nimbus\Audios_Empresa;
 use Nimbus\Campanas_Configuracion;
+use Nimbus\Agentes;
+use Nimbus\Miembros_Campana;
 
 class CampanasController extends Controller
 {
@@ -37,8 +39,9 @@ class CampanasController extends Controller
 
         $Audios = Audios_Empresa::active()->where([['Empresas_id',$empresa_id],['musica_en_espera','=','0'],])->get();
         $Mohs= Audios_Empresa::active()->where([['Empresas_id',$empresa_id],['musica_en_espera','=','1'],])->get();
-        //dd($Audios);
-        return view('inbound::campanas.create', compact('Audios','Mohs'));
+        $agentes = Agentes::active()->where('Empresas_id', $empresa_id)->get();
+
+        return view('inbound::campanas.create', compact('Audios','Mohs', 'agentes'));
     }
 
     /**
@@ -48,13 +51,14 @@ class CampanasController extends Controller
      */
     public function store(Request $request)
     {
+
         /**
          * Obtenemos los datos del usuario logeado
          */
         $user = User::find( Auth::id() );
         $empresa_id = $user->id_cliente;
         /**
-         * Insertar información el table de Formularios
+         * Insertar información el tabla de Camapana
          */
         $campana = Campanas::create(
             [
@@ -69,6 +73,9 @@ class CampanasController extends Controller
                 'Empresas_id'   => $empresa_id
             ]
         );
+        /**
+         * Insertar información el tabla de Campanas_Configuracion
+         */
         Campanas_Configuracion::create(
             [
                 'name' =>  $campana->id,
@@ -80,11 +87,25 @@ class CampanasController extends Controller
             ]
         );
         /**
+         * Insertar información el tabla de Miembros_Campana
+         */
+        $agentesParticipantes = json_decode( $request->input('agentesParticipantes') );
+        for ($i=0; $i < count($agentesParticipantes); $i++) {
+            Miembros_Campana::create(
+                [
+                    'membername' =>  $agentesParticipantes[$i],
+                    'queue_name' => $campana->id,
+                    'Agentes_id' =>  $agentesParticipantes[$i],
+                    'Campanas_id'   => $campana->id
+                ]
+            );
+        }
+        /**
          * Creamos el logs
          */
         $mensaje = 'Se creo un nuevo registro, informacion capturada:'.var_export($request->all(), true);
         $log = new LogController;
-        $log->store('Insercion', 'User',$mensaje, $user->id);
+        $log->store('Insercion', 'Campana',$mensaje, $user->id);
 
         return redirect()->route('campanas.index');
     }
@@ -110,8 +131,11 @@ class CampanasController extends Controller
         $empresa_id = $user->id_cliente;
 
         $Audios = Audios_Empresa::active()->where([['Empresas_id',$empresa_id],['musica_en_espera','=','0'],])->get();
+        $agentesCampana = Miembros_Campana::where('Campanas_id', $id )->get();
+        $agentes = Agentes::active()->where('Empresas_id', $empresa_id)->get();
+        $idAgentesCampana = $agentesCampana->pluck('Agentes_id')->toArray();
 
-        return view('inbound::campanas.edit',compact('campana','Audios'));
+        return view('inbound::campanas.edit',compact('campana','Audios', 'agentes', 'agentesCampana', 'idAgentesCampana'));
     }
 
     /**
@@ -144,6 +168,25 @@ class CampanasController extends Controller
                                             'wrapuptime' => $request->input('wrapuptime'),
                                             'strategy' =>  $request->input('strategy')
                                         ]);
+        /**
+         * Eliminados todos los agentes asocioados a la campana
+         * para posteriormente asocociar a los nuevos
+         */
+        Miembros_Campana::where('Campanas_id', '=', $id)->delete();
+        /**
+         * Insertar información el tabla de Miembros_Campana
+         */
+        $agentesParticipantes = json_decode( $request->input('agentesParticipantes') );
+        for ($i=0; $i < count($agentesParticipantes); $i++) {
+            Miembros_Campana::create(
+                [
+                    'membername' =>  $agentesParticipantes[$i],
+                    'queue_name' => $id,
+                    'Agentes_id' =>  $agentesParticipantes[$i],
+                    'Campanas_id'   => $id
+                ]
+            );
+        }
 
         /**
          * Creamos el logs

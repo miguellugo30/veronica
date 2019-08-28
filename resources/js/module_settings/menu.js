@@ -12,19 +12,13 @@ $(function() {
         if (id == 21) {
             url = currentURL + '/formularios';
             table = ' #tableFormulario';
-        }
-        /*
-        ## Opcion Calificaciones
-        */
-        else if (id == 23) {
+        } else if (id == 23) {
             url = currentURL + '/calificaciones';
             table = ' #tableCalificaciones';
-        }
-        else if (id == 17){
+        } else if (id == 17) {
             url = currentURL + '/Audios';
             table = ' #tableAudios';
-        }
-        else if (id == 19){
+        } else if (id == 19) {
             url = currentURL + '/Agentes';
             table = ' #tableAgentes';
         }

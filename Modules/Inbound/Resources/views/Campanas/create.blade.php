@@ -1,11 +1,12 @@
 <div class="row">
-    <form enctype="multipart/form-data" id="altacampana" method="post">
+    <!--form enctype="multipart/form-data" id="altacampana" method="post"-->
         <div class="col">
             <fieldset>
                 <legend>Configuración:</legend>
                 <div class="form-group">
                     <label for="nombre">Nombre</label>
                     <input type="text" class="form-control form-control-sm" id="nombre" placeholder="Nombre campaña" value="">
+                    <input type="hidden" name="agentes_participantes" id="agentes_participantes" value="">
                     @csrf
                 </div>
                 <div class="form-group">
@@ -46,7 +47,7 @@
                 </div>
                 <div class="form-group">
                     <label for="periodic_announce">Mensaje Agentes no disponibles</label>
-                    <select name="periodic_announcee" id="periodic_announce" class="form-control form-control-sm">
+                    <select name="periodic_announce" id="periodic_announce" class="form-control form-control-sm">
                         <option value="call_center/agentes_no_disponibles">Selecciona una opción</option>
                         @foreach ($Audios as $audio)
                                 <option value="{{$audio->ruta}}">{{ $audio->nombre }}</option>
@@ -116,5 +117,42 @@
             </fieldset>
         </div>
         <div class="col">
-    </form>
+            <fieldset >
+                <legend>Agentes que participan en la campaña <b><a class="nombreCampana"></a></b></legend>
+                <table class="table table-sm table-striped table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Grupo</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Extension</th>
+                        </tr>
+                    </thead>
+                    <tbody class="agentesSeleccionados">
+
+                    </tbody>
+                </table>
+            </fieldset>
+            <fieldset >
+                <legend>Agentes que no participan en la campaña <b><a class="nombreCampana"></a></b></legend>
+                <table class="table table-sm table-striped table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Grupo</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Extension</th>
+                        </tr>
+                    </thead>
+                    <tbody class="agentesNoSeleccionados">
+                        @foreach ($agentes as $agente)
+                            <tr data-id="{{ $agente->id }}">
+                                <td></td>
+                                <td>{{ $agente->nombre }}</td>
+                                <td>{{ $agente->extension }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </fieldset>
+        </div>
+    <!--/form-->
 </div>
