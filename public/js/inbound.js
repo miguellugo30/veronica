@@ -86,6 +86,48 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./resources/js/module_inbound/CondicionesTiempo.js":
+/*!**********************************************************!*\
+  !*** ./resources/js/module_inbound/CondicionesTiempo.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  var currentURL = window.location.href;
+  /**
+   * Evento para seleccionar grupo
+   */
+
+  $(document).on('click', '#tablecondiciontiempo tbody tr', function (event) {
+    event.preventDefault();
+    var id = $(this).data("id");
+    $(".deletecondiciontiempo").slideDown();
+    $(".editcondiciontiempo").slideDown();
+    $("#idSeleccionado").val(id);
+    $("#tablecondiciontiempo tbody tr").removeClass('table-primary');
+    $(this).addClass('table-primary');
+  });
+  ;
+  /**
+  * Evento para mostrar el formulario de crear un nuevo Agente
+  */
+
+  $(document).on("click", ".newcondiciontiempo", function (e) {
+    event.preventDefault();
+    $('#tituloModal').html('Alta Grupo Concicion De Tiempo');
+    $('#action').removeClass('deletecondiciontiempo');
+    $('#action').addClass('savecondiciontiempo');
+    var url = currentURL + "/Condiciones_Tiempo/create";
+    $.get(url, function (data, textStatus, jqXHR) {
+      $('#modal').modal('show');
+      $("#modal-body").html(data);
+    });
+  });
+});
+
+/***/ }),
+
 /***/ "./resources/js/module_inbound/campanas.js":
 /*!*************************************************!*\
   !*** ./resources/js/module_inbound/campanas.js ***!
@@ -363,6 +405,9 @@ $(function () {
     if (id == 16) {
       url = currentURL + '/campanas';
       table = ' #tableFormulario';
+    } else if (id == 32) {
+      url = currentURL + '/Condiciones_Tiempo';
+      table = ' #tableCondicionesTiempo';
     }
 
     $.get(url, function (data, textStatus, jqXHR) {
@@ -377,14 +422,15 @@ $(function () {
 /***/ }),
 
 /***/ 2:
-/*!*********************************************************************************************!*\
-  !*** multi ./resources/js/module_inbound/menu.js ./resources/js/module_inbound/campanas.js ***!
-  \*********************************************************************************************/
+/*!************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/module_inbound/menu.js ./resources/js/module_inbound/campanas.js ./resources/js/module_inbound/CondicionesTiempo.js ***!
+  \************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\menu.js */"./resources/js/module_inbound/menu.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\campanas.js */"./resources/js/module_inbound/campanas.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\campanas.js */"./resources/js/module_inbound/campanas.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\CondicionesTiempo.js */"./resources/js/module_inbound/CondicionesTiempo.js");
 
 
 /***/ })

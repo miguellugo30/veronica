@@ -48,6 +48,7 @@ mix.js([
     .js([
         'resources/js/module_inbound/menu.js',
         'resources/js/module_inbound/campanas.js',
+        'resources/js/module_inbound/CondicionesTiempo.js',
     ], 'public/js/inbound.js');
 /*
 .sass('resources/sass/app.scss', 'public/css');
