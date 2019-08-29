@@ -25,7 +25,8 @@ class GruposController extends Controller
         $user = User::find( Auth::id() );
         $empresa_id = $user->id_cliente;
 
-        $grupos = Grupos::active()->where('Empresas_id',$empresa_id)->get();
+        $grupos = Grupos::active()->where([['Empresas_id', '=', $empresa_id],['tipo_grupo','=','Agentes']])->get();
+
         return view('settings::Grupos.index',compact('grupos'));
     }
 
@@ -48,15 +49,15 @@ class GruposController extends Controller
         //
         $user = User::find( Auth::id() );
         $empresa_id = $user->id_cliente;
+
         $datos = $request->all();
-        $datos['Empresas_id']=$empresa_id;
-        //dd($datos);
-        $grupo = Grupos::create($datos);
-        
+        $datos['tipo_grupo']  = 3;
+        $datos['Empresas_id'] = $empresa_id;
+        Grupos::create($datos);
         /**
          * Creamos el logs
          */
-        $mensaje = 'Se creo un nuevo registro, informacion capturada:'.var_export($request->all(), true);
+        $mensaje = 'Se creo un nuevo registro, información capturada:'.var_export($request->all(), true);
         $log = new LogController;
         $log->store('Insercion', 'Grupos',$mensaje, $user->id);
         /**
@@ -83,7 +84,7 @@ class GruposController extends Controller
     public function edit($id)
     {
         $grupo = Grupos::where('id',$id)->first();
-        
+
         return view('settings::Grupos.edit',compact('grupo'));
     }
 
@@ -103,9 +104,9 @@ class GruposController extends Controller
             /**
              * Creamos el logs
              */
-            $mensaje = 'Se edito un registro con id: '.$id.', informacion editada: '.var_export($request, true);
+            $mensaje = 'Se edito un registro con id: '.$id.', información editada: '.var_export($request, true);
             $log = new LogController;
-            $log->store('Actualizacion', 'Categorias',$mensaje, $id);
+            $log->store('Actualización', 'Grupos',$mensaje, $id);
             return redirect()->route('Grupos.index');
     }
 
@@ -125,6 +126,6 @@ class GruposController extends Controller
          */
         $mensaje = 'Se Elimino un registro con id: '.$id;
         $log = new LogController;
-        $log->store('Eliminacion', 'User', $mensaje, $id);
+        $log->store('Eliminación', 'Grupos', $mensaje, $id);
     }
 }

@@ -233,8 +233,8 @@ $(function () {
     });
   });
   /**
-  * Evento para mostrar el formulario de crear un nuevo Agente
-  */
+   * Evento para mostrar el formulario de crear un nuevo Agente
+   */
 
   $(document).on("click", ".newAgente", function (e) {
     event.preventDefault();
@@ -248,14 +248,14 @@ $(function () {
     });
   });
   /**
-  * Evento para visualizar la configuración del Agente
-  */
+   * Evento para visualizar la configuración del Agente
+   */
 
   $(document).on('click', '.editAgente', function (event) {
     event.preventDefault();
     var id = $("#idSeleccionado").val();
-    $('#tituloModal').html('Editar Agente');
     var url = currentURL + '/Agentes/' + id + '/edit';
+    $('#tituloModal').html('Editar Agente');
     $('#action').addClass('updateAgente');
     $('#action').removeClass('saveAgente');
     $.ajax({
@@ -279,12 +279,17 @@ $(function () {
     $('#modal').modal('hide');
     var id = $("#id").val();
     var grupo = $("#grupo").val();
+    var tipo_licencia = $("#tipo_licencia").val();
     var nivel = $("#nivel").val();
     var nombre = $("#nombre").val();
     var usuario = $("#usuario").val();
     var contrasena = $("#contrasena").val();
     var extension = $("#extension").val();
-    var protocolo = $("#protocolo").val();
+    var canal = $("#canal").val();
+    var mix_monitor = $("input[name='mix_monitor']:checked").val();
+    var calificar_llamada = $("input[name='calificar_llamada']:checked").val();
+    var envio_sms = $("input[name='envio_sms']:checked").val();
+    var editar_datos = $("input[name='editar_datos']:checked").val();
 
     var _token = $("input[name=_token]").val();
 
@@ -292,17 +297,22 @@ $(function () {
     var url = currentURL + '/Agentes/' + id;
     $.post(url, {
       grupo: grupo,
+      tipo_licencia: tipo_licencia,
       nivel: nivel,
       nombre: nombre,
       usuario: usuario,
       contrasena: contrasena,
       extension: extension,
-      protocolo: protocolo,
+      Canales_id: canal,
+      mix_monitor: mix_monitor,
+      calificar_llamada: calificar_llamada,
+      envio_sms: envio_sms,
+      editar_datos: editar_datos,
       _method: _method,
       _token: _token
     }, function (data, textStatus, xhr) {
       $('.viewResult').html(data);
-      $('.viewResult #formDataAgente').DataTable({
+      $('.viewResult #tableAgentes').DataTable({
         "lengthChange": true,
         "order": [[2, "asc"]]
       });
@@ -317,12 +327,17 @@ $(function () {
     event.preventDefault();
     $('#modal').modal('hide');
     var grupo = $("#grupo").val();
+    var tipo_licencia = $("#tipo_licencia").val();
     var nivel = $("#nivel").val();
     var nombre = $("#nombre").val();
     var usuario = $("#usuario").val();
     var contrasena = $("#contrasena").val();
     var extension = $("#extension").val();
-    var protocolo = $("#protocolo").val();
+    var canal = $("#canal").val();
+    var mix_monitor = $("input[name='mix_monitor']:checked").val();
+    var calificar_llamada = $("input[name='calificar_llamada']:checked").val();
+    var envio_sms = $("input[name='envio_sms']:checked").val();
+    var editar_datos = $("input[name='editar_datos']:checked").val();
     var Cat_Estado_Agente_id = $("#Cat_Estado_Agente_id").val();
 
     var _token = $("input[name=_token]").val();
@@ -330,17 +345,22 @@ $(function () {
     var url = currentURL + '/Agentes';
     $.post(url, {
       grupo: grupo,
+      tipo_licencia: tipo_licencia,
       nivel: nivel,
       nombre: nombre,
       usuario: usuario,
       contrasena: contrasena,
       extension: extension,
-      protocolo: protocolo,
+      Canales_id: canal,
+      mix_monitor: mix_monitor,
+      calificar_llamada: calificar_llamada,
+      envio_sms: envio_sms,
+      editar_datos: editar_datos,
       Cat_Estado_Agente_id: Cat_Estado_Agente_id,
       _token: _token
     }, function (data, textStatus, xhr) {
       $('.viewResult').html(data);
-      $('.viewResult #formDataAgente').DataTable({
+      $('.viewResult #tableAgentes').DataTable({
         "lengthChange": true,
         "order": [[2, "asc"]]
       });
@@ -729,8 +749,8 @@ $(function () {
 $(function () {
   var currentURL = window.location.href;
   /**
-  * Evento para mostrar el formulario de crear un nuevo Agente
-  */
+   * Evento para mostrar el formulario de crear un nuevo Agente
+   */
 
   $(document).on("click", ".newGrupo", function (e) {
     event.preventDefault();
@@ -762,7 +782,7 @@ $(function () {
       _token: _token
     }, function (data, textStatus, xhr) {
       $('.viewResult').html(data);
-      $('.viewResult #formDataGrupo').DataTable({
+      $('.viewResult #tableGrupos').DataTable({
         "lengthChange": true,
         "order": [[2, "asc"]]
       });
@@ -826,256 +846,8 @@ $(function () {
     });
   });
   /**
-  * Evento para visualizar la configuración del Agente
-  */
-
-  $(document).on('click', '.editAgente', function (event) {
-    event.preventDefault();
-    var id = $("#idSeleccionado").val();
-    $('#tituloModal').html('Editar Agente');
-    var url = currentURL + '/Agentes/' + id + '/edit';
-    $('#action').addClass('updateAgente');
-    $('#action').removeClass('saveAgente');
-    $.ajax({
-      url: url,
-      type: 'GET',
-      success: function success(result) {
-        $('#modal').modal({
-          backdrop: 'static',
-          keyboard: false
-        });
-        $("#modal-body").html(result);
-      }
-    });
-  });
-  /**
-   * Evento para guardar los cambios del Agente
+   * Evento para visualizar la configuración del Grupo
    */
-
-  $(document).on('click', '.updateAgente', function (event) {
-    event.preventDefault();
-    $('#modal').modal('hide');
-    var id = $("#id").val();
-    var grupo = $("#grupo").val();
-    var nivel = $("#nivel").val();
-    var nombre = $("#nombre").val();
-    var usuario = $("#usuario").val();
-    var contrasena = $("#contrasena").val();
-    var extension = $("#extension").val();
-    var protocolo = $("#protocolo").val();
-
-    var _token = $("input[name=_token]").val();
-
-    var _method = "PUT";
-    var url = currentURL + '/Agentes/' + id;
-    $.post(url, {
-      grupo: grupo,
-      nivel: nivel,
-      nombre: nombre,
-      usuario: usuario,
-      contrasena: contrasena,
-      extension: extension,
-      protocolo: protocolo,
-      _method: _method,
-      _token: _token
-    }, function (data, textStatus, xhr) {
-      $('.viewResult').html(data);
-      $('.viewResult #formDataAgente').DataTable({
-        "lengthChange": true,
-        "order": [[2, "asc"]]
-      });
-      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
-    });
-  });
-  /**
-  * Evento para visualizar la configuración del Agente
-  */
-
-  $(document).on('click', '.editAgente', function (event) {
-    event.preventDefault();
-    var id = $("#idSeleccionado").val();
-    $('#tituloModal').html('Editar Agente');
-    var url = currentURL + '/Agentes/' + id + '/edit';
-    $('#action').addClass('updateAgente');
-    $('#action').removeClass('saveAgente');
-    $.ajax({
-      url: url,
-      type: 'GET',
-      success: function success(result) {
-        $('#modal').modal({
-          backdrop: 'static',
-          keyboard: false
-        });
-        $("#modal-body").html(result);
-      }
-    });
-  });
-  /**
-   * Evento para guardar los cambios del Agente
-   */
-
-  $(document).on('click', '.updateAgente', function (event) {
-    event.preventDefault();
-    $('#modal').modal('hide');
-    var id = $("#id").val();
-    var grupo = $("#grupo").val();
-    var nivel = $("#nivel").val();
-    var nombre = $("#nombre").val();
-    var usuario = $("#usuario").val();
-    var contrasena = $("#contrasena").val();
-    var extension = $("#extension").val();
-    var protocolo = $("#protocolo").val();
-
-    var _token = $("input[name=_token]").val();
-
-    var _method = "PUT";
-    var url = currentURL + '/Agentes/' + id;
-    $.post(url, {
-      grupo: grupo,
-      nivel: nivel,
-      nombre: nombre,
-      usuario: usuario,
-      contrasena: contrasena,
-      extension: extension,
-      protocolo: protocolo,
-      _method: _method,
-      _token: _token
-    }, function (data, textStatus, xhr) {
-      $('.viewResult').html(data);
-      $('.viewResult #formDataAgente').DataTable({
-        "lengthChange": true,
-        "order": [[2, "asc"]]
-      });
-      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
-    });
-  });
-  /**
-  * Evento para visualizar la configuración del Agente
-  */
-
-  $(document).on('click', '.editAgente', function (event) {
-    event.preventDefault();
-    var id = $("#idSeleccionado").val();
-    $('#tituloModal').html('Editar Agente');
-    var url = currentURL + '/Agentes/' + id + '/edit';
-    $('#action').addClass('updateAgente');
-    $('#action').removeClass('saveAgente');
-    $.ajax({
-      url: url,
-      type: 'GET',
-      success: function success(result) {
-        $('#modal').modal({
-          backdrop: 'static',
-          keyboard: false
-        });
-        $("#modal-body").html(result);
-      }
-    });
-  });
-  /**
-   * Evento para guardar los cambios del Agente
-   */
-
-  $(document).on('click', '.updateAgente', function (event) {
-    event.preventDefault();
-    $('#modal').modal('hide');
-    var id = $("#id").val();
-    var grupo = $("#grupo").val();
-    var nivel = $("#nivel").val();
-    var nombre = $("#nombre").val();
-    var usuario = $("#usuario").val();
-    var contrasena = $("#contrasena").val();
-    var extension = $("#extension").val();
-    var protocolo = $("#protocolo").val();
-
-    var _token = $("input[name=_token]").val();
-
-    var _method = "PUT";
-    var url = currentURL + '/Agentes/' + id;
-    $.post(url, {
-      grupo: grupo,
-      nivel: nivel,
-      nombre: nombre,
-      usuario: usuario,
-      contrasena: contrasena,
-      extension: extension,
-      protocolo: protocolo,
-      _method: _method,
-      _token: _token
-    }, function (data, textStatus, xhr) {
-      $('.viewResult').html(data);
-      $('.viewResult #formDataAgente').DataTable({
-        "lengthChange": true,
-        "order": [[2, "asc"]]
-      });
-      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
-    });
-  });
-  /**
-  * Evento para visualizar la configuración del Agente
-  */
-
-  $(document).on('click', '.editAgente', function (event) {
-    event.preventDefault();
-    var id = $("#idSeleccionado").val();
-    $('#tituloModal').html('Editar Agente');
-    var url = currentURL + '/Agentes/' + id + '/edit';
-    $('#action').addClass('updateAgente');
-    $('#action').removeClass('saveAgente');
-    $.ajax({
-      url: url,
-      type: 'GET',
-      success: function success(result) {
-        $('#modal').modal({
-          backdrop: 'static',
-          keyboard: false
-        });
-        $("#modal-body").html(result);
-      }
-    });
-  });
-  /**
-   * Evento para guardar los cambios del Agente
-   */
-
-  $(document).on('click', '.updateAgente', function (event) {
-    event.preventDefault();
-    $('#modal').modal('hide');
-    var id = $("#id").val();
-    var grupo = $("#grupo").val();
-    var nivel = $("#nivel").val();
-    var nombre = $("#nombre").val();
-    var usuario = $("#usuario").val();
-    var contrasena = $("#contrasena").val();
-    var extension = $("#extension").val();
-    var protocolo = $("#protocolo").val();
-
-    var _token = $("input[name=_token]").val();
-
-    var _method = "PUT";
-    var url = currentURL + '/Agentes/' + id;
-    $.post(url, {
-      grupo: grupo,
-      nivel: nivel,
-      nombre: nombre,
-      usuario: usuario,
-      contrasena: contrasena,
-      extension: extension,
-      protocolo: protocolo,
-      _method: _method,
-      _token: _token
-    }, function (data, textStatus, xhr) {
-      $('.viewResult').html(data);
-      $('.viewResult #formDataAgente').DataTable({
-        "lengthChange": true,
-        "order": [[2, "asc"]]
-      });
-      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
-    });
-  });
-  /**
-  * Evento para visualizar la configuración del Grupo
-  */
 
   $(document).on('click', '.editGrupo', function (event) {
     event.preventDefault();
@@ -1118,7 +890,7 @@ $(function () {
       _token: _token
     }, function (data, textStatus, xhr) {
       $('.viewResult').html(data);
-      $('.viewResult #formDataGrupo').DataTable({
+      $('.viewResult #tableGrupos').DataTable({
         "lengthChange": true,
         "order": [[2, "asc"]]
       });

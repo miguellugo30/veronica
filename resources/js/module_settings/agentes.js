@@ -59,8 +59,8 @@ $(function() {
         });
     });
     /**
-    * Evento para mostrar el formulario de crear un nuevo Agente
-    */
+     * Evento para mostrar el formulario de crear un nuevo Agente
+     */
     $(document).on("click", ".newAgente", function(e) {
         event.preventDefault();
         $('#tituloModal').html('Alta de Agente');
@@ -75,15 +75,18 @@ $(function() {
         });
     });
     /**
-    * Evento para visualizar la configuración del Agente
-    */
-   $(document).on('click', '.editAgente', function(event) {
+     * Evento para visualizar la configuración del Agente
+     */
+    $(document).on('click', '.editAgente', function(event) {
+
         event.preventDefault();
         var id = $("#idSeleccionado").val();
-        $('#tituloModal').html('Editar Agente');
         var url = currentURL + '/Agentes/' + id + '/edit';
+
+        $('#tituloModal').html('Editar Agente');
         $('#action').addClass('updateAgente');
         $('#action').removeClass('saveAgente');
+
         $.ajax({
             url: url,
             type: 'GET',
@@ -102,30 +105,40 @@ $(function() {
         let id = $("#id").val();
 
         let grupo = $("#grupo").val();
+        let tipo_licencia = $("#tipo_licencia").val();
         let nivel = $("#nivel").val();
         let nombre = $("#nombre").val();
         let usuario = $("#usuario").val();
         let contrasena = $("#contrasena").val();
         let extension = $("#extension").val();
-        let protocolo = $("#protocolo").val();
+        let canal = $("#canal").val();
+        let mix_monitor = $("input[name='mix_monitor']:checked").val();
+        let calificar_llamada = $("input[name='calificar_llamada']:checked").val();
+        let envio_sms = $("input[name='envio_sms']:checked").val();
+        let editar_datos = $("input[name='editar_datos']:checked").val();
         let _token = $("input[name=_token]").val();
         let _method = "PUT";
         let url = currentURL + '/Agentes/' + id;
 
         $.post(url, {
             grupo: grupo,
+            tipo_licencia: tipo_licencia,
             nivel: nivel,
             nombre: nombre,
             usuario: usuario,
             contrasena: contrasena,
             extension: extension,
-            protocolo: protocolo,
+            Canales_id: canal,
+            mix_monitor: mix_monitor,
+            calificar_llamada: calificar_llamada,
+            envio_sms: envio_sms,
+            editar_datos: editar_datos,
             _method: _method,
             _token: _token
         }, function(data, textStatus, xhr) {
             $('.viewResult').html(data);
 
-            $('.viewResult #formDataAgente').DataTable({
+            $('.viewResult #tableAgentes').DataTable({
                 "lengthChange": true,
                 "order": [
                     [2, "asc"]
@@ -147,31 +160,41 @@ $(function() {
         $('#modal').modal('hide');
 
         let grupo = $("#grupo").val();
+        let tipo_licencia = $("#tipo_licencia").val();
         let nivel = $("#nivel").val();
         let nombre = $("#nombre").val();
         let usuario = $("#usuario").val();
         let contrasena = $("#contrasena").val();
         let extension = $("#extension").val();
-        let protocolo = $("#protocolo").val();
+        let canal = $("#canal").val();
+        let mix_monitor = $("input[name='mix_monitor']:checked").val();
+        let calificar_llamada = $("input[name='calificar_llamada']:checked").val();
+        let envio_sms = $("input[name='envio_sms']:checked").val();
+        let editar_datos = $("input[name='editar_datos']:checked").val();
         let Cat_Estado_Agente_id = $("#Cat_Estado_Agente_id").val();
         let _token = $("input[name=_token]").val();
         let url = currentURL + '/Agentes';
 
         $.post(url, {
             grupo: grupo,
+            tipo_licencia: tipo_licencia,
             nivel: nivel,
             nombre: nombre,
             usuario: usuario,
             contrasena: contrasena,
             extension: extension,
-            protocolo: protocolo,
+            Canales_id: canal,
+            mix_monitor: mix_monitor,
+            calificar_llamada: calificar_llamada,
+            envio_sms: envio_sms,
+            editar_datos: editar_datos,
             Cat_Estado_Agente_id: Cat_Estado_Agente_id,
             _token: _token
         }, function(data, textStatus, xhr) {
 
             $('.viewResult').html(data);
 
-            $('.viewResult #formDataAgente').DataTable({
+            $('.viewResult #tableAgentes').DataTable({
                 "lengthChange": true,
                 "order": [
                     [2, "asc"]

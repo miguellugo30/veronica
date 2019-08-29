@@ -20,16 +20,13 @@
                         <tr>
                             <th>Nombre</th>
                             <th>Descrición</th>
-                            
                         </tr>
                     </thead>
                     <tbody>
                         @foreach( $grupos as $grupo )
                             <tr data-id="{{ $grupo->id }}" style="cursor:pointer">
-                                
                                 <td>{{ $grupo->nombre }}</td>
                                 <td>{{ $grupo->descripcion }}</td>
-                                
                             </tr>
                         @endforeach
                     </tbody>

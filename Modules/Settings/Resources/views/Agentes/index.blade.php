@@ -25,8 +25,8 @@
                             <th>Usuario</th>
                             <th>Contraseña</th>
                             <th>Extensión</th>
+                            <th>Canal</th>
                             <th>Prefil</th>
-                            <th>Protocolo</th>
                             <th>Prueba</th>
                         </tr>
                     </thead>
@@ -34,13 +34,19 @@
                         @foreach( $agentes as $agente )
                             <tr data-id="{{ $agente->id }}" style="cursor:pointer">
                                 <td>{{ $agente->tipo_licencia }} </td>
-                                <td> </td>
-                                <td> </td>
+                                <td>
+                                    @if ( $agente->Grupos->isEmpty() )
+                                        Sin Grupo
+                                    @else
+                                        {{ $agente->Grupos[0]->nombre }}
+                                    @endif
+                                </td>
+                                <td>{{ $agente->nivel }}</td>
                                 <td>{{ $agente->nombre }}</td>
                                 <td>{{ $agente->usuario }}</td>
                                 <td>{{ $agente->contrasena }}</td>
                                 <td>{{ $agente->extension }}</td>
-                                <td> </td>
+                                <td>{{ $agente->Canales->Cat_Tipo_Canales->nombre }}</td>
                                 <td> </td>
                                 <td> </td>
                             </tr>
@@ -54,7 +60,7 @@
 </div>
 <!-- MODAL -->
 <div class="modal fade bd-example-modal-lg" tabindex="-1" id="modal" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="tituloModal">Modal title</h5>
