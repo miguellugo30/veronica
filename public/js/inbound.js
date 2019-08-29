@@ -383,8 +383,8 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\menu.js */"./resources/js/module_inbound/menu.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\campanas.js */"./resources/js/module_inbound/campanas.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\menu.js */"./resources/js/module_inbound/menu.js");
+module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\campanas.js */"./resources/js/module_inbound/campanas.js");
 
 
 /***/ })

@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Auth;
 
 use Nimbus\User;
 use Nimbus\Agentes;
+use Nimbus\Canales;
+use Nimbus\Grupos;
+use Nimbus\Empresas;
 
 
 class AgentesController extends Controller
@@ -36,7 +39,17 @@ class AgentesController extends Controller
      */
     public function create()
     {
-        return view('settings::Agentes.create');
+        /**
+         * Obtenemos el id empresa del usuario para obtener los canales
+         */
+        $user = User::find( Auth::id() );
+        $empresa_id = $user->id_cliente;
+
+        $empresa = Empresas::find( $empresa_id );
+        $canales = Canales::active()->where('Empresas_id', $empresa_id)->get();
+        $grupos = Grupos::active()->where([['Empresas_id', '=', $empresa_id],['tipo_grupo','=','Agentes']])->get();
+
+        return view('settings::Agentes.create', compact('canales', 'grupos', 'empresa'));
     }
 
     /**
@@ -47,13 +60,25 @@ class AgentesController extends Controller
     public function store(Request $request)
     {
         /**
-         * Insertamos la informacion del Agente
+         * Insertamos la información del Agente
          */
         $user = User::find( Auth::id() );
         $empresa_id = $user->id_cliente;
+        /**
+         * Insertamos el nuevo agentes
+         */
         $datos = $request->all();
-        $datos['Empresas_id']=$empresa_id;
+        $datos['Empresas_id'] = $empresa_id;
         $agente = Agentes::create($datos);
+        /**
+         * Buscamos el grupo para poderlo vincular al agente
+         */
+        if( $datos['grupo'] != '' ){
+
+            $grupo = Grupos::find(  $datos['grupo'] );
+            $grupo->Agentes()->attach($agente->id);
+
+        }
         /**
          * Creamos el logs
          */
@@ -83,8 +108,18 @@ class AgentesController extends Controller
      */
     public function edit($id)
     {
+        /**
+         * Obtenemos el id empresa del usuario para obtener los canales
+         */
+        $user = User::find( Auth::id() );
+        $empresa_id = $user->id_cliente;
+
+        $empresa = Empresas::find( $empresa_id );
         $agente = Agentes::where('id',$id)->first();
-        return view('settings::Agentes.edit',compact('agente'));
+        $canales = Canales::active()->where('Empresas_id', $empresa_id)->get();
+        $grupos = Grupos::active()->where([['Empresas_id', '=', $empresa_id],['tipo_grupo','=','Agentes']])->get();
+
+        return view('settings::Agentes.edit',compact('agente', 'canales', 'grupos', 'empresa'));
     }
 
     /**
@@ -95,25 +130,28 @@ class AgentesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //$dataForm = $request->input('dataForm');
-        //dd($request);
-        //for($i=0;$i<count($info);$i++){
 
-            Agentes::where( 'id', $id )
+        Agentes::where( 'id', $id )
             ->update([
                     'nombre' => $request->input('nombre'),
                     'usuario' => $request->input('usuario'),
                     'contrasena' => $request->input('contrasena'),
-                    'extension' => $request->input('extension')
+                    'extension' => $request->input('extension'),
+                    'nivel' => $request->input('nivel'),
+                    'Canales_id' => $request->input('Canales_id'),
+                    'mix_monitor' => $request->input('mix_monitor'),
+                    'calificar_llamada' => $request->input('calificar_llamada'),
+                    'envio_sms' => $request->input('envio_sms'),
+                    'editar_datos' => $request->input('editar_datos'),
                 ]);
             /**
              * Creamos el logs
              */
             $mensaje = 'Se edito un registro con id: '.$id.', informacion editada: '.var_export($request, true);
             $log = new LogController;
-            $log->store('Actualizacion', 'Categorias',$mensaje, $id);
+            $log->store('Actualizacion', 'Agentes',$mensaje, $id);
             return redirect()->route('Agentes.index');
-        //}
+
     }
 
     /**
@@ -132,7 +170,7 @@ class AgentesController extends Controller
          */
         $mensaje = 'Se Elimino un registro con id: '.$id;
         $log = new LogController;
-        $log->store('Eliminacion', 'User', $mensaje, $id);
+        $log->store('Eliminacion', 'Agentes', $mensaje, $id);
 
     }
 }

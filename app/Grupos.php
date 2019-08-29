@@ -14,7 +14,7 @@ class Grupos extends Model
      * Campos que se usaran en el proceso de la vista
      */
     protected $fillable = [
-        'nombre','descripcion','activo','Empresas_id',
+        'nombre','descripcion','activo', 'tipo_grupo', 'Empresas_id',
     ];
     /**
      * Nombre de la tabla
@@ -30,8 +30,8 @@ class Grupos extends Model
     /**
      * Relacion muchos a muchos con Grupos_Agentes
      */
-    public function Grupos_Agentes()
+    public function Agentes()
     {
-        return $this->belongsToMany('Nimbus\Grupos_Agentes');
+        return $this->belongsToMany('Nimbus\Agentes', 'Grupos_Agentes');
     }
 }

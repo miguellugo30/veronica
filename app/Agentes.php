@@ -14,7 +14,7 @@ class Agentes extends Model
      * Campos que se usaran en el proceso de la vista
      */
     protected $fillable = [
-        'nombre', 'usuario', 'contrasena' , 'extension', 'extension_real','pin','mix_monitor','id_perfil_marcacion','calificar_lladada','tipo_licencia','envio_sms','id_direccion','editar_datos','activo','Cat_Estado_Agente_id','Empresas_id',
+        'nombre', 'usuario', 'contrasena' , 'extension', 'nivel', 'extension_real','pin','mix_monitor','id_perfil_marcacion','calificar_llamada','tipo_licencia','envio_sms','id_direccion','editar_datos','Cat_Estado_Agente_id','Empresas_id','Canales_id',
     ];
     /**
      * Nombre de la tabla
@@ -41,9 +41,9 @@ class Agentes extends Model
     /**
      * Uno a muchos con Grupos_Agentes
      */
-    public function Grupos_Agentes()
+    public function Grupos()
     {
-        return $this->belongsTo('Nimbus\Grupos_Agentes', 'Grupos_Agentes');
+        return $this->belongsToMany('Nimbus\Grupos', 'Grupos_Agentes');
     }
     /**
      * Relacion uno a uno con Cat_Estdo_Agente
@@ -58,6 +58,13 @@ class Agentes extends Model
     public function Miembros_Campana()
     {
         return $this->belongsTo('Nimbus\Miembros_Campana');
+    }
+    /**
+     * Uno a muchos con Grupos_Agentes
+     */
+    public function Canales()
+    {
+        return $this->belongsTo('Nimbus\Canales', 'Canales_id', 'id');
     }
 
 }

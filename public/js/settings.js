@@ -233,8 +233,8 @@ $(function () {
     });
   });
   /**
-  * Evento para mostrar el formulario de crear un nuevo Agente
-  */
+   * Evento para mostrar el formulario de crear un nuevo Agente
+   */
 
   $(document).on("click", ".newAgente", function (e) {
     event.preventDefault();
@@ -248,14 +248,14 @@ $(function () {
     });
   });
   /**
-  * Evento para visualizar la configuración del Agente
-  */
+   * Evento para visualizar la configuración del Agente
+   */
 
   $(document).on('click', '.editAgente', function (event) {
     event.preventDefault();
     var id = $("#idSeleccionado").val();
-    $('#tituloModal').html('Editar Agente');
     var url = currentURL + '/Agentes/' + id + '/edit';
+    $('#tituloModal').html('Editar Agente');
     $('#action').addClass('updateAgente');
     $('#action').removeClass('saveAgente');
     $.ajax({
@@ -279,12 +279,17 @@ $(function () {
     $('#modal').modal('hide');
     var id = $("#id").val();
     var grupo = $("#grupo").val();
+    var tipo_licencia = $("#tipo_licencia").val();
     var nivel = $("#nivel").val();
     var nombre = $("#nombre").val();
     var usuario = $("#usuario").val();
     var contrasena = $("#contrasena").val();
     var extension = $("#extension").val();
-    var protocolo = $("#protocolo").val();
+    var canal = $("#canal").val();
+    var mix_monitor = $("input[name='mix_monitor']:checked").val();
+    var calificar_llamada = $("input[name='calificar_llamada']:checked").val();
+    var envio_sms = $("input[name='envio_sms']:checked").val();
+    var editar_datos = $("input[name='editar_datos']:checked").val();
 
     var _token = $("input[name=_token]").val();
 
@@ -292,17 +297,22 @@ $(function () {
     var url = currentURL + '/Agentes/' + id;
     $.post(url, {
       grupo: grupo,
+      tipo_licencia: tipo_licencia,
       nivel: nivel,
       nombre: nombre,
       usuario: usuario,
       contrasena: contrasena,
       extension: extension,
-      protocolo: protocolo,
+      Canales_id: canal,
+      mix_monitor: mix_monitor,
+      calificar_llamada: calificar_llamada,
+      envio_sms: envio_sms,
+      editar_datos: editar_datos,
       _method: _method,
       _token: _token
     }, function (data, textStatus, xhr) {
       $('.viewResult').html(data);
-      $('.viewResult #formDataAgente').DataTable({
+      $('.viewResult #tableAgentes').DataTable({
         "lengthChange": true,
         "order": [[2, "asc"]]
       });
@@ -317,12 +327,17 @@ $(function () {
     event.preventDefault();
     $('#modal').modal('hide');
     var grupo = $("#grupo").val();
+    var tipo_licencia = $("#tipo_licencia").val();
     var nivel = $("#nivel").val();
     var nombre = $("#nombre").val();
     var usuario = $("#usuario").val();
     var contrasena = $("#contrasena").val();
     var extension = $("#extension").val();
-    var protocolo = $("#protocolo").val();
+    var canal = $("#canal").val();
+    var mix_monitor = $("input[name='mix_monitor']:checked").val();
+    var calificar_llamada = $("input[name='calificar_llamada']:checked").val();
+    var envio_sms = $("input[name='envio_sms']:checked").val();
+    var editar_datos = $("input[name='editar_datos']:checked").val();
     var Cat_Estado_Agente_id = $("#Cat_Estado_Agente_id").val();
 
     var _token = $("input[name=_token]").val();
@@ -330,17 +345,22 @@ $(function () {
     var url = currentURL + '/Agentes';
     $.post(url, {
       grupo: grupo,
+      tipo_licencia: tipo_licencia,
       nivel: nivel,
       nombre: nombre,
       usuario: usuario,
       contrasena: contrasena,
       extension: extension,
-      protocolo: protocolo,
+      Canales_id: canal,
+      mix_monitor: mix_monitor,
+      calificar_llamada: calificar_llamada,
+      envio_sms: envio_sms,
+      editar_datos: editar_datos,
       Cat_Estado_Agente_id: Cat_Estado_Agente_id,
       _token: _token
     }, function (data, textStatus, xhr) {
       $('.viewResult').html(data);
-      $('.viewResult #formDataAgente').DataTable({
+      $('.viewResult #tableAgentes').DataTable({
         "lengthChange": true,
         "order": [[2, "asc"]]
       });
@@ -719,6 +739,169 @@ $(function () {
 
 /***/ }),
 
+/***/ "./resources/js/module_settings/grupos.js":
+/*!************************************************!*\
+  !*** ./resources/js/module_settings/grupos.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  var currentURL = window.location.href;
+  /**
+   * Evento para mostrar el formulario de crear un nuevo Agente
+   */
+
+  $(document).on("click", ".newGrupo", function (e) {
+    event.preventDefault();
+    $('#tituloModal').html('Alta de Grupo');
+    $('#action').removeClass('deleteGrupo');
+    $('#action').addClass('saveGrupo');
+    var url = currentURL + "/Grupos/create";
+    $.get(url, function (data, textStatus, jqXHR) {
+      $('#modal').modal('show');
+      $("#modal-body").html(data);
+    });
+  });
+  /**
+   * Evento para guardar el nuevo agente
+   */
+
+  $(document).on('click', '.saveGrupo', function (event) {
+    event.preventDefault();
+    $('#modal').modal('hide');
+    var nombre = $("#nombre").val();
+    var descripcion = $("#descripcion").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var url = currentURL + '/Grupos';
+    $.post(url, {
+      nombre: nombre,
+      descripcion: descripcion,
+      _token: _token
+    }, function (data, textStatus, xhr) {
+      $('.viewResult').html(data);
+      $('.viewResult #tableGrupos').DataTable({
+        "lengthChange": true,
+        "order": [[2, "asc"]]
+      });
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    });
+  });
+  /**
+   * Evento para seleccionar un  Grupo
+   */
+
+  $(document).on('click', '#tableGrupos tbody tr', function (event) {
+    event.preventDefault();
+    var id = $(this).data("id");
+    $(".deleteGrupo").slideDown();
+    $(".editGrupo").slideDown();
+    $("#idSeleccionado").val(id);
+    $("#tableGrupos tbody tr").removeClass('table-primary');
+    $(this).addClass('table-primary');
+  });
+  ;
+  /**
+   * Evento para eliminar un grupo
+   *
+   */
+
+  $(document).on('click', '.deleteGrupo', function (event) {
+    event.preventDefault();
+    Swal.fire({
+      title: 'Estas seguro?',
+      text: "Deseas eliminar el registro seleccionado!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Eliminar!',
+      cancelButtonText: 'Cancelar'
+    }).then(function (result) {
+      if (result.value) {
+        var id = $("#idSeleccionado").val();
+        var _method = "DELETE";
+
+        var _token = $("input[name=_token]").val();
+
+        var url = currentURL + '/Grupos/' + id;
+        $.ajax({
+          url: url,
+          type: 'POST',
+          data: {
+            _token: _token,
+            _method: _method
+          },
+          success: function success(result) {
+            $('.viewResult').html(result);
+            $('.viewResult #tableGrupo').DataTable({
+              "lengthChange": false
+            });
+            Swal.fire('Eliminado!', 'El registro ha sido eliminado.', 'success');
+          }
+        });
+      }
+    });
+  });
+  /**
+   * Evento para visualizar la configuración del Grupo
+   */
+
+  $(document).on('click', '.editGrupo', function (event) {
+    event.preventDefault();
+    var id = $("#idSeleccionado").val();
+    $('#tituloModal').html('Editar Grupo');
+    var url = currentURL + '/Grupos/' + id + '/edit';
+    $('#action').addClass('updateGrupo');
+    $('#action').removeClass('saveGrupo');
+    $.ajax({
+      url: url,
+      type: 'GET',
+      success: function success(result) {
+        $('#modal').modal({
+          backdrop: 'static',
+          keyboard: false
+        });
+        $("#modal-body").html(result);
+      }
+    });
+  });
+  /**
+   * Evento para guardar los cambios del Agente
+   */
+
+  $(document).on('click', '.updateGrupo', function (event) {
+    event.preventDefault();
+    $('#modal').modal('hide');
+    var id = $("#id").val();
+    var nombre = $("#nombre").val();
+    var descripcion = $("#descripcion").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var _method = "PUT";
+    var url = currentURL + '/Grupos/' + id;
+    $.post(url, {
+      nombre: nombre,
+      descripcion: descripcion,
+      _method: _method,
+      _token: _token
+    }, function (data, textStatus, xhr) {
+      $('.viewResult').html(data);
+      $('.viewResult #tableGrupos').DataTable({
+        "lengthChange": true,
+        "order": [[2, "asc"]]
+      });
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    });
+  });
+});
+;
+
+/***/ }),
+
 /***/ "./resources/js/module_settings/menu.js":
 /*!**********************************************!*\
   !*** ./resources/js/module_settings/menu.js ***!
@@ -1040,9 +1223,9 @@ $(function () {
 /***/ }),
 
 /***/ 1:
-/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/module_settings/menu.js ./resources/js/module_settings/formularios.js ./resources/js/module_settings/sub_formularios.js ./resources/js/module_settings/acciones_formularios.js ./resources/js/module_settings/audios.js ./resources/js/module_settings/calificaciones.js ./resources/js/module_settings/agentes.js ***!
-  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/module_settings/menu.js ./resources/js/module_settings/formularios.js ./resources/js/module_settings/sub_formularios.js ./resources/js/module_settings/acciones_formularios.js ./resources/js/module_settings/audios.js ./resources/js/module_settings/calificaciones.js ./resources/js/module_settings/agentes.js ./resources/js/module_settings/grupos.js ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1052,7 +1235,8 @@ __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\sub_fo
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\acciones_formularios.js */"./resources/js/module_settings/acciones_formularios.js");
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\audios.js */"./resources/js/module_settings/audios.js");
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\calificaciones.js */"./resources/js/module_settings/calificaciones.js");
-module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\agentes.js */"./resources/js/module_settings/agentes.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\agentes.js */"./resources/js/module_settings/agentes.js");
+module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\grupos.js */"./resources/js/module_settings/grupos.js");
 
 
 /***/ })
