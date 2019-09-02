@@ -1,16 +1,28 @@
 $(function() {
-
     var currentURL = window.location.href;
     /**
-     * Evento para mostrar el formulario de crear un nuevo Agente
+     * Evento para seleccionar un Buzon de Voz
      */
-    $(document).on("click", ".newGrupo", function(e) {
+    $(document).on('click', '#tableBuzonVoz tbody tr', function(event) {
         event.preventDefault();
-        $('#tituloModal').html('Alta de Grupo');
-        $('#action').removeClass('deleteGrupo');
-        $('#action').addClass('saveGrupo');
+        let id = $(this).data("id");
+        $(".deleteBuzonVoz").slideDown();
+        $(".editBuzonVoz").slideDown();
+        $("#idSeleccionado").val(id);
 
-        let url = currentURL + "/Grupos/create";
+        $("#tableDesvios tbody tr").removeClass('table-primary');
+        $(this).addClass('table-primary');
+    });;
+    /**
+    * Evento para mostrar el formulario de crear un nuevo Buzon de voz
+    */
+    $(document).on("click", ".newBuzonVoz", function(e) {
+        event.preventDefault();
+        $('#tituloModal').html('Agregar Buzon De Voz');
+        $('#action').removeClass('deleteBuzonVoz');
+        $('#action').addClass('saveBuzonVoz');
+
+        let url = currentURL + "/Buzon_Voz/create";
 
         $.get(url, function(data, textStatus, jqXHR) {
             $('#modal').modal('show');
@@ -18,26 +30,34 @@ $(function() {
         });
     });
     /**
-     * Evento para guardar el nuevo agente
-     */
-    $(document).on('click', '.saveGrupo', function(event) {
+    * Evento para guardar el nuevo agente
+    */
+    $(document).on('click', '.saveBuzonVoz', function(event) {
         event.preventDefault();
         $('#modal').modal('hide');
 
         let nombre = $("#nombre").val();
-        let descripcion = $("#descripcion").val();
+        let tiempo_maximo = $("#tiempo_maximo").val();
+        let terminacion = $("#terminacion").val();
+        let Audios_Empresa_id = $("#Audios_Empresa_id").val();
+        let correos = $("#correos").val();
+        let Empresas_id = $("#Empresas_id").val();
         let _token = $("input[name=_token]").val();
-        let url = currentURL + '/Grupos';
+        let url = currentURL + '/Buzon_Voz';
 
         $.post(url, {
             nombre: nombre,
-            descripcion: descripcion,
+            tiempo_maximo: tiempo_maximo,
+            terminacion: terminacion,
+            Audios_Empresa_id: Audios_Empresa_id,
+            correos: correos,
+            Empresas_id: Empresas_id,
             _token: _token
         }, function(data, textStatus, xhr) {
 
             $('.viewResult').html(data);
 
-            $('.viewResult #tableGrupos').DataTable({
+            $('.viewResult #tableBuzonVoz').DataTable({
                 "lengthChange": true,
                 "order": [
                     [2, "asc"]
@@ -49,26 +69,13 @@ $(function() {
                 'success'
             )
         });
+
     });
     /**
-     * Evento para seleccionar un  Grupo
-     */
-    $(document).on('click', '#tableGrupos tbody tr', function(event) {
-        event.preventDefault();
-        let id = $(this).data("id");
-        $(".deleteGrupo").slideDown();
-        $(".editGrupo").slideDown();
-        $("#idSeleccionado").val(id);
-
-        $("#tableGrupos tbody tr").removeClass('table-primary');
-        $(this).addClass('table-primary');
-    });;
-
-    /**
-     * Evento para eliminar un grupo
-     *
-     */
-    $(document).on('click', '.deleteGrupo', function(event) {
+    * Evento para eliminar un buzon
+    *
+    */
+    $(document).on('click', '.deleteBuzonVoz', function(event) {
         event.preventDefault();
         Swal.fire({
             title: 'Estas seguro?',
@@ -84,7 +91,7 @@ $(function() {
                 let id = $("#idSeleccionado").val();
                 let _method = "DELETE";
                 let _token = $("input[name=_token]").val();
-                let url = currentURL + '/Grupos/' + id;
+                let url = currentURL + '/Buzon_Voz/' + id;
 
                 $.ajax({
                     url: url,
@@ -95,7 +102,7 @@ $(function() {
                     },
                     success: function(result) {
                         $('.viewResult').html(result);
-                        $('.viewResult #tableGrupo').DataTable({
+                        $('.viewResult #tableBuzonVoz').DataTable({
                             "lengthChange": false
                         });
                         Swal.fire(
@@ -108,17 +115,19 @@ $(function() {
             }
         });
     });
-
-    /**
-     * Evento para visualizar la configuración del Grupo
+        /**
+     * Evento para visualizar la configuración del Buzon de Voz y editarlo
      */
-    $(document).on('click', '.editGrupo', function(event) {
+    $(document).on('click', '.editBuzonVoz', function(event) {
+
         event.preventDefault();
         var id = $("#idSeleccionado").val();
-        $('#tituloModal').html('Editar Grupo');
-        var url = currentURL + '/Grupos/' + id + '/edit';
-        $('#action').addClass('updateGrupo');
-        $('#action').removeClass('saveGrupo');
+        var url = currentURL + '/Buzon_Voz/' + id + '/edit';
+
+        $('#tituloModal').html('Editar Buzon De Voz');
+        $('#action').addClass('updateBuzonVoz');
+        $('#action').removeClass('saveBuzonVoz');
+
         $.ajax({
             url: url,
             type: 'GET',
@@ -129,28 +138,36 @@ $(function() {
         });
     });
     /**
-     * Evento para guardar los cambios del Agente
+     * Evento para guardar los cambios del Desvio
      */
-    $(document).on('click', '.updateGrupo', function(event) {
-        event.preventDefault();
-        $('#modal').modal('hide');
+     $(document).on('click', '.updateBuzonVoz', function(event) {
+         event.preventDefault();
+         $('#modal').modal('hide');
         let id = $("#id").val();
 
         let nombre = $("#nombre").val();
-        let descripcion = $("#descripcion").val();
+        let tiempo_maximo = $("#tiempo_maximo").val();
+        let terminacion = $("#terminacion").val();
+        let Audios_Empresa_id = $("#Audios_Empresa_id").val();
+        let correos = $("#correos").val();
+        let Empresas_id = $("#Empresas_id").val();
         let _token = $("input[name=_token]").val();
         let _method = "PUT";
-        let url = currentURL + '/Grupos/' + id;
-
+        let url = currentURL + '/Buzon_Voz/' + id;
+        
         $.post(url, {
             nombre: nombre,
-            descripcion: descripcion,
+            tiempo_maximo: tiempo_maximo,
+            terminacion: terminacion,
+            Audios_Empresa_id: Audios_Empresa_id,
+            correos: correos,
+            Empresas_id: Empresas_id,
             _method: _method,
             _token: _token
         }, function(data, textStatus, xhr) {
             $('.viewResult').html(data);
-
-            $('.viewResult #tableGrupos').DataTable({
+            
+            $('.viewResult #tableBuzonVoz').DataTable({
                 "lengthChange": true,
                 "order": [
                     [2, "asc"]
@@ -160,9 +177,11 @@ $(function() {
                 'Correcto!',
                 'El registro ha sido guardado.',
                 'success'
-            )
+                )
+            });
+            
         });
 
-    });
 
-});;
+
+});

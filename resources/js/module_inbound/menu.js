@@ -8,12 +8,19 @@ $(function() {
 
         e.preventDefault();
         let id = $(this).data("id");
-
         if (id == 16) {
             url = currentURL + '/campanas';
             table = ' #tableFormulario';
+        } else if (id == 32) {
+            url = currentURL + '/Condiciones_Tiempo';
+            table = ' #tableCondicionesTiempo';
+        } else if (id == 31) {
+            url = currentURL + '/Desvios';
+            table = ' #tableDesvios';
+        } else if (id == 34) {
+            url = currentURL + '/Buzon_Voz';
+            table = ' #tableBuzonVoz';
         }
-
         $.get(url, function(data, textStatus, jqXHR) {
             $(".viewResult").html(data);
             $('.viewResult' + table).DataTable({

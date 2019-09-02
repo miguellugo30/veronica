@@ -25,3 +25,21 @@ Route::prefix('inbound')->group(function() {
 Route::group(['namespace' => '\Modules\Inbound\Http\Controllers', 'prefix' => 'inbound', 'middleware' => 'auth'], function() {
     Route::resource('campanas','CampanasController');
 });
+/**
+ * Rutas para CRUD de Condiciones_Tiempo
+ */
+Route::group(['namespace' => '\Modules\Inbound\Http\Controllers', 'prefix' => 'inbound', 'middleware' => 'auth'], function() {
+    Route::resource('Condiciones_Tiempo','CondicionesTiempoController');
+});
+/**
+ * Rutas para CRUD de Desvios
+ */
+Route::group(['namespace' => '\Modules\Inbound\Http\Controllers', 'prefix' => 'inbound', 'middleware' => 'auth'], function() {
+    Route::resource('Desvios','DesviosController');
+});
+/**
+* Rutas para CRUD de Desvios
+*/
+Route::group(['namespace' => '\Modules\Inbound\Http\Controllers', 'prefix' => 'inbound', 'middleware' => 'auth'], function() {
+    Route::resource('Buzon_Voz','BuzonVozController');
+});

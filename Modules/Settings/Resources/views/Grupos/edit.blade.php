@@ -12,7 +12,6 @@
                     <label for="descripcion">Descripción</label>
                     <input type="text" class="form-control form-control-sm" name="descripcion" id="descripcion"  value="{{$grupo->descripcion}}">
                 </div>
-                
             </fieldset>
         </div>
         <div class="col">
