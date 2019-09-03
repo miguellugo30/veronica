@@ -128,6 +128,57 @@ $(function () {
 
 /***/ }),
 
+/***/ "./resources/js/module_inbound/Did_Enrutamiento.js":
+/*!*********************************************************!*\
+  !*** ./resources/js/module_inbound/Did_Enrutamiento.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  var currentURL = window.location.href;
+  /**
+   * Evento para seleccionar un Enrutamiento
+   */
+
+  $(document).on('click', '#tabledidenrutamientos tbody tr', function (event) {
+    event.preventDefault();
+    var id = $(this).data("id"); //$(".deletedidenrutamiento").slideDown();
+
+    $(".editdidenrutamiento").slideDown();
+    $("#idSeleccionado").val(id);
+    $("#tabledidenrutamientos tbody tr").removeClass('table-primary');
+    $(this).addClass('table-primary');
+  });
+  ;
+  /**
+   * Evento para Configurar el enrutamiento
+   */
+
+  $(document).on('click', '.editdidenrutamiento', function (event) {
+    event.preventDefault();
+    var id = $("#idSeleccionado").val();
+    var url = currentURL + '/Did_Enrutamiento/' + id + '/edit';
+    $('#tituloModal').html('Editar Enrutamiento');
+    $('#action').addClass('updatedidenrutamiento');
+    $('#action').removeClass('savedidenrutamiento');
+    $.ajax({
+      url: url,
+      type: 'GET',
+      success: function success(result) {
+        $('#modal').modal({
+          backdrop: 'static',
+          keyboard: false
+        });
+        $("#modal-body").html(result);
+      }
+    });
+  });
+});
+;
+
+/***/ }),
+
 /***/ "./resources/js/module_inbound/buzon_voz.js":
 /*!**************************************************!*\
   !*** ./resources/js/module_inbound/buzon_voz.js ***!
@@ -808,6 +859,9 @@ $(function () {
     } else if (id == 34) {
       url = currentURL + '/Buzon_Voz';
       table = ' #tableBuzonVoz';
+    } else if (id == 30) {
+      url = currentURL + '/Did_Enrutamiento';
+      table = ' #tableDidEnrutamiento';
     }
 
     $.get(url, function (data, textStatus, jqXHR) {
@@ -822,9 +876,9 @@ $(function () {
 /***/ }),
 
 /***/ 2:
-/*!************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/module_inbound/menu.js ./resources/js/module_inbound/campanas.js ./resources/js/module_inbound/CondicionesTiempo.js ./resources/js/module_inbound/desvios.js ./resources/js/module_inbound/buzon_voz.js ***!
-  \************************************************************************************************************************************************************************************************************************************/
+/*!**************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/module_inbound/menu.js ./resources/js/module_inbound/campanas.js ./resources/js/module_inbound/CondicionesTiempo.js ./resources/js/module_inbound/desvios.js ./resources/js/module_inbound/buzon_voz.js ./resources/js/module_inbound/Did_Enrutamiento.js ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -832,7 +886,8 @@ __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\menu.
 __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\campanas.js */"./resources/js/module_inbound/campanas.js");
 __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\CondicionesTiempo.js */"./resources/js/module_inbound/CondicionesTiempo.js");
 __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\desvios.js */"./resources/js/module_inbound/desvios.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\buzon_voz.js */"./resources/js/module_inbound/buzon_voz.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\buzon_voz.js */"./resources/js/module_inbound/buzon_voz.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\Did_Enrutamiento.js */"./resources/js/module_inbound/Did_Enrutamiento.js");
 
 
 /***/ })
