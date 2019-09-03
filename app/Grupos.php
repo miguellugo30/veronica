@@ -34,4 +34,12 @@ class Grupos extends Model
     {
         return $this->belongsToMany('Nimbus\Agentes', 'Grupos_Agentes');
     }
+    
+    /**
+     ## Relacion muchos a muchos con Grup_Calificacione
+     */
+    public function Calificaciones()
+    {
+        return $this->belongsToMany('Nimbus\Calificaciones', 'Grupos_Calificaciones');
+    }
 }

@@ -38,8 +38,42 @@ $(function() {
                 $("#modal-body").html(result);
             }
         });
-    });
+    });  
+     
+    /**
+    * Evento para obtener el valor del tipo de Formulario
+    */
+    $(document).on('change', '#tipo_marcacion', function(event) {
 
+        let pos = $(this).data('pos');
+        let id_Tipo_Marcacion = $(this).val();
+        
+        alert(pos + '+'+id_Tipo_Marcacion);
+
+        
+    });
    
+    /**
+     * Evento para guardar Nuevas Calificaciones
+     */
+    $(document).on('click', '.saveCalificaciones', function(event) {
+        event.preventDefault();
+        $('#modal').modal('hide');
+
+        let dataForm = $("#formDataCalificaciones").serializeArray();
+
+        let _token = $("input[name=_token]").val();
+        let url = currentURL + '/calificaciones';
+
+        $.post(url, {
+            dataForm: dataForm,
+            _token: _token
+        }, function(data, textStatus, xhr) {
+            $('.viewResult').html(data);
+        });
+
+    });
+ 
+        
     
 });

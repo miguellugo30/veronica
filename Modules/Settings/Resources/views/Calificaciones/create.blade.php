@@ -1,4 +1,5 @@
 <!-- VISTA CALIFICACIONES -->
+<!-- Este es elemento que se cambia -->
 <form id="formDataCalificaciones">
     <div class="col-12" >
         <div class="row">
@@ -14,8 +15,8 @@
             <!--Tipos Marcacion-->
             <div class="col">             
                 <div class="form-group">
-                    <label for="tipo_id"><b>Tipo Marcaci&oacute;n</b></label>
-                    <select name="tipo_id" id="tipo_id" class="form-control form-control-sm">   
+                    <label for="tipo_marcacion"><b>Tipo Marcaci&oacute;n</b></label>
+                    <select name="tipo_marcacion" id="tipo_marcacion" class="form-control form-control-sm">   
                         <option value="">Seleccione un tipo</option>                        
                             <option value="Inbound">Inbound</option> 
                             <option value="Outbound">Outbound</option> 
@@ -43,21 +44,30 @@
                     <tbody>
                     
                         <tr id="tr_1" class="clonar">
+                        
+                        
+                        
+                        
                             <td>
-                                <input type="text" class="form-control form-control-sm opciones" name="nombre_campo_1" id="nombre_campo" placeholder="Nombre Calificacion">
+                                <input type="text" class="form-control form-control-sm opciones" name="nombre_calificacion_1" id="nombre_calificacion" placeholder="Nombre Calificacion">
+                                @csrf
+
                             </td>
                                     
                             <td>                            
                               <!--div class="form-group selectModulo" style="display:none" -->
-                              <!--div class="form-group selectModulo"  -->                                    
+                              <div class="form-group selectModulo">                                    
                                 <select name="tipo_formulario_1" id="tipo_formulario" data-action="create" class="form-control form-control-sm ">
                                   <option value="">Selecciona un formulario</option>
-                                     @foreach( $formularios as $formulario )
-                                      <option value="{{ $formulario->id }}">{{ $formulario->nombre }}</option>
-                                     @endforeach
-                                </select>                                   
+                                    @foreach( $formularios as $formulario )
+                                       <option value="{{ $formulario->id }}">{{ $formulario->nombre }}</option>
+                                    @endforeach
+                                </select>                                                        
                               </div>
                             </td>                            
+       
+       
+       
        
                             <td>
                                 <input type="checkbox" class="micheckbox opciones" name="editable_1" id="editable">
@@ -70,6 +80,7 @@
                                 <button type="button" name="remove" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                             </td>
                             
+                            <!-- Boton para ver detalle [aun no lo uso]-->                            
                             <td class="text-center">
                                 <button type="button" name="view_1" id="view" class="btn btn-info view" style="display:none"><i class="fas fa-eye"></i></button>
                             </td>
