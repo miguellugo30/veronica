@@ -673,6 +673,15 @@ $(function () {
     } else if (id == 32) {
       url = currentURL + '/Condiciones_Tiempo';
       table = ' #tableCondicionesTiempo';
+    } else if (id == 31) {
+      url = currentURL + '/Desvios';
+      table = ' #tableDesvios';
+    } else if (id == 34) {
+      url = currentURL + '/Buzon_Voz';
+      table = ' #tableBuzonVoz';
+    } else if (id == 30) {
+      url = currentURL + '/Did_Enrutamiento';
+      table = ' #tableDidEnrutamiento';
     }
 
     $.get(url, function (data, textStatus, jqXHR) {
