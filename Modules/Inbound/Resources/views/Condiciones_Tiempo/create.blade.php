@@ -1,3 +1,18 @@
+<style>
+.hora{
+    background-color: white;
+    display: inline-flex;
+    border: 1px solid #ccc;
+    color: #555;
+}
+.hora input{
+    border: none;
+    color: #555;
+    text-align: center;
+    width: 50px;
+    height: 29px;
+}
+</style>
 <form id="formDataCondicionTiempo">
     <div class="col-12" >
         <div class="row">
@@ -38,10 +53,16 @@
                                 <input type="text" class="form-control form-control-sm" name="nombre_campo_1" id="nombre_campo" placeholder="Nombre Campo">
                             </td>
                             <td>
-                                <input type="text" class="form-control form-control-sm hora_inicio" size="6" name="hora_inicio_1" id="hora_inicio" placeholder="hora_inicio">
+                                <div class="hora">
+                                    <input type="number" name="hora_inicio_1" id="hora_inicio" min="00" max="23" class="form-control form-control-sm" placeholder="--" size="2" onchange="if(parseInt(this.value,10)<10)this.value='0'+this.value;">:
+                                    <input type="number" name="min_inicio_1" id="min_inicio"  min="0" max="59" class="form-control form-control-sm" placeholder="--" size="2" onchange="if(parseInt(this.value,10)<10)this.value='0'+this.value;">
+                                </div>
                             </td>
                             <td>
-                                <input type="text" class="form-control form-control-sm hora_fin" size="6" name="hora_fin_1" id="hora_fin" placeholder="hora_fin">
+                                <div class="hora">
+                                    <input type="number" name="hora_fin_1" id="hora_fin" min="0" max="23" class="form-control form-control-sm" placeholder="--" onchange="if(parseInt(this.value,10)<10)this.value='0'+this.value;">:
+                                    <input type="number" name="min_fin_1" id="min_fin"  min="0" max="59" class="form-control form-control-sm" placeholder="--" onchange="if(parseInt(this.value,10)<10)this.value='0'+this.value;">
+                                </div>
                             </td>
                             <td>
                                 <select name="dia_semana_inicio_1" id="dia_semana_inicio"  class="form-control form-control-sm" placeholder="dia_demana_inicio" >
@@ -60,10 +81,10 @@
                                 </select>
                             </td>
                             <td>
-                                <input type="text" class="form-control form-control-sm fecha_inicio" name="fecha_inicio_1" id="fecha_inicio" placeholder="Fecha Inicio">
+                                <input type="text" class="form-control form-control-sm fecha_inicio" name="fecha_inicio_1" id="fecha_inicio" placeholder="Fecha Inicio" size="10">
                             </td>
                             <td>
-                                <input type="text" class="form-control form-control-sm fecha_final" name="fecha_final_1" id="fecha_final" placeholder="Fecha Final">
+                                <input type="text" class="form-control form-control-sm fecha_final" name="fecha_final_1" id="fecha_final" placeholder="Fecha Final" size="10">
                             </td>
                             <td>
                                 <select name="destino_verdadero_1" id="destino_verdadero"  class="form-control form-control-sm destinoOpccion" data-accion="si_coincide">

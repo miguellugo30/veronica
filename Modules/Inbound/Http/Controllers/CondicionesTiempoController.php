@@ -78,48 +78,48 @@ class CondicionesTiempoController extends Controller
         array_shift( $data );
         array_shift( $data );
 
-        $info = array_chunk( $data, 11 );
+        $info = array_chunk( $data, 13 );
 
         /**
          * Insertamos la información de los campos
          */
         for ($i=0; $i < count( $info ); $i++) {
 
-            if ( $info[$i][5] == NULL ) {
+            if ( $info[$i][7] == NULL ) {
                 $dia_mes_inicio = '*';
                 $mes_inicio = '*';
             } else {
-                $fecha_inicio = explode('-',  $info[$i][5]);
+                $fecha_inicio = explode('-',  $info[$i][7]);
                 $dia_mes_inicio = $fecha_inicio[0];
                 $mes_inicio = $fecha_inicio[1];
             }
 
-            if ( $info[$i][6] == NULL ) {
+            if ( $info[$i][8] == NULL ) {
                 $dia_mes_fin = '*';
                 $mes_fin = '*';
             } else {
-                $fecha_fin = explode('-',  $info[$i][6]);
+                $fecha_fin = explode('-',  $info[$i][8]);
                 $dia_mes_fin = $fecha_fin[0];
                 $mes_fin = $fecha_fin[1];
             }
 
-            $hora_inicio =  str_replace(' ','', $info[$i][1]);
-            $hora_fin =  str_replace(' ','', $info[$i][2]);
+            $hora_inicio = $info[$i][1].":".$info[$i][2];
+            $hora_fin = $info[$i][3].":".$info[$i][4];
 
             Condiciones_Tiempo::create([
                                             'nombre' => $info[$i][0],
                                             'hora_inicio' => $hora_inicio,
                                             'hora_fin' => $hora_fin,
-                                            'dia_semana_inicio' => $info[$i][3],
-                                            'dia_semana_fin' => $info[$i][4],
+                                            'dia_semana_inicio' => $info[$i][5],
+                                            'dia_semana_fin' => $info[$i][6],
                                             'dia_mes_inicio' => $dia_mes_inicio,
                                             'dia_mes_fin' => $dia_mes_fin,
                                             'mes_inicio' => $mes_inicio,
                                             'mes_fin' => $mes_fin,
-                                            'tabla_verdadero' => $info[$i][7],
-                                            'tabla_verdadero_id' => $info[$i][8],
-                                            'tabla_falso' => $info[$i][9],
-                                            'tabla_falso_id' => $info[$i][10],
+                                            'tabla_verdadero' => $info[$i][9],
+                                            'tabla_verdadero_id' => $info[$i][10],
+                                            'tabla_falso' => $info[$i][11],
+                                            'tabla_falso_id' => $info[$i][12],
                                             'Grupos_id' => $grupo->id
                                         ]);
 
@@ -277,8 +277,8 @@ class CondicionesTiempoController extends Controller
         array_shift( $data );
         array_shift( $data );
         array_shift( $data );
+        $info = array_chunk( $data, 14 );
 
-        $info = array_chunk( $data, 12 );
         /**
          * Insertamos la información de los campos
          */
@@ -286,80 +286,80 @@ class CondicionesTiempoController extends Controller
 
             if( $info[$i][0] != NULL ) {
 
-                if ( $info[$i][6] == NULL ) {
+                if ( $info[$i][8] == NULL ) {
                     $dia_mes_inicio = '*';
                     $mes_inicio = '*';
                 } else {
-                    $fecha_inicio = explode('-',  $info[$i][6]);
+                    $fecha_inicio = explode('-',  $info[$i][8]);
                     $dia_mes_inicio = $fecha_inicio[0];
                     $mes_inicio = $fecha_inicio[1];
                 }
 
-                if ( $info[$i][7] == NULL ) {
+                if ( $info[$i][9] == NULL ) {
                     $dia_mes_fin = '*';
                     $mes_fin = '*';
                 } else {
-                    $fecha_fin = explode('-',  $info[$i][7]);
+                    $fecha_fin = explode('-',  $info[$i][9]);
                     $dia_mes_fin = $fecha_fin[0];
                     $mes_fin = $fecha_fin[1];
                 }
 
-                $hora_inicio =  str_replace(' ','', $info[$i][2]);
-                $hora_fin =  str_replace(' ','', $info[$i][3]);
+                $hora_inicio = $info[$i][2].":".$info[$i][3];
+                $hora_fin = $info[$i][4].":".$info[$i][5];
 
                 Condiciones_Tiempo::where('id', $info[$i][0])->update([
                                                                         'nombre' => $info[$i][1],
                                                                         'hora_inicio' => $hora_inicio,
                                                                         'hora_fin' => $hora_fin,
-                                                                        'dia_semana_inicio' => $info[$i][4],
-                                                                        'dia_semana_fin' => $info[$i][5],
+                                                                        'dia_semana_inicio' => $info[$i][6],
+                                                                        'dia_semana_fin' => $info[$i][7],
                                                                         'dia_mes_inicio' => $dia_mes_inicio,
                                                                         'dia_mes_fin' => $dia_mes_fin,
                                                                         'mes_inicio' => $mes_inicio,
                                                                         'mes_fin' => $mes_fin,
-                                                                        'tabla_verdadero' => $info[$i][8],
-                                                                        'tabla_verdadero_id' => $info[$i][9],
-                                                                        'tabla_falso' => $info[$i][10],
-                                                                        'tabla_falso_id' => $info[$i][11]
+                                                                        'tabla_verdadero' => $info[$i][10],
+                                                                        'tabla_verdadero_id' => $info[$i][11],
+                                                                        'tabla_falso' => $info[$i][12],
+                                                                        'tabla_falso_id' => $info[$i][13]
                                                                     ]);
 
                 } else {
 
-                    if ( $info[$i][6] == NULL ) {
+                    if ( $info[$i][8] == NULL ) {
                         $dia_mes_inicio = '*';
                         $mes_inicio = '*';
                     } else {
-                        $fecha_inicio = explode('-',  $info[$i][6]);
+                        $fecha_inicio = explode('-',  $info[$i][8]);
                         $dia_mes_inicio = $fecha_inicio[0];
                         $mes_inicio = $fecha_inicio[1];
                     }
 
-                    if ( $info[$i][7] == NULL ) {
+                    if ( $info[$i][9] == NULL ) {
                         $dia_mes_fin = '*';
                         $mes_fin = '*';
                     } else {
-                        $fecha_fin = explode('-',  $info[$i][7]);
+                        $fecha_fin = explode('-',  $info[$i][9]);
                         $dia_mes_fin = $fecha_fin[0];
                         $mes_fin = $fecha_fin[1];
                     }
 
-                    $hora_inicio =  str_replace(' ','', $info[$i][2]);
-                    $hora_fin =  str_replace(' ','', $info[$i][3]);
+                    $hora_inicio = $info[$i][2].":".$info[$i][3];
+                    $hora_fin = $info[$i][4].":".$info[$i][5];
 
                     Condiciones_Tiempo::create([
                                                     'nombre' => $info[$i][1],
                                                     'hora_inicio' => $hora_inicio,
                                                     'hora_fin' => $hora_fin,
-                                                    'dia_semana_inicio' => $info[$i][4],
-                                                    'dia_semana_fin' => $info[$i][5],
+                                                    'dia_semana_inicio' => $info[$i][6],
+                                                    'dia_semana_fin' => $info[$i][7],
                                                     'dia_mes_inicio' => $dia_mes_inicio,
                                                     'dia_mes_fin' => $dia_mes_fin,
                                                     'mes_inicio' => $mes_inicio,
                                                     'mes_fin' => $mes_fin,
-                                                    'tabla_verdadero' => $info[$i][8],
-                                                    'tabla_verdadero_id' => $info[$i][9],
-                                                    'tabla_falso' => $info[$i][10],
-                                                    'tabla_falso_id' => $info[$i][11],
+                                                    'tabla_verdadero' => $info[$i][10],
+                                                    'tabla_verdadero_id' => $info[$i][11],
+                                                    'tabla_falso' => $info[$i][12],
+                                                    'tabla_falso_id' => $info[$i][13],
                                                     'Grupos_id' => $idGrupo
                                                 ]);
 

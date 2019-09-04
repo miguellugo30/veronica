@@ -174,7 +174,7 @@ $(function () {
     var clickID = $(".tableNewForm tbody tr.clonar:last").attr('id').replace('tr_', ''); // Genero el nuevo numero id
 
     var newID = parseInt(clickID) + 1;
-    var IDInput = ['id_campo', 'nombre_campo', 'hora_inicio', 'hora_fin', 'dia_semana_inicio', 'dia_semana_fin', 'fecha_inicio', 'fecha_final', 'destino_verdadero', 'destino_falso', 'opciones_si_coincide', 'opciones_no_coincide'];
+    var IDInput = ['id_campo', 'nombre_campo', 'hora_inicio', 'min_inicio', 'hora_fin', 'min_fin', 'dia_semana_inicio', 'dia_semana_fin', 'fecha_inicio', 'fecha_final', 'destino_verdadero', 'destino_falso', 'opciones_si_coincide', 'opciones_no_coincide'];
     fila = $(".tableNewForm tbody tr:eq()").clone().appendTo(".tableNewForm"); //Clonamos la fila
 
     for (var i = 0; i < IDInput.length; i++) {
@@ -320,6 +320,8 @@ $(function () {
           keyboard: false
         });
         $("#modal-body").html(result);
+        $(".fecha_inicio").datepicker();
+        $(".fecha_final").datepicker();
         $(".hora_inicio").wickedpicker({
           twentyFour: true,
           title: ''
@@ -389,6 +391,15 @@ $(function () {
         $('#opcionesSiCoincide_' + nombre).html(data);
       }
     });
+  });
+  $(document).on('change', 'input[type=number]', function (e) {
+    var val = $(this).val(); // Always 2 digits
+
+    if (val.length >= 2) val = val.slice(0, 2); // 0 on the left (doesn't work on FF)
+
+    if (val.length === 1) val = '0' + val; // Avoiding letters on FF
+
+    if (!val) val = '00';
   });
 });
 
