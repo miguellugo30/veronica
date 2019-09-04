@@ -34,4 +34,11 @@ class Grupos extends Model
     {
         return $this->belongsToMany('Nimbus\Agentes', 'Grupos_Agentes');
     }
+    /**
+     * Relacion muchos a muchos con Condiciones de tiempo
+     */
+    public function Condiciones_Tiempo()
+    {
+        return $this->hasMany('Nimbus\Condiciones_Tiempo');
+    }
 }

@@ -29,7 +29,7 @@
                         @foreach ($campanas as $campana)
                             <tr data-id="{{ $campana->id }}" style="cursor:pointer">
                                 <td>{{ Str::title( $campana->nombre ) }}</td>
-                                <td>{{ Str::title( $campana->Campanas_Configuracion->strategy ) }}</td>
+                                <td>{{ $campana->Campanas_Configuracion->strategy }}</td>
                                 <td>{{ Str::title( str_replace( '_', ' ', $campana->modalidad_logue) ) }}</td>
                             </tr>
                         @endforeach

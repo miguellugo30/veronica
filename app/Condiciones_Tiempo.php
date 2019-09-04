@@ -14,7 +14,7 @@ class Condiciones_Tiempo extends Model
     * Campos que pueden ser modificados
     */
   protected $fillable = [
-       'nombre', 'hora_inicio', 'hora_fin' , 'dia_semana_inicio','dia_semana_fin','dia_mes_inicio', 'dia_mes_fin','mes_inicio','mes_fin','verdadero','falso','activo','Grupos_id','Empresas_id',
+       'nombre', 'hora_inicio', 'hora_fin' , 'dia_semana_inicio','dia_semana_fin','dia_mes_inicio', 'dia_mes_fin','mes_inicio','mes_fin','tabla_verdadero','tabla_verdadero_id','tabla_falso','tabla_falso_id','Grupos_id',
    ];
    /**
     * Nombre de la tabla
@@ -31,13 +31,6 @@ class Condiciones_Tiempo extends Model
     |--------------------------------------------------------------------------
     | RELACIONES DE BASE DE DATOS
     |--------------------------------------------------------------------------
-    /**
-    * Muchos a uno con Empresas
-    */
-    public function Empresas()
-    {
-        return $this->belongsTo('Nimbus\Empresas', 'Empresas_id', 'id');
-    }
     /**
      * Muchos a uno con Grupos
      */

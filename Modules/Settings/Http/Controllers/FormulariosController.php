@@ -50,7 +50,6 @@ class FormulariosController extends Controller
         for ($i=0; $i < count( $dataForm ); $i++) {
             $data[ $dataForm[$i]['name']] = $dataForm[$i]['value'];
         }
-
         /**
          * Obtenemos los datos del usuario logeado
          */

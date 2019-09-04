@@ -20,6 +20,8 @@
 
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/dist/css/jquery.flexdatalist.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="{{ asset('css/wickedpicker.min.css') }}">
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
@@ -81,6 +83,7 @@
 @endif
 
 @yield('adminlte_js')
+<script src="{{ asset('js/wickedpicker.js') }}"></script>
 
 @if ( isset( $modulo ) )
     @if (  $modulo == 'Settings')
