@@ -43,10 +43,7 @@
                     
                     <tbody>
                     
-                        <tr id="tr_1" class="clonar">
-                        
-                        
-                        
+                        <tr id="tr_1" class="clonar">     
                         
                             <td>
                                 <input type="text" class="form-control form-control-sm opciones" name="nombre_calificacion_1" id="nombre_calificacion" placeholder="Nombre Calificacion">
@@ -65,10 +62,7 @@
                                 </select>                                                        
                               </div>
                             </td>                            
-       
-       
-       
-       
+              
                             <td>
                                 <input type="checkbox" class="micheckbox opciones" name="editable_1" id="editable">
                                 <input type="hidden" name="editable_hidden_1" id="editable_hidden" value="off" class="opciones">

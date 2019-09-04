@@ -1,42 +1,42 @@
 <div class="box box-primary">
     <div class="box-header with-border">
-        <h3 class="box-title"><b><i class="fas fa-share-square"></i> Desvios</b></h3>
+        <h3 class="box-title"><b><i class="fas fa-tty"></i> IVR</b></h3>
         <div class="box-tools pull-right">
-            @can('delete desvio')
+            @can('delete ivr')
             @endcan
-            <button type="button" class="btn btn-danger  btn-sm deleteDesvio" style="display:none"><i class="fas fa-trash-alt"></i> Elminar</button>
-            @can('edit desvio')
+            <button type="button" class="btn btn-danger  btn-sm deleteIvr" style="display:none"><i class="fas fa-trash-alt"></i> Elminar</button>
+            @can('edit ivr')
             @endcan
-            <button type="button" class="btn btn-warning btn-sm editDesvio" style="display:none"><i class="fas fa-edit"></i> Editar</button>
-            @can('create desvio')
+            <button type="button" class="btn btn-warning btn-sm editIvr" style="display:none"><i class="fas fa-edit"></i> Editar</button>
+            @can('create ivr')
             @endcan
-                <button type="button" class="btn btn-primary btn-sm newDesvio" data-widget="remove"><i class="fas fa-plus"></i> Nuevo</button>
+                <button type="button" class="btn btn-primary btn-sm newIvr" data-widget="remove"><i class="fas fa-plus"></i> Nuevo</button>
             <input type="hidden" name="idSeleccionado" id="idSeleccionado" value="">
         </div>
     </div><!-- /.box-header -->
     <div class="box-body">
         <div class="row">
             <div class="col-md-12 viewIndex">
-                <table id="tableDesvios" class="display table table-bordered table-hover table-sm" style="width:100%">
+                <table id="tableivr" class="display table table-bordered table-hover table-sm" style="width:100%">
                     <thead>
                         <tr>
                             <th>Nombre</th>
-                            <th>Canal</th>
-                            <th>Caller ID</th>
-                            <th>Tiempo De Ringeo</th>
-                            <th>Destino</th>
-                            <th>Probar</th>
+                            <th>Mensaje Bienvenida</th>
+                            <th>Tiempo Espera</th>
+                            <th>Mensaje Espera Superada</th>
+                            <th>Mensaje Opcion Invalida</th>
+                            <th>Repeticiones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($desvios as $desvio)
-                            <tr data-id="{{ $desvio->id }}" style="cursor:pointer">
-                            <td>{{ Str::title( $desvio->nombre ) }}</td>
-                            <td>{{ Str::title( $desvio->Canales->Cat_Tipo_Canales->nombre ) }}</td>
-                            <td></td>
-                            <td>{{ Str::title( $desvio->ringeo ) }}</td>
-                            <td>{{ Str::title( $desvio->dial ) }}</td>
-                            <td></td>
+                        @foreach ($ivrs as $ivr)
+                            <tr data-id="{{ $ivr->id }}" style="cursor:pointer">
+                            <td>{{ Str::title( $ivr->nombre ) }}</td>
+                            <td>{{ Str::title( $ivr->mensaje_bienvenida_id ) }}</td>
+                            <td>{{ Str::title( $ivr->tiempo_espera ) }}</td>
+                            <td>{{ Str::title( $ivr->mensaje_tiepo_espera_id ) }}</td>
+                            <td>{{ Str::title( $ivr->mensaje_opcion_invalida_id ) }}</td>
+                            <td>{{ Str::title( $ivr->repeticiones ) }}</td>
 
                             </tr>
                         @endforeach

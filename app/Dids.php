@@ -45,6 +45,13 @@ class Dids extends Model
    {
       return $this->belongsTo('Nimbus\Canales', 'Canales_id', 'id');
    }
+   /**
+   * Relacion uno a uno con Did_Entrutamiento
+   */
+   public function Did_Enrutamiento()
+   {
+      return $this->hasOne('Nimbus\Did_Enrutamiento')->orderby('prioridad');
+   }
 }
 
 ?>

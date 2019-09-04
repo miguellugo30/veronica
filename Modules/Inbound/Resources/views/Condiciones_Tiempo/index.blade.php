@@ -2,24 +2,26 @@
     <div class="box-header with-border">
         <h3 class="box-title"><i class="far fa-clock"></i> Condiciones de Tiempo</h3>
         <div class="box-tools pull-right">
-            @can('delete condiciontiempo')
+            @can('delete condicion de tiempo')
+            <button type="button" class="btn btn-danger  btn-sm deleteCondicion" style="display:none"><i class="fas fa-trash-alt"></i> Elminar</button>
             @endcan
-            <button type="button" class="btn btn-danger  btn-sm deletecondiciontiempo" style="display:none"><i class="fas fa-trash-alt"></i> Elminar</button>
-            <button type="button" class="btn btn-warning  btn-sm editcondiciontiempo" style="display:none"><i class="fas fa-edit"></i> Editar</button>
-            @can('create condiciontiempo')
+            @can('edit condicion de tiempo')
+                <button type="button" class="btn btn-warning  btn-sm editCondicion" style="display:none"><i class="fas fa-edit"></i> Editar</button>
             @endcan
+            @can('create condicion de tiempo')
                 <button type="button" class="btn btn-primary btn-sm newcondiciontiempo" data-widget="remove"><i class="fas fa-plus"></i> Nuevo</button>
+            @endcan
             <input type="hidden" name="idSeleccionado" id="idSeleccionado" value="">
         </div>
     </div><!-- /.box-header -->
     <div class="box-body">
         <div class="row">
             <div class="col-md-12 viewIndex" >
-                <table id="tablecondiciontiempo" class="display table table-bordered table-hover table-sm" style="width:100%">
+                <table id="tableCondicionTiempo" class="display table table-bordered table-hover table-sm" style="width:100%">
                     <thead>
                         <tr>
                             <th>Nombre</th>
-                            
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -38,7 +40,7 @@
 </div>
 <!-- MODAL -->
 <div class="modal fade bd-example-modal-lg" tabindex="-1" id="modal" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-dialog modal-xl" role="document" style="max-width: 1440px;">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="tituloModal">Modal title</h5>

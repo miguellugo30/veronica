@@ -46,7 +46,8 @@ class CalificacionesController extends Controller
         $dataForm = $request->input('dataForm');
 
         for ($i=0; $i < count( $dataForm ); $i++) {
-           $data[ $dataForm[$i]['name']."_".$i ] = $dataForm[$i]['value'];
+           $data[ $dataForm[$i]['name'] ] = $dataForm[$i]['value']; 
+         //  $data[ $dataForm[$i]['name']."_".$i ] = $dataForm[$i]['value'];
         }
 
          /**
@@ -63,23 +64,23 @@ class CalificacionesController extends Controller
          * Insertar información el table de Formularios
          */
          $grupo = Grupos::create([
-             'nombre'=> $dataForm['nombre_grupo'], 
+             'nombre'=> $data['nombre_grupo'], 
              'descripcion'=>$desc,
              'tipo_grupo'=>$tipo_grupo,             
              'Empresas_id'=>$empresa_id
              ]);
 
+        
         array_shift( $data );
         array_shift( $data );
         array_shift( $data );
 
         $info = array_chunk( $data, 6 );
+        
+        /** * Insertamos la información de los campos  **/
 
-        /**
-         * Insertamos la información de los campos
-         */
 
-        for ($i=0; $i < count( $info ); $i++) {
+       for ($i=0; $i < count( $info ); $i++) {
 
             if ( $info[$i][1] == 'asignador_folios' ) {
 
@@ -134,12 +135,15 @@ class CalificacionesController extends Controller
                                             'editable' => $info[$i][4]
                                         ]);
             }
-
+/*
       DB::table('Formularios_Campos')->insert(
                 ['Formularios_id' => $formulario->id, 'Campos_id' => $campo->id]
             );
+ */           
 
         }
+        
+        
 
         return redirect()->route('calificaciones.index');
     }

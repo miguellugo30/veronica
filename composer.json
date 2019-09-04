@@ -13,7 +13,7 @@
         "jeremykenedy/laravel-roles": "^1.7",
         "jeroennoten/laravel-adminlte": "^1.25",
         "laravel/framework": "5.8.*",
-        "laravel/telescope": "^2.0",
+        "laravel/telescope": "^2.1",
         "laravel/tinker": "^1.0",
         "monolog/monolog": "^1.24",
         "nwidart/laravel-modules": "^5.0",

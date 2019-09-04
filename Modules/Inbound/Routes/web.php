@@ -43,3 +43,15 @@ Route::group(['namespace' => '\Modules\Inbound\Http\Controllers', 'prefix' => 'i
 Route::group(['namespace' => '\Modules\Inbound\Http\Controllers', 'prefix' => 'inbound', 'middleware' => 'auth'], function() {
     Route::resource('Buzon_Voz','BuzonVozController');
 });
+/**
+* Rutas para CRUD de Desvios
+*/
+Route::group(['namespace' => '\Modules\Inbound\Http\Controllers', 'prefix' => 'inbound', 'middleware' => 'auth'], function() {
+    Route::resource('Did_Enrutamiento','DidEnrutamientoController');
+});
+/**
+* Rutas para CRUD de Desvios
+*/
+Route::group(['namespace' => '\Modules\Inbound\Http\Controllers', 'prefix' => 'inbound', 'middleware' => 'auth'], function() {
+    Route::resource('Ivr','IvrController');
+});

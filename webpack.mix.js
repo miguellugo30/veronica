@@ -51,6 +51,8 @@ mix.js([
         'resources/js/module_inbound/CondicionesTiempo.js',
         'resources/js/module_inbound/desvios.js',
         'resources/js/module_inbound/buzon_voz.js',
+        'resources/js/module_inbound/Did_Enrutamiento.js',
+        'resources/js/module_inbound/ivr.js',
     ], 'public/js/inbound.js');
 /*
 .sass('resources/sass/app.scss', 'public/css');

@@ -82,7 +82,6 @@ $(function() {
     });
     /**
      * Evento para guardar la nueva campana
-     *
      */
     $(document).on('click', '.saveCampana', function(event) {
         event.preventDefault();

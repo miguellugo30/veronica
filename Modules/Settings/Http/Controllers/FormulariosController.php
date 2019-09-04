@@ -50,11 +50,11 @@ class FormulariosController extends Controller
         for ($i=0; $i < count( $dataForm ); $i++) {
             $data[ $dataForm[$i]['name']] = $dataForm[$i]['value'];
         }
-
-        /** ## Obtenemos los datos del usuario logeado */
+        /**
+         * Obtenemos los datos del usuario logeado
+         */
         $user = User::find( Auth::id() );
         $empresa_id = $user->id_cliente;
-        
         /**
          * Insertar información el table de Formularios
          */
@@ -143,7 +143,7 @@ class FormulariosController extends Controller
             );
 
         }
-        return redirect()->route('calificaciones.index');
+        return redirect()->route('formularios.index');
     }
 
     /**

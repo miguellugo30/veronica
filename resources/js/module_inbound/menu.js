@@ -20,6 +20,12 @@ $(function() {
         } else if (id == 34) {
             url = currentURL + '/Buzon_Voz';
             table = ' #tableBuzonVoz';
+        } else if (id == 30) {
+            url = currentURL + '/Did_Enrutamiento';
+            table = ' #tableDidEnrutamiento';
+        } else if (id == 6) {
+            url = currentURL + '/Ivr';
+            table = ' #tableIvr';
         }
         $.get(url, function(data, textStatus, jqXHR) {
             $(".viewResult").html(data);
