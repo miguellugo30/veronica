@@ -1229,14 +1229,14 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\menu.js */"./resources/js/module_settings/menu.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\formularios.js */"./resources/js/module_settings/formularios.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\sub_formularios.js */"./resources/js/module_settings/sub_formularios.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\acciones_formularios.js */"./resources/js/module_settings/acciones_formularios.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\audios.js */"./resources/js/module_settings/audios.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\calificaciones.js */"./resources/js/module_settings/calificaciones.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\agentes.js */"./resources/js/module_settings/agentes.js");
-module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\grupos.js */"./resources/js/module_settings/grupos.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\menu.js */"./resources/js/module_settings/menu.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\formularios.js */"./resources/js/module_settings/formularios.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\sub_formularios.js */"./resources/js/module_settings/sub_formularios.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\acciones_formularios.js */"./resources/js/module_settings/acciones_formularios.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\audios.js */"./resources/js/module_settings/audios.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\calificaciones.js */"./resources/js/module_settings/calificaciones.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\agentes.js */"./resources/js/module_settings/agentes.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\grupos.js */"./resources/js/module_settings/grupos.js");
 
 
 /***/ })

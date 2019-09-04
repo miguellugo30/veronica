@@ -22,7 +22,6 @@
                             <th>Did</th>
                             <th>Descripcion</th>
                             <th>Aplicacion Principal</th>
-                            
                         </tr>
                     </thead>
                     <tbody>
@@ -30,8 +29,8 @@
                             <tr data-id="{{ $data[$i][0] }}" style="cursor:pointer">
                                 <td>{{ $data[$i][1] }}</td>
                                 <td>{{ $data[$i][2] }}</td>
-                                <td>{{ $data[$i][4] }}</td> 
-                            </tr> 
+                                <td>{{ $data[$i][4] }}</td>
+                            </tr>
                         @endfor
                     </tbody>
                 </table>

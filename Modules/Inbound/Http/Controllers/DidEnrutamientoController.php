@@ -56,7 +56,7 @@ class DidEnrutamientoController extends Controller
 
             array_push($data, $info);
         }
-       
+
 
         return view('inbound::Did_Enrutamiento.index',compact('data'));
     }
@@ -87,7 +87,32 @@ class DidEnrutamientoController extends Controller
      */
     public function show($id)
     {
-        return view('inbound::show');
+        $data = explode( '&', $id );
+        $destino = $data[1];
+        $num = $data[2];
+
+        $user = User::find( Auth::id() );
+        $empresa_id = $user->id_cliente;
+
+        if ($data[1] == 'Audios_Empresa') {
+            $info = Audios_Empresa::active()->where('Empresas_id', $empresa_id)->get();
+        } else if ($data[1] == 'Campanas') {
+            $info = Campanas::active()->where('Empresas_id', $empresa_id)->get();
+        } else if ($data[1] == 'Ivr') {
+            $info = [];
+        } else if ($data[1] == 'Condiciones_Tiempo') {
+            $info = Grupos::active()->where([['Empresas_id', '=', $empresa_id],['tipo_grupo','=','Condiciones de Tiempo']])->get();
+        } else if ($data[1] == 'Cat_Extensiones') {
+            $info = Cat_Extensiones::active()->where('Empresas_id', $empresa_id)->get();
+        } else if ($data[1] == 'Conferencia') {
+            $info = [];
+        } else if ($data[1] == 'Aplicacion') {
+            $info = [];
+        } else if ($data[1] == 'hangup') {
+            $info = [ ['id' => 0, 'nombre' => 'Colgar'] ];
+        }
+
+        return view('inbound::Did_Enrutamiento.show', compact( 'info', 'destino', 'num'));
     }
 
     /**
@@ -97,8 +122,8 @@ class DidEnrutamientoController extends Controller
      */
     public function edit($id)
     {
-        dd($id);
-        return view('inbound::Did_Enrutamiento.edit');
+        $enrutamiento = Did_Enrutamiento::active()->where('Dids_id',$id)->get();
+        return view('inbound::Did_Enrutamiento.edit',compact('enrutamiento'));
     }
 
     /**
@@ -110,6 +135,8 @@ class DidEnrutamientoController extends Controller
     public function update(Request $request, $id)
     {
         //
+        dd($request);
+
     }
 
     /**
