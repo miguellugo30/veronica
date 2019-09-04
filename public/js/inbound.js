@@ -830,6 +830,68 @@ $(function () {
 
 /***/ }),
 
+/***/ "./resources/js/module_inbound/ivr.js":
+/*!********************************************!*\
+  !*** ./resources/js/module_inbound/ivr.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  /**
+  * Evento para mostrar el formulario de crear un nuevo ivr
+  */
+  $(document).on("click", ".newIvr", function (e) {
+    event.preventDefault();
+    $('#tituloModal').html('Agregar Ivr');
+    $('#action').removeClass('deleteIvr');
+    $('#action').addClass('saveIvr');
+    var url = currentURL + "/Ivr/create";
+    $.get(url, function (data, textStatus, jqXHR) {
+      $('#modal').modal('show');
+      $("#modal-body").html(data);
+    });
+  });
+  /**
+  * Evento para guardar el nuevo agente
+  */
+
+  $(document).on('click', '.saveIvr', function (event) {
+    event.preventDefault();
+    $('#modal').modal('hide');
+    var nombre = $("#nombre").val();
+    var mensaje_bienvenida_id = $("#mensaje_bienvenida_id").val();
+    var tiempo_espera = $("#tiempo_espera").val();
+    var mensaje_tiepo_espera_id = $("#mensaje_tiepo_espera_id").val();
+    var mensaje_opcion_invalida_id = $("#mensaje_opcion_invalida_id").val();
+    var repeticiones = $("#repeticiones").val();
+    var Empresas_id = $("#Empresas_id").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var url = currentURL + '/Ivr';
+    $.post(url, {
+      nombre: nombre,
+      mensaje_bienvenida_id: mensaje_bienvenida_id,
+      tiempo_espera: tiempo_espera,
+      mensaje_tiepo_espera_id: mensaje_tiepo_espera_id,
+      mensaje_opcion_invalida_id: mensaje_opcion_invalida_id,
+      repeticiones: repeticiones,
+      Empresas_id: Empresas_id,
+      _token: _token
+    }, function (data, textStatus, xhr) {
+      $('.viewResult').html(data);
+      $('.viewResult #tableivr').DataTable({
+        "lengthChange": true,
+        "order": [[2, "asc"]]
+      });
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    });
+  });
+});
+
+/***/ }),
+
 /***/ "./resources/js/module_inbound/menu.js":
 /*!*********************************************!*\
   !*** ./resources/js/module_inbound/menu.js ***!
@@ -862,6 +924,9 @@ $(function () {
     } else if (id == 30) {
       url = currentURL + '/Did_Enrutamiento';
       table = ' #tableDidEnrutamiento';
+    } else if (id == 6) {
+      url = currentURL + '/Ivr';
+      table = ' #tableIvr';
     }
 
     $.get(url, function (data, textStatus, jqXHR) {
@@ -876,9 +941,9 @@ $(function () {
 /***/ }),
 
 /***/ 2:
-/*!**************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/module_inbound/menu.js ./resources/js/module_inbound/campanas.js ./resources/js/module_inbound/CondicionesTiempo.js ./resources/js/module_inbound/desvios.js ./resources/js/module_inbound/buzon_voz.js ./resources/js/module_inbound/Did_Enrutamiento.js ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************/
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/module_inbound/menu.js ./resources/js/module_inbound/campanas.js ./resources/js/module_inbound/CondicionesTiempo.js ./resources/js/module_inbound/desvios.js ./resources/js/module_inbound/buzon_voz.js ./resources/js/module_inbound/Did_Enrutamiento.js ./resources/js/module_inbound/ivr.js ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -887,7 +952,8 @@ __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\campa
 __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\CondicionesTiempo.js */"./resources/js/module_inbound/CondicionesTiempo.js");
 __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\desvios.js */"./resources/js/module_inbound/desvios.js");
 __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\buzon_voz.js */"./resources/js/module_inbound/buzon_voz.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\Did_Enrutamiento.js */"./resources/js/module_inbound/Did_Enrutamiento.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\Did_Enrutamiento.js */"./resources/js/module_inbound/Did_Enrutamiento.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\ivr.js */"./resources/js/module_inbound/ivr.js");
 
 
 /***/ })
