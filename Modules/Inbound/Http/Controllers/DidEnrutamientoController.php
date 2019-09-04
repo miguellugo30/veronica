@@ -27,6 +27,7 @@ class DidEnrutamientoController extends Controller
     {
         $user = User::find( Auth::id() );
         $empresa_id = $user->id_cliente;
+
         $dids = Dids::active()->where('Empresas_id',$empresa_id)->get();
         //dd($dids);
        $data = array();
@@ -37,17 +38,20 @@ class DidEnrutamientoController extends Controller
                 $apli = '';
                 $nombre = '';
             }else {
-
-
                 $desc = $did->Did_Enrutamiento->aplicacion;
                 $apli = $did->Did_Enrutamiento->tabla;
 
-                if ( $desc == 'Campana' ) {
+                if ( $apli == 'Campanas' ) {
                     $dataApli = Campanas::find( $did->Did_Enrutamiento->tabla_id );
                     $nombre = $dataApli->nombre;
-                }else if ( $desc == 'Anuncio' ) {
+                }else if ( $apli == 'Audios_Empresa' ) {
                     $dataApli = Audios_Empresa::find( $did->Did_Enrutamiento->tabla_id );
                     $nombre = $dataApli->nombre;
+                }else if ( $apli == 'Cat_Extensiones' ) {
+                    $dataApli = Cat_Extensiones::find( $did->Did_Enrutamiento->tabla_id );
+                    $nombre = $dataApli->extension;
+                }else if ( $apli == 'hangup' ) {
+                    $nombre = 'Colgar';
                 }
 
             }
@@ -122,8 +126,8 @@ class DidEnrutamientoController extends Controller
      */
     public function edit($id)
     {
-        $enrutamiento = Did_Enrutamiento::active()->where('Dids_id',$id)->get();
-        return view('inbound::Did_Enrutamiento.edit',compact('enrutamiento'));
+        $enrutamiento = Did_Enrutamiento::active()->where('Dids_id',$id)->orderBy('prioridad', 'ASC')->get();
+        return view('inbound::Did_Enrutamiento.edit',compact('enrutamiento', 'id'));
     }
 
     /**
@@ -134,8 +138,43 @@ class DidEnrutamientoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-        dd($request);
+        $dataForm = $request->input('dataForm');
+
+        for ($i=0; $i < count( $dataForm ); $i++) {
+            $data[ $dataForm[$i]['name']] = $dataForm[$i]['value'];
+        }
+
+        $idDid = $data['id'];
+
+        array_shift( $data );
+
+        $info = array_chunk( $data, 4 );
+
+        for ($i=0; $i < count($info); $i++) {
+
+            if ($info[$i][0] == NULL) {
+                /**
+                 * Creamos registro
+                 */
+                Did_Enrutamiento::create([
+                                            'aplicacion' => $info[$i][1],
+                                            'tabla' => $info[$i][2],
+                                            'tabla_id' => $info[$i][3],
+                                            'Dids_id' => $idDid
+                                        ]);
+            } else {
+                /**
+                 * Actualizamos registro
+                 */
+                Did_Enrutamiento::where('id', $info[$i][0])->update([
+                                                                    'aplicacion' => $info[$i][1],
+                                                                    'tabla' => $info[$i][2],
+                                                                    'tabla_id' => $info[$i][3]
+                                                                ]);
+            }
+        }
+
+        return redirect()->route('Did_Enrutamiento.index');
 
     }
 
