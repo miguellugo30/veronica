@@ -31,8 +31,8 @@ class DidEnrutamientoController extends Controller
         $empresa_id = $user->id_cliente;
 
         $dids = Dids::active()->where('Empresas_id',$empresa_id)->get();
-        //dd($dids);
-       $data = array();
+
+        $data = array();
         foreach ($dids as $did) {
             $info = [ $did->id, $did->did, $did->descripcion ];
             if( $did->Did_Enrutamiento == NULL ){

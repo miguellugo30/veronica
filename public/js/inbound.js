@@ -1221,11 +1221,11 @@ $(function () {
 
 $(function () {
   /**
-  * Evento para mostrar el formulario de crear un nuevo ivr
-  */
+   * Evento para mostrar el formulario de crear un nuevo ivr
+   */
   $(document).on("click", ".newIvr", function (e) {
     event.preventDefault();
-    $('#tituloModal').html('Agregar Ivr');
+    $('#tituloModal').html('Nuevo IVR');
     $('#action').removeClass('deleteIvr');
     $('#action').addClass('saveIvr');
     var url = currentURL + "/Ivr/create";
@@ -1235,8 +1235,8 @@ $(function () {
     });
   });
   /**
-  * Evento para guardar el nuevo agente
-  */
+   * Evento para guardar el nuevo agente
+   */
 
   $(document).on('click', '.saveIvr', function (event) {
     event.preventDefault();
@@ -1269,6 +1269,26 @@ $(function () {
       });
       Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
     });
+  });
+  /**
+   * Evento para agregar una condición de tiempo adicional
+   */
+
+  $(document).on('click', '#addOpcion', function (event) {
+    console.log($(".tableOpciones tbody tr.clonar:last").attr('id'));
+    var clickID = $(".tableOpciones tbody tr.clonar:last").attr('id').replace('tr_', ''); // Genero el nuevo numero id
+
+    var newID = parseInt(clickID) + 1;
+    var IDInput = ['tipo', 'repeticiones', 'destino'];
+    fila = $(".tableOpciones tbody tr:eq()").clone().appendTo(".tableOpciones"); //Clonamos la fila
+
+    for (var i = 0; i < IDInput.length; i++) {
+      fila.find('#' + IDInput[i]).attr('name', IDInput[i] + "_" + newID); //Cambiamos el nombre de los campos de la fila a clonar
+    }
+
+    fila.find('.form-control').attr('value', '');
+    fila.find('.btn-danger').css('display', 'initial');
+    fila.attr("id", 'tr_' + newID);
   });
 });
 
@@ -1329,13 +1349,13 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\menu.js */"./resources/js/module_inbound/menu.js");
-__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\campanas.js */"./resources/js/module_inbound/campanas.js");
-__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\CondicionesTiempo.js */"./resources/js/module_inbound/CondicionesTiempo.js");
-__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\desvios.js */"./resources/js/module_inbound/desvios.js");
-__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\buzon_voz.js */"./resources/js/module_inbound/buzon_voz.js");
-__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\Did_Enrutamiento.js */"./resources/js/module_inbound/Did_Enrutamiento.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\ivr.js */"./resources/js/module_inbound/ivr.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\menu.js */"./resources/js/module_inbound/menu.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\campanas.js */"./resources/js/module_inbound/campanas.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\CondicionesTiempo.js */"./resources/js/module_inbound/CondicionesTiempo.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\desvios.js */"./resources/js/module_inbound/desvios.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\buzon_voz.js */"./resources/js/module_inbound/buzon_voz.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\Did_Enrutamiento.js */"./resources/js/module_inbound/Did_Enrutamiento.js");
+module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\ivr.js */"./resources/js/module_inbound/ivr.js");
 
 
 /***/ })
