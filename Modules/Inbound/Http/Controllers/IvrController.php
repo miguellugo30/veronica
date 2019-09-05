@@ -24,8 +24,27 @@ class IvrController extends Controller
         $empresa_id = $user->id_cliente;
 
         $ivrs = Ivr::active()->where('Empresas_id',$empresa_id)->get();
+        $data = array();
+        foreach ($ivrs as $ivr) {
 
-        return view('inbound::Ivr.index',compact('ivrs'));
+           $datos = [ $ivr->id, $ivr->nombre, $ivr->tiempo_espera, $ivr->repeticiones ]; 
+            $info = [ $ivr->mensaje_bienvenida_id, $ivr->mensaje_tiepo_espera_id, $ivr->mensaje_opcion_invalida_id ];
+            
+            $audios = Audios_Empresa::find($info);
+
+            foreach ($audios as $audio) {
+                
+                array_push($datos, $audio->nombre);
+            }
+
+            array_push($data, $datos);
+        }
+
+        
+        //dd($data);
+
+
+        return view('inbound::Ivr.index',compact('data'));
     }
 
     /**

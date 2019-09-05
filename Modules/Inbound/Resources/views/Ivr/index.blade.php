@@ -29,17 +29,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($ivrs as $ivr)
-                            <tr data-id="{{ $ivr->id }}" style="cursor:pointer">
-                            <td>{{ Str::title( $ivr->nombre ) }}</td>
-                            <td>{{ Str::title( $ivr->mensaje_bienvenida_id ) }}</td>
-                            <td>{{ Str::title( $ivr->tiempo_espera ) }}</td>
-                            <td>{{ Str::title( $ivr->mensaje_tiepo_espera_id ) }}</td>
-                            <td>{{ Str::title( $ivr->mensaje_opcion_invalida_id ) }}</td>
-                            <td>{{ Str::title( $ivr->repeticiones ) }}</td>
+                        @for ($i=0; $i < count($data); $i ++ )
+                            <tr data-id="{{ $data[$i][0] }}" style="cursor:pointer">
+                            <td>{{ Str::title( $data[$i][1] ) }}</td>
+                            <td>{{ Str::title( $data[$i][4] ) }}</td>
+                            <td>{{ Str::title( $data[$i][2] ) }}</td>
+                            <td>{{ Str::title( $data[$i][5] ) }}</td>
+                            <td>{{ Str::title( $data[$i][6] ) }}</td>
+                            <td>{{ Str::title( $data[$i][3] ) }}</td>
 
                             </tr>
-                        @endforeach
+                        @endfor
                     </tbody>
                 </table>
             </div>
@@ -50,7 +50,7 @@
 </div>
 <!-- MODAL -->
 <div class="modal fade bd-example-modal-lg" tabindex="-1" id="modal" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="tituloModal"></h5>
