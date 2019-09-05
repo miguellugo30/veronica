@@ -12,6 +12,7 @@ use Nimbus\Campanas;
 use Nimbus\Cat_Extensiones;
 use Nimbus\User;
 use Nimbus\Condiciones_Tiempo;
+use Nimbus\Desvios;
 use Nimbus\Grupos;
 
 class CondicionesTiempoController extends Controller
@@ -157,6 +158,8 @@ class CondicionesTiempoController extends Controller
             $info = [];
         } else if ($data[1] == 'Aplicacion') {
             $info = [];
+        } else if ($data[1] == 'Desvios') {
+            $info = Desvios::active()->where('Empresas_id', $empresa_id)->get();
         } else if ($data[1] == 'hangup') {
             $info = [ ['id' => 0, 'nombre' => 'Colgar'] ];
         }

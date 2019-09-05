@@ -32,6 +32,7 @@ $(function() {
             success: function success(result) {
                 $('#modal').modal({ backdrop: 'static', keyboard: false });
                 $("#modal-body").html(result);
+                $("#condicion tbody").sortable();
             }
         });
     });
@@ -93,9 +94,60 @@ $(function() {
             })
             .done(function(data) {
 
-                $('.opcionesDestino_' + nombre).html(data);
+                $('#opcionesDestino_' + nombre).html(data);
 
             });
     });
+    /**
+     * Evento para agregar una condición de tiempo adicional
+     */
+    $(document).on('click', '#addRuta', function(event) {
 
+        var clickID = $("#condicion tbody tr.clonar:last").attr('id').replace('tr_', '');
+        // Genero el nuevo numero id
+        var newID = parseInt(clickID) + 1;
+
+        let IDInput = ['id_campo', 'descripcion_campo', 'destino'];
+
+        fila = $("#condicion tbody tr:eq()").clone().appendTo("#condicion"); //Clonamos la fila
+
+        for (let i = 0; i < IDInput.length; i++) {
+            fila.find('#' + IDInput[i]).attr('name', IDInput[i] + "_" + newID); //Cambiamos el nombre de los campos de la fila a clonar
+        }
+
+        fila.find('.opcionesDestino').attr('id', "opcionesDestino_" + newID);
+
+        fila.find('.form-control').attr('value', '');
+        fila.find('.btn-danger').css('display', 'initial');
+        fila.attr("id", 'tr_' + newID);
+    });
+    /**
+     * Evento para eliminar una fila de la tabla de nueva condicion de tiempo
+     */
+    $(document).on('click', '.tr_remove', function() {
+        let tr = $(this).closest('tr');
+        tr.remove();
+    });
+    /**
+     * Evento para eliminar una fila de la tabla de nueva condicion de tiempo
+     */
+    $(document).on('click', '.tr_edit_remove', function() {
+        let tr = $(this).closest('tr');
+        let id = $(this).data('id');
+        let _method = "DELETE";
+        let _token = $("input[name=_token]").val();
+        let url = currentURL + '/Did_Enrutamiento/' + id;
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: {
+                _token: _token,
+                _method: _method
+            },
+            success: function(result) {
+                tr.remove();
+            }
+        });
+    });
 });;
