@@ -12,7 +12,7 @@ $(function() {
 
         $("#tabledidenrutamientos tbody tr").removeClass('table-primary');
         $(this).addClass('table-primary');
-    });;
+    });
     /**
      * Evento para Configurar el enrutamiento
      */
@@ -32,7 +32,6 @@ $(function() {
             success: function success(result) {
                 $('#modal').modal({ backdrop: 'static', keyboard: false });
                 $("#modal-body").html(result);
-                $("#condicion tbody").sortable();
             }
         });
     });

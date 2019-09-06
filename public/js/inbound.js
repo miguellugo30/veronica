@@ -427,7 +427,6 @@ $(function () {
     $("#tabledidenrutamientos tbody tr").removeClass('table-primary');
     $(this).addClass('table-primary');
   });
-  ;
   /**
    * Evento para Configurar el enrutamiento
    */
@@ -448,7 +447,6 @@ $(function () {
           keyboard: false
         });
         $("#modal-body").html(result);
-        $("#condicion tbody").sortable();
       }
     });
   });
@@ -1222,46 +1220,39 @@ $(function () {
 $(function () {
   var currentURL = window.location.href;
   /**
-  * Evento para mostrar el formulario de crear un nuevo ivr
-  */
+   * Evento para mostrar el formulario de crear un nuevo ivr
+   */
 
   $(document).on("click", ".newIvr", function (e) {
     event.preventDefault();
-    $('#tituloModal').html('Agregar Ivr');
-    $('#action').removeClass('deleteIvr');
+    $('#tituloModal').html('Nuevo IVR');
+    $('#action').removeClass('updateIvr');
     $('#action').addClass('saveIvr');
     var url = currentURL + "/Ivr/create";
     $.get(url, function (data, textStatus, jqXHR) {
-      $('#modal').modal('show');
+      $('#modal').modal({
+        backdrop: 'static',
+        keyboard: false
+      });
       $("#modal-body").html(data);
     });
   });
   /**
-  * Evento para guardar el nuevo agente
-  */
+   * Evento para guardar el nuevo agente
+   */
 
   $(document).on('click', '.saveIvr', function (event) {
     event.preventDefault();
     $('#modal').modal('hide');
-    var nombre = $("#nombre").val();
-    var mensaje_bienvenida_id = $("#mensaje_bienvenida_id").val();
-    var tiempo_espera = $("#tiempo_espera").val();
-    var mensaje_tiepo_espera_id = $("#mensaje_tiepo_espera_id").val();
-    var mensaje_opcion_invalida_id = $("#mensaje_opcion_invalida_id").val();
-    var repeticiones = $("#repeticiones").val();
+    var dataForm = $("#formCreateIvr").serializeArray();
     var Empresas_id = $("#Empresas_id").val();
 
     var _token = $("input[name=_token]").val();
 
     var url = currentURL + '/Ivr';
     $.post(url, {
-      nombre: nombre,
-      mensaje_bienvenida_id: mensaje_bienvenida_id,
-      tiempo_espera: tiempo_espera,
-      mensaje_tiepo_espera_id: mensaje_tiepo_espera_id,
-      mensaje_opcion_invalida_id: mensaje_opcion_invalida_id,
-      repeticiones: repeticiones,
       Empresas_id: Empresas_id,
+      dataForm: dataForm,
       _token: _token
     }, function (data, textStatus, xhr) {
       $('.viewResult').html(data);
@@ -1273,9 +1264,65 @@ $(function () {
     });
   });
   /**
-  * Evento para eliminar un IVR
-  *
-  */
+   * Evento para agregar una condición de tiempo adicional
+   */
+
+  $(document).on('click', '#addOpcion', function (event) {
+    var clickID = $(".tableOpciones tbody tr:last").attr('id').replace('tr_', '');
+    var newID = parseInt(clickID) + 1; // Genero el nuevo numero id
+
+    fila = $(".tableOpciones tbody tr:eq()").clone().appendTo(".tableOpciones"); //Clonamos la fila
+
+    var IDInput = ['tipo', 'digito', 'destino', 'opcion_id'];
+
+    for (var i = 0; i < IDInput.length; i++) {
+      fila.find('#' + IDInput[i]).attr('name', IDInput[i] + "_" + newID); //Cambiamos el nombre de los campos de la fila a clonar
+    }
+
+    fila.find('.opcionesDestino').attr('id', "opcionesDestino_" + newID);
+    fila.find('.form-control').attr('value', '');
+    fila.find('.btn-danger').css('display', 'initial');
+    fila.attr("id", 'tr_' + newID);
+  });
+  /**
+   * Accion para mostrar las opciones en base al destino seleccionado
+   */
+
+  $(document).on('change', '.destinoOpccionIvr', function (event) {
+    var nombre = $(this).attr('name');
+    var opccion = $(this).val();
+
+    var _token = $("input[name=_token]").val();
+
+    nombre = nombre.replace('destino_', '');
+    var id = 0 + '&' + opccion + '&' + nombre;
+    var url = currentURL + '/Did_Enrutamiento/' + id;
+    $.ajax({
+      url: url,
+      type: "GET",
+      data: {
+        _token: _token
+      }
+    }).done(function (data) {
+      $('#opcionesDestino_' + nombre).html(data);
+    });
+  });
+  /**
+   * Evento para seleccionar un Enrutamiento
+   */
+
+  $(document).on('click', '#tableivr tbody tr', function (event) {
+    event.preventDefault();
+    var id = $(this).data("id");
+    $(".deleteIvr").slideDown();
+    $(".editIvr").slideDown();
+    $("#idSeleccionado").val(id);
+    $("#tabledidenrutamientos tbody tr").removeClass('table-primary');
+    $(this).addClass('table-primary');
+  });
+  /**
+   * Evento para eliminar el grupo de condicion de tiempo
+   */
 
   $(document).on('click', '.deleteIvr', function (event) {
     event.preventDefault();
@@ -1315,28 +1362,14 @@ $(function () {
     });
   });
   /**
-   * Evento para seleccionar un IVR
-   */
-
-  $(document).on('click', '#tableivr tbody tr', function (event) {
-    event.preventDefault();
-    var id = $(this).data("id");
-    $(".deleteIvr").slideDown();
-    $(".editIvr").slideDown();
-    $("#idSeleccionado").val(id);
-    $("#tableivr tbody tr").removeClass('table-primary');
-    $(this).addClass('table-primary');
-  });
-  ;
-  /**
-   * Evento para visualizar la configuración del IVR y editarlo
+   * Evento para editar la configuración de grupo de condicion de tiempo
    */
 
   $(document).on('click', '.editIvr', function (event) {
     event.preventDefault();
     var id = $("#idSeleccionado").val();
+    $('#tituloModal').html('Edicion IVR');
     var url = currentURL + '/Ivr/' + id + '/edit';
-    $('#tituloModal').html('Editar Ivr');
     $('#action').addClass('updateIvr');
     $('#action').removeClass('saveIvr');
     $.ajax({
@@ -1352,29 +1385,47 @@ $(function () {
     });
   });
   /**
-   * Evento para guardar los cambios del IVR
+   * Evento para eliminar una fila de la tabla de nueva condicion de tiempo
+   */
+
+  $(document).on('click', '.tr_remove_opcion_ivr', function () {
+    var tr = $(this).closest('tr');
+    var id = $(this).data('id');
+    var _method = "DELETE";
+
+    var _token = $("input[name=_token]").val();
+
+    var url = currentURL + '/Ivr_Opciones/' + id;
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {
+        _token: _token,
+        _method: _method
+      },
+      success: function success(result) {
+        tr.remove();
+      }
+    });
+  });
+  /**
+   * Evento para guardar el nuevo agente
    */
 
   $(document).on('click', '.updateIvr', function (event) {
     event.preventDefault();
     $('#modal').modal('hide');
-    var id = $("#id").val();
-    var nombre = $("#nombre").val();
-    var Canales_id = $("#Canales_id").val();
-    var dial = $("#dial").val();
-    var ringeo = $("#ringeo").val();
     var Empresas_id = $("#Empresas_id").val();
+    var dataForm = $("#formCreateIvr").serializeArray();
+    var id = $("#idSeleccionado").val();
 
     var _token = $("input[name=_token]").val();
 
     var _method = "PUT";
     var url = currentURL + '/Ivr/' + id;
     $.post(url, {
-      nombre: nombre,
-      Canales_id: Canales_id,
-      dial: dial,
-      ringeo: ringeo,
       Empresas_id: Empresas_id,
+      dataForm: dataForm,
       _method: _method,
       _token: _token
     }, function (data, textStatus, xhr) {
@@ -1424,7 +1475,7 @@ $(function () {
       table = ' #tableDidEnrutamiento';
     } else if (id == 6) {
       url = currentURL + '/Ivr';
-      table = ' #tableIvr';
+      table = ' #tableivr';
     }
 
     $.get(url, function (data, textStatus, jqXHR) {
