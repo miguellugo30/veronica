@@ -32,7 +32,6 @@
             <table id='condicion' class="table table-striped table-sm tableNewForm">
                 <thead>
                     <tr style="cursor: s-resize;">
-                        <th><i class="fas fa-sort-numeric-down"></i></th>
                         <th>Destino</th>
                         <th>Opciones</th>
                         <td></td>
@@ -41,7 +40,6 @@
                 <tbody>
                     @if ($data == NULL )
                         <tr id="tr_1" class="clonar">
-                            <td><i class="fas fa-grip-vertical"></i></td>
                             <td>
                                 <input type="hidden" class="form-control form-control-sm" name="id_campo_1" id="id_campo" value="" >
                                 <select name="destino_1" id="destino"  class="form-control form-control-sm destino">
@@ -70,7 +68,6 @@
                         @endphp
                         @for ($i = 0; $i < count( $data ); $i++)
                             <tr id="tr_{{$j}}" class="clonar">
-                                <td style="cursor: s-resize;"><i class="fas fa-grip-vertical"></i></td>
                                 <td>
                                     <input type="hidden" class="form-control form-control-sm" name="id_campo_{{ $data[$i][0] }}" id="id_campo" value="{{ $data[$i][0] }}" >
                                     <select name="destino_{{ $data[$i][0] }}" id="destino"  class="form-control form-control-sm destino">

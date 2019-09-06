@@ -1,13 +1,13 @@
 <div class="box box-primary">
     <div class="box-header with-border">
-        <h3 class="box-title"><b><i class="fas fa-tty"></i> IVR</b></h3>
+        <h3 class="box-title"><b><i class="fas fa-sitemap"></i> IVR</b></h3>
         <div class="box-tools pull-right">
             @can('delete ivr')
+                <button type="button" class="btn btn-danger  btn-sm deleteIvr" style="display:none"><i class="fas fa-trash-alt"></i> Elminar</button>
             @endcan
-            <button type="button" class="btn btn-danger  btn-sm deleteIvr" style="display:none"><i class="fas fa-trash-alt"></i> Elminar</button>
             @can('edit ivr')
+              <button type="button" class="btn btn-warning btn-sm editIvr" style="display:none"><i class="fas fa-edit"></i> Editar</button>
             @endcan
-            <button type="button" class="btn btn-warning btn-sm editIvr" style="display:none"><i class="fas fa-edit"></i> Editar</button>
             @can('create ivr')
             @endcan
                 <button type="button" class="btn btn-primary btn-sm newIvr" data-widget="remove"><i class="fas fa-plus"></i> Nuevo</button>

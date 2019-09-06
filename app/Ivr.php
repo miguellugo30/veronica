@@ -9,10 +9,10 @@ class Ivr extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'nombre', 'mensaje_bienvenida_id','tiempo_espera','mensaje_tiepo_espera_id','mensaje_opcion_invalida_id','repeticiones','activo','Empresas_id',
+        'nombre', 'mensaje_bienvenida_id','tiempo_espera','mensaje_tiempo_espera_id','mensaje_opcion_invalida_id','repeticiones','activo','Empresas_id',
     ];
     /**
-     * Nombre de la tabla que se ocupra
+     * Nombre de la tabla que se ocupara
      */
     protected $table = 'Ivr';
     /**
@@ -23,18 +23,18 @@ class Ivr extends Model
         return $query->where('activo', 1);
     }
     /**
-    * Relacion muchos a uno con Empresas
+    * Relación muchos a uno con Empresas
     */
     public function Empresas()
     {
         return $this->belongsTo('Nimbus\Empresas', 'Empresas_id', 'id');
     }
     /**
-    * Relacion uno a uno con Audios_Empresa
+    * Relación muchos a uno con Empresas
     */
-    public function Audios_Empresa()
+    public function Ivr_Opciones()
     {
-        return $this->hasOne('Nimbus\Empresas', 'id', 'Empresas_id');
+        return $this->hasMany('Nimbus\Ivr_Opciones');
     }
 
 }

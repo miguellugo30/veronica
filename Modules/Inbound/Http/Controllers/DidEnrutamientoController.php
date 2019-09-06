@@ -12,7 +12,7 @@ use Nimbus\Agentes;
 use Nimbus\Did_Enrutamiento;
 use Nimbus\Dids;
 use Nimbus\Campanas;
-//use Nimbus\ivr;
+use Nimbus\ivr;
 use Nimbus\Audios_Empresa;
 use Nimbus\Grupos;
 use Nimbus\Cat_Extensiones;
@@ -106,7 +106,7 @@ class DidEnrutamientoController extends Controller
         } else if ($data[1] == 'Campanas') {
             $info = Campanas::active()->where('Empresas_id', $empresa_id)->get();
         } else if ($data[1] == 'Ivr') {
-            $info = [];
+            $info = Ivr::active()->where('Empresas_id', $empresa_id)->get();
         } else if ($data[1] == 'Condiciones_Tiempo') {
             $info = Grupos::active()->where([['Empresas_id', '=', $empresa_id],['tipo_grupo','=','Condiciones de Tiempo']])->get();
         } else if ($data[1] == 'Cat_Extensiones') {
@@ -185,7 +185,6 @@ class DidEnrutamientoController extends Controller
     {
 
         $dataForm = $request->input('dataForm');
-
 
         for ($i=0; $i < count( $dataForm ); $i++) {
             $data[ $dataForm[$i]['name']] = $dataForm[$i]['value'];
