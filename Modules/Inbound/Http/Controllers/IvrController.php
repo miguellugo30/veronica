@@ -41,9 +41,6 @@ class IvrController extends Controller
         }
 
         
-        //dd($data);
-
-
         return view('inbound::Ivr.index',compact('data'));
     }
 
@@ -107,7 +104,15 @@ class IvrController extends Controller
      */
     public function edit($id)
     {
-        return view('inbound::edit');
+        $user = User::find( Auth::id() );
+        $empresa_id = $user->id_cliente;
+        $audios = Audios_Empresa::active()->where('Empresas_id',$empresa_id)->get();
+
+
+        $ivr = Ivr::active()->where('id',$id)->get();
+        //dd($ivr);
+
+        return view('inbound::Ivr.edit',compact('ivrs','audios'));
     }
 
     /**
@@ -128,6 +133,15 @@ class IvrController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Ivr::where('id',$id)
+        ->update(['activo'=>'0']);
+
+        return redirect()->route('Ivr.index');
+         /**
+         * Creamos el logs
+         */
+        $mensaje = 'Se Elimino un registro con id: '.$id;
+        $log = new LogController;
+        $log->store('Eliminacion', 'Ivr', $mensaje, $id);
     }
 }
