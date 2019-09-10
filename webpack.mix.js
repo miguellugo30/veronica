@@ -43,6 +43,7 @@ mix.js([
         'resources/js/module_settings/calificaciones.js',
         'resources/js/module_settings/agentes.js',
         'resources/js/module_settings/grupos.js',
+        'resources/js/module_settings/speech.js',
 
     ], 'public/js/settings.js')
     .js([

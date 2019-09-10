@@ -3742,6 +3742,9 @@ $(function () {
     if (id == 21) {
       url = currentURL + '/formularios';
       table = ' #tableFormulario';
+    } else if (id == 22) {
+      url = currentURL + '/speech';
+      table = ' #tableSpeech';
     } else if (id == 23) {
       url = currentURL + '/calificaciones';
       table = ' #tableCalificaciones';
