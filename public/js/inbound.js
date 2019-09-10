@@ -427,7 +427,6 @@ $(function () {
     $("#tabledidenrutamientos tbody tr").removeClass('table-primary');
     $(this).addClass('table-primary');
   });
-  ;
   /**
    * Evento para Configurar el enrutamiento
    */
@@ -501,7 +500,59 @@ $(function () {
         _token: _token
       }
     }).done(function (data) {
-      $('.opcionesDestino_' + nombre).html(data);
+      $('#opcionesDestino_' + nombre).html(data);
+    });
+  });
+  /**
+   * Evento para agregar una condición de tiempo adicional
+   */
+
+  $(document).on('click', '#addRuta', function (event) {
+    var clickID = $("#condicion tbody tr.clonar:last").attr('id').replace('tr_', ''); // Genero el nuevo numero id
+
+    var newID = parseInt(clickID) + 1;
+    var IDInput = ['id_campo', 'descripcion_campo', 'destino'];
+    fila = $("#condicion tbody tr:eq()").clone().appendTo("#condicion"); //Clonamos la fila
+
+    for (var i = 0; i < IDInput.length; i++) {
+      fila.find('#' + IDInput[i]).attr('name', IDInput[i] + "_" + newID); //Cambiamos el nombre de los campos de la fila a clonar
+    }
+
+    fila.find('.opcionesDestino').attr('id', "opcionesDestino_" + newID);
+    fila.find('.form-control').attr('value', '');
+    fila.find('.btn-danger').css('display', 'initial');
+    fila.attr("id", 'tr_' + newID);
+  });
+  /**
+   * Evento para eliminar una fila de la tabla de nueva condicion de tiempo
+   */
+
+  $(document).on('click', '.tr_remove', function () {
+    var tr = $(this).closest('tr');
+    tr.remove();
+  });
+  /**
+   * Evento para eliminar una fila de la tabla de nueva condicion de tiempo
+   */
+
+  $(document).on('click', '.tr_edit_remove', function () {
+    var tr = $(this).closest('tr');
+    var id = $(this).data('id');
+    var _method = "DELETE";
+
+    var _token = $("input[name=_token]").val();
+
+    var url = currentURL + '/Did_Enrutamiento/' + id;
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {
+        _token: _token,
+        _method: _method
+      },
+      success: function success(result) {
+        tr.remove();
+      }
     });
   });
 });
@@ -1168,45 +1219,212 @@ $(function () {
 
 $(function () {
   /**
-  * Evento para mostrar el formulario de crear un nuevo ivr
-  */
+   * Evento para mostrar el formulario de crear un nuevo ivr
+   */
   $(document).on("click", ".newIvr", function (e) {
     event.preventDefault();
-    $('#tituloModal').html('Agregar Ivr');
-    $('#action').removeClass('deleteIvr');
+    $('#tituloModal').html('Nuevo IVR');
+    $('#action').removeClass('updateIvr');
     $('#action').addClass('saveIvr');
     var url = currentURL + "/Ivr/create";
     $.get(url, function (data, textStatus, jqXHR) {
-      $('#modal').modal('show');
+      $('#modal').modal({
+        backdrop: 'static',
+        keyboard: false
+      });
       $("#modal-body").html(data);
     });
   });
   /**
-  * Evento para guardar el nuevo agente
-  */
+   * Evento para guardar el nuevo agente
+   */
 
   $(document).on('click', '.saveIvr', function (event) {
     event.preventDefault();
     $('#modal').modal('hide');
-    var nombre = $("#nombre").val();
-    var mensaje_bienvenida_id = $("#mensaje_bienvenida_id").val();
-    var tiempo_espera = $("#tiempo_espera").val();
-    var mensaje_tiepo_espera_id = $("#mensaje_tiepo_espera_id").val();
-    var mensaje_opcion_invalida_id = $("#mensaje_opcion_invalida_id").val();
-    var repeticiones = $("#repeticiones").val();
+    var dataForm = $("#formCreateIvr").serializeArray();
     var Empresas_id = $("#Empresas_id").val();
 
     var _token = $("input[name=_token]").val();
 
     var url = currentURL + '/Ivr';
     $.post(url, {
-      nombre: nombre,
-      mensaje_bienvenida_id: mensaje_bienvenida_id,
-      tiempo_espera: tiempo_espera,
-      mensaje_tiepo_espera_id: mensaje_tiepo_espera_id,
-      mensaje_opcion_invalida_id: mensaje_opcion_invalida_id,
-      repeticiones: repeticiones,
       Empresas_id: Empresas_id,
+      dataForm: dataForm,
+      _token: _token
+    }, function (data, textStatus, xhr) {
+      $('.viewResult').html(data);
+      $('.viewResult #tableivr').DataTable({
+        "lengthChange": true,
+        "order": [[2, "asc"]]
+      });
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    });
+  });
+  /**
+   * Evento para agregar una condición de tiempo adicional
+   */
+
+  $(document).on('click', '#addOpcion', function (event) {
+    var clickID = $(".tableOpciones tbody tr:last").attr('id').replace('tr_', '');
+    var newID = parseInt(clickID) + 1; // Genero el nuevo numero id
+
+    fila = $(".tableOpciones tbody tr:eq()").clone().appendTo(".tableOpciones"); //Clonamos la fila
+
+    var IDInput = ['tipo', 'digito', 'destino', 'opcion_id'];
+
+    for (var i = 0; i < IDInput.length; i++) {
+      fila.find('#' + IDInput[i]).attr('name', IDInput[i] + "_" + newID); //Cambiamos el nombre de los campos de la fila a clonar
+    }
+
+    fila.find('.opcionesDestino').attr('id', "opcionesDestino_" + newID);
+    fila.find('.form-control').attr('value', '');
+    fila.find('.btn-danger').css('display', 'initial');
+    fila.attr("id", 'tr_' + newID);
+  });
+  /**
+   * Accion para mostrar las opciones en base al destino seleccionado
+   */
+
+  $(document).on('change', '.destinoOpccionIvr', function (event) {
+    var nombre = $(this).attr('name');
+    var opccion = $(this).val();
+
+    var _token = $("input[name=_token]").val();
+
+    nombre = nombre.replace('destino_', '');
+    var id = 0 + '&' + opccion + '&' + nombre;
+    var url = currentURL + '/Did_Enrutamiento/' + id;
+    $.ajax({
+      url: url,
+      type: "GET",
+      data: {
+        _token: _token
+      }
+    }).done(function (data) {
+      $('#opcionesDestino_' + nombre).html(data);
+    });
+  });
+  /**
+   * Evento para seleccionar un Enrutamiento
+   */
+
+  $(document).on('click', '#tableivr tbody tr', function (event) {
+    event.preventDefault();
+    var id = $(this).data("id");
+    $(".deleteIvr").slideDown();
+    $(".editIvr").slideDown();
+    $("#idSeleccionado").val(id);
+    $("#tabledidenrutamientos tbody tr").removeClass('table-primary');
+    $(this).addClass('table-primary');
+  });
+  /**
+   * Evento para eliminar el grupo de condicion de tiempo
+   */
+
+  $(document).on('click', '.deleteIvr', function (event) {
+    event.preventDefault();
+    Swal.fire({
+      title: 'Estas seguro?',
+      text: "Deseas eliminar el registro seleccionado!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Eliminar!',
+      cancelButtonText: 'Cancelar'
+    }).then(function (result) {
+      if (result.value) {
+        var id = $("#idSeleccionado").val();
+        var _method = "DELETE";
+
+        var _token = $("input[name=_token]").val();
+
+        var url = currentURL + '/Ivr/' + id;
+        $.ajax({
+          url: url,
+          type: 'POST',
+          data: {
+            _token: _token,
+            _method: _method
+          },
+          success: function success(result) {
+            $('.viewResult').html(result);
+            $('.viewResult #tableivr').DataTable({
+              "lengthChange": false
+            });
+            Swal.fire('Eliminado!', 'El registro ha sido eliminado.', 'success');
+          }
+        });
+      }
+    });
+  });
+  /**
+   * Evento para editar la configuración de grupo de condicion de tiempo
+   */
+
+  $(document).on('click', '.editIvr', function (event) {
+    event.preventDefault();
+    var id = $("#idSeleccionado").val();
+    $('#tituloModal').html('Edicion IVR');
+    var url = currentURL + '/Ivr/' + id + '/edit';
+    $('#action').addClass('updateIvr');
+    $('#action').removeClass('saveIvr');
+    $.ajax({
+      url: url,
+      type: 'GET',
+      success: function success(result) {
+        $('#modal').modal({
+          backdrop: 'static',
+          keyboard: false
+        });
+        $("#modal-body").html(result);
+      }
+    });
+  });
+  /**
+   * Evento para eliminar una fila de la tabla de nueva condicion de tiempo
+   */
+
+  $(document).on('click', '.tr_remove_opcion_ivr', function () {
+    var tr = $(this).closest('tr');
+    var id = $(this).data('id');
+    var _method = "DELETE";
+
+    var _token = $("input[name=_token]").val();
+
+    var url = currentURL + '/Ivr_Opciones/' + id;
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {
+        _token: _token,
+        _method: _method
+      },
+      success: function success(result) {
+        tr.remove();
+      }
+    });
+  });
+  /**
+   * Evento para guardar el nuevo agente
+   */
+
+  $(document).on('click', '.updateIvr', function (event) {
+    event.preventDefault();
+    $('#modal').modal('hide');
+    var Empresas_id = $("#Empresas_id").val();
+    var dataForm = $("#formCreateIvr").serializeArray();
+    var id = $("#idSeleccionado").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var _method = "PUT";
+    var url = currentURL + '/Ivr/' + id;
+    $.post(url, {
+      Empresas_id: Empresas_id,
+      dataForm: dataForm,
+      _method: _method,
       _token: _token
     }, function (data, textStatus, xhr) {
       $('.viewResult').html(data);
@@ -1255,7 +1473,7 @@ $(function () {
       table = ' #tableDidEnrutamiento';
     } else if (id == 6) {
       url = currentURL + '/Ivr';
-      table = ' #tableIvr';
+      table = ' #tableivr';
     }
 
     $.get(url, function (data, textStatus, jqXHR) {

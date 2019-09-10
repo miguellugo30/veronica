@@ -8,7 +8,6 @@ use Illuminate\Routing\Controller;
 use Nimbus\Http\Controllers\LogController;
 use Illuminate\Support\Facades\Auth;
 use Nimbus\User;
-use Nimbus\Agentes;
 use Nimbus\Buzon_Voz;
 use Nimbus\Audios_Empresa;
 
@@ -119,7 +118,7 @@ class BuzonVozController extends Controller
             /**
              * Creamos el logs
              */
-            $mensaje = 'Se edito un registro con id: '.$id.', informacion editada: '.var_export($request, true);
+            $mensaje = 'Se edito un registro con id: '.$id.', informacion editada: '.var_export($request->all(), true);
             $log = new LogController;
             $log->store('Actualizacion', 'Buzon_Voz',$mensaje, $id);
             return redirect()->route('Buzon_Voz.index');

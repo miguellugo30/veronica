@@ -22,6 +22,7 @@
                             <th>Did</th>
                             <th>Descripcion</th>
                             <th>Aplicacion Principal</th>
+                            <th>Opcion</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -29,6 +30,7 @@
                             <tr data-id="{{ $data[$i][0] }}" style="cursor:pointer">
                                 <td>{{ $data[$i][1] }}</td>
                                 <td>{{ $data[$i][2] }}</td>
+                                <td>{{ $data[$i][3] }}</td>
                                 <td>{{ $data[$i][4] }}</td>
                             </tr>
                         @endfor
@@ -42,7 +44,7 @@
 </div>
 <!-- MODAL -->
 <div class="modal fade bd-example-modal-lg" tabindex="-1" id="modal" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="tituloModal"></h5>

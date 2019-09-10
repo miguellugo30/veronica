@@ -55,3 +55,9 @@ Route::group(['namespace' => '\Modules\Inbound\Http\Controllers', 'prefix' => 'i
 Route::group(['namespace' => '\Modules\Inbound\Http\Controllers', 'prefix' => 'inbound', 'middleware' => 'auth'], function() {
     Route::resource('Ivr','IvrController');
 });
+/**
+* Rutas para CRUD de Desvios
+*/
+Route::group(['namespace' => '\Modules\Inbound\Http\Controllers', 'prefix' => 'inbound', 'middleware' => 'auth'], function() {
+    Route::resource('Ivr_Opciones','OpcionesIvrController');
+});

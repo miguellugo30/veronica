@@ -25,7 +25,7 @@ $(function() {
             table = ' #tableDidEnrutamiento';
         } else if (id == 6) {
             url = currentURL + '/Ivr';
-            table = ' #tableIvr';
+            table = ' #tableivr';
         }
         $.get(url, function(data, textStatus, jqXHR) {
             $(".viewResult").html(data);
