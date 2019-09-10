@@ -24,6 +24,9 @@ $(function() {
         } else if (id == 29) {
             url = currentURL + '/Grupos';
             table = ' #tableGrupos';
+        } else if (id == 22) {
+            url = currentURL + '/Speech';
+            table = ' #tableSpeech';
         }
         $.get(url, function(data, textStatus, jqXHR) {
             $(".viewResult").html(data);
