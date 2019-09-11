@@ -12,7 +12,7 @@
                     <div class="row col-lg-12 ">
 
                         <div class="col col-sm-2 col-md-2 ca-menu text-center card m-1 bg-primary text-white thumbnail">
-                            <a href="http://localhost:8000/inbound">
+                            <a href="{{url("/inbound")}}">
 
                                 <div class="pt-3">
                                     <i class="fas fa-phone-volume fa-5x"></i>
@@ -109,7 +109,7 @@
                             </div>
                         </div>
                         <div class="col  text-center card m-1 bg-success text-white thumbnail">
-                            <a href="http://localhost:8000/settings">
+                            <a href="{{url("/settings")}}">
                                 <div class="pt-3">
                                     <i class="fas fa-cogs fa-5x"></i>
                                 </div>

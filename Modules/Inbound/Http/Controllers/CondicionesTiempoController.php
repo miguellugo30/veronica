@@ -12,7 +12,9 @@ use Nimbus\Campanas;
 use Nimbus\Cat_Extensiones;
 use Nimbus\User;
 use Nimbus\Condiciones_Tiempo;
+use Nimbus\Desvios;
 use Nimbus\Grupos;
+use Nimbus\Ivr;
 
 class CondicionesTiempoController extends Controller
 {
@@ -148,7 +150,7 @@ class CondicionesTiempoController extends Controller
         } else if ($data[1] == 'Campanas') {
             $info = Campanas::active()->where('Empresas_id', $empresa_id)->get();
         } else if ($data[1] == 'Ivr') {
-            $info = [];
+            $info = Ivr::active()->where('Empresas_id', $empresa_id)->get();
         } else if ($data[1] == 'Condiciones_Tiempo') {
             $info = Grupos::active()->where([['Empresas_id', '=', $empresa_id],['tipo_grupo','=','Condiciones de Tiempo']])->get();
         } else if ($data[1] == 'Cat_Extensiones') {
@@ -157,6 +159,8 @@ class CondicionesTiempoController extends Controller
             $info = [];
         } else if ($data[1] == 'Aplicacion') {
             $info = [];
+        } else if ($data[1] == 'Desvios') {
+            $info = Desvios::active()->where('Empresas_id', $empresa_id)->get();
         } else if ($data[1] == 'hangup') {
             $info = [ ['id' => 0, 'nombre' => 'Colgar'] ];
         }
@@ -210,7 +214,7 @@ class CondicionesTiempoController extends Controller
             } else if ($v->tabla_verdadero == 'Campanas') {
                 $info = Campanas::active()->where('Empresas_id', $empresa_id)->get();
             } else if ($v->tabla_verdadero == 'Ivr') {
-                $info = [];
+                $info = Ivr::active()->where('Empresas_id', $empresa_id)->get();
             } else if ($v->tabla_verdadero == 'Condiciones_Tiempo') {
                 $info = Grupos::active()->where([['Empresas_id', '=', $empresa_id],['tipo_grupo','=','Condiciones de Tiempo']])->get();
             } else if ($v->tabla_verdadero == 'Cat_Extensiones') {
@@ -230,7 +234,7 @@ class CondicionesTiempoController extends Controller
             } else if ($v->tabla_falso == 'Campanas') {
                 $info = Campanas::active()->where('Empresas_id', $empresa_id)->get();
             } else if ($v->tabla_falso == 'Ivr') {
-                $info = [];
+                $info = Ivr::active()->where('Empresas_id', $empresa_id)->get();
             } else if ($v->tabla_falso == 'Condiciones_Tiempo') {
                 $info = Grupos::active()->where([['Empresas_id', '=', $empresa_id],['tipo_grupo','=','Condiciones de Tiempo']])->get();
             } else if ($v->tabla_falso == 'Cat_Extensiones') {

@@ -1126,6 +1126,9 @@ $(function () {
     if (id == 21) {
       url = currentURL + '/formularios';
       table = ' #tableFormulario';
+    } else if (id == 22) {
+      url = currentURL + '/speech';
+      table = ' #tableSpeech';
     } else if (id == 23) {
       url = currentURL + '/calificaciones';
       table = ' #tableCalificaciones';
@@ -1138,6 +1141,9 @@ $(function () {
     } else if (id == 29) {
       url = currentURL + '/Grupos';
       table = ' #tableGrupos';
+    } else if (id == 22) {
+      url = currentURL + '/Speech';
+      table = ' #tableSpeech';
     }
 
     $.get(url, function (data, textStatus, jqXHR) {

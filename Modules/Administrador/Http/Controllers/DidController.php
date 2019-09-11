@@ -13,7 +13,7 @@ use Nimbus\Dids;
 // Agregar modelo Clientes para acceder a los datos
 use Nimbus\Empresas;
 use Nimbus\Canales;
-
+use PHPAMI\Ami;
 
 class DidController extends Controller
 {
@@ -67,6 +67,7 @@ class DidController extends Controller
          * Se recorre arreglo de dids
          */
         for ($i=0; $i < count($dids_store); $i++) {
+            $empresa_id = $data['id_empresa'];
             $cat = Dids::create([
                                     'did'=>trim($dids_store[$i]),
                                     'numero_real'=>$data['numero_real'],
@@ -79,9 +80,37 @@ class DidController extends Controller
             /**
              * Creamos el logs
              */
-            $mensaje = 'Se creo un nuevo registro, informacion capturada:'.var_export($data, true);
+            $mensaje = 'Se creo un nuevo registro, información capturada:'.var_export($data, true);
             $log = new LogController;
-            $log->store('Insercion', 'Dids',$mensaje, $cat->id);
+            $log->store('Inserción', 'Dids',$mensaje, $cat->id);
+        }
+        /**
+         * Creamos una petición, para poder escribir
+         * los nuevos DID en el archivo EXTENSIONS_DID.CONF
+         */
+        $ch = curl_init();
+        // definimos la URL a la que hacemos la petición
+        curl_setopt($ch, CURLOPT_URL,"10.255.242.136/api-contextos/contexto_did.php");
+        // indicamos el tipo de petición: POST
+        curl_setopt($ch, CURLOPT_POST, TRUE);
+        // definimos cada uno de los parámetros
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "empresa_id=".$empresa_id);
+        // recibimos la respuesta y la guardamos en una variable
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $remote_server_output = curl_exec ($ch);
+        // cerramos la sesión cURL
+        curl_close ($ch);
+        /**
+         * Si la respuesta es 1, se hace el reload del dialplan
+         */
+        if ($remote_server_output == 1) {
+            $ami = new Ami();
+            if ($ami->connect('10.255.242.136:5038', 'Call_Center', 'Call_C3nt3r_1nf1n1t', 'off') === false) {
+               throw new \RuntimeException('Could not connect to Asterisk Management Interface.');
+            }
+            $result  = $ami->command('dialplan Reload');
+            dd( $result );
+            $ami->disconnect();
         }
     }
 
@@ -120,7 +149,7 @@ class DidController extends Controller
          */
         $empresas = Empresas::where('activo',1)->get();
         /**
-         * Obtenemos los canales que estan vinculadas a la empresa vinculada al DID
+         * Obtenemos los canales que están vinculadas a la empresa vinculada al DID
          */
         $empresa = Empresas::findOrFail(  $Dids->Empresas->id );
         $canales = $empresa->canales;
@@ -166,7 +195,7 @@ class DidController extends Controller
              */
             $mensaje = 'Se edito un registro con id: '.$info[$i][0].', informacion editada: '.var_export($info[$i], true);
             $log = new LogController;
-            $log->store('Actualizacion', 'Categorias',$mensaje, $info[$i][0]);
+            $log->store('Actualización', 'Categorías',$mensaje, $info[$i][0]);
         }
     }
 
@@ -183,7 +212,7 @@ class DidController extends Controller
          */
         $mensaje = 'Se Elimino un registro con id: '.$id;
         $log = new LogController;
-        $log->store('Eliminacion', 'Dids',$mensaje, $id);
+        $log->store('Eliminación', 'Dids',$mensaje, $id);
         /**
          * Redirigimos a la ruta index
          */
