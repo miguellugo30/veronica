@@ -20,28 +20,40 @@
             </div>
         </div>
         <div class="col">
+        
+        
             <div class="form-group">
+            
                 <div class="text-center">
                         <img src="" id='image_input_header' width="100px"/></label>
                 </div>
+                
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input form-control-sm" id="file_input_header" name="file_input_header" lang="es">
+                    <input type="file" class="custom-file-input form-control-sm" id="file_input_header" name="file_input_header" lang="es"/>
                     <label class="custom-file-label" for="file_input_header">Seleccionar Archivo</label>
                 </div>
+                
                 <!--label for="image_header" class="col-md-3 col-form-label text-md-right">Imagen header<br>
                 <input type="file" id='file_input_header' name="file_input_header" class="form-control form-control-sm"/-->
             </div>
+            
+            
             <div class="form-group">
+            
                 <div class="text-center">
                     <img src="" id='image_input_pie' class="rounded" width="100px"/>
                 </div>
+                
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input form-control-sm" id="file_input_pie" name="file_input_pie" lang="es">
+                    <input type="file" class="custom-file-input form-control-sm" id="file_input_pie" name="file_input_pie" lang="es"/>
                     <label class="custom-file-label" for="file_input_pie">Seleccionar Archivo</label>
                 </div>
+                
                 <!--label for="img_pie" class="col-md-2 col-form-label text-md-right">Imagen pie<br>
                 <input type="file" id="file_input_pie" name="file_input_pie" class="form-control form-control-sm" placeholder="Imagen pie"-->
             </div>
+            
+            
         </div>
     </div>
 </form>

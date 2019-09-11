@@ -8,6 +8,8 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Nimbus\Audios_Empresa;
 use Nimbus\User;
+use Storage;
+use File;
 use Nimbus\Http\Controllers\LogController;
 
 
@@ -31,25 +33,20 @@ class AudiosEmpresasController extends Controller
     {
         return view('settings::AudiosEmpresa.create');
     }
-
+    
+    
     /**
      * Store a newly created resource in storage.
      * @param Request $request
      * @return Response
      */
     public function store(Request $request)
-    {
-        //
-        /**
-         * Obtenemos los datos del usuario logeado
-         */
+    {        
+        /** Obtenemos los datos del usuario logeado **/
         $user = User::find( Auth::id() );
         $empresa_id = $user->id_cliente;
-
-        //dd($request);
-        /**
-         * Insertar información el table de Formularios
-         */
+        
+        /** Inserta el registro en Audios **/
         Audios_Empresa::create(
             [
                 'nombre' => $request->input('nombre'),
@@ -57,17 +54,36 @@ class AudiosEmpresasController extends Controller
                 'ruta' =>  $request->input('ruta') ,
                 'Empresas_id'   => $empresa_id
             ]
-        );
-        return redirect()->route('Audios.index');
-        /**
-         * Creamos el logs
-         */
+        );      
+            
+       /**  Obtener datos del campo file definido en el formulario **/
+       $file = $request->file('file'); 
+       
+       /** obtenemos el nombre del archivo **/
+       $aud_nom = $file->getClientOriginalName();
+    //        $ext = explode('.', $nombre_img1);
+    //        $nom = "img_header_".$distribuidor->id.".".$ext[1];//creamos en nuevo nombre del archivo
+   
+        $dir_audios = "/audios/".$empresa_id;  
+         
+        if(!File::exists($dir_audios)){
+           Storage::makeDirectory($dir_audios);
+        }
+        
+         
+      // Storage::disk('public')->put($directorio_imagenes."/".$nom,($file) ? File::get($file));
+        Storage::disk('local')->put($dir_audios."/".$aud_nom,  \File::get($file));                  
+       
+        /**   Creamos el logs      */
         $mensaje = 'Se creo un nuevo registro, informacion capturada:'.var_export($request->all(), true);
         $log = new LogController;
         $log->store('Insercion', 'User',$mensaje, $user->id);
+        
+         return redirect()->route('Audios.index');
 
     }
-
+    
+    
     /**
      * Show the specified resource.
      * @param int $id

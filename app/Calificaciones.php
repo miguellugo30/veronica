@@ -27,21 +27,35 @@ class Calificaciones extends Model
     | RELACIONES DE BASE DE DATOS
     |--------------------------------------------------------------------------
     /**
-     * Relacion muchos a uno con Campanas
+    ## Relacion muchos a uno con Grupo_Calificaciones_Calificacion
+    -- Relacion con Campanas
      */
-    public function Campanas()
-    {
-        return $this->belongsTo('Nimbus\Campanas', 'Campanas_id');
-    }
+   # public function Grupo_Calificacion()
+   # {
+   #     return $this->belongsTo('Nimbus\Grupo_Calificacion', 'Grupo_Calificacion','id');
+   # }
+    
+    /**
+     * 
+    ## Relacion muchos a uno con Tipo_Marcacion
+    */
+    #public function Tipo_Marcacion()
+    #{
+    #    return $this->belongsTo('Nimbus\Cat_Tipo_Marcacion', 'Cat_Tipo_Marcacion_id','id');
+    #}
+    
+   
     /**
     ## Relacion uno a uno con Formularios
      */
     public function Formularios()
     {
         return $this->hasOne('Nimbus\Formularios', 'id', 'Formularios_id');
-    }
+    }   
+    
+        
     /**
-    * Relacion uno a muchos con Sub_Calificaciones
+    ## Relacion uno a muchos con Sub_Calificaciones
     */
     public function Sub_Calificaciones()
     {

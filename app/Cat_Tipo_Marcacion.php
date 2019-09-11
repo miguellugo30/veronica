@@ -24,4 +24,10 @@ class Cat_Tipo_Marcacion extends Model
     {
         return $this->hasMany('Nimbus\Formularios');
     }
+    
+    /** Relacion uno a muchos con Calificaciones */
+    public function Calificaciones()
+    {
+        return $this->hasMany('Nimbus\Calificaciones');
+    }
 }
