@@ -20,7 +20,7 @@
                         <option value="">Seleccione un tipo</option>                        
                             <option value="Inbound">Inbound</option> 
                             <option value="Outbound">Outbound</option> 
-                            <option value="Manuales">Manuales</option>                        
+                            <option value="Manual">Manual</option>                        
                     </select>
                 </div> 
             </div>
@@ -36,7 +36,7 @@
                             <th>Nombre Calificaci&oacute;n</th>   
                             <th>Formulario</th>
                             <th>SubCalificaci&oacute;n</th>
-                            <td><input type="button" class="btn btn-primary btn-sm" id = "add" value = "Agregar" /></td>
+                            <td><input type="button" class="btn btn-primary btn-sm" id = "add_c" value = "Agregar" /></td>
                         </tr>
                     </thead>
                     

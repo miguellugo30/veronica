@@ -86,6 +86,91 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./resources/js/module_settings/acciones_calificaciones.js":
+/*!*****************************************************************!*\
+  !*** ./resources/js/module_settings/acciones_calificaciones.js ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+* JS CALIFICACIONES EVENTOS DE LA TABLA
+**/
+$(function () {
+  /**
+   * Evento para agregar una nueva fila en calificaciones
+   */
+  $(document).on('click', '#add_c', function () {
+    var clickID = $(".tableNewForm tbody tr.clonar:last").attr('id').replace('tr_', '');
+    $('#form_opc .form-control-sm').val(''); // Genero el nuevo numero id
+
+    var newID = parseInt(clickID) + 1; //let IDInput = ['id_campo', 'nombre_campo', 'tipo_campo', 'tamano', 'obligatorio', 'obligatorio_hidden', 'editable', 'editable_hidden', 'opciones', 'view'];
+
+    var IDInput = ['nombre_calificacion', 'tipo_formulario', 'editable', 'editable_hidden', 'opciones', 'view'];
+    fila = $(".tableNewForm tbody tr:eq()").clone().appendTo(".tableNewForm"); //Clonamos la fila
+
+    for (var i = 0; i < IDInput.length; i++) {
+      fila.find('#' + IDInput[i]).attr('name', IDInput[i] + "_" + newID); //Cambiamos el nombre de los campos de la fila a clonar
+    }
+
+    fila.find('.btn-info').css('display', 'none');
+    fila.find('#id_campo').attr('value', '');
+    fila.attr("id", 'tr_' + newID);
+  });
+  /**
+   * Accion para habilitar o deshabilitar los chechbox
+   * de Requerido y Editable
+   */
+
+  $(document).on('click', '.micheckbox', function () {
+    var id = $(this).attr('id');
+    var idTR = $(this).attr('name').replace(id + "_", '');
+    var name = id + "_hidden_" + idTR;
+
+    if ($(this).prop('checked')) {
+      $("input[name=" + name + "]").prop("disabled", true);
+    } else {
+      $("input[name=" + name + "]").prop("disabled", false);
+    }
+  });
+  /**
+   * Evento para eliminar una fila de la tabla de nuevo 
+   */
+
+  $(document).on('click', '.tr_clone_remove', function () {
+    var tr = $(this).closest('tr');
+    tr.remove();
+  });
+  /**
+   * Evento para eliminar una fila de la tabla de nuevo formulario
+   */
+
+  $(document).on('click', '.tr_edit_remove', function () {
+    var id = $(this).data('id-campo');
+    var idForm = $("#id_formulario").val();
+    var tr = $(this).closest('tr');
+    tr.remove();
+    var _method = "DELETE";
+
+    var _token = $("input[name=_token]").val();
+
+    var url = currentURL + '/campos/' + id + '&' + idForm;
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {
+        _token: _token,
+        _method: _method
+      },
+      success: function success(result) {
+        console.log(result);
+      }
+    });
+  });
+});
+
+/***/ }),
+
 /***/ "./resources/js/module_settings/acciones_formularios.js":
 /*!**************************************************************!*\
   !*** ./resources/js/module_settings/acciones_formularios.js ***!
@@ -504,10 +589,11 @@ $(function () {
 $(function () {
   var currentURL = window.location.href;
   /**
-   * Evento que muestra elemento calificaciones
+   * Evento que muestra elemento calificaciones || esta funcion muestra con slide los botones de Eliminar y Editar
    */
 
   $(document).on('click', '#tableCalificaciones tbody tr', function (event) {
+    /* Para que nunca tome los refresh, preventivo*/
     event.preventDefault();
     var id = $(this).data("id");
     $(".editCalificaciones").slideDown();
@@ -539,7 +625,7 @@ $(function () {
     });
   });
   /**
-  * Evento para obtener el valor del tipo de Formulario
+  * Evento para obtener el valor del tipo de Formulario LD
   */
 
   $(document).on('change', '#tipo_marcacion', function (event) {
@@ -564,6 +650,74 @@ $(function () {
       _token: _token
     }, function (data, textStatus, xhr) {
       $('.viewResult').html(data);
+    });
+  });
+  /**
+  * Evento para eliminar la Calificacion
+  
+  *
+  */
+
+  $(document).on('click', '.deleteCalificaciones', function (event) {
+    event.preventDefault();
+    /**Modal de Alerta Swal.fire**/
+
+    Swal.fire({
+      title: 'Estas seguro?',
+      text: "Deseas eliminar el registro seleccionado!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Eliminar!',
+      cancelButtonText: 'Cancelar'
+    }).then(function (result) {
+      if (result.value) {
+        var id = $("#idSeleccionado").val();
+        var _method = "DELETE";
+
+        var _token = $("input[name=_token]").val();
+
+        var url = currentURL + '/calificaciones/' + id;
+        $.ajax({
+          url: url,
+          type: 'POST',
+          data: {
+            _token: _token,
+            _method: _method
+          },
+          success: function success(result) {
+            $('.viewResult').html(result);
+            $('.viewResult #tableCalificaciones').DataTable({
+              "lengthChange": false
+            });
+            Swal.fire('Eliminado!', 'El registro ha sido eliminado.', 'success');
+          }
+        });
+      }
+    });
+  });
+  /**
+  * Evento para visualizar un registro
+  */
+
+  $(document).on('click', '.editCalificaciones', function (event) {
+    event.preventDefault();
+    var id = $("#idSeleccionado").val();
+    $('#tituloModal').html('Detalles de Calificaciones');
+    var url = currentURL + '/calificaciones/' + id + '/edit';
+    $('#action').addClass('updateCalificaciones');
+    $('#action').removeClass('saveCalificaciones');
+    $.ajax({
+      url: url,
+      type: 'GET',
+      success: function success(result) {
+        $('#modal').modal({
+          backdrop: 'static',
+          keyboard: false
+        });
+        $("#modal-body").html(result);
+      }
     });
   });
 });
@@ -1273,9 +1427,9 @@ $(function () {
 /***/ }),
 
 /***/ 1:
-/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/module_settings/menu.js ./resources/js/module_settings/formularios.js ./resources/js/module_settings/sub_formularios.js ./resources/js/module_settings/acciones_formularios.js ./resources/js/module_settings/audios.js ./resources/js/module_settings/calificaciones.js ./resources/js/module_settings/agentes.js ./resources/js/module_settings/grupos.js ***!
-  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/module_settings/menu.js ./resources/js/module_settings/formularios.js ./resources/js/module_settings/sub_formularios.js ./resources/js/module_settings/acciones_formularios.js ./resources/js/module_settings/audios.js ./resources/js/module_settings/calificaciones.js ./resources/js/module_settings/acciones_calificaciones.js ./resources/js/module_settings/agentes.js ./resources/js/module_settings/grupos.js ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1285,6 +1439,7 @@ __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\sub_
 __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\acciones_formularios.js */"./resources/js/module_settings/acciones_formularios.js");
 __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\audios.js */"./resources/js/module_settings/audios.js");
 __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\calificaciones.js */"./resources/js/module_settings/calificaciones.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\acciones_calificaciones.js */"./resources/js/module_settings/acciones_calificaciones.js");
 __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\agentes.js */"./resources/js/module_settings/agentes.js");
 module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\grupos.js */"./resources/js/module_settings/grupos.js");
 

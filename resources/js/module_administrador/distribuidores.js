@@ -32,7 +32,6 @@ $(function() {
         let img_header = $("#img_header").val();
         let img_pie = $("#img_pie").val();
         let _token = $("input[name=_token]").val();
-
         formData.append("servicio", servicio);
         formData.append("distribuidor", distribuidor);
         formData.append("numero_soporte", numero_soporte);
