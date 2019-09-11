@@ -61,25 +61,26 @@ class AudiosEmpresasController extends Controller
        
        /** obtenemos el nombre del archivo **/
        $aud_nom = $file->getClientOriginalName();
-    //        $ext = explode('.', $nombre_img1);
-    //        $nom = "img_header_".$distribuidor->id.".".$ext[1];//creamos en nuevo nombre del archivo
+    //   $ext = explode('.', $nombre_img1);
+    //   $nom = "img_header_".$distribuidor->id.".".$ext[1];//creamos en nuevo nombre del archivo
    
         $dir_audios = "/audios/".$empresa_id;  
          
         if(!File::exists($dir_audios)){
            Storage::makeDirectory($dir_audios);
         }
-        
+      //  dd($dir_audios);
          
       // Storage::disk('public')->put($directorio_imagenes."/".$nom,($file) ? File::get($file));
-        Storage::disk('local')->put($dir_audios."/".$aud_nom,  \File::get($file));                  
+        Storage::disk('public')->put($dir_audios."/".$aud_nom, \File::get($file));
+      //  Storage::disk('local')->put($dir_audios."/".$aud_nom,  \File::get($file));                  
        
         /**   Creamos el logs      */
         $mensaje = 'Se creo un nuevo registro, informacion capturada:'.var_export($request->all(), true);
         $log = new LogController;
         $log->store('Insercion', 'User',$mensaje, $user->id);
         
-         return redirect()->route('Audios.index');
+        return redirect()->route('Audios.index');
 
     }
     
