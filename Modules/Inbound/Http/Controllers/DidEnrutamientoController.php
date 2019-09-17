@@ -185,6 +185,8 @@ class DidEnrutamientoController extends Controller
     {
 
         $dataForm = $request->input('dataForm');
+        $user = User::find( Auth::id() );
+        $empresa_id = $user->id_cliente;
 
         for ($i=0; $i < count( $dataForm ); $i++) {
             $data[ $dataForm[$i]['name']] = $dataForm[$i]['value'];
@@ -229,6 +231,34 @@ class DidEnrutamientoController extends Controller
                                                                 ]);
             }
             $j++;
+        }
+        /**
+         * Creamos una petición, para poder escribir
+         * los nuevos DID en el archivo EXTENSIONS_DID.CONF
+         */
+        $ch = curl_init();
+        // definimos la URL a la que hacemos la petición
+        curl_setopt($ch, CURLOPT_URL,"10.255.242.136/api-contextos/contexto_did.php");
+        // indicamos el tipo de petición: POST
+        curl_setopt($ch, CURLOPT_POST, TRUE);
+        // definimos cada uno de los parámetros
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "empresa_id=".$empresa_id);
+        // recibimos la respuesta y la guardamos en una variable
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $remote_server_output = curl_exec ($ch);
+        // cerramos la sesión cURL
+        curl_close ($ch);
+        /**
+         * Si la respuesta es 1, se hace el reload del dialplan
+         */
+        if ($remote_server_output == 1) {
+            $ami = new Ami();
+            if ($ami->connect('10.255.242.136:5038', 'Call_Center', 'Call_C3nt3r_1nf1n1t', 'off') === false) {
+               throw new \RuntimeException('Could not connect to Asterisk Management Interface.');
+            }
+            $result  = $ami->command('dialplan Reload');
+            dd( $result );
+            $ami->disconnect();
         }
 
         return redirect()->route('Did_Enrutamiento.index');
