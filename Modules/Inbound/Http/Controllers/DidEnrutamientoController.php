@@ -8,7 +8,6 @@ use Illuminate\Routing\Controller;
 use Nimbus\Http\Controllers\LogController;
 use Illuminate\Support\Facades\Auth;
 use Nimbus\User;
-use Nimbus\Agentes;
 use Nimbus\Did_Enrutamiento;
 use Nimbus\Dids;
 use Nimbus\Campanas;
@@ -16,8 +15,8 @@ use Nimbus\ivr;
 use Nimbus\Audios_Empresa;
 use Nimbus\Grupos;
 use Nimbus\Cat_Extensiones;
-use Nimbus\Condiciones_Tiempo;
 use Nimbus\Desvios;
+use PHPAMI\Ami;
 
 class DidEnrutamientoController extends Controller
 {
