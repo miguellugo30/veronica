@@ -35,7 +35,6 @@
                             <tr data-id="{{ $agente->id }}" style="cursor:pointer">
                                 <td>{{ $agente->tipo_licencia }} </td>
                                 <td>
-                                    {{  $agente->Grupos }}
                                     @if ( $agente->Grupos->isEmpty() )
                                         Sin Grupo
                                     @else
