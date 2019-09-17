@@ -39,6 +39,12 @@ Route::group(['namespace' => '\Modules\Settings\Http\Controllers', 'prefix' => '
     Route::resource('campos','CamposController');
 });
 /**
+ * Rutas para CRUD de Speech
+ */
+Route::group(['namespace' => '\Modules\Settings\Http\Controllers', 'prefix' => 'settings', 'middleware' => 'auth'], function() {
+    Route::resource('speech','SpeechController');
+});
+/**
  * Rutas para CRUD de Calificaciones
  *## Rutas para CRUD de Calificaciones
  */
@@ -63,3 +69,14 @@ Route::group(['namespace' => '\Modules\Settings\Http\Controllers', 'prefix' => '
 Route::group(['namespace' => '\Modules\Settings\Http\Controllers', 'prefix' => 'settings', 'middleware' => 'auth'], function() {
     Route::resource('Grupos','GruposController');
 });
+
+
+/**
+ ## Rutas para CRUD de Audios_Empresas Almacenamiento
+ */
+Route::group(['namespace' => '\Modules\Settings\Http\Controllers', 'prefix' => 'settings', 'middleware' => 'auth'], function() {
+    Route::resource('Carga','StorageController');
+});
+
+
+
