@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Nimbus\Troncales;
+use Nimbus\Troncales_Sansay;
 use Nimbus\Cat_Distribuidor;
 use Nimbus\Cat_IP_PBX;
 use Nimbus\Http\Controllers\LogController;
@@ -36,8 +37,7 @@ class TroncalesController extends Controller
          */
         $distribuidores = Cat_Distribuidor::active()->get();
 
-        $medias = Cat_IP_PBX::where('activo',1)->get();
-        return view('administrador::troncales.create', compact('distribuidores','medias'));
+        return view('administrador::troncales.create', compact('distribuidores'));
     }
 
     /**
@@ -49,9 +49,15 @@ class TroncalesController extends Controller
     {
         /**
          * Obtenemos todos los datos del formulario de alta y
-         * los insertamos la informacion del formulario
+         * los insertamos la información del formulario
          */
         $cat = Troncales::create( $request->all() );
+
+        Troncales_Sansay::create([
+                                    'name' => $request->input('nombre'),
+                                    'host' => $request->input('ip_host'),
+                                    'Troncales_id' => $cat->id
+                                ]);
         /**
          * Creamos el logs
          */
@@ -71,8 +77,7 @@ class TroncalesController extends Controller
      */
     public function show($id)
     {
-        $configuracion = Troncales::findOrFail($id);
-
+        $configuracion = Troncales_Sansay::where( 'Troncales_id', $id )->get();
         return view('administrador::troncales.show', compact('configuracion'));
     }
 
@@ -116,7 +121,8 @@ class TroncalesController extends Controller
                                     'Cat_Distribuidor_id' => $request->input('Cat_Distribuidor_id'),
                                     'Cat_IP_PBX_id' => $request->input('Cat_IP_PBX_id'),
                                 ]);
-                /**
+
+        /**
          * Creamos el logs
          */
         $mensaje = 'Se edito un registro con id: '.$id.', informacion editada: '.var_export($request->all(), true);
@@ -153,4 +159,37 @@ class TroncalesController extends Controller
          */
         return redirect()->route('troncales.index');
     }
+
+    /**
+     * Update the specified resource in storage.
+     * @param Request $request
+     * @param int $id
+     * @return Response
+     */
+    public function updateSansay(Request $request, $id)
+    {
+        /**
+         * Actualizamos la troncal
+         */
+        Troncales_Sansay::where( 'id', $id )
+                                ->update([
+                                    'host' => $request->input('host'),
+                                    'dtmfmode' => $request->input('dtmfmode'),
+                                    'allow' => $request->input('allow'),
+                                ]);
+
+        /**
+         * Creamos el logs
+         */
+        $mensaje = 'Se edito un registro con id: '.$id.', informacion editada: '.var_export($request->all(), true);
+        $log = new LogController;
+        $log->store('Actualizacion', 'Troncales',$mensaje, $id);
+        /**
+         * Redirigimos a la ruta index
+         */
+        return redirect()->route('troncales.index');
+    }
+
+
+
 }
