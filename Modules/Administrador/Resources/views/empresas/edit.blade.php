@@ -10,6 +10,8 @@
             <li data-opcion="dataCanales" class="list-group-item">Canales</li>
             <li data-opcion="dataExtensiones" class="list-group-item">Catalogo de extensiones</li>
             <li data-opcion="dataDids" class="list-group-item">Dids</li>
+            <li data-opcion="dataAplicaciones" class="list-group-item">Aplicaciones</li>
+            <li data-opcion="dataPerfiles" class="list-group-item">Perfiles de Marcado</li>
         </ul>
         <br><br>
     </div>

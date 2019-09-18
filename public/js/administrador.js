@@ -2302,7 +2302,7 @@ $(function () {
    * Evento para mostrar el formulario editar empresa
    */
 
-  $(document).on('click', '#tableEmpresas tbody tr', function (event) {
+  $(document).on('dblclick', '#tableEmpresas tbody tr', function (event) {
     event.preventDefault();
     $(".newEmpresa").slideUp();
     $(".viewIndex").slideUp();
@@ -3716,6 +3716,22 @@ $(function () {
       $("#sub_cat_" + id).slideDown();
     } else {
       $("#sub_cat_" + id).slideUp();
+    }
+  });
+  /**
+   * Evento para marcar / desmarcar todos los checkbox
+   */
+
+  $(document).on('click', '.marcarDesmarcar', function () {
+    //event.preventDefault();
+    var id = $(this).data("value");
+
+    if ($("#sub_cat_" + id + " .mark").prop("checked") == true) {
+      //alert("CHECKBOX ESTA ACTIVO");
+      $("#sub_cat_" + id + " .mark").prop("checked", true);
+    } else {
+      //alert("CHECKBOX ESTA INACTIVO");
+      $("#sub_cat_" + id + " .mark").prop("checked", false);
     }
   });
 });

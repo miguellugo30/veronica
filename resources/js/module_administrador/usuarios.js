@@ -211,4 +211,19 @@ $(function() {
         }
     });
 
+    /**
+     * Evento para marcar / desmarcar todos los checkbox
+     */
+    $(document).on('click', '.marcarDesmarcar', function() {
+        //event.preventDefault();
+        var id = $(this).data("value");
+        if ($("#sub_cat_" + id + " .mark").prop("checked") == true) {
+            //alert("CHECKBOX ESTA ACTIVO");
+            $("#sub_cat_" + id + " .mark").prop("checked", true);
+        } else {
+            //alert("CHECKBOX ESTA INACTIVO");
+            $("#sub_cat_" + id + " .mark").prop("checked", false);
+        }
+    });
+
 });
