@@ -2302,7 +2302,7 @@ $(function () {
    * Evento para mostrar el formulario editar empresa
    */
 
-  $(document).on('click', '#tableEmpresas tbody tr', function (event) {
+  $(document).on('dblclick', '#tableEmpresas tbody tr', function (event) {
     event.preventDefault();
     $(".newEmpresa").slideUp();
     $(".viewIndex").slideUp();
@@ -3338,6 +3338,7 @@ $(function () {
     e.preventDefault();
     $('#tituloModal').html('Nueva Troncal');
     $('#action').removeClass('updateTrocal');
+    $('#action').removeClass('updateTrocalSansay');
     $('#action').addClass('saveTroncal');
     var url = currentURL + '/troncales/create';
     $.get(url, function (data, textStatus, jqXHR) {
@@ -3397,6 +3398,7 @@ $(function () {
     e.preventDefault();
     $('#tituloModal').html('Editar Troncal');
     $('#action').removeClass('saveTroncal');
+    $('#action').removeClass('updateTrocalSansay');
     $('#action').addClass('updateTrocal');
     var id = $("#idSeleccionado").val();
     var url = currentURL + "/troncales/" + id + "/edit";
@@ -3501,13 +3503,51 @@ $(function () {
    * Evento para invocar a la ventana modal para visualizar la configuracion
    */
 
-  $(document).on('click', '.show-modal', function (event) {
-    var id = $(this).val(); //alert(id);
-
-    var url = currentURL + '/troncales/' + 1;
+  $(document).on('click', '.viewConfig', function (event) {
+    var id = $(this).val();
+    var url = currentURL + '/troncales/' + id;
+    $('#action').removeClass('saveTroncal');
+    $('#action').removeClass('updateTrocal');
+    $('#action').addClass('updateTrocalSansay');
+    $('#tituloModal').html('Configuración Troncal');
     $.get(url, function (data, textStatus, xhr) {
-      $("#configuracionmodal").html(data);
-      $("#configuracionmodal").modal("show");
+      $('#modal').modal('show');
+      $("#modal-body").html(data);
+    });
+  });
+  /**
+   * Evento para editar el modulo
+   */
+
+  $(document).on('click', '.updateTrocalSansay', function (event) {
+    event.preventDefault();
+    $('#modal').modal('hide');
+    var id = $("#id_sansay").val();
+    var host = $("#host").val();
+    var dtmfmode = $("#dtmfmode").val();
+    var allow = $("#allow").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var url = currentURL + '/troncales/sansay/' + id;
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {
+        id: id,
+        host: host,
+        dtmfmode: dtmfmode,
+        allow: allow,
+        _token: _token
+      },
+      success: function success(result) {
+        $('.viewResult').html(result);
+        $('.viewCreate').slideUp();
+        $('.viewIndex #tableTroncales').DataTable({
+          "lengthChange": true
+        });
+        Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+      }
     });
   });
 });
@@ -3716,6 +3756,22 @@ $(function () {
       $("#sub_cat_" + id).slideDown();
     } else {
       $("#sub_cat_" + id).slideUp();
+    }
+  });
+  /**
+   * Evento para marcar / desmarcar todos los checkbox
+   */
+
+  $(document).on('click', '.marcarDesmarcar', function () {
+    //event.preventDefault();
+    var id = $(this).data("value");
+
+    if ($("#sub_cat_" + id + " .mark").prop("checked") == true) {
+      //alert("CHECKBOX ESTA ACTIVO");
+      $("#sub_cat_" + id + " .mark").prop("checked", true);
+    } else {
+      //alert("CHECKBOX ESTA INACTIVO");
+      $("#sub_cat_" + id + " .mark").prop("checked", false);
     }
   });
 });

@@ -15,6 +15,7 @@
                             <th>Distribuidor</th>
                             <th>Nombre</th>
                             <th>Ubicación</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -24,6 +25,7 @@
                                 <td>{{ $empresa->Config_Empresas->Distribuidores->servicio }}</td>
                                 <td>{{$empresa->nombre}}</td>
                                 <td>{{$empresa->nombre}}</td>
+                                <td><button type="button" name="link" class="btn btn-info link"><i class="fas fa-sign-in-alt"></i></button></td>
                             </tr>
                         @endforeach
                     </tbody>

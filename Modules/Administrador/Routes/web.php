@@ -49,6 +49,7 @@ Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix'
  * Rutas de CRUD de Troncales
  */
 Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
+    Route::post('/troncales/sansay/{id}', 'TroncalesController@updateSansay');
     Route::resource('troncales','TroncalesController');
 });
 /**

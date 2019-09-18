@@ -4,7 +4,7 @@ namespace Nimbus;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Troncales extends Model
+class Troncales_Sansay extends Model
 {
     /*
      * Esto sirve para insertar la fecha tipo timestamp debido a la configuración de Laravel
@@ -14,12 +14,12 @@ class Troncales extends Model
      * Campos que se usaran en el proceso de la vista
      */
     protected $fillable = [
-        'nombre', 'descripcion' , 'Cat_Distribuidor_id',
+        'name', 'type', 'host' , 'context', 'dtmfmode', 'directmedia', 'canreinvite', 'disallow', 'allow', 'qualify', 'Troncales_id',
     ];
     /**
      * Nombre de la tabla
      */
-    protected $table = 'Troncales';
+    protected $table = 'Troncales_Sansay';
     /**
      * Funcion para obtener solo los registros activos
      */
@@ -34,22 +34,8 @@ class Troncales extends Model
     /**
      * Relación muchos a muchos con empresas
      */
-    public function Cat_Distribuidor()
+    public function Troncales()
     {
-        return $this->belongsTo('Nimbus\Cat_Distribuidor', 'Cat_Distribuidor_id');
-    }
-    /**
-     * Relacion uno a muchos con Canales
-     */
-    public function Canales()
-    {
-        return $this->hasMany('Nimbus\Canales');
-    }
-    /**
-     * Relación muchos a muchos con empresas
-     */
-    public function Troncales_Sansay()
-    {
-        return $this->hasOne('Nimbus\Troncales_Sansay');
+        return $this->hasOne('Nimbus\Troncales', 'Troncaless_id');
     }
 }
