@@ -3,14 +3,14 @@
         <h3 class="box-title"><b><i class="fas fa-share-square"></i> Desvios</b></h3>
         <div class="box-tools pull-right">
             @can('delete desvio')
-            @endcan
             <button type="button" class="btn btn-danger  btn-sm deleteDesvio" style="display:none"><i class="fas fa-trash-alt"></i> Elminar</button>
+            @endcan
             @can('edit desvio')
-            @endcan
             <button type="button" class="btn btn-warning btn-sm editDesvio" style="display:none"><i class="fas fa-edit"></i> Editar</button>
-            @can('create desvio')
             @endcan
+                @can('create desvio')
                 <button type="button" class="btn btn-primary btn-sm newDesvio" data-widget="remove"><i class="fas fa-plus"></i> Nuevo</button>
+                @endcan
             <input type="hidden" name="idSeleccionado" id="idSeleccionado" value="">
         </div>
     </div><!-- /.box-header -->

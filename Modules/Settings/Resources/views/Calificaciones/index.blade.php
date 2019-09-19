@@ -2,13 +2,15 @@
     <div class="box-header with-border">
         <h3 class="box-title"><b><i class="fas fa-phone"></i> Calificaciones</b></h3>
         <div class="box-tools pull-right">
+            @can('delete calificaciones')
             <button type="button" class="btn btn-danger  btn-sm deleteCalificaciones" style="display:none"><i class="fas fa-trash-alt"></i> Elminar</button>
+            @endcan
+            @can('edit calificaciones')
             <button type="button" class="btn btn-warning btn-sm editCalificaciones" style="display:none"><i class="fas fa-edit"></i> Editar</button>
-                                   
-            @can('create formularios')
+            @endcan
+            @can('create calificaciones')
                 <button type="button" class="btn btn-primary btn-sm newCalificaciones"><i class="fas fa-plus"></i> Nuevo</button>
             @endcan
-            
             <input type="hidden" name="idSeleccionado" id="idSeleccionado" value="">
         </div>
     </div><!-- /.box-header -->
