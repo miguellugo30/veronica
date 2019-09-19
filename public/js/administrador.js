@@ -1773,16 +1773,18 @@ $(function () {
    * Evento para mostrar el formulario editar distribuidores
    */
 
-  $(document).on('dblclick', '#tableDid tbody tr', function (event) {
-    event.preventDefault();
-    $(".viewIndex").slideUp();
-    $(".viewCreate").slideDown();
-    var id = $(this).data("id");
-    var url = currentURL + "/did/" + id + "/edit";
-    $.get(url, function (data, textStatus, jqXHR) {
-      $(".viewCreate").html(data);
-    });
+  /*$(document).on('dblclick', '#tableDid tbody tr', function(event) {
+      event.preventDefault();
+       $(".viewIndex").slideUp();
+      $(".viewCreate").slideDown();
+       let id = $(this).data("id");
+      let url = currentURL + "/did/" + id + "/edit";
+      $.get(url, function(data, textStatus, jqXHR) {
+          $(".viewCreate").html(data);
+       });
   });
+  */
+
   /**
    * Evento para cancelar la creacion/edicion del distribuidores
    */
