@@ -252,6 +252,83 @@ $(function () {
 
 /***/ }),
 
+/***/ "./resources/js/module_settings/acciones_speech.js":
+/*!*********************************************************!*\
+  !*** ./resources/js/module_settings/acciones_speech.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  /**
+   * Evento para mostrar el boton de añadir y borrar cuando el tipo de speech sea dinamico
+   */
+  $(document).on('change', '.tipo', function (event) {
+    event.preventDefault();
+    var tipo = $('.tipo').val();
+
+    if (tipo == 'dinamico') {
+      $('.agrega').removeAttr("hidden");
+      $('.remove').removeAttr("hidden");
+    } else if (tipo == 'estatico') {
+      $('.agrega').attr("hidden", "hidden");
+      $('.remove').attr("hidden", "hidden");
+      /**
+       * Eliminamos las opciones adicionales dentro de la tabla de opciones
+       */
+
+      var nColumnas = $(".tableNewSpeech tbody tr").length;
+
+      for (var i = nColumnas; i > 1; i--) {
+        $(".tableNewSpeech tbody tr#tr_" + i).remove();
+      }
+    } else if (tipo == '') {
+      $('.agrega').attr("hidden", "hidden");
+      $('.remove').attr("hidden", "hidden");
+      /**
+       * Eliminamos las opciones adicionales dentro de la tabla de opciones
+       */
+
+      var nColumnas = $(".tableNewSpeech tbody tr").length;
+
+      for (var _i = nColumnas; _i > 1; _i--) {
+        $(".tableNewSpeech tbody tr#tr_" + _i).remove();
+      }
+    }
+  });
+  /**
+   * Evento para agregar una nueva fila para campos nuevos en el formulario
+   */
+
+  $(document).on('click', '#add_s', function () {
+    var clickID = $(".tableNewSpeech tbody tr.clonar:last").attr('id').replace('tr_', '');
+    $('#form_opc .form-control-sm').val(''); // Genero el nuevo numero id
+
+    var newID = parseInt(clickID) + 1; //let IDInput = ['id_campo', 'nombre_speech', 'tipo_campo', 'tamano', 'obligatorio', 'obligatorio_hidden', 'editable', 'editable_hidden', 'opciones', 'view'];
+
+    var IDInput = ['nombre', 'descripcion', 'tipo'];
+    fila = $(".tableNewSpeech tbody tr:eq()").clone().appendTo(".tableNewSpeech"); //Clonamos la fila
+
+    for (var i = 0; i < IDInput.length; i++) {
+      fila.find('#' + IDInput[i]).attr('name', IDInput[i] + "_" + newID); //Cambiamos el nombre de los campos de la fila a clonar
+    }
+
+    fila.find('.btn-info').css('display', 'none');
+    fila.find('#id_campo').attr('value', '');
+    fila.attr("id", 'tr_' + newID);
+  });
+  /**
+   * Evento para eliminar una fila de la tabla de nuevo Speech
+   */
+
+  $(document).on('click', '.tr_clone_remove', function () {
+    var tr = $(this).closest('tr');
+    tr.remove();
+  });
+});
+
+/***/ }),
+
 /***/ "./resources/js/module_settings/agentes.js":
 /*!*************************************************!*\
   !*** ./resources/js/module_settings/agentes.js ***!
@@ -594,12 +671,20 @@ $(function () {
 
   $(document).on('click', '#tableCalificaciones tbody tr', function (event) {
     /* Para que nunca tome los refresh, preventivo*/
+
+    /* event.preventDefault(); 
+     let id = $(this).data("id");
+     $(".editCalificaciones").slideDown();
+     $(".deleteCalificaciones").slideDown();
+       $("#idSeleccionado").val(id);
+       $("#tableCalificaciones tbody tr").removeClass('table-primary');
+     $(this).addClass('table-primary');
+     */
     event.preventDefault();
     var id = $(this).data("id");
-    $(".editCalificaciones").slideDown();
-    $(".deleteCalificaciones").slideDown();
+    $(".dropleft").slideDown();
     $("#idSeleccionado").val(id);
-    $("#tableCalificaciones tbody tr").removeClass('table-primary');
+    $("#tableFormulario tbody tr").removeClass('table-primary');
     $(this).addClass('table-primary');
   });
   /**
@@ -1598,22 +1683,23 @@ $(function () {
 /***/ }),
 
 /***/ 1:
-/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/module_settings/menu.js ./resources/js/module_settings/formularios.js ./resources/js/module_settings/sub_formularios.js ./resources/js/module_settings/acciones_formularios.js ./resources/js/module_settings/audios.js ./resources/js/module_settings/calificaciones.js ./resources/js/module_settings/acciones_calificaciones.js ./resources/js/module_settings/agentes.js ./resources/js/module_settings/grupos.js ./resources/js/module_settings/speech.js ***!
-  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/module_settings/menu.js ./resources/js/module_settings/formularios.js ./resources/js/module_settings/sub_formularios.js ./resources/js/module_settings/acciones_formularios.js ./resources/js/module_settings/audios.js ./resources/js/module_settings/calificaciones.js ./resources/js/module_settings/acciones_calificaciones.js ./resources/js/module_settings/agentes.js ./resources/js/module_settings/grupos.js ./resources/js/module_settings/speech.js ./resources/js/module_settings/acciones_speech.js ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\menu.js */"./resources/js/module_settings/menu.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\formularios.js */"./resources/js/module_settings/formularios.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\sub_formularios.js */"./resources/js/module_settings/sub_formularios.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\acciones_formularios.js */"./resources/js/module_settings/acciones_formularios.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\audios.js */"./resources/js/module_settings/audios.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\calificaciones.js */"./resources/js/module_settings/calificaciones.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\acciones_calificaciones.js */"./resources/js/module_settings/acciones_calificaciones.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\agentes.js */"./resources/js/module_settings/agentes.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\grupos.js */"./resources/js/module_settings/grupos.js");
-module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\speech.js */"./resources/js/module_settings/speech.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\menu.js */"./resources/js/module_settings/menu.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\formularios.js */"./resources/js/module_settings/formularios.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\sub_formularios.js */"./resources/js/module_settings/sub_formularios.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\acciones_formularios.js */"./resources/js/module_settings/acciones_formularios.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\audios.js */"./resources/js/module_settings/audios.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\calificaciones.js */"./resources/js/module_settings/calificaciones.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\acciones_calificaciones.js */"./resources/js/module_settings/acciones_calificaciones.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\agentes.js */"./resources/js/module_settings/agentes.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\grupos.js */"./resources/js/module_settings/grupos.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\speech.js */"./resources/js/module_settings/speech.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\acciones_speech.js */"./resources/js/module_settings/acciones_speech.js");
 
 
 /***/ })

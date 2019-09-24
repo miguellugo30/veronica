@@ -27,14 +27,15 @@ class Calificaciones extends Model
     | RELACIONES DE BASE DE DATOS
     |--------------------------------------------------------------------------
     /**
-    ## Relacion muchos a uno con Grupo_Calificaciones_Calificacion
+    ## Relacion muchos a uno con Grupo_Calificaciones
     -- Relacion con Campanas
      */
-   # public function Grupo_Calificacion()
-   # {
-   #     return $this->belongsTo('Nimbus\Grupo_Calificacion', 'Grupo_Calificacion','id');
-   # }
+    public function Grupo_Calificaciones()
+    {
+        return $this->belongsTo('Nimbus\Grupo_Calificaciones', 'Grupo_Calificaciones','id');
+    }
     
+    ###-----CONFIRMAR--------
     /**
      * 
     ## Relacion muchos a uno con Tipo_Marcacion
