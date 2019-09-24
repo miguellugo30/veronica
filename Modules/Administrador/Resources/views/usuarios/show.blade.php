@@ -24,7 +24,6 @@
                                 <tr>
                                     <th></th>
                                     <th>Categoria</th>
-                                    {{--<th><span class="button-checkbox"><button type="button" class="btn btn-sm" data-color="primary"></button><input type="checkbox" class="marcarDesmarcar mark"> Marcar/Desmarcar Todos</span></th>--}}
                                 </tr>
                             </thead>
                             <tbody>

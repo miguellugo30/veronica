@@ -3,14 +3,14 @@
         <h3 class="box-title"><b><i class="fas fa-microphone-alt"></i> Buzon De Voz</b></h3>
         <div class="box-tools pull-right">
             @can('delete buzon de voz')
-            @endcan
             <button type="button" class="btn btn-danger  btn-sm deleteBuzonVoz" style="display:none"><i class="fas fa-trash-alt"></i> Elminar</button>
+            @endcan
             @can('edit buzon de voz')
-            @endcan
             <button type="button" class="btn btn-warning btn-sm editBuzonVoz" style="display:none"><i class="fas fa-edit"></i> Editar</button>
-            @can('create buzon de voz')
             @endcan
+                @can('create buzon de voz')
                 <button type="button" class="btn btn-primary btn-sm newBuzonVoz" data-widget="remove"><i class="fas fa-plus"></i> Nuevo</button>
+                @endcan
             <input type="hidden" name="idSeleccionado" id="idSeleccionado" value="">
         </div>
     </div><!-- /.box-header -->
@@ -33,11 +33,11 @@
                             <td>{{ Str::title( $buzon->nombre ) }}</td>
                             <td>{{ Str::title( $buzon->tiempo_maximo ) }}</td>
                             <td>
-                                @if($buzon->terminacion == 'y') 
+                                @if($buzon->terminacion == 'y')
                                 Terminacion Con Cualquier Digito
                                 @else
                                 Terminacion Con #
-                                @endif    
+                                @endif
                             </td>
                             <td>{{$buzon->Audios_Empresa->nombre}}</td>
                             <td>{{$buzon->correos}}</td>

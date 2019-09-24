@@ -49,7 +49,7 @@ $(function() {
     /**
      * Evento para mostrar el formulario editar distribuidores
      */
-    $(document).on('dblclick', '#tableDid tbody tr', function(event) {
+    /*$(document).on('dblclick', '#tableDid tbody tr', function(event) {
         event.preventDefault();
 
         $(".viewIndex").slideUp();
@@ -62,6 +62,7 @@ $(function() {
 
         });
     });
+    */
     /**
      * Evento para cancelar la creacion/edicion del distribuidores
      */

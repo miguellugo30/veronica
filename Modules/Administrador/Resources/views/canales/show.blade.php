@@ -1,5 +1,7 @@
 <div class="col-12" style="text-align: right;">
+    @can('create canales')
     <button type="button" class="btn btn-primary btn-sm newCanal" data-widget="remove"><i class="fas fa-plus"></i> Nuevo Canal</button>
+    @endcan
 </div>
 
 <div class="col-12">
