@@ -16,6 +16,7 @@
         "laravel/telescope": "^2.1",
         "laravel/tinker": "^1.0",
         "monolog/monolog": "^1.24",
+        "nesbot/carbon": "^2.24",
         "nwidart/laravel-modules": "^5.0",
         "ofbeaton/phpami": "^1.1",
         "spatie/laravel-permission": "^2.37"

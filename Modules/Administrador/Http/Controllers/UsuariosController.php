@@ -2,7 +2,6 @@
 
 namespace Modules\Administrador\Http\Controllers;
 
-use DB;
 use Nimbus\User;
 use Nimbus\Empresas;
 use Nimbus\Categorias;
@@ -10,7 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Hash;
 use Nimbus\Http\Controllers\LogController;
 
@@ -86,14 +84,6 @@ class UsuariosController extends Controller
          * Asignamos las categorias al usuario
          */
         $user->syncPermissions( $request->input('arr'));
-        /*
-        $data = $request->input('arr');
-        for ($i=0; $i < count( $data ); $i++) {
-            DB::table('categorias_user')->insert(
-                ['categorias_id' => $data[$i], 'user_id' => $user->id]
-            );
-        }
-        */
        /**
          * Redirigimos a la ruta index
          */
@@ -127,8 +117,6 @@ class UsuariosController extends Controller
          * Obtenemos la información del usuario a editar
          */
         $user = User::findOrFail( $id );
-
-        //$catUser = $user->categorias->pluck('id')->toArray();//Categorías del usuario
         /**
          * Obtenemos todos los roles
          */
