@@ -1,16 +1,43 @@
 <div class="box box-primary">
     <div class="box-header with-border">
         <h3 class="box-title"><b><i class="fas fa-phone"></i> Calificaciones</b></h3>
+        
         <div class="box-tools pull-right">
-            <button type="button" class="btn btn-danger  btn-sm deleteCalificaciones" style="display:none"><i class="fas fa-trash-alt"></i> Elminar</button>
-            <button type="button" class="btn btn-warning btn-sm editCalificaciones" style="display:none"><i class="fas fa-edit"></i> Editar</button>
-                                   
+            <div class="btn-group dropleft" style="display:none" >
+                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Accion
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item editFormulario" href="#"><i class="fas fa-pen-square"></i> Editar</a>
+                    <a class="dropdown-item cloneFormulario" href="#"><i class="fas fa-clone"></i> Duplicar</a>
+                    <a class="dropdown-item viewFormulario" href="#"><i class="fas fa-eye"></i> Visualizar</a>
+                    <div class="dropdown-divider"></div>
+                    @can('delete formularios')
+                        <a class="dropdown-item deleteFormulario" href="#"><i class="fas fa-trash-alt"></i> Eliminar</a>
+                    @endcan
+                </div>
+            </div>
             @can('create formularios')
-                <button type="button" class="btn btn-primary btn-sm newCalificaciones"><i class="fas fa-plus"></i> Nuevo</button>
+                <button type="button" class="btn btn-primary btn-sm newFormulario"><i class="fas fa-plus"></i> Nuevo</button>
             @endcan
-            
             <input type="hidden" name="idSeleccionado" id="idSeleccionado" value="">
         </div>
+        
+      <!-- SUSTITUIR       
+        <div class="box-tools pull-right">
+            @can('delete calificaciones')
+            <button type="button" class="btn btn-danger  btn-sm deleteCalificaciones" style="display:none"><i class="fas fa-trash-alt"></i> Elminar</button>
+            @endcan
+            @can('edit calificaciones')
+            <button type="button" class="btn btn-warning btn-sm editCalificaciones" style="display:none"><i class="fas fa-edit"></i> Editar</button>
+            @endcan
+            @can('create calificaciones')
+                <button type="button" class="btn btn-primary btn-sm newCalificaciones"><i class="fas fa-plus"></i> Nuevo</button>
+            @endcan
+            <input type="hidden" name="idSeleccionado" id="idSeleccionado" value="">
+        </div>
+        -->
+        
     </div><!-- /.box-header -->
     <div class="box-body">
         <div class="row">

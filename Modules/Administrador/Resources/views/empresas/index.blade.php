@@ -2,7 +2,9 @@
     <div class="box-header with-border">
         <h3 class="box-title"><i class="fas fa-building"></i> Empresas</h3>
         <div class="box-tools pull-right">
+            @can('create empresas')
             <button type="button" class="btn btn-primary btn-sm newEmpresa" data-widget="remove"><i class="fas fa-plus"></i> Nueva</button>
+            @endcan
         </div>
     </div><!-- /.box-header -->
     <div class="box-body">

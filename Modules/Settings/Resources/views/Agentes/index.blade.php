@@ -3,12 +3,14 @@
         <h3 class="box-title"><i class="fas fa-user-cog"></i> Agentes</h3>
         <div class="box-tools pull-right">
             @can('delete agente')
-            @endcan
             <button type="button" class="btn btn-danger  btn-sm deleteAgente" style="display:none"><i class="fas fa-trash-alt"></i> Elminar</button>
-            <button type="button" class="btn btn-warning  btn-sm editAgente" style="display:none"><i class="fas fa-edit"></i> Editar</button>
-            @can('create agente')
             @endcan
+            @can('edit agente')
+            <button type="button" class="btn btn-warning  btn-sm editAgente" style="display:none"><i class="fas fa-edit"></i> Editar</button>
+            @endcan
+                @can('create agente')
                 <button type="button" class="btn btn-primary btn-sm newAgente" data-widget="remove"><i class="fas fa-plus"></i> Nuevo</button>
+                @endcan
             <input type="hidden" name="idSeleccionado" id="idSeleccionado" value="">
         </div>
     </div><!-- /.box-header -->

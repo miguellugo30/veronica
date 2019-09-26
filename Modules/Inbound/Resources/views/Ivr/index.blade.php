@@ -2,15 +2,15 @@
     <div class="box-header with-border">
         <h3 class="box-title"><b><i class="fas fa-sitemap"></i> IVR</b></h3>
         <div class="box-tools pull-right">
-            @can('delete ivr')
+                @can('delete ivr')
                 <button type="button" class="btn btn-danger  btn-sm deleteIvr" style="display:none"><i class="fas fa-trash-alt"></i> Elminar</button>
-            @endcan
-            @can('edit ivr')
+                @endcan
+              @can('edit ivr')
               <button type="button" class="btn btn-warning btn-sm editIvr" style="display:none"><i class="fas fa-edit"></i> Editar</button>
-            @endcan
-            @can('create ivr')
-            @endcan
+              @endcan
+                @can('create ivr')
                 <button type="button" class="btn btn-primary btn-sm newIvr" data-widget="remove"><i class="fas fa-plus"></i> Nuevo</button>
+                @endcan
             <input type="hidden" name="idSeleccionado" id="idSeleccionado" value="">
         </div>
     </div><!-- /.box-header -->

@@ -1,5 +1,7 @@
 <div class="col-md-12" style="text-align: right;">
+        @can('create did')
         <button type="button" class="btn btn-primary btn-sm newDid" data-widget="remove"><i class="fas fa-plus"></i> Nuevo DID</button>
+        @endcan
     </div>
     <br><br>
 <div class="col-md-12">

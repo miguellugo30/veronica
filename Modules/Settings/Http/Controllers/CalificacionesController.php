@@ -7,8 +7,13 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Nimbus\User;
-use Nimbus\Calificaciones; ##---confirma?
+use Nimbus\Calificaciones; 
+##-----------------------------
+use Nimbus\Sub_Calificaciones;
+
 use Nimbus\Grupos;
+##----VALIDAR SU USO -------
+use Nimbus\Grupo_Calificaciones;
 use Nimbus\Cat_Tipo_Marcacion;
 use Nimbus\Formularios;
 
@@ -68,6 +73,8 @@ class CalificacionesController extends Controller
              'tipo_grupo'=>$tipo_grupo,             
              'Empresas_id'=>$empresa_id
              ]);
+             
+        ### FALTA AGREGAR EN LA PIVOTE     
 
         $tipo_marcacion = $data['tipo_marcacion']; 
         array_shift( $data );
@@ -134,23 +141,18 @@ class CalificacionesController extends Controller
     public function edit($id)
     {       
         
-        $calificacion = Calificaciones::find( $id );
-        dd($calificacion);
-       
-        $id = '3';
-        
-        $formularios = Formularios::where('Grupo_Calificaciones_id',$calificacion->Formularios_id);
-        $grupos = Grupos::where('');
-        
-        
-
-       # $formulario = $formulario->Formularios;        
-       # $grupo = Grupos::find($id_gpo)         
-        #$TipoMarcacion = array(['nombre']); 
-         //Cat_Tipo_Marcacion::all();
-
-        
-        return view('settings::Calificaciones.edit', compact('calificaciones'));
+        $calificaciones = Calificaciones::find($id); 
+        /** Obtener dato  del grupo, no se modificara  **/ 
+        $id_grupo = Grupo_Calificaciones::where('Calificaciones_id',$calificaciones->id)->select("Grupos_id")->first(); 
+        $grupos = Grupos::find($id_grupo->Grupos_id); 
+        $id_cat_tipo_marcacion = Formularios::find($calificaciones->Formularios_id); 
+        $formularios = Formularios::all(); 
+      
+        $TipoMarcacion = Cat_Tipo_Marcacion::all(); 
+                           
+      //  dd($grupos->nombre);
+              
+        return view('settings::Calificaciones.edit', compact('calificaciones','formularios','TipoMarcacion','grupos','id_cat_tipo_marcacion'));
     }
 
     

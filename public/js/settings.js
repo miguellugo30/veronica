@@ -671,12 +671,20 @@ $(function () {
 
   $(document).on('click', '#tableCalificaciones tbody tr', function (event) {
     /* Para que nunca tome los refresh, preventivo*/
+
+    /* event.preventDefault(); 
+     let id = $(this).data("id");
+     $(".editCalificaciones").slideDown();
+     $(".deleteCalificaciones").slideDown();
+       $("#idSeleccionado").val(id);
+       $("#tableCalificaciones tbody tr").removeClass('table-primary');
+     $(this).addClass('table-primary');
+     */
     event.preventDefault();
     var id = $(this).data("id");
-    $(".editCalificaciones").slideDown();
-    $(".deleteCalificaciones").slideDown();
+    $(".dropleft").slideDown();
     $("#idSeleccionado").val(id);
-    $("#tableCalificaciones tbody tr").removeClass('table-primary');
+    $("#tableFormulario tbody tr").removeClass('table-primary');
     $(this).addClass('table-primary');
   });
   /**
