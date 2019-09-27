@@ -50,5 +50,19 @@ class User extends Authenticatable
     {
         return $this->belongsTo('Nimbus\Empresas', 'Empresas_id');
     }
+    /**
+     * Relación uno a muchos con Logs
+     */
+    public function Logs()
+    {
+        return $this->hasMany('Nimbus\Empresas');
+    }
+    /**
+     * Relación uno a muchos con Token Soporte
+     */
+    public function Token_Soporte()
+    {
+        return $this->hasMany('Nimbus\Token_Soporte');
+    }
 
 }

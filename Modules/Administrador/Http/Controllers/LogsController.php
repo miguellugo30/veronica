@@ -1,15 +1,13 @@
 <?php
 
-namespace Modules\Inbound\Http\Controllers;
+namespace Modules\Administrador\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Auth;
-use Nimbus\User;
-use Nimbus\Categorias;
+use Nimbus\Logs;
 
-class InboundController extends Controller
+class LogsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,20 +16,10 @@ class InboundController extends Controller
     public function index()
     {
         /**
-         * Obtenemos los datos del usuario logeado
+         * Recuperamos todos los logs
          */
-        $user = User::find( Auth::id() );
-        /**
-         * Obtenemos el rol del usuario logeado
-         */
-        $rol = $user->getRoleNames();
-        /**
-         * Obtenemos las categorias relacionadas al usuario
-         */
-        $categorias = Categorias::where('modulos_id', 1)->get();
-        $modulo = "Inbound";
-
-        return view('inbound::index', compact( 'rol', 'categorias', 'modulo' ));
+        $logs = Logs::all();
+        return view('administrador::Logs.index', compact('logs'));
     }
 
     /**
@@ -40,7 +28,7 @@ class InboundController extends Controller
      */
     public function create()
     {
-        return view('inbound::create');
+        return view('administrador::Logs.create');
     }
 
     /**
@@ -60,7 +48,7 @@ class InboundController extends Controller
      */
     public function show($id)
     {
-        return view('inbound::show');
+        return view('administrador::Logs.show');
     }
 
     /**
@@ -70,7 +58,7 @@ class InboundController extends Controller
      */
     public function edit($id)
     {
-        return view('inbound::edit');
+        return view('administrador::Logs.edit');
     }
 
     /**

@@ -5,6 +5,9 @@ namespace Modules\Administrador\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+/* MODELOS */
 use Nimbus\Empresas;
 use Nimbus\Cat_Distribuidor;
 use Nimbus\Cat_IP_PBX;
@@ -17,6 +20,8 @@ use Nimbus\Cat_Tipo_Canales;
 use Nimbus\Dids;
 use Nimbus\Troncales;
 use Nimbus\Cat_Extensiones;
+use Nimbus\Token_Soporte;
+use Nimbus\User;
 
 class EmpresasController extends Controller
 {
@@ -739,8 +744,8 @@ class EmpresasController extends Controller
         return redirect()->route('empresas.index');
     }
     /**
-     * Funcion para generar una contrasenia, el tamanio se
-     * define en el parametro que se le pasa ( Largo )
+     * Función para generar una contraseña, el tamaño se
+     * define en el parámetro que se le pasa ( Largo )
      */
     public function contra($largo){
         $cadena_base =  'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
@@ -756,4 +761,33 @@ class EmpresasController extends Controller
 
         return $password;
     }
+
+    public function generar_sesion( $id ){
+        /**
+         * Obtenemos los permisos del usuario de la empresa seleccionada
+         */
+        $user = User::find( Auth::id() );
+        $tokenConsulta = Token_Soporte::where([ ['Empresas_id', '=', $id] , ['users_id','=',$user->id] ])->get();
+
+        if ( $tokenConsulta->isEmpty() ) {
+
+            $token = sha1( $user->email.$user->password.$id.date('d-m-YH:i:s') );
+            $date = Carbon::now()->addHour(1);
+
+            Token_Soporte::create([
+                'token' =>   $token,
+                'caducidad' => $date,
+                'users_id' => $user->id,
+                'Empresas_id' => $id
+                ]);
+
+        } else {
+
+            $token =  $tokenConsulta[0]->token;
+        }
+
+        return $token;
+
+    }
+
 }

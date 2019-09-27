@@ -331,7 +331,9 @@ $(function() {
             }
         });
     });
-
+    /**
+     * Evento para seleccionar los modulos
+     */
     $(document).on('click', '.modulosEmpresa', function() {
         var id = $(this).val();
 
@@ -369,4 +371,34 @@ $(function() {
             }
         }
     });
+    /**
+     * Evento para abrir una sesion para entrar a la cuenta del cliente seleccionado
+     */
+    $(document).on('click', '.linkEmpresa', function() {
+
+        let id_empresa = $(this).attr("data-id_empresa");
+        let dominio = $("#dominio_empresa").val();
+        let _token = $("input[name=_token]").val();
+        let url = currentURL + '/empresas/generar_sesion/' + id_empresa;
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: {
+                _token: _token,
+                id_empresa: id_empresa
+            },
+            success: function(result) {
+
+                var tab = window.open(dominio + '/soporte/' + result, '_blank');
+                if (tab) {
+                    tab.focus(); //ir a la pestaña
+                } else {
+                    alert('Pestañas bloqueadas, activa las ventanas emergentes (Popups) ');
+                    return false;
+                }
+            }
+        });
+    });
+
 });

@@ -8,7 +8,6 @@ use Illuminate\Routing\Controller;
 use Nimbus\Http\Controllers\LogController;
 use Illuminate\Support\Facades\Auth;
 use Nimbus\User;
-use Nimbus\Agentes;
 use Nimbus\Desvios;
 use Nimbus\Canales;
 

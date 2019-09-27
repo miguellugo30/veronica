@@ -18,6 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/soporte/{token}', 'SoporteController@index');
 
 Route::prefix('administrador/')->group(function() {
     Route::get('categoria/{id}', 'subCategoriaController@index')->name('categoria')->middleware('auth');

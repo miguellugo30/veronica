@@ -22,12 +22,15 @@
                     </thead>
                     <tbody>
                         @foreach ($empresas as $empresa)
-                            <tr data-id="{{ $empresa->id }}" data-toggle="tooltip" data-placement="top" title="Click para visualizar el detalle" style="cursor:pointer">
+                            <tr data-id="{{ $empresa->id }}" style="cursor:pointer">
                                 <td>{{$empresa->id}}</td>
                                 <td>{{ $empresa->Config_Empresas->Distribuidores->servicio }}</td>
                                 <td>{{$empresa->nombre}}</td>
                                 <td>{{$empresa->nombre}}</td>
-                                <td><button type="button" name="link" class="btn btn-info link"><i class="fas fa-sign-in-alt"></i></button></td>
+                                <td>
+                                    <input type="hidden" id="dominio_empresa" value="http://info.nimbus.mx">
+                                    <button type="button" data-id_empresa="{{ $empresa->id }}" name="link" class="btn btn-info linkEmpresa"><i class="fas fa-sign-in-alt"></i></button>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
