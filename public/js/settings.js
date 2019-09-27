@@ -297,6 +297,43 @@ $(function () {
     }
   });
   /**
+   * Evento para mostrar el boton de añadir y borrar cuando el tipo de speech sea dinamico en el apartado de editar
+   */
+
+  $(document).on('change', '.tipo', function (event) {
+    event.preventDefault();
+    var tipo = $('.tipo').val();
+
+    if (tipo == 'dinamico') {
+      $('.agrega').removeAttr("hidden");
+      $('.remove').removeAttr("hidden");
+    } else if (tipo == 'estatico') {
+      $('.agrega').attr("hidden", "hidden");
+      $('.remove').attr("hidden", "hidden");
+      /**
+       * Eliminamos las opciones adicionales dentro de la tabla de opciones
+       */
+
+      var nColumnas = $(".tableEditSpeech tbody tr").length;
+
+      for (var i = nColumnas; i > 1; i--) {
+        $(".tableEditSpeech tbody tr#tr_" + i).remove();
+      }
+    } else if (tipo == '') {
+      $('.agrega').attr("hidden", "hidden");
+      $('.remove').attr("hidden", "hidden");
+      /**
+       * Eliminamos las opciones adicionales dentro de la tabla de opciones
+       */
+
+      var nColumnas = $(".tableEditSpeech tbody tr").length;
+
+      for (var _i2 = nColumnas; _i2 > 1; _i2--) {
+        $(".tableEditSpeech tbody tr#tr_" + _i2).remove();
+      }
+    }
+  });
+  /**
    * Evento para agregar una nueva fila para campos nuevos en el formulario
    */
 
@@ -306,8 +343,29 @@ $(function () {
 
     var newID = parseInt(clickID) + 1; //let IDInput = ['id_campo', 'nombre_speech', 'tipo_campo', 'tamano', 'obligatorio', 'obligatorio_hidden', 'editable', 'editable_hidden', 'opciones', 'view'];
 
-    var IDInput = ['nombre', 'descripcion', 'tipo'];
+    var IDInput = ['nombreSpeech', 'descripcion', 'prioridad'];
     fila = $(".tableNewSpeech tbody tr:eq()").clone().appendTo(".tableNewSpeech"); //Clonamos la fila
+
+    for (var i = 0; i < IDInput.length; i++) {
+      fila.find('#' + IDInput[i]).attr('name', IDInput[i] + "_" + newID); //Cambiamos el nombre de los campos de la fila a clonar
+    }
+
+    fila.find('.btn-info').css('display', 'none');
+    fila.find('#id_campo').attr('value', '');
+    fila.attr("id", 'tr_' + newID);
+  });
+  /**
+   * Evento para agregar una nueva fila para campos nuevos en el formulario editar speech
+   */
+
+  $(document).on('click', '#add_os', function () {
+    var clickID = $(".tableEditSpeech tbody tr.clonar:last").attr('id').replace('tr_', '');
+    $('#form_opc .form-control-sm').val(''); // Genero el nuevo numero id
+
+    var newID = parseInt(clickID) + 1; //let IDInput = ['id_campo', 'nombre_speech', 'tipo_campo', 'tamano', 'obligatorio', 'obligatorio_hidden', 'editable', 'editable_hidden', 'opciones', 'view'];
+
+    var IDInput = ['nombreSpeech', 'descripcion', 'prioridad'];
+    fila = $(".tableEditSpeech tbody tr:eq()").clone().appendTo(".tableEditSpeech"); //Clonamos la fila
 
     for (var i = 0; i < IDInput.length; i++) {
       fila.find('#' + IDInput[i]).attr('name', IDInput[i] + "_" + newID); //Cambiamos el nombre de los campos de la fila a clonar
@@ -1321,8 +1379,8 @@ $(function () {
   $(document).on('click', '.editSpeech', function (event) {
     event.preventDefault();
     var id = $("#idSeleccionado").val();
+    $('#tituloModal').html('Detalles de Speech');
     var url = currentURL + '/speech/' + id + '/edit';
-    $('#tituloModal').html('Editar Speech');
     $('#action').addClass('updateSpeech');
     $('#action').removeClass('saveSpeech');
     $.ajax({
@@ -1344,47 +1402,37 @@ $(function () {
   $(document).on('click', '.updateSpeech', function (event) {
     event.preventDefault();
     $('#modal').modal('hide');
-    var id = $("#id").val();
-    var nombre = $("#nombre").val();
-    var descripcion = $("#descripcion").val();
-    var tipo = $("#tipo").val();
+    $('.tipo').removeAttr("disabled");
+    $('.nombre').removeAttr("disabled");
+    var id = $("#idSeleccionado").val();
+    var dataForm = $("#editspeech").serializeArray();
 
     var _token = $("input[name=_token]").val();
 
     var _method = "PUT";
     var url = currentURL + '/speech/' + id;
     $.post(url, {
-      nombre: nombre,
-      descripcion: descripcion,
-      tipo: tipo,
+      dataForm: dataForm,
       _method: _method,
       _token: _token
     }, function (data, textStatus, xhr) {
       $('.viewResult').html(data);
-      $('.viewResult #tableSpeech').DataTable({
-        "lengthChange": true,
-        "order": [[2, "asc"]]
-      });
-      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
     });
   });
   /**
-   * Evento para guardar el nuevo agente
+   * Evento para guardar el nuevo speech
    */
 
   $(document).on('click', '.saveSpeech', function (event) {
+    event.preventDefault();
     $('#modal').modal('hide');
-    var nombre = $("#nombre").val();
-    var descripcion = $("#descripcion").val();
-    var tipo = $("#tipo").val();
+    var dataForm = $("#altaspeech").serializeArray();
 
     var _token = $("input[name=_token]").val();
 
     var url = currentURL + '/speech';
     $.post(url, {
-      nombre: nombre,
-      descripcion: descripcion,
-      tipo: tipo,
+      dataForm: dataForm,
       _token: _token
     }, function (data, textStatus, xhr) {
       $('.viewResult').html(data);
