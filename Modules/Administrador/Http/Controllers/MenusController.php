@@ -54,16 +54,32 @@ class MenusController extends Controller
      */
     public function store(Request $request)
     {
-        /*$info = $request->input('nombre');
-        dd($info);*/
-
         /**
-         * Insertamos la informacion del formulario
+         * Insertamos la informacion del formulario en la tabla permissions como en la tabla de categorias
          */
-        $request['permiso'] = $request->input('permiso2');
-        dd($request);
+        $request['permiso'] = ("view ".strtolower($request->input('nombre')));
+        $permisoV = ("view ".strtolower($request->input('nombre')));
+        $permisoC = ("create ".strtolower($request->input('nombre')));
+        $permisoE = ("edit ".strtolower($request->input('nombre')));
+        $permisoD = ("delete ".strtolower($request->input('nombre')));
+        DB::table('permissions')->insert([
+                                    'name' => $permisoV,
+                                    'guard_name' => 'web'
+                                        ]);
+        DB::table('permissions')->insert([
+                                    'name' => $permisoC,
+                                    'guard_name' => 'web'
+                                        ]);
+        DB::table('permissions')->insert([
+                                    'name' => $permisoE,
+                                    'guard_name' => 'web'
+                                        ]);
+        DB::table('permissions')->insert([
+                                    'name' => $permisoD,
+                                    'guard_name' => 'web'
+                                        ]);
+
         $cat = Categorias::create($request->all());
-        dd($cat);
         /**
          * Creamos el logs
          */

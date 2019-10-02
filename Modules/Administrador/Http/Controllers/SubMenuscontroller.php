@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Nimbus\Http\Controllers\LogController;
+use DB;
 
 class SubMenuscontroller extends Controller
 {
@@ -36,8 +37,30 @@ class SubMenuscontroller extends Controller
     public function store(Request $request)
     {
         /**
-         * Insertamos la informacion del formulario
+         * Insertamos la informacion del formulario en la tabla permissions como en la tabla sub_categorias
          */
+        $request['permiso'] = ("view ".strtolower($request->input('nombre')));
+        $permisoV = ("view ".strtolower($request->input('nombre')));
+        $permisoC = ("create ".strtolower($request->input('nombre')));
+        $permisoE = ("edit ".strtolower($request->input('nombre')));
+        $permisoD = ("delete ".strtolower($request->input('nombre')));
+        DB::table('permissions')->insert([
+                                    'name' => $permisoV,
+                                    'guard_name' => 'web'
+                                        ]);
+        DB::table('permissions')->insert([
+                                    'name' => $permisoC,
+                                    'guard_name' => 'web'
+                                        ]);
+        DB::table('permissions')->insert([
+                                    'name' => $permisoE,
+                                    'guard_name' => 'web'
+                                        ]);
+        DB::table('permissions')->insert([
+                                    'name' => $permisoD,
+                                    'guard_name' => 'web'
+                                        ]);
+
         $cat = Sub_Categorias::create($request->all());
          /**
          * Creamos el logs

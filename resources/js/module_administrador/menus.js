@@ -42,7 +42,6 @@ $(function() {
         let modulo_id = $("#modulo_id").val();
         let menu_id = $("#menu_id").val();
         let nombre = $("#nombre").val();
-        let permiso = $("#nombre").val();
         let descripcion = $("#descripcion").val();
         let nivel_id = $("#nivel_id").val();
         let _token = $("input[name=_token]").val();
@@ -54,7 +53,6 @@ $(function() {
             url = currentURL + '/menus';
             $.post(url, {
                 nombre: nombre,
-                permiso: permiso,
                 descripcion: descripcion,
                 tipo: nivel_id,
                 modulos_id: modulo_id,
