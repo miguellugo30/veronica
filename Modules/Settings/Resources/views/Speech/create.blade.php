@@ -19,6 +19,7 @@
                             @csrf
                     </div>
                 </div>
+                <div class="col-md-12">
                 <fieldset>
                     <legend>Campos de speech</legend>
                         <table id='tipos' class="table table-striped table-sm tableNewSpeech">
@@ -39,6 +40,7 @@
                             </tbody>
                         </table>
                 </fieldset>
+                </div>
             </div>
         </form>
     </div>

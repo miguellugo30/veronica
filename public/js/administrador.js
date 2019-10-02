@@ -2758,6 +2758,7 @@ $(function () {
     var modulo_id = $("#modulo_id").val();
     var menu_id = $("#menu_id").val();
     var nombre = $("#nombre").val();
+    var permiso = $("#nombre").val();
     var descripcion = $("#descripcion").val();
     var nivel_id = $("#nivel_id").val();
 
@@ -2772,6 +2773,7 @@ $(function () {
       url = currentURL + '/menus';
       $.post(url, {
         nombre: nombre,
+        permiso: permiso,
         descripcion: descripcion,
         tipo: nivel_id,
         modulos_id: modulo_id,

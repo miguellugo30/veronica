@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Nimbus\Http\Controllers\LogController;
+use DB;
 
 class MenusController extends Controller
 {
@@ -53,10 +54,16 @@ class MenusController extends Controller
      */
     public function store(Request $request)
     {
+        /*$info = $request->input('nombre');
+        dd($info);*/
+
         /**
          * Insertamos la informacion del formulario
          */
+        $request['permiso'] = $request->input('permiso2');
+        dd($request);
         $cat = Categorias::create($request->all());
+        dd($cat);
         /**
          * Creamos el logs
          */
