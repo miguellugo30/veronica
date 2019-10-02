@@ -2838,6 +2838,7 @@ $(function () {
 
       var _method = $("input[name=_method]").val();
 
+      var permi = $("#id_permiso").val();
       url = currentURL + "/menus/" + id;
       $.ajax({
         url: url,
@@ -2847,7 +2848,8 @@ $(function () {
           descripcion: descripcion,
           tipo: _tipo,
           _token: _token,
-          _method: _method
+          _method: _method,
+          permi: permi
         },
         success: function success(result) {
           $('.viewResult').html(result);
@@ -2867,6 +2869,8 @@ $(function () {
 
       var _method2 = $("input[name=_method]").val();
 
+      var _permi = $("#id_permiso").val();
+
       url = currentURL + "/submenus/" + _id;
       $.ajax({
         url: url,
@@ -2876,7 +2880,8 @@ $(function () {
           descripcion: _descripcion,
           tipo: _tipo2,
           _token: _token2,
-          _method: _method2
+          _method: _method2,
+          permi: _permi
         },
         success: function success(result) {
           $('.viewResult').html(result);

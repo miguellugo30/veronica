@@ -3,6 +3,7 @@
         <label for="name"><b>Nombre</b></label>
         <input type="text" class="form-control form-control-sm" id="nombre" placeholder="Nombre" value="{{ $subCategoria->nombre }}">
         <input type="hidden" name="id_subCate" id="id_subCate" value="{{ $id }}">
+        <input type="hidden" name="id_permiso" id="id_permiso" value="{{ $subCategoria->nombre }}">
         @csrf
         @method('PUT')
     </div>

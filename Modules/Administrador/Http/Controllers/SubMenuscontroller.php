@@ -109,11 +109,34 @@ class SubMenuscontroller extends Controller
      */
     public function update(Request $request, $id)
     {
+        /**
+         * Actualizamos el Sub Menu
+         */
+        $request['permiso'] = ("view ".strtolower($request->input('nombre')));
+
+        $permisoV = ("view ".strtolower($request->input('nombre')));
+        $permisoC = ("create ".strtolower($request->input('nombre')));
+        $permisoE = ("edit ".strtolower($request->input('nombre')));
+        $permisoD = ("delete ".strtolower($request->input('nombre')));
+
+        DB::table('permissions')->where('name', ("view ".strtolower($request->input('permi'))))->update([
+                                                                                                    'name' => $permisoV
+                                                                                                    ]);
+        DB::table('permissions')->where('name', ("create ".strtolower($request->input('permi'))))->update([
+                                                                                                    'name' => $permisoC
+                                                                                                    ]);
+        DB::table('permissions')->where('name', ("edit ".strtolower($request->input('permi'))))->update([
+                                                                                                    'name' => $permisoE
+                                                                                                    ]);
+        DB::table('permissions')->where('name', ("delete ".strtolower($request->input('permi'))))->update([
+                                                                                                    'name' => $permisoD
+                                                                                                    ]);
         Sub_Categorias::where( 'id', $id )
                     ->update([
                         'nombre' => $request->input('nombre'),
                         'descripcion' => $request->input('descripcion'),
                         'tipo' => $request->input('tipo'),
+                        'permiso' => $request->permiso,
                     ]);
 
         /**

@@ -126,6 +126,7 @@ $(function() {
             let tipo = $("#tipo").val();
             let _token = $("input[name=_token]").val();
             let _method = $("input[name=_method]").val();
+            let permi = $("#id_permiso").val();
             url = currentURL + "/menus/" + id;
             $.ajax({
                 url: url,
@@ -135,7 +136,8 @@ $(function() {
                     descripcion: descripcion,
                     tipo: tipo,
                     _token: _token,
-                    _method: _method
+                    _method: _method,
+                    permi: permi
                 },
                 success: function(result) {
                     $('.viewResult').html(result);
@@ -155,6 +157,7 @@ $(function() {
             let tipo = $("#tipo").val();
             let _token = $("input[name=_token]").val();
             let _method = $("input[name=_method]").val();
+            let permi = $("#id_permiso").val();
             url = currentURL + "/submenus/" + id;
 
             $.ajax({
@@ -165,7 +168,8 @@ $(function() {
                     descripcion: descripcion,
                     tipo: tipo,
                     _token: _token,
-                    _method: _method
+                    _method: _method,
+                    permi: permi
                 },
                 success: function(result) {
                     $('.viewResult').html(result);
