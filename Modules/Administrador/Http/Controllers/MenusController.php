@@ -59,14 +59,14 @@ class MenusController extends Controller
          */
         $request['permiso'] = ("view ".strtolower($request->input('nombre')));
         $permisoV = ("view ".strtolower($request->input('nombre')));
-        $permisoC = ("create ".strtolower($request->input('nombre')));
-        $permisoE = ("edit ".strtolower($request->input('nombre')));
-        $permisoD = ("delete ".strtolower($request->input('nombre')));
+        //$permisoC = ("create ".strtolower($request->input('nombre')));
+        //$permisoE = ("edit ".strtolower($request->input('nombre')));
+        //$permisoD = ("delete ".strtolower($request->input('nombre')));
         DB::table('permissions')->insert([
                                     'name' => $permisoV,
                                     'guard_name' => 'web'
                                         ]);
-        DB::table('permissions')->insert([
+        /*DB::table('permissions')->insert([
                                     'name' => $permisoC,
                                     'guard_name' => 'web'
                                         ]);
@@ -78,6 +78,7 @@ class MenusController extends Controller
                                     'name' => $permisoD,
                                     'guard_name' => 'web'
                                         ]);
+        */
         $cat = Categorias::create($request->all());
         /**
          * Creamos el logs
