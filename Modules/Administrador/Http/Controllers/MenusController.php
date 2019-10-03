@@ -180,6 +180,26 @@ class MenusController extends Controller
     public function destroy($id)
     {
         /**
+         * Buscamos el id en las categorias
+         */
+        $categoria = Categorias::findOrFail( $id );
+
+        /**
+         * Formateamos las variables para que en base al nombre del permiso, posteriormente puedan ser borradas de la tabla permissions
+         */
+        $permisoV = str_replace('view','view',$categoria->permiso);
+        $permisoC = str_replace('view','create',$categoria->permiso);
+        $permisoE = str_replace('view','edit',$categoria->permiso);
+        $permisoD = str_replace('view','delete',$categoria->permiso);
+
+        /**
+         * Borramos de la tabla permissions las Categorias
+         */
+        DB::table('permissions')->where('name','=',$permisoV)->delete();
+        DB::table('permissions')->where('name','=',$permisoC)->delete();
+        DB::table('permissions')->where('name','=',$permisoE)->delete();
+        DB::table('permissions')->where('name','=',$permisoD)->delete();
+        /**
          * Ponemos en desactivo el registro seleccionado
          */
         Categorias::where( 'id', $id )

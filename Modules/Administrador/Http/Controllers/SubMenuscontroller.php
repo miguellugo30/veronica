@@ -159,6 +159,27 @@ class SubMenuscontroller extends Controller
      */
     public function destroy( Request $request, $id)
     {
+        /**
+         * Buscamos el id en las Sub_Categorias
+         */
+        $SubCategoria = Sub_Categorias::findOrFail( $id );
+
+        /**
+         * Formateamos las variables para que en base al nombre del permiso podamos posteriormente borrarlas de la tabla permissions
+         */
+        $permisoV = str_replace('view','view',$SubCategoria->permiso);
+        $permisoC = str_replace('view','create',$SubCategoria->permiso);
+        $permisoE = str_replace('view','edit',$SubCategoria->permiso);
+        $permisoD = str_replace('view','delete',$SubCategoria->permiso);
+
+        /**
+         * Borramos de la tabla permissions las Sub_Categorias
+         */
+        DB::table('permissions')->where('name','=',$permisoV)->delete();
+        DB::table('permissions')->where('name','=',$permisoC)->delete();
+        DB::table('permissions')->where('name','=',$permisoE)->delete();
+        DB::table('permissions')->where('name','=',$permisoD)->delete();
+
         Sub_Categorias::where( 'id', $id )
         ->update([
             'activo' => 0
