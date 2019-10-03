@@ -2,7 +2,7 @@
     <div class="col-12">
         <form enctype="multipart/form-data" id="altaspeech" method="post">
             <div class="row">
-                <div class="col-6">
+                <div class="col-4">
                     <div class="form-group">
                         <label for="tipo"><b>Tipo</b></label>
                             <select name="tipo" id="tipo" class="form-control form-control-sm tipo">
@@ -12,10 +12,17 @@
                             </select>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-4">
                     <div class="form-group">
                         <label for="nombre"><b>Nombre</b></label>
                             <input type="text" class="form-control form-control-sm" id="nombre" name="nombre" placeholder="Nombre Speech">
+                            @csrf
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="nombre"><b>Descripcion</b></label>
+                            <input type="text" class="form-control form-control-sm" id="descripcion" name="descripcion" placeholder="Descripcion Speech">
                             @csrf
                     </div>
                 </div>

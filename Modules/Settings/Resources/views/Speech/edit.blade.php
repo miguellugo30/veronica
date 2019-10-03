@@ -2,7 +2,7 @@
         <div class="col-12">
             <form enctype="multipart/form-data" id="editspeech" method="post">
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-4">
                         <div class="form-group">
                             <label for="tipo"><b>Tipo</b></label>
                                 <select name="tipo{{-- $speech->tipo --}}" id="tipo" data-action="edit" class="form-control form-control-sm tipo" disabled>
@@ -12,11 +12,18 @@
                                 </select>
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-4">
                         <div class="form-group">
                             <label for="nombre"><b>Nombre</b></label>
                                 <input type="text" class="form-control form-control-sm nombre" id="nombre" name="nombre" value="{{ $speech->nombre }}" disabled>
                                 <input type="hidden" name="id" id="id"  value="{{ $speech->id }}">
+                                @csrf
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="nombre"><b>Descripcion</b></label>
+                                <input type="text" class="form-control form-control-sm descripcion" id="descripcion" name="descripcion" value="{{ $speech->nombre }}" disabled>
                                 @csrf
                         </div>
                     </div>
