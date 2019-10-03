@@ -137,14 +137,14 @@ class MenusController extends Controller
         $request['permiso'] = ("view ".strtolower($request->input('nombre')));
 
         $permisoV = ("view ".strtolower($request->input('nombre')));
-        $permisoC = ("create ".strtolower($request->input('nombre')));
-        $permisoE = ("edit ".strtolower($request->input('nombre')));
-        $permisoD = ("delete ".strtolower($request->input('nombre')));
+        //$permisoC = ("create ".strtolower($request->input('nombre')));
+        //$permisoE = ("edit ".strtolower($request->input('nombre')));
+        //$permisoD = ("delete ".strtolower($request->input('nombre')));
 
         DB::table('permissions')->where('name', ("view ".strtolower($request->input('permi'))))->update([
                                                                                                     'name' => $permisoV
                                                                                                     ]);
-        DB::table('permissions')->where('name', ("create ".strtolower($request->input('permi'))))->update([
+        /*DB::table('permissions')->where('name', ("create ".strtolower($request->input('permi'))))->update([
                                                                                                     'name' => $permisoC
                                                                                                     ]);
         DB::table('permissions')->where('name', ("edit ".strtolower($request->input('permi'))))->update([
@@ -153,6 +153,7 @@ class MenusController extends Controller
         DB::table('permissions')->where('name', ("delete ".strtolower($request->input('permi'))))->update([
                                                                                                     'name' => $permisoD
                                                                                                     ]);
+        */
          Categorias::where( 'id', $id )
                     ->update([
                         'nombre' => $request->input('nombre'),
@@ -189,17 +190,17 @@ class MenusController extends Controller
          * Formateamos las variables para que en base al nombre del permiso, posteriormente puedan ser borradas de la tabla permissions
          */
         $permisoV = str_replace('view','view',$categoria->permiso);
-        $permisoC = str_replace('view','create',$categoria->permiso);
-        $permisoE = str_replace('view','edit',$categoria->permiso);
-        $permisoD = str_replace('view','delete',$categoria->permiso);
+        //$permisoC = str_replace('view','create',$categoria->permiso);
+        //$permisoE = str_replace('view','edit',$categoria->permiso);
+        //$permisoD = str_replace('view','delete',$categoria->permiso);
 
         /**
          * Borramos de la tabla permissions las Categorias
          */
         DB::table('permissions')->where('name','=',$permisoV)->delete();
-        DB::table('permissions')->where('name','=',$permisoC)->delete();
-        DB::table('permissions')->where('name','=',$permisoE)->delete();
-        DB::table('permissions')->where('name','=',$permisoD)->delete();
+        //DB::table('permissions')->where('name','=',$permisoC)->delete();
+        //DB::table('permissions')->where('name','=',$permisoE)->delete();
+        //DB::table('permissions')->where('name','=',$permisoD)->delete();
         /**
          * Ponemos en desactivo el registro seleccionado
          */
