@@ -23,7 +23,7 @@
                     <div class="col-4">
                         <div class="form-group">
                             <label for="nombre"><b>Descripcion</b></label>
-                                <input type="text" class="form-control form-control-sm descripcion" id="descripcion" name="descripcion" value="{{ $speech->nombre }}" disabled>
+                                <input type="text" class="form-control form-control-sm descripcion" id="descripcion" name="descripcion" value="{{ $speech->descripcion }}" disabled>
                                 @csrf
                         </div>
                     </div>
