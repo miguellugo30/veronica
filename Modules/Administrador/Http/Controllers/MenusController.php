@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Nimbus\Http\Controllers\LogController;
+use DB;
 
 class MenusController extends Controller
 {
@@ -54,8 +55,30 @@ class MenusController extends Controller
     public function store(Request $request)
     {
         /**
-         * Insertamos la informacion del formulario
+         * Insertamos la informacion del formulario en la tabla permissions como en la tabla de categorias
          */
+        $request['permiso'] = ("view ".strtolower($request->input('nombre')));
+        $permisoV = ("view ".strtolower($request->input('nombre')));
+        //$permisoC = ("create ".strtolower($request->input('nombre')));
+        //$permisoE = ("edit ".strtolower($request->input('nombre')));
+        //$permisoD = ("delete ".strtolower($request->input('nombre')));
+        DB::table('permissions')->insert([
+                                    'name' => $permisoV,
+                                    'guard_name' => 'web'
+                                        ]);
+        /*DB::table('permissions')->insert([
+                                    'name' => $permisoC,
+                                    'guard_name' => 'web'
+                                        ]);
+        DB::table('permissions')->insert([
+                                    'name' => $permisoE,
+                                    'guard_name' => 'web'
+                                        ]);
+        DB::table('permissions')->insert([
+                                    'name' => $permisoD,
+                                    'guard_name' => 'web'
+                                        ]);
+        */
         $cat = Categorias::create($request->all());
         /**
          * Creamos el logs
@@ -111,11 +134,32 @@ class MenusController extends Controller
         /**
          * Actualizamos el menu
          */
+        $request['permiso'] = ("view ".strtolower($request->input('nombre')));
+
+        $permisoV = ("view ".strtolower($request->input('nombre')));
+        //$permisoC = ("create ".strtolower($request->input('nombre')));
+        //$permisoE = ("edit ".strtolower($request->input('nombre')));
+        //$permisoD = ("delete ".strtolower($request->input('nombre')));
+
+        DB::table('permissions')->where('name', ("view ".strtolower($request->input('permi'))))->update([
+                                                                                                    'name' => $permisoV
+                                                                                                    ]);
+        /*DB::table('permissions')->where('name', ("create ".strtolower($request->input('permi'))))->update([
+                                                                                                    'name' => $permisoC
+                                                                                                    ]);
+        DB::table('permissions')->where('name', ("edit ".strtolower($request->input('permi'))))->update([
+                                                                                                    'name' => $permisoE
+                                                                                                    ]);
+        DB::table('permissions')->where('name', ("delete ".strtolower($request->input('permi'))))->update([
+                                                                                                    'name' => $permisoD
+                                                                                                    ]);
+        */
          Categorias::where( 'id', $id )
                     ->update([
                         'nombre' => $request->input('nombre'),
                         'descripcion' => $request->input('descripcion'),
                         'tipo' => $request->input('tipo'),
+                        'permiso' => $request->permiso,
                     ]);
         /**
          * Creamos el logs
@@ -137,6 +181,26 @@ class MenusController extends Controller
      */
     public function destroy($id)
     {
+        /**
+         * Buscamos el id en las categorias
+         */
+        $categoria = Categorias::findOrFail( $id );
+
+        /**
+         * Formateamos las variables para que en base al nombre del permiso, posteriormente puedan ser borradas de la tabla permissions
+         */
+        $permisoV = str_replace('view','view',$categoria->permiso);
+        //$permisoC = str_replace('view','create',$categoria->permiso);
+        //$permisoE = str_replace('view','edit',$categoria->permiso);
+        //$permisoD = str_replace('view','delete',$categoria->permiso);
+
+        /**
+         * Borramos de la tabla permissions las Categorias
+         */
+        DB::table('permissions')->where('name','=',$permisoV)->delete();
+        //DB::table('permissions')->where('name','=',$permisoC)->delete();
+        //DB::table('permissions')->where('name','=',$permisoE)->delete();
+        //DB::table('permissions')->where('name','=',$permisoD)->delete();
         /**
          * Ponemos en desactivo el registro seleccionado
          */

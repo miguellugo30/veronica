@@ -2,10 +2,10 @@
     <div class="box-header with-border">
         <h3 class="box-title"><i class="fas fa-headphones-alt"></i> Audios</h3>
         <div class="box-tools pull-right">
-                @can('delete audio')
+                @can('delete audios')
                 <button type="button" class="btn btn-danger  btn-sm deleteAudio" style="display:none"><i class="fas fa-trash-alt"></i> Elminar</button>
                 @endcan
-                @can('create audio')
+                @can('create audios')
                 <button type="button" class="btn btn-primary btn-sm newAudio" data-widget="remove"><i class="fas fa-plus"></i> Nuevo</button>
                 @endcan
             <input type="hidden" name="idSeleccionado" id="idSeleccionado" value="">
