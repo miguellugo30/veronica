@@ -2,13 +2,11 @@
     <div class="box-header with-border">
         <h3 class="box-title"><b><i class="fas fa-fax"></i> Enrutamientos DID's</b></h3>
         <div class="box-tools pull-right">
-            @can('delete didenrutamiento')
-            @endcan
+            @can('delete configuracion did')
             <button type="button" class="btn btn-danger  btn-sm deletedidenrutamiento" style="display:none"><i class="fas fa-trash-alt"></i> Elminar</button>
-            @can('edit didenrutamiento')
             @endcan
+            @can('edit configuracion did')
             <button type="button" class="btn btn-warning btn-sm editdidenrutamiento" style="display:none"><i class="fas fa-edit"></i> Editar</button>
-            @can('create didenrutamiento')
             @endcan
             <input type="hidden" name="idSeleccionado" id="idSeleccionado" value="">
         </div>

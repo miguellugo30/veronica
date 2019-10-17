@@ -45,6 +45,7 @@
                                                             <th>Crear</th>
                                                             <th>Editar</th>
                                                             <th>Eliminar</th>
+                                                            <th><span class="button-checkbox"><button type="button" class="btn btn-sm" data-color="primary"></button><input type="checkbox" class="marcarDesmarcar mark" data-value="{{ $categoria->id }}"> Marcar/Desmarcar Todos</span></th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -52,15 +53,15 @@
                                                             <tr>
                                                                 <td>{{ $sub->nombre }}</td>
                                                                 @if ($sub->nombre == 'Logs')
-                                                                        <td><input type="checkbox" name="permisos[]" id="permisos[]" value="{{ $sub->permiso }}"></td>
+                                                                        <td><input type="checkbox" name="permisos[]" id="permisos[]" value="{{ $sub->permiso }}" class="mark"></td>
                                                                         <td></td>
                                                                         <td></td>
                                                                         <td></td>
                                                                     @else
-                                                                        <td><input type="checkbox" name="permisos[]" id="permisos[]" value="{{ $sub->permiso }}"></td>
-                                                                        <td><input type="checkbox" name="permisos[]" id="permisos[]" value="{{ str_replace( 'view', 'create',$sub->permiso) }}"></td>
-                                                                        <td><input type="checkbox" name="permisos[]" id="permisos[]" value="{{ str_replace( 'view', 'edit',$sub->permiso) }}"></td>
-                                                                        <td><input type="checkbox" name="permisos[]" id="permisos[]" value="{{ str_replace( 'view', 'delete',$sub->permiso) }}"></td>
+                                                                        <td><input type="checkbox" name="permisos[]" id="permisos[]" value="{{ $sub->permiso }}" class="mark"></td>
+                                                                        <td><input type="checkbox" name="permisos[]" id="permisos[]" value="{{ str_replace( 'view', 'create',$sub->permiso) }}" class="mark"></td>
+                                                                        <td><input type="checkbox" name="permisos[]" id="permisos[]" value="{{ str_replace( 'view', 'edit',$sub->permiso) }}" class="mark"></td>
+                                                                        <td><input type="checkbox" name="permisos[]" id="permisos[]" value="{{ str_replace( 'view', 'delete',$sub->permiso) }}" class="mark"></td>
                                                                     @endif
                                                             </tr>
                                                         @endforeach

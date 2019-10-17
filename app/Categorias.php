@@ -14,7 +14,7 @@ class Categorias extends Model
      * Campos que pueden ser modificados
      */
     protected $fillable = [
-        'nombre', 'descripcion', 'class_icon', 'tipo', 'modulos_id',
+        'nombre', 'descripcion', 'class_icon', 'tipo', 'modulos_id','permiso'
     ];
     /**
      * Funcion para obtener solo los registros activos

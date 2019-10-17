@@ -8,6 +8,7 @@ $(function() {
         e.preventDefault();
         $('#tituloModal').html('Nueva Troncal');
         $('#action').removeClass('updateTrocal');
+        $('#action').removeClass('updateTrocalSansay');
         $('#action').addClass('saveTroncal');
 
         let url = currentURL + '/troncales/create';
@@ -74,6 +75,7 @@ $(function() {
         e.preventDefault();
         $('#tituloModal').html('Editar Troncal');
         $('#action').removeClass('saveTroncal');
+        $('#action').removeClass('updateTrocalSansay');
         $('#action').addClass('updateTrocal');
 
         let id = $("#idSeleccionado").val();
@@ -182,18 +184,61 @@ $(function() {
         let nombre = nombre_troncal.replace(" ", "_");
         $("#troncal_sansay").val("BUS > " + nombre + " > DID")
     });
-
     /**
      * Evento para invocar a la ventana modal para visualizar la configuracion
      */
-    $(document).on('click', '.show-modal', function(event) {
+    $(document).on('click', '.viewConfig', function(event) {
         let id = $(this).val();
-        //alert(id);
-        let url = currentURL + '/troncales/' + 1;
+        let url = currentURL + '/troncales/' + id;
+
+        $('#action').removeClass('saveTroncal');
+        $('#action').removeClass('updateTrocal');
+        $('#action').addClass('updateTrocalSansay');
+
+        $('#tituloModal').html('Configuración Troncal');
 
         $.get(url, function(data, textStatus, xhr) {
-            $("#configuracionmodal").html(data);
-            $("#configuracionmodal").modal("show");
+            $('#modal').modal('show');
+            $("#modal-body").html(data);
         });
     });
+    /**
+     * Evento para editar el modulo
+     */
+    $(document).on('click', '.updateTrocalSansay', function(event) {
+        event.preventDefault();
+        $('#modal').modal('hide');
+
+        let id = $("#id_sansay").val();
+        let host = $("#host").val();
+        let dtmfmode = $("#dtmfmode").val();
+        let allow = $("#allow").val();
+        let _token = $("input[name=_token]").val();
+        let url = currentURL + '/troncales/sansay/' + id;
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: {
+                id: id,
+                host: host,
+                dtmfmode: dtmfmode,
+                allow: allow,
+                _token: _token
+            },
+            success: function(result) {
+                $('.viewResult').html(result);
+                $('.viewCreate').slideUp();
+                $('.viewIndex #tableTroncales').DataTable({
+                    "lengthChange": true
+                });
+                Swal.fire(
+                    'Correcto!',
+                    'El registro ha sido guardado.',
+                    'success'
+                )
+            }
+        });
+    });
+
 });

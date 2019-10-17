@@ -91,13 +91,14 @@
                                                                 <th>Crear</th>
                                                                 <th>Editar</th>
                                                                 <th>Eliminar</th>
+                                                                <th><span class="button-checkbox"><button type="button" class="btn btn-sm" data-color="primary"></button><input type="checkbox" class="marcarDesmarcar2 mark2" data-value="{{ $categoria->id }}"> Marcar/Desmarcar Todos</span></th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             <tr>
-                                                                <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( str_replace( 'view', 'create', $categoria->permiso) ) ? 'checked' : '' }} value="{{ str_replace( 'view', 'create',$categoria->permiso) }}"></td>
-                                                                <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( str_replace( 'view', 'edit', $categoria->permiso) ) ? 'checked' : '' }} value="{{ str_replace( 'view', 'edit',$categoria->permiso) }}"></td>
-                                                                <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( str_replace( 'view', 'delete', $categoria->permiso) ) ? 'checked' : '' }} value="{{ str_replace( 'view', 'delete',$categoria->permiso) }}"></td>
+                                                                <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( str_replace( 'view', 'create', $categoria->permiso) ) ? 'checked' : '' }} value="{{ str_replace( 'view', 'create',$categoria->permiso) }}" class="mark2"></td>
+                                                                <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( str_replace( 'view', 'edit', $categoria->permiso) ) ? 'checked' : '' }} value="{{ str_replace( 'view', 'edit',$categoria->permiso) }}" class="mark2"></td>
+                                                                <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( str_replace( 'view', 'delete', $categoria->permiso) ) ? 'checked' : '' }} value="{{ str_replace( 'view', 'delete',$categoria->permiso) }}" class="mark2"></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -113,6 +114,7 @@
                                                                     <th>Crear</th>
                                                                     <th>Editar</th>
                                                                     <th>Eliminar</th>
+                                                                    <th><span class="button-checkbox"><button type="button" class="btn btn-sm" data-color="primary"></button><input type="checkbox" class="marcarDesmarcar2 mark2" data-value="{{ $categoria->id }}"> Marcar/Desmarcar Todos</span></th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -120,15 +122,15 @@
                                                                     <tr>
                                                                         <td>{{ $sub->nombre }}</td>
                                                                         @if ($sub->nombre == 'Logs')
-                                                                            <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( $sub->permiso ) ? 'checked' : '' }} value="{{ $sub->permiso }}"></td>
+                                                                            <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( $sub->permiso ) ? 'checked' : '' }} value="{{ $sub->permiso }}" class="mark2"></td>
                                                                             <td></td>
                                                                             <td></td>
                                                                             <td></td>
                                                                         @else
-                                                                            <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( $sub->permiso ) ? 'checked' : '' }} value="{{ $sub->permiso }}"></td>
-                                                                            <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( str_replace( 'view', 'create',$sub->permiso) ) ? 'checked' : '' }} value="{{ str_replace( 'view', 'create',$sub->permiso) }}"></td>
-                                                                            <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( str_replace( 'view', 'edit',$sub->permiso) ) ? 'checked' : '' }} value="{{ str_replace( 'view', 'edit',$sub->permiso) }}"></td>
-                                                                            <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( str_replace( 'view', 'delete',$sub->permiso) ) ? 'checked' : '' }} value="{{ str_replace( 'view', 'delete',$sub->permiso) }}"></td>
+                                                                            <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( $sub->permiso ) ? 'checked' : '' }} value="{{ $sub->permiso }}" class="mark2"></td>
+                                                                            <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( str_replace( 'view', 'create',$sub->permiso) ) ? 'checked' : '' }} value="{{ str_replace( 'view', 'create',$sub->permiso) }}" class="mark2"></td>
+                                                                            <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( str_replace( 'view', 'edit',$sub->permiso) ) ? 'checked' : '' }} value="{{ str_replace( 'view', 'edit',$sub->permiso) }}" class="mark2"></td>
+                                                                            <td><input type="checkbox" name="permisos[]" id="permisos[]" {{ $user->hasPermissionTo( str_replace( 'view', 'delete',$sub->permiso) ) ? 'checked' : '' }} value="{{ str_replace( 'view', 'delete',$sub->permiso) }}" class="mark2"></td>
                                                                         @endif
                                                                     </tr>
                                                                 @endforeach

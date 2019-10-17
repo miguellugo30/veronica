@@ -18,23 +18,5 @@
         <label for="descripcion">Descripci&oacute;n</label>
         <input type="text" class="form-control form-control-sm" id="descripcion" placeholder="descripcion" value="{{ $troncal->descripcion }}">
     </div>
-    <div class="form-group">
-        <label for="ip_media">IP Media</label>
-        <select name="ip_media" id="ip_media" class="form-control form-control-sm">
-            @foreach( $medias as $media )
-                <option value="{{ $media->id }}" {{ $media->id == $troncal->Cat_IP_PBX_id ? "selected" : '' }}>{{ $media->media_server." :: ".$media->ip_pbx }}</option>
-            @endforeach
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="ip_host">IP Host</label>
-        <input type="text" class="form-control form-control-sm" id="ip_host" placeholder="IP Host" value="{{ $troncal->ip_host }}">
-    </div>
 </div>
-<!--div class="col-12">
-    <div class="col-6" style="float:none; margin:auto">
-        <button type="submit" class="btn btn-warning btn-sm cancelTroncal"><i class="fas fa-times"></i> Cancelar</button>
-        <button type="submit" class="btn btn-danger btn-sm deleteTroncal"><i class="fas fa-trash-alt"></i> Eliminar</button>
-        <button type="submit" class="btn btn-primary btn-sm updateTrocal float-right"><i class="fas fa-save"></i> Guardar</button>
-    </div>
-</div-->
+

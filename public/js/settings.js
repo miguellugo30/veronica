@@ -90,6 +90,8 @@
 /*!**************************************************************!*\
   !*** ./resources/js/module_settings/acciones_formularios.js ***!
   \**************************************************************/
+<<<<<<< HEAD
+=======
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -162,6 +164,142 @@ $(function () {
         console.log(result);
       }
     });
+  });
+});
+
+/***/ }),
+
+/***/ "./resources/js/module_settings/acciones_speech.js":
+/*!*********************************************************!*\
+  !*** ./resources/js/module_settings/acciones_speech.js ***!
+  \*********************************************************/
+>>>>>>> 1f934d4dfb8cf5247a69d69365de1d9083007140
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  /**
+   * Evento para mostrar el boton de añadir y borrar cuando el tipo de speech sea dinamico
+   */
+  $(document).on('change', '.tipo', function (event) {
+    event.preventDefault();
+    var tipo = $('.tipo').val();
+
+    if (tipo == 'dinamico') {
+      $('.agrega').removeAttr("hidden");
+      $('.remove').removeAttr("hidden");
+    } else if (tipo == 'estatico') {
+      $('.agrega').attr("hidden", "hidden");
+      $('.remove').attr("hidden", "hidden");
+      /**
+       * Eliminamos las opciones adicionales dentro de la tabla de opciones
+       */
+
+      var nColumnas = $(".tableNewSpeech tbody tr").length;
+
+      for (var i = nColumnas; i > 1; i--) {
+        $(".tableNewSpeech tbody tr#tr_" + i).remove();
+      }
+    } else if (tipo == '') {
+      $('.agrega').attr("hidden", "hidden");
+      $('.remove').attr("hidden", "hidden");
+      /**
+       * Eliminamos las opciones adicionales dentro de la tabla de opciones
+       */
+
+      var nColumnas = $(".tableNewSpeech tbody tr").length;
+
+      for (var _i = nColumnas; _i > 1; _i--) {
+        $(".tableNewSpeech tbody tr#tr_" + _i).remove();
+      }
+    }
+  });
+  /**
+   * Evento para mostrar el boton de añadir y borrar cuando el tipo de speech sea dinamico en el apartado de editar
+   */
+
+  $(document).on('change', '.tipo', function (event) {
+    event.preventDefault();
+    var tipo = $('.tipo').val();
+
+    if (tipo == 'dinamico') {
+      $('.agrega').removeAttr("hidden");
+      $('.remove').removeAttr("hidden");
+    } else if (tipo == 'estatico') {
+      $('.agrega').attr("hidden", "hidden");
+      $('.remove').attr("hidden", "hidden");
+      /**
+       * Eliminamos las opciones adicionales dentro de la tabla de opciones
+       */
+
+      var nColumnas = $(".tableEditSpeech tbody tr").length;
+
+      for (var i = nColumnas; i > 1; i--) {
+        $(".tableEditSpeech tbody tr#tr_" + i).remove();
+      }
+    } else if (tipo == '') {
+      $('.agrega').attr("hidden", "hidden");
+      $('.remove').attr("hidden", "hidden");
+      /**
+       * Eliminamos las opciones adicionales dentro de la tabla de opciones
+       */
+
+      var nColumnas = $(".tableEditSpeech tbody tr").length;
+
+      for (var _i2 = nColumnas; _i2 > 1; _i2--) {
+        $(".tableEditSpeech tbody tr#tr_" + _i2).remove();
+      }
+    }
+  });
+  /**
+   * Evento para agregar una nueva fila para campos nuevos en el formulario
+   */
+
+  $(document).on('click', '#add_s', function () {
+    var clickID = $(".tableNewSpeech tbody tr.clonar:last").attr('id').replace('tr_', '');
+    $('#form_opc .form-control-sm').val(''); // Genero el nuevo numero id
+
+    var newID = parseInt(clickID) + 1; //let IDInput = ['id_campo', 'nombre_speech', 'tipo_campo', 'tamano', 'obligatorio', 'obligatorio_hidden', 'editable', 'editable_hidden', 'opciones', 'view'];
+
+    var IDInput = ['nombreSpeech', 'descripcion', 'prioridad'];
+    fila = $(".tableNewSpeech tbody tr:eq()").clone().appendTo(".tableNewSpeech"); //Clonamos la fila
+
+    for (var i = 0; i < IDInput.length; i++) {
+      fila.find('#' + IDInput[i]).attr('name', IDInput[i] + "_" + newID); //Cambiamos el nombre de los campos de la fila a clonar
+    }
+
+    fila.find('.btn-info').css('display', 'none');
+    fila.find('#id_campo').attr('value', '');
+    fila.attr("id", 'tr_' + newID);
+  });
+  /**
+   * Evento para agregar una nueva fila para campos nuevos en el formulario editar speech
+   */
+
+  $(document).on('click', '#add_os', function () {
+    var clickID = $(".tableEditSpeech tbody tr.clonar:last").attr('id').replace('tr_', '');
+    $('#form_opc .form-control-sm').val(''); // Genero el nuevo numero id
+
+    var newID = parseInt(clickID) + 1; //let IDInput = ['id_campo', 'nombre_speech', 'tipo_campo', 'tamano', 'obligatorio', 'obligatorio_hidden', 'editable', 'editable_hidden', 'opciones', 'view'];
+
+    var IDInput = ['nombreSpeech', 'descripcion', 'prioridad'];
+    fila = $(".tableEditSpeech tbody tr:eq()").clone().appendTo(".tableEditSpeech"); //Clonamos la fila
+
+    for (var i = 0; i < IDInput.length; i++) {
+      fila.find('#' + IDInput[i]).attr('name', IDInput[i] + "_" + newID); //Cambiamos el nombre de los campos de la fila a clonar
+    }
+
+    fila.find('.btn-info').css('display', 'none');
+    fila.find('#id_campo').attr('value', '');
+    fila.attr("id", 'tr_' + newID);
+  });
+  /**
+   * Evento para eliminar una fila de la tabla de nuevo Speech
+   */
+
+  $(document).on('click', '.tr_clone_remove', function () {
+    var tr = $(this).closest('tr');
+    tr.remove();
   });
 });
 
@@ -504,26 +642,12 @@ $(function () {
 $(function () {
   var currentURL = window.location.href;
   /**
-   * Evento que muestra elemento calificaciones || esta funcion muestra con slide los botones de Eliminar y Editar
-   */
-
-  $(document).on('click', '#tableCalificaciones tbody tr', function (event) {
-    /* Para que nunca tome los refresh, preventivo*/
-    event.preventDefault();
-    var id = $(this).data("id");
-    $(".editCalificaciones").slideDown();
-    $(".deleteCalificaciones").slideDown();
-    $("#idSeleccionado").val(id);
-    $("#tableCalificaciones tbody tr").removeClass('table-primary');
-    $(this).addClass('table-primary');
-  });
-  /**
    * Evento para mostrar el formulario de crear un nueva calificacion
    */
 
   $(document).on("click", ".newCalificaciones", function (e) {
     e.preventDefault();
-    $('#tituloModal').html('Nuevo Grupo Calificaciones');
+    $('#tituloModal').html('Nuevas Calificaciones');
     var url = currentURL + '/calificaciones/create';
     $('#action').removeClass('updateCalificaciones');
     $('#action').addClass('saveCalificaciones');
@@ -540,13 +664,24 @@ $(function () {
     });
   });
   /**
-  * Evento para obtener el valor del tipo de Formulario LD
-  */
+   * Evento para clonar finas de la tabla
+   */
 
-  $(document).on('change', '#tipo_marcacion', function (event) {
-    var pos = $(this).data('pos');
-    var id_Tipo_Marcacion = $(this).val();
-    alert(pos + '+' + id_Tipo_Marcacion);
+  $(document).on('click', '#addCalificaciones', function (event) {
+    var clickID = $(".tableNewForm tbody tr.clonar:last").attr('id').replace('tr_', ''); // Genero el nuevo numero id
+
+    var newID = parseInt(clickID) + 1;
+    var IDInput = ['nombre_calificacion', 'formulario_calificacion', 'id_calificacion']; //ID de los inputs dentro de la fila
+
+    fila = $(".tableNewForm tbody tr:eq()").clone().appendTo(".tableNewForm"); //Clonamos la fila
+
+    for (var i = 0; i < IDInput.length; i++) {
+      fila.find('#' + IDInput[i]).attr('name', IDInput[i] + "_" + newID); //Cambiamos el nombre de los campos de la fila a clonar
+    }
+
+    fila.find('.btn-danger').css('display', 'block');
+    fila.find('#id_calificacion').val('');
+    fila.attr("id", 'tr_' + newID);
   });
   /**
    * Evento para guardar Nuevas Calificaciones
@@ -568,10 +703,69 @@ $(function () {
     });
   });
   /**
-  * Evento para eliminar la Calificacion
-  
-  *
-  */
+   * Evento que muestra elemento calificaciones || esta funcion muestra con slide los botones de Eliminar y Editar
+   */
+
+  $(document).on('click', '#tableCalificaciones tbody tr', function (event) {
+    event.preventDefault();
+    var id = $(this).data("id");
+    $(".dropleft").slideDown();
+    $("#idSeleccionado").val(id);
+    $("#tableCalificaciones tbody tr").removeClass('table-primary');
+    $(this).addClass('table-primary');
+  });
+  /**
+   * Evento para visualizar un registro
+   */
+
+  $(document).on('click', '.editCalificaciones', function (event) {
+    event.preventDefault();
+    var id = $("#idSeleccionado").val();
+    $('#tituloModal').html('Edicion de Calificaciones');
+    var url = currentURL + '/calificaciones/' + id + '/edit';
+    $('#action').removeClass('saveCalificaciones');
+    $('#action').addClass('updateCalificaciones');
+    $.ajax({
+      url: url,
+      type: 'GET',
+      success: function success(result) {
+        $('#modal').modal({
+          backdrop: 'static',
+          keyboard: false
+        });
+        $("#modal-body").html(result);
+      }
+    });
+  });
+  /**
+   * Evento para guardar Nuevas Calificaciones
+   */
+
+  $(document).on('click', '.updateCalificaciones', function (event) {
+    event.preventDefault();
+    $('#modal').modal('hide');
+    var dataForm = $("#formDataCalificaciones").serializeArray();
+    var id = $("#idSeleccionado").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var _method = "PUT";
+    var url = currentURL + '/calificaciones/' + id;
+    $.post(url, {
+      dataForm: dataForm,
+      _token: _token,
+      _method: _method
+    }, function (data, textStatus, xhr) {
+      $('.viewResult').html(data);
+      $('.viewResult #tableCalificaciones').DataTable({
+        "lengthChange": false
+      });
+      Swal.fire('Actualizado!', 'El registro ha sido actualiazdo.', 'success');
+    });
+  });
+  /**
+   * Evento para eliminar el Grupo
+   */
 
   $(document).on('click', '.deleteCalificaciones', function (event) {
     event.preventDefault();
@@ -613,16 +807,77 @@ $(function () {
     });
   });
   /**
-  * Evento para visualizar un registro
-  */
+   * Evento para eliminar el Grupo
+   */
 
-  $(document).on('click', '.editCalificaciones', function (event) {
+  $(document).on('click', '.tr_clone_remove-calificacion', function (event) {
+    var id = $(this).data("id-eliminar");
+
+    var _token = $("input[name=_token]").val();
+
+    var url = currentURL + '/calificaciones/eliminarCalificacion/' + id;
+    var tr = $(this).closest('tr');
+    $.ajax({
+      url: url,
+      type: 'GET',
+      data: {
+        _token: _token
+      },
+      success: function success(result) {
+        tr.remove();
+        Swal.fire('Eliminado!', 'El registro ha sido eliminado.', 'success');
+      }
+    });
+  });
+  /**
+   * Evento para duplicar el grupo de calificaciones
+   */
+
+  $(document).on('click', '.cloneCalificaciones', function (event) {
     event.preventDefault();
+    Swal.fire({
+      title: 'Nombre del nuevo grupo de calificaciones',
+      input: 'text',
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      showCancelButton: true,
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Duplicar',
+      showLoaderOnConfirm: true,
+      preConfirm: function preConfirm(nombreForm) {
+        var id = $("#idSeleccionado").val();
+        var url = currentURL + '/calificaciones/duplicar/' + id;
+
+        var _token = $("input[name=_token]").val();
+
+        $.ajax({
+          url: url,
+          type: 'GET',
+          data: {
+            id: id,
+            nombreForm: nombreForm,
+            _token: _token
+          },
+          success: function success(result) {
+            $('.viewResult').html(result);
+            $('.viewResult #tableCalificaciones').DataTable({
+              "lengthChange": false
+            });
+            Swal.fire('Duplicado!', 'El registro ha sido duplicado.', 'success');
+          }
+        });
+      }
+    });
+  });
+  /**
+   * Visualizar el grupo de calificaciones
+   */
+
+  $(document).on('click', '.viewCalificaciones', function (event) {
     var id = $("#idSeleccionado").val();
-    $('#tituloModal').html('Detalles de Calificaciones');
-    var url = currentURL + '/calificaciones/' + id + '/edit';
-    $('#action').addClass('updateCalificaciones');
-    $('#action').removeClass('saveCalificaciones');
+    var url = currentURL + '/calificaciones/' + id;
+    $('#tituloModal').html('Visualizar Calificaciones');
     $.ajax({
       url: url,
       type: 'GET',
@@ -632,6 +887,22 @@ $(function () {
           keyboard: false
         });
         $("#modal-body").html(result);
+      }
+    });
+  });
+  /**
+   * Mostrar formulario vinculado a la calificacion seleccionada
+   */
+
+  $(document).on('change', '#calificacion', function (event) {
+    var id = $(this).val();
+    console.log(id);
+    var url = currentURL + '/formularios/' + id;
+    $.ajax({
+      url: url,
+      type: 'GET',
+      success: function success(result) {
+        $(".viewFormularioCalificacion").html(result);
       }
     });
   });
@@ -1072,6 +1343,161 @@ $(function () {
 
 /***/ }),
 
+/***/ "./resources/js/module_settings/speech.js":
+/*!************************************************!*\
+  !*** ./resources/js/module_settings/speech.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  var currentURL = window.location.href;
+  /**
+   * Evento para seleccionar Speech
+   */
+
+  $(document).on('click', '#tableSpeech tbody tr', function (event) {
+    event.preventDefault();
+    var id = $(this).data("id");
+    $(".deleteSpeech").slideDown();
+    $(".editSpeech").slideDown();
+    $("#idSeleccionado").val(id);
+    $("#tableSpeech tbody tr").removeClass('table-primary');
+    $(this).addClass('table-primary');
+  });
+  ;
+  /**
+   * Evento para eliminar el Agente
+   *
+   */
+
+  $(document).on('click', '.deleteSpeech', function (event) {
+    event.preventDefault();
+    Swal.fire({
+      title: 'Estas seguro?',
+      text: "Deseas eliminar el registro seleccionado!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Eliminar!',
+      cancelButtonText: 'Cancelar'
+    }).then(function (result) {
+      if (result.value) {
+        var id = $("#idSeleccionado").val();
+        var _method = "DELETE";
+
+        var _token = $("input[name=_token]").val();
+
+        var url = currentURL + '/speech/' + id;
+        $.ajax({
+          url: url,
+          type: 'POST',
+          data: {
+            _token: _token,
+            _method: _method
+          },
+          success: function success(result) {
+            $('.viewResult').html(result);
+            $('.viewResult #tableSpeech').DataTable({
+              "lengthChange": false
+            });
+            Swal.fire('Eliminado!', 'El registro ha sido eliminado.', 'success');
+          }
+        });
+      }
+    });
+  });
+  /**
+   * Evento para mostrar el formulario de crear un nuevo Agente
+   */
+
+  $(document).on("click", ".newSpeech", function (e) {
+    event.preventDefault();
+    $('#tituloModal').html('Alta de Speech');
+    $('#action').removeClass('deleteSpeech');
+    $('#action').addClass('saveSpeech');
+    var url = currentURL + "/speech/create";
+    $.get(url, function (data, textStatus, jqXHR) {
+      $('#modal').modal('show');
+      $("#modal-body").html(data);
+    });
+  });
+  /**
+   * Evento para visualizar la configuración del Speech
+   */
+
+  $(document).on('click', '.editSpeech', function (event) {
+    event.preventDefault();
+    var id = $("#idSeleccionado").val();
+    $('#tituloModal').html('Detalles de Speech');
+    var url = currentURL + '/speech/' + id + '/edit';
+    $('#action').addClass('updateSpeech');
+    $('#action').removeClass('saveSpeech');
+    $.ajax({
+      url: url,
+      type: 'GET',
+      success: function success(result) {
+        $('#modal').modal({
+          backdrop: 'static',
+          keyboard: false
+        });
+        $("#modal-body").html(result);
+      }
+    });
+  });
+  /**
+   * Evento para guardar los cambios del Speech
+   */
+
+  $(document).on('click', '.updateSpeech', function (event) {
+    event.preventDefault();
+    $('#modal').modal('hide');
+    $('.tipo').removeAttr("disabled");
+    $('.nombre').removeAttr("disabled");
+    var id = $("#idSeleccionado").val();
+    var dataForm = $("#editspeech").serializeArray();
+
+    var _token = $("input[name=_token]").val();
+
+    var _method = "PUT";
+    var url = currentURL + '/speech/' + id;
+    $.post(url, {
+      dataForm: dataForm,
+      _method: _method,
+      _token: _token
+    }, function (data, textStatus, xhr) {
+      $('.viewResult').html(data);
+    });
+  });
+  /**
+   * Evento para guardar el nuevo speech
+   */
+
+  $(document).on('click', '.saveSpeech', function (event) {
+    event.preventDefault();
+    $('#modal').modal('hide');
+    var dataForm = $("#altaspeech").serializeArray();
+
+    var _token = $("input[name=_token]").val();
+
+    var url = currentURL + '/speech';
+    $.post(url, {
+      dataForm: dataForm,
+      _token: _token
+    }, function (data, textStatus, xhr) {
+      $('.viewResult').html(data);
+      $('.viewResult #tableSpeech').DataTable({
+        "lengthChange": true,
+        "order": [[2, "asc"]]
+      });
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    });
+  });
+});
+
+/***/ }),
+
 /***/ "./resources/js/module_settings/sub_formularios.js":
 /*!*********************************************************!*\
   !*** ./resources/js/module_settings/sub_formularios.js ***!
@@ -1348,6 +1774,7 @@ $(function () {
 /***/ }),
 
 /***/ 1:
+<<<<<<< HEAD
 /*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** multi ./resources/js/module_settings/menu.js ./resources/js/module_settings/formularios.js ./resources/js/module_settings/sub_formularios.js ./resources/js/module_settings/acciones_formularios.js ./resources/js/module_settings/audios.js ./resources/js/module_settings/calificaciones.js ./resources/js/module_settings/agentes.js ./resources/js/module_settings/grupos.js ***!
   \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
@@ -1362,6 +1789,24 @@ __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\audi
 __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\calificaciones.js */"./resources/js/module_settings/calificaciones.js");
 __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\agentes.js */"./resources/js/module_settings/agentes.js");
 module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\grupos.js */"./resources/js/module_settings/grupos.js");
+=======
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/module_settings/menu.js ./resources/js/module_settings/formularios.js ./resources/js/module_settings/sub_formularios.js ./resources/js/module_settings/acciones_formularios.js ./resources/js/module_settings/audios.js ./resources/js/module_settings/calificaciones.js ./resources/js/module_settings/agentes.js ./resources/js/module_settings/grupos.js ./resources/js/module_settings/speech.js ./resources/js/module_settings/acciones_speech.js ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\menu.js */"./resources/js/module_settings/menu.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\formularios.js */"./resources/js/module_settings/formularios.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\sub_formularios.js */"./resources/js/module_settings/sub_formularios.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\acciones_formularios.js */"./resources/js/module_settings/acciones_formularios.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\audios.js */"./resources/js/module_settings/audios.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\calificaciones.js */"./resources/js/module_settings/calificaciones.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\agentes.js */"./resources/js/module_settings/agentes.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\grupos.js */"./resources/js/module_settings/grupos.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\speech.js */"./resources/js/module_settings/speech.js");
+module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\acciones_speech.js */"./resources/js/module_settings/acciones_speech.js");
+>>>>>>> 1f934d4dfb8cf5247a69d69365de1d9083007140
 
 
 /***/ })

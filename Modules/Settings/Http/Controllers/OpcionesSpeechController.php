@@ -5,8 +5,9 @@ namespace Modules\Settings\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Nimbus\speech;
 
-class StorageController extends Controller
+class OpcionesSpeechController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,6 +35,7 @@ class StorageController extends Controller
     public function store(Request $request)
     {
         //
+
     }
 
     /**
@@ -75,5 +77,8 @@ class StorageController extends Controller
     public function destroy($id)
     {
         //
+        $ids = explode('&', $id);
+        $form = speech::find( $ids[1] );
+        $form->Opciones_Speech()->detach($ids[0]);
     }
 }

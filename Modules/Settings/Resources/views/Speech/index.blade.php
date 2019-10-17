@@ -2,13 +2,15 @@
     <div class="box-header with-border">
         <h3 class="box-title"><i class="fa fa-file-audio-o"></i> Speech</h3>
         <div class="box-tools pull-right">
-            @can('delete speech')
-            @endcan
+                @can('delete speech')
                 <button type="button" class="btn btn-danger  btn-sm deleteSpeech" style="display:none"><i class="fas fa-trash-alt"></i> Elminar</button>
+                @endcan
+                @can('edit speech')
                 <button type="button" class="btn btn-warning  btn-sm editSpeech" style="display:none"><i class="fas fa-edit"></i> Editar</button>
-            @can('create speech')
-            @endcan
+                @endcan
+                @can('create speech')
                 <button type="button" class="btn btn-primary btn-sm newSpeech" data-widget="remove"><i class="fas fa-plus"></i> Nuevo</button>
+                @endcan
             <input type="hidden" name="idSeleccionado" id="idSeleccionado" value="">
         </div>
     </div><!-- /.box-header -->

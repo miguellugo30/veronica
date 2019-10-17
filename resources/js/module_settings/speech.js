@@ -78,15 +78,13 @@ $(function() {
      * Evento para visualizar la configuración del Speech
      */
     $(document).on('click', '.editSpeech', function(event) {
-
         event.preventDefault();
-        var id = $("#idSeleccionado").val();
-        var url = currentURL + '/speech/' + id + '/edit';
 
-        $('#tituloModal').html('Editar Speech');
+        var id = $("#idSeleccionado").val();
+        $('#tituloModal').html('Detalles de Speech');
+        var url = currentURL + '/speech/' + id + '/edit';
         $('#action').addClass('updateSpeech');
         $('#action').removeClass('saveSpeech');
-
         $.ajax({
             url: url,
             type: 'GET',
@@ -102,54 +100,35 @@ $(function() {
     $(document).on('click', '.updateSpeech', function(event) {
         event.preventDefault();
         $('#modal').modal('hide');
-        let id = $("#id").val();
-
-        let nombre = $("#nombre").val();
-        let descripcion = $("#descripcion").val();
-        let tipo = $("#tipo").val();
+        $('.tipo').removeAttr("disabled");
+        $('.nombre').removeAttr("disabled");
+        let id = $("#idSeleccionado").val();
+        let dataForm = $("#editspeech").serializeArray();
         let _token = $("input[name=_token]").val();
         let _method = "PUT";
         let url = currentURL + '/speech/' + id;
 
         $.post(url, {
-            nombre: nombre,
-            descripcion: descripcion,
-            tipo: tipo,
+            dataForm: dataForm,
             _method: _method,
             _token: _token
         }, function(data, textStatus, xhr) {
             $('.viewResult').html(data);
-
-            $('.viewResult #tableSpeech').DataTable({
-                "lengthChange": true,
-                "order": [
-                    [2, "asc"]
-                ]
-            });
-            Swal.fire(
-                'Correcto!',
-                'El registro ha sido guardado.',
-                'success'
-            )
         });
-
     });
     /**
-     * Evento para guardar el nuevo agente
+     * Evento para guardar el nuevo speech
      */
     $(document).on('click', '.saveSpeech', function(event) {
+        event.preventDefault();
         $('#modal').modal('hide');
 
-        let nombre = $("#nombre").val();
-        let descripcion = $("#descripcion").val();
-        let tipo = $("#tipo").val();
+        let dataForm = $("#altaspeech").serializeArray();
         let _token = $("input[name=_token]").val();
         let url = currentURL + '/speech';
 
         $.post(url, {
-            nombre: nombre,
-            descripcion: descripcion,
-            tipo: tipo,
+            dataForm: dataForm,
             _token: _token
         }, function(data, textStatus, xhr) {
 
@@ -168,5 +147,4 @@ $(function() {
             )
         });
     });
-
 });

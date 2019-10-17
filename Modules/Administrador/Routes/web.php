@@ -31,6 +31,7 @@ Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix'
  * Rutas de CRUD de EMRPRESAS
  */
 Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
+    Route::post('/empresas/generar_sesion/{id}', 'EmpresasController@generar_sesion');
     Route::resource('empresas','EmpresasController');
 });
 /**
@@ -49,6 +50,7 @@ Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix'
  * Rutas de CRUD de Troncales
  */
 Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
+    Route::post('/troncales/sansay/{id}', 'TroncalesController@updateSansay');
     Route::resource('troncales','TroncalesController');
 });
 /**

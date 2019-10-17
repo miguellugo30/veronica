@@ -26,7 +26,7 @@ class CampanasController extends Controller
         $empresa_id = $user->id_cliente;
         $campanas= Campanas::active()->where('Empresas_id',$empresa_id)->get();
 
-        return view('inbound::campanas.index',compact('campanas'));
+        return view('inbound::Campanas.index',compact('campanas'));
     }
     /**
      * Show the form for creating a new resource.
@@ -41,7 +41,7 @@ class CampanasController extends Controller
         $Mohs= Audios_Empresa::active()->where([['Empresas_id',$empresa_id],['musica_en_espera','=','1'],])->get();
         $agentes = Agentes::active()->where('Empresas_id', $empresa_id)->get();
 
-        return view('inbound::campanas.create', compact('Audios','Mohs', 'agentes'));
+        return view('inbound::Campanas.create', compact('Audios','Mohs', 'agentes'));
     }
 
     /**
@@ -116,7 +116,7 @@ class CampanasController extends Controller
      */
     public function show($id)
     {
-        return view('inbound::campanas.show');
+        return view('inbound::Campanas.show');
     }
 
     /**
@@ -135,7 +135,7 @@ class CampanasController extends Controller
         $agentes = Agentes::active()->where('Empresas_id', $empresa_id)->get();
         $idAgentesCampana = $agentesCampana->pluck('Agentes_id')->toArray();
 
-        return view('inbound::campanas.edit',compact('campana','Audios', 'agentes', 'agentesCampana', 'idAgentesCampana'));
+        return view('inbound::Campanas.edit',compact('campana','Audios', 'agentes', 'agentesCampana', 'idAgentesCampana'));
     }
 
     /**

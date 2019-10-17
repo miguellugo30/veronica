@@ -211,4 +211,33 @@ $(function() {
         }
     });
 
+    /**
+     * Evento para marcar / desmarcar todos los checkbox al crear un nuevo usuario
+     */
+    $(document).on('click', '.marcarDesmarcar', function() {
+        //event.preventDefault();
+        var id = $(this).data("value");
+        if ($("#sub_cat_" + id + " .mark").prop("checked") == true) {
+            //alert("CHECKBOX ESTA ACTIVO");
+            $("#sub_cat_" + id + " .mark").prop("checked", true);
+        } else {
+            //alert("CHECKBOX ESTA INACTIVO");
+            $("#sub_cat_" + id + " .mark").prop("checked", false);
+        }
+    });
+
+    /**
+     * Evento para marcar / desmarcar todos los checkbox al editar un nuevo usuario
+     */
+    $(document).on('click', '.marcarDesmarcar2', function() {
+        //event.preventDefault();
+        var id = $(this).data("value");
+        //alert("EL ID ES" + id);
+        if ($("#sub_cat_" + id + " .mark2").prop("checked") == true) {
+            $("#sub_cat_" + id + " .mark2").prop("checked", true);
+        } else {
+            $("#sub_cat_" + id + " .mark2").prop("checked", false);
+        }
+    });
+
 });

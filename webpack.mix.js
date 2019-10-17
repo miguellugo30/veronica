@@ -41,10 +41,10 @@ mix.js([
         'resources/js/module_settings/acciones_formularios.js',
         'resources/js/module_settings/audios.js',
         'resources/js/module_settings/calificaciones.js',
-        'resources/js/module_settings/acciones_calificaciones.js',
         'resources/js/module_settings/agentes.js',
         'resources/js/module_settings/grupos.js',
         'resources/js/module_settings/speech.js',
+        'resources/js/module_settings/acciones_speech.js',
 
     ], 'public/js/settings.js')
     .js([

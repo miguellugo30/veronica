@@ -39,6 +39,7 @@ class Speech extends Model
      */
     public function Opciones_Speech()
     {
-        return $this->hasMany('Nimbus\Opciones_Speech','speech_id','id');
+        return $this->hasMany('Nimbus\Opciones_Speech', 'speech_id');
+        //return $this->belongsTo('Nimbus\Opciones_Speech');
     }
 }
