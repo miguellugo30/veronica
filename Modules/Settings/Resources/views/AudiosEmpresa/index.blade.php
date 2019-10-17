@@ -27,7 +27,7 @@
                             <tr data-id="{{ $audio->id }}" style="cursor:pointer">
                                 <td>{{ $audio->nombre }}</td>
                                 <td>{{ $audio->descripcion }}</td>
-                                <td>{{ $audio->descripcion }}</td>
+                                <td><audio controls><source src='{{ $audio->ruta }}' type="audio/wav"></audio></td>
                             </tr>
                         @endforeach
                     </tbody>
