@@ -46,9 +46,10 @@ Route::group(['namespace' => '\Modules\Settings\Http\Controllers', 'prefix' => '
 });
 /**
  * Rutas para CRUD de Calificaciones
- *## Rutas para CRUD de Calificaciones
  */
 Route::group(['namespace' => '\Modules\Settings\Http\Controllers', 'prefix' => 'settings', 'middleware' => 'auth'], function() {
+    Route::get('/calificaciones/eliminarCalificacion/{id}', 'CalificacionesController@destroyCalificacion');
+    Route::get('/calificaciones/duplicar/{id}', 'CalificacionesController@duplicate');
     Route::resource('calificaciones','CalificacionesController');
 });
 /**
@@ -69,14 +70,3 @@ Route::group(['namespace' => '\Modules\Settings\Http\Controllers', 'prefix' => '
 Route::group(['namespace' => '\Modules\Settings\Http\Controllers', 'prefix' => 'settings', 'middleware' => 'auth'], function() {
     Route::resource('Grupos','GruposController');
 });
-
-
-/**
- ## Rutas para CRUD de Audios_Empresas Almacenamiento
- */
-Route::group(['namespace' => '\Modules\Settings\Http\Controllers', 'prefix' => 'settings', 'middleware' => 'auth'], function() {
-    Route::resource('Carga','StorageController');
-});
-
-
-
