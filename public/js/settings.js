@@ -86,17 +86,6 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./resources/js/module_settings/acciones_calificaciones.js":
-/*!*****************************************************************!*\
-  !*** ./resources/js/module_settings/acciones_calificaciones.js ***!
-  \*****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nError: ENOENT: no such file or directory, open 'C:\\xampp\\htdocs\\Nimbus\\resources\\js\\module_settings\\acciones_calificaciones.js'");
-
-/***/ }),
-
 /***/ "./resources/js/module_settings/acciones_formularios.js":
 /*!**************************************************************!*\
   !*** ./resources/js/module_settings/acciones_formularios.js ***!
@@ -1782,9 +1771,9 @@ $(function () {
 /***/ }),
 
 /***/ 1:
-/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/module_settings/menu.js ./resources/js/module_settings/formularios.js ./resources/js/module_settings/sub_formularios.js ./resources/js/module_settings/acciones_formularios.js ./resources/js/module_settings/audios.js ./resources/js/module_settings/calificaciones.js ./resources/js/module_settings/acciones_calificaciones.js ./resources/js/module_settings/agentes.js ./resources/js/module_settings/grupos.js ./resources/js/module_settings/speech.js ./resources/js/module_settings/acciones_speech.js ***!
-  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/module_settings/menu.js ./resources/js/module_settings/formularios.js ./resources/js/module_settings/sub_formularios.js ./resources/js/module_settings/acciones_formularios.js ./resources/js/module_settings/audios.js ./resources/js/module_settings/calificaciones.js ./resources/js/module_settings/agentes.js ./resources/js/module_settings/grupos.js ./resources/js/module_settings/speech.js ./resources/js/module_settings/acciones_speech.js ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1794,7 +1783,6 @@ __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\sub_
 __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\acciones_formularios.js */"./resources/js/module_settings/acciones_formularios.js");
 __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\audios.js */"./resources/js/module_settings/audios.js");
 __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\calificaciones.js */"./resources/js/module_settings/calificaciones.js");
-__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\acciones_calificaciones.js */"./resources/js/module_settings/acciones_calificaciones.js");
 __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\agentes.js */"./resources/js/module_settings/agentes.js");
 __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\grupos.js */"./resources/js/module_settings/grupos.js");
 __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\speech.js */"./resources/js/module_settings/speech.js");
