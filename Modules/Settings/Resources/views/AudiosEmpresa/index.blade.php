@@ -27,7 +27,7 @@
                             <tr data-id="{{ $audio->id }}" style="cursor:pointer">
                                 <td>{{ $audio->nombre }}</td>
                                 <td>{{ $audio->descripcion }}</td>                                                                                               <!-- strtok nos sirve para dividir nuestra ruta y nombre de archivo y asi solo tener el nombre y la extension del archivo para posteriormente reproducirla -->
-                                <td><audio controls preload="auto"><source src='http://localhost/Nimbus/storage/app/public/audios/{{ $audio->Empresas_id }}/<?php strtok($audio->ruta,'/'); echo strtok('/'); ?>' type="audio/wav">Tu navegador no soporta audio, favor de obtener la ultima version</audio></td>
+                                <td><audio controls preload="none"><source src='http://localhost/Nimbus/storage/app/public/audios/{{ $audio->Empresas_id }}/<?php strtok($audio->ruta,'/'); echo strtok('/'); ?>' type="audio/wav">Tu navegador no soporta audio, favor de obtener la ultima version</audio></td>
                             </tr>
                         @endforeach
                     </tbody>
