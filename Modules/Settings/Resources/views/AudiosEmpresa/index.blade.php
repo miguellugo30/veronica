@@ -26,7 +26,7 @@
                         @foreach( $audios as $audio )
                             <tr data-id="{{ $audio->id }}" style="cursor:pointer">
                                 <td>{{ $audio->nombre }}</td>
-                                <td>{{ $audio->descripcion }}</td>                                                                                            <!-- strtok nos sirve para dividir nuestra ruta y nombre de archivo y asi solo tener el nombre y la extension del archivo para posteriormente reproducirla -->
+                                <td>{{ $audio->descripcion }}</td>
                                 <td><audio controls preload="metadata"><source src='http://10.255.242.136/audios/temp/{{ $audio->ruta }}' type="audio/wav">Tu navegador no soporta audio, favor de obtener la ultima version</audio></td>
                             </tr>
                         @endforeach
