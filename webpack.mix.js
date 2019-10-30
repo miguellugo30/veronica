@@ -12,7 +12,6 @@ const mix = require('laravel-mix');
  */
 
 mix.js([
-        'resources/js/app.js',
         'resources/js/module_administrador/usuarios.js',
         'resources/js/module_administrador/modulos.js',
         'resources/js/module_administrador/submenus.js',
@@ -55,7 +54,10 @@ mix.js([
         'resources/js/module_inbound/buzon_voz.js',
         'resources/js/module_inbound/Did_Enrutamiento.js',
         'resources/js/module_inbound/ivr.js',
-    ], 'public/js/inbound.js');
+    ], 'public/js/inbound.js')
+    .js([
+        'resources/js/module_agentes/agentes.js',
+    ], 'public/js/agente.js');
 /*
 .sass('resources/sass/app.scss', 'public/css');
 mix.js('resources/js/app.js', 'public/js/all.js')

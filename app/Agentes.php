@@ -2,10 +2,13 @@
 
 namespace Nimbus;
 
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Agentes extends Model
+class Agentes extends  Authenticatable
 {
+    use Notifiable;
     /*
      * Esto sirve para insertar la fecha tipo timestamp debido a la configuración de Laravel
      */
@@ -48,9 +51,9 @@ class Agentes extends Model
     /**
      * Relacion uno a uno con Cat_Estdo_Agente
      */
-    public function Cat_Estdo_Agente()
+    public function Cat_Estado_Agente()
     {
-        return $this->hasOne('Nimbus\Cat_Estdo_Agente', 'Cat_Estdo_Agente_id', 'id');
+        return $this->hasOne('Nimbus\Cat_Estado_Agente', 'id', 'Cat_Estado_Agente_id');
     }
     /**
      * Uno a muchos con Agentes
@@ -65,6 +68,13 @@ class Agentes extends Model
     public function Canales()
     {
         return $this->belongsTo('Nimbus\Canales', 'Canales_id', 'id');
+    }
+    /**
+     * Uno a muchos con Asignacion Agente
+     */
+    public function Crd_Asignacion_Agente()
+    {
+        return $this->hasMany('Nimbus\Crd_Asignacion_Agente');
     }
 
 }

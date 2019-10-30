@@ -256,7 +256,7 @@ class DidEnrutamientoController extends Controller
                throw new \RuntimeException('Could not connect to Asterisk Management Interface.');
             }
             $result  = $ami->command('dialplan Reload');
-            dd( $result );
+
             $ami->disconnect();
         }
 

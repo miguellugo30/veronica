@@ -48,6 +48,10 @@
 
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,600,700,300italic,400italic,600italic">
+
+    <link rel='stylesheet' href='https://unpkg.com/@fullcalendar/core@4.3.1/main.min.css' />
+    <link rel='stylesheet' href='https://unpkg.com/@fullcalendar/list@4.3.0/main.min.css' />
+
 </head>
 <body class="hold-transition @yield('body_class')" style="font-size: 0.8rem !important;">
 
@@ -56,7 +60,7 @@
 <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery.min.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery.slimscroll.min.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('vendor/adminlte/dist/js/jquery.flexdatalist.min.js') }}"></script>
+<!--script src="{{-- asset('vendor/adminlte/dist/js/jquery.flexdatalist.min.js') --}}"></script-->
 
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
@@ -96,6 +100,10 @@
 @endif
 
 <script src="{{ asset('js/funciones_formularios.js') }}"></script>
+<script src='https://unpkg.com/@fullcalendar/core@4.3.1/main.min.js'></script>
+<script src='https://unpkg.com/@fullcalendar/core@4.3.1/locales-all.js'></script>
+<script src='https://unpkg.com/@fullcalendar/list@4.3.0/main.min.js'></script>
+
 
 <style>
 #cargando{

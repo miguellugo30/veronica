@@ -17,6 +17,14 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('/agentes/login', 'AgentesLoginController@showAgentesLoginForm');
+Route::post('/agentes/login', 'AgentesLoginController@agentesLogin');
+
+Route::get('/agentes/extension', 'AgentesLoginController@showAgentesExtension');
+Route::post('/agentes/extension', 'AgentesLoginController@agentesExtension');
+
+Route::post('/logout/agentes', 'AgentesLoginController@agentesLogout')->name('agentes.logout');
+
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/soporte/{token}', 'SoporteController@index');
 
