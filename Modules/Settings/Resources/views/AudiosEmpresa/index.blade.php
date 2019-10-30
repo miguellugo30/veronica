@@ -27,7 +27,7 @@
                             <tr data-id="{{ $audio->id }}" style="cursor:pointer">
                                 <td>{{ $audio->nombre }}</td>
                                 <td>{{ $audio->descripcion }}</td>
-                                <td><audio controls><source src='{{ $audio->ruta }}' type="audio/wav"></audio></td>
+                                <td><audio controls preload="metadata"><source src='http://10.255.242.136/audios/temp/{{ $audio->ruta }}' type="audio/wav">Tu navegador no soporta audio, favor de obtener la ultima version</audio></td>
                             </tr>
                         @endforeach
                     </tbody>

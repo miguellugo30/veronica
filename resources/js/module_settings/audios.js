@@ -30,7 +30,7 @@ $(function() {
     });
     //Ingresa el nombre del archivo seleccionado en el campo del browser
     $(document).on('change', '#file', function(e) {
-        $('#labelFile').html( e.target.files[0]['name'] );
+        $('#labelFile').html(e.target.files[0]['name']);
     });
     /**
      * Evento para guardar el nuevo audio
