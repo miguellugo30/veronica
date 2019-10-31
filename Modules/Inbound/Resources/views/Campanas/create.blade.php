@@ -50,7 +50,7 @@
                     <select name="periodic_announce" id="periodic_announce" class="form-control form-control-sm">
                         <option value="call_center/agentes_no_disponibles">Selecciona una opción</option>
                         @foreach ($Audios as $audio)
-                                <option value="{{$audio->nombre}}">{{ $audio->nombre }}</option>
+                                <option value="{{$audio->id}}">{{ $audio->nombre }}</option>
                         @endforeach
                     </select>
                 </div>
