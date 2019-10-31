@@ -1,5 +1,5 @@
 <div class="row">
-    <!--form enctype="multipart/form-data" id="altacampana" method="post"-->
+    <form enctype="multipart/form-data" id="altacampana" method="post">
         <div class="col">
             <fieldset>
                 <legend>Configuración:</legend>
@@ -41,7 +41,7 @@
                     <select name="msginical" id="msginical" class="form-control form-control-sm">
                         <option value="">Selecciona una opción</option>
                         @foreach ($Audios as $audio)
-                                <option value="{{$audio->ruta}}">{{ $audio->nombre }}</option>
+                                <option value="{{$audio->id}}">{{ $audio->nombre }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -50,7 +50,7 @@
                     <select name="periodic_announce" id="periodic_announce" class="form-control form-control-sm">
                         <option value="call_center/agentes_no_disponibles">Selecciona una opción</option>
                         @foreach ($Audios as $audio)
-                                <option value="{{$audio->ruta}}">{{ $audio->nombre }}</option>
+                                <option value="{{$audio->nombre}}">{{ $audio->nombre }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -80,8 +80,9 @@
                     <label for="script">Tipo de Script</label>
                     <select name="script" id="script" class="form-control form-control-sm">
                         <option value="">Seleccione Scripting</option>
-                        <option value="">Estatico</option>
-
+                        @foreach ($speech as $spech)
+                    <option value="{{ $spech->id }}">{{ $spech->nombre }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <!-- Seccion Alertas de Tiempo y Liberacion de Terminal -->
@@ -104,6 +105,9 @@
                     <label for="cal_lib">Calificacion de Liberacion (En caso de activar opcion anterior)</label>
                     <select name="cal_lib" id="cal_lib" class="form-control form-control-sm">
                         <option value="">Seleccione Calificacion</option>
+                        @foreach ($calificaciones as $calificacion)
+                        <option value="{{ $calificacion->id }}">{{ $calificacion->nombre }}</option>
+                        @endforeach
 
 
                     </select>
@@ -154,5 +158,5 @@
                 </table>
             </fieldset>
         </div>
-    <!--/form-->
+    </form>
 </div>
