@@ -380,9 +380,10 @@ a:focus {
     margin-right: 5px
 }
 
-.content-header>.breadcrumb>li+li:before {
-    content: '>\00a0'
-}
+
+/*.content-header>.breadcrumb>li+li:before {
+    content: '\00a0'
+}*/
 
 @media (max-width:991px) {
     .content-header>.breadcrumb {
@@ -509,7 +510,8 @@ a:focus {
     position: relative;
     width: 100%;
     padding: 10px;
-    overflow: hidden
+    overflow: hidden;
+    height: 100px;
 }
 
 .user-panel:before,
@@ -757,8 +759,8 @@ a:focus {
 .control-sidebar-bg,
 .control-sidebar {
     top: 0;
-    right: -230px;
-    width: 230px;
+    right: -400px;
+    width: 450px;
     -webkit-transition: right .3s ease-in-out;
     -o-transition: right .3s ease-in-out;
     transition: right .3s ease-in-out
@@ -767,7 +769,8 @@ a:focus {
 .control-sidebar {
     position: absolute;
     padding-top: 50px;
-    z-index: 1010
+    z-index: 1010;
+    height: 100%;
 }
 
 @media (max-width:768px) {

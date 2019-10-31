@@ -10,7 +10,11 @@ class Campanas extends Model
     public $timestamps = false;
 
     protected $fillable = [
+<<<<<<< HEAD
         'nombre', 'modalidad_logue','modalidad_grabacion','opciones_desvio','id_opciones_desvio','buzon','speech_id','id_grabacion','time_max_sonora','time_max_llamada','time_liberacion','id_relacion','tipo_marcacion','Base_Datos_id','Empresas_id','Grupos_id'
+=======
+        'nombre', 'modalidad_logue','modalidad_grabacion','opciones_desvio','id_opciones_desvio','buzon','speech_id','id_grabacion','time_max_sonora','time_max_llamada','time_liberacion','id_relacion','tipo_marcacion','Base_Datos_id','Empresas_id','Formularios_id'
+>>>>>>> e02dcd1798106ff862120d98e2a38acdd47d1fe3
     ];
     /**
      * Nombre de la tabla que se ocupra
@@ -53,7 +57,7 @@ class Campanas extends Model
      */
     public function Grupos()
     {
-        return $this->hasMany('Nimbus\Grupos');
+        return $this->hasMany('Nimbus\Grupos', 'id', 'Grupos_id');
     }
     /**
      * Relacion uno a uno con Campanas_Configuracion
@@ -69,5 +73,11 @@ class Campanas extends Model
     {
         return $this->belongsTo('Nimbus\Miembros_Campana');
     }
-
+    /**
+     * Relacion uno a uno con Speech
+     */
+    public function Speech()
+    {
+        return $this->hasOne('Nimbus\Speech', 'id','speech_id');
+    }
 }

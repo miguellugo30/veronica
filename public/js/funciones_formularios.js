@@ -1,6 +1,8 @@
 $(function() {
 
-    currentURL = window.location.href;
+    currentURL = window.location.href.replace('agentes/');
+
+    console.log(currentURL);
 
     $(document).on('click', '#btn_bloque_ocultos', function(event) {
         $('#bloque_oculto').slideToggle();
@@ -23,6 +25,21 @@ $(function() {
             }
         });
 
+    });
+
+    $(document).on('change', '#calificacion', function(event) {
+
+        let id = $(this).val();
+
+        let url = currentURL.replace('agentes/') + '/formularios/' + id;
+
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function(result) {
+                $(".viewFormularioCalificacion").html(result);
+            }
+        });
     });
 
 });

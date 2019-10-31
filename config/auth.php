@@ -46,6 +46,11 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+
+        'agentes' => [
+            'driver' => 'session',
+            'provider' => 'agentes',
+        ],
     ],
 
     /*
@@ -69,6 +74,11 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => Nimbus\User::class,
+        ],
+
+        'agentes' => [
+            'driver' => 'eloquent',
+            'model' => Nimbus\Agentes::class,
         ],
 
         // 'users' => [
@@ -97,6 +107,11 @@ return [
             'provider' => 'users',
             'table' => 'password_resets',
             'expire' => 60,
+        ],
+        'agentes' => [
+            'provider' => 'agentes',
+            'table' => 'password_resets',
+            'expire' => 120,
         ],
     ],
 
