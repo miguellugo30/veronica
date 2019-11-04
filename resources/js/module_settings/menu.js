@@ -30,6 +30,9 @@ $(function() {
         } else if (id == 22) {
             url = currentURL + '/Speech';
             table = ' #tableSpeech';
+        } else if (id == 35) {
+            url = currentURL + '/EventosAgentes';
+            table = ' #tableEventosAgentes';
         }
         $.get(url, function(data, textStatus, jqXHR) {
             $(".viewResult").html(data);

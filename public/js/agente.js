@@ -202,7 +202,7 @@ document.addEventListener('DOMContentLoaded', function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_agentes\agentes.js */"./resources/js/module_agentes/agentes.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_agentes\agentes.js */"./resources/js/module_agentes/agentes.js");
 
 
 /***/ })
