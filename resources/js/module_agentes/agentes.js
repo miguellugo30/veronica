@@ -1,4 +1,5 @@
 $(function() {
+
     $(document).on("click", ".nav-link", function(e) {
         $('.nav-link').attr('data-toggle', 'tab');
         let id = $(this).attr('href');
@@ -57,9 +58,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     stop();
 
                     $(".estado-agente").html("<i class='fa fa-circle text-danger'></i> " + obj['estado']);
+                    $(".colgar-llamada").prop("disabled", false);
 
                     $.get("agentes/" + id_agente + "/edit", function(data, textStatus, jqXHR) {
                         $(".view-call").html(data);
+                        $(".historico-llamadas").DataTable({
+                            "searching": false,
+                            "lengthChange": false,
+                            "iDisplayLength": 5
+                        });
                     });
 
                 }
@@ -76,6 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
     $(document).on("click", ".calificar-llamada", function(e) {
 
         let id_agente = $('#id_agente').val();
+        let canal = $("#canal").val();
         let _token = $("input[name=_token]").val();
 
         $.ajax({
@@ -83,6 +91,7 @@ document.addEventListener('DOMContentLoaded', function() {
             url: "/agentes", // Podrías separar las funciones de PHP en un fichero a parte
             data: {
                 id_agente: id_agente,
+                canal: canal,
                 _token: _token
             }
         }).done(function(msg) {
@@ -90,6 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log(msg)
             $(".view-call").html('');
             $(".estado-agente").html("<i class='fa fa-circle text-success'></i> Disponible");
+            $(".colgar-llamada").prop("disabled", true);
             start();
 
         });

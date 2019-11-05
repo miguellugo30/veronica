@@ -57,6 +57,7 @@ mix.js([
     ], 'public/js/inbound.js')
     .js([
         'resources/js/module_agentes/agentes.js',
+        'resources/js/module_agentes/eventosPantallaAgente.js',
     ], 'public/js/agente.js');
 /*
 .sass('resources/sass/app.scss', 'public/css');

@@ -155,8 +155,14 @@ document.addEventListener('DOMContentLoaded', function () {
         if (obj['status'] != 0) {
           stop();
           $(".estado-agente").html("<i class='fa fa-circle text-danger'></i> " + obj['estado']);
+          $(".colgar-llamada").prop("disabled", false);
           $.get("agentes/" + id_agente + "/edit", function (data, textStatus, jqXHR) {
             $(".view-call").html(data);
+            $(".historico-llamadas").DataTable({
+              "searching": false,
+              "lengthChange": false,
+              "iDisplayLength": 5
+            });
           });
         }
       });
@@ -173,6 +179,7 @@ document.addEventListener('DOMContentLoaded', function () {
   start();
   $(document).on("click", ".calificar-llamada", function (e) {
     var id_agente = $('#id_agente').val();
+    var canal = $("#canal").val();
 
     var _token = $("input[name=_token]").val();
 
@@ -182,12 +189,14 @@ document.addEventListener('DOMContentLoaded', function () {
       // Podrías separar las funciones de PHP en un fichero a parte
       data: {
         id_agente: id_agente,
+        canal: canal,
         _token: _token
       }
     }).done(function (msg) {
       console.log(msg);
       $(".view-call").html('');
       $(".estado-agente").html("<i class='fa fa-circle text-success'></i> Disponible");
+      $(".colgar-llamada").prop("disabled", true);
       start();
     });
   });
@@ -195,14 +204,42 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /***/ }),
 
+/***/ "./resources/js/module_agentes/eventosPantallaAgente.js":
+/*!**************************************************************!*\
+  !*** ./resources/js/module_agentes/eventosPantallaAgente.js ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  $(document).on("click", ".colgar-llamada", function (e) {
+    var canal = $("#canal").val();
+
+    var _token = $("input[name=_token]").val();
+
+    $.ajax({
+      method: "POST",
+      url: "/agentes",
+      // Podrías separar las funciones de PHP en un fichero a parte
+      data: {
+        canal: canal,
+        _token: _token
+      }
+    }).done(function (msg) {});
+  });
+});
+
+/***/ }),
+
 /***/ 3:
-/*!******************************************************!*\
-  !*** multi ./resources/js/module_agentes/agentes.js ***!
-  \******************************************************/
+/*!*************************************************************************************************************!*\
+  !*** multi ./resources/js/module_agentes/agentes.js ./resources/js/module_agentes/eventosPantallaAgente.js ***!
+  \*************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_agentes\agentes.js */"./resources/js/module_agentes/agentes.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_agentes\agentes.js */"./resources/js/module_agentes/agentes.js");
+module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_agentes\eventosPantallaAgente.js */"./resources/js/module_agentes/eventosPantallaAgente.js");
 
 
 /***/ })

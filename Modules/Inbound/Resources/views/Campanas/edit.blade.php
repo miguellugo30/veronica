@@ -51,7 +51,7 @@
                     <select name="periodic_announcee" id="periodic_announce" class="form-control form-control-sm">
                         <option value="call_center/agentes_no_disponibles">Selecciona una opción</option>
                         @foreach ($Audios as $audio)
-                                <option value="{{$audio->ruta}}" {{($audio->ruta == $campana->id_grabacion) ? 'selected = "selected"':'' }}>{{ $audio->nombre }}</option>
+                                <option value="{{$audio->ruta}}" {{($audio->ruta == $campana->Campanas_Configuracion->periodic_announce) ? 'selected = "selected"':'' }}>{{ $audio->nombre }}</option>
                         @endforeach
                     </select>
                 </div>

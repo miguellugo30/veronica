@@ -31,7 +31,7 @@ class Crd_Call_Center_Detalles extends Model
      */
     public function Crd_Asignacion_Agente()
     {
-        return $this->hasMany('Nimbus\Crd_Asignacion_Agente');
+        return $this->hasMany('Nimbus\Crd_Asignacion_Agente', 'Cdr_call_center_detalles_id', 'id');
     }
     /**
      * Uno a muchos con CDR

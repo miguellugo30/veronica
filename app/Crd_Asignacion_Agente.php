@@ -9,7 +9,7 @@ class Crd_Asignacion_Agente extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'uniqueid','Cdr_call_center_detalles_id','Empresas_id',
+        'uniqueid', 'canal','Cdr_call_center_detalles_id','Empresas_id',
     ];
     /**
      * Nombre de la tabla que se ocupra

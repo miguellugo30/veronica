@@ -53,7 +53,7 @@
     <link rel='stylesheet' href='https://unpkg.com/@fullcalendar/list@4.3.0/main.min.css' />
 
 </head>
-<body class="hold-transition @yield('body_class')" style="font-size: 0.8rem !important;">
+<body class="hold-transition @yield('body_class')" style="font-size: 0.8rem !important;" onbeforeunload="redireccionar()">
 
 @yield('body')
 

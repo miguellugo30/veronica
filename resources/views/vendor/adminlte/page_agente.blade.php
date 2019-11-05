@@ -72,6 +72,7 @@
                                     @endif
                                     {{ csrf_field() }}
                                     <input type="hidden" name="id_agente" id="id_agente" value="{{$agente->id}}">
+                                    <input type="hidden" name="id_evento" id="id_evento" value="{{$evento}}">
                                 </form>
                             @endif
                         </li>
@@ -122,7 +123,7 @@
                         </div>
                     </div>
                     <br>
-                    <button type="button" class="btn btn-danger m-1"><i class="fas fa-phone-slash"></i></button>
+                    <button type="button" class="btn btn-danger m-1 colgar-llamada" disabled><i class="fas fa-phone-slash"></i></button>
                     <button type="button" class="btn btn-info m-1"><i class="fas fa-check"></i></button>
                 </div>
                 <hr>
@@ -629,6 +630,42 @@
     @yield('js')
     <!--script src="//{{-- Request::getHost() --}}:6001/socket.io/socket.io.js"></script-->
     <script src="{{ asset('js/agente.js')}}" charset="utf-8"></script>
+    <script>
+        /*
+        $(window).bind('beforeunload', function(e) {
+            e.preventDefault();
+            // make AJAX call
+            alert( "ESTA SEGURO DE SALIR" );
+        });
+        window.addEventListener('beforeunload', function (e) {
+            return "Do you really want to close?";
+        });
+        /*
+        var bPreguntar = true;
 
+        window.onbeforeunload = preguntarAntesDeSalir;
+
+        function preguntarAntesDeSalir() {
+            if (bPreguntar)
+                return "¿Seguro que quieres salir?";
+        }
+        *
+        var areYouReallySure = false;
+        function areYouSure() {
+            if(allowPrompt){
+                if (!areYouReallySure && true) {
+                    areYouReallySure = true;
+                    var confMessage = "***************************************nn E S P E R A !!! nnAntes de abandonar nuestra web, síguenos en nuestras redes sociales como Facebook, Twitter o Instagram.nnnYA PUEDES HACER CLIC EN EL BOTÓN CANCELAR SI QUIERES...nn***************************************";
+                    return confMessage;
+                }
+            }else{
+                allowPrompt = true;
+            }
+        }
+
+        var allowPrompt = true;
+        window.onbeforeunload = areYouSure;
+        */
+    </script>
 @stop
 

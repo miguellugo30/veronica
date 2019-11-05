@@ -4,17 +4,17 @@ namespace Nimbus;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Crd_Call_Center extends Model
+class Registros_Eventos_Agentes extends Model
 {
     public $timestamps = false;
 
     protected $fillable = [
-        'tipo', 'uniqueid','callerid','calledid','fecha_inicio','fecha_fin', 'hangup', 'Empresas_id'
+        'fecha_inicio', 'fecha_fin','Eventos_Agentes_id','Agentes_id',
     ];
     /**
      * Nombre de la tabla que se ocupra
      */
-    protected $table = 'Cdr_call_center';
+    protected $table = 'Registros_Eventos_Agentes';
     /*
     |--------------------------------------------------------------------------
     | RELACIONES DE BASE DE DATOS
@@ -22,15 +22,15 @@ class Crd_Call_Center extends Model
     /**
      * Muchos a uno con Empresas
      */
-    public function Empresas()
+    public function Eventos_agentes()
     {
-        return $this->belongsTo('Nimbus\Empresas', 'Empresas_id', 'id');
+        return $this->belongsTo('Nimbus\Eventos_Agentes', 'Eventos_Agentes_id', 'id');
     }
     /**
-     * Uno a muchos con Empresas
+     * Muchos a uno con Empresas
      */
-    public function CDR_Detalle()
+    public function Agentes()
     {
-        return $this->hasMany('Nimbus\Crd_Call_Center_Detalles', 'uniqueid', 'uniqueid');
+        return $this->belongsTo('Nimbus\Agentes', 'Agentes_id', 'id');
     }
 }
