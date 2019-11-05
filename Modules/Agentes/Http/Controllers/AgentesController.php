@@ -6,12 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use DB;
-use PHPAMI\Ami;
+use Modules\Agentes\Http\Controllers\EventosAmiController;
 
 use Nimbus\Agentes;
 use Nimbus\Campanas;
 use Nimbus\Crd_Asignacion_Agente;
 use Nimbus\Miembros_Campana;
+use Nimbus\Eventos_Agentes;
 
 class AgentesController extends Controller
 {
@@ -23,9 +24,9 @@ class AgentesController extends Controller
     {
         $evento = $request->evento;
         $agente = auth()->guard('agentes')->user();
+        $eventosAgente = Eventos_Agentes::active()->where('Empresas_id', $agente->Empresas_id)->get();
 
-
-        return view('agentes::index', compact('agente', 'evento'));
+        return view('agentes::index', compact('agente', 'evento', 'eventosAgente'));
     }
 
     /**
@@ -47,14 +48,7 @@ class AgentesController extends Controller
         Agentes::where( 'id', $request->id_agente )->update(['Cat_Estado_Agente_id' => 2]);
         Miembros_Campana::where( 'membername', $request->id_agente )->update(['Paused' => 0]);
 
-        $ami = new Ami();
-        if ($ami->connect('10.255.242.136:5038', 'Call_Center', 'Call_C3nt3r_1nf1n1t', 'off') === false) {
-            throw new \RuntimeException('Could not connect to Asterisk Management Interface.');
-        }
-
-        $ami->command('hangup request '.$request->canal);
-
-        $ami->disconnect();
+        EventosAmiController::colgar_llamada( $request->canal );
 
     }
 
@@ -70,6 +64,10 @@ class AgentesController extends Controller
 
         if ( $agente->Cat_Estado_Agente_id == 4 || $agente->Cat_Estado_Agente_id == 8 ) {
             $data['status'] = 1;
+            $data['estado'] = $agente->Cat_Estado_Agente->nombre;
+            return json_encode( $data );
+        } else if( $agente->Cat_Estado_Agente_id == 3 ) {
+            $data['status'] = 2;
             $data['estado'] = $agente->Cat_Estado_Agente->nombre;
             return json_encode( $data );
         } else {

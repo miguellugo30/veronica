@@ -76,5 +76,12 @@ class Agentes extends  Authenticatable
     {
         return $this->hasMany('Nimbus\Crd_Asignacion_Agente');
     }
+    /**
+     * Uno a muchos con Registros_Eventos_Agentes
+     */
+    public function Registros_Eventos_Agentes()
+    {
+        return $this->hasMany('Nimbus\Registros_Eventos_Agentes', 'Agentes_id', 'id');
+    }
 
 }

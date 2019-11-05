@@ -7,14 +7,11 @@ $(function() {
 
         $.ajax({
             method: "POST",
-            url: "/agentes", // Podrías separar las funciones de PHP en un fichero a parte
+            url: "/agentes/colgar", // Podrías separar las funciones de PHP en un fichero a parte
             data: {
                 canal: canal,
                 _token: _token
             }
-        }).done(function(msg) {
-
-        });
+        }).done(function(msg) {});
     });
-
 });

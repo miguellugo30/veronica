@@ -8,6 +8,7 @@ use Auth;
 use Modules\Agentes\Http\Controllers\LogRegistroEventosController;
 
 use Nimbus\Agentes;
+use Nimbus\Miembros_Campana;
 
 class AgentesLoginController extends Controller
 {
@@ -110,8 +111,7 @@ class AgentesLoginController extends Controller
 
                 $evento = LogRegistroEventosController::registro_evento( $agente->id, 1 );
 
-                return redirect()->route('post.index', ['evento' => $evento->id]);
-                //return redirect()->action('\Modules\Agentes\Http\Controllers\AgentesController@index', ['evento' => $evento->id]);
+                return redirect()->action('\Modules\Agentes\Http\Controllers\AgentesController@index', ['evento' => $evento->id]);
                 //return redirect('/agentes');
             } else {
                 return back()->withErrors(['email' => 'La extension ya se encuentra en uso.']);

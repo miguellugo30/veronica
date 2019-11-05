@@ -144,13 +144,14 @@
                     <div class="col text-center">
                         <label for=""><b>No Disponible</b></label>
                         <div class="input-group">
-                            <select name="" id="" class="form-control form-control-sm">
-                                <option value="">a</option>
-                                <option value="">b</option>
-                                <option value="">c</option>
+                            <select name="no_disponible" id="no_disponible" class="form-control form-control-sm">
+                                <option value="0">Selecciona una opcion</option>
+                                @foreach ($eventosAgente as $evento)
+                                    <option value="{{$evento->id}}">{{$evento->nombre}}</option>
+                                @endforeach
                             </select>
                             <div class="input-group-prepend">
-                                <div class="input-group-text btn-primary" style="cursor:pointer"><i class="fas fa-ban text-white"></i></div>
+                                <div class="input-group-text btn-primary activar_no_disponible" style="cursor:pointer"><i class="fas fa-ban text-white"></i></div>
                             </div>
                         </div>
                     </div>
@@ -173,7 +174,10 @@
             @if(config('adminlte.layout') == 'top-nav')
             <div class="container">
             @endif
-            <div class="view-call">
+            <div class="view-call  ">
+                <div class="col-12 text-center" style="padding-top: 19%;">
+                    <i class="fas fa-spinner fa-10x fa-spin text-info"></i>
+                </div>
                 <!-- Content Header (Page header) -->
                 <!--section class="content-header" style="margin-right:50px">
                     @yield('content_header')
@@ -622,6 +626,24 @@
         </aside>
     </div>
     <!-- ./wrapper -->
+    <!-- MODAL NO DISPONIBLE -->
+    <div class="modal fade" id="modal-no-disponible" tabindex="-1" role="dialog" aria-labelledby="title-no-disponible" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="title-no-disponible"></h4>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" id="agente-disponible">Disponible</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- FIN MODAL NO DISPONIBLE -->
+
 @stop
 
 @section('adminlte_js')

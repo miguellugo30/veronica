@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }).done(function (msg) {
         var obj = $.parseJSON(msg);
 
-        if (obj['status'] != 0) {
+        if (obj['status'] == 1) {
           stop();
           $(".estado-agente").html("<i class='fa fa-circle text-danger'></i> " + obj['estado']);
           $(".colgar-llamada").prop("disabled", false);
@@ -163,6 +163,13 @@ document.addEventListener('DOMContentLoaded', function () {
               "lengthChange": false,
               "iDisplayLength": 5
             });
+          });
+        } else if (obj['status'] == 2) {
+          stop();
+          $(".estado-agente").html("<i class='fa fa-circle text-danger'></i> " + obj['estado']);
+          $("#modal-no-disponible").modal({
+            backdrop: 'static',
+            keyboard: false
           });
         }
       });
@@ -178,6 +185,7 @@ document.addEventListener('DOMContentLoaded', function () {
   ;
   start();
   $(document).on("click", ".calificar-llamada", function (e) {
+    stop();
     var id_agente = $('#id_agente').val();
     var canal = $("#canal").val();
 
@@ -193,12 +201,63 @@ document.addEventListener('DOMContentLoaded', function () {
         _token: _token
       }
     }).done(function (msg) {
-      console.log(msg);
-      $(".view-call").html('');
+      $(".view-call").html('<div class="col-12 text-center" style="padding-top: 19%;"><i class="fas fa-spinner fa-10x fa-spin text-info"></i></div>');
       $(".estado-agente").html("<i class='fa fa-circle text-success'></i> Disponible");
       $(".colgar-llamada").prop("disabled", true);
       start();
     });
+  });
+  $(document).on("change", "#no_disponible", function (e) {
+    var no_disponible = $(this).val();
+    var no_disponible_text = $('select[name="no_disponible"] option:selected').text();
+
+    var _token = $("input[name=_token]").val();
+
+    $('#title-no-disponible').html(no_disponible_text);
+
+    if (no_disponible != '0') {
+      $.ajax({
+        method: "POST",
+        url: "/agentes/no_disponible",
+        // Podrías separar las funciones de PHP en un fichero a parte
+        data: {
+          no_disponible: no_disponible,
+          no_disponible_text: no_disponible_text,
+          _token: _token
+        }
+      }).done(function (msg) {
+        $(".modal-body").html(msg);
+        $("#modal-no-disponible").modal({
+          backdrop: 'static',
+          keyboard: false
+        });
+      });
+    }
+  });
+  $(document).on("click", "#agente-disponible", function (e) {
+    var agente = $('#agente_evento').val();
+    var evento = $('#id_no_disponible').val();
+
+    var _token = $("input[name=_token]").val();
+
+    if (no_disponible != '') {
+      $.ajax({
+        method: "POST",
+        url: "/agentes/agente_disponible",
+        // Podrías separar las funciones de PHP en un fichero a parte
+        data: {
+          agente: agente,
+          evento: evento,
+          _token: _token
+        }
+      }).done(function (msg) {
+        $(".estado-agente").html("<i class='fa fa-circle text-success'></i> Disponible");
+        $('#no_disponible option[value="0"]').attr("selected", true);
+        $("#modal-no-disponible").modal('hide');
+        $(".modal-body").html('');
+        start();
+      });
+    }
   });
 });
 
@@ -219,7 +278,7 @@ $(function () {
 
     $.ajax({
       method: "POST",
-      url: "/agentes",
+      url: "/agentes/colgar",
       // Podrías separar las funciones de PHP en un fichero a parte
       data: {
         canal: canal,

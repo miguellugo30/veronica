@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 var obj = $.parseJSON(msg);
 
-                if (obj['status'] != 0) {
+                if (obj['status'] == 1) {
 
                     stop();
 
@@ -69,6 +69,12 @@ document.addEventListener('DOMContentLoaded', function() {
                         });
                     });
 
+                } else if (obj['status'] == 2) {
+                    stop();
+
+                    $(".estado-agente").html("<i class='fa fa-circle text-danger'></i> " + obj['estado']);
+                    $("#modal-no-disponible").modal({ backdrop: 'static', keyboard: false });
+
                 }
             });
         }, 3000);
@@ -81,10 +87,12 @@ document.addEventListener('DOMContentLoaded', function() {
     start();
 
     $(document).on("click", ".calificar-llamada", function(e) {
+        stop();
 
         let id_agente = $('#id_agente').val();
         let canal = $("#canal").val();
         let _token = $("input[name=_token]").val();
+
 
         $.ajax({
             method: "POST",
@@ -95,13 +103,59 @@ document.addEventListener('DOMContentLoaded', function() {
                 _token: _token
             }
         }).done(function(msg) {
-
-            console.log(msg)
-            $(".view-call").html('');
+            $(".view-call").html('<div class="col-12 text-center" style="padding-top: 19%;"><i class="fas fa-spinner fa-10x fa-spin text-info"></i></div>');
             $(".estado-agente").html("<i class='fa fa-circle text-success'></i> Disponible");
             $(".colgar-llamada").prop("disabled", true);
             start();
-
         });
+    });
+
+    $(document).on("change", "#no_disponible", function(e) {
+
+        let no_disponible = $(this).val();
+        let no_disponible_text = $('select[name="no_disponible"] option:selected').text();
+        let _token = $("input[name=_token]").val();
+
+        $('#title-no-disponible').html(no_disponible_text);
+
+        if (no_disponible != '0') {
+            $.ajax({
+                method: "POST",
+                url: "/agentes/no_disponible", // Podrías separar las funciones de PHP en un fichero a parte
+                data: {
+                    no_disponible: no_disponible,
+                    no_disponible_text: no_disponible_text,
+                    _token: _token
+                }
+            }).done(function(msg) {
+                $(".modal-body").html(msg)
+                $("#modal-no-disponible").modal({ backdrop: 'static', keyboard: false });
+            });
+        }
+    });
+
+    $(document).on("click", "#agente-disponible", function(e) {
+
+        let agente = $('#agente_evento').val();
+        let evento = $('#id_no_disponible').val();
+        let _token = $("input[name=_token]").val();
+
+        if (no_disponible != '') {
+            $.ajax({
+                method: "POST",
+                url: "/agentes/agente_disponible", // Podrías separar las funciones de PHP en un fichero a parte
+                data: {
+                    agente: agente,
+                    evento: evento,
+                    _token: _token
+                }
+            }).done(function(msg) {
+                $(".estado-agente").html("<i class='fa fa-circle text-success'></i> Disponible");
+                $('#no_disponible option[value="0"]').attr("selected", true);
+                $("#modal-no-disponible").modal('hide');
+                $(".modal-body").html('')
+                start();
+            });
+        }
     });
 });

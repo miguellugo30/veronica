@@ -44,6 +44,7 @@ mix.js([
         'resources/js/module_settings/grupos.js',
         'resources/js/module_settings/speech.js',
         'resources/js/module_settings/acciones_speech.js',
+        'resources/js/module_settings/eventos_agentes.js',
 
     ], 'public/js/settings.js')
     .js([

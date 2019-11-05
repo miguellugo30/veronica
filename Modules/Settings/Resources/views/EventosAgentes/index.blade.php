@@ -1,15 +1,15 @@
 <div class="box box-primary">
     <div class="box-header with-border">
-        <h3 class="box-title"><i class="fas fa-user-cog"></i> Grupos</h3>
+        <h3 class="box-title"><i class="fas fa-user-cog"></i> Eventos</h3>
         <div class="box-tools pull-right">
-            @can('delete grupos agentes')
-            <button type="button" class="btn btn-danger  btn-sm deleteGrupo" style="display:none"><i class="fas fa-trash-alt"></i> Elminar</button>
+            @can('delete eventos')
+            <button type="button" class="btn btn-danger  btn-sm deleteEventoAgente" style="display:none"><i class="fas fa-trash-alt"></i> Elminar</button>
             @endcan
-            @can('edit grupos agentes')
-            <button type="button" class="btn btn-warning  btn-sm editGrupo" style="display:none"><i class="fas fa-edit"></i> Editar</button>
+            @can('edit eventos')
+            <button type="button" class="btn btn-warning  btn-sm editEventoAgente" style="display:none"><i class="fas fa-edit"></i> Editar</button>
             @endcan
-                @can('create grupos agentes')
-                <button type="button" class="btn btn-primary btn-sm newGrupo" data-widget="remove"><i class="fas fa-plus"></i> Nuevo</button>
+                @can('create eventos')
+                <button type="button" class="btn btn-primary btn-sm newEventoAgente" data-widget="remove"><i class="fas fa-plus"></i> Nuevo</button>
                 @endcan
             <input type="hidden" name="idSeleccionado" id="idSeleccionado" value="">
         </div>
@@ -17,18 +17,18 @@
     <div class="box-body">
         <div class="row">
             <div class="col-md-12 viewIndex" >
-                <table id="tableGrupos" class="display table table-bordered table-hover table-sm" style="width:100%">
+                <table id="tableEventosAgentes" class="display table table-bordered table-hover table-sm" style="width:100%">
                     <thead>
                         <tr>
                             <th>Nombre</th>
-                            <th>Descripción</th>
+                            <th>Tiempo</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach( $grupos as $grupo )
-                            <tr data-id="{{ $grupo->id }}" style="cursor:pointer">
-                                <td>{{ $grupo->nombre }}</td>
-                                <td>{{ $grupo->descripcion }}</td>
+                        @foreach( $eventos as $evento )
+                            <tr data-id="{{ $evento->id }}" style="cursor:pointer">
+                                <td>{{ $evento->nombre }}</td>
+                                <td>{{ $evento->tiempo }}</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -40,7 +40,7 @@
 </div>
 <!-- MODAL -->
 <div class="modal fade bd-example-modal-lg" tabindex="-1" id="modal" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="tituloModal">Modal title</h5>
@@ -59,3 +59,4 @@
     </div>
 </div>
 <!-- FIN MODAL -->
+
