@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use DB;
+
 use Nimbus\User;
 use Nimbus\Http\Controllers\LogController;
 use Nimbus\Campanas;
@@ -55,7 +57,6 @@ class CampanasController extends Controller
      */
     public function store(Request $request)
     {
-
         /**
          * Obtenemos los datos del usuario logeado
          */
@@ -92,14 +93,25 @@ class CampanasController extends Controller
             ]
         );
         /**
+         * Obtenemos la intecace a usar para el agente
+         */
+        $interface = $this->modalidad_logueo( $request->input('mlogeo') );
+        /**
          * Insertar información el tabla de Miembros_Campana
          */
         $agentesParticipantes = json_decode( $request->input('agentesParticipantes') );
         for ($i=0; $i < count($agentesParticipantes); $i++) {
+            /**
+             * Obtenemos el estado actual ( Pause ) del agente
+             */
+            $estado = $this->estado_agente( $agentesParticipantes[$i] );
+
             Miembros_Campana::create(
                 [
                     'membername' =>  $agentesParticipantes[$i],
                     'queue_name' => $campana->id,
+                    'interface' => $interface.$agentesParticipantes[$i],
+                    'paused' => $estado['paused'],
                     'Agentes_id' =>  $agentesParticipantes[$i],
                     'Campanas_id'   => $campana->id
                 ]
@@ -181,15 +193,26 @@ class CampanasController extends Controller
          * para posteriormente asocociar a los nuevos
          */
         Miembros_Campana::where('Campanas_id', '=', $id)->delete();
+         /**
+         * Obtenemos la intecace a usar para el agente
+         */
+        $interface = $this->modalidad_logueo( $request->input('mlogeo') );
         /**
          * Insertar información el tabla de Miembros_Campana
          */
         $agentesParticipantes = json_decode( $request->input('agentesParticipantes') );
         for ($i=0; $i < count($agentesParticipantes); $i++) {
+            /**
+             * Obtenemos el estado actual ( Pause ) del agente
+             */
+            $estado = $this->estado_agente( $agentesParticipantes[$i] );
+
             Miembros_Campana::create(
                 [
                     'membername' =>  $agentesParticipantes[$i],
                     'queue_name' => $id,
+                    'interface' => $interface.$agentesParticipantes[$i],
+                    'paused' => $estado,
                     'Agentes_id' =>  $agentesParticipantes[$i],
                     'Campanas_id'   => $id
                 ]
@@ -217,16 +240,70 @@ class CampanasController extends Controller
      */
     public function destroy($id)
     {
-        //dd($id);
         Campanas::where('id',$id)
         ->update(['activo'=>'0']);
+
+        Miembros_Campana::where('queue_name', $id)->delete();
         /**
          * Creamos el logs
          */
         $mensaje = 'Se Elimino un registro con id: '.$id;
         $log = new LogController;
-        $log->store('Eliminacion', 'User', $mensaje, $id);
+        $log->store('Eliminacion', 'Campanas', $mensaje, $id);
 
         return redirect()->route('campanas.index');
     }
+    /**
+     * Fucion para obtener la modalidad de logueo donde pertenece un agente
+     */
+    public function validar_modo_logueo( Request $request )
+    {
+        $modalidad = DB::table('Miembros_Campanas')
+                    ->join( 'Campanas', 'Campanas.id', '=', 'Miembros_Campanas.Campanas_id' )
+                    ->select(
+                                'Campanas.modalidad_logue'
+                            )
+                    ->where('Miembros_Campanas.Agentes_id', $request->idAgente)
+                    ->where('Campanas.activo', 1)->get();
+
+        return $modalidad;
+    }
+    /**
+     * Funcion para eliminar agentes participante de una campana
+     */
+    public function eliminar_participantes( Request $request )
+    {
+        Miembros_Campana::where('queue_name', $request->camapana_id)->delete();
+    }
+    /**
+     * Funcion para definir la interface del agente con base a
+     * la modalidad de logueo
+     */
+    public function modalidad_logueo( $modalidad )
+    {
+        /**
+         * Definir la interface, dependiendo la modalidad de logueo
+         */
+        if ( $modalidad == 'canal_abierto' ) {
+            return 'Agent/';
+        } else {
+            return 'SIP/';
+        }
+    }
+    /**
+     * Funcion para devolver el estado del agente,
+     * si no se encuentra el agente regresa el estado
+     * en pausa = 1, si no se regresa el estado actual
+     */
+    public function estado_agente( $agente )
+    {
+        $estado = Miembros_Campana::select('paused')->where('Agentes_id', $agente)->groupBy('paused')->get();
+
+        if ($estado == '') {
+            return 1;
+        } else {
+            return $estado[0]->paused;
+        }
+    }
+
 }

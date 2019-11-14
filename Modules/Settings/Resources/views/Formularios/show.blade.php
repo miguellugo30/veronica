@@ -1,27 +1,34 @@
+<style>
+    textarea {
+        resize: none;
+    }
+</style>
+
 <input type="hidden" name="idForm" id="idForm" value="{{ Str::snake( $formulario->nombre ) }}">
 
 <form id="{{ Str::snake( $formulario->nombre ) }}" class="formularioView">
+    <input type="hidden" name="idFormulario" id="idFormulario" value="{{ $formulario->id }}">
     <div class="col-12" style="float:none; margin:auto">
         @foreach ($campos as $campo)
             @if($campo->tipo_campo == 'text')
 
                 <div class="form-group">
                     <label for="name">{{$campo->nombre_campo}}</label>
-                    <input type="{{$campo->tipo_campo}}" class="form-control form-control-sm" id="formulario" name="formulario" placeholder="{{$campo->nombre_campo}}">
+                    <input type="{{$campo->tipo_campo}}" class="form-control form-control-sm" id="campo_{{$campo->id}}" name="campo_{{$campo->id}}" placeholder="{{$campo->nombre_campo}}">
                 </div>
 
             @elseif($campo->tipo_campo == 'textarea')
 
                 <div class="form-group">
                     <label for="name">{{$campo->nombre_campo}}</label>
-                    <textarea name="" id="" cols="30" rows="10"></textarea>
+                    <textarea class="form-control" name="campo_{{$campo->id}}" id="campo_{{$campo->id}}" cols="30" rows="3"></textarea>
                 </div>
 
             @elseif($campo->tipo_campo == 'fecha')
 
                 <div class="form-group">
                     <label for="name">{{$campo->nombre_campo}}</label>
-                    <input type="date" name="" id="">
+                    <input type="date" name="campo_{{$campo->id}}" id="campo_{{$campo->id}}">
                 </div>
 
             @elseif($campo->tipo_campo == 'select')
@@ -41,7 +48,7 @@
 
                 <div class="form-group">
                     <label for="name">{{$campo->nombre_campo}}</label>
-                    <input type="number" name="" id="">
+                    <input type="number" name="campo_{{$campo->id}}" id="campo_{{$campo->id}}">
                 </div>
 
             @elseif($campo->tipo_campo == 'Seperador')

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e7af18dffaa1762ecffe61b21a257504",
+    "content-hash": "045a336dbe97765c45b2d670df63b555",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -1918,6 +1918,49 @@
                 "uuid"
             ],
             "time": "2018-07-19T23:38:55+00:00"
+        },
+        {
+            "name": "ritey/nusoap",
+            "version": "0.9.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ritey/nusoap.git",
+                "reference": "0ab518be271312e4eac4a08b27b3a7ddf9aedea2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ritey/nusoap/zipball/0ab518be271312e4eac4a08b27b3a7ddf9aedea2",
+                "reference": "0ab518be271312e4eac4a08b27b3a7ddf9aedea2",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPLv2"
+            ],
+            "authors": [
+                {
+                    "name": "Dietrich Ayala",
+                    "homepage": "http://sourceforge.net/u/dietricha/profile/"
+                },
+                {
+                    "name": "Scott Nichol",
+                    "homepage": "http://sourceforge.net/u/snichol/profile/"
+                }
+            ],
+            "description": "Clone of NuSoap to work with Packagist/Composer",
+            "homepage": "http://github.com/ritey/nusoap",
+            "keywords": [
+                "nusoap",
+                "php",
+                "soap"
+            ],
+            "time": "2016-06-07T10:48:50+00:00"
         },
         {
             "name": "spatie/laravel-permission",

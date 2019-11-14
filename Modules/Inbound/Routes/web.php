@@ -23,6 +23,8 @@ Route::prefix('inbound')->group(function() {
  * Rutas para CRUD de Campanas
  */
 Route::group(['namespace' => '\Modules\Inbound\Http\Controllers', 'prefix' => 'inbound', 'middleware' => 'auth'], function() {
+    Route::post('campanas/validar_modo_logueo', 'CampanasController@validar_modo_logueo')->name('campanas.validar_modo_logueo');
+    Route::post('campanas/eliminar-participantes', 'CampanasController@eliminar_participantes')->name('campanas.eliminar_participantes');
     Route::resource('campanas','CampanasController');
 });
 /**

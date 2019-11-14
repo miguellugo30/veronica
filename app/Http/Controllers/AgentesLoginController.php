@@ -86,7 +86,6 @@ class AgentesLoginController extends Controller
      */
     public function showAgentesExtension( Request $request )
     {
-
         $agente = auth()->guard('agentes')->user();
 
         return view('agentes::logeo_extension', compact( 'agente' ) );
@@ -108,6 +107,10 @@ class AgentesLoginController extends Controller
             if ( $disponible->isEmpty() ) {
 
                 $this->Actualiza_Estado_Agente( $agente->id, 2 );
+                /**
+                 * Ponemos al usuario en pausa dentro de la cola
+                 */
+                $this->pausar_agente( $agente->id, 0 );
 
                 $evento = LogRegistroEventosController::registro_evento( $agente->id, 1 );
 
@@ -138,29 +141,29 @@ class AgentesLoginController extends Controller
     /**
      * Funcion para validar si el Agente/Extension esta disponible
      */
-    public function Valida_Agente( $id_agente)
+    private function Valida_Agente( $id_agente)
     {
-        return Agentes::where( [['extension',$id_agente],['Cat_Estado_Agente_id','=','2'],])->get();
+        return Agentes::where('id',$id_agente)->whereIn('Cat_Estado_Agente_id',[2,3,4,8])->get();
     }
     /**
      * Funcion para actualizar el estado del agente/extension
      */
-    public function Actualiza_Estado_Agente( $id_agente, $estado)
+    private function Actualiza_Estado_Agente( $id_agente, $estado)
     {
         Agentes::where( 'id', $id_agente )->update(['Cat_Estado_Agente_id' => $estado]);
     }
     /**
      * Funcion para actualizar la extension y el estado del agente/extension
      */
-    public function Actualiza_Estado_Extension_Agente( $id_agente, $estado, $extension)
+    private function Actualiza_Estado_Extension_Agente( $id_agente, $estado, $extension)
     {
         Agentes::where( 'id', $id_agente )->update(['extension' => $extension,'Cat_Estado_Agente_id' => $estado]);
     }
     /**
      * Funcion para poner el agente en pausa
      */
-    public function pausar_agente($id_agente)
+    private function pausar_agente($id_agente, $estado)
     {
-        Miembros_Campana::where( 'membername', $id_agente )->update(['Paused' => 0]);
+        Miembros_Campana::where( 'Agentes_id', $id_agente )->update(['paused' => $estado]);
     }
 }

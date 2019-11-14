@@ -1,10 +1,11 @@
-<section class="content-header" style="margin-right:50px">
+<section class="content-header" style="margin-right:65px">
     <div class="row">
         <div class="col-4">
             <h4>
                 <b>{{ ucwords( $campana->nombre ) }}</b>
                 <small>{{$calledid}}</small>
                 <input type="hidden" id="canal" name="canal" value="{{ $canal }}">
+                <input type="hidden" id="uniqueid" name="uniqueid" value="{{ $uniqueid }}">
             </h4>
         </div>
         <div class="col-4 text-center">
@@ -19,7 +20,7 @@
     </div>
 </section>
 
-<section class="content viewResult" style="margin-right:50px">
+<section class="content viewResult" style="margin-right:65px">
     <div class="row">
             <div class="col-8  h-100 d-inline-block">
                 <div class="box" >
@@ -40,7 +41,7 @@
                                             <select class="form-control form-control-sm" name="calificacion" id="calificacion">
                                                 <option value="">Selecciona una calificacion</option>
                                                 @foreach ($grupo->Calificaciones as $calificacion)
-                                                    <option value="{{$calificacion->Formularios_id}}">{{$calificacion->nombre}}</option>
+                                                    <option data-calificacionId="{{$calificacion->id}}" value="{{$calificacion->Formularios_id}}">{{$calificacion->nombre}}</option>
                                                 @endforeach
                                             </select>
                                         </div>

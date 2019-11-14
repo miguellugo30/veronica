@@ -970,12 +970,47 @@ $(function () {
    */
 
   $(document).on('click', '.agentesNoSeleccionados tr', function (event) {
-    $(this).clone().appendTo(".agentesSeleccionados"); //Clonamos la fila
-
+    var fila = $(this);
     var idAgente = $(this).data('id');
-    agentesParticipantes.push(idAgente);
-    $("#agentes_participantes").val(JSON.stringify(agentesParticipantes));
-    $(this).remove();
+    var modoLogueo = $('#mlogeo').val();
+    var bandera = true;
+
+    var _token = $("input[name=_token]").val();
+
+    var url = currentURL + '/campanas/validar_modo_logueo';
+
+    if (modoLogueo == "") {
+      Swal.fire('!Tenemos un problema!', 'Tienes que elegir primero la modalidad de logueo a usar en esta campaña.', 'warning');
+    } else {
+      $.ajax({
+        url: url,
+        type: 'POST',
+        data: {
+          _token: _token,
+          idAgente: idAgente
+        },
+        success: function success(result) {
+          for (var i = 0; i < result.length; i++) {
+            if (modoLogueo === result[i]['modalidad_logue']) {
+              bandera = true;
+            } else {
+              bandera = false;
+              break;
+            }
+          }
+
+          if (bandera) {
+            fila.clone().appendTo(".agentesSeleccionados"); //Clonamos la fila
+
+            agentesParticipantes.push(idAgente);
+            $("#agentes_participantes").val(JSON.stringify(agentesParticipantes));
+            fila.remove();
+          } else {
+            Swal.fire('!Tenemos un problema!', 'No se puede agregar el agente seleccionado, ya que esta campaña tiene diferente modalidad de logueo a las cuales ya esta agregado el agente.', 'warning');
+          }
+        }
+      });
+    }
   });
   /**
    * Evento para quitar agentes a la campana
@@ -992,6 +1027,51 @@ $(function () {
 
     $("#agentes_participantes").val(JSON.stringify(agentesParticipantes));
     $(this).remove();
+  });
+  $(document).on('change', '.mlogueoEditar', function (event) {
+    event.preventDefault();
+    var mLogueoInicial = $("#mlogueoInicial").val();
+    Swal.fire({
+      title: 'Estas seguro?',
+      text: "Al cambiar la modalidad de logueo, se quitaran los agentes participantes, para evitar problemas con la modalidad de logueo en otras campañas en las que participen los agentes",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, quitar de campaña!',
+      cancelButtonText: 'Cancelar'
+    }).then(function (result) {
+      if (result.value) {
+        var camapana_id = $("#id").val();
+
+        var _token = $("input[name=_token]").val();
+
+        var url = currentURL + '/campanas/eliminar-participantes';
+        $.ajax({
+          url: url,
+          type: 'POST',
+          data: {
+            _token: _token,
+            camapana_id: camapana_id
+          },
+          success: function success(result) {
+            $("#tableAgentesParticipantes tbody tr").each(function () {
+              $(this).clone().appendTo(".agentesNoSeleccionados");
+              var index = agentesParticipantes.indexOf($(this).data('id'));
+
+              if (index > -1) {
+                agentesParticipantes.splice(index, 1);
+              }
+
+              $("#agentes_participantes").val(JSON.stringify(agentesParticipantes));
+              $(this).remove();
+            });
+          }
+        });
+      } else {
+        $('#mlogeo').val(mLogueoInicial);
+      }
+    });
   });
   /**
    * Evento para capturar el nombre de la campana y mostrar en la etiqueta
