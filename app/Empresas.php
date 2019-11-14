@@ -82,10 +82,24 @@ class Empresas extends Model
         return $this->hasMany('Nimbus\Formularios');
     }
     /**
-     * Relacion uno a muchos con Sub_Formularios
+     * Relacion uno a muchos con Speech
      */
     public function Speech()
     {
         return $this->hasMany('Nimbus\speech');
+    }
+    /**
+     * Relacion uno a muchos con Agentes
+     */
+    public function Agentes()
+    {
+        return $this->hasMany('Nimbus\Agentes');
+    }
+    /**
+     * Relacion uno a muchos con Speech
+     */
+    public function Eventos_Agentes()
+    {
+        return $this->hasMany('Nimbus\Eventos_Agentes');
     }
 }

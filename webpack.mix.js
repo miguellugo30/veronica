@@ -12,7 +12,6 @@ const mix = require('laravel-mix');
  */
 
 mix.js([
-        'resources/js/app.js',
         'resources/js/module_administrador/usuarios.js',
         'resources/js/module_administrador/modulos.js',
         'resources/js/module_administrador/submenus.js',
@@ -45,6 +44,7 @@ mix.js([
         'resources/js/module_settings/grupos.js',
         'resources/js/module_settings/speech.js',
         'resources/js/module_settings/acciones_speech.js',
+        'resources/js/module_settings/eventos_agentes.js',
 
     ], 'public/js/settings.js')
     .js([
@@ -55,8 +55,16 @@ mix.js([
         'resources/js/module_inbound/buzon_voz.js',
         'resources/js/module_inbound/Did_Enrutamiento.js',
         'resources/js/module_inbound/ivr.js',
+<<<<<<< HEAD
         'resources/js/module_inbound/Metricas_ACD.js',
     ], 'public/js/inbound.js');
+=======
+    ], 'public/js/inbound.js')
+    .js([
+        'resources/js/module_agentes/agentes.js',
+        'resources/js/module_agentes/eventosPantallaAgente.js',
+    ], 'public/js/agente.js');
+>>>>>>> 28f20d509a40d5768c8154b2710fa29e6ce477ca
 /*
 .sass('resources/sass/app.scss', 'public/css');
 mix.js('resources/js/app.js', 'public/js/all.js')

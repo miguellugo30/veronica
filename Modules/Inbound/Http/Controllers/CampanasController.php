@@ -13,6 +13,8 @@ use Nimbus\Audios_Empresa;
 use Nimbus\Campanas_Configuracion;
 use Nimbus\Agentes;
 use Nimbus\Miembros_Campana;
+use Nimbus\speech;
+use Nimbus\Grupos;
 
 class CampanasController extends Controller
 {
@@ -40,8 +42,10 @@ class CampanasController extends Controller
         $Audios = Audios_Empresa::active()->where([['Empresas_id',$empresa_id],['musica_en_espera','=','0'],])->get();
         $Mohs= Audios_Empresa::active()->where([['Empresas_id',$empresa_id],['musica_en_espera','=','1'],])->get();
         $agentes = Agentes::active()->where('Empresas_id', $empresa_id)->get();
+        $speech = speech::active()->where('Empresas_id',$empresa_id)->get();
+        $calificaciones = Grupos::active()->where([['Empresas_id', '=', $empresa_id],['tipo_grupo','=','Calificaciones']])->get();
 
-        return view('inbound::Campanas.create', compact('Audios','Mohs', 'agentes'));
+        return view('inbound::Campanas.create', compact('Audios','Mohs', 'agentes','speech','calificaciones'));
     }
 
     /**
@@ -66,11 +70,12 @@ class CampanasController extends Controller
                 'modalidad_logue' => $request->input('mlogeo'),
                 'id_grabacion' =>  $request->input('msginical') ,
                 'tipo_marcacion' => 'Inbound',
-                //'id_speech' =>  $request->input('script') ,
+                'speech_id' =>  $request->input('script') ,
                 'time_max_sonora' =>  $request->input('alertstll') ,
                 'time_max_llamada' =>  $request->input('alertstdll') ,
                 'time_liberacion' =>  $request->input('libta') ,
-                'Empresas_id'   => $empresa_id
+                'Empresas_id'   => $empresa_id,
+                'Grupos_id' => $request->input('cal_lib')
             ]
         );
         /**
@@ -134,8 +139,10 @@ class CampanasController extends Controller
         $agentesCampana = Miembros_Campana::where('Campanas_id', $id )->get();
         $agentes = Agentes::active()->where('Empresas_id', $empresa_id)->get();
         $idAgentesCampana = $agentesCampana->pluck('Agentes_id')->toArray();
+        $speech = speech::active()->where('Empresas_id',$empresa_id)->get();
+        $calificaciones = Grupos::active()->where([['Empresas_id', '=', $empresa_id],['tipo_grupo','=','Calificaciones']])->get();
 
-        return view('inbound::Campanas.edit',compact('campana','Audios', 'agentes', 'agentesCampana', 'idAgentesCampana'));
+        return view('inbound::Campanas.edit',compact('campana','Audios', 'agentes', 'agentesCampana', 'idAgentesCampana', 'speech', 'calificaciones'));
     }
 
     /**
@@ -156,10 +163,11 @@ class CampanasController extends Controller
                                             'modalidad_logue' => $request->input('mlogeo'),
                                             'id_grabacion' =>  $request->input('msginical') ,
                                             'tipo_marcacion' => 'Inbound',
-                                            //'id_speech' =>  $request->input('script') ,
+                                            'speech_id' =>  $request->input('script') ,
                                             'time_max_sonora' =>  $request->input('alertstll') ,
                                             'time_max_llamada' =>  $request->input('alertstdll') ,
-                                            'time_liberacion' =>  $request->input('libta')
+                                            'time_liberacion' =>  $request->input('libta'),
+                                            'Grupos_id' => $request->input('cal_lib')
                                         ]);
 
         Campanas_Configuracion::where('Campanas_id', $id)->update([

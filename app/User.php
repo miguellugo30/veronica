@@ -4,7 +4,7 @@ namespace Nimbus;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
-use Spatie\Permission\Traits\HasPermissions;
+
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable

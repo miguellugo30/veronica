@@ -21,7 +21,7 @@
                     <thead>
                         <tr>
                             <th>Nombre</th>
-                            <th>Descrición</th>
+                            <th>Descripción</th>
                         </tr>
                     </thead>
                     <tbody>
