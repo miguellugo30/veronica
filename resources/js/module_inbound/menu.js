@@ -29,6 +29,9 @@ $(function() {
         } else if (id == 39) {
             url = currentURL + '/Metricas_ACD';
             table = ' #tableACD';
+        } else if (id == 40) {
+            url = currentURL + '/Desglose_llamadas';
+            table = ' #tableDesgloseLlamadas';
         }
         $.get(url, function(data, textStatus, jqXHR) {
             $(".viewResult").html(data);

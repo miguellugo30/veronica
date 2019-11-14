@@ -1570,6 +1570,9 @@ $(function () {
     } else if (id == 39) {
       url = currentURL + '/Metricas_ACD';
       table = ' #tableACD';
+    } else if (id == 40) {
+      url = currentURL + '/Desglose_llamadas';
+      table = ' #tableDesgloseLlamadas';
     }
 
     $.get(url, function (data, textStatus, jqXHR) {
@@ -1590,24 +1593,14 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-<<<<<<< HEAD
-__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\menu.js */"./resources/js/module_inbound/menu.js");
-__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\campanas.js */"./resources/js/module_inbound/campanas.js");
-__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\CondicionesTiempo.js */"./resources/js/module_inbound/CondicionesTiempo.js");
-__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\desvios.js */"./resources/js/module_inbound/desvios.js");
-__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\buzon_voz.js */"./resources/js/module_inbound/buzon_voz.js");
-__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\Did_Enrutamiento.js */"./resources/js/module_inbound/Did_Enrutamiento.js");
-__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\ivr.js */"./resources/js/module_inbound/ivr.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\Metricas_ACD.js */"./resources/js/module_inbound/Metricas_ACD.js");
-=======
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\menu.js */"./resources/js/module_inbound/menu.js");
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\campanas.js */"./resources/js/module_inbound/campanas.js");
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\CondicionesTiempo.js */"./resources/js/module_inbound/CondicionesTiempo.js");
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\desvios.js */"./resources/js/module_inbound/desvios.js");
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\buzon_voz.js */"./resources/js/module_inbound/buzon_voz.js");
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\Did_Enrutamiento.js */"./resources/js/module_inbound/Did_Enrutamiento.js");
-module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\ivr.js */"./resources/js/module_inbound/ivr.js");
->>>>>>> 28f20d509a40d5768c8154b2710fa29e6ce477ca
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\ivr.js */"./resources/js/module_inbound/ivr.js");
+module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\Metricas_ACD.js */"./resources/js/module_inbound/Metricas_ACD.js");
 
 
 /***/ })
