@@ -560,6 +560,17 @@ $(function () {
 
 /***/ }),
 
+/***/ "./resources/js/module_inbound/Metricas_ACD.js":
+/*!*****************************************************!*\
+  !*** ./resources/js/module_inbound/Metricas_ACD.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
+
+/***/ }),
+
 /***/ "./resources/js/module_inbound/buzon_voz.js":
 /*!**************************************************!*\
   !*** ./resources/js/module_inbound/buzon_voz.js ***!
@@ -1476,6 +1487,9 @@ $(function () {
     } else if (id == 6) {
       url = currentURL + '/Ivr';
       table = ' #tableivr';
+    } else if (id == 39) {
+      url = currentURL + '/Metricas_ACD';
+      table = ' #tableACD';
     }
 
     $.get(url, function (data, textStatus, jqXHR) {
@@ -1490,19 +1504,20 @@ $(function () {
 /***/ }),
 
 /***/ 2:
-/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/module_inbound/menu.js ./resources/js/module_inbound/campanas.js ./resources/js/module_inbound/CondicionesTiempo.js ./resources/js/module_inbound/desvios.js ./resources/js/module_inbound/buzon_voz.js ./resources/js/module_inbound/Did_Enrutamiento.js ./resources/js/module_inbound/ivr.js ***!
-  \***************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/module_inbound/menu.js ./resources/js/module_inbound/campanas.js ./resources/js/module_inbound/CondicionesTiempo.js ./resources/js/module_inbound/desvios.js ./resources/js/module_inbound/buzon_voz.js ./resources/js/module_inbound/Did_Enrutamiento.js ./resources/js/module_inbound/ivr.js ./resources/js/module_inbound/Metricas_ACD.js ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! c:\xampp\htdocs\Nimbus\resources\js\module_inbound\menu.js */"./resources/js/module_inbound/menu.js");
-__webpack_require__(/*! c:\xampp\htdocs\Nimbus\resources\js\module_inbound\campanas.js */"./resources/js/module_inbound/campanas.js");
-__webpack_require__(/*! c:\xampp\htdocs\Nimbus\resources\js\module_inbound\CondicionesTiempo.js */"./resources/js/module_inbound/CondicionesTiempo.js");
-__webpack_require__(/*! c:\xampp\htdocs\Nimbus\resources\js\module_inbound\desvios.js */"./resources/js/module_inbound/desvios.js");
-__webpack_require__(/*! c:\xampp\htdocs\Nimbus\resources\js\module_inbound\buzon_voz.js */"./resources/js/module_inbound/buzon_voz.js");
-__webpack_require__(/*! c:\xampp\htdocs\Nimbus\resources\js\module_inbound\Did_Enrutamiento.js */"./resources/js/module_inbound/Did_Enrutamiento.js");
-module.exports = __webpack_require__(/*! c:\xampp\htdocs\Nimbus\resources\js\module_inbound\ivr.js */"./resources/js/module_inbound/ivr.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\menu.js */"./resources/js/module_inbound/menu.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\campanas.js */"./resources/js/module_inbound/campanas.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\CondicionesTiempo.js */"./resources/js/module_inbound/CondicionesTiempo.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\desvios.js */"./resources/js/module_inbound/desvios.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\buzon_voz.js */"./resources/js/module_inbound/buzon_voz.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\Did_Enrutamiento.js */"./resources/js/module_inbound/Did_Enrutamiento.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\ivr.js */"./resources/js/module_inbound/ivr.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\Metricas_ACD.js */"./resources/js/module_inbound/Metricas_ACD.js");
 
 
 /***/ })
