@@ -91,18 +91,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
         let id_agente = $('#id_agente').val();
         let canal = $("#canal").val();
+        let id_calificacion = $("#calificacion option:selected").data('calificacionid');
+        let uniqueid = $("#uniqueid").val();
         let _token = $("input[name=_token]").val();
-
+        let datosFormulario = $(".formularioView").serializeArray();
 
         $.ajax({
             method: "POST",
             url: "/agentes", // Podrías separar las funciones de PHP en un fichero a parte
             data: {
-                id_agente: id_agente,
                 canal: canal,
+                uniqueid: uniqueid,
+                id_calificacion: id_calificacion,
+                id_agente: id_agente,
+                datosFormulario: datosFormulario,
                 _token: _token
             }
         }).done(function(msg) {
+            $(".view-call").html(msg);
             $(".view-call").html('<div class="col-12 text-center" style="padding-top: 19%;"><i class="fas fa-spinner fa-10x fa-spin text-info"></i></div>');
             $(".estado-agente").html("<i class='fa fa-circle text-success'></i> Disponible");
             $(".colgar-llamada").prop("disabled", true);

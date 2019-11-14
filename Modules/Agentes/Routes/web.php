@@ -17,6 +17,9 @@ Route::group(['namespace' => '\Modules\Agentes\Http\Controllers', 'middleware' =
     Route::post('agentes/colgar', 'EventosAgenteController@colgar')->name('colgar.agente');
     Route::post('agentes/no_disponible', 'EventosAgenteController@no_disponible')->name('no_disponible.agente');
     Route::post('agentes/agente_disponible', 'EventosAgenteController@agente_disponible')->name('agente_disponible.agente');
+    Route::post('agentes/historial-llamadas', 'EventosAgenteController@historial_llamadas')->name('historial_llamadas.agente');
+    Route::post('agentes/llamadas-abandonadas', 'EventosAgenteController@llamadas_abandonadas')->name('llamadas_abandonadas.agente');
+    Route::post('agentes/logeo-extension', 'EventosAgenteController@logeoExtension')->name('logeoExtension.agente');
 });
 
 

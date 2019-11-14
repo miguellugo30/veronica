@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use DB;
 use Modules\Agentes\Http\Controllers\EventosAmiController;
+use Modules\Agentes\Http\Controllers\CalificarLlamadaController;
 
 use Nimbus\Agentes;
 use Nimbus\Campanas;
@@ -22,11 +23,21 @@ class AgentesController extends Controller
      */
     public function index( Request $request )
     {
+        $modalidad = DB::table('Campanas')
+                    ->join( 'Miembros_Campanas', 'Campanas.id', '=', 'Miembros_Campanas.Campanas_id' )
+                    ->select(
+                                'Campanas.modalidad_logue'
+                            )
+                    ->where('Campanas.activo', 1)
+                    ->where('Miembros_Campanas.Agentes_id', auth()->guard('agentes')->id())
+                    ->groupBy('modalidad_logue')
+                    ->first();
+
         $evento = $request->evento;
         $agente = auth()->guard('agentes')->user();
         $eventosAgente = Eventos_Agentes::active()->where('Empresas_id', $agente->Empresas_id)->get();
 
-        return view('agentes::index', compact('agente', 'evento', 'eventosAgente'));
+        return view('agentes::index', compact('agente', 'evento', 'eventosAgente', 'modalidad'));
     }
 
     /**
@@ -47,8 +58,9 @@ class AgentesController extends Controller
     {
         Agentes::where( 'id', $request->id_agente )->update(['Cat_Estado_Agente_id' => 2]);
         Miembros_Campana::where( 'membername', $request->id_agente )->update(['Paused' => 0]);
-
         EventosAmiController::colgar_llamada( $request->canal );
+        CalificarLlamadaController::calificarllamada( $request );
+
 
     }
 
@@ -94,6 +106,7 @@ class AgentesController extends Controller
         $calledid = $datos_llamada->CDR_Detalles->CDR->first()->calledid;
         $callerid = $datos_llamada->CDR_Detalles->CDR->first()->callerid;
         $canal = $datos_llamada->canal;
+        $uniqueid = $datos_llamada->uniqueid;
         /**
          * Obtenemos la informacion de la campana a la cual esta el agente y la llamada
          */
@@ -123,9 +136,10 @@ class AgentesController extends Controller
                                 'Agentes.nombre',
                                 DB::raw("IF(Cdr_call_center_detalles.aplicacion='Campana','', (SELECT Campanas.nombre FROM Campanas WHERE Campanas.id = Cdr_call_center_detalles.id_aplicacion)) AS campana")
                             )
-                    ->where('Cdr_call_center.callerid', $callerid)->get();
+                    ->where('Cdr_call_center.callerid', $callerid)
+                    ->whereDate('Cdr_call_center.fecha_inicio', DB::raw('curdate()'))->get();
 
-        return view('agentes::show', compact( 'campana', 'calledid', 'speech', 'historico', 'grupo', 'canal' ));
+        return view('agentes::show', compact( 'campana', 'calledid', 'speech', 'historico', 'grupo', 'canal', 'uniqueid' ));
     }
 
     /**

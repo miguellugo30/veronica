@@ -759,7 +759,7 @@ a:focus {
 .control-sidebar-bg,
 .control-sidebar {
     top: 0;
-    right: -400px;
+    right: -385px;
     width: 450px;
     -webkit-transition: right .3s ease-in-out;
     -o-transition: right .3s ease-in-out;
@@ -2780,7 +2780,7 @@ a:focus {
 .nav>li>a:active,
 .nav>li>a:focus {
     color: #444;
-    background: #f7f7f7
+    background: #e0e0e0
 }
 
 .nav-pills>li>a {

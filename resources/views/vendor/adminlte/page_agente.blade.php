@@ -98,9 +98,11 @@
                     <div class="pull-left info" >
                         <p>{{ $agente->nombre }}</p>
                         <p>Usr.: {{ $agente->usuario }}</p>
-                        <p>Ext.: {{ $agente->extension }}</p>
+                        <p>Ext.: {{ $agente->extension_real }}</p>
                         <a class="estado-agente"><i class="fa fa-circle text-success"></i> {{ $agente->Cat_Estado_Agente->nombre }}</a>
                         <input type="hidden" name="id_agente" id="id_agente" value="{{$agente->id}}">
+                        <input type="hidden" name="extension" id="extension" value="{{$agente->extension}}">
+                        <input type="hidden" name="id_empresa" id="id_empresa" value="{{$agente->Empresas_id}}">
                         @csrf
                     </div>
                 </div>
@@ -135,9 +137,18 @@
                                 <option value="">b</option>
                                 <option value="">c</option>
                             </select>
-                            <div class="input-group-prepend">
-                                <div class="input-group-text btn-primary" style="cursor:pointer"><i class="fas fa-exchange-alt text-white"></i></div>
+                            <div class="btn-group" role="group">
+                                <button id="btnGroupDrop1" type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-exchange-alt text-white"></i>
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                    <a class="dropdown-item" href="#">Transferir llamada</a>
+                                    <a class="dropdown-item" href="#">Transferir llamada y pantalla</a>
+                                </div>
                             </div>
+                            <!--div class="input-group-prepend">
+                                <div class="input-group-text btn-primary" style="cursor:pointer"><i class="fas fa-exchange-alt text-white"></i></div>
+                            </div-->
                         </div>
                     </div>
                 <hr>
@@ -156,9 +167,13 @@
                         </div>
                     </div>
                 <hr>
-                <div class="col">
-                    <button type="button" class="btn btn-primary btn-sm btn-block"><i class="fas fa-phone"></i> Logueo en extension</button>
-                </div>
+                @if ( isset( $modalidad->modalidad_logue ) )
+                    @if ( $modalidad->modalidad_logue == 'canal_abierto' )
+                    <div class="col">
+                        <button type="button" class="logeo-extension btn btn-primary btn-sm btn-block"><i class="fas fa-phone"></i> Logueo en extension</button>
+                    </div>
+                    @endif
+                @endif
                 <br>
                 <div class="col">
                     <button type="button" class="btn btn-primary btn-sm btn-block"><i class="far fa-clock"></i> Llamada programada</button>
@@ -175,8 +190,9 @@
             <div class="container">
             @endif
             <div class="view-call  ">
+
                 <div class="col-12 text-center" style="padding-top: 19%;">
-                    <i class="fas fa-spinner fa-10x fa-spin text-info"></i>
+                    <i class="fas fa-circle-notch fa-10x fa-spin text-info"></i>
                 </div>
                 <!-- Content Header (Page header) -->
                 <!--section class="content-header" style="margin-right:50px">
@@ -208,36 +224,31 @@
             <div class="row">
                 <div class="col-2">
                     <ul class="nav flex-column" role="tablist">
-                        <!--li class="nav-item">
-                            <a href="#" class="nav-link" role="tab" data-toggle="control-sidebar" style="padding-left: 11px;padding-top: 15px;">
-                                <i class="fas fa-arrow-left text-primary fa-2x"></i>
-                            </a>
-                        </li-->
                         <li class="nav-item">
-                            <a href="#historial-llamadas" class="nav-link active" role="tab" data-toggle="control-sidebar" style="padding-left: 11px;padding-top: 15px;">
+                            <a href="#historial-llamadas" id="view-historial-llamadas" class="nav-link text-center" role="tab" data-toggle="control-sidebar" style="padding: 1rem 1rem">
                                 <i class="fas fa-history text-primary fa-2x"></i>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#llamadas-perdidas"  class="nav-link"        role="tab" data-toggle="control-sidebar" style="padding-left: 11px;padding-top: 15px;">
+                            <a href="#llamadas-perdidas" id="view-llamadas-perdidas" class="nav-link text-center" role="tab" data-toggle="control-sidebar" style="padding: 1rem 1rem">
                                 <i class="fa fa-phone-slash text-primary fa-2x"></i>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#agenda-dia"         class="nav-link"        role="tab" data-toggle="control-sidebar" style="padding-left: 11px;padding-top: 15px;">
+                            <a href="#agenda-dia" id="view-agenda-dia" class="nav-link text-center" role="tab" data-toggle="control-sidebar" style="padding: 1rem 1rem">
                                 <i class="fa fa-calendar-alt text-primary fa-2x"></i>
                             </a>
                         </li>
                     </ul>
                 </div>
-                <div class="col-10">
+                <div class="col-10" style="border-left: 1px solid #e0e0e0;">
                     <!-- Tab panes -->
                     <div class="tab-content">
                         <!-- Home tab content -->
-                        <div class="tab-pane active" role="tabpanel" id="historial-llamadas">
+                        <div class="tab-pane " role="tabpanel" id="historial-llamadas">
                             <div class="row">
                                 <div class="col-9">
-                                    <h3 class="control-sidebar-heading"><b>Historial de llamadas</b></h3>
+                                    <h3 class="control-sidebar-heading"><b>Llamadas Completadas</b></h3>
                                 </div>
                                 <div class="col-2">
                                     <button type="button" class="close mt-2" aria-label="Close" data-toggle="control-sidebar">
@@ -245,175 +256,10 @@
                                     </button>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-11">
-                                    <h6><b>Llamadas Inbound</b></h6>
-                                    <table class="table table-striped table-sm">
-                                        <thead class="thead-light">
-                                            <tr>
-                                                <th>Campaña</th>
-                                                <th>Num.</th>
-                                                <th>Inicio</th>
-                                                <th>Fin</th>
-                                                <th>Estatus</th>
-                                                <th>Ver</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>BTC</td>
-                                                <td>5528816600</td>
-                                                <td>09:49:21</td>
-                                                <td>09:52:50</td>
-                                                <td class="text-center"><i class="fas fa-check text-success"></i></td>
-                                                <td><i class="far fa-plus-square text-primary"></i></td>
-                                            </tr>
-                                            <tr>
-                                                <td>BTC</td>
-                                                <td>5528816600</td>
-                                                <td>09:49:21</td>
-                                                <td>09:52:50</td>
-                                                <td class="text-center"><i class="fas fa-check text-success"></i></td>
-                                                <td><i class="far fa-plus-square text-primary"></i></td>
-                                            </tr>
-                                            <tr>
-                                                <td>BTC</td>
-                                                <td>5528816600</td>
-                                                <td>09:49:21</td>
-                                                <td>09:52:50</td>
-                                                <td class="text-center"><i class="fas fa-check text-success"></i></td>
-                                                <td><i class="far fa-plus-square text-primary"></i></td>
-                                            </tr>
-                                            <tr>
-                                                <td>BTC</td>
-                                                <td>5528816600</td>
-                                                <td>09:49:21</td>
-                                                <td>09:52:50</td>
-                                                <td class="text-center"><i class="fas fa-check text-success"></i></td>
-                                                <td><i class="far fa-plus-square text-primary"></i></td>
-                                            </tr>
-                                            <tr>
-                                                <td>BTC</td>
-                                                <td>5528816600</td>
-                                                <td>09:49:21</td>
-                                                <td>09:52:50</td>
-                                                <td class="text-center"><i class="fas fa-check text-success"></i></td>
-                                                <td><i class="far fa-plus-square text-primary"></i></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <hr>
-                                    <h6><b>Llamadas Outbound</b></h6>
-                                    <table class="table table-striped table-sm">
-                                        <thead class="thead-light">
-                                            <tr>
-                                                <th>Campaña</th>
-                                                <th>Num.</th>
-                                                <th>Inicio</th>
-                                                <th>Fin</th>
-                                                <th>Estatus</th>
-                                                <th>Ver</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>BTC</td>
-                                                <td>5528816600</td>
-                                                <td>09:49:21</td>
-                                                <td>09:52:50</td>
-                                                <td class="text-center"><i class="fas fa-check text-success"></i></td>
-                                                <td><i class="far fa-plus-square text-primary"></i></td>
-                                            </tr>
-                                            <tr>
-                                                <td>BTC</td>
-                                                <td>5528816600</td>
-                                                <td>09:49:21</td>
-                                                <td>09:52:50</td>
-                                                <td class="text-center"><i class="fas fa-check text-success"></i></td>
-                                                <td><i class="far fa-plus-square text-primary"></i></td>
-                                            </tr>
-                                            <tr>
-                                                <td>BTC</td>
-                                                <td>5528816600</td>
-                                                <td>09:49:21</td>
-                                                <td>09:52:50</td>
-                                                <td class="text-center"><i class="fas fa-check text-success"></i></td>
-                                                <td><i class="far fa-plus-square text-primary"></i></td>
-                                            </tr>
-                                            <tr>
-                                                <td>BTC</td>
-                                                <td>5528816600</td>
-                                                <td>09:49:21</td>
-                                                <td>09:52:50</td>
-                                                <td class="text-center"><i class="fas fa-check text-success"></i></td>
-                                                <td><i class="far fa-plus-square text-primary"></i></td>
-                                            </tr>
-                                            <tr>
-                                                <td>BTC</td>
-                                                <td>5528816600</td>
-                                                <td>09:49:21</td>
-                                                <td>09:52:50</td>
-                                                <td class="text-center"><i class="fas fa-check text-success"></i></td>
-                                                <td><i class="far fa-plus-square text-primary"></i></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <hr>
-                                    <h6><b>Llamadas Manuales</b></h6>
-                                    <table class="table table-striped table-sm">
-                                        <thead class="thead-light">
-                                            <tr>
-                                                <th>Campaña</th>
-                                                <th>Num.</th>
-                                                <th>Inicio</th>
-                                                <th>Fin</th>
-                                                <th>Estatus</th>
-                                                <th>Ver</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>BTC</td>
-                                                <td>5528816600</td>
-                                                <td>09:49:21</td>
-                                                <td>09:52:50</td>
-                                                <td class="text-center"><i class="fas fa-check text-success"></i></td>
-                                                <td><i class="far fa-plus-square text-primary"></i></td>
-                                            </tr>
-                                            <tr>
-                                                <td>BTC</td>
-                                                <td>5528816600</td>
-                                                <td>09:49:21</td>
-                                                <td>09:52:50</td>
-                                                <td class="text-center"><i class="fas fa-check text-success"></i></td>
-                                                <td><i class="far fa-plus-square text-primary"></i></td>
-                                            </tr>
-                                            <tr>
-                                                <td>BTC</td>
-                                                <td>5528816600</td>
-                                                <td>09:49:21</td>
-                                                <td>09:52:50</td>
-                                                <td class="text-center"><i class="fas fa-check text-success"></i></td>
-                                                <td><i class="far fa-plus-square text-primary"></i></td>
-                                            </tr>
-                                            <tr>
-                                                <td>BTC</td>
-                                                <td>5528816600</td>
-                                                <td>09:49:21</td>
-                                                <td>09:52:50</td>
-                                                <td class="text-center"><i class="fas fa-check text-success"></i></td>
-                                                <td><i class="far fa-plus-square text-primary"></i></td>
-                                            </tr>
-                                            <tr>
-                                                <td>BTC</td>
-                                                <td>5528816600</td>
-                                                <td>09:49:21</td>
-                                                <td>09:52:50</td>
-                                                <td class="text-center"><i class="fas fa-check text-success"></i></td>
-                                                <td><i class="far fa-plus-square text-primary"></i></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                            <div class="row" style="margin-right: 0px;margin-left: -30px;">
+                                <hr>
+                                <div class="col-11 result-historial-llamada" style="padding-left: 0px;">
+
                                 </div>
                             </div>
                         </div>
@@ -431,175 +277,9 @@
                                 </div>
                             </div>
                             <div class="row">
-                                    <div class="col-11">
-                                            <h6><b>Llamadas Inbound</b></h6>
-                                            <table class="table table-striped table-sm">
-                                                <thead class="thead-light">
-                                                    <tr>
-                                                        <th>Campaña</th>
-                                                        <th>Num.</th>
-                                                        <th>Inicio</th>
-                                                        <th>Fin</th>
-                                                        <th>Estatus</th>
-                                                        <th>Ver</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>BTC</td>
-                                                        <td>5528816600</td>
-                                                        <td>09:49:21</td>
-                                                        <td>09:52:50</td>
-                                                        <td class="text-center"><i class="fas fa-times text-danger"></i></td>
-                                                        <td><i class="far fa-plus-square text-primary"></i></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>BTC</td>
-                                                        <td>5528816600</td>
-                                                        <td>09:49:21</td>
-                                                        <td>09:52:50</td>
-                                                        <td class="text-center"><i class="fas fa-times text-danger"></i></td>
-                                                        <td><i class="far fa-plus-square text-primary"></i></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>BTC</td>
-                                                        <td>5528816600</td>
-                                                        <td>09:49:21</td>
-                                                        <td>09:52:50</td>
-                                                        <td class="text-center"><i class="fas fa-times text-danger"></i></td>
-                                                        <td><i class="far fa-plus-square text-primary"></i></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>BTC</td>
-                                                        <td>5528816600</td>
-                                                        <td>09:49:21</td>
-                                                        <td>09:52:50</td>
-                                                        <td class="text-center"><i class="fas fa-times text-danger"></i></td>
-                                                        <td><i class="far fa-plus-square text-primary"></i></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>BTC</td>
-                                                        <td>5528816600</td>
-                                                        <td>09:49:21</td>
-                                                        <td>09:52:50</td>
-                                                        <td class="text-center"><i class="fas fa-times text-danger"></i></td>
-                                                        <td><i class="far fa-plus-square text-primary"></i></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                            <hr>
-                                            <h6><b>Llamadas Outbound</b></h6>
-                                            <table class="table table-striped table-sm">
-                                                <thead class="thead-light">
-                                                    <tr>
-                                                        <th>Campaña</th>
-                                                        <th>Num.</th>
-                                                        <th>Inicio</th>
-                                                        <th>Fin</th>
-                                                        <th>Estatus</th>
-                                                        <th>Ver</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>BTC</td>
-                                                        <td>5528816600</td>
-                                                        <td>09:49:21</td>
-                                                        <td>09:52:50</td>
-                                                        <td class="text-center"><i class="fas fa-times text-danger"></i></td>
-                                                        <td><i class="far fa-plus-square text-primary"></i></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>BTC</td>
-                                                        <td>5528816600</td>
-                                                        <td>09:49:21</td>
-                                                        <td>09:52:50</td>
-                                                        <td class="text-center"><i class="fas fa-times text-danger"></i></td>
-                                                        <td><i class="far fa-plus-square text-primary"></i></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>BTC</td>
-                                                        <td>5528816600</td>
-                                                        <td>09:49:21</td>
-                                                        <td>09:52:50</td>
-                                                        <td class="text-center"><i class="fas fa-times text-danger"></i></td>
-                                                        <td><i class="far fa-plus-square text-primary"></i></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>BTC</td>
-                                                        <td>5528816600</td>
-                                                        <td>09:49:21</td>
-                                                        <td>09:52:50</td>
-                                                        <td class="text-center"><i class="fas fa-times text-danger"></i></td>
-                                                        <td><i class="far fa-plus-square text-primary"></i></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>BTC</td>
-                                                        <td>5528816600</td>
-                                                        <td>09:49:21</td>
-                                                        <td>09:52:50</td>
-                                                        <td class="text-center"><i class="fas fa-times text-danger"></i></td>
-                                                        <td><i class="far fa-plus-square text-primary"></i></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                            <hr>
-                                            <h6><b>Llamadas Manuales</b></h6>
-                                            <table class="table table-striped table-sm">
-                                                <thead class="thead-light">
-                                                    <tr>
-                                                        <th>Campaña</th>
-                                                        <th>Num.</th>
-                                                        <th>Inicio</th>
-                                                        <th>Fin</th>
-                                                        <th>Estatus</th>
-                                                        <th>Ver</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>BTC</td>
-                                                        <td>5528816600</td>
-                                                        <td>09:49:21</td>
-                                                        <td>09:52:50</td>
-                                                        <td class="text-center"><i class="fas fa-times text-danger"></i></td>
-                                                        <td><i class="far fa-plus-square text-primary"></i></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>BTC</td>
-                                                        <td>5528816600</td>
-                                                        <td>09:49:21</td>
-                                                        <td>09:52:50</td>
-                                                        <td class="text-center"><i class="fas fa-times text-danger"></i></td>
-                                                        <td><i class="far fa-plus-square text-primary"></i></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>BTC</td>
-                                                        <td>5528816600</td>
-                                                        <td>09:49:21</td>
-                                                        <td>09:52:50</td>
-                                                        <td class="text-center"><i class="fas fa-times text-danger"></i></td>
-                                                        <td><i class="far fa-plus-square text-primary"></i></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>BTC</td>
-                                                        <td>5528816600</td>
-                                                        <td>09:49:21</td>
-                                                        <td>09:52:50</td>
-                                                        <td class="text-center"><i class="fas fa-times text-danger"></i></td>
-                                                        <td><i class="far fa-plus-square text-primary"></i></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>BTC</td>
-                                                        <td>5528816600</td>
-                                                        <td>09:49:21</td>
-                                                        <td>09:52:50</td>
-                                                        <td class="text-center"><i class="fas fa-times text-danger"></i></td>
-                                                        <td><i class="far fa-plus-square text-primary"></i></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                <div class="col-11 result-llamadas-abandonadas">
+
+                                </div>
                             </div>
                         </div>
                         <!-- /.tab-pane -->
