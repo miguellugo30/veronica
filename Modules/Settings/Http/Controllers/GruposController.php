@@ -22,10 +22,10 @@ class GruposController extends Controller
         /**
          * Sacamos los datos del agente y su empresa para obtener los agentes
          */
-        $user = User::find( Auth::id() );
+        $user = Auth::user();
         $empresa_id = $user->id_cliente;
 
-        $grupos = Grupos::active()->where([['Empresas_id', '=', $empresa_id],['tipo_grupo','=','Agentes']])->get();
+        $grupos = Grupos::empresa($empresa_id)->active()->where('tipo_grupo','Agentes')->get();
 
         return view('settings::Grupos.index',compact('grupos'));
     }
@@ -46,8 +46,7 @@ class GruposController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $user = User::find( Auth::id() );
+        $user = Auth::user();
         $empresa_id = $user->id_cliente;
 
         $datos = $request->all();

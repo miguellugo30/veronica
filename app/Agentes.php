@@ -30,6 +30,13 @@ class Agentes extends  Authenticatable
     {
         return $query->where('activo', 1);
     }
+    /**
+     * Funcion para obtener solo los registros de una empresa
+     */
+    public function scopeEmpresa($query, $empresa)
+    {
+        return $query->where('Empresas_id', $empresa);
+    }
     /*
     |--------------------------------------------------------------------------
     | RELACIONES DE BASE DE DATOS

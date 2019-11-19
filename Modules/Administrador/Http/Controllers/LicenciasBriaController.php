@@ -19,7 +19,7 @@ class LicenciasBriaController extends Controller
         /**
          * Obtenemos las licencias activas
          */
-        $licencias = LicenciasBria::active()->get();
+        $licencias = LicenciasBria::active()->with('Extensiones.Empresas')->get();
 
         return view('administrador::licencias_bria.index', compact('licencias'));
     }

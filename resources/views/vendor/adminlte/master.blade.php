@@ -51,6 +51,11 @@
 
     <link rel='stylesheet' href='https://unpkg.com/@fullcalendar/core@4.3.1/main.min.css' />
     <link rel='stylesheet' href='https://unpkg.com/@fullcalendar/list@4.3.0/main.min.css' />
+    @if ( isset( $modulo ) )
+    @if( $modulo == 'Inbound')
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    @endif
+@endif
 
 </head>
 <body class="hold-transition @yield('body_class')" style="font-size: 0.8rem !important;" onbeforeunload="redireccionar()">
@@ -95,6 +100,8 @@
     @elseif( $modulo == 'Administrador')
         <script src="{{ asset('js/administrador.js') }}"></script>
     @elseif( $modulo == 'Inbound')
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
         <script src="{{ asset('js/inbound.js') }}"></script>
     @endif
 @endif

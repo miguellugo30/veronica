@@ -27,7 +27,7 @@ class CondicionesTiempoController extends Controller
         /**
         * Sacamos los datos del agente y su empresa para obtener los agentes
         */
-        $user = User::find( Auth::id() );
+        $user = Auth::user();
         $empresa_id = $user->id_cliente;
 
         $condicionestiempo = Grupos::active()->where([['Empresas_id', '=', $empresa_id],['tipo_grupo','=','Condiciones de Tiempo']])->get();

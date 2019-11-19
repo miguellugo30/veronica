@@ -21,7 +21,7 @@ class AdministradorController extends Controller
         /**
          * Obtenemos los datos del usuario logeado
          */
-        $user = User::find( Auth::id() );
+        $user = Auth::user();
         /**
          * Obtenemos el rol del usuario logeado
          */
@@ -29,7 +29,7 @@ class AdministradorController extends Controller
         /**
          * Obtenemos las categorias relacionadas al usuario
          */
-        $categorias = Categorias::active()->where('modulos_id', 18)->get();
+        $categorias = Categorias::active()->where('modulos_id', 18)->with('Sub_Categorias')->get();
         $modulo = "Administrador";
 
         return view('administrador::index', compact( 'rol', 'categorias', 'modulo' ) );

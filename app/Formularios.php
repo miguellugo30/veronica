@@ -23,7 +23,13 @@ class Formularios extends Model
     {
         return $query->where('activo', 1);
     }
-
+    /**
+     * Funcion para obtener solo los registros de una empresa
+     */
+    public function scopeEmpresa($query, $empresa)
+    {
+        return $query->where('Empresas_id', $empresa);
+    }
     /*
     |--------------------------------------------------------------------------
     | RELACIONES DE BASE DE DATOS
@@ -42,6 +48,10 @@ class Formularios extends Model
     {
         return $this->belongsTo('Nimbus\Cat_Tipo_Marcacion', 'Cat_Tipo_Marcacion_id','id');
     }
+    /*
+    |--------------------------------------------------------------------------
+    | RELACIONES DE BASE DE DATOS
+    |--------------------------------------------------------------------------
     /**
      * Relacion uno a muchos con Formularios_campos
      */
@@ -58,13 +68,13 @@ class Formularios extends Model
     }
 
     /**
-    ## Relacion uno a uno con Calificaciones
-    */
+     * Relacion uno a uno con Calificaciones
+     */
     public function Calificaciones()
     {
         return $this->hasOne('Nimbus\Calificaciones', 'id', 'Formularios_id');
-    }   
-    
+    }
+
 
 }
 

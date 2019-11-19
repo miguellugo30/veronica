@@ -23,7 +23,7 @@ class TroncalesController extends Controller
         /**
          * Recuperamos todos las troncales que esten activos
          */
-        $troncales = Troncales::active()->get();
+        $troncales = Troncales::active()->with('Cat_Distribuidor')->with('Troncales_Sansay')->get();;
         return view('administrador::troncales.index', compact('troncales'));
     }
 

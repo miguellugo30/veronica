@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 
+use Nimbus\Cdr_call_center;
+
 class DesgloseLlamadasController extends Controller
 {
     /**
@@ -14,7 +16,15 @@ class DesgloseLlamadasController extends Controller
      */
     public function index()
     {
-        return view('inbound::DesgloseLlamadas.index');
+
+        $fechaI = '2019-11-13 00:00:00';
+        $fechaF = '2019-11-13 23:59:59';
+
+        $cdr = Cdr_call_center::empresa(24)->whereBetween('fecha_inicio', [$fechaI, $fechaF])->get();
+
+        dd( $cdr );
+
+        //return view('inbound::DesgloseLlamadas.index');
     }
 
     /**

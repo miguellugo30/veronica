@@ -23,7 +23,7 @@ class CanalesController extends Controller
         /**
          * Recuperamos todos los canales que esten activos
          */
-        $canales = Canales::where('activo',1)->get();
+        $canales = Canales::where('activo',1)->with('Distribuidores')->with('Troncales')->with('Cat_Tipo_Canales')->with('Empresas')->get();
         return view('administrador::canales.index', compact('canales'));
     }
     /**

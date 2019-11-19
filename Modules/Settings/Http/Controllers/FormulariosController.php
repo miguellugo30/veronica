@@ -21,7 +21,10 @@ class FormulariosController extends Controller
      */
     public function index()
     {
-        $formularios = Formularios::active()->get();
+        $user = Auth::user();
+        $empresa_id = $user->id_cliente;
+        $formularios = Formularios::empresa($empresa_id)->active()->with('Tipo_Marcacion')->get();
+
         return view('settings::Formularios.index',compact('formularios'));
 
     }

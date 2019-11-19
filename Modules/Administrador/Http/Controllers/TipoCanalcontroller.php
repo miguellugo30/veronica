@@ -17,7 +17,7 @@ class TipoCanalcontroller extends Controller
      */
     public function index()
     {
-        $tipocanales = Cat_Tipo_Canales::where('activo',1)->get();
+        $tipocanales = Cat_Tipo_Canales::active()->with('Cat_Distribuidor')->get();
         //dd($tipocanales);
         return view('administrador::cat_tipo_canal.index',compact('tipocanales'));
     }

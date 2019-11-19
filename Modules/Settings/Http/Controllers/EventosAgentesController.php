@@ -23,10 +23,10 @@ class EventosAgentesController extends Controller
         /**
          * Sacamos los datos del Usuario y su empresa para obtener los eventos
          */
-        $user = User::find( Auth::id() );
+        $user = Auth::user();
         $empresa_id = $user->id_cliente;
 
-        $eventos = Eventos_Agentes::active()->get();
+        $eventos = Eventos_Agentes::empresa($empresa_id)->active()->get();
         return view('settings::EventosAgentes.index',compact('eventos'));
     }
 
@@ -47,7 +47,7 @@ class EventosAgentesController extends Controller
     public function store(Request $request)
     {
         //
-        $user = User::find( Auth::id() );
+        $user = Auth::user();
         $empresa_id = $user->id_cliente;
 
         $datos = $request->all();

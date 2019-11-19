@@ -27,10 +27,10 @@ class AgentesController extends Controller
         /**
          * Sacamos los datos del agente y su empresa para obtener los agentes
          */
-        $user = User::find( Auth::id() );
+        $user = Auth::user();
         $empresa_id = $user->id_cliente;
 
-        $agentes = Agentes::active()->where('Empresas_id',$empresa_id)->get();
+        $agentes = Agentes::empresa($empresa_id)->active()->with('Canales')->with('Grupos')->get();
         return view('settings::Agentes.index',compact('agentes'));
     }
 
@@ -43,7 +43,7 @@ class AgentesController extends Controller
         /**
          * Obtenemos el id empresa del usuario para obtener los canales
          */
-        $user = User::find( Auth::id() );
+        $user = Auth::user();
         $empresa_id = $user->id_cliente;
 
         $empresa = Empresas::find( $empresa_id );

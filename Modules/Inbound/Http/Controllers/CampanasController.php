@@ -26,9 +26,9 @@ class CampanasController extends Controller
      */
     public function index()
     {
-        $user = User::find( Auth::id() );
+        $user = Auth::user();
         $empresa_id = $user->id_cliente;
-        $campanas= Campanas::active()->where('Empresas_id',$empresa_id)->get();
+        $campanas = Campanas::empresa($empresa_id)->active()->with('Campanas_Configuracion')->get();
 
         return view('inbound::Campanas.index',compact('campanas'));
     }
@@ -60,7 +60,7 @@ class CampanasController extends Controller
         /**
          * Obtenemos los datos del usuario logeado
          */
-        $user = User::find( Auth::id() );
+        $user = Auth::user();
         $empresa_id = $user->id_cliente;
         /**
          * Insertar información el tabla de Camapana
@@ -144,7 +144,7 @@ class CampanasController extends Controller
     public function edit($id)
     {
         $campana= Campanas::where('id',$id)->first();
-        $user = User::find( Auth::id() );
+        $user = Auth::user();;
         $empresa_id = $user->id_cliente;
 
         $Audios = Audios_Empresa::active()->where([['Empresas_id',$empresa_id],['musica_en_espera','=','0'],])->get();
@@ -168,7 +168,7 @@ class CampanasController extends Controller
         /**
          * Obtenemos los datos del usuario logeado
          */
-        $user = User::find( Auth::id() );
+        $user = Auth::user();;
 
         Campanas::where('id', $id)->update([
                                             'nombre' => $request->input('nombre'),

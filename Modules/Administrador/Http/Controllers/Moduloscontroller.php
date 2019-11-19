@@ -19,9 +19,7 @@ class ModulosController extends Controller
         /**
          * Recuperamos todos los modulos que esten activos
          */
-        $modulos = Modulos::where('activo', 1)
-                            ->orderBy('prioridad', 'asc')
-                            ->get();
+        $modulos = Modulos::active()->orderBy('prioridad', 'asc')->get();
 
         return view('administrador::modulos.index', compact('modulos') );
     }

@@ -2587,13 +2587,12 @@ $(function () {
 /***/ (function(module, exports) {
 
 $(function () {
-  var currentURL = window.location.href;
   /**
    * Evento para el menu de sub categorias y mostrar la vista
    */
-
   $(document).on("click", ".sub-menu", function (e) {
     e.preventDefault();
+    var currentURL = window.location.href;
     var id = $(this).data("id");
 
     if (id == 6) {

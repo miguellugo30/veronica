@@ -26,12 +26,12 @@ class CalificacionesController extends Controller
         /**
          * Sacamos los datos del agente y su empresa para obtener los agentes
          */
-        $user = User::find( Auth::id() );
+        $user = Auth::user();
         $empresa_id = $user->id_cliente;
         /**
          * Obtener los valores activos de nuestra tabala calificaciones
          */
-        $calificaciones = Grupos::active()->where([['Empresas_id', '=', $empresa_id],['tipo_grupo','=','Calificaciones']])->get();
+        $calificaciones = Grupos::empresa($empresa_id)->active()->where('tipo_grupo','Calificaciones')->get();
         return view('settings::Calificaciones.index', compact('calificaciones'));
     }
 
