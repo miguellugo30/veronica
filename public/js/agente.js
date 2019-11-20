@@ -327,6 +327,30 @@ $(function () {
       $('.result-llamadas-abandonadas').html(msg);
     });
   });
+  $(document).on('click', '.logeo-extension', function (event) {
+    var idAgente = $("#id_agente").val();
+    var canal = $("#canal").val();
+    var extension = $("#extension").val();
+    var id_empresa = $("#id_empresa").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var url = currentURL.replace('agentes/') + '/logeo-extension';
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {
+        idAgente: idAgente,
+        canal: canal,
+        extension: extension,
+        id_empresa: id_empresa,
+        _token: _token
+      },
+      success: function success(result) {
+        console.log(result); // $(".viewFormularioCalificacion").html(result);
+      }
+    });
+  });
 });
 
 /***/ }),

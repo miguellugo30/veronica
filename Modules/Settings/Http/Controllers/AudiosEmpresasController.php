@@ -22,7 +22,10 @@ class AudiosEmpresasController extends Controller
      */
     public function index()
     {
-        $audios = Audios_Empresa::active()->get();
+        $user = Auth::user();
+        $empresa_id = $user->id_cliente;
+        $audios = Audios_Empresa::empresa($empresa_id)->active()->get();
+
         return view('settings::AudiosEmpresa.index',compact('audios'));
     }
 

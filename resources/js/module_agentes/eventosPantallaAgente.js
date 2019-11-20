@@ -49,4 +49,32 @@ $(function() {
         });
     });
 
+    $(document).on('click', '.logeo-extension', function(event) {
+
+        let idAgente = $("#id_agente").val();
+        let canal = $("#canal").val();
+        let extension = $("#extension").val();
+        let id_empresa = $("#id_empresa").val();
+        let _token = $("input[name=_token]").val();
+
+        let url = currentURL.replace('agentes/') + '/logeo-extension';
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: {
+                idAgente: idAgente,
+                canal: canal,
+                extension: extension,
+                id_empresa: id_empresa,
+                _token: _token
+            },
+            success: function(result) {
+                console.log(result);
+                // $(".viewFormularioCalificacion").html(result);
+            }
+        });
+
+    });
+
 });

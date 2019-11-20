@@ -31,6 +31,7 @@
                         <div class="row justify-content-md-center">
                             <div class="alert alert-dark col-8" role="alert">
                                 <b>Filtros por fecha</b>
+                                @csrf
                             </div>
                         </div>
                         <div class="row justify-content-md-center">
@@ -118,4 +119,87 @@
         </div><!-- /.row -->
     </div><!-- ./box-body -->
 </div>
+
+
+
+<script>
+$(function() {
+    /*
+        $("#fecha-inicio").daterangepicker({
+                                            "showDropdowns": true,
+                                            "timePicker": true,
+                                            "timePicker24Hour": true,
+                                            "locale": {
+                                                "format": "DD/MM/YYYY",
+                                                "separator": " - ",
+                                                "applyLabel": "Seleccionar",
+                                                "cancelLabel": "Cancelar",
+                                                "fromLabel": "Desde",
+                                                "toLabel": "Hasta",
+                                                "customRangeLabel": "Custom",
+                                                "weekLabel": "W",
+                                                "daysOfWeek": [
+                                                    "Do",
+                                                    "Lu",
+                                                    "Ma",
+                                                    "Mi",
+                                                    "Ju",
+                                                    "Vi",
+                                                    "Sa"
+                                                ],
+                                                "monthNames": [
+                                                    "Enero",
+                                                    "Febrero",
+                                                    "Marzo",
+                                                    "Abril",
+                                                    "Mayo",
+                                                    "Junio",
+                                                    "Julio",
+                                                    "Agosto",
+                                                    "Septiembre",
+                                                    "Octubre",
+                                                    "Noviembre",
+                                                    "Diciembre"
+                                                ],
+                                                "firstDay": 1
+                                            },
+                                            "opens": "center",
+                                        });
+
+    */
+
+    var dateFormat = "mm/dd/yy",
+    from = $("#fecha-inicio")
+        .datepicker({
+            defaultDate: "+1w",
+            changeMonth: true,
+            numberOfMonths: 2,
+            dateFormat: "dd/mm/yy"
+        })
+        .on("change", function() {
+            to.datepicker("option", "minDate", getDate(this));
+        }),
+        to = $("#fecha-fin").datepicker({
+            defaultDate: "+1w",
+            changeMonth: true,
+            numberOfMonths: 2,
+            dateFormat: "dd/mm/yy"
+        })
+        .on("change", function() {
+            from.datepicker("option", "maxDate", getDate(this));
+        });
+
+    function getDate(element) {
+        var date;
+        try {
+            date = $.datepicker.parseDate(dateFormat, element.value);
+        } catch (error) {
+            date = null;
+        }
+        console.log( date );
+        return date;
+    }
+});
+
+</script>
 

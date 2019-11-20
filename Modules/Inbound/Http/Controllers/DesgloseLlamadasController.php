@@ -12,6 +12,8 @@ use Nimbus\User;
 use Nimbus\Crd_Call_Center;
 use Modules\Inbound\Http\Controllers\QueryreportdesgloseController;
 
+use Nimbus\Cdr_call_center;
+
 class DesgloseLlamadasController extends Controller
 {
     /**

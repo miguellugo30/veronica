@@ -17,7 +17,7 @@ class LogController extends Controller
         /**
          * Recuperamos todos los logs
          */
-        $logs = Logs::all();
+        $logs = Logs::with('Usuarios')->get();
         return view('Logs.index', compact('logs'));
     }
     /**

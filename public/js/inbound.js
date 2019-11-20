@@ -1661,7 +1661,45 @@ $(function () {
 
 /***/ }),
 
+/***/ "./resources/js/module_inbound/reporteDesglose.js":
+/*!********************************************************!*\
+  !*** ./resources/js/module_inbound/reporteDesglose.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  var currentURL = window.location.href;
+  /**
+   * Evento para el menu de sub categorias y mostrar la vista
+   */
+
+  $(document).on("click", ".generarReporteDesglose", function (e) {
+    var url = currentURL + '/Desglose_llamadas/';
+    var fecha_inicio = $("#fecha-inicio").val();
+    var fecha_fin = $("#fecha-fin").val();
+    $.ajax({
+      url: url,
+      type: "post",
+      data: {
+        fecha_inicio: fecha_inicio,
+        fecha_fin: fecha_fin,
+        _token: _token
+      }
+    }).done(function (data) {
+      $('.viewResult').html(data);
+      $('.viewResult #tableCondicionTiempo').DataTable({
+        "lengthChange": false
+      });
+      Swal.fire('Correcto!', 'El registro ha sido actualizado.', 'success');
+    });
+  });
+});
+
+/***/ }),
+
 /***/ 2:
+<<<<<<< HEAD
 /*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** multi ./resources/js/module_inbound/menu.js ./resources/js/module_inbound/campanas.js ./resources/js/module_inbound/CondicionesTiempo.js ./resources/js/module_inbound/desvios.js ./resources/js/module_inbound/buzon_voz.js ./resources/js/module_inbound/Did_Enrutamiento.js ./resources/js/module_inbound/ivr.js ./resources/js/module_inbound/Metricas_ACD.js ./resources/js/module_inbound/desglosellamadas.js ***!
   \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
@@ -1677,6 +1715,23 @@ __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\Did_E
 __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\ivr.js */"./resources/js/module_inbound/ivr.js");
 __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\Metricas_ACD.js */"./resources/js/module_inbound/Metricas_ACD.js");
 module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\desglosellamadas.js */"./resources/js/module_inbound/desglosellamadas.js");
+=======
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/module_inbound/menu.js ./resources/js/module_inbound/campanas.js ./resources/js/module_inbound/CondicionesTiempo.js ./resources/js/module_inbound/desvios.js ./resources/js/module_inbound/buzon_voz.js ./resources/js/module_inbound/Did_Enrutamiento.js ./resources/js/module_inbound/ivr.js ./resources/js/module_inbound/Metricas_ACD.js ./resources/js/module_inbound/reporteDesglose.js ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\menu.js */"./resources/js/module_inbound/menu.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\campanas.js */"./resources/js/module_inbound/campanas.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\CondicionesTiempo.js */"./resources/js/module_inbound/CondicionesTiempo.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\desvios.js */"./resources/js/module_inbound/desvios.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\buzon_voz.js */"./resources/js/module_inbound/buzon_voz.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\Did_Enrutamiento.js */"./resources/js/module_inbound/Did_Enrutamiento.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\ivr.js */"./resources/js/module_inbound/ivr.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\Metricas_ACD.js */"./resources/js/module_inbound/Metricas_ACD.js");
+module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\reporteDesglose.js */"./resources/js/module_inbound/reporteDesglose.js");
+>>>>>>> 1954ed50c648059c92fc5af05cbb2880df8896df
 
 
 /***/ })
