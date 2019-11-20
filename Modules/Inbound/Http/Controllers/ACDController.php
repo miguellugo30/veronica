@@ -5,6 +5,10 @@ namespace Modules\Inbound\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
+
+use Nimbus\Cdr_call_center;
 
 class ACDController extends Controller
 {
@@ -14,7 +18,7 @@ class ACDController extends Controller
      */
     public function index()
     {
-        return view('inbound::Reportes.metricas_acd');
+        return view('inbound::ACD.index');
     }
 
     /**
@@ -33,7 +37,25 @@ class ACDController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $fechaI = Carbon::parse( $request->dateInicio );
+        $fechaF = Carbon::parse( $request->dateFin );
+
+        $diff = $fechaI->diffForHumans( $fechaF );
+
+        return $diff;
+        /*
+        $user = Auth::user();
+        $empresa_id = $user->id_cliente;
+
+        $data = Cdr_call_center::empresa( $empresa_id )
+                                ->tipollamada('Inbound')
+                                ->whereBetween('fecha_inicio', [$request->dateInicio, $request->dateFin])
+                                ->get();
+
+        //dd( $data );
+        return view('inbound::ACD.show');
+        */
     }
 
     /**

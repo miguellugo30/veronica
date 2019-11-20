@@ -20,6 +20,11 @@ class Cdr_call_center extends Model
     {
         return $query->where('Empresas_id', $empresa);
     }
+
+    public function scopeTipoLlamada($query, $tipo)
+    {
+        return $query->where('tipo', $tipo);
+    }
     /*
     |--------------------------------------------------------------------------
     | RELACIONES DE BASE DE DATOS

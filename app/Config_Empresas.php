@@ -14,7 +14,7 @@ class Config_Empresas extends Model
     * Campos que pueden ser modificados
     */
     protected $fillable = [
-
+        'usuario_ami', 'clave_ami', 'zona_horaria', 'horario_verano', 'fecha_vencimiento', 'agentes_entrada', 'agentes_salida', 'agentes_dual', 'canal_mensajes_voz', 'canal_generador_encuestas', 'licencias_ivr_inteligente', 'licencias_administrador', 'licencias_softphone', 'almacenamiento_posiciones', 'almacenamiento_adicional', 'clave_aprov', 'https', 'Empresas_id', 'Dominios_id', 'Cat_IP_PBX_id', 'Cat_Base_Datos_id', 'Cat_Distribuidor_id',
    ];
    /**
     * Nombre de la tabla

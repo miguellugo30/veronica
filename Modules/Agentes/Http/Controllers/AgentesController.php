@@ -2,12 +2,14 @@
 
 namespace Modules\Agentes\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use DB;
 use Modules\Agentes\Http\Controllers\EventosAmiController;
 use Modules\Agentes\Http\Controllers\CalificarLlamadaController;
+use Nimbus\Http\Controllers\ZonaHorariaController;
 
 use Nimbus\Agentes;
 use Nimbus\Campanas;
@@ -56,12 +58,17 @@ class AgentesController extends Controller
      */
     public function store(Request $request)
     {
+
+        $user = auth()->guard('agentes')->user();
+        $empresa_id = $user->Empresas_id;
+
+        $fecha = ZonaHorariaController::zona_horaria( $empresa_id );
+
         Agentes::where( 'id', $request->id_agente )->update(['Cat_Estado_Agente_id' => 2]);
         Miembros_Campana::where( 'membername', $request->id_agente )->update(['Paused' => 0]);
+        Crd_Asignacion_Agente::where('uniqueid', $request->uniqueid)->update(['fecha_calificacion' => $fecha]);
         EventosAmiController::colgar_llamada( $request->canal );
         CalificarLlamadaController::calificarllamada( $request );
-
-
     }
 
     /**
