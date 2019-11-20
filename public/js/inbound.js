@@ -1085,6 +1085,81 @@ $(function () {
 
 /***/ }),
 
+/***/ "./resources/js/module_inbound/desglosellamadas.js":
+/*!*********************************************************!*\
+  !*** ./resources/js/module_inbound/desglosellamadas.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  var currentURL = window.location.href;
+  /**
+   * Evento para mostrar el formulario de crear un nuevo ivr
+   */
+
+  $(document).on("click", ".generardesglose", function (e) {
+    //alert ('generar');
+
+    /**
+     * Esto contrae el body
+     */
+    $('.body-filtro').slideUp();
+    $('.nuevo-reporte').slideDown();
+    $('#body-reporte').slideDown();
+    e.preventDefault();
+    /**
+     * Con esto traemos las variables
+     */
+
+    var fechainicio = $("#fechainicio").val();
+    var fechafin = $("#fechafin").val();
+    var hora_inicio = $("#hora_inicio").val();
+    var minuto_inicio = $("#min_inicio").val();
+    var hora_fin = $("#hora_fin").val();
+    var minuto_fin = $("#min_fin").val();
+    var numero_origen = $("#numero_origen").val();
+    var numero_destino = $("#numero_destino").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var url = currentURL + "/Desglose_llamadas/";
+    dateinicio = fechainicio + " " + hora_inicio + ":" + minuto_inicio + ":00";
+    datefin = fechafin + " " + hora_fin + ":" + minuto_fin + ":59";
+    /**
+     * Con esto mandamos las variables
+     */
+
+    $.post(url, {
+      dateinicio: dateinicio,
+      datefin: datefin,
+      numero_origen: numero_origen,
+      numero_destino: numero_destino,
+      //Empresas_id: Empresas_id,
+      _token: _token
+    }, function (data, textStatus, xhr) {
+      $('.viewreportedesglose').html(data);
+    });
+  });
+  /**
+   * Evento para mostrar el formulario de crear un nuevo ivr
+   */
+
+  $(document).on("click", ".nuevo-reporte", function (e) {
+    //alert ('generar');
+
+    /**
+     * Esto contrae el body
+     */
+    $('.body-filtro').slideDown();
+    $('.nuevo-reporte').slideUp();
+    $('#body-reporte').slideUp();
+    e.preventDefault();
+  });
+});
+
+/***/ }),
+
 /***/ "./resources/js/module_inbound/desvios.js":
 /*!************************************************!*\
   !*** ./resources/js/module_inbound/desvios.js ***!
@@ -1570,6 +1645,9 @@ $(function () {
     } else if (id == 39) {
       url = currentURL + '/Metricas_ACD';
       table = ' #tableACD';
+    } else if (id == 40) {
+      url = currentURL + '/Desglose_llamadas';
+      table = ' #tableDesgloseLlamadas';
     }
 
     $.get(url, function (data, textStatus, jqXHR) {
@@ -1584,9 +1662,9 @@ $(function () {
 /***/ }),
 
 /***/ 2:
-/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/module_inbound/menu.js ./resources/js/module_inbound/campanas.js ./resources/js/module_inbound/CondicionesTiempo.js ./resources/js/module_inbound/desvios.js ./resources/js/module_inbound/buzon_voz.js ./resources/js/module_inbound/Did_Enrutamiento.js ./resources/js/module_inbound/ivr.js ./resources/js/module_inbound/Metricas_ACD.js ***!
-  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/module_inbound/menu.js ./resources/js/module_inbound/campanas.js ./resources/js/module_inbound/CondicionesTiempo.js ./resources/js/module_inbound/desvios.js ./resources/js/module_inbound/buzon_voz.js ./resources/js/module_inbound/Did_Enrutamiento.js ./resources/js/module_inbound/ivr.js ./resources/js/module_inbound/Metricas_ACD.js ./resources/js/module_inbound/desglosellamadas.js ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1597,7 +1675,8 @@ __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\desvi
 __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\buzon_voz.js */"./resources/js/module_inbound/buzon_voz.js");
 __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\Did_Enrutamiento.js */"./resources/js/module_inbound/Did_Enrutamiento.js");
 __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\ivr.js */"./resources/js/module_inbound/ivr.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\Metricas_ACD.js */"./resources/js/module_inbound/Metricas_ACD.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\Metricas_ACD.js */"./resources/js/module_inbound/Metricas_ACD.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\desglosellamadas.js */"./resources/js/module_inbound/desglosellamadas.js");
 
 
 /***/ })

@@ -56,6 +56,7 @@ mix.js([
         'resources/js/module_inbound/Did_Enrutamiento.js',
         'resources/js/module_inbound/ivr.js',
         'resources/js/module_inbound/Metricas_ACD.js',
+        'resources/js/module_inbound/desglosellamadas.js',
     ], 'public/js/inbound.js')
     .js([
         'resources/js/module_agentes/agentes.js',
