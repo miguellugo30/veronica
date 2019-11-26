@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "045a336dbe97765c45b2d670df63b555",
+    "content-hash": "570fc3afc3f3003d1cfd0ce3a825e1a5",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -221,6 +221,61 @@
                 "schedule"
             ],
             "time": "2019-03-31T00:38:28+00:00"
+        },
+        {
+            "name": "econea/nusoap",
+            "version": "v0.9.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/econea/nusoap.git",
+                "reference": "6f9dbb82bdd64d537947707dd7873248aa152003"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/econea/nusoap/zipball/6f9dbb82bdd64d537947707dd7873248aa152003",
+                "reference": "6f9dbb82bdd64d537947707dd7873248aa152003",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "jakub-onderka/php-parallel-lint": "~1.0.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-0.9.x": "0.9.7.x-dev",
+                    "dev-develop": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.0-only"
+            ],
+            "authors": [
+                {
+                    "name": "Milan Felix Šulc",
+                    "homepage": "https://f3l1x.io"
+                }
+            ],
+            "description": "Fixed NuSOAP for PHP 5.6 - 7.3",
+            "homepage": "https://github.com/econea/nusoap",
+            "keywords": [
+                "client",
+                "http",
+                "nusoap",
+                "php",
+                "soap",
+                "transport",
+                "xml"
+            ],
+            "time": "2019-11-20T09:03:39+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -1918,49 +1973,6 @@
                 "uuid"
             ],
             "time": "2018-07-19T23:38:55+00:00"
-        },
-        {
-            "name": "ritey/nusoap",
-            "version": "0.9.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ritey/nusoap.git",
-                "reference": "0ab518be271312e4eac4a08b27b3a7ddf9aedea2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ritey/nusoap/zipball/0ab518be271312e4eac4a08b27b3a7ddf9aedea2",
-                "reference": "0ab518be271312e4eac4a08b27b3a7ddf9aedea2",
-                "shasum": ""
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "lib/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPLv2"
-            ],
-            "authors": [
-                {
-                    "name": "Dietrich Ayala",
-                    "homepage": "http://sourceforge.net/u/dietricha/profile/"
-                },
-                {
-                    "name": "Scott Nichol",
-                    "homepage": "http://sourceforge.net/u/snichol/profile/"
-                }
-            ],
-            "description": "Clone of NuSoap to work with Packagist/Composer",
-            "homepage": "http://github.com/ritey/nusoap",
-            "keywords": [
-                "nusoap",
-                "php",
-                "soap"
-            ],
-            "time": "2016-06-07T10:48:50+00:00"
         },
         {
             "name": "spatie/laravel-permission",
