@@ -5,6 +5,12 @@ namespace Modules\Inbound\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Nimbus\Http\Controllers\LogController;
+use Illuminate\Support\Facades\Auth;
+
+use Nimbus\User;
+use Nimbus\Crd_Call_Center;
+use Modules\Inbound\Http\Controllers\QueryreportdesgloseController;
 
 use Nimbus\Cdr_call_center;
 
@@ -17,14 +23,8 @@ class DesgloseLlamadasController extends Controller
     public function index()
     {
 
-        $fechaI = '2019-11-13 00:00:00';
-        $fechaF = '2019-11-13 23:59:59';
-
-        $cdr = Cdr_call_center::empresa(24)->whereBetween('fecha_inicio', [$fechaI, $fechaF])->get();
-
-        dd( $cdr );
-
-        //return view('inbound::DesgloseLlamadas.index');
+        //dd ($empresa_id);
+        return view('inbound::DesgloseLlamadas.index');
     }
 
     /**
@@ -33,7 +33,7 @@ class DesgloseLlamadasController extends Controller
      */
     public function create()
     {
-        return view('inbound::create');
+        return view('inbound::DesgloseLlamadas.create');
     }
 
     /**
@@ -44,6 +44,17 @@ class DesgloseLlamadasController extends Controller
     public function store(Request $request)
     {
         //
+        $user = Auth::user();
+        $empresa_id = $user->id_cliente;
+
+        $desglose = QueryreportdesgloseController::query( $request->dateinicio, $request->datefin, $empresa_id );
+        //Cdr_call_center::empresa(24)->whereBetween('fecha_inicio', [$fechaI, $fechaF])->get();
+        
+        //dd($desglose);
+
+        return view('inbound::DesgloseLlamadas.show',compact('desglose'));
+
+
     }
 
     /**
