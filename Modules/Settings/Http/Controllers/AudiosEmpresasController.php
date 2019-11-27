@@ -76,19 +76,19 @@ class AudiosEmpresasController extends Controller
         ## $ip_pbx
 
         /** Consumir WS desde el MS para enviar el audio **/
-        $url = '10.255.242.136/audios/upload_audios.php';
+        $url = '10.255.242.136/ws-ms/audios/upload_audios.php';
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL,$url);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_VERBOSE, true);
         curl_setopt($ch, CURLOPT_POST,1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, "empresa_id=".$empresa_id."&accion=1"."&id=" . $aud_nom);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "empresa_id=".$empresa_id."&accion=UPLOAD"."&id=" . $aud_nom);
         $remote_server_output = curl_exec($ch);
         $error = curl_errno($ch);
         curl_close ($ch);
 
-   // dd($remote_server_output);
+   	//dd($remote_server_output);
         /** Si respuesta es 1 */
       //  if ($remote_server_output == 1) {
 

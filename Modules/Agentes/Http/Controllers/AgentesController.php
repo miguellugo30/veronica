@@ -58,6 +58,7 @@ class AgentesController extends Controller
     {
         Agentes::where( 'id', $request->id_agente )->update(['Cat_Estado_Agente_id' => 2]);
         Miembros_Campana::where( 'membername', $request->id_agente )->update(['Paused' => 0]);
+	Crd_Asignacion_Agente::where('uniqueid', $request->uniqueid)->update(['fecha_calificacion' => $fecha]);
         EventosAmiController::colgar_llamada( $request->canal );
         CalificarLlamadaController::calificarllamada( $request );
 
@@ -99,19 +100,22 @@ class AgentesController extends Controller
         /**
          * Obtenemos la llamada que fue asignada al agente
          */
-        $datos_llamada = Crd_Asignacion_Agente::where( 'Agentes_id', $id )->orderBy('id', 'desc')->first();
-        /**
+        $datos_llamada = Crd_Asignacion_Agente::where( 'Agentes_id', $id )->orderBy('id', 'desc')->limit(1)->get();
+	$cdrDetalle = $datos_llamada[0]->CDR_Detalles->orderBy('id', 'desc')->limit(1)->get();
+	/**
          * Obtenemos el CALLED y CALLER
          */
-        $calledid = $datos_llamada->CDR_Detalles->CDR->first()->calledid;
-        $callerid = $datos_llamada->CDR_Detalles->CDR->first()->callerid;
-        $canal = $datos_llamada->canal;
-        $uniqueid = $datos_llamada->uniqueid;
+        $calledid = $datos_llamada[0]->CDR_Detalles->CDR->first()->calledid;
+        $callerid = $datos_llamada[0]->CDR_Detalles->CDR->first()->callerid;
+        $canal = $datos_llamada[0]->canal;
+        $uniqueid = $datos_llamada[0]->uniqueid;
+	
+		
         /**
          * Obtenemos la informacion de la campana a la cual esta el agente y la llamada
          */
-        if ( $datos_llamada->CDR_Detalles->aplicacion == 'Campanas' ) {
-            $campana = Campanas::active()->where( 'id', $datos_llamada->CDR_Detalles->id_aplicacion )->get()->first();
+        if ( $cdrDetalle->first()->aplicacion == 'Campanas' ) {
+            $campana = Campanas::active()->where( 'id', $cdrDetalle->first()->id_aplicacion )->get()->first();
         }
         /**
          * Obtenemos el Speech y el grupo de calificaciones
@@ -139,7 +143,7 @@ class AgentesController extends Controller
                     ->where('Cdr_call_center.callerid', $callerid)
                     ->whereDate('Cdr_call_center.fecha_inicio', DB::raw('curdate()'))->get();
 
-        return view('agentes::show', compact( 'campana', 'calledid', 'speech', 'historico', 'grupo', 'canal', 'uniqueid' ));
+       return view('agentes::show', compact( 'campana', 'calledid', 'speech', 'historico', 'grupo', 'canal', 'uniqueid' ));
     }
 
     /**
