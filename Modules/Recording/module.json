@@ -1,0 +1,14 @@
+{
+    "name": "Recording",
+    "alias": "recording",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Recording\\Providers\\RecordingServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
