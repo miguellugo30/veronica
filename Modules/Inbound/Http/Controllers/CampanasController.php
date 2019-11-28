@@ -15,7 +15,7 @@ use Nimbus\Audios_Empresa;
 use Nimbus\Campanas_Configuracion;
 use Nimbus\Agentes;
 use Nimbus\Miembros_Campana;
-use Nimbus\speech;
+use Nimbus\Speech;
 use Nimbus\Grupos;
 
 class CampanasController extends Controller
@@ -302,7 +302,7 @@ class CampanasController extends Controller
         if ($estado == '') {
             return 1;
         } else {
-            return $estado[0]->paused;
+            return 0;
         }
     }
 

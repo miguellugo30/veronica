@@ -11,7 +11,7 @@ use Nimbus\User;
 use Nimbus\Did_Enrutamiento;
 use Nimbus\Dids;
 use Nimbus\Campanas;
-use Nimbus\ivr;
+use Nimbus\Ivr;
 use Nimbus\Audios_Empresa;
 use Nimbus\Grupos;
 use Nimbus\Cat_Extensiones;
