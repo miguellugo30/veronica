@@ -7,12 +7,18 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use PHPAMI\Ami;
 
+use Nimbus\Empresas;
+
 class EventosAmiController extends Controller
 {
     public static function colgar_llamada( $canal )
     {
+        $agente = auth()->guard('agentes')->user();
+        $pbx = Empresas::empresa($agente->Empresas_id)->active()->with('Config_Empresas')->with('Config_Empresas.ms')->get()->first();
+
         $ami = new Ami();
-        if ($ami->connect('10.255.242.136:5038', 'Call_Center', 'Call_C3nt3r_1nf1n1t', 'off') === false) {
+        if ($ami->connect($pbx->Config_Empresas->ms->ip_pbx.':5038', $pbx->Config_Empresas->usuario_ami, $pbx->Config_Empresas->clave_ami, 'off') === false)
+        {
             throw new \RuntimeException('Could not connect to Asterisk Management Interface.');
         }
 

@@ -7,7 +7,10 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Nimbus\Http\Controllers\LogController;
 use Illuminate\Support\Facades\Auth;
-use Nimbus\User;
+use nusoap_client;
+use PHPAMI\Ami;
+
+use Nimbus\Empresas;
 use Nimbus\Did_Enrutamiento;
 use Nimbus\Dids;
 use Nimbus\Campanas;
@@ -16,7 +19,6 @@ use Nimbus\Audios_Empresa;
 use Nimbus\Grupos;
 use Nimbus\Cat_Extensiones;
 use Nimbus\Desvios;
-use PHPAMI\Ami;
 
 class DidEnrutamientoController extends Controller
 {
@@ -97,7 +99,7 @@ class DidEnrutamientoController extends Controller
         $destino = $data[1];
         $num = $data[2];
 
-        $user = User::find( Auth::id() );
+        $user = Auth::user();
         $empresa_id = $user->id_cliente;
 
         if ($data[1] == 'Audios_Empresa') {
@@ -134,7 +136,7 @@ class DidEnrutamientoController extends Controller
         $did = Dids::find( $id );
 
         $enrutamiento = Did_Enrutamiento::active()->where('Dids_id',$id)->orderBy('prioridad', 'ASC')->get();
-        $user = User::find( Auth::id() );
+        $user = Auth::user();
         $empresa_id = $user->id_cliente;
 
         $data = array();
@@ -184,7 +186,7 @@ class DidEnrutamientoController extends Controller
     {
 
         $dataForm = $request->input('dataForm');
-        $user = User::find( Auth::id() );
+        $user = Auth::user();
         $empresa_id = $user->id_cliente;
 
         for ($i=0; $i < count( $dataForm ); $i++) {
@@ -235,33 +237,25 @@ class DidEnrutamientoController extends Controller
          * Creamos una petición, para poder escribir
          * los nuevos DID en el archivo EXTENSIONS_DID.CONF
          */
-        $ch = curl_init();
-        // definimos la URL a la que hacemos la petición
-        curl_setopt($ch, CURLOPT_URL,"10.255.242.136/api-contextos/enrutamiento_did.php");
-        // indicamos el tipo de petición: POST
-        curl_setopt($ch, CURLOPT_POST, TRUE);
-        // definimos cada uno de los parámetros
-        curl_setopt($ch, CURLOPT_POSTFIELDS, "empresa_id=".$empresa_id);
-        // recibimos la respuesta y la guardamos en una variable
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $remote_server_output = curl_exec ($ch);
-        // cerramos la sesión cURL
-        curl_close ($ch);
+        $pbx = Empresas::empresa($empresa_id)->active()->with('Config_Empresas')->with('Config_Empresas.ms')->get()->first();
+        $wsdl = 'http://'.$pbx->Config_Empresas->ms->ip_pbx.'/ws-ms/index.php';
+        $client =  new  nusoap_client( $wsdl );
+        $result = $client->call('EnrutamientoDid', array(
+                                                        'empresas_id' => $empresa_id
+                                                    ));
         /**
-         * Si la respuesta es 1, se hace el reload del dialplan
-         */
-        if ($remote_server_output == 1) {
+        * Si la respuesta es 1, se hace el reload del sip
+        */
+        if ($result['error'] == 1) {
             $ami = new Ami();
-            if ($ami->connect('10.255.242.136:5038', 'Call_Center', 'Call_C3nt3r_1nf1n1t', 'off') === false) {
-               throw new \RuntimeException('Could not connect to Asterisk Management Interface.');
+            if ($ami->connect($pbx->Config_Empresas->ms->ip_pbx.':5038', $pbx->Config_Empresas->usuario_ami, $pbx->Config_Empresas->clave_ami, 'off') === false)
+            {
+                throw new \RuntimeException('Could not connect to Asterisk Management Interface.');
             }
             $result  = $ami->command('dialplan Reload');
-
             $ami->disconnect();
         }
-
         return redirect()->route('Did_Enrutamiento.index');
-
     }
 
     /**

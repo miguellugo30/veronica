@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 use Nimbus\Http\Controllers\LogController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use nusoap_client;
 
 use Nimbus\User;
 use Nimbus\Agentes;
@@ -29,7 +30,6 @@ class AgentesController extends Controller
          */
         $user = Auth::user();
         $empresa_id = $user->id_cliente;
-
         $agentes = Agentes::empresa($empresa_id)->active()->with('Canales')->with('Grupos')->get();
         return view('settings::Agentes.index',compact('agentes'));
     }
@@ -63,7 +63,7 @@ class AgentesController extends Controller
         /**
          * Insertamos la información del Agente
          */
-        $user = User::find( Auth::id() );
+        $user = Auth::user();
         $empresa_id = $user->id_cliente;
         /**
          * Insertamos el nuevo agentes
@@ -86,22 +86,24 @@ class AgentesController extends Controller
          * Creamos una petición, para poder escribir
          * los agentes en el archivo AGENTS.CONF
          */
-        $ch = curl_init();
-        // definimos la URL a la que hacemos la petición
-        curl_setopt($ch, CURLOPT_URL,"10.255.242.136/api-contextos/agentes.php");
-        // indicamos el tipo de petición: POST
-        curl_setopt($ch, CURLOPT_POST, TRUE);
-        // definimos cada uno de los parámetros
-        curl_setopt($ch, CURLOPT_POSTFIELDS, "empresa_id=".$empresa_id);
-        // recibimos la respuesta y la guardamos en una variable
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $remote_server_output = curl_exec ($ch);
-        print_r( $remote_server_output );
-        // cerramos la sesión cURL
-        curl_close ($ch);
+        $pbx = Empresas::empresa($empresa_id)->active()->with('Config_Empresas')->with('Config_Empresas.ms')->get()->first();
+        $wsdl = 'http://'.$pbx->Config_Empresas->ms->ip_pbx.'/ws-ms/index.php';
+        $client =  new  nusoap_client( $wsdl );
+        $result = $client->call('AgentesConf', array(
+                                                        'empresas_id' => $empresa_id
+                                                    ));
         /**
          * Si la respuesta es 1, se hace el reload del sip
          */
+        if ($result['result'] == 1) {
+            $ami = new Ami();
+            if ($ami->connect($pbx->Config_Empresas->ms->ip_pbx.':5038', $pbx->Config_Empresas->usuario_ami, $pbx->Config_Empresas->clave_ami, 'off') === false)
+            {
+               throw new \RuntimeException('Could not connect to Asterisk Management Interface.');
+            }
+            $result  = $ami->command('dialplan Reload');
+            $ami->disconnect();
+        }
         /**
          * Creamos el logs
          */
@@ -134,7 +136,7 @@ class AgentesController extends Controller
         /**
          * Obtenemos el id empresa del usuario para obtener los canales
          */
-        $user = User::find( Auth::id() );
+        $user = Auth::user();
         $empresa_id = $user->id_cliente;
 
         $empresa = Empresas::find( $empresa_id );

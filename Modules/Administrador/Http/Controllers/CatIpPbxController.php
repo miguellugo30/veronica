@@ -57,20 +57,22 @@ class CatIpPbxController extends Controller
          */
         $cat = $pbx = Cat_IP_PBX::create(  $request->all() );
         /**
+         * Asignamos las categorias al usuario
+         */
+        if ( $request->input('arr') != NULL ) {
+            $data = $request->input('arr');
+            for ($i=0; $i < count( $data ); $i++) {
+                DB::table('Cat_IP_PBX_Cat_Nas')->insert(
+                    ['Cat_IP_PBX_id' => $pbx->id, 'Cat_Nas_id' => $data[$i] ]
+                );
+            }
+        }
+         /**
          * Creamos el logs
          */
         $mensaje = 'Se creo un nuevo registro, informacion capturada:'.var_export($request->all(), true);
         $log = new LogController;
         $log->store('Insercion', 'Cat_IP_PBX',$mensaje, $cat->id);
-        /**
-         * Asignamos las categorias al usuario
-         */
-        $data = $request->input('arr');
-        for ($i=0; $i < count( $data ); $i++) {
-            DB::table('Cat_IP_PBX_Cat_Nas')->insert(
-                ['Cat_IP_PBX_id' => $pbx->id, 'Cat_Nas_id' => $data[$i] ]
-            );
-        }
         /**
         * Recuperamos todos los catalogos que esten activos
         */

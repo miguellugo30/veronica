@@ -27,6 +27,13 @@ class Empresas extends Model
     {
         return $query->where('activo', 1);
     }
+    /**
+     * Funcion para obtener solo los registros activos
+     */
+    public function scopeEmpresa($query, $id)
+    {
+        return $query->where('id', $id);
+    }
     /*
     |--------------------------------------------------------------------------
     | RELACIONES DE BASE DE DATOS
