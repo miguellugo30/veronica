@@ -52,7 +52,7 @@ class SpeechController extends Controller
         for ($i=0; $i < count( $dataForm ); $i++) {
             $data[ $dataForm[$i]['name']] = $dataForm[$i]['value'];
         }
-
+        //dd( $data );
         /**
          * Insertamos la información del Agente
          */
@@ -62,13 +62,14 @@ class SpeechController extends Controller
          * Insertar información a la tabla de Speech
          */
          $speech = Speech::create([
-            'tipo'=>$data['tipo'],
-            'nombre'=>$data['nombre'],
-            'descripcion'=>$data['descripcion'],
-            'activo'=>1,
-            'Empresas_id'=>$empresa_id
-        ]);
+             'tipo'=>$data['tipo'],
+             'nombre'=>$data['nombre'],
+             'descripcion'=>$data['descripcion'],
+             'activo'=>1,
+             'Empresas_id'=>$empresa_id
+             ]);
 
+        array_shift( $data );
         array_shift( $data );
         array_shift( $data );
         array_shift( $data );
@@ -80,15 +81,16 @@ class SpeechController extends Controller
          $j = 1;
          for ($i=0; $i < count( $info ); $i++) {
 
-                $opciones = Opciones_Speech::create([
-                    'nombre' => $info[$i][0],
-                    'texto' => $info[$i][1],
-                    'prioridad' => $j,
-                    'speech_id' => $speech->id
-                ]);
+                Opciones_Speech::create([
+                                            'nombre' => $info[$i][0],
+                                            'texto' => $info[$i][1],
+                                            'prioridad' => $j,
+                                            'speech_id' => $speech->id
+                                        ]);
                 $j = $j + 1;
             }
         return redirect()->route('speech.index');
+
     }
 
     /**

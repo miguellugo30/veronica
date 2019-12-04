@@ -15,7 +15,7 @@ class Opciones_Speech extends Model
      * Campos que pueden ser modificados
      */
     protected $fillable = [
-        'id', 'nombre', 'texto', 'prioridad', 'speech_id'
+        'nombre', 'texto', 'prioridad', 'speech_id'
     ];
     /**
      * Nombre de la tabla

@@ -24,7 +24,7 @@
                             <th>Troncal</th>
                             <th>Descripci&oacute;n</th>
                             <th>IP HOST</th>
-                            <th>Configuraci&oacute;n</th>
+                            <!--th>Configuraci&oacute;n</th-->
                         </tr>
                     </thead>
                     <tbody>
@@ -34,12 +34,12 @@
                                 <td>{{ $troncal->nombre }}</td>
                                 <td>{{ $troncal->descripcion }}</td>
                                 <td>{{  ( $troncal->Troncales_Sansay != NULL ) ? $troncal->Troncales_Sansay->host : ''}}</td>
-                                <td align="center">
+                                <!--td align="center">
                                     <input type="hidden" name="id" id="id" value="{{ $troncal->id }}">
-                                    <button type="button" value="{{$troncal->id}}" class="btn bg-olive margin btn-sm viewConfig" style="margin: 0px;">
+                                    <button type="button" value="{{--$troncal->id--}}" class="btn bg-olive margin btn-sm viewConfig" style="margin: 0px;">
                                         <i class="fas fa-cog"></i>
                                     </button>
-                                </td>
+                                </td-->
                             </tr>
                         @endforeach
                         <div id="configuracionmodal" class="modal fade">

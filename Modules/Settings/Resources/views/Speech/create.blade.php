@@ -5,6 +5,7 @@
                 <div class="col-4">
                     <div class="form-group">
                         <label for="tipo"><b>Tipo</b></label>
+                            @csrf
                             <select name="tipo" id="tipo" class="form-control form-control-sm tipo">
                                 <option value="">Seleccione un tipo</option>
                                 <option value="estatico">Estatico</option>
@@ -15,15 +16,13 @@
                 <div class="col-4">
                     <div class="form-group">
                         <label for="nombre"><b>Nombre</b></label>
-                            <input type="text" class="form-control form-control-sm" id="nombre" name="nombre" placeholder="Nombre Speech">
-                            @csrf
+                        <input type="text" class="form-control form-control-sm" id="nombre" name="nombre" placeholder="Nombre Speech">
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="form-group">
                         <label for="nombre"><b>Descripcion</b></label>
-                            <input type="text" class="form-control form-control-sm" id="descripcion" name="descripcion" placeholder="Descripcion Speech">
-                            @csrf
+                        <input type="text" class="form-control form-control-sm" id="descripcion" name="descripcion" placeholder="Descripcion Speech">
                     </div>
                 </div>
                 <div class="col-md-12">
@@ -39,10 +38,15 @@
                             </thead>
                             <tbody>
                                 <tr id="tr_1" class="clonar">
-                                    <td><input type="text" class="form-control form-control-sm nombreSpeech" id="nombreSpeech" name="nombreSpeech" placeholder="Nombre" value="">
+                                    <td>
+                                        <input type="text" class="form-control form-control-sm nombreSpeech" id="nombreSpeech" name="nombreSpeech" placeholder="Nombre" value="">
                                     </td>
-                                    <td><input type="text" class="form-control form-control-sm descripcion" id="descripcion" name="descripcion" placeholder="Descripcion" value=""></td>
-                                    <td class="tr_clone_remove"><button type="button" name="remove" class="btn btn-danger remove" hidden><i class="fas fa-trash-alt"></i></button></td>
+                                    <td>
+                                        <input type="text" class="form-control form-control-sm descripcion" id="descripcionSpeech" name="descripcionSpeech" placeholder="Descripcion" value="">
+                                    </td>
+                                    <td class="tr_clone_remove">
+                                        <button type="button" name="remove" class="btn btn-danger remove" hidden><i class="fas fa-trash-alt"></i></button>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>

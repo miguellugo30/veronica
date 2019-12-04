@@ -10,7 +10,7 @@ class Speech extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'nombre', 'descripcion','tipo','Empresas_id','id'
+        'tipo','nombre', 'descripcion','Empresas_id'
     ];
     /**
      * Nombre de la tabla que se ocupara

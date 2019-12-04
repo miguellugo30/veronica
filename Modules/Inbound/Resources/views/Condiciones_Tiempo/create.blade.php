@@ -101,7 +101,7 @@
                                 </select>
                             </td>
                             <td>
-                                <div id="opcionesSiCoincide_1"></div>
+                                <div class="opcionesSi" id="opcionesSiCoincide_1"></div>
                             </td>
                             <td>
                                 <select name="destino_falso_1" id="destino_falso"  class="form-control form-control-sm destinoOpccion" data-accion="no_coincide">
@@ -118,7 +118,7 @@
                                 </select>
                             </td>
                             <td>
-                                <div id="opcionesNoCoincide_1"></div>
+                                <div class="opcionesNo" id="opcionesNoCoincide_1"></div>
                             </td>
                             <td class="tr_clone_remove text-center">
                                 <button type="button" name="remove" class="btn btn-danger" style="display:none"><i class="fas fa-trash-alt"></i></button>

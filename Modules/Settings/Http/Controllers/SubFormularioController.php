@@ -5,6 +5,8 @@ namespace Modules\Settings\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
+
 use Nimbus\Formularios;
 use Nimbus\Sub_Formularios;
 use Nimbus\Campos;
@@ -26,7 +28,9 @@ class SubFormularioController extends Controller
      */
     public function create()
     {
-        $formularios = Formularios::active()->get();
+        $user = Auth::user();
+        $empresa_id = $user->id_cliente;
+        $formularios = Formularios::empresa($empresa_id)->active()->with('Tipo_Marcacion')->get();
         return view('settings::subFormularios.create',compact('formularios'));
     }
 
