@@ -12,7 +12,7 @@ class EventosAmiController extends Controller
     public static function colgar_llamada( $canal )
     {
         $ami = new Ami();
-        if ($ami->connect('10.255.242.136:5038', 'Call_Center', 'Call_C3nt3r_1nf1n1t', 'off') === false) {
+        if ($ami->connect('10.255.245.136:5038', 'Call_Center', 'Call_C3nt3r_1nf1n1t', 'off') === false) {
             throw new \RuntimeException('Could not connect to Asterisk Management Interface.');
         }
 

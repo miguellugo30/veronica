@@ -103,7 +103,7 @@ class EventosAgenteController extends Controller
      */
     public function logeoExtension( Request $request )
     {
-        $wsdl = 'http://10.255.242.136/ws-ms/index.php';
+        $wsdl = 'http://10.255.245.136/ws-ms/index.php';
 
 
         $client =  new  nusoap_client( $wsdl );
