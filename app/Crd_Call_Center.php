@@ -15,6 +15,13 @@ class Crd_Call_Center extends Model
      * Nombre de la tabla que se ocupra
      */
     protected $table = 'Cdr_call_center';
+    /**
+     * Funcion para obtener solo los registros de una empresa
+     */
+    public function scopeEmpresa($query, $empresa)
+    {
+        return $query->where('Empresas_id', $empresa);
+    }
     /*
     |--------------------------------------------------------------------------
     | RELACIONES DE BASE DE DATOS
@@ -31,6 +38,6 @@ class Crd_Call_Center extends Model
      */
     public function CDR_Detalle()
     {
-        return $this->hasMany('Nimbus\Crd_Call_Center_Detalles');
+        return $this->hasMany('Nimbus\Crd_Call_Center_Detalles', 'uniqueid', 'uniqueid');
     }
 }

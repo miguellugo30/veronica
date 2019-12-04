@@ -21,10 +21,10 @@ class DesviosController extends Controller
      */
     public function index()
     {
-        $user = User::find( Auth::id() );
+        $user = Auth::user();
         $empresa_id = $user->id_cliente;
 
-        $desvios = Desvios::active()->where('Empresas_id',$empresa_id)->get();
+        $desvios = Desvios::empresa($empresa_id)->active()->with('Canales')->get();
         return view('inbound::Desvios.index',compact('desvios'));
     }
 

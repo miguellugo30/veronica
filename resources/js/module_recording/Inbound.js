@@ -198,6 +198,21 @@ $(function() {
         });
     });
 
+    $(document).on("click", ".grabacion", function() {
+        var nom_audio = (this.id);
+        //let _token = $("input[name=_token]").val();
+        var url = currentURL + '/Inbound/getGrabacion/' + nom_audio;
+        alert(url);
+        $.ajax({
+            url: url,
+            type: 'GET',
+            data: {
+                nom_audio: nom_audio,
+                //_token: _token
+            }
+        });
+    });
+
     $(document).on("click", ".checkall", function() {
         /**
          * Evento para Marcar/Desmarcar todos los checkbox de la columna 0

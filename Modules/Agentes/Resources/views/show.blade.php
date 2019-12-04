@@ -1,9 +1,11 @@
-<section class="content-header" style="margin-right:50px">
+<section class="content-header" style="margin-right:65px">
     <div class="row">
         <div class="col-4">
             <h4>
-                <b>{{$campana->nombre}}</b>
-                <small>{{ ucwords( $calledid ) }}</small>
+                <b>{{ ucwords( $campana->nombre ) }}</b>
+                <small>{{$calledid}}</small>
+                <input type="hidden" id="canal" name="canal" value="{{ $canal }}">
+                <input type="hidden" id="uniqueid" name="uniqueid" value="{{ $uniqueid }}">
             </h4>
         </div>
         <div class="col-4 text-center">
@@ -18,10 +20,10 @@
     </div>
 </section>
 
-<section class="content viewResult" style="margin-right:50px">
-    <div class="row justify-content-md-center align-items-center">
-            <div class="col-8">
-                <div class="box">
+<section class="content viewResult" style="margin-right:65px">
+    <div class="row">
+            <div class="col-8  h-100 d-inline-block">
+                <div class="box" >
                     <div class="box-header with-border">
                         <h3 class="box-title"><b>Calificar llamada</b></h3>
                         <div class="box-tools pull-right">
@@ -39,7 +41,7 @@
                                             <select class="form-control form-control-sm" name="calificacion" id="calificacion">
                                                 <option value="">Selecciona una calificacion</option>
                                                 @foreach ($grupo->Calificaciones as $calificacion)
-                                                    <option value="{{$calificacion->Formularios_id}}">{{$calificacion->nombre}}</option>
+                                                    <option data-calificacionId="{{$calificacion->id}}" value="{{$calificacion->Formularios_id}}">{{$calificacion->nombre}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -113,7 +115,7 @@
                 <div class="box-body">
                     <div class="row">
                         <div class="col-12 text-justify">
-                            <table class="table table-striped table-sm">
+                            <table class="table table-striped table-sm historico-llamadas">
                                 <thead class="thead-light">
                                     <tr>
                                         <th>Campaña</th>
@@ -125,16 +127,18 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($historico as $hist)
+                                    @foreach ($historico as $his)
                                         <tr>
-                                            <td>{{$campana->nombre}}</td>
-                                            <td>{{ date( 'd-m-Y H:i:s', strtotime( $hist->fecha_inicio ) ) }}</td>
-                                            <td>Calificacion</td>
-                                            <td>Raul Rojas</td>
+                                            <td>{{ $his->campana }}</td>
+                                            <td>{{  date( 'd-m-Y H:i:s', strtotime( $his->fecha_inicio ) )  }}</td>
+                                            <td>{{ $his->callerid }}</td>
+                                            <td>{{ $his->nombre }}</td>
                                             <td class="text-center"><i class="fas fa-check text-success"></i></td>
                                             <td><i class="far fa-plus-square text-primary"></i></td>
                                         </tr>
                                     @endforeach
+                                    @for ($i = 0; $i < count( $historico  ); $i++)
+                                    @endfor
                                 </tbody>
                             </table>
                         </div>

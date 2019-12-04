@@ -27,6 +27,13 @@ class Dids extends Model
     {
         return $query->where('activo', 1);
     }
+     /**
+     * Funcion para obtener solo los registros de una empresa
+     */
+    public function scopeEmpresa($query, $empresa)
+    {
+        return $query->where('Empresas_id', $empresa);
+    }
     /*
     |--------------------------------------------------------------------------
     | RELACIONES DE BASE DE DATOS
@@ -50,7 +57,7 @@ class Dids extends Model
    */
    public function Did_Enrutamiento()
    {
-      return $this->hasOne('Nimbus\Did_Enrutamiento')->orderby('prioridad');
+      return $this->hasOne('Nimbus\Did_Enrutamiento', 'Dids_id', 'id')->orderby('prioridad');
    }
 }
 

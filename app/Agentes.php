@@ -17,7 +17,7 @@ class Agentes extends  Authenticatable
      * Campos que se usaran en el proceso de la vista
      */
     protected $fillable = [
-        'nombre', 'usuario', 'contrasena' , 'extension', 'nivel', 'extension_real','pin','mix_monitor','id_perfil_marcacion','calificar_llamada','tipo_licencia','envio_sms','id_direccion','editar_datos','Cat_Estado_Agente_id','Empresas_id','Canales_id',
+        'nombre', 'usuario', 'email', 'password', 'contrasena' , 'extension', 'nivel', 'extension_real','pin','mix_monitor','id_perfil_marcacion','calificar_llamada','tipo_licencia','envio_sms','id_direccion','editar_datos','Cat_Estado_Agente_id','Empresas_id','Canales_id',
     ];
     /**
      * Nombre de la tabla
@@ -29,6 +29,13 @@ class Agentes extends  Authenticatable
     public function scopeActive($query)
     {
         return $query->where('activo', 1);
+    }
+    /**
+     * Funcion para obtener solo los registros de una empresa
+     */
+    public function scopeEmpresa($query, $empresa)
+    {
+        return $query->where('Empresas_id', $empresa);
     }
     /*
     |--------------------------------------------------------------------------

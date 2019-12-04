@@ -36,12 +36,14 @@
                             </div>
                         </div>
                         <div class="col  text-center card m-1 bg-success text-white thumbnail">
-                            <div class="pt-3">
-                                <i class="fas fa-headset fa-5x"></i>
-                            </div>
-                            <div class="pt-3">
-                                <h6>Monitor & Coaching</h6>
-                            </div>
+                            <a href="{{url("/monitor")}}">
+                                <div class="pt-3">
+                                    <i class="fas fa-headset fa-5x"></i>
+                                </div>
+                                <div class="pt-3">
+                                    <h6>Monitor & Coaching</h6>
+                                </div>
+                            </a>
                         </div>
                         <div class="col  text-center card m-1 bg-danger text-white thumbnail">
                             <a href="http://localhost:8000/recording">

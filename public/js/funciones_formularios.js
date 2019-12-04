@@ -2,7 +2,9 @@ $(function() {
 
     currentURL = window.location.href.replace('agentes/');
 
-    console.log(currentURL);
+
+    url = currentURL.split('?');
+    currentURL = url[0];
 
     $(document).on('click', '#btn_bloque_ocultos', function(event) {
         $('#bloque_oculto').slideToggle();
@@ -41,5 +43,4 @@ $(function() {
             }
         });
     });
-
 });

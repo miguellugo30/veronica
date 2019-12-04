@@ -11,8 +11,9 @@
                     @csrf
                 </div>
                 <div class="form-group">
-                    <label for="mlogeo">Modalidad de Logeo</label>
-                    <select name="mlogeo" id="mlogeo" class="form-control form-control-sm">
+                    <label for="mlogeo">Modalidad de Logueo</label>
+                    <input type="hidden" id="mlogueoInicial" name="mlogueoInicial" value="{{$campana->modalidad_logue}}">
+                    <select name="mlogeo" id="mlogeo" class="form-control form-control-sm mlogueoEditar">
                         <option value="">Selecciona una opción</option>
                         <option value="canal_cerrado" {{($campana->modalidad_logue == 'canal_cerrado' ) ? 'selected = "selected"':'' }}>Sin Logeo Permanente</option>
                         <option value="canal_abierto" {{($campana->modalidad_logue == 'canal_abierto' ) ? 'selected = "selected"':'' }}>Logeo Permanente</option>
@@ -51,7 +52,7 @@
                     <select name="periodic_announcee" id="periodic_announce" class="form-control form-control-sm">
                         <option value="call_center/agentes_no_disponibles">Selecciona una opción</option>
                         @foreach ($Audios as $audio)
-                                <option value="{{$audio->id}}" {{($audio->id == $campana->Campanas_configuracion->periodic_announce) ? 'selected = "selected"':'' }}>{{ $audio->nombre }}</option>
+                                <option value="{{$audio->ruta}}" {{($audio->ruta == $campana->Campanas_Configuracion->periodic_announce) ? 'selected = "selected"':'' }}>{{ $audio->nombre }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -120,7 +121,7 @@
         <div class="col">
             <fieldset >
                 <legend>Agentes que participan en la campaña <b><a class="nombreCampana"></a></b></legend>
-                <table class="table table-sm table-striped table-hover">
+                <table id="tableAgentesParticipantes" class="table table-sm table-striped table-hover">
                     <thead class="thead-light">
                         <tr>
                             <th scope="col">Grupo</th>

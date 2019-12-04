@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Nimbus\Http\Controllers\LogController;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 use Nimbus\User;
 use Nimbus\Agentes;
@@ -26,10 +27,10 @@ class AgentesController extends Controller
         /**
          * Sacamos los datos del agente y su empresa para obtener los agentes
          */
-        $user = User::find( Auth::id() );
+        $user = Auth::user();
         $empresa_id = $user->id_cliente;
 
-        $agentes = Agentes::active()->where('Empresas_id',$empresa_id)->get();
+        $agentes = Agentes::empresa($empresa_id)->active()->with('Canales')->with('Grupos')->get();
         return view('settings::Agentes.index',compact('agentes'));
     }
 
@@ -42,7 +43,7 @@ class AgentesController extends Controller
         /**
          * Obtenemos el id empresa del usuario para obtener los canales
          */
-        $user = User::find( Auth::id() );
+        $user = Auth::user();
         $empresa_id = $user->id_cliente;
 
         $empresa = Empresas::find( $empresa_id );
@@ -69,6 +70,8 @@ class AgentesController extends Controller
          */
         $datos = $request->all();
         $datos['Empresas_id'] = $empresa_id;
+        $datos['password'] = Hash::make( $datos['contrasena'] );
+        $datos['email'] = $datos['usuario'];
         $agente = Agentes::create($datos);
         /**
          * Buscamos el grupo para poderlo vincular al agente
@@ -79,6 +82,26 @@ class AgentesController extends Controller
             $grupo->Agentes()->attach($agente->id);
 
         }
+        /**
+         * Creamos una petición, para poder escribir
+         * los agentes en el archivo AGENTS.CONF
+         */
+        $ch = curl_init();
+        // definimos la URL a la que hacemos la petición
+        curl_setopt($ch, CURLOPT_URL,"10.255.242.136/api-contextos/agentes.php");
+        // indicamos el tipo de petición: POST
+        curl_setopt($ch, CURLOPT_POST, TRUE);
+        // definimos cada uno de los parámetros
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "empresa_id=".$empresa_id);
+        // recibimos la respuesta y la guardamos en una variable
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $remote_server_output = curl_exec ($ch);
+        print_r( $remote_server_output );
+        // cerramos la sesión cURL
+        curl_close ($ch);
+        /**
+         * Si la respuesta es 1, se hace el reload del sip
+         */
         /**
          * Creamos el logs
          */

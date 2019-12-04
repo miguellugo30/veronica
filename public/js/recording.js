@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -421,6 +421,20 @@ $(function () {
       }
     });
   });
+  $(document).on("click", ".grabacion", function () {
+    var nom_audio = this.id; //let _token = $("input[name=_token]").val();
+
+    var url = currentURL + '/Inbound/getGrabacion/' + nom_audio;
+    alert(url);
+    $.ajax({
+      url: url,
+      type: 'GET',
+      data: {
+        nom_audio: nom_audio //_token: _token
+
+      }
+    });
+  });
   $(document).on("click", ".checkall", function () {
     /**
      * Evento para Marcar/Desmarcar todos los checkbox de la columna 0
@@ -536,7 +550,7 @@ $(function () {
 
 /***/ }),
 
-/***/ 4:
+/***/ 3:
 /*!***********************************************************************************************************************************************!*\
   !*** multi ./resources/js/module_recording/menu.js ./resources/js/module_recording/Grabaciones.js ./resources/js/module_recording/Inbound.js ***!
   \***********************************************************************************************************************************************/

@@ -1,4 +1,5 @@
 $(function() {
+    var currentURL = window.location.href;
     /**
      * Evento para mostrar el formulario de crear un nuevo ivr
      */
@@ -102,7 +103,7 @@ $(function() {
         $(".editIvr").slideDown();
         $("#idSeleccionado").val(id);
 
-        $("#tabledidenrutamientos tbody tr").removeClass('table-primary');
+        $("#tableivr tbody tr").removeClass('table-primary');
         $(this).addClass('table-primary');
     });
     /**

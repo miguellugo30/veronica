@@ -28,7 +28,7 @@ class DidController extends Controller
         /**
          * Recuperamos todos los did que esten activos
          */
-        $Dids = Dids::active()->get();
+        $Dids = Dids::active()->with('Empresas')->with('Canales.Troncales')->get();
         return view('administrador::dids.index', compact('Dids'));
     }
 

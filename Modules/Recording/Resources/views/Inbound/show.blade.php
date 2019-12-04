@@ -62,7 +62,7 @@
                     <td>{{ date('H:i:s',strtotime($grabacion->duracion)) }}</td>
                     <td></td>
                     <td></td>
-                    <td><audio controls preload="metadata" controlsList="nodownload"><source src='{{ $grabacion->escuchar }}' type="audio/wav"></audio></td>
+                    <td><i class="fas fa-file-download grabacion" id="{{ $grabacion->escuchar }}"></i></td>
                 </tr>
             @endforeach
         </tbody>

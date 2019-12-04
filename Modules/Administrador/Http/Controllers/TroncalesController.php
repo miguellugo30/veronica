@@ -23,7 +23,7 @@ class TroncalesController extends Controller
         /**
          * Recuperamos todos las troncales que esten activos
          */
-        $troncales = Troncales::active()->get();
+        $troncales = Troncales::active()->with('Cat_Distribuidor')->with('Troncales_Sansay')->get();;
         return view('administrador::troncales.index', compact('troncales'));
     }
 
@@ -147,9 +147,9 @@ class TroncalesController extends Controller
                                 ->update([
                                     'nombre' => $request->input('nombre'),
                                     'descripcion' => $request->input('descripcion'),
-                                    'ip_host' => $request->input('ip_host'),
+                                    //'ip_host' => $request->input('ip_host'),
                                     'Cat_Distribuidor_id' => $request->input('Cat_Distribuidor_id'),
-                                    'Cat_IP_PBX_id' => $request->input('Cat_IP_PBX_id'),
+                                    //'Cat_IP_PBX_id' => $request->input('Cat_IP_PBX_id'),
                                 ]);
 
         /**

@@ -22,7 +22,7 @@ class CatIpPbxController extends Controller
         /**
         * Recuperamos todos los catalogos que esten activos
         */
-        $cat_ip_pbx = Cat_IP_PBX::where('activo',1)->get();
+        $cat_ip_pbx = Cat_IP_PBX::active()->with('BaseDatos')->with('cat_nas')->get();
         return view('administrador::ip_pbx.index', compact('cat_ip_pbx'));
     }
 

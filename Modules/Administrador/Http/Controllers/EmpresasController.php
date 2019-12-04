@@ -34,7 +34,7 @@ class EmpresasController extends Controller
         /**
          * Recuperamos todos las empresas que esten activos
          */
-        $empresas = Empresas::active()->get();
+        $empresas = Empresas::active()->with('Config_Empresas.Distribuidores')->get();
         return view('administrador::empresas.index', compact('empresas'));
     }
 

@@ -1,5 +1,5 @@
 <div class="row">
-    <form enctype="multipart/form-data" id="altacampana" method="post">
+    <!--form enctype="multipart/form-data" id="altacampana" method="post"-->
         <div class="col">
             <fieldset>
                 <legend>Configuración:</legend>
@@ -10,7 +10,7 @@
                     @csrf
                 </div>
                 <div class="form-group">
-                    <label for="mlogeo">Modalida de Logeo</label>
+                    <label for="mlogeo">Modalida de Logueo</label>
                     <select name="mlogeo" id="mlogeo" class="form-control form-control-sm">
                         <option value="">Selecciona una opción</option>
                         <option value="canal_cerrado">Sin Logeo Permanente</option>
@@ -158,5 +158,5 @@
                 </table>
             </fieldset>
         </div>
-    </form>
+    <!--/form-->
 </div>

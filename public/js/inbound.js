@@ -560,6 +560,49 @@ $(function () {
 
 /***/ }),
 
+/***/ "./resources/js/module_inbound/Metricas_ACD.js":
+/*!*****************************************************!*\
+  !*** ./resources/js/module_inbound/Metricas_ACD.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  var currentURL = window.location.href;
+  /**
+   * Evento para el menu de sub categorias y mostrar la vista
+   */
+
+  $(document).on("click", ".generarReporteACD", function (e) {
+    e.preventDefault();
+    var url = currentURL + '/Metricas_ACD';
+    var fecha_inicio = $("#fecha-inicio").val();
+    var hora_inicio = $("#hora_inicio").val();
+    var min_inicio = $("#min_inicio").val();
+    var fecha_fin = $("#fecha-fin").val();
+    var hora_fin = $("#hora_fin").val();
+    var min_fin = $("#min_fin").val();
+    dateInicio = fecha_inicio + " " + hora_inicio + ":" + min_inicio + ":00";
+    dateFin = fecha_fin + " " + hora_fin + ":" + min_fin + ":00";
+
+    var _token = $("input[name=_token]").val();
+
+    $.ajax({
+      url: url,
+      type: "post",
+      data: {
+        dateInicio: dateInicio,
+        dateFin: dateFin,
+        _token: _token
+      }
+    }).done(function (data) {
+      $('.viewReporteACD').html(data);
+    });
+  });
+});
+
+/***/ }),
+
 /***/ "./resources/js/module_inbound/buzon_voz.js":
 /*!**************************************************!*\
   !*** ./resources/js/module_inbound/buzon_voz.js ***!
@@ -959,12 +1002,47 @@ $(function () {
    */
 
   $(document).on('click', '.agentesNoSeleccionados tr', function (event) {
-    $(this).clone().appendTo(".agentesSeleccionados"); //Clonamos la fila
-
+    var fila = $(this);
     var idAgente = $(this).data('id');
-    agentesParticipantes.push(idAgente);
-    $("#agentes_participantes").val(JSON.stringify(agentesParticipantes));
-    $(this).remove();
+    var modoLogueo = $('#mlogeo').val();
+    var bandera = true;
+
+    var _token = $("input[name=_token]").val();
+
+    var url = currentURL + '/campanas/validar_modo_logueo';
+
+    if (modoLogueo == "") {
+      Swal.fire('!Tenemos un problema!', 'Tienes que elegir primero la modalidad de logueo a usar en esta campaña.', 'warning');
+    } else {
+      $.ajax({
+        url: url,
+        type: 'POST',
+        data: {
+          _token: _token,
+          idAgente: idAgente
+        },
+        success: function success(result) {
+          for (var i = 0; i < result.length; i++) {
+            if (modoLogueo === result[i]['modalidad_logue']) {
+              bandera = true;
+            } else {
+              bandera = false;
+              break;
+            }
+          }
+
+          if (bandera) {
+            fila.clone().appendTo(".agentesSeleccionados"); //Clonamos la fila
+
+            agentesParticipantes.push(idAgente);
+            $("#agentes_participantes").val(JSON.stringify(agentesParticipantes));
+            fila.remove();
+          } else {
+            Swal.fire('!Tenemos un problema!', 'No se puede agregar el agente seleccionado, ya que esta campaña tiene diferente modalidad de logueo a las cuales ya esta agregado el agente.', 'warning');
+          }
+        }
+      });
+    }
   });
   /**
    * Evento para quitar agentes a la campana
@@ -982,6 +1060,51 @@ $(function () {
     $("#agentes_participantes").val(JSON.stringify(agentesParticipantes));
     $(this).remove();
   });
+  $(document).on('change', '.mlogueoEditar', function (event) {
+    event.preventDefault();
+    var mLogueoInicial = $("#mlogueoInicial").val();
+    Swal.fire({
+      title: 'Estas seguro?',
+      text: "Al cambiar la modalidad de logueo, se quitaran los agentes participantes, para evitar problemas con la modalidad de logueo en otras campañas en las que participen los agentes",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, quitar de campaña!',
+      cancelButtonText: 'Cancelar'
+    }).then(function (result) {
+      if (result.value) {
+        var camapana_id = $("#id").val();
+
+        var _token = $("input[name=_token]").val();
+
+        var url = currentURL + '/campanas/eliminar-participantes';
+        $.ajax({
+          url: url,
+          type: 'POST',
+          data: {
+            _token: _token,
+            camapana_id: camapana_id
+          },
+          success: function success(result) {
+            $("#tableAgentesParticipantes tbody tr").each(function () {
+              $(this).clone().appendTo(".agentesNoSeleccionados");
+              var index = agentesParticipantes.indexOf($(this).data('id'));
+
+              if (index > -1) {
+                agentesParticipantes.splice(index, 1);
+              }
+
+              $("#agentes_participantes").val(JSON.stringify(agentesParticipantes));
+              $(this).remove();
+            });
+          }
+        });
+      } else {
+        $('#mlogeo').val(mLogueoInicial);
+      }
+    });
+  });
   /**
    * Evento para capturar el nombre de la campana y mostrar en la etiqueta
    */
@@ -989,6 +1112,81 @@ $(function () {
   $(document).on('keyup', '#nombre', function (event) {
     var valor = $('#nombre').val();
     $(".nombreCampana").text(valor);
+  });
+});
+
+/***/ }),
+
+/***/ "./resources/js/module_inbound/desglosellamadas.js":
+/*!*********************************************************!*\
+  !*** ./resources/js/module_inbound/desglosellamadas.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  var currentURL = window.location.href;
+  /**
+   * Evento para mostrar el formulario de crear un nuevo ivr
+   */
+
+  $(document).on("click", ".generardesglose", function (e) {
+    //alert ('generar');
+
+    /**
+     * Esto contrae el body
+     */
+    $('.body-filtro').slideUp();
+    $('.nuevo-reporte').slideDown();
+    $('#body-reporte').slideDown();
+    e.preventDefault();
+    /**
+     * Con esto traemos las variables
+     */
+
+    var fechainicio = $("#fechainicio").val();
+    var fechafin = $("#fechafin").val();
+    var hora_inicio = $("#hora_inicio").val();
+    var minuto_inicio = $("#min_inicio").val();
+    var hora_fin = $("#hora_fin").val();
+    var minuto_fin = $("#min_fin").val();
+    var numero_origen = $("#numero_origen").val();
+    var numero_destino = $("#numero_destino").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var url = currentURL + "/Desglose_llamadas/";
+    dateinicio = fechainicio + " " + hora_inicio + ":" + minuto_inicio + ":00";
+    datefin = fechafin + " " + hora_fin + ":" + minuto_fin + ":59";
+    /**
+     * Con esto mandamos las variables
+     */
+
+    $.post(url, {
+      dateinicio: dateinicio,
+      datefin: datefin,
+      numero_origen: numero_origen,
+      numero_destino: numero_destino,
+      //Empresas_id: Empresas_id,
+      _token: _token
+    }, function (data, textStatus, xhr) {
+      $('.viewreportedesglose').html(data);
+    });
+  });
+  /**
+   * Evento para mostrar el formulario de crear un nuevo ivr
+   */
+
+  $(document).on("click", ".nuevo-reporte", function (e) {
+    //alert ('generar');
+
+    /**
+     * Esto contrae el body
+     */
+    $('.body-filtro').slideDown();
+    $('.nuevo-reporte').slideUp();
+    $('#body-reporte').slideUp();
+    e.preventDefault();
   });
 });
 
@@ -1218,9 +1416,11 @@ $(function () {
 /***/ (function(module, exports) {
 
 $(function () {
+  var currentURL = window.location.href;
   /**
    * Evento para mostrar el formulario de crear un nuevo ivr
    */
+
   $(document).on("click", ".newIvr", function (e) {
     event.preventDefault();
     $('#tituloModal').html('Nuevo IVR');
@@ -1315,7 +1515,7 @@ $(function () {
     $(".deleteIvr").slideDown();
     $(".editIvr").slideDown();
     $("#idSeleccionado").val(id);
-    $("#tabledidenrutamientos tbody tr").removeClass('table-primary');
+    $("#tableivr tbody tr").removeClass('table-primary');
     $(this).addClass('table-primary');
   });
   /**
@@ -1474,6 +1674,12 @@ $(function () {
     } else if (id == 6) {
       url = currentURL + '/Ivr';
       table = ' #tableivr';
+    } else if (id == 39) {
+      url = currentURL + '/Metricas_ACD';
+      table = ' #tableACD';
+    } else if (id == 40) {
+      url = currentURL + '/Desglose_llamadas';
+      table = ' #tableDesgloseLlamadas';
     }
 
     $.get(url, function (data, textStatus, jqXHR) {
@@ -1488,9 +1694,9 @@ $(function () {
 /***/ }),
 
 /***/ 2:
-/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/module_inbound/menu.js ./resources/js/module_inbound/campanas.js ./resources/js/module_inbound/CondicionesTiempo.js ./resources/js/module_inbound/desvios.js ./resources/js/module_inbound/buzon_voz.js ./resources/js/module_inbound/Did_Enrutamiento.js ./resources/js/module_inbound/ivr.js ***!
-  \***************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/module_inbound/menu.js ./resources/js/module_inbound/campanas.js ./resources/js/module_inbound/CondicionesTiempo.js ./resources/js/module_inbound/desvios.js ./resources/js/module_inbound/buzon_voz.js ./resources/js/module_inbound/Did_Enrutamiento.js ./resources/js/module_inbound/ivr.js ./resources/js/module_inbound/Metricas_ACD.js ./resources/js/module_inbound/desglosellamadas.js ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1500,7 +1706,9 @@ __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\Condi
 __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\desvios.js */"./resources/js/module_inbound/desvios.js");
 __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\buzon_voz.js */"./resources/js/module_inbound/buzon_voz.js");
 __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\Did_Enrutamiento.js */"./resources/js/module_inbound/Did_Enrutamiento.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\ivr.js */"./resources/js/module_inbound/ivr.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\ivr.js */"./resources/js/module_inbound/ivr.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\Metricas_ACD.js */"./resources/js/module_inbound/Metricas_ACD.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\desglosellamadas.js */"./resources/js/module_inbound/desglosellamadas.js");
 
 
 /***/ })

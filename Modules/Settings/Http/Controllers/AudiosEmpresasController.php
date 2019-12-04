@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use nusoap_client;
 
 use Nimbus\Http\Controllers\LogController;
 use Nimbus\Audios_Empresa;
@@ -22,7 +23,10 @@ class AudiosEmpresasController extends Controller
      */
     public function index()
     {
-        $audios = Audios_Empresa::active()->get();
+        $user = Auth::user();
+        $empresa_id = $user->id_cliente;
+        $audios = Audios_Empresa::empresa($empresa_id)->active()->get();
+
         return view('settings::AudiosEmpresa.index',compact('audios'));
     }
 
@@ -58,43 +62,21 @@ class AudiosEmpresasController extends Controller
            Storage::makeDirectory($dir_audios);
 
        /** Colocar en el Directorio WEB SERVER **/
-       ## storage/app/public/audios/empresa_id/ */
        Storage::disk('public')->put($dir_audios."/".$aud_nom, \File::get($file));
-       ## Storage::disk('local')->put($dir_audios."/".$aud_nom,  \File::get($file));
-
-       //dd($dir_audios);
-
         /** Crear el logs    */
         $mensaje = 'Se creo un nuevo registro, informacion capturada:'.var_export($request->all(), true);
         $log = new LogController;
         $log->store('Insercion', 'User',$mensaje, $user->id);
 
-        ## OBTENER DEL Modelo FALTA
-        ## $ip_pbx
+        $wsdl = 'http://10.255.242.136/ws-ms/index.php';
 
-        /** Consumir WS desde el MS para enviar el audio **/
-        $url = '10.255.242.136/audios/upload_audios.php';
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL,$url);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_VERBOSE, true);
-        curl_setopt($ch, CURLOPT_POST,1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, "empresa_id=".$empresa_id."&accion=1"."&id=" . $aud_nom);
-        $remote_server_output = curl_exec($ch);
-        $error = curl_errno($ch);
-        curl_close ($ch);
 
-   // dd($remote_server_output);
-        /** Si respuesta es 1 */
-      //  if ($remote_server_output == 1) {
+        $client =  new  nusoap_client( $wsdl );
 
-            /*
-           $ruta_media = "call_center/Grabaciones_" . $empresa_id . "/" . $id_audio;
-           $audio = explode("-", $id_audio);
-           $nom_audio = $audio[0];
-            */
-
+        $result = $client->call('SubirArchivo', array(
+            'empresas_id' => $empresa_id,
+            'id_grabacion' => $aud_nom
+        ));
           /** Insertar registro en Audios **/
           Audios_Empresa::create(
             [
@@ -104,11 +86,9 @@ class AudiosEmpresasController extends Controller
                 'Empresas_id'   => $empresa_id
             ]
           );
-      //  }
 
         /** Mostrar principal  */
         return redirect()->route('Audios.index');
-
     }
 
 

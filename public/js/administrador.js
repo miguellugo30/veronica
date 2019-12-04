@@ -2587,13 +2587,12 @@ $(function () {
 /***/ (function(module, exports) {
 
 $(function () {
-  var currentURL = window.location.href;
   /**
    * Evento para el menu de sub categorias y mostrar la vista
    */
-
   $(document).on("click", ".sub-menu", function (e) {
     e.preventDefault();
+    var currentURL = window.location.href;
     var id = $(this).data("id");
 
     if (id == 6) {
@@ -2650,6 +2649,9 @@ $(function () {
     } else if (id == 21) {
       url = currentURL + '/formularios';
       table = ' #tableFormularios';
+    } else if (id == 5) {
+      url = currentURL + '/smtp';
+      table = ' #tableSmtp';
     }
 
     $.get(url, function (data, textStatus, jqXHR) {
@@ -3422,7 +3424,7 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
-    var id = $("#id").val();
+    var id = $("#idSeleccionado").val();
     var _method = "PUT";
     var url = currentURL + '/troncales/' + id;
     $.ajax({
@@ -3434,6 +3436,7 @@ $(function () {
         ip_host: ip_host,
         Cat_IP_PBX_id: Cat_IP_PBX_id,
         Cat_Distribuidor_id: Cat_Distribuidor_id,
+        id: id,
         _token: _token,
         _method: _method
       },

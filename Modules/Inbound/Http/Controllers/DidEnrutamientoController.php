@@ -11,7 +11,7 @@ use Nimbus\User;
 use Nimbus\Did_Enrutamiento;
 use Nimbus\Dids;
 use Nimbus\Campanas;
-use Nimbus\ivr;
+use Nimbus\Ivr;
 use Nimbus\Audios_Empresa;
 use Nimbus\Grupos;
 use Nimbus\Cat_Extensiones;
@@ -26,10 +26,10 @@ class DidEnrutamientoController extends Controller
      */
     public function index()
     {
-        $user = User::find( Auth::id() );
+        $user = Auth::user();
         $empresa_id = $user->id_cliente;
 
-        $dids = Dids::active()->where('Empresas_id',$empresa_id)->get();
+        $dids = Dids::empresa($empresa_id)->active()->with('Did_Enrutamiento')->get();
 
         $data = array();
         foreach ($dids as $did) {

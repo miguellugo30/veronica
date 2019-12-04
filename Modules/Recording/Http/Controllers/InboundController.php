@@ -21,6 +21,7 @@ use Nimbus\Grupos;
 //use Nimbus\Grupo_Calificaciones;
 use DB;
 use Session;
+use nusoap_client;
 
 class InboundController extends Controller
 {
@@ -87,20 +88,6 @@ class InboundController extends Controller
             JOIN Campanas C ON (CDD.id_aplicacion = C.id)
             WHERE GR.Empresas_id = $empresa_id AND GR.fecha BETWEEN '$fechaI' AND '$fechaF'");
 
-            /** Consumir WS desde el MS para enviar el audio **/
-            /*$url = '10.255.244.26/audios/upload_audios.php';
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL,$url);
-            curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_VERBOSE, true);
-            curl_setopt($ch, CURLOPT_POST,1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, "empresa_id=".$empresa_id."&accion=1"."&id=" . $aud_nom);
-            $remote_server_output = curl_exec($ch);
-            $error = curl_errno($ch);
-            curl_close ($ch);*/
-
-            //dd($Grabaciones);
             return view('recording::Inbound.show',compact('Grabaciones','user'));
     }
 
@@ -199,10 +186,24 @@ class InboundController extends Controller
         return view('recording::Inbound.show',compact('grabaciones','grabacionesnombre','agentesnombre'));
     }
 
+    public function getGrabacion(Request $request,$nom_audio)
+    {
+        $user = User::find( Auth::id() );
+        $empresa_id = $user->id_cliente;
+        $wsdl = 'http://10.255.242.136/ws-ms/index.php';
+
+        $client =  new  nusoap_client( $wsdl );
+
+        $result = $client->call('BajarArchivo', array(
+            'empresas_id' => $empresa_id,
+            'id_grabacion' => $nom_audio
+        ));
+    }
+
 }
 
 
-/**
+/*
   $grabaciones = Grabaciones::where('tipo','Inbound')->where('Empresas_id',$empresa_id)->whereBetween('fecha',[$fechaI,$fechaF])->get();
 
             foreach ($grabaciones as $grabacion) {

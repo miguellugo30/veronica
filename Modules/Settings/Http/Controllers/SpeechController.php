@@ -19,21 +19,11 @@ class SpeechController extends Controller
      */
     public function index()
     {
-        $speech = Speech::active()->get();
-        //echo $speech;
-        /*
-        foreach($speech as $valor){
-            echo "<br> SPEECH :";
-            echo $valor->nombre;
-            echo "<br>";
+        $user = Auth::user();
+        $empresa_id = $user->id_cliente;
 
-            foreach($valor->Opciones_Speech as $nvalor){
-                    echo "<br> OPCIONES_SPEECH :";
-                    echo $nvalor->nombre;
-                    echo "<br>";
-            }
-        }
-        */
+        $speech = Speech::empresa($empresa_id)->active()->get();
+
         return view('settings::Speech.index',compact('speech'));
     }
 

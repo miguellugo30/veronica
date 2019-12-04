@@ -20,7 +20,7 @@ class BuzonVozController extends Controller
      */
     public function index()
     {
-        $user = User::find( Auth::id() );
+        $user = Auth::user();
         $empresa_id = $user->id_cliente;
         $buzones = Buzon_Voz::active()->where('Empresas_id',$empresa_id)->get();
 

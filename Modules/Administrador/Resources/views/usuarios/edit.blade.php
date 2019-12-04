@@ -52,18 +52,18 @@
                 <ul class="nav nav-tabs">
                     @foreach( $modulos as $modulo )
                         @if ($loop->first)
-                            <li class="nav-item active"><a href="#tab_{{ Str::snake( $modulo->nombre ) }}" class="nav-link" data-toggle="tab">{{ $modulo->nombre }}</a></li>
+                            <li class="nav-item active"><a href="#tab_{{ Str::snake( str_replace( '&', '',$modulo->nombre) ) }}" class="nav-link" data-toggle="tab">{{ $modulo->nombre }}</a></li>
                         @else
-                            <li class="nav-item"><a href="#tab_{{ Str::snake( $modulo->nombre ) }}" class="nav-link" data-toggle="tab">{{ $modulo->nombre }}</a></li>
+                            <li class="nav-item"><a href="#tab_{{ Str::snake( str_replace( '&', '',$modulo->nombre) ) }}" class="nav-link" data-toggle="tab">{{ $modulo->nombre }}</a></li>
                         @endif
                     @endforeach
                 </ul>
                 <div class="tab-content">
                     @foreach( $modulos as $modulo )
                         @if ($loop->first)
-                            <div class="tab-pane active" id="tab_{{ Str::snake( $modulo->nombre ) }}">
+                            <div class="tab-pane active" id="tab_{{ Str::snake( str_replace( '&', '',$modulo->nombre) ) }}">
                         @else
-                            <div class="tab-pane" id="tab_{{ Str::snake( $modulo->nombre ) }}">
+                            <div class="tab-pane" id="tab_{{ Str::snake( str_replace( '&', '',$modulo->nombre) ) }}">
                         @endif
                             <h3>{{ $modulo->nombre }}</h3>
                             <table class="table table-bordered table-sm">
