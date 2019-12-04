@@ -11,6 +11,7 @@ use nusoap_client;
 
 use Nimbus\Miembros_Campana;
 use Nimbus\Agentes;
+use Nimbus\Empresas;
 
 class EventosAgenteController extends Controller
 {
@@ -101,32 +102,19 @@ class EventosAgenteController extends Controller
     /**
      * Funcion para poner como  disponible a un agente
      */
-    public function logeoExtension( Request $request )
+    public function logeoExtension()
     {
-        $wsdl = 'http://10.255.245.136/ws-ms/index.php';
-
-
+        $agente = auth()->guard('agentes')->user();
+        $pbx = Empresas::empresa($agente->Empresas_id)->active()->with('Config_Empresas')->with('Config_Empresas.ms')->get()->first();
+        $wsdl = 'http://'.$pbx->Config_Empresas->ms->ip_pbx.'/ws-ms/index.php';
         $client =  new  nusoap_client( $wsdl );
 
         $result = $client->call('LogueoExtension', array(
-            'empresas_id' => 24,
-            'agentes_id' => 8,
+            'empresas_id' => $agente->Empresas_id,
+            'agentes_id' => $agente->id,
             'canal' => 'CANAL',
-            'extension' => '11536501002'
-    ));
-
-        /*$cliente =  new  SoapClient( $wsdl, ['encoding' => 'UTF-8','trace' => true] );
-
-        $param = array(
-                        'empresas_id' => $request->id_empresa,
-                        'agentes_id' => $request->idAgente,
-                        'canal' => $request->canal,
-                        'extension' => $request->extension
-                    );
-
-        $resultado = $cliente->LogueoExtension( $param );
-                    */
+            'extension' => $agente->extension
+        ));
         return json_encode($result);
-
     }
 }

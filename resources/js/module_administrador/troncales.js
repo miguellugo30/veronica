@@ -100,7 +100,7 @@ $(function() {
         let Cat_IP_PBX_id = $("#ip_media").val();
         let Cat_Distribuidor_id = $("#distribuidores").val();
         let _token = $("input[name=_token]").val();
-        let id = $("#id").val();
+        let id = $("#idSeleccionado").val();
         let _method = "PUT";
         let url = currentURL + '/troncales/' + id;
 
@@ -113,6 +113,7 @@ $(function() {
                 ip_host: ip_host,
                 Cat_IP_PBX_id: Cat_IP_PBX_id,
                 Cat_Distribuidor_id: Cat_Distribuidor_id,
+                id: id,
                 _token: _token,
                 _method: _method
             },

@@ -63,6 +63,9 @@ $(function() {
         } else if (id == 21) {
             url = currentURL + '/formularios';
             table = ' #tableFormularios';
+        } else if (id == 5) {
+            url = currentURL + '/smtp';
+            table = ' #tableSmtp';
         }
         $.get(url, function(data, textStatus, jqXHR) {
             $(".viewResult").html(data);

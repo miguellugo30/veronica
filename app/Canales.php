@@ -14,7 +14,7 @@ class Canales extends Model
      * Campos que pueden ser modificados
      */
     protected $fillable = [
-       'protocolo', 'prefijo' , 'Troncales_id', 'Empresas_id', 'Cat_Distribuidor_id','Cat_Canales_Tipo_id','Empresas_id'
+       'protocolo', 'prefijo' , 'Troncales_id', 'Cat_Distribuidor_id', 'Empresas_id', 'Cat_Canales_Tipo_id',
     ];
     /**
      * Nombre de la tabla

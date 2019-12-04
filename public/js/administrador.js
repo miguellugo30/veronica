@@ -2649,6 +2649,9 @@ $(function () {
     } else if (id == 21) {
       url = currentURL + '/formularios';
       table = ' #tableFormularios';
+    } else if (id == 5) {
+      url = currentURL + '/smtp';
+      table = ' #tableSmtp';
     }
 
     $.get(url, function (data, textStatus, jqXHR) {
@@ -3421,7 +3424,7 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
-    var id = $("#id").val();
+    var id = $("#idSeleccionado").val();
     var _method = "PUT";
     var url = currentURL + '/troncales/' + id;
     $.ajax({
@@ -3433,6 +3436,7 @@ $(function () {
         ip_host: ip_host,
         Cat_IP_PBX_id: Cat_IP_PBX_id,
         Cat_Distribuidor_id: Cat_Distribuidor_id,
+        id: id,
         _token: _token,
         _method: _method
       },

@@ -125,8 +125,12 @@ $(function () {
         keyboard: false
       });
       $("#modal-body").html(data);
-      $(".fecha_inicio").datepicker();
-      $(".fecha_final").datepicker();
+      $(".fecha_inicio").datepicker({
+        dateFormat: "dd-mm-yy"
+      });
+      $(".fecha_final").datepicker({
+        dateFormat: "dd-mm-yy"
+      });
       $(".hora_inicio").wickedpicker({
         twentyFour: true,
         title: ''
@@ -1515,7 +1519,7 @@ $(function () {
     $(".deleteIvr").slideDown();
     $(".editIvr").slideDown();
     $("#idSeleccionado").val(id);
-    $("#tabledidenrutamientos tbody tr").removeClass('table-primary');
+    $("#tableivr tbody tr").removeClass('table-primary');
     $(this).addClass('table-primary');
   });
   /**

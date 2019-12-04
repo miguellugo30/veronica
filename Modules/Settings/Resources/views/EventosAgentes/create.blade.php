@@ -9,18 +9,9 @@
                     @csrf
                 </div>
                 <div class="form-group">
-                    <label for="tiempo">Tiempo</label>
-                    <input type="time" class="form-control form-control-sm" name="tiempo" id="tiempo"  value="<?php echo date("H:i");?>">
+                    <label for="tiempo">Tiempo (Minutos)</label>
+                    <input type="number" min="1" max="60" class="form-control form-control-sm" name="tiempo" id="tiempo"  value="1">
                 </div>
-                <!--div class="form-group">
-                    <label for="tiempo">Fecha Inicio</label>
-                    <input type="date" class="form-control form-control-sm" name="fechaini" id="fechaini"  value="" min="<?php echo date("Y-m-d");?>">
-                </div>
-                <div class="form-group">
-                    <label for="tiempo">Fecha Fin</label>
-                    <input type="date" class="form-control form-control-sm" name="fechafin" id="fechafin"  value="" min="<?php echo date("Y-m-d");?>">
-                </div-->
-
             </fieldset>
         </div>
         <div class="col">

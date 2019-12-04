@@ -19,7 +19,7 @@
                         <tr>
                             <th>Nombre</th>
                             <th>Descripcion</th>
-                            <th>Escuchar</th>
+                            <th>Reproducir</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -27,7 +27,12 @@
                             <tr data-id="{{ $audio->id }}" style="cursor:pointer">
                                 <td>{{ $audio->nombre }}</td>
                                 <td>{{ $audio->descripcion }}</td>
-                                <td><audio controls preload="metadata"><source src='http://10.255.242.136/audios/temp/{{ $audio->ruta }}' type="audio/wav">Tu navegador no soporta audio, favor de obtener la ultima version</audio></td>
+                                <td>
+                                    <i class="far fa-play-circle fa-2x reproducir-audio" data-id-audio="{{ $audio->id }}"></i>
+                                    <!--audio controls preload="metadata"><source src='http://10.255.242.136/audios/temp/{{ $audio->ruta }}' type="audio/wav">
+                                        Tu navegador no soporta audio, favor de obtener la ultima version
+                                    </audio-->
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -58,3 +63,9 @@
     </div>
 </div>
 <!-- FIN MODAL -->
+<div style="display:none">
+    <audio id="reproductor">
+        <source id="source-audio" src='' type="audio/wav">
+        Tu navegador no soporta audio, favor de obtener la ultima version
+    </audio>
+</div>

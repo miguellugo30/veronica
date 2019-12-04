@@ -52,6 +52,11 @@ class EventosAgentesController extends Controller
 
         $datos = $request->all();
         $datos['Empresas_id'] = $empresa_id;
+        if ($datos['tiempo'] == 60) {
+            $datos['tiempo'] = '01:00:00';
+        } else {
+            $datos['tiempo'] = '00:'.$datos['tiempo'].':00';
+        }
         Eventos_Agentes::create($datos);
 
         /**

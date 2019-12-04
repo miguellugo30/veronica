@@ -103,7 +103,7 @@ $(function() {
         $(".editIvr").slideDown();
         $("#idSeleccionado").val(id);
 
-        $("#tabledidenrutamientos tbody tr").removeClass('table-primary');
+        $("#tableivr tbody tr").removeClass('table-primary');
         $(this).addClass('table-primary');
     });
     /**

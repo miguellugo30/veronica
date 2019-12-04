@@ -5,12 +5,15 @@ namespace Modules\Administrador\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use PHPAMI\Ami;
+use nusoap_client;
+
+use Nimbus\Empresas;
 use Nimbus\Troncales;
 use Nimbus\Troncales_Sansay;
 use Nimbus\Cat_Distribuidor;
 use Nimbus\Cat_IP_PBX;
 use Nimbus\Http\Controllers\LogController;
-use PHPAMI\Ami;
 
 class TroncalesController extends Controller
 {
@@ -63,28 +66,24 @@ class TroncalesController extends Controller
          * Creamos una petición, para poder escribir
          * los nuevos DID en el archivo EXTENSIONS_DID.CONF
          */
-        $ch = curl_init();
-        // definimos la URL a la que hacemos la petición
-        curl_setopt($ch, CURLOPT_URL,"10.255.242.136/api-contextos/troncales.php");
-        // indicamos el tipo de petición: POST
-        curl_setopt($ch, CURLOPT_POST, TRUE);
-        // definimos cada uno de los parámetros
-        //curl_setopt($ch, CURLOPT_POSTFIELDS, "empresa_id=".$empresa_id);
-        // recibimos la respuesta y la guardamos en una variable
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $remote_server_output = curl_exec ($ch);
-        // cerramos la sesión cURL
-        curl_close ($ch);
+        $user = Auth::user();
+        $empresa_id = $user->id_cliente;
+        $pbx = Empresas::empresa($empresa_id)->active()->with('Config_Empresas')->with('Config_Empresas.ms')->get()->first();
+        $wsdl = 'http://'.$pbx->Config_Empresas->ms->ip_pbx.'/ws-ms/index.php';
+        $client =  new  nusoap_client( $wsdl );
+        $result = $client->call('Troncales', array(
+                                                        'empresas_id' => $empresa_id
+                                                    ));
         /**
          * Si la respuesta es 1, se hace el reload del sip
          */
-        if ($remote_server_output == 1) {
+        if ($result['error'] == 1) {
             $ami = new Ami();
-            if ($ami->connect('10.255.242.136:5038', 'Call_Center', 'Call_C3nt3r_1nf1n1t', 'off') === false) {
-               throw new \RuntimeException('Could not connect to Asterisk Management Interface.');
+            if ($ami->connect($pbx->Config_Empresas->ms->ip_pbx.':5038', $pbx->Config_Empresas->usuario_ami, $pbx->Config_Empresas->clave_ami, 'off') === false)
+            {
+                throw new \RuntimeException('Could not connect to Asterisk Management Interface.');
             }
-            $result  = $ami->command('sip Reload');
-            dd( $result );
+            $result  = $ami->command('dialplan Reload');
             $ami->disconnect();
         }
 
@@ -147,9 +146,9 @@ class TroncalesController extends Controller
                                 ->update([
                                     'nombre' => $request->input('nombre'),
                                     'descripcion' => $request->input('descripcion'),
-                                    'ip_host' => $request->input('ip_host'),
+                                    //'ip_host' => $request->input('ip_host'),
                                     'Cat_Distribuidor_id' => $request->input('Cat_Distribuidor_id'),
-                                    'Cat_IP_PBX_id' => $request->input('Cat_IP_PBX_id'),
+                                    //'Cat_IP_PBX_id' => $request->input('Cat_IP_PBX_id'),
                                 ]);
 
         /**

@@ -12,6 +12,7 @@ use Nimbus\Http\Controllers\LogController;
 use Nimbus\Audios_Empresa;
 use Nimbus\User;
 use Storage;
+use Nimbus\Empresas;
 use File;
 
 
@@ -67,17 +68,18 @@ class AudiosEmpresasController extends Controller
         $mensaje = 'Se creo un nuevo registro, informacion capturada:'.var_export($request->all(), true);
         $log = new LogController;
         $log->store('Insercion', 'User',$mensaje, $user->id);
-
-        $wsdl = 'http://10.255.242.136/ws-ms/index.php';
-
-
+        /**
+         * Subimos el archivo al media server
+         */
+        $pbx = Empresas::empresa($empresa_id)->active()->with('Config_Empresas')->with('Config_Empresas.ms')->get()->first();
+        $wsdl = 'http://'.$pbx->Config_Empresas->ms->ip_pbx.'/ws-ms/index.php';
         $client =  new  nusoap_client( $wsdl );
 
-        $result = $client->call('SubirArchivo', array(
-            'empresas_id' => $empresa_id,
-            'id_grabacion' => $aud_nom
-        ));
-          /** Insertar registro en Audios **/
+        $client->call('SubirArchivo', array(
+                                                'empresas_id' => $empresa_id,
+                                                'id_grabacion' => $aud_nom
+                                            ));
+        /** Insertar registro en Audios **/
           Audios_Empresa::create(
             [
                 'nombre' => $request->input('nombre'),
@@ -99,7 +101,39 @@ class AudiosEmpresasController extends Controller
      */
     public function show($id)
     {
-        return view('settings::show');
+        /**
+         * Obtenemos la grabacion a usar
+         */
+        $audio = Audios_Empresa::find( $id );
+        /**
+         * Obtener los datos del usuario logeado
+         * **/
+        $user = User::find( Auth::id() );
+        $empresa_id = $user->id_cliente;
+        /**
+         * Descargamos el archivo al media server
+         */
+        $pbx = Empresas::empresa($empresa_id)->active()->with('Config_Empresas')->with('Config_Empresas.ms')->get()->first();
+        $wsdl = 'http://'.$pbx->Config_Empresas->ms->ip_pbx.'/ws-ms/index.php';
+        $client =  new  nusoap_client( $wsdl );
+
+        $result = $client->call('BajarArchivo', array(
+                                                'empresas_id' => $empresa_id,
+                                                'id_grabacion' => $audio->ruta
+                                            ));
+        if ( $result['error'] == 1 )
+        {
+            $archivo = explode( '/',  $audio->ruta );
+            $ruta = Storage::disk('public')->getAdapter()->getPathPrefix();
+            //Storage::download('http:///'.$pbx->Config_Empresas->ms->ip_pbx.'/ws-ms/tmp/'.$archivo[1]);
+            $source = file_get_contents( 'http://'.$pbx->Config_Empresas->ms->ip_pbx.'/ws-ms/tmp/'.$archivo[1] );
+            file_put_contents( $ruta.'tmp/'.$archivo[1], $source );
+            //dd( Storage::url( '/tmp/'.$archivo[1] ) );
+            return Storage::url( 'tmp/'.$archivo[1] ) ;
+        }
+        else{
+
+        }
     }
 
     /**
@@ -130,8 +164,7 @@ class AudiosEmpresasController extends Controller
      */
     public function destroy($id)
     {
-        Audios_Empresa::where('id',$id)
-        ->update(['activo'=>'0']);
+        Audios_Empresa::where('id',$id)->update(['activo'=>'0']);
 
         return redirect()->route('Audios.index');
          /**

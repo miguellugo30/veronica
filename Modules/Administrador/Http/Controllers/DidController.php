@@ -6,11 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Nimbus\Http\Controllers\LogController;
+use nusoap_client;
 /*
 * Agregar el modelo de la tabla que debe usar nuestro modulo
 */
 use Nimbus\Dids;
-// Agregar modelo Clientes para acceder a los datos
 use Nimbus\Empresas;
 use Nimbus\Canales;
 use PHPAMI\Ami;
@@ -55,7 +55,8 @@ class DidController extends Controller
     {
         $dataForm = $request->input('dataForm');
 
-        for ($i=0; $i < count( $dataForm ); $i++) {
+        for ($i=0; $i < count( $dataForm ); $i++)
+        {
             $data[ $dataForm[$i]['name'] ] = $dataForm[$i]['value'];
         }
         //dd($data);
@@ -66,7 +67,8 @@ class DidController extends Controller
         /**
          * Se recorre arreglo de dids
          */
-        for ($i=0; $i < count($dids_store); $i++) {
+        for ($i=0; $i < count($dids_store); $i++)
+        {
             $empresa_id = $data['id_empresa'];
             $cat = Dids::create([
                                     'did'=>trim($dids_store[$i]),
@@ -88,28 +90,24 @@ class DidController extends Controller
          * Creamos una petición, para poder escribir
          * los nuevos DID en el archivo EXTENSIONS_DID.CONF
          */
-        $ch = curl_init();
-        // definimos la URL a la que hacemos la petición
-        curl_setopt($ch, CURLOPT_URL,"10.255.242.136/api-contextos/contexto_did.php");
-        // indicamos el tipo de petición: POST
-        curl_setopt($ch, CURLOPT_POST, TRUE);
-        // definimos cada uno de los parámetros
-        curl_setopt($ch, CURLOPT_POSTFIELDS, "empresa_id=".$empresa_id);
-        // recibimos la respuesta y la guardamos en una variable
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $remote_server_output = curl_exec ($ch);
-        // cerramos la sesión cURL
-        curl_close ($ch);
+        $user = Auth::user();
+        $empresa_id = $user->id_cliente;
+        $pbx = Empresas::empresa($empresa_id)->active()->with('Config_Empresas')->with('Config_Empresas.ms')->get()->first();
+        $wsdl = 'http://'.$pbx->Config_Empresas->ms->ip_pbx.'/ws-ms/index.php';
+        $client =  new  nusoap_client( $wsdl );
+        $result = $client->call('ContextoDid', array(
+                                                        'empresas_id' => $empresa_id
+                                                    ));
         /**
-         * Si la respuesta es 1, se hace el reload del dialplan
-         */
-        if ($remote_server_output == 1) {
+        * Si la respuesta es 1, se hace el reload del sip
+        */
+        if ($result['error'] == 1) {
             $ami = new Ami();
-            if ($ami->connect('10.255.242.136:5038', 'Call_Center', 'Call_C3nt3r_1nf1n1t', 'off') === false) {
-               throw new \RuntimeException('Could not connect to Asterisk Management Interface.');
+            if ($ami->connect($pbx->Config_Empresas->ms->ip_pbx.':5038', $pbx->Config_Empresas->usuario_ami, $pbx->Config_Empresas->clave_ami, 'off') === false)
+            {
+                throw new \RuntimeException('Could not connect to Asterisk Management Interface.');
             }
             $result  = $ami->command('dialplan Reload');
-
             $ami->disconnect();
         }
     }

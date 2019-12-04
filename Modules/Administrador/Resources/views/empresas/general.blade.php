@@ -56,7 +56,7 @@
                         @foreach ($empresa->Modulos as $item)
                             @if ($loop->iteration == 10)
                                 </div>
-                                <div class="col6">
+                                <div class="col">
                             @endif
                             <li>
                                 @if ($item->nombre == 'Inbound')
