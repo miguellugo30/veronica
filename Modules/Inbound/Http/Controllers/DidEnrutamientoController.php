@@ -56,12 +56,16 @@ class DidEnrutamientoController extends Controller
                 }else if ( $tabla == 'Condiciones_Tiempo' ) {
                     $dataApli = Grupos::active()->where([['id', '=', $did->Did_Enrutamiento->tabla_id],['tipo_grupo','=','Condiciones de Tiempo']])->get();
                     $nombre = $dataApli[0]->nombre;
+                }else if ( $tabla == 'Ivr' ) {
+                    $dataApli = Ivr::find( $did->Did_Enrutamiento->tabla_id );
+                    $nombre = $dataApli->nombre;
                 }else if ( $tabla == 'hangup' ) {
                     $nombre = 'Colgar';
+                } else {
+                    $nombre = 'Sin Aplicacion';
                 }
 
             }
-
             array_push($info, $apli, $nombre);
             array_push($data, $info);
 

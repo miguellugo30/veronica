@@ -24,7 +24,7 @@ class IvrController extends Controller
      */
     public function index()
     {
-        $user = User::find( Auth::id() );
+        $user = Auth::user();
         $empresa_id = $user->id_cliente;
 
         $ivrs = Ivr::active()->where('Empresas_id',$empresa_id)->get();
@@ -32,11 +32,9 @@ class IvrController extends Controller
         foreach ($ivrs as $ivr) {
 
             $datos = [ $ivr->id, $ivr->nombre, $ivr->tiempo_espera, $ivr->repeticiones ];
-
             $audios = Audios_Empresa::find( [ $ivr->mensaje_bienvenida_id, $ivr->mensaje_tiempo_espera_id, $ivr->mensaje_opcion_invalida_id ] );
-
-            foreach ($audios as $audio) {
-
+            foreach ($audios as $audio)
+            {
                 array_push($datos, $audio->nombre);
             }
 
@@ -52,7 +50,7 @@ class IvrController extends Controller
      */
     public function create()
     {
-        $user = User::find( Auth::id() );
+        $user = Auth::user();
         $empresa_id = $user->id_cliente;
         $audios = Audios_Empresa::active()->where('Empresas_id',$empresa_id)->get();
 
@@ -109,7 +107,7 @@ class IvrController extends Controller
         /**
          * Creamos el logs
          */
-        $user = User::find( Auth::id() );
+        $user = Auth::user();
         $mensaje = 'Se creo un nuevo registro, información capturada:'.var_export($request->input('dataForm'), true);
         $log = new LogController;
         $log->store('Creacion', 'Ivr',$mensaje, $user->id);
@@ -135,7 +133,7 @@ class IvrController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find( Auth::id() );
+        $user = Auth::user();
         $empresa_id = $user->id_cliente;
         $audios = Audios_Empresa::active()->where('Empresas_id',$empresa_id)->get();
         $ivr = Ivr::find( $id );
@@ -255,7 +253,7 @@ class IvrController extends Controller
         /**
          * Creamos el logs
          */
-        $user = User::find( Auth::id() );
+        $user =Auth::user();
         $mensaje = 'Se Elimino un registro con id: '.$id;
         $log = new LogController;
         $log->store('Eliminación', 'Ivr',$mensaje, $user->id);

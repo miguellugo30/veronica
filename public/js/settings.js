@@ -585,7 +585,6 @@ $(function () {
   });
   /**
    * Evento para eliminar el Audio
-   *
    */
 
   $(document).on('click', '.deleteAudio', function (event) {
@@ -622,6 +621,44 @@ $(function () {
             Swal.fire('Eliminado!', 'El registro ha sido eliminado.', 'success');
           }
         });
+      }
+    });
+  });
+  /**
+   * Evento para reproducir un audio
+   */
+
+  $(document).on('click', '.reproducir-audio', function (event) {
+    var id = $(this).data("id-audio");
+    var url = currentURL + '/Audios/' + id;
+
+    var _token = $("input[name=_token]").val();
+
+    $.ajax({
+      url: url,
+      type: 'GET',
+      data: {
+        id: id,
+        _token: _token
+      },
+      success: function success(result) {
+        var src = currentURL.replace(/\/settings/g, '') + result;
+        var audio = new Audio();
+        var playPromise;
+        audio.src = src;
+        playPromise = audio.play();
+
+        if (playPromise) {
+          playPromise.then(function () {
+            // Audio Loading Successful
+            // Audio playback takes time
+            setTimeout(function () {
+              // Follow up operation
+              console.log("done.");
+            }, audio.duration * 1000); // audio.duration is the length of the audio in seconds.
+          })["catch"](function (e) {// Audio loading failure
+          });
+        }
       }
     });
   });
