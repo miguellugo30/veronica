@@ -146,9 +146,9 @@ class TroncalesController extends Controller
                                 ->update([
                                     'nombre' => $request->input('nombre'),
                                     'descripcion' => $request->input('descripcion'),
-                                    'ip_host' => $request->input('ip_host'),
+                                    //'ip_host' => $request->input('ip_host'),
                                     'Cat_Distribuidor_id' => $request->input('Cat_Distribuidor_id'),
-                                    'Cat_IP_PBX_id' => $request->input('Cat_IP_PBX_id'),
+                                    //'Cat_IP_PBX_id' => $request->input('Cat_IP_PBX_id'),
                                 ]);
 
         /**

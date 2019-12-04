@@ -45,7 +45,6 @@ mix.js([
         'resources/js/module_settings/speech.js',
         'resources/js/module_settings/acciones_speech.js',
         'resources/js/module_settings/eventos_agentes.js',
-
     ], 'public/js/settings.js')
     .js([
         'resources/js/module_inbound/menu.js',
@@ -58,6 +57,11 @@ mix.js([
         'resources/js/module_inbound/Metricas_ACD.js',
         'resources/js/module_inbound/desglosellamadas.js',
     ], 'public/js/inbound.js')
+    .js([
+        'resources/js/module_recording/menu.js',
+        'resources/js/module_recording/Grabaciones.js',
+        'resources/js/module_recording/Inbound.js',
+    ], 'public/js/recording.js')
     .js([
         'resources/js/module_agentes/agentes.js',
         'resources/js/module_agentes/eventosPantallaAgente.js',

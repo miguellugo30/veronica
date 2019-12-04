@@ -109,4 +109,11 @@ class Empresas extends Model
     {
         return $this->hasMany('Nimbus\Eventos_Agentes');
     }
+    /**
+     * Relacion uno a muchos con Grabaciones
+     */
+    public function Grabaciones()
+    {
+        return $this->hasMany('Nimbus\Grabaciones');
+    }
 }
