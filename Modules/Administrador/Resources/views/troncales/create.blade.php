@@ -21,4 +21,13 @@
         <label for="ip_host">IP Host</label>
         <input type="text" class="form-control" id="ip_host" placeholder="IP Host" required>
     </div>
+    <div class="form-group">
+        <label for="mediaserver">Media Server</label>
+        <select name="mediaserver" id="mediaserver" class="form-control form-control-sm">
+            <option value="" >Selecciona un Media Server</option>
+            @foreach( $mediaserver as $ms )
+                <option value="{{ $ms->ip_pbx }}" >{{ $ms->media_server }}</option>
+            @endforeach
+        </select>
+    </div>
 </div>

@@ -3358,7 +3358,7 @@ $(function () {
     var nombre = $("#nombre").val();
     var descripcion = $("#descripcion").val();
     var ip_host = $("#ip_host").val();
-    var Cat_IP_PBX_id = $("#ip_media").val();
+    var Cat_IP_PBX_id = $("#mediaserver").val();
     var Cat_Distribuidor_id = $("#distribuidores").val();
 
     var _token = $("input[name=_token]").val();

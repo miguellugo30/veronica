@@ -28,7 +28,7 @@ $(function() {
         let nombre = $("#nombre").val();
         let descripcion = $("#descripcion").val();
         let ip_host = $("#ip_host").val();
-        let Cat_IP_PBX_id = $("#ip_media").val();
+        let Cat_IP_PBX_id = $("#mediaserver").val();
         let Cat_Distribuidor_id = $("#distribuidores").val();
         let _token = $("input[name=_token]").val();
         let url = currentURL + '/troncales';

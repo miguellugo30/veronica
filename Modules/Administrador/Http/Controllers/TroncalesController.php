@@ -14,6 +14,7 @@ use Nimbus\Troncales_Sansay;
 use Nimbus\Cat_Distribuidor;
 use Nimbus\Cat_IP_PBX;
 use Nimbus\Http\Controllers\LogController;
+use Illuminate\Support\Facades\Auth;
 
 class TroncalesController extends Controller
 {
@@ -26,7 +27,7 @@ class TroncalesController extends Controller
         /**
          * Recuperamos todos las troncales que esten activos
          */
-        $troncales = Troncales::active()->with('Cat_Distribuidor')->with('Troncales_Sansay')->get();;
+        $troncales = Troncales::active()->with('Cat_Distribuidor')->with('Troncales_Sansay')->get();
         return view('administrador::troncales.index', compact('troncales'));
     }
 
@@ -41,7 +42,12 @@ class TroncalesController extends Controller
          */
         $distribuidores = Cat_Distribuidor::active()->get();
 
-        return view('administrador::troncales.create', compact('distribuidores'));
+        /**
+         * Recuperamos todos los Media Server que esten activos
+         */
+        $mediaserver = Cat_IP_PBX::active()->get();
+
+        return view('administrador::troncales.create', compact('distribuidores','mediaserver'));
     }
 
     /**
@@ -68,8 +74,8 @@ class TroncalesController extends Controller
          */
         $user = Auth::user();
         $empresa_id = $user->id_cliente;
-        $pbx = Empresas::empresa($empresa_id)->active()->with('Config_Empresas')->with('Config_Empresas.ms')->get()->first();
-        $wsdl = 'http://'.$pbx->Config_Empresas->ms->ip_pbx.'/ws-ms/index.php';
+        $pbx = Empresas::where('id',$empresa_id)->active()->with('Config_Empresas')->with('Config_Empresas.ms')->get()->first();
+        $wsdl = 'http://'.$request->input('Cat_IP_PBX_id').'/ws-ms/index.php';
         $client =  new  nusoap_client( $wsdl );
         $result = $client->call('Troncales', array(
                                                         'empresas_id' => $empresa_id
@@ -79,7 +85,7 @@ class TroncalesController extends Controller
          */
         if ($result['error'] == 1) {
             $ami = new Ami();
-            if ($ami->connect($pbx->Config_Empresas->ms->ip_pbx.':5038', $pbx->Config_Empresas->usuario_ami, $pbx->Config_Empresas->clave_ami, 'off') === false)
+            if ($ami->connect($request->input('Cat_IP_PBX_id').':5038', $pbx->Config_Empresas->usuario_ami, $pbx->Config_Empresas->clave_ami, 'off') === false)
             {
                 throw new \RuntimeException('Could not connect to Asterisk Management Interface.');
             }
