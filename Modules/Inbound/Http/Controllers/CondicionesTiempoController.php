@@ -91,7 +91,7 @@ class CondicionesTiempoController extends Controller
                 $dia_mes_inicio = '*';
                 $mes_inicio = '*';
             } else {
-                $fecha_inicio = explode('/',  $info[$i][7]);
+                $fecha_inicio = explode('-',  $info[$i][7]);
                 $dia_mes_inicio = $fecha_inicio[0];
                 $mes_inicio = $fecha_inicio[1];
             }

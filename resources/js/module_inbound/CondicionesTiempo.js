@@ -30,8 +30,8 @@ $(function() {
             $('#modal').modal({ backdrop: 'static', keyboard: false });
             $("#modal-body").html(data);
 
-            $(".fecha_inicio").datepicker();
-            $(".fecha_final").datepicker();
+            $(".fecha_inicio").datepicker({ dateFormat: "dd-mm-yy" });
+            $(".fecha_final").datepicker({ dateFormat: "dd-mm-yy" });
 
             $(".hora_inicio").wickedpicker({ twentyFour: true, title: '', });
             $(".hora_fin").wickedpicker({ twentyFour: true, title: '', });

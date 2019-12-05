@@ -239,7 +239,7 @@ class EmpresasController extends Controller
             array_shift( $data );
             array_shift( $data );
 
-            $info = array_chunk( $data, 4 );
+            $info = array_chunk( $data, 5 );
 
             for($i=0;$i<count($info);$i++){
 

@@ -8,6 +8,7 @@ use Nimbus\Categorias;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Artisan;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Nimbus\Http\Controllers\LogController;
@@ -84,6 +85,10 @@ class UsuariosController extends Controller
          * Asignamos las categorias al usuario
          */
         $user->syncPermissions( $request->input('arr'));
+        /**
+         * Limpiamos la cache
+         */
+        Artisan::call('cache:clear');
        /**
          * Redirigimos a la ruta index
          */
@@ -131,6 +136,10 @@ class UsuariosController extends Controller
          */
         $empresa = Empresas::find( $user->id_cliente );
         $modulos = $empresa->Modulos;
+        /**
+         * Limpiamos la cache
+         */
+        Artisan::call('cache:clear');
 
         return view('administrador::usuarios.edit', compact( 'roles', 'clientes', 'user', 'modulos' ));
     }
