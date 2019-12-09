@@ -30,8 +30,8 @@ $(function() {
             $('#modal').modal({ backdrop: 'static', keyboard: false });
             $("#modal-body").html(data);
 
-            $(".fecha_inicio").datepicker({ dateFormat: "dd-mm-yy" });
-            $(".fecha_final").datepicker({ dateFormat: "dd-mm-yy" });
+            //$(".fecha_inicio").datepicker({ dateFormat: "dd-mm-yy" });
+            //$(".fecha_final").datepicker({ dateFormat: "dd-mm-yy" });
 
             $(".hora_inicio").wickedpicker({ twentyFour: true, title: '', });
             $(".hora_fin").wickedpicker({ twentyFour: true, title: '', });
@@ -75,9 +75,6 @@ $(function() {
      */
     $(document).on('click', '#add', function(event) {
 
-        $(".fecha_inicio").datepicker("destroy");
-        $(".fecha_final").datepicker("destroy");
-
         var clickID = $(".tableNewForm tbody tr.clonar:last").attr('id').replace('tr_', '');
         // Genero el nuevo numero id
         var newID = parseInt(clickID) + 1;
@@ -92,36 +89,6 @@ $(function() {
 
         fila.find('.opcionesSi').attr('id', "opcionesSiCoincide_" + newID);
         fila.find('.opcionesNo').attr('id', "opcionesNoCoincide_" + newID);
-
-        $(".fecha_inicio").datepicker({
-            dateFormat: "dd-mm-yy",
-            beforeShow: function() {
-                name = $(this).attr('name');
-                dateIni = $('input[name="fecha_inicio_1"]').val();
-            },
-            onSelect: function(date) {
-                $('input[name="fecha_inicio_1"]').val(dateIni);
-                $('input[name="' + name + '"]').val(date)
-            }
-        });
-
-        dateIni = '';
-
-        $(".fecha_final").datepicker({
-            beforeShow: function() {
-                name = $(this).attr('name');
-                nameIni = name.replace('fecha_final', 'fecha_inicio');
-
-                dateIni = $('input[name="' + nameIni + '"]').val();
-                dateFin = $('input[name="fecha_final_1"]').val();
-            },
-            minDate: new Date(dateIni),
-            dateFormat: "dd-mm-yy",
-            onSelect: function(date) {
-                $('input[name="fecha_final_1"]').val(dateFin);
-                $('input[name="' + name + '"]').val(date)
-            }
-        });
 
         fila.find('.form-control').attr('value', '');
         //fila.find('#id_campo').attr('value', '');
@@ -229,9 +196,6 @@ $(function() {
             success: function success(result) {
                 $('#modal').modal({ backdrop: 'static', keyboard: false });
                 $("#modal-body").html(result);
-
-                $(".fecha_inicio").datepicker();
-                $(".fecha_final").datepicker();
 
                 $(".hora_inicio").wickedpicker({ twentyFour: true, title: '', });
                 $(".hora_fin").wickedpicker({ twentyFour: true, title: '', });

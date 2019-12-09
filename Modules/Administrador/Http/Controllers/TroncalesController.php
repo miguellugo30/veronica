@@ -78,7 +78,7 @@ class TroncalesController extends Controller
          */
         $user = Auth::user();
         $empresa_id = $user->id_cliente;
-        $pbx = Empresas::where('id',$empresa_id)->active()->with('Config_Empresas')->with('Config_Empresas.ms')->get()->first();
+        $pbx = Empresas::where('id',$empresa_id)->active()->with('Config_Empresas')->get()->first();
         $wsdl = 'http://'.$ip.'/ws-ms/index.php';
         $client =  new  nusoap_client( $wsdl );
         $result = $client->call('Troncales', array(

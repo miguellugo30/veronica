@@ -124,13 +124,9 @@ $(function () {
         backdrop: 'static',
         keyboard: false
       });
-      $("#modal-body").html(data);
-      $(".fecha_inicio").datepicker({
-        dateFormat: "dd-mm-yy"
-      });
-      $(".fecha_final").datepicker({
-        dateFormat: "dd-mm-yy"
-      });
+      $("#modal-body").html(data); //$(".fecha_inicio").datepicker({ dateFormat: "dd-mm-yy" });
+      //$(".fecha_final").datepicker({ dateFormat: "dd-mm-yy" });
+
       $(".hora_inicio").wickedpicker({
         twentyFour: true,
         title: ''
@@ -173,8 +169,6 @@ $(function () {
    */
 
   $(document).on('click', '#add', function (event) {
-    $(".fecha_inicio").datepicker("destroy");
-    $(".fecha_final").datepicker("destroy");
     var clickID = $(".tableNewForm tbody tr.clonar:last").attr('id').replace('tr_', ''); // Genero el nuevo numero id
 
     var newID = parseInt(clickID) + 1;
@@ -187,32 +181,6 @@ $(function () {
 
     fila.find('.opcionesSi').attr('id', "opcionesSiCoincide_" + newID);
     fila.find('.opcionesNo').attr('id', "opcionesNoCoincide_" + newID);
-    $(".fecha_inicio").datepicker({
-      dateFormat: "dd-mm-yy",
-      beforeShow: function beforeShow() {
-        name = $(this).attr('name');
-        dateIni = $('input[name="fecha_inicio_1"]').val();
-      },
-      onSelect: function onSelect(date) {
-        $('input[name="fecha_inicio_1"]').val(dateIni);
-        $('input[name="' + name + '"]').val(date);
-      }
-    });
-    dateIni = '';
-    $(".fecha_final").datepicker({
-      beforeShow: function beforeShow() {
-        name = $(this).attr('name');
-        nameIni = name.replace('fecha_final', 'fecha_inicio');
-        dateIni = $('input[name="' + nameIni + '"]').val();
-        dateFin = $('input[name="fecha_final_1"]').val();
-      },
-      minDate: new Date(dateIni),
-      dateFormat: "dd-mm-yy",
-      onSelect: function onSelect(date) {
-        $('input[name="fecha_final_1"]').val(dateFin);
-        $('input[name="' + name + '"]').val(date);
-      }
-    });
     fila.find('.form-control').attr('value', ''); //fila.find('#id_campo').attr('value', '');
 
     fila.find('.btn-danger').css('display', 'initial');
@@ -324,8 +292,6 @@ $(function () {
           keyboard: false
         });
         $("#modal-body").html(result);
-        $(".fecha_inicio").datepicker();
-        $(".fecha_final").datepicker();
         $(".hora_inicio").wickedpicker({
           twentyFour: true,
           title: ''
@@ -1704,15 +1670,15 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\menu.js */"./resources/js/module_inbound/menu.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\campanas.js */"./resources/js/module_inbound/campanas.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\CondicionesTiempo.js */"./resources/js/module_inbound/CondicionesTiempo.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\desvios.js */"./resources/js/module_inbound/desvios.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\buzon_voz.js */"./resources/js/module_inbound/buzon_voz.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\Did_Enrutamiento.js */"./resources/js/module_inbound/Did_Enrutamiento.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\ivr.js */"./resources/js/module_inbound/ivr.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\Metricas_ACD.js */"./resources/js/module_inbound/Metricas_ACD.js");
-module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\desglosellamadas.js */"./resources/js/module_inbound/desglosellamadas.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\menu.js */"./resources/js/module_inbound/menu.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\campanas.js */"./resources/js/module_inbound/campanas.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\CondicionesTiempo.js */"./resources/js/module_inbound/CondicionesTiempo.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\desvios.js */"./resources/js/module_inbound/desvios.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\buzon_voz.js */"./resources/js/module_inbound/buzon_voz.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\Did_Enrutamiento.js */"./resources/js/module_inbound/Did_Enrutamiento.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\ivr.js */"./resources/js/module_inbound/ivr.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\Metricas_ACD.js */"./resources/js/module_inbound/Metricas_ACD.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_inbound\desglosellamadas.js */"./resources/js/module_inbound/desglosellamadas.js");
 
 
 /***/ })

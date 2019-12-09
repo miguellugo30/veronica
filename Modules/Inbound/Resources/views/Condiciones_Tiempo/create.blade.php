@@ -81,10 +81,10 @@
                                 </select>
                             </td>
                             <td>
-                                <input type="text" class="form-control form-control-sm fecha_inicio" name="fecha_inicio_1" id="fecha_inicio" placeholder="Fecha Inicio" size="10">
+                                <input type="date" class="form-control form-control-sm fecha_inicio" name="fecha_inicio_1" id="fecha_inicio" placeholder="Fecha Inicio" size="10">
                             </td>
                             <td>
-                                <input type="text" class="form-control form-control-sm fecha_final" name="fecha_final_1" id="fecha_final" placeholder="Fecha Final" size="10">
+                                <input type="date" class="form-control form-control-sm fecha_final" name="fecha_final_1" id="fecha_final" placeholder="Fecha Final" size="10">
                             </td>
                             <td>
                                 <select name="destino_verdadero_1" id="destino_verdadero"  class="form-control form-control-sm destinoOpccion" data-accion="si_coincide">

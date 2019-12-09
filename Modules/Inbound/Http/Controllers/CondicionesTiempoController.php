@@ -92,7 +92,7 @@ class CondicionesTiempoController extends Controller
                 $mes_inicio = '*';
             } else {
                 $fecha_inicio = explode('-',  $info[$i][7]);
-                $dia_mes_inicio = $fecha_inicio[0];
+                $dia_mes_inicio = $fecha_inicio[1];
                 $mes_inicio = $fecha_inicio[1];
             }
 
@@ -101,7 +101,7 @@ class CondicionesTiempoController extends Controller
                 $mes_fin = '*';
             } else {
                 $fecha_fin = explode('-',  $info[$i][8]);
-                $dia_mes_fin = $fecha_fin[0];
+                $dia_mes_fin = $fecha_fin[2];
                 $mes_fin = $fecha_fin[1];
             }
 
@@ -295,7 +295,7 @@ class CondicionesTiempoController extends Controller
                     $mes_inicio = '*';
                 } else {
                     $fecha_inicio = explode('-',  $info[$i][8]);
-                    $dia_mes_inicio = $fecha_inicio[0];
+                    $dia_mes_inicio = $fecha_inicio[2];
                     $mes_inicio = $fecha_inicio[1];
                 }
 
@@ -304,7 +304,7 @@ class CondicionesTiempoController extends Controller
                     $mes_fin = '*';
                 } else {
                     $fecha_fin = explode('-',  $info[$i][9]);
-                    $dia_mes_fin = $fecha_fin[0];
+                    $dia_mes_fin = $fecha_fin[2];
                     $mes_fin = $fecha_fin[1];
                 }
 
@@ -334,7 +334,7 @@ class CondicionesTiempoController extends Controller
                         $mes_inicio = '*';
                     } else {
                         $fecha_inicio = explode('-',  $info[$i][8]);
-                        $dia_mes_inicio = $fecha_inicio[0];
+                        $dia_mes_inicio = $fecha_inicio[2];
                         $mes_inicio = $fecha_inicio[1];
                     }
 
@@ -343,7 +343,7 @@ class CondicionesTiempoController extends Controller
                         $mes_fin = '*';
                     } else {
                         $fecha_fin = explode('-',  $info[$i][9]);
-                        $dia_mes_fin = $fecha_fin[0];
+                        $dia_mes_fin = $fecha_fin[2];
                         $mes_fin = $fecha_fin[1];
                     }
 
