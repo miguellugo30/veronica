@@ -90,10 +90,10 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control form-control-sm fecha_inicio" name="fecha_inicio_{{ $condiciones[$i][0] }}" id="fecha_inicio" placeholder="Fecha Inicio" {{ $condiciones[$i][6] == '*' ? '' : 'value='.$condiciones[$i][6].'-'.$condiciones[$i][7].'-'.date('Y') }}>
+                                    <input type="date" class="form-control form-control-sm fecha_inicio" name="fecha_inicio_{{ $condiciones[$i][0] }}" id="fecha_inicio" placeholder="Fecha Inicio" {{ $condiciones[$i][6] == '*' ? '' : 'value='.date('Y').'-'.$condiciones[$i][7].'-'.$condiciones[$i][6] }}>
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control form-control-sm fecha_final" name="fecha_final_{{ $condiciones[$i][0] }}" id="fecha_final" placeholder="Fecha Final" {{ $condiciones[$i][8] == '*' ? '' : 'value='.$condiciones[$i][8].'-'.$condiciones[$i][9].'-'.date('Y') }}>
+                                    <input type="date" class="form-control form-control-sm fecha_final" name="fecha_final_{{ $condiciones[$i][0] }}" id="fecha_final" placeholder="Fecha Final" {{ $condiciones[$i][8] == '*' ? '' : 'value='.date('Y').'-'.$condiciones[$i][9].'-'.$condiciones[$i][8] }}>
                                 </td>
                                 <td>
                                     <select name="destino_verdadero_{{ $condiciones[$i][0] }}" id="destino_verdadero"  class="form-control form-control-sm destinoOpccion" data-accion="si_coincide">

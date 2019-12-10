@@ -123,8 +123,8 @@ $(function () {
     $('#tituloModal').html('Nuevo Audio');
     $('#action').removeClass('deleteAudio');
     $('#action').addClass('saveAudio');
-      let url = currentURL + "/Audios/create";
-      $.get(url, function(data, textStatus, jqXHR) {
+     let url = currentURL + "/Audios/create";
+     $.get(url, function(data, textStatus, jqXHR) {
         $('#modal').modal('show');
         $("#modal-body").html(data);
     });
@@ -281,7 +281,7 @@ $(function () {
           $("#agente").append('@foreach ($nombres as $nombre)<option value="{{$nombre->id}}">{{$nombre->nombre}}</option>@endforeach');
           /*$.each(res, function(key, value) {
               $("#agente").append('<option value="' + value + '">' + value + '</option>');
-            });*/
+           });*/
   //}
 
   /**
@@ -445,7 +445,7 @@ $(function () {
      */
 
     /*let tabla = $('.resultado #tableInbound').DataTable();
-      if (this.checked) {
+     if (this.checked) {
         for (i = 1; i <= tabla.rows().count(); i++) {
             $(".numcheck_" + i).attr('checked', 'checked');
         }
@@ -463,9 +463,9 @@ $(function () {
       event.preventDefault();
       let id = $(this).data("id");
       $("#idSeleccionado").val(id);
-        $("#tableInbound tbody tr").removeClass('table-primary');
+       $("#tableInbound tbody tr").removeClass('table-primary');
       $(this).addClass('table-primary');
-    });*/
+   });*/
 
   /**
    * Evento para deshabilitar las extensiones si seleccionan un Agente
@@ -557,9 +557,9 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_recording\menu.js */"./resources/js/module_recording/menu.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_recording\Grabaciones.js */"./resources/js/module_recording/Grabaciones.js");
-module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_recording\Inbound.js */"./resources/js/module_recording/Inbound.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_recording\menu.js */"./resources/js/module_recording/menu.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_recording\Grabaciones.js */"./resources/js/module_recording/Grabaciones.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_recording\Inbound.js */"./resources/js/module_recording/Inbound.js");
 
 
 /***/ })
