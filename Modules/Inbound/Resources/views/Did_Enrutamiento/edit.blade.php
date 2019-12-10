@@ -15,16 +15,18 @@
 </style>
 <form id="formDataEnrutamiento">
     <div class="col-12" >
+            <div class="form-group text-right">
+                    <b>* Campos obligatorios.</b>
+                </div>
             <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="nombre"><b> Descripción</b></label>
-                            @csrf
-                            <input type="text" class="form-control form-control-sm" id="descripcion" name="descripcion" placeholder="Descripción" value="{{$did->descripcion}}">
-                            <input type="hidden" class="form-control form-control-sm" name="id" id="id" value="{{ $id }}" >
-                        </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="nombre"><b> Descripción *:</b></label>
+                        <input type="hidden" class="form-control form-control-sm" name="id" id="id" value="{{ $id }}" >
+                        <input type="text" class="form-control form-control-sm" id="descripcion" name="descripcion" placeholder="Descripción" value="{{$did->descripcion}}">
                     </div>
                 </div>
+            </div>
         <fieldset>
             <legend>
                 <input type="button" class="btn btn-primary btn-sm" id = "addRuta" value = "Agregar Ruta" style="float: right;" />
@@ -32,8 +34,8 @@
             <table id='condicion' class="table table-striped table-sm tableNewForm">
                 <thead>
                     <tr style="cursor: s-resize;">
-                        <th>Destino</th>
-                        <th>Opciones</th>
+                        <th>Destino *:</th>
+                        <th>Opciones *:</th>
                         <td></td>
                     </tr>
                 </thead>
@@ -86,6 +88,7 @@
                                 <td>
                                     <div id="opcionesDestino_{{ $data[$i][0] }}" class="opcionesDestino">
                                         <select name="opciones_{{ $data[$i][0] }}" id="opciones" class="form-control form-control-sm">
+                                            <option value="">Selecciona una opción</option>
                                             @foreach ($data[$i][4] as $v)
                                                 @if ($data[$i][2] == 'Cat_Extensiones')
                                                     <option value="{{ $v->id }}" {{ $data[$i][3] == $v->id ? 'selected = "selected"' : '' }} >{{$v->extension}}</option>
@@ -110,5 +113,8 @@
                 </tbody>
             </table>
         </fieldset>
+        <div class="alert alert-danger print-error-msg" role="alert" style="display:none">
+                <ul></ul>
+            </div>
     </div>
 </form>

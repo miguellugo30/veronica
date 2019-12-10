@@ -5,8 +5,13 @@ namespace Modules\Administrador\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Nimbus\BaseDatos;
+//use Validator;
+use Modules\Administrador\Http\Requests\DataBaseRequest;
+/**
+ * Clases independientes a laravel
+ */
 use Nimbus\Http\Controllers\LogController;
+use Nimbus\BaseDatos;
 
 class BasesDatosController extends Controller
 {
@@ -37,19 +42,19 @@ class BasesDatosController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(DataBaseRequest $request)
     {
         /**
          * Obtenemos todos los datos del formulario de alta y
-         * los insertamos la informacion del formulario
+         * los insertamos la información del formulario
          */
         $db = BaseDatos::create( $request->all() );
         /**
          * Creamos el logs
-         */
-        $mensaje = 'Se creo un nuevo registro, informacion capturada:'.var_export($request->all(), true);
-        $log = new LogController;
-        $log->store('Insercion', 'BaseDatos',$mensaje, $db->id);
+         **/
+         $mensaje = 'Se creo un nuevo registro, información capturada:'.var_export($request->all(), true);
+         $log = new LogController;
+         $log->store('Inserción', 'BaseDatos',$mensaje, $db->id);
         /**
          * Redirigimos a la ruta index
          */
@@ -75,7 +80,7 @@ class BasesDatosController extends Controller
     public function edit($id)
     {
         /**
-         * Obtenemos la informacion de la base de datos ha editar
+         * Obtenemos la información de la base de datos ha editar
          */
         $baseDatos = BaseDatos::findOrFail( $id );
         return view('administrador::basedatos.edit', compact('baseDatos', 'id'));
@@ -87,27 +92,27 @@ class BasesDatosController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(DataBaseRequest $request, $id)
     {
         /**
          * Actualizamos la troncal
          */
-        BaseDatos::where( 'id', $id )
-                                ->update([
-                                    'nombre' => $request->input('nombre'),
-                                    'ip' => $request->input('ip'),
-                                    'ubicacion' => $request->input('ubicacion')
-                                ]);
+         BaseDatos::where( 'id', $id )
+         ->update([
+             'nombre' => $request->nombre,
+             'ip' => $request->ip,
+             'ubicacion' => $request->ubicacion
+             ]);
         /**
          * Creamos el logs
          */
-        $mensaje = 'Se edito un registro con id: '.$id.', informacion editada: '.var_export($request->all(), true);
-        $log = new LogController;
-        $log->store('Actualizacion', 'BaseDatos',$mensaje, $id);
-        /**
-         * Redirigimos a la ruta index
-         */
-        return redirect()->route('basedatos.index');
+         $mensaje = 'Se edito un registro con id: '.$id.', información editada: '.var_export($request->all(), true);
+         $log = new LogController;
+         $log->store('Actualizacion', 'BaseDatos',$mensaje, $id);
+         /**
+          * Redirigimos a la ruta index
+          */
+          return redirect()->route('basedatos.index');
     }
 
     /**
@@ -129,7 +134,7 @@ class BasesDatosController extends Controller
          */
         $mensaje = 'Se Elimino un registro con id: '.$id;
         $log = new LogController;
-        $log->store('Eliminacion', 'BaseDatos',$mensaje, $id);
+        $log->store('Eliminación', 'BaseDatos',$mensaje, $id);
         /**
          * Redirigimos a la ruta index
          */

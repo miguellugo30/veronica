@@ -40,9 +40,12 @@ $(function() {
      */
     $(document).on('click', '.updatedidenrutamiento', function(event) {
         event.preventDefault();
-        $('#modal').modal('hide');
 
         let dataForm = $("#formDataEnrutamiento").serializeArray();
+        var data = {};
+        $(dataForm).each(function(index, obj) {
+            data[obj.name] = obj.value;
+        });
         let _method = "PUT";
         var id = $("#idSeleccionado").val();
         let _token = $("input[name=_token]").val();
@@ -52,13 +55,16 @@ $(function() {
         $.ajax({
                 url: url,
                 type: "post",
+                dataType: 'JSON',
                 data: {
-                    dataForm: dataForm,
+                    dataForm: data,
                     _method: _method,
                     _token: _token
                 },
             })
             .done(function(data) {
+                $('#modal').modal('hide');
+                $('.modal-backdrop ').css('display', 'none');
                 $('.viewResult').html(data);
                 $('.viewResult #tableCondicionTiempo').DataTable({
                     "lengthChange": false
@@ -68,6 +74,8 @@ $(function() {
                     'El registro ha sido actualizado.',
                     'success'
                 )
+            }).fail(function(data) {
+                printErrorMsg(data.responseJSON.errors);
             });
     });
 
@@ -149,4 +157,30 @@ $(function() {
             }
         });
     });
+    /**
+     * Funcion para mostrar los errores de los formularios
+     */
+    function printErrorMsg(msg) {
+        $(".print-error-msg").find("ul").html('');
+        $(".print-error-msg").css('display', 'block');
+        $(".form-control").removeClass('is-invalid');
+        for (var clave in msg) {
+            var data = clave.split('.');
+            $("[name='" + data[1] + "']").addClass('is-invalid');
+            if (msg.hasOwnProperty(clave)) {
+                var valor = msg[clave][0].split('.');
+
+                var value = valor[1].replace(' ', '_');
+                console.log(value);
+
+                if (value.indexOf('_') > -1) {
+                    var v = value.split('_');
+                    $(".print-error-msg").find("ul").append('<li>' + v[0] + ' es un campo obligatorio</li>');
+                } else {
+                    $(".print-error-msg").find("ul").append('<li>' + valor[1] + '</li>');
+                }
+
+            }
+        }
+    }
 });;

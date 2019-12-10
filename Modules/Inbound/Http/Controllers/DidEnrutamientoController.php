@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Nimbus\Http\Controllers\LogController;
 use Illuminate\Support\Facades\Auth;
+use Modules\Inbound\Http\Requests\DidEnrutamientoRequest;
 use nusoap_client;
 use PHPAMI\Ami;
 
@@ -35,40 +36,42 @@ class DidEnrutamientoController extends Controller
 
         $data = array();
         foreach ($dids as $did) {
-            $info = [ $did->id, $did->did, $did->descripcion ];
-            if( $did->Did_Enrutamiento == NULL ){
-                $desc = '';
-                $apli = '';
-                $nombre = '';
-            }else {
-                $apli = $did->Did_Enrutamiento->aplicacion;
-                $tabla = $did->Did_Enrutamiento->tabla;
 
-                if ( $tabla == 'Campanas' ) {
-                    $dataApli = Campanas::find( $did->Did_Enrutamiento->tabla_id );
-                    $nombre = $dataApli->nombre;
-                }else if ( $tabla == 'Audios_Empresa' ) {
-                    $dataApli = Audios_Empresa::find( $did->Did_Enrutamiento->tabla_id );
-                    $nombre = $dataApli->nombre;
-                }else if ( $tabla == 'Cat_Extensiones' ) {
-                    $dataApli = Cat_Extensiones::find( $did->Did_Enrutamiento->tabla_id );
-                    $nombre = $dataApli->extension;
-                }else if ( $tabla == 'Condiciones_Tiempo' ) {
-                    $dataApli = Grupos::active()->where([['id', '=', $did->Did_Enrutamiento->tabla_id],['tipo_grupo','=','Condiciones de Tiempo']])->get();
-                    $nombre = $dataApli[0]->nombre;
-                }else if ( $tabla == 'Ivr' ) {
-                    $dataApli = Ivr::find( $did->Did_Enrutamiento->tabla_id );
-                    $nombre = $dataApli->nombre;
-                }else if ( $tabla == 'hangup' ) {
-                    $nombre = 'Colgar';
-                } else {
-                    $nombre = 'Sin Aplicacion';
+            if ( $did->Did_Enrutamiento->activo == 1 ) {
+                $info = [ $did->id, $did->did, $did->descripcion ];
+                if( $did->Did_Enrutamiento == NULL ){
+                    $desc = '';
+                    $apli = '';
+                    $nombre = '';
+                }else {
+                    $apli = $did->Did_Enrutamiento->aplicacion;
+                    $tabla = $did->Did_Enrutamiento->tabla;
+
+                    if ( $tabla == 'Campanas' ) {
+                        $dataApli = Campanas::find( $did->Did_Enrutamiento->tabla_id );
+                        $nombre = $dataApli->nombre;
+                    }else if ( $tabla == 'Audios_Empresa' ) {
+                        $dataApli = Audios_Empresa::find( $did->Did_Enrutamiento->tabla_id );
+                        $nombre = $dataApli->nombre;
+                    }else if ( $tabla == 'Cat_Extensiones' ) {
+                        $dataApli = Cat_Extensiones::find( $did->Did_Enrutamiento->tabla_id );
+                        $nombre = $dataApli->extension;
+                    }else if ( $tabla == 'Condiciones_Tiempo' ) {
+                        $dataApli = Grupos::active()->where([['id', '=', $did->Did_Enrutamiento->tabla_id],['tipo_grupo','=','Condiciones de Tiempo']])->get();
+                        $nombre = $dataApli[0]->nombre;
+                    }else if ( $tabla == 'Ivr' ) {
+                        $dataApli = Ivr::find( $did->Did_Enrutamiento->tabla_id );
+                        $nombre = $dataApli->nombre;
+                    }else if ( $tabla == 'hangup' ) {
+                        $nombre = 'Colgar';
+                    } else {
+                        $nombre = 'Sin Aplicacion';
+                    }
+
                 }
-
+                array_push($info, $apli, $nombre);
+                array_push($data, $info);
             }
-            array_push($info, $apli, $nombre);
-            array_push($data, $info);
-
         }
         return view('inbound::Did_Enrutamiento.index',compact('data'));
     }
@@ -186,9 +189,9 @@ class DidEnrutamientoController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(DidEnrutamientoRequest $request, $id)
     {
-
+        /*
         $dataForm = $request->input('dataForm');
         $user = Auth::user();
         $empresa_id = $user->id_cliente;
@@ -200,9 +203,9 @@ class DidEnrutamientoController extends Controller
         $idDid = $data['id'];
         $descripcion = $data['descripcion'];
 
-        /**
+        /*
          * Actualizamos registro
-         */
+         *
         Dids::where('id', $idDid)->update([ 'descripcion' => $descripcion ]);
 
         array_shift( $data );
@@ -214,9 +217,9 @@ class DidEnrutamientoController extends Controller
         for ($i=0; $i < count($info); $i++) {
 
             if ($info[$i][0] == NULL) {
-                /**
+                /*
                  * Creamos registro
-                 */
+                 *
                 Did_Enrutamiento::create([
                                             'aplicacion' => $info[$i][1],
                                             'prioridad' => $j,
@@ -225,9 +228,9 @@ class DidEnrutamientoController extends Controller
                                             'Dids_id' => $idDid
                                         ]);
             } else {
-                /**
+                /*
                  * Actualizamos registro
-                 */
+                 *
                 Did_Enrutamiento::where('id', $info[$i][0])->update([
                                                                     'aplicacion' => $info[$i][1],
                                                                     'prioridad' => $j,
@@ -237,19 +240,19 @@ class DidEnrutamientoController extends Controller
             }
             $j++;
         }
-        /**
+        /*
          * Creamos una petición, para poder escribir
          * los nuevos DID en el archivo EXTENSIONS_DID.CONF
-         */
+         *
         $pbx = Empresas::empresa($empresa_id)->active()->with('Config_Empresas')->with('Config_Empresas.ms')->get()->first();
         $wsdl = 'http://'.$pbx->Config_Empresas->ms->ip_pbx.'/ws-ms/index.php';
         $client =  new  nusoap_client( $wsdl );
         $result = $client->call('EnrutamientoDid', array(
                                                         'empresas_id' => $empresa_id
                                                     ));
-        /**
+        /*
         * Si la respuesta es 1, se hace el reload del sip
-        */
+        *
         if ($result['error'] == 1) {
             $ami = new Ami();
             if ($ami->connect($pbx->Config_Empresas->ms->ip_pbx.':5038', $pbx->Config_Empresas->usuario_ami, $pbx->Config_Empresas->clave_ami, 'off') === false)
@@ -260,6 +263,7 @@ class DidEnrutamientoController extends Controller
             $ami->disconnect();
         }
         return redirect()->route('Did_Enrutamiento.index');
+        */
     }
 
     /**

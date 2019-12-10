@@ -75,7 +75,7 @@ $(function() {
             url: url,
             type: 'GET',
             success: function(result) {
-                $('#modal').modal('show');
+                $('#modal').modal({ backdrop: 'static', keyboard: false });
                 $("#modal-body").html(result);
             }
         });
@@ -85,7 +85,6 @@ $(function() {
      */
     $(document).on('click', '.saveCampana', function(event) {
         event.preventDefault();
-        $('#modal').modal('hide');
 
         let nombre = $("#nombre").val();
         let agentesParticipantes = $("#agentes_participantes").val();
@@ -127,6 +126,9 @@ $(function() {
                 },
             })
             .done(function(data) {
+                $('.modal-backdrop ').css('display', 'none');
+                $('#modal').modal('hide');
+
                 $('.viewResult').html(data);
                 $('.viewResult #tableCampanas').DataTable({
                     "lengthChange": false
@@ -137,6 +139,8 @@ $(function() {
                     'success'
                 )
                 agentesParticipantes.length = 0;
+            }).fail(function(data) {
+                printErrorMsg(data.responseJSON.errors);
             });
     });
     /**
@@ -166,7 +170,7 @@ $(function() {
      */
     $(document).on('click', '.updaCampanas', function(event) {
         event.preventDefault();
-        $('#modal').modal('hide');
+
         let id = $("#id").val();
         let nombre = $("#nombre").val();
         let agentesParticipantes = $("#agentes_participantes").val();
@@ -205,6 +209,8 @@ $(function() {
             _method: _method,
             _token: _token
         }, function(data, textStatus, xhr) {
+            $('#modal').modal('hide');
+            $('.modal-backdrop ').css('display', 'none');
             $('.viewResult').html(data);
             $('.viewResult #tableCampanas').DataTable({
                 "lengthChange": false
@@ -214,6 +220,8 @@ $(function() {
                 'El registro ha sido editado.',
                 'success'
             )
+        }).fail(function(data) {
+            printErrorMsg(data.responseJSON.errors);
         });
     });
     /**
@@ -345,4 +353,18 @@ $(function() {
         let valor = $('#nombre').val();
         $(".nombreCampana").text(valor);
     });
+    /**
+     * Funcion para mostrar los errores de los formularios
+     */
+    function printErrorMsg(msg) {
+        $(".print-error-msg").find("ul").html('');
+        $(".print-error-msg").css('display', 'block');
+        $(".form-control").removeClass('is-invalid');
+        for (var clave in msg) {
+            $("#" + clave).addClass('is-invalid');
+            if (msg.hasOwnProperty(clave)) {
+                $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
+            }
+        }
+    }
 });

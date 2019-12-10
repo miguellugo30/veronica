@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 use Modules\Agentes\Http\Controllers\LogRegistroEventosController;
 use DB;
 use nusoap_client;
+use Modules\Agentes\Http\Controllers\EventosAmiController;
 
 use Nimbus\Miembros_Campana;
 use Nimbus\Agentes;
@@ -28,7 +29,8 @@ class EventosAgenteController extends Controller
     public function no_disponible( Request $request )
     {
         $evento = LogRegistroEventosController::registro_evento( auth()->guard('agentes')->id(), $request->no_disponible );
-        Miembros_Campana::where( 'membername', auth()->guard('agentes')->id() )->update(['Paused' => 1]);
+        //Miembros_Campana::where( 'membername', auth()->guard('agentes')->id() )->update(['Paused' => 1]);
+        EventosAmiController::despausar_agente( $request->canal, 'paused' );
         Agentes::where( 'id', auth()->guard('agentes')->id() )->update(['Cat_Estado_Agente_id' => 3]);
 
         $agente = auth()->guard('agentes')->id();

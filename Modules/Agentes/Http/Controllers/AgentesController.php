@@ -31,7 +31,7 @@ class AgentesController extends Controller
                                 'Campanas.modalidad_logue'
                             )
                     ->where('Campanas.activo', 1)
-                    ->where('Miembros_Campanas.Agentes_id', auth()->guard('agentes')->id())
+                    ->where('Miembros_Campanas.membername', auth()->guard('agentes')->id())
                     ->groupBy('modalidad_logue')
                     ->first();
 
@@ -68,7 +68,9 @@ class AgentesController extends Controller
         Miembros_Campana::where( 'membername', $request->id_agente )->update(['Paused' => 0]);
         Crd_Asignacion_Agente::where('uniqueid', $request->uniqueid)->update(['fecha_calificacion' => $fecha]);
         EventosAmiController::colgar_llamada( $request->canal );
+        $despausar = EventosAmiController::despausar_agente( $request->canal, 'unpause' );
         CalificarLlamadaController::calificarllamada( $request );
+        print_r( $despausar );
     }
 
     /**

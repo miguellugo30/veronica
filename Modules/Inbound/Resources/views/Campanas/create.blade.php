@@ -1,16 +1,19 @@
 <div class="row">
     <!--form enctype="multipart/form-data" id="altacampana" method="post"-->
         <div class="col">
+            <div class="form-group text-right">
+                <b>*Campos obligatorios.</b>
+            </div>
             <fieldset>
                 <legend>Configuración:</legend>
                 <div class="form-group">
-                    <label for="nombre">Nombre</label>
+                    <label for="nombre"><b>Nombre *:</b></label>
                     <input type="text" class="form-control form-control-sm" id="nombre" placeholder="Nombre campaña" value="">
                     <input type="hidden" name="agentes_participantes" id="agentes_participantes" value="">
                     @csrf
                 </div>
                 <div class="form-group">
-                    <label for="mlogeo">Modalida de Logueo</label>
+                    <label for="mlogeo"><b>Modalida de Logueo *:</b></label>
                     <select name="mlogeo" id="mlogeo" class="form-control form-control-sm">
                         <option value="">Selecciona una opción</option>
                         <option value="canal_cerrado">Sin Logeo Permanente</option>
@@ -18,7 +21,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="strategy">Estrategia de Marcado</label>
+                    <label for="strategy"><b>Estrategia de Marcado *:</b></label>
                     <select name="strategy" id="strategy" class="form-control form-control-sm">
                         <option value="">Selecciona una opción</option>
                         <option value="random">Aleatorio</option>
@@ -29,7 +32,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="wrapuptime">Tiempo de Ringeo Ext. Agente</label>
+                    <label for="wrapuptime"><b>Tiempo de Ringeo Ext. Agente *:</b></label>
                     <input type="text" class="form-control form-control-sm" id="wrapuptime" placeholder="15 - 100 segundos" value="">
                 </div>
                 <!-- Seccion Mesajes y sonidos -->
@@ -37,7 +40,7 @@
                 Mensajes y sonidos en la Campaña
                 </div>
                 <div class="form-group">
-                    <label for="msginical">Mensaje al entrar llamada (opcional)</label>
+                    <label for="msginical"><b>Mensaje al entrar llamada:</b></label>
                     <select name="msginical" id="msginical" class="form-control form-control-sm">
                         <option value="">Selecciona una opción</option>
                         @foreach ($Audios as $audio)
@@ -46,7 +49,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="periodic_announce">Mensaje Agentes no disponibles</label>
+                    <label for="periodic_announce"><b>Mensaje Agentes no disponibles:</b></label>
                     <select name="periodic_announce" id="periodic_announce" class="form-control form-control-sm">
                         <option value="call_center/agentes_no_disponibles">Selecciona una opción</option>
                         @foreach ($Audios as $audio)
@@ -55,7 +58,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="periodic_announce_frequency">Repetir mensaje "Agentes no disponibles" cada</label>
+                    <label for="periodic_announce_frequency"><b>Repetir mensaje "Agentes no disponibles" cada *:</b></label>
                     <input type="text" class="form-control form-control-sm" id="periodic_announce_frequency" placeholder="segundos" value="">
                 </div>
                 <!--
@@ -77,7 +80,7 @@
                 Script Inicial (Opcional)
                 </div>
                 <div class="form-group">
-                    <label for="script">Tipo de Script</label>
+                    <label for="script"><b>Tipo de Script *:</b></label>
                     <select name="script" id="script" class="form-control form-control-sm">
                         <option value="">Seleccione Scripting</option>
                         @foreach ($speech as $spech)
@@ -90,19 +93,19 @@
                 Alertas de Tiempo y Liberacion de Terminal
                 </div>
                 <div class="form-group">
-                    <label for="alertstll">Alerta sonora tiempo en Llamada</label>
+                    <label for="alertstll"><b>Alerta sonora tiempo en Llamada *:</b></label>
                     <input type="text" class="form-control form-control-sm" id="alertstll" placeholder="0 segundos" value="">
                 </div>
                 <div class="form-group">
-                    <label for="alertstdll">Alerta Sonora tiempo definiendo llamada</label>
+                    <label for="alertstdll"><b>Alerta Sonora tiempo definiendo llamada *:</b></label>
                     <input type="text" class="form-control form-control-sm" id="alertstdll" placeholder="0 segundos" value="">
                 </div>
                 <div class="form-group">
-                    <label for="libta">Liberacion de Terminal (Regresar a Disponible agente)</label>
+                    <label for="libta"><b>Liberacion de Terminal (Regresar a Disponible agente) *:</b></label>
                     <input type="text" class="form-control form-control-sm" id="libta" placeholder="0 segundos" value="">
                 </div>
                 <div class="form-group">
-                    <label for="cal_lib">Calificacion de Liberacion (En caso de activar opcion anterior)</label>
+                    <label for="cal_lib"><b>Calificacion de Liberacion (En caso de activar opcion anterior) *:</b></label>
                     <select name="cal_lib" id="cal_lib" class="form-control form-control-sm">
                         <option value="">Seleccione Calificacion</option>
                         @foreach ($calificaciones as $calificacion)
@@ -157,6 +160,9 @@
                     </tbody>
                 </table>
             </fieldset>
+            <div class="alert alert-danger print-error-msg" role="alert" style="display:none">
+                <ul></ul>
+            </div>
         </div>
     <!--/form-->
 </div>

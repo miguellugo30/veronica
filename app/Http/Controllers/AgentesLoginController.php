@@ -164,6 +164,6 @@ class AgentesLoginController extends Controller
      */
     private function pausar_agente($id_agente, $estado)
     {
-        Miembros_Campana::where( 'Agentes_id', $id_agente )->update(['paused' => $estado]);
+        Miembros_Campana::where( 'membername', $id_agente )->update(['paused' => $estado]);
     }
 }

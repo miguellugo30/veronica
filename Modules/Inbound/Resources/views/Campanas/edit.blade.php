@@ -163,6 +163,9 @@
                     </tbody>
                 </table>
             </fieldset>
+            <div class="alert alert-danger print-error-msg" role="alert" style="display:none">
+                <ul></ul>
+            </div>
         </div>
     <!--/form-->
 </div>

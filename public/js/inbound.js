@@ -460,8 +460,11 @@ $(function () {
 
   $(document).on('click', '.updatedidenrutamiento', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var dataForm = $("#formDataEnrutamiento").serializeArray();
+    var data = {};
+    $(dataForm).each(function (index, obj) {
+      data[obj.name] = obj.value;
+    });
     var _method = "PUT";
     var id = $("#idSeleccionado").val();
 
@@ -471,17 +474,22 @@ $(function () {
     $.ajax({
       url: url,
       type: "post",
+      dataType: 'JSON',
       data: {
-        dataForm: dataForm,
+        dataForm: data,
         _method: _method,
         _token: _token
       }
     }).done(function (data) {
+      $('#modal').modal('hide');
+      $('.modal-backdrop ').css('display', 'none');
       $('.viewResult').html(data);
       $('.viewResult #tableCondicionTiempo').DataTable({
         "lengthChange": false
       });
       Swal.fire('Correcto!', 'El registro ha sido actualizado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
@@ -559,6 +567,33 @@ $(function () {
       }
     });
   });
+  /**
+   * Funcion para mostrar los errores de los formularios
+   */
+
+  function printErrorMsg(msg) {
+    $(".print-error-msg").find("ul").html('');
+    $(".print-error-msg").css('display', 'block');
+    $(".form-control").removeClass('is-invalid');
+
+    for (var clave in msg) {
+      var data = clave.split('.');
+      $("[name='" + data[1] + "']").addClass('is-invalid');
+
+      if (msg.hasOwnProperty(clave)) {
+        var valor = msg[clave][0].split('.');
+        var value = valor[1].replace(' ', '_');
+        console.log(value);
+
+        if (value.indexOf('_') > -1) {
+          var v = value.split('_');
+          $(".print-error-msg").find("ul").append('<li>' + v[0] + ' es un campo obligatorio</li>');
+        } else {
+          $(".print-error-msg").find("ul").append('<li>' + valor[1] + '</li>');
+        }
+      }
+    }
+  }
 });
 ;
 
@@ -866,7 +901,10 @@ $(function () {
       url: url,
       type: 'GET',
       success: function success(result) {
-        $('#modal').modal('show');
+        $('#modal').modal({
+          backdrop: 'static',
+          keyboard: false
+        });
         $("#modal-body").html(result);
       }
     });
@@ -877,7 +915,6 @@ $(function () {
 
   $(document).on('click', '.saveCampana', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var nombre = $("#nombre").val();
     var agentesParticipantes = $("#agentes_participantes").val();
     var mlogeo = $("#mlogeo").val();
@@ -917,12 +954,16 @@ $(function () {
         _token: _token
       }
     }).done(function (data) {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
       $('.viewResult').html(data);
       $('.viewResult #tableCampanas').DataTable({
         "lengthChange": false
       });
       Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
       agentesParticipantes.length = 0;
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
@@ -955,7 +996,6 @@ $(function () {
 
   $(document).on('click', '.updaCampanas', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var id = $("#id").val();
     var nombre = $("#nombre").val();
     var agentesParticipantes = $("#agentes_participantes").val();
@@ -994,11 +1034,15 @@ $(function () {
       _token: _token,
       _method: _method
     }, "_token", _token), function (data, textStatus, xhr) {
+      $('#modal').modal('hide');
+      $('.modal-backdrop ').css('display', 'none');
       $('.viewResult').html(data);
       $('.viewResult #tableCampanas').DataTable({
         "lengthChange": false
       });
       Swal.fire('Correcto!', 'El registro ha sido editado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
@@ -1117,6 +1161,23 @@ $(function () {
     var valor = $('#nombre').val();
     $(".nombreCampana").text(valor);
   });
+  /**
+   * Funcion para mostrar los errores de los formularios
+   */
+
+  function printErrorMsg(msg) {
+    $(".print-error-msg").find("ul").html('');
+    $(".print-error-msg").css('display', 'block');
+    $(".form-control").removeClass('is-invalid');
+
+    for (var clave in msg) {
+      $("#" + clave).addClass('is-invalid');
+
+      if (msg.hasOwnProperty(clave)) {
+        $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
+      }
+    }
+  }
 });
 
 /***/ }),

@@ -5,6 +5,7 @@ namespace Modules\Administrador\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\Administrador\Http\Requests\NasRequest;
 use Nimbus\Cat_NAS;
 use Nimbus\Http\Controllers\LogController;
 
@@ -37,7 +38,7 @@ class CatNasController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(NasRequest $request)
     {
         /**
          * Obtenemos todos los datos del formulario de alta y
@@ -86,7 +87,7 @@ class CatNasController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(NasRequest $request, $id)
     {
         /**
          * Actualizamos los campos

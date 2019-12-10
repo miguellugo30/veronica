@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use DB;
+use Modules\Inbound\Http\Requests\CampanasRequest;
 
 use Nimbus\User;
 use Nimbus\Http\Controllers\LogController;
@@ -55,8 +56,9 @@ class CampanasController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(CampanasRequest $request)
     {
+        exit();
         /**
          * Obtenemos los datos del usuario logeado
          */
@@ -109,7 +111,7 @@ class CampanasController extends Controller
             Miembros_Campana::create(
                 [
                     'membername' =>  $agentesParticipantes[$i],
-                    'queue_name' => $campana->id,
+                    //'queue_name' => $campana->id,
                     'interface' => $interface.$agentesParticipantes[$i],
                     'paused' => $estado['paused'],
                     'Agentes_id' =>  $agentesParticipantes[$i],
@@ -163,7 +165,7 @@ class CampanasController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(CampanasRequest $request, $id)
     {
         /**
          * Obtenemos los datos del usuario logeado

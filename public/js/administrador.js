@@ -376,7 +376,7 @@ $(function () {
 
   $(document).on("click", ".editDataBase", function (e) {
     e.preventDefault();
-    $('#tituloModal').html('Editar Tipo Canal');
+    $('#tituloModal').html('Editar Base de Datos');
     $('#action').removeClass('saveBaseDatos');
     $('#action').addClass('updateBaseDatos');
     var id = $("#idSeleccionado").val();
@@ -392,7 +392,6 @@ $(function () {
 
   $(document).on('click', '.saveBaseDatos', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var nombre = $("#nombre").val();
     var ubicacion = $("#ubicacion").val();
     var ip = $("#ip").val();
@@ -410,7 +409,12 @@ $(function () {
       $('.viewIndex #tableBaseDatos').DataTable({
         "lengthChange": true
       });
+    }).done(function () {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
       Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
@@ -432,7 +436,6 @@ $(function () {
 
   $(document).on('click', '.updateBaseDatos', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var nombre = $("#nombre").val();
     var ubicacion = $("#ubicacion").val();
     var ip = $("#ip").val();
@@ -452,13 +455,18 @@ $(function () {
         _token: _token,
         _method: _method
       },
-      success: function success(result) {
-        $('.viewResult').html(result);
+      success: function success(data) {
+        $('.modal-backdrop ').css('display', 'none');
+        $('#modal').modal('hide');
+        $('.viewResult').html(data);
         $('.viewCreate').slideUp();
         $('.viewIndex #tableBaseDatos').DataTable({
           "lengthChange": true
         });
         Swal.fire('Correcto!', 'El registro ha sido actualizado.', 'success');
+      },
+      error: function error(data) {
+        printErrorMsg(data.responseJSON.errors);
       }
     });
   });
@@ -504,6 +512,23 @@ $(function () {
       }
     });
   });
+  /**
+   * Funcion para mostrar los errores de los formularios
+   */
+
+  function printErrorMsg(msg) {
+    $(".print-error-msg").find("ul").html('');
+    $(".print-error-msg").css('display', 'block');
+    $(".form-control").removeClass('is-invalid');
+
+    for (var clave in msg) {
+      $("#" + clave).addClass('is-invalid');
+
+      if (msg.hasOwnProperty(clave)) {
+        $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -1392,7 +1417,6 @@ $(function () {
 
   $(document).on('click', '.saveNas', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var nombre = $("#nombre").val();
     var ip_nas = $("#ip_nas").val();
 
@@ -1408,7 +1432,12 @@ $(function () {
       $('.viewIndex #tableNas').DataTable({
         "lengthChange": true
       });
+    }).done(function () {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
       Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
@@ -1446,7 +1475,6 @@ $(function () {
 
   $(document).on('click', '.updateNas', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var nombre = $("#nombre").val();
     var ip_nas = $("#ip_nas").val();
     var id = $("#id").val();
@@ -1469,8 +1497,13 @@ $(function () {
         $('.viewIndex #tableNas').DataTable({
           "lengthChange": true
         });
-        Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
       }
+    }).done(function (data) {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
@@ -1515,6 +1548,20 @@ $(function () {
       }
     });
   });
+  /**
+   * Funcion para mostrar los errores de los formularios
+   */
+
+  function printErrorMsg(msg) {
+    $(".print-error-msg").find("ul").html('');
+    $(".print-error-msg").css('display', 'block');
+
+    for (var clave in msg) {
+      if (msg.hasOwnProperty(clave)) {
+        $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
+      }
+    }
+  }
 });
 
 /***/ }),
