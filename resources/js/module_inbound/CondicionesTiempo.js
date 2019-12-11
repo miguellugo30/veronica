@@ -43,9 +43,12 @@ $(function() {
      */
     $(document).on('click', '.saveCondicion', function(event) {
         event.preventDefault();
-        $('#modal').modal('hide');
 
         let dataForm = $("#formDataCondicionTiempo").serializeArray();
+        var data = {};
+        $(dataForm).each(function(index, obj) {
+            data[obj.name] = obj.value;
+        });
         let _token = $("input[name=_token]").val();
 
         let url = currentURL + '/Condiciones_Tiempo';
@@ -54,11 +57,13 @@ $(function() {
                 url: url,
                 type: "post",
                 data: {
-                    dataForm: dataForm,
+                    dataForm: data,
                     _token: _token
                 },
             })
             .done(function(data) {
+                $('#modal').modal('hide');
+                $('.modal-backdrop ').css('display', 'none');
                 $('.viewResult').html(data);
                 $('.viewResult #tableCondicionTiempo').DataTable({
                     "lengthChange": false
@@ -68,6 +73,8 @@ $(function() {
                     'El registro ha sido guardado.',
                     'success'
                 )
+            }).fail(function(data) {
+                printErrorMsg(data.responseJSON.errors);
             });
     });
     /**
@@ -207,9 +214,12 @@ $(function() {
      */
     $(document).on('click', '.updateCondicion', function(event) {
         event.preventDefault();
-        $('#modal').modal('hide');
 
         let dataForm = $("#formDataCondicionTiempo").serializeArray();
+        var data = {};
+        $(dataForm).each(function(index, obj) {
+            data[obj.name] = obj.value;
+        });
         let _method = "PUT";
         let _token = $("input[name=_token]").val();
         let id = 0;
@@ -220,12 +230,14 @@ $(function() {
                 url: url,
                 type: "post",
                 data: {
-                    dataForm: dataForm,
+                    dataForm: data,
                     _method: _method,
                     _token: _token
                 },
             })
             .done(function(data) {
+                $('#modal').modal('hide');
+                $('.modal-backdrop ').css('display', 'none');
                 $('.viewResult').html(data);
                 $('.viewResult #tableCondicionTiempo').DataTable({
                     "lengthChange": false
@@ -235,6 +247,8 @@ $(function() {
                     'El registro ha sido actualizado.',
                     'success'
                 )
+            }).fail(function(data) {
+                printErrorMsg(data.responseJSON.errors);
             });
     });
     /**
@@ -279,4 +293,17 @@ $(function() {
         // Avoiding letters on FF
         if (!val) val = '00';
     });
+    /**
+     * Funcion para mostrar los errores de los formularios
+     */
+    function printErrorMsg(msg) {
+        $(".print-error-msg").find("ul").html('');
+        $(".print-error-msg").css('display', 'block');
+        $(".form-control").removeClass('is-invalid');
+        $(".print-error-msg").find("ul").append('<li>Es un campo obligatorio</li>');
+        for (var clave in msg) {
+            var data = clave.split('.');
+            $("[name='" + data[1] + "']").addClass('is-invalid');
+        }
+    }
 });

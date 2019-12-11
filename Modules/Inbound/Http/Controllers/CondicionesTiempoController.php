@@ -7,6 +7,8 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Nimbus\Http\Controllers\LogController;
 use Illuminate\Support\Facades\Auth;
+use Modules\Inbound\Http\Requests\CondicionesTiempoRequest;
+
 use Nimbus\Audios_Empresa;
 use Nimbus\Campanas;
 use Nimbus\Cat_Extensiones;
@@ -59,51 +61,29 @@ class CondicionesTiempoController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(CondicionesTiempoRequest $request)
     {
-        $dataForm = $request->input('dataForm');
-
-        for ($i=0; $i < count( $dataForm ); $i++) {
-            $data[ $dataForm[$i]['name']] = $dataForm[$i]['value'];
-        }
+        $data = $request->dataForm;
+        $nombreGrupo = $request->dataForm['nombre'];
+        array_shift( $data );
+        $info = array_chunk( $data, 13 );
 
         $user = User::find( Auth::id() );
         $empresa_id = $user->id_cliente;
 
         $grupo = Grupos::create([
-                                    'nombre' => $data['nombre'],
-                                    'descripcion' => $data['nombre'],
+                                    'nombre' =>  $nombreGrupo,
+                                    'descripcion' =>  $nombreGrupo,
                                     'tipo_grupo' => 'Condiciones de Tiempo',
                                     'Empresas_id' => $empresa_id
                                 ]);
-
-        array_shift( $data );
-        array_shift( $data );
-
-        $info = array_chunk( $data, 13 );
-
         /**
          * Insertamos la información de los campos
          */
-        for ($i=0; $i < count( $info ); $i++) {
-
-            if ( $info[$i][7] == NULL ) {
-                $dia_mes_inicio = '*';
-                $mes_inicio = '*';
-            } else {
-                $fecha_inicio = explode('-',  $info[$i][7]);
-                $dia_mes_inicio = $fecha_inicio[1];
-                $mes_inicio = $fecha_inicio[1];
-            }
-
-            if ( $info[$i][8] == NULL ) {
-                $dia_mes_fin = '*';
-                $mes_fin = '*';
-            } else {
-                $fecha_fin = explode('-',  $info[$i][8]);
-                $dia_mes_fin = $fecha_fin[2];
-                $mes_fin = $fecha_fin[1];
-            }
+        for ($i=0; $i < count( $info ); $i++)
+        {
+            list( $dia_mes_inicio, $mes_inicio ) = $this->validarFecha( $info[$i][7] );
+            list( $dia_mes_fin, $mes_fin ) = $this->validarFecha( $info[$i][8] );
 
             $hora_inicio = $info[$i][1].":".$info[$i][2];
             $hora_fin = $info[$i][3].":".$info[$i][4];
@@ -128,7 +108,6 @@ class CondicionesTiempoController extends Controller
         }
         return redirect()->route('Condiciones_Tiempo.index');
     }
-
     /**
      * Show the specified resource.
      * @param int $id
@@ -175,7 +154,6 @@ class CondicionesTiempoController extends Controller
      */
     public function edit($id)
     {
-
         $grupo = Grupos::find($id);
         $user = User::find( Auth::id() );
         $empresa_id = $user->id_cliente;
@@ -263,50 +241,29 @@ class CondicionesTiempoController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(CondicionesTiempoRequest $request, $id)
     {
-        $dataForm = $request->input('dataForm');
+        $data = $request->dataForm;
+        $nombreGrupo = $request->dataForm['nombre'];
+        $id_grupo = $request->dataForm['id_grupo'];
 
-        for ($i=0; $i < count( $dataForm ); $i++) {
-            $data[ $dataForm[$i]['name']] = $dataForm[$i]['value'];
-        }
-
-        $idGrupo = $data['id_grupo'];
-
-        Grupos::where('id', $idGrupo)->update([
-            'nombre' => $data['nombre'],
-            'descripcion' => $data['nombre'],
+        Grupos::where('id', $id_grupo)->update([
+            'nombre' => $nombreGrupo,
+            'descripcion' => $nombreGrupo,
             ]);
 
         array_shift( $data );
         array_shift( $data );
-        array_shift( $data );
         $info = array_chunk( $data, 14 );
-
         /**
          * Insertamos la información de los campos
          */
-        for ($i=0; $i < count( $info ); $i++) {
-
-            if( $info[$i][0] != NULL ) {
-
-                if ( $info[$i][8] == NULL ) {
-                    $dia_mes_inicio = '*';
-                    $mes_inicio = '*';
-                } else {
-                    $fecha_inicio = explode('-',  $info[$i][8]);
-                    $dia_mes_inicio = $fecha_inicio[2];
-                    $mes_inicio = $fecha_inicio[1];
-                }
-
-                if ( $info[$i][9] == NULL ) {
-                    $dia_mes_fin = '*';
-                    $mes_fin = '*';
-                } else {
-                    $fecha_fin = explode('-',  $info[$i][9]);
-                    $dia_mes_fin = $fecha_fin[2];
-                    $mes_fin = $fecha_fin[1];
-                }
+        for ($i=0; $i < count( $info ); $i++)
+        {
+            if( $info[$i][0] != NULL )
+            {
+                list( $dia_mes_inicio, $mes_inicio ) = $this->validarFecha( $info[$i][8] );
+                list( $dia_mes_fin, $mes_fin ) = $this->validarFecha( $info[$i][9] );
 
                 $hora_inicio = $info[$i][2].":".$info[$i][3];
                 $hora_fin = $info[$i][4].":".$info[$i][5];
@@ -327,25 +284,11 @@ class CondicionesTiempoController extends Controller
                                                                         'tabla_falso_id' => $info[$i][13]
                                                                     ]);
 
-                } else {
-
-                    if ( $info[$i][8] == NULL ) {
-                        $dia_mes_inicio = '*';
-                        $mes_inicio = '*';
-                    } else {
-                        $fecha_inicio = explode('-',  $info[$i][8]);
-                        $dia_mes_inicio = $fecha_inicio[2];
-                        $mes_inicio = $fecha_inicio[1];
-                    }
-
-                    if ( $info[$i][9] == NULL ) {
-                        $dia_mes_fin = '*';
-                        $mes_fin = '*';
-                    } else {
-                        $fecha_fin = explode('-',  $info[$i][9]);
-                        $dia_mes_fin = $fecha_fin[2];
-                        $mes_fin = $fecha_fin[1];
-                    }
+                }
+                else
+                {
+                    list( $dia_mes_inicio, $mes_inicio ) = $this->validarFecha( $info[$i][8] );
+                    list( $dia_mes_fin, $mes_fin ) = $this->validarFecha( $info[$i][9] );
 
                     $hora_inicio = $info[$i][2].":".$info[$i][3];
                     $hora_fin = $info[$i][4].":".$info[$i][5];
@@ -364,18 +307,12 @@ class CondicionesTiempoController extends Controller
                                                     'tabla_verdadero_id' => $info[$i][11],
                                                     'tabla_falso' => $info[$i][12],
                                                     'tabla_falso_id' => $info[$i][13],
-                                                    'Grupos_id' => $idGrupo
+                                                    'Grupos_id' => $id_grupo
                                                 ]);
-
                 }
-
-
         }
-
         return redirect()->route('Condiciones_Tiempo.index');
-
     }
-
     /**
      * Remove the specified resource from storage.
      * @param int $id
@@ -406,5 +343,25 @@ class CondicionesTiempoController extends Controller
         }
 
         return redirect()->route('Condiciones_Tiempo.index');
+    }
+    /**
+     * Funcion para validar la fecha
+     */
+    public function validarFecha( $fecha )
+    {
+        if ( $fecha == NULL )
+        {
+            $dia_mes = '*';
+            $mes = '*';
+        }
+        else
+        {
+            $fecha_fin = explode('-',  $fecha );
+            $dia_mes = $fecha_fin[2];
+            $mes = $fecha_fin[1];
+        }
+
+        return array( $dia_mes, $mes);
+
     }
 }

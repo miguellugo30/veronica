@@ -7,7 +7,8 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Nimbus\Http\Controllers\LogController;
 use Illuminate\Support\Facades\Auth;
-use Nimbus\User;
+use Modules\Inbound\Http\Requests\IVRRequest;
+
 use Nimbus\Ivr;
 use Nimbus\Audios_Empresa;
 use Nimbus\Ivr_Opciones;
@@ -62,58 +63,49 @@ class IvrController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(IVRRequest $request)
     {
-
-        for ($i=0; $i < count( $request->input('dataForm') ); $i++) {
-            $data[ $request->input('dataForm')[$i]['name']] = $request->input('dataForm')[$i]['value'];
-        }
+        $empresa_id = $request->Empresas_id;
+        $data = $request->dataForm;
         /**
         * Insertar información del Ivr
-        */
+        **/
         $ivr = Ivr::create([
                                 'nombre' => $data['nombre'],
-                                'mensaje_bienvenida_id'   => $data['mensaje_bienvenida_id'],
+                                'mensaje_bienvenida_id' => $data['mensaje_bienvenida_id'],
                                 'tiempo_espera' => $data['tiempo_espera'],
                                 'mensaje_tiempo_espera_id' => $data['mensaje_tiempo_espera_id'],
                                 'mensaje_opcion_invalida_id' => $data['mensaje_opcion_invalida_id'],
                                 'repeticiones' => $data['repeticiones'],
-                                'Empresas_id' => $data['Empresas_id']
+                                'Empresas_id' => $empresa_id
                             ]);
 
-        unset(
-                $data['Empresas_id'],
-                $data['nombre'],
-                $data['_token'],
-                $data['mensaje_bienvenida_id'],
-                $data['tiempo_espera'],
-                $data['mensaje_tiempo_espera_id'],
-                $data['mensaje_opcion_invalida_id'],
-                $data['repeticiones'],
-                $data['Empresas_id']
-            );
+        array_shift( $data );
+        array_shift( $data );
+        array_shift( $data );
+        array_shift( $data );
+        array_shift( $data );
+        array_shift( $data );
 
-        $info = array_chunk( $data, 4 );
+        $info = array_chunk( $data, 3 );
 
         for ($i=0; $i < count($info); $i++) {
             Ivr_Opciones::create([
-                                    'tipo' => $info[$i][0],
-                                    'digito' => $info[$i][1],
-                                    'tabla' => $info[$i][2],
-                                    'tabla_id' => $info[$i][3],
+                                    'digito' => $info[$i][0],
+                                    'tabla' => $info[$i][1],
+                                    'tabla_id' => $info[$i][2],
                                     'Ivr_id' => $ivr->id
                                 ]);
         }
         /**
          * Creamos el logs
-         */
+         **/
         $user = Auth::user();
         $mensaje = 'Se creo un nuevo registro, información capturada:'.var_export($request->input('dataForm'), true);
         $log = new LogController;
-        $log->store('Creacion', 'Ivr',$mensaje, $user->id);
+        $log->store('Creacion', 'Ivr',$mensaje,  Auth::id());
 
         return redirect()->route('Ivr.index');
-
     }
 
     /**
@@ -182,28 +174,25 @@ class IvrController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(IVRRequest $request, $id)
     {
-        for ($i=0; $i < count( $request->input('dataForm') ); $i++) {
-            $data[ $request->input('dataForm')[$i]['name']] = $request->input('dataForm')[$i]['value'];
-        }
+        $empresa_id = $request->Empresas_id;
+        $data = $request->dataForm;
         /**
         * Actualizamos información del Ivr
-        */
-        $ivr = Ivr::where('id', $data['ivr_id'])->update([
-                                                        'nombre' => $data['nombre'],
-                                                        'mensaje_bienvenida_id'   => $data['mensaje_bienvenida_id'],
-                                                        'tiempo_espera' => $data['tiempo_espera'],
-                                                        'mensaje_tiempo_espera_id' => $data['mensaje_tiempo_espera_id'],
-                                                        'mensaje_opcion_invalida_id' => $data['mensaje_opcion_invalida_id'],
-                                                        'repeticiones' => $data['repeticiones']
-                                                    ]);
+        **/
+        Ivr::where('id', $data['ivr_id'])->update([
+                                                    'nombre' => $data['nombre'],
+                                                    'mensaje_bienvenida_id'   => $data['mensaje_bienvenida_id'],
+                                                    'tiempo_espera' => $data['tiempo_espera'],
+                                                    'mensaje_tiempo_espera_id' => $data['mensaje_tiempo_espera_id'],
+                                                    'mensaje_opcion_invalida_id' => $data['mensaje_opcion_invalida_id'],
+                                                    'repeticiones' => $data['repeticiones']
+                                                ]);
 
         $idIvr = $data['ivr_id'];
         unset(
-                $data['Empresas_id'],
                 $data['ivr_id'],
-                $data['_token'],
                 $data['nombre'],
                 $data['mensaje_bienvenida_id'],
                 $data['tiempo_espera'],
@@ -212,30 +201,28 @@ class IvrController extends Controller
                 $data['repeticiones']
             );
 
-        $info = array_chunk( $data, 5 );
+        $info = array_chunk( $data, 4 );
 
         for ($i=0; $i < count($info); $i++) {
 
             if ($info[$i][0] == NULL) {
                 /**
                  * Creamos registro
-                 */
+                 **/
                 Ivr_Opciones::create([
-                                        'tipo' => $info[$i][1],
-                                        'digito' => $info[$i][2],
-                                        'tabla' => $info[$i][3],
-                                        'tabla_id' => $info[$i][4],
+                                        'digito' => $info[$i][1],
+                                        'tabla' => $info[$i][2],
+                                        'tabla_id' => $info[$i][3],
                                         'Ivr_id' => $idIvr
                                     ]);
             } else {
                 /**
                  * Actualizamos registro
-                 */
+                 **/
                 Ivr_Opciones::where('id', $info[$i][0])->update([
-                                                                    'tipo' => $info[$i][1],
-                                                                    'digito' => $info[$i][2],
-                                                                    'tabla' => $info[$i][3],
-                                                                    'tabla_id' => $info[$i][4]
+                                                                    'digito' => $info[$i][1],
+                                                                    'tabla' => $info[$i][2],
+                                                                    'tabla_id' => $info[$i][3]
                                                                 ]);
             }
         }

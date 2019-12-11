@@ -18,8 +18,7 @@
         <div class="row">
             <div class="col">
                 <div class="form-group">
-                    <label for="nombre"><b> Nombre Grupo</b></label>
-                    @csrf
+                    <label for="nombre"><b> Nombre Grupo *:</b></label>
                     <input type="text" class="form-control form-control-sm" id="nombre" name="nombre" placeholder="Nombre Grupo">
                 </div>
             </div>
@@ -33,17 +32,17 @@
                 <table id='condicion' class="table table-striped table-sm tableNewForm">
                     <thead>
                         <tr>
-                            <th>Nombre</th>
-                            <th>Hora Inicio</th>
-                            <th>Hora Fin</th>
-                            <th>Dia Semana Inicio</th>
+                            <th>Nombre *</th>
+                            <th>Hora Inicio *</th>
+                            <th>Hora Fin *</th>
+                            <th>Dia Semana Inicio </th>
                             <th>Dia Semana Fin</th>
                             <th>Fecha Inicio</th>
                             <th>Fecha Fin</th>
-                            <th>Destino si coincide</th>
-                            <th>Opciones</th>
-                            <th>Destino si no coincide</th>
-                            <th>Opciones</th>
+                            <th>Destino si coincide *</th>
+                            <th>Opciones *</th>
+                            <th>Destino si no coincide *</th>
+                            <th>Opciones *</th>
                             <td></td>
                         </tr>
                     </thead>
@@ -101,7 +100,11 @@
                                 </select>
                             </td>
                             <td>
-                                <div class="opcionesSi" id="opcionesSiCoincide_1"></div>
+                                <div class="opcionesSi" id="opcionesSiCoincide_1">
+                                    <select name="opciones_coincide_1" id="opciones_coincide"  class="form-control form-control-sm destinoOpccion" data-accion="no_coincide">
+                                        <option value="">Selecciona una opción</option>
+                                    </select>
+                                </div>
                             </td>
                             <td>
                                 <select name="destino_falso_1" id="destino_falso"  class="form-control form-control-sm destinoOpccion" data-accion="no_coincide">
@@ -118,7 +121,11 @@
                                 </select>
                             </td>
                             <td>
-                                <div class="opcionesNo" id="opcionesNoCoincide_1"></div>
+                                <div class="opcionesNo" id="opcionesNoCoincide_1">
+                                    <select name="opciones_no_coincide_1" id="opciones_no_coincide"  class="form-control form-control-sm destinoOpccion" data-accion="no_coincide">
+                                        <option value="">Selecciona una opción</option>
+                                    </select>
+                                </div>
                             </td>
                             <td class="tr_clone_remove text-center">
                                 <button type="button" name="remove" class="btn btn-danger" style="display:none"><i class="fas fa-trash-alt"></i></button>
@@ -127,6 +134,12 @@
                     </tbody>
                 </table>
             </fieldset>
+            <div class="form-group text-right">
+                <b>* Campos obligatorios.</b>
+            </div>
+        </div>
+        <div class="alert alert-danger print-error-msg" role="alert" style="display:none">
+            <ul></ul>
         </div>
     </div>
 </form>

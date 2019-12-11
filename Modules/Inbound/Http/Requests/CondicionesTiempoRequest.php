@@ -4,7 +4,7 @@ namespace Modules\Inbound\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DidEnrutamientoRequest extends FormRequest
+class CondicionesTiempoRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -13,7 +13,7 @@ class DidEnrutamientoRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = ['dataForm.descripcion' => 'required'];
+        $rules = ['dataForm.nombre' => 'required'];
 
         foreach ($this->request->get('dataForm') as $key => $value)
         {

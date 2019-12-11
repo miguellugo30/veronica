@@ -171,7 +171,6 @@ $(function() {
                 var valor = msg[clave][0].split('.');
 
                 var value = valor[1].replace(' ', '_');
-                console.log(value);
 
                 if (value.indexOf('_') > -1) {
                     var v = value.split('_');
