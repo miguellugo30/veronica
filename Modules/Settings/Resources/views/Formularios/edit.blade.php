@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col">
                 <div class="form-group">
-                    <label for="nombre"><b>Tipo</b></label>
+                    <label for="nombre"><b>Tipo *:</b></label>
                     <select name="tipo" id="tipo" class="form-control form-control-sm" disabled>
                         <option value="">Seleccione un tipo</option>
                         @foreach ($TipoMarcacion as $tipo)
@@ -14,7 +14,7 @@
             </div>
             <div class="col">
                 <div class="form-group">
-                    <label for="nombre"><b> Nombre Formulario</b></label>
+                    <label for="nombre"><b> Nombre Formulario *:</b></label>
                     <input type="text" class="form-control form-control-sm" id="nombre" name="nombre" placeholder="Nombre Formulario" value='{{$formulario->nombre}}' disabled >
                     <input type="hidden" name="id_formulario" id="id_formulario" value="{{$formulario->id}}">
                 </div>
@@ -26,9 +26,9 @@
                 <table id='formulario' class="table table-striped table-sm tableNewForm">
                     <thead>
                         <tr>
-                            <th>Nombre Campo</th>
-                            <th>Tipo Campo</th>
-                            <th>Longitud</th>
+                            <th>Nombre Campo *:</th>
+                            <th>Tipo Campo *:</th>
+                            <th>Longitud *:</th>
                             <th>Requerido</th>
                             <th>Editable</th>
                             <td class="text-center"><input type="button" class="btn btn-primary btn-sm" id = "add" value = "Agregar campo" /></td>
@@ -82,6 +82,12 @@
                     </tbody>
                 </table>
             </fieldset>
+        </div>
+        <div class="form-group">
+            <small class="form-text text-muted"> <b>*Campos obligatorios.</b></small>
+        </div>
+        <div class="alert alert-danger print-error-msg" role="alert" style="display:none">
+            <ul></ul>
         </div>
     </div>
 </form>

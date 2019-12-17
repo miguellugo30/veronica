@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use DB;
+use Modules\Settings\Http\Requests\CalificacionesRequest;
 /**
  * Modelos
  */
@@ -55,7 +56,7 @@ class CalificacionesController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(CalificacionesRequest $request)
     {
         $dataForm = $request->input('dataForm');
 
@@ -139,7 +140,7 @@ class CalificacionesController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(CalificacionesRequest $request, $id)
     {
 
         $dataForm = $request->input('dataForm');

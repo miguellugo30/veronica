@@ -411,7 +411,6 @@ $(function () {
 
   $(document).on('click', '.updateAgente', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var id = $("#id").val();
     var grupo = $("#grupo").val();
     var tipo_licencia = $("#tipo_licencia").val();
@@ -439,6 +438,7 @@ $(function () {
       contrasena: contrasena,
       extension: extension,
       Canales_id: canal,
+      canal: canal,
       mix_monitor: mix_monitor,
       calificar_llamada: calificar_llamada,
       envio_sms: envio_sms,
@@ -451,7 +451,12 @@ $(function () {
         "lengthChange": true,
         "order": [[2, "asc"]]
       });
+    }).done(function () {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
       Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
@@ -460,7 +465,6 @@ $(function () {
 
   $(document).on('click', '.saveAgente', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var grupo = $("#grupo").val();
     var tipo_licencia = $("#tipo_licencia").val();
     var nivel = $("#nivel").val();
@@ -487,6 +491,7 @@ $(function () {
       contrasena: contrasena,
       extension: extension,
       Canales_id: canal,
+      canal: canal,
       mix_monitor: mix_monitor,
       calificar_llamada: calificar_llamada,
       envio_sms: envio_sms,
@@ -499,9 +504,31 @@ $(function () {
         "lengthChange": true,
         "order": [[2, "asc"]]
       });
+    }).done(function () {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
       Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
+  /**
+   * Funcion para mostrar los errores de los formularios
+   */
+
+  function printErrorMsg(msg) {
+    $(".print-error-msg").find("ul").html('');
+    $(".print-error-msg").css('display', 'block');
+    $(".form-control").removeClass('is-invalid');
+
+    for (var clave in msg) {
+      $("#" + clave).addClass('is-invalid');
+
+      if (msg.hasOwnProperty(clave)) {
+        $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -552,9 +579,8 @@ $(function () {
 
   $(document).on('click', '.saveAudio', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var formData = new FormData(document.getElementById("altaaudio"));
-    var nombre = $("#name").val();
+    var nombre = $("#nombre").val();
     var descripcion = $("#descripcion").val();
     var labelFile = $("#labelFile").text();
     var file = $("#file").val();
@@ -564,24 +590,28 @@ $(function () {
     formData.append("nombre", nombre);
     formData.append("descripcion", descripcion);
     formData.append("ruta", labelFile);
-    formData.append("File", File);
+    formData.append("File", file);
     formData.append("_token", _token);
     var url = currentURL + '/Audios';
     $.ajax({
       url: url,
       type: "post",
-      dataType: "html",
+      //dataType: "html",
       data: formData,
       cache: false,
       contentType: false,
       processData: false
     }).done(function (data) {
+      $('#modal').modal('hide');
+      $('.modal-backdrop ').css('display', 'none');
       $('.viewResult').html(data);
       $('.viewResult #tableAudios').DataTable({
         "lengthChange": false
       });
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
-    Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
   });
   /**
    * Evento para eliminar el Audio
@@ -662,6 +692,23 @@ $(function () {
       }
     });
   });
+  /**
+   * Funcion para mostrar los errores de los formularios
+   */
+
+  function printErrorMsg(msg) {
+    $(".print-error-msg").find("ul").html('');
+    $(".print-error-msg").css('display', 'block');
+    $(".form-control").removeClass('is-invalid');
+
+    for (var clave in msg) {
+      $("#" + clave).addClass('is-invalid');
+
+      if (msg.hasOwnProperty(clave)) {
+        $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -974,7 +1021,6 @@ $(function () {
 
   $(document).on('click', '.saveEventoAgente', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var nombre = $("#nombre").val();
     var tiempo = $("#tiempo").val(); //let fechaini = $("#fechaini").val();
     //let fechafin = $("#fechafin").val();
@@ -994,7 +1040,12 @@ $(function () {
         "lengthChange": true,
         "order": [[0, "asc"]]
       });
+    }).done(function () {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
       Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
@@ -1082,7 +1133,6 @@ $(function () {
 
   $(document).on('click', '.updateEventoAgente', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var id = $("#id").val();
     var nombre = $("#nombre").val();
     var tiempo = $("#tiempo").val();
@@ -1100,11 +1150,33 @@ $(function () {
       $('.viewResult').html(data);
       $('.viewResult #tableEventosAgentes').DataTable({
         "lengthChange": true,
-        "order": [[1, "asc"]]
+        "order": [[0, "asc"]]
       });
+    }).done(function () {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
       Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
+  /**
+   * Funcion para mostrar los errores de los formularios
+   */
+
+  function printErrorMsg(msg) {
+    $(".print-error-msg").find("ul").html('');
+    $(".print-error-msg").css('display', 'block');
+    $(".form-control").removeClass('is-invalid');
+
+    for (var clave in msg) {
+      $("#" + clave).addClass('is-invalid');
+
+      if (msg.hasOwnProperty(clave)) {
+        $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
+      }
+    }
+  }
 });
 ;
 
@@ -1359,7 +1431,6 @@ $(function () {
 
   $(document).on('click', '.saveGrupo', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var nombre = $("#nombre").val();
     var descripcion = $("#descripcion").val();
 
@@ -1374,9 +1445,14 @@ $(function () {
       $('.viewResult').html(data);
       $('.viewResult #tableGrupos').DataTable({
         "lengthChange": true,
-        "order": [[2, "asc"]]
+        "order": [[0, "asc"]]
       });
+    }).done(function () {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
       Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
@@ -1464,7 +1540,6 @@ $(function () {
 
   $(document).on('click', '.updateGrupo', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var id = $("#id").val();
     var nombre = $("#nombre").val();
     var descripcion = $("#descripcion").val();
@@ -1482,13 +1557,34 @@ $(function () {
       $('.viewResult').html(data);
       $('.viewResult #tableGrupos').DataTable({
         "lengthChange": true,
-        "order": [[2, "asc"]]
+        "order": [[0, "asc"]]
       });
+    }).done(function () {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
       Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
+  /**
+   * Funcion para mostrar los errores de los formularios
+   */
+
+  function printErrorMsg(msg) {
+    $(".print-error-msg").find("ul").html('');
+    $(".print-error-msg").css('display', 'block');
+    $(".form-control").removeClass('is-invalid');
+
+    for (var clave in msg) {
+      $("#" + clave).addClass('is-invalid');
+
+      if (msg.hasOwnProperty(clave)) {
+        $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
+      }
+    }
+  }
 });
-;
 
 /***/ }),
 

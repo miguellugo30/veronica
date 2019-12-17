@@ -22,6 +22,7 @@ use Nimbus\Troncales;
 use Nimbus\Cat_Extensiones;
 use Nimbus\Token_Soporte;
 use Nimbus\User;
+use Modules\Administrador\Http\Requests\EmpresasRequest;
 
 class EmpresasController extends Controller
 {
@@ -57,7 +58,7 @@ class EmpresasController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(EmpresasRequest $request)
     {
         $dataModulos = array();
         $dataForm = $request->input('dataForm');
@@ -430,7 +431,7 @@ class EmpresasController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(EmpresasRequest $request, $id)
     {
         $data = array();
         $dataModulos = array();

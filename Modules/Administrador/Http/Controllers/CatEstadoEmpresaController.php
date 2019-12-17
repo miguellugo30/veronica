@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Nimbus\Cat_Estado_Empresa;
 use Nimbus\Http\Controllers\LogController;
+use Modules\Administrador\Http\Requests\EstadoEmpresaRequest;
 
 class CatEstadoEmpresaController extends Controller
 {
@@ -34,7 +35,7 @@ class CatEstadoEmpresaController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(EstadoEmpresaRequest $request)
     {
         /**
          * Obtenemos todos los datos del formulario de alta y
@@ -81,7 +82,7 @@ class CatEstadoEmpresaController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(EstadoEmpresaRequest $request, $id)
     {
         /**
          * Actualizamos los campos

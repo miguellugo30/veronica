@@ -9,6 +9,7 @@ use Nimbus\Http\Controllers\LogController;
 use Illuminate\Support\Facades\Auth;
 use Nimbus\Grupos;
 use Nimbus\User;
+use Modules\Settings\Http\Requests\GruposRequest;
 
 
 class GruposController extends Controller
@@ -44,7 +45,7 @@ class GruposController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(GruposRequest $request)
     {
         $user = Auth::user();
         $empresa_id = $user->id_cliente;
@@ -93,7 +94,7 @@ class GruposController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(GruposRequest $request, $id)
     {
         Grupos::where( 'id', $id )
             ->update([
@@ -103,7 +104,7 @@ class GruposController extends Controller
             /**
              * Creamos el logs
              */
-            $mensaje = 'Se edito un registro con id: '.$id.', información editada: '.var_export($request, true);
+            $mensaje = 'Se edito un registro con id: '.$id.', información editada: '.var_export($request->all(), true);
             $log = new LogController;
             $log->store('Actualización', 'Grupos',$mensaje, $id);
             return redirect()->route('Grupos.index');

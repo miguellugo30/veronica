@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Nimbus\Http\Controllers\LogController;
+use Modules\Administrador\Http\Requests\ModulosRequest;
 
 class ModulosController extends Controller
 {
@@ -38,7 +39,7 @@ class ModulosController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(ModulosRequest $request)
     {
         /**
          * Insertamos la informacion del formulario
@@ -86,7 +87,7 @@ class ModulosController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(ModulosRequest $request, $id)
     {
         Modulos::where( 'id', $id )
         ->update([

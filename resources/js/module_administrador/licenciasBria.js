@@ -38,7 +38,6 @@ $(function() {
      */
     $(document).on('click', '.saveLicencia', function(event) {
         event.preventDefault();
-        $('#modal').modal('hide');
 
         let licencia = $("#licencia").val();
         let _token = $("input[name=_token]").val();
@@ -63,28 +62,31 @@ $(function() {
                 $('.viewIndex #licencias_bria').DataTable({
                     "lengthChange": true
                 });
-                Swal.fire(
-                    'Correcto!',
-                    'El registro ha sido guardado.',
-                    'success'
-                )
             }
-        });
-        /*
-        $.post(url, {
-            licencia: licencia,
-            _token: _token
-        }, function(data, textStatus, xhr) {
-            $('.viewResult').html(data);
-            $('.viewIndex #licencias_bria').DataTable({
-                "lengthChange": true
-            });
+        }).done(function(data) {
+            $('.modal-backdrop ').css('display', 'none');
+            $('#modal').modal('hide');
             Swal.fire(
                 'Correcto!',
                 'El registro ha sido guardado.',
                 'success'
             )
+        }).fail(function(data) {
+            printErrorMsg(data.responseJSON.errors);
         });
-        */
     });
+    /**
+     * Funcion para mostrar los errores de los formularios
+     */
+    function printErrorMsg(msg) {
+        $(".print-error-msg").find("ul").html('');
+        $(".print-error-msg").css('display', 'block');
+        $(".form-control").removeClass('is-invalid');
+        for (var clave in msg) {
+            $("#" + clave).addClass('is-invalid');
+            if (msg.hasOwnProperty(clave)) {
+                $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
+            }
+        }
+    }
 });

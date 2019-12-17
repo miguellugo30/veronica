@@ -101,9 +101,8 @@ $(function() {
      */
     $(document).on('click', '.updateAgente', function(event) {
         event.preventDefault();
-        $('#modal').modal('hide');
-        let id = $("#id").val();
 
+        let id = $("#id").val();
         let grupo = $("#grupo").val();
         let tipo_licencia = $("#tipo_licencia").val();
         let nivel = $("#nivel").val();
@@ -121,35 +120,41 @@ $(function() {
         let url = currentURL + '/Agentes/' + id;
 
         $.post(url, {
-            grupo: grupo,
-            tipo_licencia: tipo_licencia,
-            nivel: nivel,
-            nombre: nombre,
-            usuario: usuario,
-            contrasena: contrasena,
-            extension: extension,
-            Canales_id: canal,
-            mix_monitor: mix_monitor,
-            calificar_llamada: calificar_llamada,
-            envio_sms: envio_sms,
-            editar_datos: editar_datos,
-            _method: _method,
-            _token: _token
-        }, function(data, textStatus, xhr) {
-            $('.viewResult').html(data);
-
-            $('.viewResult #tableAgentes').DataTable({
-                "lengthChange": true,
-                "order": [
-                    [2, "asc"]
-                ]
+                grupo: grupo,
+                tipo_licencia: tipo_licencia,
+                nivel: nivel,
+                nombre: nombre,
+                usuario: usuario,
+                contrasena: contrasena,
+                extension: extension,
+                Canales_id: canal,
+                canal: canal,
+                mix_monitor: mix_monitor,
+                calificar_llamada: calificar_llamada,
+                envio_sms: envio_sms,
+                editar_datos: editar_datos,
+                _method: _method,
+                _token: _token
+            }, function(data, textStatus, xhr) {
+                $('.viewResult').html(data);
+                $('.viewResult #tableAgentes').DataTable({
+                    "lengthChange": true,
+                    "order": [
+                        [2, "asc"]
+                    ]
+                });
+            }).done(function() {
+                $('.modal-backdrop ').css('display', 'none');
+                $('#modal').modal('hide');
+                Swal.fire(
+                    'Correcto!',
+                    'El registro ha sido guardado.',
+                    'success'
+                )
+            })
+            .fail(function(data) {
+                printErrorMsg(data.responseJSON.errors);
             });
-            Swal.fire(
-                'Correcto!',
-                'El registro ha sido guardado.',
-                'success'
-            )
-        });
 
     });
     /**
@@ -157,7 +162,6 @@ $(function() {
      */
     $(document).on('click', '.saveAgente', function(event) {
         event.preventDefault();
-        $('#modal').modal('hide');
 
         let grupo = $("#grupo").val();
         let tipo_licencia = $("#tipo_licencia").val();
@@ -176,36 +180,56 @@ $(function() {
         let url = currentURL + '/Agentes';
 
         $.post(url, {
-            grupo: grupo,
-            tipo_licencia: tipo_licencia,
-            nivel: nivel,
-            nombre: nombre,
-            usuario: usuario,
-            contrasena: contrasena,
-            extension: extension,
-            Canales_id: canal,
-            mix_monitor: mix_monitor,
-            calificar_llamada: calificar_llamada,
-            envio_sms: envio_sms,
-            editar_datos: editar_datos,
-            Cat_Estado_Agente_id: Cat_Estado_Agente_id,
-            _token: _token
-        }, function(data, textStatus, xhr) {
+                grupo: grupo,
+                tipo_licencia: tipo_licencia,
+                nivel: nivel,
+                nombre: nombre,
+                usuario: usuario,
+                contrasena: contrasena,
+                extension: extension,
+                Canales_id: canal,
+                canal: canal,
+                mix_monitor: mix_monitor,
+                calificar_llamada: calificar_llamada,
+                envio_sms: envio_sms,
+                editar_datos: editar_datos,
+                Cat_Estado_Agente_id: Cat_Estado_Agente_id,
+                _token: _token
+            }, function(data, textStatus, xhr) {
 
-            $('.viewResult').html(data);
-
-            $('.viewResult #tableAgentes').DataTable({
-                "lengthChange": true,
-                "order": [
-                    [2, "asc"]
-                ]
+                $('.viewResult').html(data);
+                $('.viewResult #tableAgentes').DataTable({
+                    "lengthChange": true,
+                    "order": [
+                        [2, "asc"]
+                    ]
+                });
+            }).done(function() {
+                $('.modal-backdrop ').css('display', 'none');
+                $('#modal').modal('hide');
+                Swal.fire(
+                    'Correcto!',
+                    'El registro ha sido guardado.',
+                    'success'
+                )
+            })
+            .fail(function(data) {
+                printErrorMsg(data.responseJSON.errors);
             });
-            Swal.fire(
-                'Correcto!',
-                'El registro ha sido guardado.',
-                'success'
-            )
-        });
     });
+    /**
+     * Funcion para mostrar los errores de los formularios
+     */
+    function printErrorMsg(msg) {
+        $(".print-error-msg").find("ul").html('');
+        $(".print-error-msg").css('display', 'block');
+        $(".form-control").removeClass('is-invalid');
+        for (var clave in msg) {
+            $("#" + clave).addClass('is-invalid');
+            if (msg.hasOwnProperty(clave)) {
+                $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
+            }
+        }
+    }
 
 });

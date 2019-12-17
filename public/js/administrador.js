@@ -579,7 +579,6 @@ $(function () {
 
   $(document).on('click', '.saveEdoAge', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var nombre = $("#nombre").val();
     var descripcion = $("#descripcion").val();
 
@@ -597,7 +596,12 @@ $(function () {
       $('.viewIndex #tableEdoAge').DataTable({
         "lengthChange": true
       });
+    }).done(function () {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
       Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
@@ -619,7 +623,6 @@ $(function () {
 
   $(document).on('click', '.updateEdoAge', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var nombre = $("#nombre").val();
     var descripcion = $("#descripcion").val();
     var id = $("#id").val();
@@ -644,8 +647,13 @@ $(function () {
         $('.viewIndex #tableEdoAge').DataTable({
           "lengthChange": true
         });
-        Swal.fire('Correcto!', 'El registro ha sido actualizado.', 'success');
       }
+    }).done(function (data) {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
+      Swal.fire('Correcto!', 'El registro ha sido actualizado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
@@ -689,6 +697,23 @@ $(function () {
       }
     });
   });
+  /**
+   * Funcion para mostrar los errores de los formularios
+   */
+
+  function printErrorMsg(msg) {
+    $(".print-error-msg").find("ul").html('');
+    $(".print-error-msg").css('display', 'block');
+    $(".form-control").removeClass('is-invalid');
+
+    for (var clave in msg) {
+      $("#" + clave).addClass('is-invalid');
+
+      if (msg.hasOwnProperty(clave)) {
+        $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -741,7 +766,6 @@ $(function () {
 
   $(document).on('click', '.saveEdoCli', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var nombre = $("#nombre").val();
     var descripcion = $("#descripcion").val();
     var marcar = $('input:radio[name=marcar]:checked').val();
@@ -764,7 +788,12 @@ $(function () {
         "lengthChange": true,
         "order": [[5, "asc"]]
       });
+    }).done(function () {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
       Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
@@ -786,7 +815,6 @@ $(function () {
 
   $(document).on('click', '.updateEdoCli', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var nombre = $("#nombre").val();
     var descripcion = $("#descripcion").val();
     var marcar = $('input:radio[name=marcar]:checked').val();
@@ -817,8 +845,13 @@ $(function () {
           "lengthChange": true,
           "order": [[5, "asc"]]
         });
-        Swal.fire('Correcto!', 'El registro ha sido actualizado.', 'success');
       }
+    }).done(function (data) {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
+      Swal.fire('Correcto!', 'El registro ha sido actualizado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
@@ -910,6 +943,23 @@ $(function () {
       }
     });
   });
+  /**
+   * Funcion para mostrar los errores de los formularios
+   */
+
+  function printErrorMsg(msg) {
+    $(".print-error-msg").find("ul").html('');
+    $(".print-error-msg").css('display', 'block');
+    $(".form-control").removeClass('is-invalid');
+
+    for (var clave in msg) {
+      $("#" + clave).addClass('is-invalid');
+
+      if (msg.hasOwnProperty(clave)) {
+        $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -960,7 +1010,6 @@ $(function () {
 
   $(document).on('click', '.saveEdoEmp', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var nombre = $("#nombre").val();
 
     var _token = $("input[name=_token]").val();
@@ -974,7 +1023,12 @@ $(function () {
       $('.viewIndex #tableEdoEmp').DataTable({
         "lengthChange": true
       });
+    }).done(function () {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
       Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
@@ -1005,7 +1059,6 @@ $(function () {
 
   $(document).on('click', '.updateEdoEmp', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var nombre = $("#nombre").val();
     var id = $("#id").val();
     var _method = "PUT";
@@ -1027,8 +1080,13 @@ $(function () {
         $('.viewIndex #tableEdoEmp').DataTable({
           "lengthChange": true
         });
-        Swal.fire('Correcto!', 'El registro ha sido actualizado.', 'success');
       }
+    }).done(function (data) {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
+      Swal.fire('Correcto!', 'El registro ha sido actualizado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
@@ -1073,6 +1131,23 @@ $(function () {
       }
     });
   });
+  /**
+   * Funcion para mostrar los errores de los formularios
+   */
+
+  function printErrorMsg(msg) {
+    $(".print-error-msg").find("ul").html('');
+    $(".print-error-msg").css('display', 'block');
+    $(".form-control").removeClass('is-invalid');
+
+    for (var clave in msg) {
+      $("#" + clave).addClass('is-invalid');
+
+      if (msg.hasOwnProperty(clave)) {
+        $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -1262,7 +1337,6 @@ $(function () {
 
   $(document).on('click', '.savePbx', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var media_server = $("#media_server").val();
     var ip_pbx = $("#ip_pbx").val();
     var Cat_Base_Datos_id = $("#basedatos").val();
@@ -1284,7 +1358,12 @@ $(function () {
       $('.viewIndex #tablePbx').DataTable({
         "lengthChange": true
       });
+    }).done(function () {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
       Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
@@ -1306,7 +1385,6 @@ $(function () {
 
   $(document).on('click', '.updatePbx', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var media_server = $("#media_server").val();
     var ip_pbx = $("#ip_pbx").val();
     var Cat_Base_Datos_id = $("#basedatos").val();
@@ -1333,12 +1411,16 @@ $(function () {
       },
       success: function success(result) {
         $('.viewResult').html(result);
-        $('.viewCreate').slideUp();
         $('.viewIndex #tablePbx').DataTable({
           "lengthChange": true
         });
-        Swal.fire('Correcto!', 'El registro ha sido actualizado.', 'success');
       }
+    }).done(function (data) {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
@@ -1383,6 +1465,23 @@ $(function () {
       }
     });
   });
+  /**
+   * Funcion para mostrar los errores de los formularios
+   */
+
+  function printErrorMsg(msg) {
+    $(".print-error-msg").find("ul").html('');
+    $(".print-error-msg").css('display', 'block');
+    $(".form-control").removeClass('is-invalid');
+
+    for (var clave in msg) {
+      $("#" + clave).addClass('is-invalid');
+
+      if (msg.hasOwnProperty(clave)) {
+        $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -1612,7 +1711,6 @@ $(function () {
 
   $(document).on('click', '.saveTipoCanales', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var nombre = $("#nombre").val();
     var prefijo = $("#prefijo").val();
     var distribuidor = $("#distribuidor").val();
@@ -1630,7 +1728,12 @@ $(function () {
       $('.viewIndex #tableTiposCanal').DataTable({
         "lengthChange": true
       });
+    }).done(function () {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
       Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
@@ -1652,7 +1755,6 @@ $(function () {
 
   $(document).on('click', '.updateTipoCanal', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var nombre = $("#nombre").val();
     var prefijo = $("#prefijo").val();
     var distribuidor = $("#distribuidor").val();
@@ -1677,8 +1779,13 @@ $(function () {
         $('.viewIndex #tableTiposCanal').DataTable({
           "lengthChange": true
         });
-        Swal.fire('Correcto!', 'El registro ha sido actualizado.', 'success');
       }
+    }).done(function (data) {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
+      Swal.fire('Correcto!', 'El registro ha sido actualizado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
@@ -1722,6 +1829,23 @@ $(function () {
       }
     });
   });
+  /**
+   * Funcion para mostrar los errores de los formularios
+   */
+
+  function printErrorMsg(msg) {
+    $(".print-error-msg").find("ul").html('');
+    $(".print-error-msg").css('display', 'block');
+    $(".form-control").removeClass('is-invalid');
+
+    for (var clave in msg) {
+      $("#" + clave).addClass('is-invalid');
+
+      if (msg.hasOwnProperty(clave)) {
+        $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -1936,7 +2060,6 @@ $(function () {
 
   $(document).on('click', '.saveDistribuidor', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var formData = new FormData(document.getElementById("altadistribuidores"));
     var servicio = $("#servicio").val();
     var distribuidor = $("#distribuidor").val();
@@ -1957,19 +2080,23 @@ $(function () {
     var url = currentURL + '/distribuidor';
     $.ajax({
       url: url,
-      type: "post",
-      dataType: "html",
+      type: "POST",
+      //dataType: "JSON",
       data: formData,
       cache: false,
       contentType: false,
       processData: false
     }).done(function (data) {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
       $('.viewResult').html(data);
       $('.viewResult #tableDistribuidores').DataTable({
         "lengthChange": false
       });
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
-    Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
   });
   /**
    * Evento para mostrar el formulario editar distribuidores
@@ -2006,7 +2133,6 @@ $(function () {
 
   $(document).on('click', '.updateDistribuidor', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var formData = new FormData(document.getElementById("editardistribuidores"));
     var servicio = $("#servicio").val();
     var distribuidor = $("#distribuidor").val();
@@ -2030,18 +2156,22 @@ $(function () {
     $.ajax({
       url: url,
       type: "POST",
-      dataType: "html",
+      //dataType: "JSON",
       data: formData,
       cache: false,
       contentType: false,
       processData: false
     }).done(function (data) {
+      $('#modal').modal('hide');
+      $('.modal-backdrop ').css('display', 'none');
       $('.viewResult').html(data);
       $('.viewResult #tableDistribuidores').DataTable({
         "lengthChange": false
       });
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
-    Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
   });
   /**
    * Evento para eliminar el distribuidores
@@ -2095,6 +2225,23 @@ $(function () {
     var TmpPath_pie = URL.createObjectURL(e.target.files[0]);
     $('#image_input_pie').attr('src', TmpPath_pie);
   });
+  /**
+   * Funcion para mostrar los errores de los formularios
+   */
+
+  function printErrorMsg(msg) {
+    $(".print-error-msg").find("ul").html('');
+    $(".print-error-msg").css('display', 'block');
+    $(".form-control").removeClass('is-invalid');
+
+    for (var clave in msg) {
+      $("#" + clave).addClass('is-invalid');
+
+      if (msg.hasOwnProperty(clave)) {
+        $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -2577,7 +2724,6 @@ $(function () {
 
   $(document).on('click', '.saveLicencia', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var licencia = $("#licencia").val();
 
     var _token = $("input[name=_token]").val();
@@ -2602,26 +2748,32 @@ $(function () {
         $('.viewIndex #licencias_bria').DataTable({
           "lengthChange": true
         });
-        Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
       }
+    }).done(function (data) {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
-    /*
-    $.post(url, {
-        licencia: licencia,
-        _token: _token
-    }, function(data, textStatus, xhr) {
-        $('.viewResult').html(data);
-        $('.viewIndex #licencias_bria').DataTable({
-            "lengthChange": true
-        });
-        Swal.fire(
-            'Correcto!',
-            'El registro ha sido guardado.',
-            'success'
-        )
-    });
-    */
   });
+  /**
+   * Funcion para mostrar los errores de los formularios
+   */
+
+  function printErrorMsg(msg) {
+    $(".print-error-msg").find("ul").html('');
+    $(".print-error-msg").css('display', 'block');
+    $(".form-control").removeClass('is-invalid');
+
+    for (var clave in msg) {
+      $("#" + clave).addClass('is-invalid');
+
+      if (msg.hasOwnProperty(clave)) {
+        $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -2761,7 +2913,6 @@ $(function () {
 
   $(document).on('click', '.saveMenu', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var tipo_id = $("#tipo_id").val();
     var modulo_id = $("#modulo_id").val();
     var menu_id = $("#menu_id").val();
@@ -2786,7 +2937,12 @@ $(function () {
         _token: _token
       }, function (data, textStatus, xhr) {
         $('.viewResult').html(data);
+      }).done(function () {
+        $('.modal-backdrop ').css('display', 'none');
+        $('#modal').modal('hide');
         Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+      }).fail(function (data) {
+        printErrorMsg(data.responseJSON.errors);
       });
     } else {
       url = currentURL + '/submenus';
@@ -2798,7 +2954,12 @@ $(function () {
         _token: _token
       }, function (data, textStatus, xhr) {
         $('.viewResult').html(data);
+      }).done(function () {
+        $('.modal-backdrop ').css('display', 'none');
+        $('#modal').modal('hide');
         Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+      }).fail(function (data) {
+        printErrorMsg(data.responseJSON.errors);
       });
     }
   });
@@ -2832,7 +2993,6 @@ $(function () {
 
   $(document).on('click', '.updateMenu', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var tipo = $("#tipoSeleccionado").val();
 
     if (tipo == 1) {
@@ -2861,8 +3021,13 @@ $(function () {
         },
         success: function success(result) {
           $('.viewResult').html(result);
-          Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
         }
+      }).done(function (data) {
+        $('.modal-backdrop ').css('display', 'none');
+        $('#modal').modal('hide');
+        Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+      }).fail(function (data) {
+        printErrorMsg(data.responseJSON.errors);
       });
     } else {
       var _nombre = $("#nombre").val();
@@ -2893,8 +3058,13 @@ $(function () {
         },
         success: function success(result) {
           $('.viewResult').html(result);
-          Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
         }
+      }).done(function (data) {
+        $('.modal-backdrop ').css('display', 'none');
+        $('#modal').modal('hide');
+        Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+      }).fail(function (data) {
+        printErrorMsg(data.responseJSON.errors);
       });
     }
   });
@@ -3013,6 +3183,23 @@ $(function () {
       });
     }
   });
+  /**
+   * Funcion para mostrar los errores de los formularios
+   */
+
+  function printErrorMsg(msg) {
+    $(".print-error-msg").find("ul").html('');
+    $(".print-error-msg").css('display', 'block');
+    $(".form-control").removeClass('is-invalid');
+
+    for (var clave in msg) {
+      $("#" + clave).addClass('is-invalid');
+
+      if (msg.hasOwnProperty(clave)) {
+        $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -3048,7 +3235,6 @@ $(function () {
 
   $(document).on('click', '.saveModulo', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var nombre = $("#nombre").val();
     var descripcion = $("#descripcion").val();
 
@@ -3065,7 +3251,12 @@ $(function () {
         "lengthChange": true,
         "order": [[2, "asc"]]
       });
+    }).done(function () {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
       Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
@@ -3104,7 +3295,6 @@ $(function () {
 
   $(document).on('click', '.updateModulo', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var nombre = $("#nombreEdit").val();
     var descripcion = $("#descripcionEdit").val();
     var id_modulo = $("#id_modulo").val();
@@ -3128,8 +3318,13 @@ $(function () {
           "lengthChange": true,
           "order": [[2, "asc"]]
         });
-        Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
       }
+    }).done(function (data) {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
@@ -3216,6 +3411,23 @@ $(function () {
       }
     });
   });
+  /**
+   * Funcion para mostrar los errores de los formularios
+   */
+
+  function printErrorMsg(msg) {
+    $(".print-error-msg").find("ul").html('');
+    $(".print-error-msg").css('display', 'block');
+    $(".form-control").removeClass('is-invalid');
+
+    for (var clave in msg) {
+      $("#" + clave).addClass('is-invalid');
+
+      if (msg.hasOwnProperty(clave)) {
+        $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -3401,7 +3613,6 @@ $(function () {
 
   $(document).on('click', '.saveTroncal', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var nombre = $("#nombre").val();
     var descripcion = $("#descripcion").val();
     var ip_host = $("#ip_host").val();
@@ -3423,7 +3634,12 @@ $(function () {
       $('.viewIndex #tableTroncales').DataTable({
         "lengthChange": true
       });
+    }).done(function () {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
       Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
@@ -3462,7 +3678,6 @@ $(function () {
 
   $(document).on('click', '.updateTrocal', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var nombre = $("#nombre").val();
     var descripcion = $("#descripcion").val();
     var ip_host = $("#ip_host").val();
@@ -3493,8 +3708,13 @@ $(function () {
         $('.viewIndex #tableTroncales').DataTable({
           "lengthChange": true
         });
-        Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
       }
+    }).done(function (data) {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
@@ -3600,6 +3820,23 @@ $(function () {
       }
     });
   });
+  /**
+   * Funcion para mostrar los errores de los formularios
+   */
+
+  function printErrorMsg(msg) {
+    $(".print-error-msg").find("ul").html('');
+    $(".print-error-msg").css('display', 'block');
+    $(".form-control").removeClass('is-invalid');
+
+    for (var clave in msg) {
+      $("#" + clave).addClass('is-invalid');
+
+      if (msg.hasOwnProperty(clave)) {
+        $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -3637,7 +3874,6 @@ $(function () {
 
   $(document).on("click", '.saveClient', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var name = $("#name").val();
     var email = $("#email").val();
     var pass_1 = $("#pass_1").val();
@@ -3663,7 +3899,12 @@ $(function () {
       $('.viewResult #tableUsuarios').DataTable({
         "lengthChange": true
       });
+    }).done(function () {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
       Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
@@ -3701,7 +3942,6 @@ $(function () {
 
   $(document).on('click', '.updateClient', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var name = $("#name").val();
     var id_user = $("#id_user").val();
     var email = $("#email").val();
@@ -3734,8 +3974,13 @@ $(function () {
         $('.viewResult #tableUsuarios').DataTable({
           "lengthChange": true
         });
-        Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
       }
+    }).done(function (data) {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
@@ -3838,6 +4083,23 @@ $(function () {
       $("#sub_cat_" + id + " .mark2").prop("checked", false);
     }
   });
+  /**
+   * Funcion para mostrar los errores de los formularios
+   */
+
+  function printErrorMsg(msg) {
+    $(".print-error-msg").find("ul").html('');
+    $(".print-error-msg").css('display', 'block');
+    $(".form-control").removeClass('is-invalid');
+
+    for (var clave in msg) {
+      $("#" + clave).addClass('is-invalid');
+
+      if (msg.hasOwnProperty(clave)) {
+        $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
+      }
+    }
+  }
 });
 
 /***/ }),

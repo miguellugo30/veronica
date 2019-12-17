@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 use Nimbus\Cat_Tipo_Canales;
 use Nimbus\Cat_Distribuidor;
 use Nimbus\Http\Controllers\LogController;
+use Modules\Administrador\Http\Requests\TipoCanalRequest;
 
 class TipoCanalcontroller extends Controller
 {
@@ -37,7 +38,7 @@ class TipoCanalcontroller extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(TipoCanalRequest $request)
     {
         //dd($request);
         /**
@@ -92,7 +93,7 @@ class TipoCanalcontroller extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(TipoCanalRequest $request, $id)
     {
         /**
          * Actualizamos la troncal

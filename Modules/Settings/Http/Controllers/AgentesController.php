@@ -15,7 +15,7 @@ use Nimbus\Agentes;
 use Nimbus\Canales;
 use Nimbus\Grupos;
 use Nimbus\Empresas;
-
+use Modules\Settings\Http\Requests\AgentesRequest;
 
 class AgentesController extends Controller
 {
@@ -58,7 +58,7 @@ class AgentesController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(AgentesRequest $request)
     {
         /**
          * Insertamos la información del Agente
@@ -153,7 +153,7 @@ class AgentesController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(AgentesRequest $request, $id)
     {
 
         Agentes::where( 'id', $id )
@@ -172,7 +172,7 @@ class AgentesController extends Controller
             /**
              * Creamos el logs
              */
-            $mensaje = 'Se edito un registro con id: '.$id.', informacion editada: '.var_export($request, true);
+            $mensaje = 'Se edito un registro con id: '.$id.', informacion editada: '.var_export($request->all(), true);
             $log = new LogController;
             $log->store('Actualizacion', 'Agentes',$mensaje, $id);
             return redirect()->route('Agentes.index');

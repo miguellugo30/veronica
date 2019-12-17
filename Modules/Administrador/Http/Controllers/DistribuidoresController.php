@@ -9,6 +9,7 @@ use Nimbus\Cat_Distribuidor;
 use Storage;
 use File;
 use Nimbus\Http\Controllers\LogController;
+use Modules\Administrador\Http\Requests\DistribuidoresRequest;
 
 class DistribuidoresController extends Controller
 {
@@ -43,9 +44,9 @@ class DistribuidoresController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
-    { 
-            
+    public function store(DistribuidoresRequest $request)
+    {
+
         /**
          * Obtener los valores recibidos del formulario
          */
@@ -58,17 +59,17 @@ class DistribuidoresController extends Controller
          * Validar que el campo file_input_header tenga algun valor, para poder asignarle nombre a img_header
          * de lo contrario se utilizara el nombre de la imagen por defecto.
          */
-  
+
         if($request->file('file_input_header') != NULL){
-            
+
             $file = $request->file('file_input_header');//Obtenemos la informacion cargado en el input file de Imagen encabezado
             $nombre_img1 = $file->getClientOriginalName();//Obtenemos el nombre del archivo a mover
             //$distribuidor->img_header = $nombre_img1;//Asignamos el nuevo nombre al registro ha actualizar
-            $ext = explode('.', $nombre_img1);          
+            $ext = explode('.', $nombre_img1);
             $nom = "img_header_".$distribuidor->id.".".$ext[1];//creamos en nuevo nombre del archivo
           //  dd($nom);
-        }else{    
-            
+        }else{
+
           //  dd('Np entra');
             $nom = $img_default;
             $file = $img_default;
@@ -95,18 +96,18 @@ class DistribuidoresController extends Controller
         if(!File::exists($directorio_imagenes)){
             Storage::makeDirectory($directorio_imagenes);
         }
-  #dd($nombre_img2);       
- 
-//////////////NO TENEMOS EL VALOR DEL IMG 
- 
+  #dd($nombre_img2);
+
+//////////////NO TENEMOS EL VALOR DEL IMG
+
         Storage::disk('public')->put($directorio_imagenes."/".$nom,($file) ? File::get($file) : $nombre_img1);
         Storage::disk('public')->put($directorio_imagenes."/".$nom2,($file2) ? File::get($file2) : $nombre_img2);
-  
+
         /**
          * Actualizamos el nombre de las imagenes al registro actualmente creado
          */
         $distribuidor = Cat_Distribuidor::find($distribuidor->id);
-        $distribuidor->img_header = $directorio_imagenes."/".$nom;//Asignamos el nuevo nombre al registro ha actualizar       
+        $distribuidor->img_header = $directorio_imagenes."/".$nom;//Asignamos el nuevo nombre al registro ha actualizar
         $distribuidor->img_pie = $directorio_imagenes."/".$nom2;//Asignamos el nuevo nombre al registro ha actualizar
         $distribuidor->save();
 
@@ -147,7 +148,7 @@ class DistribuidoresController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(DistribuidoresRequest $request, $id)
     {
         $file = $request->file('file_input_header');
         //dd( $file );

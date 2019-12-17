@@ -10,6 +10,7 @@ use Nimbus\User;
 use Nimbus\Speech;
 use Nimbus\Opciones_Speech;
 use DB;
+use Modules\Settings\Http\Requests\SpeechRequest;
 
 class SpeechController extends Controller
 {
@@ -45,7 +46,7 @@ class SpeechController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(SpeechRequest $request)
     {
         $dataForm = $request->input('dataForm');
 
@@ -123,7 +124,7 @@ class SpeechController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(SpeechRequest $request, $id)
     {
         $dataForm = $request->input('dataForm');
         //dd($dataForm);

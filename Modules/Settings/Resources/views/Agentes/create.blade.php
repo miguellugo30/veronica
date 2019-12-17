@@ -1,9 +1,9 @@
 <div class="row">
     <div class="col">
         <div class="form-group">
-            <label for="grupo"><b>Grupo</b></label>
+            <label for="grupo"><b>Grupo *:</b></label>
             <select name="grupo" id="grupo" class="form-control form-control-sm">
-                <option value="">Sin Grupo</option>
+                <option disabled selected value="">Sin Grupo</option>
                 @foreach ($grupos as $grupo)
                     <option value="{{$grupo->id}}">{{$grupo->nombre}}</option>
                 @endforeach
@@ -12,34 +12,34 @@
             @csrf
         </div>
         <div class="form-group">
-            <label for="tipo_licencia"><b>Tipo Licencia</b></label>
+            <label for="tipo_licencia"><b>Tipo Licencia *:</b></label>
             <select name="tipo_licencia" id="tipo_licencia" class="form-control form-control-sm">
-                <option value="">Selecciona un licencia</option>
+                <option disabled selected value="">Selecciona un licencia</option>
                 <option value="Inbound"  {{ ( $empresa->Config_Empresas->agentes_entrada != 0 ) ? '' : 'style=display:none' }}>Inbound</option>
                 <option value="Outbound" {{ ( $empresa->Config_Empresas->agentes_salida != 0 ) ? '' : 'style=display:none' }}>Outbound</option>
                 <option value="Full"     {{ ( $empresa->Config_Empresas->agentes_dual != 0 ) ? '' : 'style=display:none' }}>Full</option>
             </select>
         </div>
         <div class="form-group">
-            <label for="nivel"><b>Nivel</b></label>
+            <label for="nivel"><b>Nivel *:</b></label>
             <input type="number" class="form-control form-control-sm" name="nivel" id="nivel" placeholder="Nivel" min="0" max="5">
         </div>
         <div class="form-group">
-            <label for="nombre"><b>Nombre</b></label>
+            <label for="nombre"><b>Nombre *:</b></label>
             <input type="text" class="form-control form-control-sm" name="nombre" id="nombre" placeholder="Nombre">
         </div>
         <div class="form-group">
-            <label for="usuario"><b>Usuario</b></label>
+            <label for="usuario"><b>Usuario *:</b></label>
             <input type="text" class="form-control form-control-sm" name="usuario" id="usuario" placeholder="Usuario">
         </div>
         <div class="form-group">
-            <label for="contrasena"><b>Contraseña</b></label>
+            <label for="contrasena"><b>Contraseña *:</b></label>
             <input type="text" class="form-control form-control-sm" name="contrasena" id="contrasena" placeholder="Contraseña">
         </div>
         <div class="form-group">
-            <label for="canal"><b>Canal</b></label>
+            <label for="canal"><b>Canal *:</b></label>
             <select name="canal" id="canal" class="form-control form-control-sm">
-                <option value="">Selecciona un canal</option>
+                <option disabled selected value="">Selecciona un canal</option>
                 @foreach ($canales as $canal)
                     <option value="{{$canal->id}}">{{$canal->Cat_Tipo_Canales->nombre}}</option>
                 @endforeach
@@ -47,8 +47,14 @@
             <!--input type="text" class="form-control form-control-sm" name="protocolo" id="protocolo"  placeholder=""-->
         </div>
         <div class="form-group">
-            <label for="extension"><b>Extensión</b></label>
+            <label for="extension"><b>Extensión *:</b></label>
             <input type="text" class="form-control form-control-sm" name="extension" id="extension"  placeholder="Extensión">
+        </div>
+        <div class="form-group">
+            <small class="form-text text-muted"> <b>*Campos obligatorios.</b></small>
+        </div>
+        <div class="alert alert-danger print-error-msg" role="alert" style="display:none">
+            <ul></ul>
         </div>
     </div>
     <div class="col">

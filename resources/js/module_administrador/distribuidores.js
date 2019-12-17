@@ -22,7 +22,6 @@ $(function() {
      */
     $(document).on('click', '.saveDistribuidor', function(event) {
         event.preventDefault();
-        $('#modal').modal('hide');
 
         let formData = new FormData(document.getElementById("altadistribuidores"));
         let servicio = $("#servicio").val();
@@ -44,24 +43,28 @@ $(function() {
 
         $.ajax({
                 url: url,
-                type: "post",
-                dataType: "html",
+                type: "POST",
+                //dataType: "JSON",
                 data: formData,
                 cache: false,
                 contentType: false,
                 processData: false
             })
             .done(function(data) {
+                $('.modal-backdrop ').css('display', 'none');
+                $('#modal').modal('hide');
                 $('.viewResult').html(data);
                 $('.viewResult #tableDistribuidores').DataTable({
                     "lengthChange": false
                 });
+                Swal.fire(
+                    'Correcto!',
+                    'El registro ha sido guardado.',
+                    'success'
+                )
+            }).fail(function(data) {
+                printErrorMsg(data.responseJSON.errors);
             });
-        Swal.fire(
-            'Correcto!',
-            'El registro ha sido guardado.',
-            'success'
-        )
     });
     /**
      * Evento para mostrar el formulario editar distribuidores
@@ -102,7 +105,7 @@ $(function() {
     $(document).on('click', '.updateDistribuidor', function(event) {
 
         event.preventDefault();
-        $('#modal').modal('hide');
+
         let formData = new FormData(document.getElementById("editardistribuidores"));
         let servicio = $("#servicio").val();
         let distribuidor = $("#distribuidor").val();
@@ -126,23 +129,27 @@ $(function() {
         $.ajax({
                 url: url,
                 type: "POST",
-                dataType: "html",
+                //dataType: "JSON",
                 data: formData,
                 cache: false,
                 contentType: false,
                 processData: false
             })
             .done(function(data) {
+                $('#modal').modal('hide');
+                $('.modal-backdrop ').css('display', 'none');
                 $('.viewResult').html(data);
                 $('.viewResult #tableDistribuidores').DataTable({
                     "lengthChange": false
                 });
+                Swal.fire(
+                    'Correcto!',
+                    'El registro ha sido guardado.',
+                    'success'
+                )
+            }).fail(function(data) {
+                printErrorMsg(data.responseJSON.errors);
             });
-        Swal.fire(
-            'Correcto!',
-            'El registro ha sido guardado.',
-            'success'
-        )
     });
     /**
      * Evento para eliminar el distribuidores
@@ -200,4 +207,18 @@ $(function() {
         $('#image_input_pie').attr('src', TmpPath_pie);
     });
 
+    /**
+     * Funcion para mostrar los errores de los formularios
+     */
+    function printErrorMsg(msg) {
+        $(".print-error-msg").find("ul").html('');
+        $(".print-error-msg").css('display', 'block');
+        $(".form-control").removeClass('is-invalid');
+        for (var clave in msg) {
+            $("#" + clave).addClass('is-invalid');
+            if (msg.hasOwnProperty(clave)) {
+                $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
+            }
+        }
+    }
 });

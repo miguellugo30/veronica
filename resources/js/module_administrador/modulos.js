@@ -24,7 +24,6 @@ $(function() {
      */
     $(document).on('click', '.saveModulo', function(event) {
         event.preventDefault();
-        $('#modal').modal('hide');
 
         let nombre = $("#nombre").val();
         let descripcion = $("#descripcion").val();
@@ -38,18 +37,22 @@ $(function() {
         }, function(data, textStatus, xhr) {
 
             $('.viewResult').html(data);
-
             $('.viewResult #tableModulos').DataTable({
                 "lengthChange": true,
                 "order": [
                     [2, "asc"]
                 ]
             });
+        }).done(function() {
+            $('.modal-backdrop ').css('display', 'none');
+            $('#modal').modal('hide');
             Swal.fire(
                 'Correcto!',
                 'El registro ha sido guardado.',
                 'success'
             )
+        }).fail(function(data) {
+            printErrorMsg(data.responseJSON.errors);
         });
     });
     /**
@@ -92,7 +95,6 @@ $(function() {
      */
     $(document).on('click', '.updateModulo', function(event) {
         event.preventDefault();
-        $('#modal').modal('hide');
 
         let nombre = $("#nombreEdit").val();
         let descripcion = $("#descripcionEdit").val();
@@ -118,12 +120,17 @@ $(function() {
                         [2, "asc"]
                     ]
                 });
-                Swal.fire(
-                    'Correcto!',
-                    'El registro ha sido guardado.',
-                    'success'
-                )
             }
+        }).done(function(data) {
+            $('.modal-backdrop ').css('display', 'none');
+            $('#modal').modal('hide');
+            Swal.fire(
+                'Correcto!',
+                'El registro ha sido guardado.',
+                'success'
+            )
+        }).fail(function(data) {
+            printErrorMsg(data.responseJSON.errors);
         });
     });
     /**
@@ -218,4 +225,18 @@ $(function() {
             }
         });
     });
+    /**
+     * Funcion para mostrar los errores de los formularios
+     */
+    function printErrorMsg(msg) {
+        $(".print-error-msg").find("ul").html('');
+        $(".print-error-msg").css('display', 'block');
+        $(".form-control").removeClass('is-invalid');
+        for (var clave in msg) {
+            $("#" + clave).addClass('is-invalid');
+            if (msg.hasOwnProperty(clave)) {
+                $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
+            }
+        }
+    }
 });

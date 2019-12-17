@@ -2,22 +2,28 @@
     <div class="row">
         <div class="col">
             <div class="form-group">
-                <label for="servicio">Servicio</label>
+                <label for="servicio">Servicio *:</label>
                 <input type="text" class="form-control form-control-sm" id="servicio" value="{{$distribuidor->servicio}}" placeholder="Servicio">
                 <input type="hidden" class="form-control" id="id_distribuidor" value="{{$distribuidor->id}}">
                 @csrf
             </div>
             <div class="form-group">
-                <label for="distribuidor">Distribuidor</label>
+                <label for="distribuidor">Distribuidor *:</label>
                 <input type="text" class="form-control form-control-sm" id="distribuidor" value="{{$distribuidor->distribuidor}}" placeholder="Distribuidor">
             </div>
             <div class="form-group">
-                <label for="numero_soporte">Numero Soporte</label>
+                <label for="numero_soporte">Numero Soporte *:</label>
                 <input type="text" class="form-control form-control-sm" id="numero_soporte" value="{{$distribuidor->numero_soporte}}" placeholder="Numero Soporte">
             </div>
             <div class="form-group">
-                <label for="prefijo">Prefijo</label>
+                <label for="prefijo">Prefijo *:</label>
                 <input type="number" min="0" maxlength="5" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" class="form-control form-control-sm" id="prefijo" value="{{$distribuidor->prefijo}}" placeholder="Prefijo"/>
+            </div>
+            <div class="form-group">
+                <small class="form-text text-muted"> <b>*Campos obligatorios.</b></small>
+            </div>
+            <div class="alert alert-danger print-error-msg" role="alert" style="display:none">
+                <ul></ul>
             </div>
         </div>
         <div class="col">
