@@ -14,8 +14,8 @@ $(function() {
         $(this).addClass('table-primary');
     });;
     /**
-    * Evento para mostrar el formulario de crear un nuevo Buzon de voz
-    */
+     * Evento para mostrar el formulario de crear un nuevo Buzon de voz
+     */
     $(document).on("click", ".newBuzonVoz", function(e) {
         event.preventDefault();
         $('#tituloModal').html('Agregar Buzon De Voz');
@@ -30,11 +30,10 @@ $(function() {
         });
     });
     /**
-    * Evento para guardar el nuevo agente
-    */
+     * Evento para guardar el nuevo agente
+     */
     $(document).on('click', '.saveBuzonVoz', function(event) {
         event.preventDefault();
-        $('#modal').modal('hide');
 
         let nombre = $("#nombre").val();
         let tiempo_maximo = $("#tiempo_maximo").val();
@@ -55,6 +54,8 @@ $(function() {
             _token: _token
         }, function(data, textStatus, xhr) {
 
+            $('#modal').modal('hide');
+            $('.modal-backdrop ').css('display', 'none');
             $('.viewResult').html(data);
 
             $('.viewResult #tableBuzonVoz').DataTable({
@@ -68,13 +69,15 @@ $(function() {
                 'El registro ha sido guardado.',
                 'success'
             )
+        }).fail(function(data) {
+            printErrorMsg(data.responseJSON.errors);
         });
 
     });
     /**
-    * Evento para eliminar un buzon
-    *
-    */
+     * Evento para eliminar un buzon
+     *
+     */
     $(document).on('click', '.deleteBuzonVoz', function(event) {
         event.preventDefault();
         Swal.fire({
@@ -115,7 +118,7 @@ $(function() {
             }
         });
     });
-        /**
+    /**
      * Evento para visualizar la configuración del Buzon de Voz y editarlo
      */
     $(document).on('click', '.editBuzonVoz', function(event) {
@@ -140,11 +143,9 @@ $(function() {
     /**
      * Evento para guardar los cambios del Desvio
      */
-     $(document).on('click', '.updateBuzonVoz', function(event) {
-         event.preventDefault();
-         $('#modal').modal('hide');
+    $(document).on('click', '.updateBuzonVoz', function(event) {
+        event.preventDefault();
         let id = $("#id").val();
-
         let nombre = $("#nombre").val();
         let tiempo_maximo = $("#tiempo_maximo").val();
         let terminacion = $("#terminacion").val();
@@ -154,7 +155,7 @@ $(function() {
         let _token = $("input[name=_token]").val();
         let _method = "PUT";
         let url = currentURL + '/Buzon_Voz/' + id;
-        
+
         $.post(url, {
             nombre: nombre,
             tiempo_maximo: tiempo_maximo,
@@ -165,8 +166,11 @@ $(function() {
             _method: _method,
             _token: _token
         }, function(data, textStatus, xhr) {
+
+            $('.modal-backdrop ').css('display', 'none');
+            $('#modal').modal('hide');
             $('.viewResult').html(data);
-            
+
             $('.viewResult #tableBuzonVoz').DataTable({
                 "lengthChange": true,
                 "order": [
@@ -177,11 +181,23 @@ $(function() {
                 'Correcto!',
                 'El registro ha sido guardado.',
                 'success'
-                )
-            });
-            
+            )
+        }).fail(function(data) {
+            printErrorMsg(data.responseJSON.errors);
         });
-
-
-
+    });
+    /**
+     * Funcion para mostrar los errores de los formularios
+     */
+    function printErrorMsg(msg) {
+        $(".print-error-msg").find("ul").html('');
+        $(".print-error-msg").css('display', 'block');
+        $(".form-control").removeClass('is-invalid');
+        for (var clave in msg) {
+            $("#" + clave).addClass('is-invalid');
+            if (msg.hasOwnProperty(clave)) {
+                $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
+            }
+        }
+    }
 });

@@ -18,8 +18,7 @@
         <div class="row">
             <div class="col">
                 <div class="form-group">
-                    <label for="nombre"><b> Nombre Grupo</b></label>
-                    @csrf
+                    <label for="nombre"><b>Nombre Grupo *:</b></label>
                     <input type="text" class="form-control form-control-sm" id="nombre" name="nombre" placeholder="Nombre Grupo" value="{{ $grupo->nombre  }}">
                     <input type="hidden" class="form-control form-control-sm" id="id_grupo" name="id_grupo"  value="{{ $grupo->id  }}">
                 </div>
@@ -34,17 +33,17 @@
                 <table id='condicion' class="table table-striped table-sm tableNewForm">
                     <thead>
                         <tr>
-                            <th>Nombre condicion</th>
-                            <th>Hora Inicio</th>
-                            <th>Hora Fin</th>
+                            <th>Nombre *</th>
+                            <th>Hora Inicio *</th>
+                            <th>Hora Fin *</th>
                             <th>Dia Semana Inicio</th>
                             <th>Dia Semana Fin</th>
                             <th>Fecha Inicio</th>
                             <th>Fecha Fin</th>
-                            <th>Destino si coincide</th>
-                            <th>Opciones</th>
-                            <th>Destino si no coincide</th>
-                            <th>Opciones</th>
+                            <th>Destino si coincide *</th>
+                            <th>Opciones *</th>
+                            <th>Destino si no coincide *</th>
+                            <th>Opciones *</th>
                             <td></td>
                         </tr>
                     </thead>
@@ -161,6 +160,12 @@
                     </tbody>
                 </table>
             </fieldset>
+            <div class="form-group text-right">
+                <b>* Campos obligatorios.</b>
+            </div>
+        </div>
+        <div class="alert alert-danger print-error-msg" role="alert" style="display:none">
+            <ul></ul>
         </div>
     </div>
 </form>

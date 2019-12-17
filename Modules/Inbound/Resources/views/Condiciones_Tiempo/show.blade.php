@@ -1,4 +1,5 @@
 <select name="opciones_{{ $accion.'_'.$num }}" id="opciones" class="form-control form-control-sm">
+    <option value="">Selecciona una opción</option>
     @foreach ($info as $v)
         @if ($opcion == 'Cat_Extensiones')
             <option value="{{ $v->id }}">{{$v->extension}}</option>

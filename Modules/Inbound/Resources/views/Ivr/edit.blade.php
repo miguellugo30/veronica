@@ -3,20 +3,18 @@
         <table id='condicion' class="table table-striped table-sm tableNewForm">
             <thead>
                 <tr>
-                <th>Nombre</th>
-                <th>Mensaje Bienvenida</th>
-                <th>Tiempo Espera</th>
-                <th>Mensaje Espera Superada</th>
-                <th>Mensaje Opción Invalida</th>
-                <th>Repeticiones</th>
+                <th>Nombre *</th>
+                <th>Mensaje Bienvenida *</th>
+                <th>Tiempo Espera *</th>
+                <th>Mensaje Espera Superada *</th>
+                <th>Mensaje Opción Invalida *</th>
+                <th>Repeticiones *</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>
-                        <input type="hidden" class="form-control form-control-sm" id="Empresas_id" name="Empresas_id" value="{{$empresa_id}}">
                         <input type="hidden" class="form-control form-control-sm" id="ivr_id" name="ivr_id" value="{{ $ivr->id }}">
-                        @csrf
                         <input type="text" class="form-control form-control-sm" id="nombre" name="nombre" placeholder="Nombre IVR" value="{{ $ivr->nombre }}">
                     </td>
                     <td>
@@ -61,10 +59,9 @@
             <table id="tableOpcionesIvr" class="table table-striped table-sm tableOpciones">
                 <thead>
                     <tr>
-                        <th>Tipo</th>
-                        <th>Dígito a presionar</th>
-                        <th>Destino</th>
-                        <th>Opciones</th>
+                        <th>Dígito(s) a presionar *</th>
+                        <th>Destino *</th>
+                        <th>Opciones *</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -73,15 +70,7 @@
                         <tr id="tr_{{ $i + 1 }}">
                             <td>
                                 <input type="hidden" class="form-control form-control-sm" id="opcion_id" name="opcion_id_{{ $i + 1 }}" value="{{ $data[$i][0] }}">
-                                <select name="tipo_{{ $i + 1 }}" id="tipo" class="form-control form-control-sm">
-                                    <option value="">Selecciona una opción</option>
-                                    <option value="digito" {{ 'digito' == $data[$i][1] ? 'selected = "selected"' : '' }} >Dígito</option>
-                                    <option value="invalid" {{ 'invalid' == $data[$i][1] ? 'selected = "selected"' : '' }} >Opción Invalida</option>
-                                    <option value="timeout" {{ 'timeout' == $data[$i][1] ? 'selected = "selected"' : '' }} >Tiempo de Espera Superado</option>
-                                </select>
-                            </td>
-                            <td>
-                                <input type="number" name="digito_{{ $i + 1 }}" id="digito" class="form-control form-control-sm" min="1" placeholder="Dígito" value="{{ $data[$i][2] }}">
+                                <input type="number" name="digito_{{ $i + 1 }}" id="digito" class="form-control form-control-sm" min="1" placeholder="Dígito(s)" value="{{ $data[$i][2] }}">
                             </td>
                             <td>
                                 <select name="destino_{{ $i + 1 }}" id="destino"  class="form-control form-control-sm destinoOpccionIvr">
@@ -119,6 +108,13 @@
                     @endfor
                 </tbody>
             </table>
+            <div class="form-group text-right">
+                <b>* Campos obligatorios.</b>
+            </div>
         </fieldset>
     </div>
 </form>
+<div class="alert alert-danger print-error-msg" role="alert" style="display:none">
+    <ul></ul>
+</div>
+<input type="hidden" class="form-control form-control-sm" id="Empresas_id" name="Empresas_id" value="{{$empresa_id}}">

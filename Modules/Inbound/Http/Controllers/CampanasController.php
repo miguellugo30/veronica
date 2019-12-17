@@ -58,7 +58,6 @@ class CampanasController extends Controller
      */
     public function store(CampanasRequest $request)
     {
-        exit();
         /**
          * Obtenemos los datos del usuario logeado
          */

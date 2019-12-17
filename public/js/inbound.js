@@ -143,8 +143,11 @@ $(function () {
 
   $(document).on('click', '.saveCondicion', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var dataForm = $("#formDataCondicionTiempo").serializeArray();
+    var data = {};
+    $(dataForm).each(function (index, obj) {
+      data[obj.name] = obj.value;
+    });
 
     var _token = $("input[name=_token]").val();
 
@@ -153,15 +156,19 @@ $(function () {
       url: url,
       type: "post",
       data: {
-        dataForm: dataForm,
+        dataForm: data,
         _token: _token
       }
     }).done(function (data) {
+      $('#modal').modal('hide');
+      $('.modal-backdrop ').css('display', 'none');
       $('.viewResult').html(data);
       $('.viewResult #tableCondicionTiempo').DataTable({
         "lengthChange": false
       });
       Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
@@ -309,8 +316,11 @@ $(function () {
 
   $(document).on('click', '.updateCondicion', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var dataForm = $("#formDataCondicionTiempo").serializeArray();
+    var data = {};
+    $(dataForm).each(function (index, obj) {
+      data[obj.name] = obj.value;
+    });
     var _method = "PUT";
 
     var _token = $("input[name=_token]").val();
@@ -321,16 +331,20 @@ $(function () {
       url: url,
       type: "post",
       data: {
-        dataForm: dataForm,
+        dataForm: data,
         _method: _method,
         _token: _token
       }
     }).done(function (data) {
+      $('#modal').modal('hide');
+      $('.modal-backdrop ').css('display', 'none');
       $('.viewResult').html(data);
       $('.viewResult #tableCondicionTiempo').DataTable({
         "lengthChange": false
       });
       Swal.fire('Correcto!', 'El registro ha sido actualizado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
@@ -371,6 +385,21 @@ $(function () {
 
     if (!val) val = '00';
   });
+  /**
+   * Funcion para mostrar los errores de los formularios
+   */
+
+  function printErrorMsg(msg) {
+    $(".print-error-msg").find("ul").html('');
+    $(".print-error-msg").css('display', 'block');
+    $(".form-control").removeClass('is-invalid');
+    $(".print-error-msg").find("ul").append('<li>Es un campo obligatorio</li>');
+
+    for (var clave in msg) {
+      var data = clave.split('.');
+      $("[name='" + data[1] + "']").addClass('is-invalid');
+    }
+  }
 });
 
 /***/ }),
@@ -549,7 +578,6 @@ $(function () {
       if (msg.hasOwnProperty(clave)) {
         var valor = msg[clave][0].split('.');
         var value = valor[1].replace(' ', '_');
-        console.log(value);
 
         if (value.indexOf('_') > -1) {
           var v = value.split('_');
@@ -632,8 +660,8 @@ $(function () {
   });
   ;
   /**
-  * Evento para mostrar el formulario de crear un nuevo Buzon de voz
-  */
+   * Evento para mostrar el formulario de crear un nuevo Buzon de voz
+   */
 
   $(document).on("click", ".newBuzonVoz", function (e) {
     event.preventDefault();
@@ -647,12 +675,11 @@ $(function () {
     });
   });
   /**
-  * Evento para guardar el nuevo agente
-  */
+   * Evento para guardar el nuevo agente
+   */
 
   $(document).on('click', '.saveBuzonVoz', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var nombre = $("#nombre").val();
     var tiempo_maximo = $("#tiempo_maximo").val();
     var terminacion = $("#terminacion").val();
@@ -672,18 +699,22 @@ $(function () {
       Empresas_id: Empresas_id,
       _token: _token
     }, function (data, textStatus, xhr) {
+      $('#modal').modal('hide');
+      $('.modal-backdrop ').css('display', 'none');
       $('.viewResult').html(data);
       $('.viewResult #tableBuzonVoz').DataTable({
         "lengthChange": true,
         "order": [[2, "asc"]]
       });
       Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
-  * Evento para eliminar un buzon
-  *
-  */
+   * Evento para eliminar un buzon
+   *
+   */
 
   $(document).on('click', '.deleteBuzonVoz', function (event) {
     event.preventDefault();
@@ -723,8 +754,8 @@ $(function () {
     });
   });
   /**
-  * Evento para visualizar la configuración del Buzon de Voz y editarlo
-  */
+   * Evento para visualizar la configuración del Buzon de Voz y editarlo
+   */
 
   $(document).on('click', '.editBuzonVoz', function (event) {
     event.preventDefault();
@@ -751,7 +782,6 @@ $(function () {
 
   $(document).on('click', '.updateBuzonVoz', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var id = $("#id").val();
     var nombre = $("#nombre").val();
     var tiempo_maximo = $("#tiempo_maximo").val();
@@ -774,14 +804,35 @@ $(function () {
       _method: _method,
       _token: _token
     }, function (data, textStatus, xhr) {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
       $('.viewResult').html(data);
       $('.viewResult #tableBuzonVoz').DataTable({
         "lengthChange": true,
         "order": [[2, "asc"]]
       });
       Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
+  /**
+   * Funcion para mostrar los errores de los formularios
+   */
+
+  function printErrorMsg(msg) {
+    $(".print-error-msg").find("ul").html('');
+    $(".print-error-msg").css('display', 'block');
+    $(".form-control").removeClass('is-invalid');
+
+    for (var clave in msg) {
+      $("#" + clave).addClass('is-invalid');
+
+      if (msg.hasOwnProperty(clave)) {
+        $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -1289,8 +1340,8 @@ $(function () {
     });
   });
   /**
-  * Evento para mostrar el formulario de crear un nuevo desvio
-  */
+   * Evento para mostrar el formulario de crear un nuevo desvio
+   */
 
   $(document).on("click", ".newDesvio", function (e) {
     event.preventDefault();
@@ -1304,12 +1355,11 @@ $(function () {
     });
   });
   /**
-  * Evento para guardar el nuevo agente
-  */
+   * Evento para guardar el nuevo agente
+   */
 
   $(document).on('click', '.saveDesvio', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var nombre = $("#nombre").val();
     var Canales_id = $("#Canales_id").val();
     var dial = $("#dial").val();
@@ -1327,18 +1377,22 @@ $(function () {
       Empresas_id: Empresas_id,
       _token: _token
     }, function (data, textStatus, xhr) {
+      $('#modal').modal('hide');
+      $('.modal-backdrop ').css('display', 'none');
       $('.viewResult').html(data);
       $('.viewResult #tableDesvios').DataTable({
         "lengthChange": true,
         "order": [[2, "asc"]]
       });
       Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
-  * Evento para eliminar un desvio
-  *
-  */
+   * Evento para eliminar un desvio
+   *
+   */
 
   $(document).on('click', '.deleteDesvio', function (event) {
     event.preventDefault();
@@ -1406,7 +1460,6 @@ $(function () {
 
   $(document).on('click', '.updateDesvio', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var id = $("#id").val();
     var nombre = $("#nombre").val();
     var Canales_id = $("#Canales_id").val();
@@ -1428,13 +1481,34 @@ $(function () {
       _token: _token
     }, function (data, textStatus, xhr) {
       $('.viewResult').html(data);
+      $('#modal').modal('hide');
+      $('.modal-backdrop ').css('display', 'none');
       $('.viewResult #tableDesvios').DataTable({
         "lengthChange": true,
         "order": [[2, "asc"]]
       });
       Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
+  /**
+   * Funcion para mostrar los errores de los formularios
+   */
+
+  function printErrorMsg(msg) {
+    $(".print-error-msg").find("ul").html('');
+    $(".print-error-msg").css('display', 'block');
+    $(".form-control").removeClass('is-invalid');
+
+    for (var clave in msg) {
+      $("#" + clave).addClass('is-invalid');
+
+      if (msg.hasOwnProperty(clave)) {
+        $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -1472,8 +1546,11 @@ $(function () {
 
   $(document).on('click', '.saveIvr', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var dataForm = $("#formCreateIvr").serializeArray();
+    var data = {};
+    $(dataForm).each(function (index, obj) {
+      data[obj.name] = obj.value;
+    });
     var Empresas_id = $("#Empresas_id").val();
 
     var _token = $("input[name=_token]").val();
@@ -1481,15 +1558,19 @@ $(function () {
     var url = currentURL + '/Ivr';
     $.post(url, {
       Empresas_id: Empresas_id,
-      dataForm: dataForm,
+      dataForm: data,
       _token: _token
     }, function (data, textStatus, xhr) {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
       $('.viewResult').html(data);
       $('.viewResult #tableivr').DataTable({
         "lengthChange": true,
         "order": [[2, "asc"]]
       });
       Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
@@ -1643,9 +1724,12 @@ $(function () {
 
   $(document).on('click', '.updateIvr', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var Empresas_id = $("#Empresas_id").val();
     var dataForm = $("#formCreateIvr").serializeArray();
+    var data = {};
+    $(dataForm).each(function (index, obj) {
+      data[obj.name] = obj.value;
+    });
     var id = $("#idSeleccionado").val();
 
     var _token = $("input[name=_token]").val();
@@ -1654,18 +1738,37 @@ $(function () {
     var url = currentURL + '/Ivr/' + id;
     $.post(url, {
       Empresas_id: Empresas_id,
-      dataForm: dataForm,
+      dataForm: data,
       _method: _method,
       _token: _token
     }, function (data, textStatus, xhr) {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
       $('.viewResult').html(data);
       $('.viewResult #tableivr').DataTable({
         "lengthChange": true,
         "order": [[2, "asc"]]
       });
       Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
+  /**
+   * Funcion para mostrar los errores de los formularios
+   */
+
+  function printErrorMsg(msg) {
+    $(".print-error-msg").find("ul").html('');
+    $(".print-error-msg").css('display', 'block');
+    $(".form-control").removeClass('is-invalid');
+    $(".print-error-msg").find("ul").append('<li>Es un campo obligatorio</li>');
+
+    for (var clave in msg) {
+      var data = clave.split('.');
+      $("[name='" + data[1] + "']").addClass('is-invalid');
+    }
+  }
 });
 
 /***/ }),

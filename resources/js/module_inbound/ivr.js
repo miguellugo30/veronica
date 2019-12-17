@@ -21,19 +21,24 @@ $(function() {
      */
     $(document).on('click', '.saveIvr', function(event) {
         event.preventDefault();
-        $('#modal').modal('hide');
+
         let dataForm = $("#formCreateIvr").serializeArray();
+        var data = {};
+        $(dataForm).each(function(index, obj) {
+            data[obj.name] = obj.value;
+        });
         let Empresas_id = $("#Empresas_id").val();
         let _token = $("input[name=_token]").val();
         let url = currentURL + '/Ivr';
 
         $.post(url, {
-
             Empresas_id: Empresas_id,
-            dataForm: dataForm,
+            dataForm: data,
             _token: _token
         }, function(data, textStatus, xhr) {
 
+            $('.modal-backdrop ').css('display', 'none');
+            $('#modal').modal('hide');
             $('.viewResult').html(data);
 
             $('.viewResult #tableivr').DataTable({
@@ -47,6 +52,8 @@ $(function() {
                 'El registro ha sido guardado.',
                 'success'
             )
+        }).fail(function(data) {
+            printErrorMsg(data.responseJSON.errors);
         });
     });
     /**
@@ -195,9 +202,13 @@ $(function() {
      */
     $(document).on('click', '.updateIvr', function(event) {
         event.preventDefault();
-        $('#modal').modal('hide');
+
         let Empresas_id = $("#Empresas_id").val();
         let dataForm = $("#formCreateIvr").serializeArray();
+        var data = {};
+        $(dataForm).each(function(index, obj) {
+            data[obj.name] = obj.value;
+        });
         let id = $("#idSeleccionado").val();
         let _token = $("input[name=_token]").val();
         let _method = "PUT";
@@ -206,11 +217,13 @@ $(function() {
         $.post(url, {
 
             Empresas_id: Empresas_id,
-            dataForm: dataForm,
+            dataForm: data,
             _method: _method,
             _token: _token
         }, function(data, textStatus, xhr) {
 
+            $('.modal-backdrop ').css('display', 'none');
+            $('#modal').modal('hide');
             $('.viewResult').html(data);
 
             $('.viewResult #tableivr').DataTable({
@@ -224,6 +237,21 @@ $(function() {
                 'El registro ha sido guardado.',
                 'success'
             )
+        }).fail(function(data) {
+            printErrorMsg(data.responseJSON.errors);
         });
     });
+    /**
+     * Funcion para mostrar los errores de los formularios
+     */
+    function printErrorMsg(msg) {
+        $(".print-error-msg").find("ul").html('');
+        $(".print-error-msg").css('display', 'block');
+        $(".form-control").removeClass('is-invalid');
+        $(".print-error-msg").find("ul").append('<li>Es un campo obligatorio</li>');
+        for (var clave in msg) {
+            var data = clave.split('.');
+            $("[name='" + data[1] + "']").addClass('is-invalid');
+        }
+    }
 });

@@ -7,6 +7,8 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Nimbus\Http\Controllers\LogController;
 use Illuminate\Support\Facades\Auth;
+use Modules\Inbound\Http\Requests\DesviosRequest;
+
 use Nimbus\User;
 use Nimbus\Desvios;
 use Nimbus\Canales;
@@ -47,7 +49,7 @@ class DesviosController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(DesviosRequest $request)
     {
         /**
         * Insertar información del desvio
@@ -102,7 +104,7 @@ class DesviosController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(DesviosRequest $request, $id)
     {
         Desvios::where( 'id', $id )
             ->update([

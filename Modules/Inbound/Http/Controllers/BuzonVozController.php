@@ -7,6 +7,8 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Nimbus\Http\Controllers\LogController;
 use Illuminate\Support\Facades\Auth;
+use Modules\Inbound\Http\Requests\BuzonVozRequest;
+
 use Nimbus\User;
 use Nimbus\Buzon_Voz;
 use Nimbus\Audios_Empresa;
@@ -33,7 +35,7 @@ class BuzonVozController extends Controller
      */
     public function create()
     {
-        $user = User::find( Auth::id() );
+        $user = Auth::user();
         $empresa_id = $user->id_cliente;
         $audios = Audios_Empresa::active()->where('Empresas_id',$empresa_id)->get();
         //dd($audios);
@@ -47,20 +49,19 @@ class BuzonVozController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(BuzonVozRequest $request)
     {
         /**
         * Insertar información del Buzon de voz
         */
-        //dd($request);
         Buzon_Voz::create(
             [
-                'nombre' => $request->input('nombre'),
-                'tiempo_maximo'   => $request->input('tiempo_maximo'),
-                'terminacion' => $request->input('terminacion'),
-                'correos' => $request->input('correos'),
-                'Audios_Empresa_id' => $request->input('Audios_Empresa_id'),
-                'Empresas_id' => $request->input('Empresas_id')
+                'nombre' => $request->nombre,
+                'tiempo_maximo'   => $request->tiempo_maximo,
+                'terminacion' => $request->terminacion,
+                'correos' => $request->correos,
+                'Audios_Empresa_id' => $request->Audios_Empresa_id,
+                'Empresas_id' => $request->Empresas_id
             ]
         );
         return redirect()->route('Buzon_Voz.index');
@@ -69,7 +70,7 @@ class BuzonVozController extends Controller
          */
         $mensaje = 'Se creo un nuevo registro, informacion capturada:'.var_export($request->all(), true);
         $log = new LogController;
-        $log->store('Insercion', 'User',$mensaje, $user->id);
+        $log->store('Insercion', 'User',$mensaje, Auth::id());
     }
 
     /**
@@ -104,16 +105,15 @@ class BuzonVozController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(BuzonVozRequest $request, $id)
     {
         Buzon_Voz::where( 'id', $id )
             ->update([
-                'nombre' => $request->input('nombre'),
-                'tiempo_maximo'   => $request->input('tiempo_maximo'),
-                'terminacion' => $request->input('terminacion'),
-                'correos' => $request->input('correos'),
-                'Audios_Empresa_id' => $request->input('Audios_Empresa_id'),
-                'Empresas_id' => $request->input('Empresas_id')
+                'nombre' => $request->nombre,
+                'tiempo_maximo'   => $request->tiempo_maximo,
+                'correos' => $request->correos,
+                'Audios_Empresa_id' => $request->Audios_Empresa_id,
+                'Empresas_id' => $request->Empresas_id
                 ]);
             /**
              * Creamos el logs

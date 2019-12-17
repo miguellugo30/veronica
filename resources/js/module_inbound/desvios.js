@@ -59,8 +59,8 @@ $(function() {
         });
     });
     /**
-    * Evento para mostrar el formulario de crear un nuevo desvio
-    */
+     * Evento para mostrar el formulario de crear un nuevo desvio
+     */
     $(document).on("click", ".newDesvio", function(e) {
         event.preventDefault();
         $('#tituloModal').html('Agregar Desvio');
@@ -75,11 +75,10 @@ $(function() {
         });
     });
     /**
-    * Evento para guardar el nuevo agente
-    */
+     * Evento para guardar el nuevo agente
+     */
     $(document).on('click', '.saveDesvio', function(event) {
         event.preventDefault();
-        $('#modal').modal('hide');
 
         let nombre = $("#nombre").val();
         let Canales_id = $("#Canales_id").val();
@@ -97,6 +96,8 @@ $(function() {
             Empresas_id: Empresas_id,
             _token: _token
         }, function(data, textStatus, xhr) {
+            $('#modal').modal('hide');
+            $('.modal-backdrop ').css('display', 'none');
 
             $('.viewResult').html(data);
 
@@ -111,12 +112,15 @@ $(function() {
                 'El registro ha sido guardado.',
                 'success'
             )
+
+        }).fail(function(data) {
+            printErrorMsg(data.responseJSON.errors);
         });
     });
     /**
-    * Evento para eliminar un desvio
-    *
-    */
+     * Evento para eliminar un desvio
+     *
+     */
     $(document).on('click', '.deleteDesvio', function(event) {
         event.preventDefault();
         Swal.fire({
@@ -182,11 +186,10 @@ $(function() {
     /**
      * Evento para guardar los cambios del Desvio
      */
-     $(document).on('click', '.updateDesvio', function(event) {
-         event.preventDefault();
-         $('#modal').modal('hide');
-        let id = $("#id").val();
+    $(document).on('click', '.updateDesvio', function(event) {
+        event.preventDefault();
 
+        let id = $("#id").val();
         let nombre = $("#nombre").val();
         let Canales_id = $("#Canales_id").val();
         let dial = $("#dial").val();
@@ -195,7 +198,7 @@ $(function() {
         let _token = $("input[name=_token]").val();
         let _method = "PUT";
         let url = currentURL + '/Desvios/' + id;
-        
+
         $.post(url, {
             nombre: nombre,
             Canales_id: Canales_id,
@@ -206,7 +209,9 @@ $(function() {
             _token: _token
         }, function(data, textStatus, xhr) {
             $('.viewResult').html(data);
-            
+            $('#modal').modal('hide');
+            $('.modal-backdrop ').css('display', 'none');
+
             $('.viewResult #tableDesvios').DataTable({
                 "lengthChange": true,
                 "order": [
@@ -217,9 +222,23 @@ $(function() {
                 'Correcto!',
                 'El registro ha sido guardado.',
                 'success'
-                )
-            });
-            
+            )
+        }).fail(function(data) {
+            printErrorMsg(data.responseJSON.errors);
         });
-
+    });
+    /**
+     * Funcion para mostrar los errores de los formularios
+     */
+    function printErrorMsg(msg) {
+        $(".print-error-msg").find("ul").html('');
+        $(".print-error-msg").css('display', 'block');
+        $(".form-control").removeClass('is-invalid');
+        for (var clave in msg) {
+            $("#" + clave).addClass('is-invalid');
+            if (msg.hasOwnProperty(clave)) {
+                $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
+            }
+        }
+    }
 });
