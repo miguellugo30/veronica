@@ -1,7 +1,10 @@
 <div class="row">
     <div class="col">
+        <div class="form-group text-right">
+            <b>* Campos obligatorios.</b>
+        </div>
         <div class="form-group">
-            <label for="grupo">Grupo</label>
+            <label for="grupo"><b>Grupo *:</b></label>
             <select name="grupo" id="grupo" class="form-control form-control-sm">
                 <option value="">Sin Grupo</option>
                 @foreach ($grupos as $grupo)
@@ -12,7 +15,7 @@
             @csrf
         </div>
         <div class="form-group">
-            <label for="tipo_licencia">Tipo Licencia</label>
+            <label for="tipo_licencia"><b>Tipo Licencia *:</b></label>
             <select name="tipo_licencia" id="tipo_licencia" class="form-control form-control-sm">
                 <option value="">Selecciona un licencia</option>
                 <option value="Inbound"  {{ $agente->tipo_licencia == 'Inbound' ? 'selected=selected' : '' }} {{ ( $empresa->Config_Empresas->agentes_entrada != 0 ) ? '' : 'style=display:none' }}>Inbound</option>
@@ -21,34 +24,38 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="nivel">Nivel</label>
+            <label for="nivel"><b>Nivel *:</b></label>
             <input type="number" class="form-control form-control-sm" name="nivel" id="nivel"  placeholder="Nivel" min="0"  value="{{$agente->nivel}}">
         </div>
         <div class="form-group">
-            <label for="nombre">Nombre</label>
+            <label for="nombre"><b>Nombre *:</b></label>
             <input type="text" class="form-control form-control-sm" name="nombre" id="nombre" placeholder="Nombre" value="{{$agente->nombre}}">
         </div>
         <div class="form-group">
-            <label for="usuario">Usuario</label>
+            <label for="usuario"><b>Usuario *:</b></label>
             <input type="text" class="form-control form-control-sm" name="usuario" id="usuario" placeholder="Usuario" value="{{$agente->usuario}}">
         </div>
         <div class="form-group">
-            <label for="contrasena">Contraseña</label>
+            <label for="contrasena"><b>Contraseña *:</b></label>
             <input type="text" class="form-control form-control-sm" name="contrasena" id="contrasena" placeholder="Contraseña" value="{{$agente->contrasena}}">
         </div>
         <div class="form-group">
-            <label for="canal">Canal</label>
+            <label for="canal"><b>Canal *:</b></label>
             <select name="canal" id="canal" class="form-control form-control-sm">
                 <option value="">Selecciona un canal</option>
                 @foreach ($canales as $canal)
                     <option value="{{$canal->id}}" {{($canal->id == $agente->Canales_id) ? 'selected = "selected"':'' }}>{{$canal->Cat_Tipo_Canales->nombre}}</option>
                 @endforeach
             </select>
-            <!--input type="text" class="form-control form-control-sm" name="protocolo" id="protocolo"  placeholder=""-->
         </div>
         <div class="form-group">
-            <label for="extension">Extensión</label>
-            <input type="text" class="form-control form-control-sm" name="extension" id="extension" placeholder="Extensión" value="{{$agente->extension}}">
+            <label for="extension"><b>Extensión *:</b></label>
+            <select name="extension" id="extension" class="form-control form-control-sm">
+                <option value="">Selecciona un extensión</option>
+                @foreach ($cat_extensiones as $extension)
+                    <option value="{{$extension->extension}}" {{ $agente->extension_real == $extension->extension ? 'selected=selected' : '' }}>{{$extension->extension}}</option>
+                @endforeach
+            </select>
         </div>
     </div>
     <div class="col">

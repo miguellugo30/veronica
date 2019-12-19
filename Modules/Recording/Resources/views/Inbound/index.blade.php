@@ -1,121 +1,109 @@
 <div class="box box-primary">
     <div class="box-header with-border">
-        <h3 class="box-title"><i class="fas fa fa-filter"></i> Filtro</h3>
-          <div class="center p1 bg-blue" role="alert" style="text-align:center;">Filtrar Por:</div>
+        <h3 class="box-title"><i class="fas fa fa-filter"></i> <b>Filtro</b></h3>
         <div class="box-tools pull-right">
-                {{--@can('delete grabaciones')
-                <button type="button" class="btn btn-danger  btn-sm deleteGrabacion" style="display:none"><i class="fas fa-trash-alt"></i> Eliminar</button>
-                @endcan
-                @can('create grabaciones')
-                <button type="button" class="btn btn-primary btn-sm downloadGrabacion" style="display:none" data-widget="remove"><i class="fas fa-plus"></i> Descargar</button>
-                @endcan--}}
-            <input type="hidden" name="idSeleccionado" id="idSeleccionado" value="">
+            <button class='btn btn-primary btn-sm nuevo-reporte' style='display:none'>
+                Nuevo Reporte
+            </button>
         </div>
-        <form enctype="multipart/form-data" id="filtargrabaciones" method="post">
-        <div class="form-row">
-                <div class="form-group col-md-3">
-                </div>
-                <div class="form-group col-md-2">
-                        <label class="mr-sm-2 mb-0" for="campana"><b>Campaña:</b></label>
-                        <select class="form-control form-control-sm campana" name="campana" id="campana">
-                            <option>Seleccione una Campaña</option>
-                                @foreach ($campanas as $campana)
-                                <option value="{{ $campana->id }}">{{ $campana->nombre }}</option>
-                                @endforeach
-                        </select>
+    </div><!-- /.box-header -->
+    <div class="box-body">
+        <div class="body-filtro">
+            <form enctype="multipart/form-data" id="filtargrabaciones" method="post">
+                <div class="row justify-content-md-center">
+                    <div class="alert alert-dark col-6" role="alert">
+                        <b>Filtros por fecha</b>
                         @csrf
-                </div>
-                <div class="form-group col-md-2">
-                        <label class="mr-sm-2 mb-0" for="agente"><b>Agente:</b></label>
-                        <select class="form-control form-control-sm agente" name="agente" id="agente" disabled>
-                            <option>Selecciona un Agente</option>
-                                {{--@foreach ($nombres as $nombre)
-                                <option value="{{ $nombre->id }}">{{ $nombre->nombre }}</option>
-                                @endforeach--}}
-                        </select>
-                </div>
-                <div class="form-group col-md-2">
-                    <label class="mr-sm-2 mb-0" for="extension"><b>Extension:</b></label>
-                    <select class="form-control form-control-sm extension" name="extension" id="extension" disabled>
-                        <option>Selecciona una Extension</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-3">
-                </div>
-                <div class="form-group col-md-3">
-                </div>
-                <div class="form-group col-md-2">
-                    <label class="mr-sm-2 mb-0" for="numOrigen"><b>Numero Origen:</b></label>
-                    <input class="form-control form-control-sm" type="text" value="" name="numOrigen" id="numOrigen"/>
-                </div>
-                <div class="form-group col-md-2">
-                    <label class="mr-sm-2 mb-0" for="fechaIni"><b>Fecha Inicio:</b></label>
-                    <input class="form-control form-control-sm" type="date" value="<?php echo date('Y-m-d'); ?>" name="fechaIni" id="fechaIni"/>
-                </div>
-                <div class="form-group col-md-2">
-                    <label class="mr-sm-2 mb-0" for="hrIni"><b>Hora Inicio:</b></label>
-                    <input class="form-control form-control-sm" type="time" value="00:00" name="hrIni" id="hrIni"/>
-                </div>
-                <div class="form-group col-md-2">
-                </div>
-                <div class="form-group col-md-2">
-                </div>
-                <div class="form-group col-md-1">
                     </div>
-                <div class="form-group col-md-2">
-                    <label class="mr-sm-2 mb-0" for="numDestino"><b>Numero Destino:</b></label>
-                    <input class="form-control form-control-sm" type="text" value="" name="numDestino" id="numDestino"/>
                 </div>
-                <div class="form-group col-md-2">
-                        <label class="mr-sm-2 mb-0" for="fechaFin"><b>Fecha Fin:</b></label>
-                        <input class="form-control form-control-sm" type="date" value="<?php echo date('Y-m-d'); ?>" name="fechaFin" id="fechaFin"/>
+                <div class="row justify-content-md-center">
+                    <div class="col-3">
+                        <div class="form-group row">
+                            <label class="col-sm-5 col-form-label" for="fechaIni"><b>Fecha Inicio:</b></label>
+                            <div class="col-sm-7">
+                                <input class="form-control form-control-sm" type="date" value="<?php echo date('Y-m-d'); ?>" name="fechaIni" id="fechaIni"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-5 col-form-label" for="fechaFin"><b>Fecha Fin:</b></label>
+                            <div class="col-sm-7">
+                                <input class="form-control form-control-sm" type="date" value="<?php echo date('Y-m-d'); ?>" name="fechaFin" id="fechaFin"/>
+                            </div>
+                        </div>
+                    </div><!-- ./col -->
+                    <div class="col-3">
+                        <div class="form-group row">
+                            <label class="col-sm-5 col-form-label" for="hrIni"><b>Hora Inicio:</b></label>
+                            <div class="col-sm-7">
+                                <input class="form-control form-control-sm" type="time" value="00:00" name="hrIni" id="hrIni"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-5 col-form-label" for="hrFin"><b>Hora Fin:</b></label>
+                            <div class="col-sm-7">
+                                <input class="form-control form-control-sm" type="time" value="23:59" name="hrFin" id="hrFin"/>
+                            </div>
+                        </div>
+                    </div><!-- ./col -->
+                </div><!-- ./row -->
+                <div class="row justify-content-md-center">
+                    <button type="submit" class="btn btn-primary btn-sm filtrar">Generar</button>
                 </div>
-                <div class="form-group col-md-2">
-                        <label class="mr-sm-2 mb-0" for="hrFin"><b>Hora Fin:</b></label>
-                        <input class="form-control form-control-sm" type="time" value="23:59" name="hrFin" id="hrFin"/>
-                </div>
-                <div class="form-group col-md-3">
-                </div>
-                <div class="form-group col-md-3">
-                </div>
-                <div class="form-group col-md-2">
-                        <label class="mr-sm-2 mb-0" for="estatus"><b>Estatus de la Grabacion:</b></label>
-                        <select class="form-control form-control-sm" name="estatus" id="estatus">
-                            <option>Seleccione una Opcion</option>
-                                <option value="1">En el servidor de Grabaciones</option>
-                                <option value="2">En mi servidor FTP</option>
-                                <option value="3">Grabaciones Eliminadas</option>
-                        </select>
-                </div>
+            </form>
+        </div><!-- ./row -->
+    </div><!-- ./box-body -->
+</div><!-- ./box-primary -->
 
-                <div class="form-group col-md-2">
-                        <label class="mr-sm-2 mb-0" for="calificacion"><b>Calificacion:</b></label>
-                        <select class="form-control form-control-sm calificacion" name="calificacion" id="calificacion" disabled>
-                            <option>Seleccione una Calificacion</option>
-                                {{--@foreach ($calificaciones_id as $calificacion_id)
-                                <option value="{{ $calificacion_id->Calificaciones_id }}">{{ $calificacion_id->Calificaciones_id }}</option>
-                                @endforeach--}}
-                        </select>
-                </div>
-                <div class="form-group col-md-2">
-                        <label class="mr-sm-2 mb-0" for="subcalificacion"><b>Subcalificacion:</b></label>
-                        <select class="form-control form-control-sm subcalificacion" name="subcalificacion" id="subcalificacion" disabled>
-                            <option>Seleccione una Subcalificacion</option>
-                                {{--@foreach ($subcalificaciones as $subcalificacion)
-                                <option value="{{ $subcalificacion->id }}">{{ $subcalificacion->nombre }}</option>
-                                @endforeach--}}
-                        </select>
-                </div>
-                <div class="form-group col-md-6">
-                </div>
-                <button type="submit" class="btn btn-primary filtrar">Filtrar</button>
+
+<div class="box box-primary" id='body-reporte' style='display:none'>
+    <div class="box-header with-border">
+        <h3 class="box-title"><b><i class="fas fa-filter"></i> Reporte: <label id="rangoFiltro"></label> </b></h3>
+        <div class="box-tools pull-right">
+            <button class='btn btn-primary btn-sm descargar-reporte' >
+                <i class="far fa-file-excel"></i>
+                Descargar excel
+            </button>
+            <button class='btn btn-primary btn-sm descargar-grabaciones' >
+                <i class="fas fa-download"></i>
+                Descargar grabaciones
+            </button>
+            <button class='btn btn-primary btn-sm eliminar-grabaciones' >
+                <i class="fas fa-trash-alt"></i>
+                Eliminar grabaciones
+            </button>
         </div>
-        </form>
-    </div>
-    <hr>
-    <div class="resultado">
-
+    </div><!-- /.box-header -->
+    <div class="box-body">
+        <div class="row ">
+            <div class="box-tools">
+                <div class="col-12">
+                    <i class="fas fa-circle text-secondary"></i> La grabacion esta en el servidor de grabaciones<br>
+                    <i class="fas fa-circle text-primary"></i> La grabacion esta en el FTP del cliente
+                </div>
+            </div>
+            <div class="col-12 viewreportedesglose">
+            </div>
+        </div><!-- /.row -->
+    </div><!-- ./box-body -->
+</div>
+<iframe id="iFrameDescarga" src="" frameborder="0" style="display:none"></iframe>
+<!-- MODAL -->
+<div class="modal fade " tabindex="-1" id="modal" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tituloModal"><i class="fas fa-volume-up"></i> Reproducir audio</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center" id="modal-body">
+                    ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-secondary float-left" data-dismiss="modal"><i class="fas fa-times"></i> Cerrar</button>
+            </div>
+        </div>
     </div>
 </div>
-
-
+<!-- FIN MODAL -->

@@ -35,7 +35,7 @@ class QueryreportdesgloseController extends Controller
                                 'C.nombre AS campana',
                                 'D.nombre AS agente',
                                 DB::raw('TIMEDIFF( E.fecha_respuesta, A.fecha_inicio ) AS espera'),
-                                DB::raw('TIMEDIFF( A.fecha_fin, A.fecha_inicio ) duracion'), 
+                                DB::raw('TIMEDIFF( A.fecha_fin, A.fecha_inicio ) duracion'),
                                 DB::raw('TIMEDIFF( E.fecha_calificacion, A.fecha_fin ) AS definicion')
                             )
                     ->whereBetween('A.fecha_inicio', [$fechainicio, $fechafin])

@@ -18,7 +18,7 @@
     <div class="box-header with-border">
         <h3 class="box-title"><b><i class="fas fa-filter"></i> Filtro</b></h3>
         <div class="box-tools pull-right">
-            <button class='btn btn-primary btn-sm nuevo-reporte' style='display:none'> 
+            <button class='btn btn-primary btn-sm nuevo-reporte' style='display:none'>
                 Nuevo Reporte
             </button>
         </div>
@@ -55,38 +55,14 @@
                                     <label for="hora-inicio" class="col-sm-5 col-form-label col-form-label-sm">Hora Inicio:</label>
                                     <div class="hora col-sm-5">
                                     <input type="number" name="hora_inicio" id="hora_inicio" min="00" max="23" class="form-control form-control-sm" value="00" placeholder="00" size="2" onchange="if(parseInt(this.value,10)<10)this.value='0'+this.value;">:
-                                    <input type="number" name="min_inicio" id="min_inicio"  min="0" max="59" class="form-control form-control-sm" value="00" placeholder="00" size="2" onchange="if(parseInt(this.value,10)<10)this.value='0'+this.value;">  
+                                    <input type="number" name="min_inicio" id="min_inicio"  min="0" max="59" class="form-control form-control-sm" value="00" placeholder="00" size="2" onchange="if(parseInt(this.value,10)<10)this.value='0'+this.value;">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="hora-fin" class="col-sm-5 col-form-label col-form-label-sm">Hora Fin:</label>
                                     <div class="hora col-sm-5">
                                     <input type="number" name="hora_fin" id="hora_fin" min="00" max="23" class="form-control form-control-sm" value="23" placeholder="23" size="2" onchange="if(parseInt(this.value,10)<10)this.value='0'+this.value;">:
-                                    <input type="number" name="min_fin" id="min_fin"  min="0" max="59" class="form-control form-control-sm" value="59" placeholder="59" size="2" onchange="if(parseInt(this.value,10)<10)this.value='0'+this.value;">  
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row justify-content-md-center">
-                            <div class="alert alert-dark col-8" role="alert">
-                                <b>Filtros por numero</b>
-                            </div>
-                        </div>
-
-                        <div class="row justify-content-md-center">
-                            <div class="col-md-4">
-                                <div class="form-group row">
-                                    <label for="numero_origen" class="col-sm-5 col-form-label col-form-label-sm">Numero Origen:</label>
-                                    <div class="col-sm-7">
-                                        <input type="text" class="form-control form-control-sm" name="numero_origen" id="numero_origen" placeholder="Numero Origen">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group row">
-                                    <label for="numero_destino" class="col-sm-5 col-form-label col-form-label-sm">Numero Destino:</label>
-                                    <div class="col-sm-7">
-                                        <input type="text" class="form-control form-control-sm" name="numero_destino" id="numero_destino" placeholder="Numero Destino">
+                                    <input type="number" name="min_fin" id="min_fin"  min="0" max="59" class="form-control form-control-sm" value="59" placeholder="59" size="2" onchange="if(parseInt(this.value,10)<10)this.value='0'+this.value;">
                                     </div>
                                 </div>
                             </div>
@@ -106,7 +82,8 @@
     <div class="box-header with-border">
         <h3 class="box-title"><b><i class="fas fa-filter"></i> Desglose</b></h3>
         <div class="box-tools pull-right">
-            <button class='btn btn-primary btn-sm nuevo-reporte' > 
+            <button class='btn btn-primary btn-sm descargar-reporte' >
+                <i class="fas fa-circle-notch fa-spin" style="display:none"></i>
                 Descargar
             </button>
         </div>
@@ -114,92 +91,9 @@
     <div class="box-body">
         <div class="row ">
             <div class="col-12 viewreportedesglose">
-                                        
             </div>
         </div><!-- /.row -->
     </div><!-- ./box-body -->
 </div>
 
-
-
-<script>
-$(function() {
-    /*
-        $("#fecha-inicio").daterangepicker({
-                                            "showDropdowns": true,
-                                            "timePicker": true,
-                                            "timePicker24Hour": true,
-                                            "locale": {
-                                                "format": "DD/MM/YYYY",
-                                                "separator": " - ",
-                                                "applyLabel": "Seleccionar",
-                                                "cancelLabel": "Cancelar",
-                                                "fromLabel": "Desde",
-                                                "toLabel": "Hasta",
-                                                "customRangeLabel": "Custom",
-                                                "weekLabel": "W",
-                                                "daysOfWeek": [
-                                                    "Do",
-                                                    "Lu",
-                                                    "Ma",
-                                                    "Mi",
-                                                    "Ju",
-                                                    "Vi",
-                                                    "Sa"
-                                                ],
-                                                "monthNames": [
-                                                    "Enero",
-                                                    "Febrero",
-                                                    "Marzo",
-                                                    "Abril",
-                                                    "Mayo",
-                                                    "Junio",
-                                                    "Julio",
-                                                    "Agosto",
-                                                    "Septiembre",
-                                                    "Octubre",
-                                                    "Noviembre",
-                                                    "Diciembre"
-                                                ],
-                                                "firstDay": 1
-                                            },
-                                            "opens": "center",
-                                        });
-
-    */
-
-    var dateFormat = "mm/dd/yy",
-    from = $("#fecha-inicio")
-        .datepicker({
-            defaultDate: "+1w",
-            changeMonth: true,
-            numberOfMonths: 2,
-            dateFormat: "dd/mm/yy"
-        })
-        .on("change", function() {
-            to.datepicker("option", "minDate", getDate(this));
-        }),
-        to = $("#fecha-fin").datepicker({
-            defaultDate: "+1w",
-            changeMonth: true,
-            numberOfMonths: 2,
-            dateFormat: "dd/mm/yy"
-        })
-        .on("change", function() {
-            from.datepicker("option", "maxDate", getDate(this));
-        });
-
-    function getDate(element) {
-        var date;
-        try {
-            date = $.datepicker.parseDate(dateFormat, element.value);
-        } catch (error) {
-            date = null;
-        }
-        console.log( date );
-        return date;
-    }
-});
-
-</script>
-
+<iframe id="iFrameDescarga" src="" frameborder="0" style="display:none"></iframe>

@@ -73,6 +73,7 @@ Route::group(['namespace' => '\Modules\Inbound\Http\Controllers', 'prefix' => 'i
 * Rutas para CRUD de Reporte de Desglose de llamadas
 */
 Route::group(['namespace' => '\Modules\Inbound\Http\Controllers', 'prefix' => 'inbound', 'middleware' => 'auth'], function() {
+    Route::get('Desglose_llamadas/descargar/{fecha_inicio}/{fecha_fin}', 'DesgloseLlamadasController@update');
     Route::resource('Desglose_llamadas','DesgloseLlamadasController');
 });
 

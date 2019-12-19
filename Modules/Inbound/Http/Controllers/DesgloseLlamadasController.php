@@ -5,14 +5,11 @@ namespace Modules\Inbound\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Nimbus\Http\Controllers\LogController;
 use Illuminate\Support\Facades\Auth;
+use Nimbus\Exports\ReporteDesgloceExport;
+use Maatwebsite\Excel\Facades\Excel;
 
-use Nimbus\User;
-use Nimbus\Crd_Call_Center;
 use Modules\Inbound\Http\Controllers\QueryreportdesgloseController;
-
-use Nimbus\Cdr_call_center;
 
 class DesgloseLlamadasController extends Controller
 {
@@ -22,8 +19,6 @@ class DesgloseLlamadasController extends Controller
      */
     public function index()
     {
-
-        //dd ($empresa_id);
         return view('inbound::DesgloseLlamadas.index');
     }
 
@@ -43,20 +38,12 @@ class DesgloseLlamadasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
         $user = Auth::user();
         $empresa_id = $user->id_cliente;
-
         $desglose = QueryreportdesgloseController::query( $request->dateinicio, $request->datefin, $empresa_id );
-        //Cdr_call_center::empresa(24)->whereBetween('fecha_inicio', [$fechaI, $fechaF])->get();
-        
-        //dd($desglose);
-
         return view('inbound::DesgloseLlamadas.show',compact('desglose'));
-
-
     }
-
     /**
      * Show the specified resource.
      * @param int $id
@@ -64,7 +51,7 @@ class DesgloseLlamadasController extends Controller
      */
     public function show($id)
     {
-        return view('inbound::show');
+
     }
 
     /**
@@ -83,9 +70,11 @@ class DesgloseLlamadasController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update( $fecha_inicio, $fecha_fin )
     {
-        //
+        $user = Auth::user();
+        $empresa_id = $user->id_cliente;
+        return Excel::download(new ReporteDesgloceExport($fecha_inicio, $fecha_fin, $empresa_id), 'reporte_desglose_llamadas.xlsx');
     }
 
     /**

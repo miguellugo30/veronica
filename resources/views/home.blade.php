@@ -46,7 +46,7 @@
                             </a>
                         </div>
                         <div class="col  text-center card m-1 bg-danger text-white thumbnail">
-                            <a href="http://localhost:8000/recording">
+                            <a href="/recording">
                             <div class="pt-3">
                                 <i class="fas fa-microphone-alt fa-5x"></i>
                             </div>

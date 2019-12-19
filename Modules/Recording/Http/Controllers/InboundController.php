@@ -5,23 +5,17 @@ namespace Modules\Recording\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-
-use Nimbus\User;
-use Nimbus\Agentes;
-//use Nimbus\Cat_Extensiones;
-use Nimbus\Campanas;
-use Nimbus\Calificaciones;
-use Nimbus\Sub_Calificaciones;
 use Illuminate\Support\Facades\Auth;
+use Modules\Recording\Http\Controllers\QueryReporteRecordingInboundController;
+use Nimbus\Exports\ReporteRecordingInboundExport;
+use Maatwebsite\Excel\Facades\Excel;
+use nusoap_client;
+use Storage;
+use Illuminate\Support\Facades\Artisan;
+use ZipArchive;
+
 use Nimbus\Empresas;
 use Nimbus\Grabaciones;
-use Nimbus\Formularios;
-use Nimbus\Miembros_Campana;
-use Nimbus\Grupos;
-//use Nimbus\Grupo_Calificaciones;
-use DB;
-use Session;
-use nusoap_client;
 
 class InboundController extends Controller
 {
@@ -31,14 +25,7 @@ class InboundController extends Controller
      */
     public function index()
     {
-        /**
-         * Obtenemos los datos del usuario Logueado
-         */
-        $user = User::find( Auth::id() );
-        $empresa_id = $user->id_cliente;
-        $campanas = Campanas::active()->where('Empresas_id',$empresa_id)->where('tipo_marcacion','Inbound')->get();
-        Session::flash('campanas', $campanas);
-        return view('recording::Inbound.index',compact('campanas'));
+        return view('recording::Inbound.index');
 
     }
 
@@ -58,37 +45,11 @@ class InboundController extends Controller
      */
     public function store(Request $request)
     {
-        /*
-        //$campana_id = $request->input('campana');
-        $campanas = Session::get('campanas');
-        $campana_id = $request->all();
-        $miembros = Miembros_Campana::where('Campanas_id',$campana_id)->get();
+        $user = Auth::user();
+        $empresa_id = $user->id_cliente;
+        $Grabaciones = QueryReporteRecordingInboundController::query($request->fechaIni, $request->fechaFin, $empresa_id );
 
-        foreach ($miembros as $miembro){
-
-            $nombres[] = Agentes::where('id',$miembro->Agentes_id)->get();
-
-        }
-            Session::flash('nombres', $nombres);
-            return $nombres;
-            //return view('recording::Inbound.index',compact('campanas','nombres'));
-        */
-            $user = User::find( Auth::id() );
-            $empresa_id = $user->id_cliente;
-            $fechaI = $request->input('fechaIni');
-            $fechaF = $request->input('fechaFin');
-
-            $Grabaciones =  DB::select("SELECT GR.estado AS estado, C.nombre AS campana, A.nombre AS agente, A.extension as extension, CCC.callerid AS numero, CDD.fecha_inicio AS inicio, CDD.fecha_fin AS fin,
-            TIMEDIFF( CDD.fecha_fin, CDD.fecha_inicio ) AS duracion, GR.nombre_archivo as escuchar
-            FROM Grabaciones GR
-            RIGHT JOIN Cdr_call_center_detalles CDD ON (GR.uniqueid = CDD.uniqueid)
-            JOIN `Cdr_Asignacion_Agente` CAA ON (GR.uniqueid = CAA.uniqueid)
-            JOIN  `Cdr_call_center` CCC ON (GR.uniqueid = CCC.uniqueid)
-            JOIN Agentes A ON (CAA.Agentes_id = A.id)
-            JOIN Campanas C ON (CDD.id_aplicacion = C.id)
-            WHERE GR.Empresas_id = $empresa_id AND GR.fecha BETWEEN '$fechaI' AND '$fechaF'");
-
-            return view('recording::Inbound.show',compact('Grabaciones','user'));
+        return view('recording::Inbound.show',compact('Grabaciones'));
     }
 
     /**
@@ -96,9 +57,40 @@ class InboundController extends Controller
      * @param int $id
      * @return Response
      */
-    public function show($id)
+    public function listen(Request $request)
     {
-        return view('recording::Inbound.show');
+        $user = Auth::user();
+        $empresa_id = $user->id_cliente;
+        $infoAudio = explode( '|', $request->grab);
+
+        $pbx = Empresas::empresa($empresa_id)->active()->with('Config_Empresas')->with('Config_Empresas.ms')->get()->first();
+        $wsdl = 'http://'.$pbx->Config_Empresas->ms->ip_pbx.'/ws-ms/index.php';
+        $cliente =  new  nusoap_client( $wsdl );
+
+        $result =  $cliente->call('BajarGrabacionLlamada', array(
+                                                                        'empresas_id' => $empresa_id,
+                                                                        'id_grabacion' => $infoAudio[0],
+                                                                        'tipo' => "Inbound"
+                                                                    ));
+
+        $error = $result['error'];
+
+        if ( $result['error'] == 1 )
+        {
+            $archivo = explode( '/', $infoAudio[0] );
+            $ruta = Storage::disk('public')->getAdapter()->getPathPrefix();
+            $source = file_get_contents( 'http://'.$pbx->Config_Empresas->ms->ip_pbx.'/ws-ms/tmp/'.$archivo[1] );
+            file_put_contents( $ruta.'tmp/'.$archivo[1], $source );
+            $ruta = Storage::url( 'tmp/'.$archivo[1] ) ;
+            $mensaje = "";
+        }
+        else
+        {
+            $ruta = '';
+            $mensaje = $result['mensaje']."; id de error: ".$infoAudio[1];
+        }
+        return view('recording::Inbound.reproducir', compact( 'error', 'ruta', 'mensaje' ));
+
     }
 
     /**
@@ -106,9 +98,68 @@ class InboundController extends Controller
      * @param int $id
      * @return Response
      */
-    public function edit($id)
+    public function dowloadZip( Request $request )
     {
-        return view('recording::Inbound.edit');
+        /**
+         * Obtenemos el id empresa con el usuario
+         */
+        $user = Auth::user();
+        $empresa_id = $user->id_cliente;
+        /**
+         * Creamos el directorio donde se guardaran las grabaciones
+         */
+        Storage::disk('public')->makeDirectory('/tmp/'.$empresa_id);
+        /**
+         * Obtenemos la ip de PBX que tiene la empresa
+         */
+        $pbx = Empresas::empresa($empresa_id)->active()->with('Config_Empresas')->with('Config_Empresas.ms')->get()->first();
+        /**
+         * Inicializamos el consumo del PBX
+         */
+        $wsdl = 'http://'.$pbx->Config_Empresas->ms->ip_pbx.'/ws-ms/index.php';
+        $cliente =  new  nusoap_client( $wsdl );
+         /**
+         * Limpiamos los archivos del directorio TMP
+         */
+        Artisan::call('delete:tmp');
+        /**
+         * Recuperamos las grabaciones a descargar
+         */
+        $grabaciones = $request->valoresCheck;
+        /**
+         * Descargamos las grabaciones
+         */
+        for ($i=0; $i < count( $grabaciones ); $i++) {
+
+            $grabacion = Grabaciones::find( $grabaciones[$i] );
+
+            $result =  $cliente->call('BajarGrabacionLlamada', array(
+                                                                            'empresas_id' => $empresa_id,
+                                                                            'id_grabacion' => $grabacion->nombre_archivo,
+                                                                            'tipo' => "Inbound"
+                                                                        ));
+            if ( $result['error'] == 1 )
+            {
+                $archivo = explode( '/', $grabacion->nombre_archivo );
+                $ruta = Storage::disk('public')->getAdapter()->getPathPrefix();
+                $source = file_get_contents( 'http://'.$pbx->Config_Empresas->ms->ip_pbx.'/ws-ms/tmp/'.$archivo[1] );
+                file_put_contents( $ruta.'tmp/'.$empresa_id.'/'.$archivo[1], $source );
+                $ruta = Storage::url( 'tmp/'.$empresa_id.'/'.$archivo[1] ) ;
+            }
+
+        }
+        /**
+         * CREAMOS EL ZIP CON LOS ARCHIVOS
+         **/
+        $zipper = new \Chumper\Zipper\Zipper;
+        $ruta = glob(public_path( '/storage/tmp/'.$empresa_id.'/*' ) );
+        $zipper->make('storage/tmp/grabaciones_'.$empresa_id.'.zip')->add( $ruta )->close();
+        $zipper->close();
+        /**
+         * Borramos el directorio temporal
+         */
+        Storage::disk('public')->deleteDirectory('/tmp/'.$empresa_id);
+        return 'storage/tmp/grabaciones_'.$empresa_id.'.zip';
     }
 
     /**
@@ -117,9 +168,11 @@ class InboundController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update($fecha_inicio, $fecha_fin)
     {
-        //
+        $user = Auth::user();
+        $empresa_id = $user->id_cliente;
+        return Excel::download(new ReporteRecordingInboundExport($fecha_inicio, $fecha_fin, $empresa_id), 'reporte_recording_inbound.xlsx');
     }
 
     /**
@@ -127,104 +180,48 @@ class InboundController extends Controller
      * @param int $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
-    }
-
-    public function getAgentes($campana_id)
-    {
-        $miembros = DB::table("Miembros_Campanas")->where('Campanas_id',$campana_id)->get('Agentes_id');
-        foreach ($miembros as $miembro){
-
-            $nombres[] = Agentes::where('id',$miembro->Agentes_id)->pluck('nombre');
-        }
-        return $nombres;
-    }
-
-    public function getExtensiones($agente_id)
-    {
-        $agentes = Agentes::where('nombre',$agente_id)->pluck('extension');
-
-        return $agentes;
-    }
-
-    public function getCalificaciones($campana_id)
-    {
-        $user = User::find( Auth::id() );
+        /**
+         * Obtenemos el id empresa con el usuario
+         */
+        $user = Auth::user();
         $empresa_id = $user->id_cliente;
-        $grupos_id = Campanas::active()->where('tipo_marcacion','Inbound')->where('id',$campana_id)->where('Empresas_id',$empresa_id)->pluck('Grupos_id');
-        $idCalif = DB::table("Grupo_Calificaciones")->where('Grupos_id',$grupos_id)->get('Calificaciones_id');
-        foreach ($idCalif as $idC){
-            $nombreCalificaciones[] = Calificaciones::active()->where('id',$idC->Calificaciones_id)->pluck('nombre');
+        /**
+         * Obtenemos la ip de PBX que tiene la empresa
+         */
+        $pbx = Empresas::empresa($empresa_id)->active()->with('Config_Empresas')->with('Config_Empresas.ms')->get()->first();
+        /**
+         * Inicializamos el consumo del PBX
+         */
+        $wsdl = 'http://'.$pbx->Config_Empresas->ms->ip_pbx.'/ws-ms/index.php';
+        $cliente =  new  nusoap_client( $wsdl );
+        /**
+         * Recuperamos las grabaciones a descargar
+         */
+        $grabaciones = $request->valoresCheck;
+
+        for ($i=0; $i < count( $grabaciones ); $i++) {
+
+            $grabacion = Grabaciones::find( $grabaciones[$i] );
+
+            Grabaciones::where( 'id', $grabaciones[$i] )
+                        ->update([
+                            'estado' => 'Borrado'
+                        ]);
+
+            $result = $cliente->call(
+                            'EliminarGrabacionLlamada', array
+                                                        (
+                                                            'empresas_id' => $empresa_id,
+                                                            'id_grabacion' => $grabacion->nombre_archivo,
+                                                            'tipo' => "Inbound"
+                                                        )
+                            );
         }
-        return $nombreCalificaciones;
 
+        $Grabaciones = QueryReporteRecordingInboundController::query($request->fechaIni, $request->fechaFin, $empresa_id );
+
+        return view('recording::Inbound.show',compact('Grabaciones'));
     }
-
-    public function getGrabaciones(Request $request,$campana_id)
-    {   $user = User::find( Auth::id() );
-        $empresa_id = $user->id_cliente;
-        $fechaI = $request->input('fechaIni');
-        $fechaF = $request->input('fechaFin');
-
-        $grabaciones = Grabaciones::where('tipo','Inbound')->where('Empresas_id',$empresa_id)->whereBetween('fecha',[$fechaI,$fechaF])->get();
-
-        foreach ($grabaciones as $grabacion) {
-
-            $grabacionesnombre[] = Campanas::active()->where('tipo_marcacion','Inbound')->where('Empresas_id',$empresa_id)->where('id_grabacion',$grabacion->id)->get();
-
-        }
-        $i = 0;
-        foreach ($grabacionesnombre as $agentesnombre) {
-            $i++;
-            if (isset($grabacionesnombre[$i-1][0]['id'])) {
-                $agentesnombre[] = Miembros_Campana::where('Campanas_id',$grabacionesnombre[$i-1][0]['id'])->get();
-            }
-        }
-
-        return view('recording::Inbound.show',compact('grabaciones','grabacionesnombre','agentesnombre'));
-    }
-
-    public function getGrabacion(Request $request,$nom_audio)
-    {
-        $user = User::find( Auth::id() );
-        $empresa_id = $user->id_cliente;
-        $wsdl = 'http://10.255.242.136/ws-ms/index.php';
-
-        $client =  new  nusoap_client( $wsdl );
-
-        $result = $client->call('BajarArchivo', array(
-            'empresas_id' => $empresa_id,
-            'id_grabacion' => $nom_audio
-        ));
-    }
-
 }
-
-
-/*
-  $grabaciones = Grabaciones::where('tipo','Inbound')->where('Empresas_id',$empresa_id)->whereBetween('fecha',[$fechaI,$fechaF])->get();
-
-            foreach ($grabaciones as $grabacion) {
-
-                        $grabacionesnombre[] = Campanas::active()->where('tipo_marcacion','Inbound')->where('Empresas_id',$empresa_id)->where('id_grabacion',$grabacion->id)->get();
-            }
-
-            $i = 0;
-            foreach ($grabacionesnombre as $agentesnombre) {
-
-                $i++;
-                if (isset($grabacionesnombre[$i-1][0]['id'])) {
-                    $nombreagentes[] = Miembros_Campana::where('Campanas_id',$grabacionesnombre[$i-1][0]['id'])->get();
-                }
-            }
-
-            $j = 0;
-            foreach ($nombreagentes as $agente) {
-                $j++;
-                if (isset($nombreagentes[$j-1][0]['Agentes_id'])) {
-                    $agentes[] = Agentes::active()->where('Empresas_id',$empresa_id)->where('tipo_licencia','Inbound')->where('id',$nombreagentes[$j-1][0]['Agentes_id'])->get();
-                }
-            }
- */

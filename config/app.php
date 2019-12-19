@@ -161,15 +161,15 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
         /*
-         * Package Service Providers...
-         */
+        * Package Service Providers...
+        */
         Spatie\Permission\PermissionServiceProvider::class,
-
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+        Chumper\Zipper\ZipperServiceProvider::class,
         /*
-         * Application Service Providers...
-         */
+        * Application Service Providers...
+        */
         Nimbus\Providers\AppServiceProvider::class,
         Nimbus\Providers\AuthServiceProvider::class,
         // Nimbus\Providers\BroadcastServiceProvider::class,
@@ -228,7 +228,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Zipper' => Chumper\Zipper\Zipper::class,
     ],
 
 ];

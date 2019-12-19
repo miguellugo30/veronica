@@ -101,9 +101,8 @@ $(function() {
      */
     $(document).on('click', '.updateAgente', function(event) {
         event.preventDefault();
-        $('#modal').modal('hide');
-        let id = $("#id").val();
 
+        let id = $("#id").val();
         let grupo = $("#grupo").val();
         let tipo_licencia = $("#tipo_licencia").val();
         let nivel = $("#nivel").val();
@@ -136,8 +135,10 @@ $(function() {
             _method: _method,
             _token: _token
         }, function(data, textStatus, xhr) {
-            $('.viewResult').html(data);
 
+            $('#modal').modal('hide');
+            $('.modal-backdrop ').css('display', 'none');
+            $('.viewResult').html(data);
             $('.viewResult #tableAgentes').DataTable({
                 "lengthChange": true,
                 "order": [
@@ -149,6 +150,8 @@ $(function() {
                 'El registro ha sido guardado.',
                 'success'
             )
+        }).fail(function(data) {
+            printErrorMsg(data.responseJSON.errors);
         });
 
     });
@@ -157,7 +160,6 @@ $(function() {
      */
     $(document).on('click', '.saveAgente', function(event) {
         event.preventDefault();
-        $('#modal').modal('hide');
 
         let grupo = $("#grupo").val();
         let tipo_licencia = $("#tipo_licencia").val();
@@ -192,8 +194,9 @@ $(function() {
             _token: _token
         }, function(data, textStatus, xhr) {
 
+            $('#modal').modal('hide');
+            $('.modal-backdrop ').css('display', 'none');
             $('.viewResult').html(data);
-
             $('.viewResult #tableAgentes').DataTable({
                 "lengthChange": true,
                 "order": [
@@ -205,7 +208,22 @@ $(function() {
                 'El registro ha sido guardado.',
                 'success'
             )
+        }).fail(function(data) {
+            printErrorMsg(data.responseJSON.errors);
         });
     });
-
+    /**
+     * Funcion para mostrar los errores de los formularios
+     */
+    function printErrorMsg(msg) {
+        $(".print-error-msg").find("ul").html('');
+        $(".print-error-msg").css('display', 'block');
+        $(".form-control").removeClass('is-invalid');
+        for (var clave in msg) {
+            $("#" + clave).addClass('is-invalid');
+            if (msg.hasOwnProperty(clave)) {
+                $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
+            }
+        }
+    }
 });
