@@ -256,13 +256,15 @@ $(function () {
     var clickID = $(".tableNewSpeech tbody tr.clonar:last").attr('id').replace('tr_', '');
     $('#form_opc .form-control-sm').val(''); // Genero el nuevo numero id
 
-    var newID = parseInt(clickID) + 1; //let IDInput = ['id_campo', 'nombre_speech', 'tipo_campo', 'tamano', 'obligatorio', 'obligatorio_hidden', 'editable', 'editable_hidden', 'opciones', 'view'];
+    var newID = parseInt(clickID) + 1; //let IDInput = ['nombreSpeech', 'descripcion', 'prioridad'];
 
-    var IDInput = ['nombreSpeech', 'descripcion', 'prioridad'];
+    var IDInput = ['nombreSpeech', 'descripcionSpeech'];
     fila = $(".tableNewSpeech tbody tr:eq()").clone().appendTo(".tableNewSpeech"); //Clonamos la fila
 
     for (var i = 0; i < IDInput.length; i++) {
       fila.find('#' + IDInput[i]).attr('name', IDInput[i] + "_" + newID); //Cambiamos el nombre de los campos de la fila a clonar
+
+      fila.find('#' + IDInput[i]).attr('id', IDInput[i] + "_" + newID); //Cambiamos el id de los campos de la fila a clonar
     }
 
     fila.find('.btn-info').css('display', 'none');
@@ -277,13 +279,14 @@ $(function () {
     var clickID = $(".tableEditSpeech tbody tr.clonar:last").attr('id').replace('tr_', '');
     $('#form_opc .form-control-sm').val(''); // Genero el nuevo numero id
 
-    var newID = parseInt(clickID) + 1; //let IDInput = ['id_campo', 'nombre_speech', 'tipo_campo', 'tamano', 'obligatorio', 'obligatorio_hidden', 'editable', 'editable_hidden', 'opciones', 'view'];
-
-    var IDInput = ['nombreSpeech', 'descripcion', 'prioridad'];
+    var newID = parseInt(clickID) + 1;
+    var IDInput = ['nombreSpeech', 'descripcion'];
     fila = $(".tableEditSpeech tbody tr:eq()").clone().appendTo(".tableEditSpeech"); //Clonamos la fila
 
     for (var i = 0; i < IDInput.length; i++) {
-      fila.find('#' + IDInput[i]).attr('name', IDInput[i] + "_" + newID); //Cambiamos el nombre de los campos de la fila a clonar
+      fila.find('.' + IDInput[i]).attr('name', IDInput[i] + "_" + newID); //Cambiamos el nombre de los campos de la fila a clonar
+
+      fila.find('.' + IDInput[i]).attr('id', IDInput[i] + "_" + newID); //Cambiamos el id de los campos de la fila a clonar
     }
 
     fila.find('.btn-info').css('display', 'none');
@@ -760,7 +763,7 @@ $(function () {
       fila.find('#' + IDInput[i]).attr('name', IDInput[i] + "_" + newID); //Cambiamos el nombre de los campos de la fila a clonar
     }
 
-    fila.find('.btn-danger').css('display', 'block');
+    fila.find('.btn-danger').css('display', 'initial');
     fila.find('#id_calificacion').val('');
     fila.attr("id", 'tr_' + newID);
   });
@@ -770,17 +773,25 @@ $(function () {
 
   $(document).on('click', '.saveCalificaciones', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var dataForm = $("#formDataCalificaciones").serializeArray();
+    var data = {};
+    $(dataForm).each(function (index, obj) {
+      data[obj.name] = obj.value;
+    });
 
     var _token = $("input[name=_token]").val();
 
     var url = currentURL + '/calificaciones';
     $.post(url, {
-      dataForm: dataForm,
+      dataForm: data,
       _token: _token
     }, function (data, textStatus, xhr) {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
       $('.viewResult').html(data);
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
@@ -824,8 +835,11 @@ $(function () {
 
   $(document).on('click', '.updateCalificaciones', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var dataForm = $("#formDataCalificaciones").serializeArray();
+    var data = {};
+    $(dataForm).each(function (index, obj) {
+      data[obj.name] = obj.value;
+    });
     var id = $("#idSeleccionado").val();
 
     var _token = $("input[name=_token]").val();
@@ -833,15 +847,19 @@ $(function () {
     var _method = "PUT";
     var url = currentURL + '/calificaciones/' + id;
     $.post(url, {
-      dataForm: dataForm,
+      dataForm: data,
       _token: _token,
       _method: _method
     }, function (data, textStatus, xhr) {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
       $('.viewResult').html(data);
       $('.viewResult #tableCalificaciones').DataTable({
         "lengthChange": false
       });
       Swal.fire('Actualizado!', 'El registro ha sido actualiazdo.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
@@ -987,6 +1005,21 @@ $(function () {
       }
     });
   });
+  /**
+   * Funcion para mostrar los errores de los formularios
+   */
+
+  function printErrorMsg(msg) {
+    $(".print-error-msg").find("ul").html('');
+    $(".print-error-msg").css('display', 'block');
+    $(".form-control").removeClass('is-invalid');
+    $(".print-error-msg").find("ul").append('<li>Es un campo obligatorio</li>');
+
+    for (var clave in msg) {
+      var data = clave.split('.');
+      $("[name='" + data[1] + "']").addClass('is-invalid');
+    }
+  }
 });
 
 /***/ }),
@@ -1273,17 +1306,25 @@ $(function () {
 
   $(document).on('click', '.saveFormulario', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var dataForm = $("#formDataFormulario").serializeArray();
+    var data = {};
+    $(dataForm).each(function (index, obj) {
+      data[obj.name] = obj.value;
+    });
 
     var _token = $("input[name=_token]").val();
 
     var url = currentURL + '/formularios';
     $.post(url, {
-      dataForm: dataForm,
+      dataForm: data,
       _token: _token
     }, function (data, textStatus, xhr) {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
       $('.viewResult').html(data);
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
@@ -1338,20 +1379,28 @@ $(function () {
 
   $(document).on('click', '.updateFormulario', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var id = $("#idSeleccionado").val();
     var dataForm = $("#formDataFormulario").serializeArray();
+    var data = {};
+    $(dataForm).each(function (index, obj) {
+      data[obj.name] = obj.value;
+    });
 
     var _token = $("input[name=_token]").val();
 
     var _method = "PUT";
     var url = currentURL + '/formularios/' + id;
     $.post(url, {
-      dataForm: dataForm,
+      dataForm: data,
       _method: _method,
       _token: _token
     }, function (data, textStatus, xhr) {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
       $('.viewResult').html(data);
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
@@ -1397,6 +1446,21 @@ $(function () {
       }
     });
   });
+  /**
+   * Funcion para mostrar los errores de los formularios
+   */
+
+  function printErrorMsg(msg) {
+    $(".print-error-msg").find("ul").html('');
+    $(".print-error-msg").css('display', 'block');
+    $(".form-control").removeClass('is-invalid');
+    $(".print-error-msg").find("ul").append('<li>Es un campo obligatorio</li>');
+
+    for (var clave in msg) {
+      var data = clave.split('.');
+      $("[name='" + data[1] + "']").addClass('is-invalid');
+    }
+  }
 });
 
 /***/ }),
@@ -1751,22 +1815,28 @@ $(function () {
 
   $(document).on('click', '.updateSpeech', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
-    $('.tipo').removeAttr("disabled");
-    $('.nombre').removeAttr("disabled");
-    var id = $("#idSeleccionado").val();
     var dataForm = $("#editspeech").serializeArray();
+    var data = {};
+    $(dataForm).each(function (index, obj) {
+      data[obj.name] = obj.value;
+    });
+    var id = $("#idSeleccionado").val();
 
     var _token = $("input[name=_token]").val();
 
     var _method = "PUT";
     var url = currentURL + '/speech/' + id;
     $.post(url, {
-      dataForm: dataForm,
+      dataForm: data,
       _method: _method,
       _token: _token
     }, function (data, textStatus, xhr) {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
       $('.viewResult').html(data);
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
@@ -1775,24 +1845,46 @@ $(function () {
 
   $(document).on('click', '.saveSpeech', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var dataForm = $("#altaspeech").serializeArray();
+    var data = {};
+    $(dataForm).each(function (index, obj) {
+      data[obj.name] = obj.value;
+    });
 
     var _token = $("input[name=_token]").val();
 
     var url = currentURL + '/speech';
     $.post(url, {
-      dataForm: dataForm,
+      dataForm: data,
       _token: _token
     }, function (data, textStatus, xhr) {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
       $('.viewResult').html(data);
       $('.viewResult #tableSpeech').DataTable({
         "lengthChange": true,
         "order": [[2, "asc"]]
       });
       Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
+  /**
+   * Funcion para mostrar los errores de los formularios
+   */
+
+  function printErrorMsg(msg) {
+    $(".print-error-msg").find("ul").html('');
+    $(".print-error-msg").css('display', 'block');
+    $(".form-control").removeClass('is-invalid');
+    $(".print-error-msg").find("ul").append('<li>Es un campo obligatorio</li>');
+
+    for (var clave in msg) {
+      var data = clave.split('.');
+      $("[name='" + data[1] + "']").addClass('is-invalid');
+    }
+  }
 });
 
 /***/ }),

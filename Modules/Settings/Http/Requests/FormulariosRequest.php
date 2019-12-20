@@ -13,13 +13,21 @@ class FormulariosRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'tipo' => 'required',
-            'nombre' => 'required',
-            'nombre_campo' => 'required',
-            'tipo_campo' => 'required',
-            'tamano' => 'required',
-        ];
+
+        foreach ($this->request->get('dataForm') as $key => $value)
+        {
+            /**
+             * Buscamos si el id_campo es null para permitir agregar los nuevos campos
+             **/
+            if ($key == strpos($key,'id_campo')) {
+                $rules[ 'dataForm.'.$key] = 'nullable';
+            } else {
+                $rules[ 'dataForm.'.$key] = 'required';
+            }
+
+        }
+
+        return $rules;
     }
 
     /**

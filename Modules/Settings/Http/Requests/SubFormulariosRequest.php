@@ -4,7 +4,7 @@ namespace Modules\Settings\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SpeechRequest extends FormRequest
+class SubFormulariosRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -13,12 +13,9 @@ class SpeechRequest extends FormRequest
      */
     public function rules()
     {
-        foreach ($this->request->get('dataForm') as $key => $value)
-        {
-            $rules[ 'dataForm.'.$key] = 'required';
-        }
-
-        return $rules;
+        return [
+            //
+        ];
     }
 
     /**

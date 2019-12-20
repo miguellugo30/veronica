@@ -39,7 +39,7 @@ $(function() {
         for (let i = 0; i < IDInput.length; i++) {
             fila.find('#' + IDInput[i]).attr('name', IDInput[i] + "_" + newID); //Cambiamos el nombre de los campos de la fila a clonar
         }
-        fila.find('.btn-danger').css('display', 'block');
+        fila.find('.btn-danger').css('display', 'initial');
         fila.find('#id_calificacion').val('');
         fila.attr("id", 'tr_' + newID);
     });
@@ -48,18 +48,29 @@ $(function() {
      */
     $(document).on('click', '.saveCalificaciones', function(event) {
         event.preventDefault();
-        $('#modal').modal('hide');
 
         let dataForm = $("#formDataCalificaciones").serializeArray();
-
+        var data = {};
+        $(dataForm).each(function(index, obj) {
+            data[obj.name] = obj.value;
+        });
         let _token = $("input[name=_token]").val();
         let url = currentURL + '/calificaciones';
 
         $.post(url, {
-            dataForm: dataForm,
+            dataForm: data,
             _token: _token
         }, function(data, textStatus, xhr) {
+            $('.modal-backdrop ').css('display', 'none');
+            $('#modal').modal('hide');
             $('.viewResult').html(data);
+            Swal.fire(
+                'Correcto!',
+                'El registro ha sido guardado.',
+                'success'
+            )
+        }).fail(function(data) {
+            printErrorMsg(data.responseJSON.errors);
         });
 
     });
@@ -105,19 +116,24 @@ $(function() {
      */
     $(document).on('click', '.updateCalificaciones', function(event) {
         event.preventDefault();
-        $('#modal').modal('hide');
 
         let dataForm = $("#formDataCalificaciones").serializeArray();
+        var data = {};
+        $(dataForm).each(function(index, obj) {
+            data[obj.name] = obj.value;
+        });
         var id = $("#idSeleccionado").val();
         let _token = $("input[name=_token]").val();
         let _method = "PUT";
         let url = currentURL + '/calificaciones/' + id;
 
         $.post(url, {
-            dataForm: dataForm,
+            dataForm: data,
             _token: _token,
             _method: _method,
         }, function(data, textStatus, xhr) {
+            $('.modal-backdrop ').css('display', 'none');
+            $('#modal').modal('hide');
             $('.viewResult').html(data);
             $('.viewResult #tableCalificaciones').DataTable({
                 "lengthChange": false
@@ -127,6 +143,8 @@ $(function() {
                 'El registro ha sido actualiazdo.',
                 'success'
             )
+        }).fail(function(data) {
+            printErrorMsg(data.responseJSON.errors);
         });
 
     });
@@ -281,4 +299,18 @@ $(function() {
             }
         });
     });
+
+    /**
+     * Funcion para mostrar los errores de los formularios
+     */
+    function printErrorMsg(msg) {
+        $(".print-error-msg").find("ul").html('');
+        $(".print-error-msg").css('display', 'block');
+        $(".form-control").removeClass('is-invalid');
+        $(".print-error-msg").find("ul").append('<li>Es un campo obligatorio</li>');
+        for (var clave in msg) {
+            var data = clave.split('.');
+            $("[name='" + data[1] + "']").addClass('is-invalid');
+        }
+    }
 });

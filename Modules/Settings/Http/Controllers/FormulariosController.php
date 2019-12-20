@@ -51,10 +51,8 @@ class FormulariosController extends Controller
     public function store(FormulariosRequest $request)
     {
         $dataForm = $request->input('dataForm');
+        $data = $request->dataForm;
 
-        for ($i=0; $i < count( $dataForm ); $i++) {
-            $data[ $dataForm[$i]['name']] = $dataForm[$i]['value'];
-        }
         /**
          * Obtenemos los datos del usuario logeado
          */
@@ -189,10 +187,13 @@ class FormulariosController extends Controller
     public function update(FormulariosRequest $request, $id)
     {
         $dataForm = $request->input('dataForm');
+        $data = $request->dataForm;
 
+        /*
         for ($i=0; $i < count( $dataForm ); $i++) {
             $data[ $dataForm[$i]['name'] ] = $dataForm[$i]['value'];
         }
+        */
 
         $idFormulario = $data['id_formulario'];
 

@@ -41,8 +41,8 @@
                                 <tbody>
                                     @foreach ($speech->Opciones_Speech as $opcion)
                                     <tr id="tr_{{ $opcion->id }}" class="clonar">
-                                        <td><input type="text" class="form-control form-control-sm nombreSpeech" id="nombreSpeech" name="nombreSpeech_{{ $opcion->id }}" value="{{ $opcion->nombre }}"></td>
-                                        <td><input type="text" class="form-control form-control-sm descripcion" id="descripcionSpeech" name="descripcionSpeech_{{ $opcion->id }}" value="{{ $opcion->texto }}"></td>
+                                        <td><input type="text" class="form-control form-control-sm nombreSpeech" id="nombreSpeech_{{ $opcion->id }}" name="nombreSpeech_{{ $opcion->id }}" value="{{ $opcion->nombre }}"></td>
+                                        <td><input type="text" class="form-control form-control-sm descripcion" id="descripcionSpeech_{{ $opcion->id }}" name="descripcionSpeech_{{ $opcion->id }}" value="{{ $opcion->texto }}"></td>
                                         <td class="tr_clone_remove"><button type="button" name="remove" class="btn btn-danger remove" {{('dinamico' == $speech->tipo) ? '':'hidden' }}><i class="fas fa-trash-alt"></i></button></td>
                                     </tr>
                                     @endforeach
@@ -50,12 +50,12 @@
                             </table>
                     </fieldset>
                     </div>
-                    <div class="form-group">
-                        <small class="form-text text-muted"> <b>*Campos obligatorios.</b></small>
-                    </div>
-                    <div class="alert alert-danger print-error-msg" role="alert" style="display:none">
-                        <ul></ul>
-                    </div>
+                </div>
+                <div class="form-group">
+                    <small class="form-text text-muted"> <b>*Campos obligatorios.</b></small>
+                </div>
+                <div class="alert alert-danger print-error-msg" role="alert" style="display:none">
+                    <ul></ul>
                 </div>
             </form>
         </div>

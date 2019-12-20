@@ -9,7 +9,7 @@
             </div>
             <div class="col">
                 <div class="form-group">
-                    <label for="nombre"><b> Descripción del grupo *:</b></label>
+                    <label for="descripcion"><b> Descripción del grupo *:</b></label>
                     <input type="text" class="form-control form-control-sm" id="descripcion" name="descripcion" placeholder="Descripcion">
                     @csrf
                 </div>

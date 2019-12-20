@@ -13,19 +13,18 @@ class CalificacionesRequest extends FormRequest
      */
     public function rules()
     {
-        /*
-        return [
-            'nombre' => 'required',
-            'descripcion' => 'required',
-            'nombre_calificacion' => 'required',
-            'formulario_calificacion' => 'required',
-        ];
-        */
+        foreach ($this->request->get('dataForm') as $key => $value)
+        {
+            /**
+             * Buscamos si el id_calificacion es null para permitir agregar las nuevas calificaciones
+             **/
+            if ($key == strpos($key,'id_calificacion')) {
+                $rules[ 'dataForm.'.$key] = 'nullable';
+            } else {
+                $rules[ 'dataForm.'.$key] = 'required';
+            }
+        }
 
-        $rules = ['dataForm.nombre' => 'required',
-                  'dataForm.descripcion' => 'required',
-                  'dataForm.nombre_calificacion' => 'required',
-                  'dataForm.formulario_calificacion' => 'required'];
         return $rules;
     }
 

@@ -68,7 +68,7 @@
                             <td>
                                 <input type="checkbox" class="micheckbox opciones" name="editable_1" id="editable">
                                 <input type="hidden" name="editable_hidden_1" id="editable_hidden" value="off" class="opciones">
-                                <input type="hidden" name="opciones_1" id="opciones" class="opciones " value="">
+                                <input type="hidden" name="opciones_1" id="opciones" class="opciones " value="off">
                             </td>
                             <td class="tr_clone_remove text-center">
                                 <button type="button" name="remove" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>

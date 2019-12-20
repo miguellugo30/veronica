@@ -84,14 +84,15 @@ $(function() {
         $('#form_opc .form-control-sm').val('');
         // Genero el nuevo numero id
         var newID = parseInt(clickID) + 1;
-        //let IDInput = ['id_campo', 'nombre_speech', 'tipo_campo', 'tamano', 'obligatorio', 'obligatorio_hidden', 'editable', 'editable_hidden', 'opciones', 'view'];
-        let IDInput = ['nombreSpeech', 'descripcion', 'prioridad'];
+        //let IDInput = ['nombreSpeech', 'descripcion', 'prioridad'];
+        let IDInput = ['nombreSpeech', 'descripcionSpeech'];
         fila = $(".tableNewSpeech tbody tr:eq()").clone().appendTo(".tableNewSpeech"); //Clonamos la fila
         for (let i = 0; i < IDInput.length; i++) {
             fila.find('#' + IDInput[i]).attr('name', IDInput[i] + "_" + newID); //Cambiamos el nombre de los campos de la fila a clonar
+            fila.find('#' + IDInput[i]).attr('id', IDInput[i] + "_" + newID); //Cambiamos el id de los campos de la fila a clonar
         }
         fila.find('.btn-info').css('display', 'none');
-        fila.find('#id_campo').attr('value', '')
+        fila.find('#id_campo').attr('value', '');
         fila.attr("id", 'tr_' + newID);
 
     });
@@ -104,14 +105,14 @@ $(function() {
         $('#form_opc .form-control-sm').val('');
         // Genero el nuevo numero id
         var newID = parseInt(clickID) + 1;
-        //let IDInput = ['id_campo', 'nombre_speech', 'tipo_campo', 'tamano', 'obligatorio', 'obligatorio_hidden', 'editable', 'editable_hidden', 'opciones', 'view'];
-        let IDInput = ['nombreSpeech', 'descripcion', 'prioridad'];
+        let IDInput = ['nombreSpeech', 'descripcion'];
         fila = $(".tableEditSpeech tbody tr:eq()").clone().appendTo(".tableEditSpeech"); //Clonamos la fila
         for (let i = 0; i < IDInput.length; i++) {
-            fila.find('#' + IDInput[i]).attr('name', IDInput[i] + "_" + newID); //Cambiamos el nombre de los campos de la fila a clonar
+            fila.find('.' + IDInput[i]).attr('name', IDInput[i] + "_" + newID); //Cambiamos el nombre de los campos de la fila a clonar
+            fila.find('.' + IDInput[i]).attr('id', IDInput[i] + "_" + newID); //Cambiamos el id de los campos de la fila a clonar
         }
         fila.find('.btn-info').css('display', 'none');
-        fila.find('#id_campo').attr('value', '')
+        fila.find('#id_campo').attr('value', '');
         fila.attr("id", 'tr_' + newID);
 
     });
