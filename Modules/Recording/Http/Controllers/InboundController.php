@@ -12,7 +12,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use nusoap_client;
 use Storage;
 use Illuminate\Support\Facades\Artisan;
-use ZipArchive;
+use Nimbus\Http\Controllers\LogController;
 
 use Nimbus\Empresas;
 use Nimbus\Grabaciones;
@@ -205,11 +205,6 @@ class InboundController extends Controller
 
             $grabacion = Grabaciones::find( $grabaciones[$i] );
 
-            Grabaciones::where( 'id', $grabaciones[$i] )
-                        ->update([
-                            'estado' => 'Borrado'
-                        ]);
-
             $result = $cliente->call(
                             'EliminarGrabacionLlamada', array
                                                         (
@@ -218,10 +213,27 @@ class InboundController extends Controller
                                                             'tipo' => "Inbound"
                                                         )
                             );
+
+            if ( $result['error'] == 1 )
+            {
+                Grabaciones::where( 'id', $grabaciones[$i] )->update(['estado' => 'Borrado']);
+                /**
+                 * Creamos el logs
+                 */
+                $mensaje = $result['mensaje'].' con id: '.$grabaciones[$i].' y se actualizo ha BORRADO';
+                $log = new LogController;
+                $log->store('Eliminación', 'Grabación', $mensaje, $grabaciones[$i]);
+            }
+            else
+            {
+                Grabaciones::where( 'id', $grabaciones[$i] )->update(['estado' => 'Error']);
+                 /**
+                 * Creamos el logs
+                 */
+                $mensaje = $result['mensaje'].' con id: '.$grabaciones[$i].' y se actualizo ha ERROR';
+                $log = new LogController;
+                $log->store('Eliminación', 'Grabación', $mensaje, $grabaciones[$i]);
+            }
         }
-
-        $Grabaciones = QueryReporteRecordingInboundController::query($request->fechaIni, $request->fechaFin, $empresa_id );
-
-        return view('recording::Inbound.show',compact('Grabaciones'));
     }
 }

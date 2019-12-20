@@ -25,7 +25,7 @@
                             </a>
                         </div>
 
-                            <div class="col  text-center card m-1 bg-secondary text-white disabled">
+                            <div class="col  text-center card m-1 bg-secondary text-white">
                                 <div class="pt-3">
                                     <i class="fas fa-phone-volume fa-5x"></i>
                                     <i class="fas fa-caret-right fa-3x"></i>
@@ -63,7 +63,7 @@
                                 <h6>Intelligent IVR</h6>
                             </div>
                         </div>
-                        <div class="col  text-center card m-1 bg-primary text-white thumbnail">
+                        <div class="col  text-center card m-1 bg-secondary text-white thumbnail">
                             <div class="pt-3">
                                 <i class="fas fa-tasks fa-5x"></i>
                             </div>
@@ -88,7 +88,7 @@
                                 <h6>Voice Message Broadcasting</h6>
                             </div>
                         </div>
-                        <div class="col  text-center card m-1 bg-danger text-white disabled">
+                        <div class="col  text-center card m-1 bg-danger text-white ">
                             <div class="pt-3">
                                 <i class="fas fa-envelope-square fa-5x"></i>
                             </div>
@@ -96,7 +96,7 @@
                                 <h6>Vioce Mail</h6>
                             </div>
                         </div>
-                        <div class="col  text-center card m-1 bg-info text-white disabled">
+                        <div class="col  text-center card m-1 bg-info text-white ">
                             <div class="pt-3">
                                 <i class="fas fa-users fa-5x"></i>
                             </div>
@@ -112,7 +112,7 @@
                                 <h6>SMS Server</h6>
                             </div>
                         </div>
-                        <div class="col  text-center card m-1 bg-success text-white thumbnail">
+                        <div class="col  text-center card m-1 bg-primary text-white thumbnail">
                             <a href="{{url("/settings")}}">
                                 <div class="pt-3">
                                     <i class="fas fa-cogs fa-5x"></i>

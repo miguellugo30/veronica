@@ -75,7 +75,7 @@ class TroncalesController extends Controller
         $ip = $request->input('Cat_IP_PBX_id');
         /**
          * Creamos una petición, para poder escribir
-         * los nuevos DID en el archivo EXTENSIONS_DID.CONF
+         * las nuevas TRONCALES en el archivo SIP_TRONCALES.CONF
          */
         $user = Auth::user();
         $empresa_id = $user->id_cliente;
@@ -83,7 +83,7 @@ class TroncalesController extends Controller
         $wsdl = 'http://'.$ip.'/ws-ms/index.php';
         $client =  new  nusoap_client( $wsdl );
         $result = $client->call('Troncales', array(
-                                                        'empresas_id' => $empresa_id
+                                                        'empresas_id' => $cat->id
                                                     ));
         /**
          * Si la respuesta es 1, se hace el reload del sip
@@ -178,13 +178,25 @@ class TroncalesController extends Controller
          * los nuevos DID en el archivo EXTENSIONS_DID.CONF
          */
 
+<<<<<<< HEAD
+        $ip = $request->input('Cat_IP_PBX_id');
+        /**
+         * Creamos una petición, para poder escribir
+         * las nuevas TRONCALES en el archivo SIP_TRONCALES.CONF
+         */
+=======
+>>>>>>> 678ba4a9ff602e4ed42f27438df1bd892466f120
         $user = Auth::user();
         $empresa_id = $user->id_cliente;
         $pbx = Empresas::where('id',$empresa_id)->active()->with('Config_Empresas')->get()->first();
         $wsdl = 'http://'.$ip.'/ws-ms/index.php';
         $client =  new  nusoap_client( $wsdl );
         $result = $client->call('Troncales', array(
+<<<<<<< HEAD
+                                                        'empresas_id' => $id
+=======
                                                         'empresas_id' => $empresa_id
+>>>>>>> 678ba4a9ff602e4ed42f27438df1bd892466f120
                                                     ));
         /**
          * Si la respuesta es 1, se hace el reload del sip
@@ -198,6 +210,10 @@ class TroncalesController extends Controller
             $result  = $ami->command('dialplan Reload');
             $ami->disconnect();
         }
+<<<<<<< HEAD
+
+=======
+>>>>>>> 678ba4a9ff602e4ed42f27438df1bd892466f120
         /**
          * Creamos el logs
          */

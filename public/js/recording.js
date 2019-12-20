@@ -375,12 +375,12 @@ $(function () {
   $(document).on('click', '.eliminar-grabaciones', function (event) {
     event.preventDefault();
     Swal.fire({
-      title: 'Estas seguro?',
-      text: "Deseas eliminar las grabacion seleccionada!",
+      title: '¿Estas seguro?',
+      text: "¿Deseas eliminar la(s) grabación(es) seleccionada(s)?. Esta acción la(s) eliminara físicamente y no podrá(n) ser recuperada(s).",
       type: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
       confirmButtonText: 'Si, Eliminar!',
       cancelButtonText: 'Cancelar'
     }).then(function (result) {

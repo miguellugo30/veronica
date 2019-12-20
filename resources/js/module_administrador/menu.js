@@ -1,10 +1,8 @@
 $(function() {
-
     /**
      * Evento para el menu de sub categorias y mostrar la vista
      */
     $(document).on("click", ".sub-menu", function(e) {
-
         e.preventDefault();
         let currentURL = window.location.href;
         let id = $(this).data("id");
@@ -59,7 +57,7 @@ $(function() {
             table = ' #licencias_bria';
         } else if (id == 20) {
             url = currentURL + '/logs';
-            table = ' #tableLogs';
+            table = '#tableLogs';
         } else if (id == 21) {
             url = currentURL + '/formularios';
             table = ' #tableFormularios';
@@ -69,7 +67,7 @@ $(function() {
         }
         $.get(url, function(data, textStatus, jqXHR) {
             $(".viewResult").html(data);
-            if (id != 4) {
+            if (id != 4 || id != 20) {
                 $('.viewResult' + table).DataTable({
                     "lengthChange": true
                 });

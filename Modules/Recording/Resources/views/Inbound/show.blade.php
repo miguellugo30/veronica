@@ -62,7 +62,6 @@
     </tfoot>
 </table>
 
-
 <script>
 $(function() {
 
@@ -86,7 +85,6 @@ $(function() {
                 });
 
     $('#tableInbound thead tr th.buscar').on( 'keyup', "input",function () {
-        console.log(this.value, $(this).parent().index())
         table
             .column( $(this).parent().index() )
             .search( this.value )
