@@ -27,7 +27,7 @@ $(function() {
         let nombre = $("#nombre").val();
         let descripcion = $("#descripcion").val();
         let ip_host = $("#ip_host").val();
-        let Cat_IP_PBX_id = $("#mediaserver").val();
+        let mediaserver = $("#mediaserver").val();
         let distribuidores = $("#distribuidores").val();
         let _token = $("input[name=_token]").val();
         let url = currentURL + '/troncales';
@@ -35,7 +35,7 @@ $(function() {
         $.post(url, {
                 nombre: nombre,
                 descripcion: descripcion,
-                Cat_IP_PBX_id: Cat_IP_PBX_id,
+                mediaserver: mediaserver,
                 ip_host: ip_host,
                 distribuidores: distribuidores,
                 _token: _token
@@ -101,7 +101,7 @@ $(function() {
         let nombre = $("#nombre").val();
         let descripcion = $("#descripcion").val();
         let ip_host = $("#ip_host").val();
-        let Cat_IP_PBX_id = $("#mediaserver").val();
+        let mediaserver = $("#mediaserver").val();
         let distribuidores = $("#distribuidores").val();
         let _token = $("input[name=_token]").val();
         let id = $("#idSeleccionado").val();
@@ -115,7 +115,7 @@ $(function() {
                 nombre: nombre,
                 descripcion: descripcion,
                 ip_host: ip_host,
-                Cat_IP_PBX_id: Cat_IP_PBX_id,
+                mediaserver: mediaserver,
                 distribuidores: distribuidores,
                 id: id,
                 _token: _token,
