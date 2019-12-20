@@ -42,7 +42,7 @@
         <div class="form-group">
             <label for="canal"><b>Canal *:</b></label>
             <select name="canal" id="canal" class="form-control form-control-sm">
-                <option disabled selected value="">Selecciona un canal</option>
+                <option value="">Selecciona un canal</option>
                 @foreach ($canales as $canal)
                     <option value="{{$canal->id}}">{{$canal->Cat_Tipo_Canales->nombre}}</option>
                 @endforeach

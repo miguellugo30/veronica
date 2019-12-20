@@ -20,7 +20,7 @@ class AgentesRequest extends FormRequest
             'nombre' => 'required',
             'usuario' => 'required',
             'contrasena' => 'required',
-            'canal' => 'required|numeric',
+            'Canales_id' => 'required',
             'extension' => 'required',
         ];
     }
@@ -44,7 +44,7 @@ class AgentesRequest extends FormRequest
             'nombre' => 'Nombre',
             'usuario' => 'Usuario',
             'contrasena' => 'Contraseña',
-            'canal' => 'Canal',
+            'Canales_id' => 'Canal',
             'extension' => 'Extension',
         ];
     }
