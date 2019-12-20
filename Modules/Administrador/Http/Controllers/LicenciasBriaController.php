@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Nimbus\LicenciasBria;
 use Nimbus\Http\Controllers\LogController;
+use Modules\Administrador\Http\Requests\LicenciasBriaRequest;
 
 class LicenciasBriaController extends Controller
 {
@@ -38,7 +39,7 @@ class LicenciasBriaController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(LicenciasBriaRequest $request)
     {
         /**
          * Obtenemos todos los datos del formulario de alta y
@@ -83,7 +84,7 @@ class LicenciasBriaController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(LicenciasBriaRequest $request, $id)
     {
         //
     }

@@ -8,6 +8,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Nimbus\Http\Controllers\LogController;
 use DB;
+use Modules\Administrador\Http\Requests\SubMenusRequest;
 
 class SubMenuscontroller extends Controller
 {
@@ -34,7 +35,7 @@ class SubMenuscontroller extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(SubMenusRequest $request)
     {
         /**
          * Insertamos la informacion del formulario en la tabla permissions como en la tabla sub_categorias
@@ -107,7 +108,7 @@ class SubMenuscontroller extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(SubMenusRequest $request, $id)
     {
         /**
          * Actualizamos el Sub Menu

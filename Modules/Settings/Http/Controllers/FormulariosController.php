@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Modules\Settings\Http\Requests\FormulariosRequest;
 
 use Nimbus\User;
 use Nimbus\Campos;
@@ -47,13 +48,11 @@ class FormulariosController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(FormulariosRequest $request)
     {
         $dataForm = $request->input('dataForm');
+        $data = $request->dataForm;
 
-        for ($i=0; $i < count( $dataForm ); $i++) {
-            $data[ $dataForm[$i]['name']] = $dataForm[$i]['value'];
-        }
         /**
          * Obtenemos los datos del usuario logeado
          */
@@ -185,13 +184,16 @@ class FormulariosController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(FormulariosRequest $request, $id)
     {
         $dataForm = $request->input('dataForm');
+        $data = $request->dataForm;
 
+        /*
         for ($i=0; $i < count( $dataForm ); $i++) {
             $data[ $dataForm[$i]['name'] ] = $dataForm[$i]['value'];
         }
+        */
 
         $idFormulario = $data['id_formulario'];
 

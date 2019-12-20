@@ -7,6 +7,8 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use DB;
+use Modules\Settings\Http\Requests\CalificacionesRequest;
+use Nimbus\Http\Controllers\LogController;
 /**
  * Modelos
  */
@@ -55,13 +57,10 @@ class CalificacionesController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(CalificacionesRequest $request)
     {
         $dataForm = $request->input('dataForm');
-
-        for ($i=0; $i < count( $dataForm ); $i++) {
-            $data[ $dataForm[$i]['name']] = $dataForm[$i]['value'];
-        }
+        $data = $request->dataForm;
         /**
          * Obtenemos los datos del usuario logeado
          */
@@ -80,7 +79,7 @@ class CalificacionesController extends Controller
         array_shift( $data );
         array_shift( $data );
         array_shift( $data );
-
+        //dd($data);
         $info = array_chunk( $data, 2 );
         /**
          * Insertamos la información de las calificaciones
@@ -89,13 +88,21 @@ class CalificacionesController extends Controller
 
             $calificacion = Calificaciones::create([
                             'nombre' => $info[$i][0],
-                            'tipo' => 'Inbound',
+                            'tipo_marcacion' => 'Inbound',
                             'Formularios_id' => $info[$i][1]
                         ]);
 
             $grupo->Calificaciones()->attach($calificacion);
 
         }
+
+        /**
+         * Creamos el logs
+         **/
+        $user = Auth::user();
+        $mensaje = 'Se creo un nuevo registro, información capturada:'.var_export($request->input('dataForm'), true);
+        $log = new LogController;
+        $log->store('Creacion', 'Calificaciones',$mensaje,  Auth::id());
 
         return redirect()->route('calificaciones.index');
 
@@ -139,14 +146,11 @@ class CalificacionesController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(CalificacionesRequest $request, $id)
     {
 
         $dataForm = $request->input('dataForm');
-
-        for ($i=0; $i < count( $dataForm ); $i++) {
-            $data[ $dataForm[$i]['name']] = $dataForm[$i]['value'];
-        }
+        $data = $request->dataForm;
 
         $grupo =  Grupos::find( $id );
         /**
@@ -171,7 +175,7 @@ class CalificacionesController extends Controller
 
                 $calificacion = Calificaciones::create([
                                     'nombre' => $info[$i][1],
-                                    'tipo' => 'Inbound',
+                                    'tipo_marcacion' => 'Inbound',
                                     'Formularios_id' => $info[$i][2]
                                 ]);
 

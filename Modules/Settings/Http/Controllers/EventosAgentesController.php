@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Nimbus\Http\Controllers\LogController;
+use Modules\Settings\Http\Requests\EventosRequest;
 
 use Nimbus\User;
 use Nimbus\Eventos_Agentes;
@@ -44,7 +45,7 @@ class EventosAgentesController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(EventosRequest $request)
     {
         //
         $user = Auth::user();
@@ -98,7 +99,7 @@ class EventosAgentesController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(EventosRequest $request, $id)
     {
         //
         Eventos_Agentes::where( 'id', $id )
@@ -109,7 +110,7 @@ class EventosAgentesController extends Controller
             /**
              * Creamos el logs
              */
-            $mensaje = 'Se edito un registro con id: '.$id.', información editada: '.var_export($request, true);
+            $mensaje = 'Se edito un registro con id: '.$id.', información editada: '.var_export($request->all(), true);
             $log = new LogController;
             $log->store('Actualización', 'EventosAgentes',$mensaje, $id);
             return redirect()->route('EventosAgentes.index');

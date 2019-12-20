@@ -3,27 +3,27 @@
         <fieldset>
             <legend>Información usuario</legend>
             <div class="form-group">
-                <label for="name">Nombre</label>
+                <label for="name">Nombre *:</label>
                 <input type="text" class="form-control form-control-sm" id="name" placeholder="Nombre usuario" value="{{$user->name}}">
                 <input type="hidden" class="form-control form-control-sm" id="id_user"  value="{{$user->id}}">
                 @csrf
             </div>
             <div class="form-group">
-                <label for="email">Email</label>
+                <label for="email">Email *:</label>
                 <input type="text" class="form-control form-control-sm" id="email" placeholder="Email" value="{{$user->email}}">
             </div>
             <div class="form-group">
-                <label for="pass_1">Contraseña</label>
+                <label for="pass_1">Contraseña *:</label>
                 <input type="password" class="form-control form-control-sm" id="pass_1" placeholder="Contraseña" value="">
             </div>
             <div class="form-group">
-                <label for="pass_2">Confirmar contraseña</label>
+                <label for="pass_2">Confirmar contraseña *:</label>
                 <input type="password" class="form-control form-control-sm" id="pass_2" placeholder="Contraseña" value="">
             </div>
             <div class="form-group">
-                <label for="cliente">Empresa</label>
+                <label for="cliente">Empresa *:</label>
                 <select name="cliente" id="cliente" class="form-control form-control-sm">
-                    <option value="">Selecciona una empresa</option>
+                    <option disabled selected value="">Selecciona una empresa</option>
                     <option value="30" {{ $user->id_cliente == 30 ? 'selected="selected"' : '' }}>C3NTRO</option>
                     @foreach( $clientes as $cliente )
                         <option value="{{ $cliente->id }}" {{ $user->id_cliente == $cliente->id ? 'selected="selected"' : '' }}>{{ $cliente->nombre }}</option>
@@ -31,18 +31,24 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="rol">Rol</label>
+                <label for="rol">Rol *:</label>
                 @php
                     $role =  $user->getRoleNames();
                 @endphp
                 <select name="rol" id="rol" class="form-control form-control-sm">
-                    <option value="">Selecciona un rol</option>
+                    <option disabled selected value="">Selecciona un rol</option>
                     @foreach( $roles as $rol )
                         <option value="{{ $rol->id }}" {{ $role[0] == $rol->name ? 'selected="selected"' : '' }} >{{ $rol->name }}</option>
                     @endforeach
                 </select>
             </div>
         </fieldset>
+        <div class="form-group">
+            <small class="form-text text-muted"> <b>*Campos obligatorios.</b></small>
+        </div>
+        <div class="alert alert-danger print-error-msg" role="alert" style="display:none">
+            <ul></ul>
+        </div>
     </div>
     <div class="col modulosEmpresa">
         <h5><b>Modulos</b></h5>

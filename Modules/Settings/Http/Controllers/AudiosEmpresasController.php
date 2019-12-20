@@ -14,6 +14,7 @@ use Nimbus\User;
 use Storage;
 use Nimbus\Empresas;
 use File;
+use Modules\Settings\Http\Requests\AudiosRequest;
 
 
 class AudiosEmpresasController extends Controller
@@ -46,7 +47,7 @@ class AudiosEmpresasController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(AudiosRequest $request)
     {
         /** Obtener los datos del usuario logeado **/
         $user = User::find( Auth::id() );
@@ -150,7 +151,7 @@ class AudiosEmpresasController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(AudiosRequest $request, $id)
     {
         //
     }

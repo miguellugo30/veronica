@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="tipo"><b>Tipo</b></label>
+                        <label for="tipo"><b>Tipo *:</b></label>
                             @csrf
                             <select name="tipo" id="tipo" class="form-control form-control-sm tipo">
                                 <option value="">Seleccione un tipo</option>
@@ -15,13 +15,13 @@
                 </div>
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="nombre"><b>Nombre</b></label>
+                        <label for="nombre"><b>Nombre *:</b></label>
                         <input type="text" class="form-control form-control-sm" id="nombre" name="nombre" placeholder="Nombre Speech">
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="nombre"><b>Descripcion</b></label>
+                        <label for="nombre"><b>Descripcion *:</b></label>
                         <input type="text" class="form-control form-control-sm" id="descripcion" name="descripcion" placeholder="Descripcion Speech">
                     </div>
                 </div>
@@ -31,8 +31,8 @@
                         <table id='tipos' class="table table-striped table-sm tableNewSpeech">
                             <thead>
                                 <tr>
-                                    <th>Nombre</th>
-                                    <th>Descripcion</th>
+                                    <th>Nombre *:</th>
+                                    <th>Descripcion *:</th>
                                     <td><input type="button" class="btn btn-primary btn-sm agrega" id="add_s" value = "Agregar" hidden/></td>
                                 </tr>
                             </thead>
@@ -52,6 +52,12 @@
                         </table>
                 </fieldset>
                 </div>
+            </div>
+            <div class="form-group">
+                <small class="form-text text-muted"> <b>*Campos obligatorios.</b></small>
+            </div>
+            <div class="alert alert-danger print-error-msg" role="alert" style="display:none">
+                <ul></ul>
             </div>
         </form>
     </div>

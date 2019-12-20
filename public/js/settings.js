@@ -256,13 +256,15 @@ $(function () {
     var clickID = $(".tableNewSpeech tbody tr.clonar:last").attr('id').replace('tr_', '');
     $('#form_opc .form-control-sm').val(''); // Genero el nuevo numero id
 
-    var newID = parseInt(clickID) + 1; //let IDInput = ['id_campo', 'nombre_speech', 'tipo_campo', 'tamano', 'obligatorio', 'obligatorio_hidden', 'editable', 'editable_hidden', 'opciones', 'view'];
+    var newID = parseInt(clickID) + 1; //let IDInput = ['nombreSpeech', 'descripcion', 'prioridad'];
 
-    var IDInput = ['nombreSpeech', 'descripcion', 'prioridad'];
+    var IDInput = ['nombreSpeech', 'descripcionSpeech'];
     fila = $(".tableNewSpeech tbody tr:eq()").clone().appendTo(".tableNewSpeech"); //Clonamos la fila
 
     for (var i = 0; i < IDInput.length; i++) {
       fila.find('#' + IDInput[i]).attr('name', IDInput[i] + "_" + newID); //Cambiamos el nombre de los campos de la fila a clonar
+
+      fila.find('#' + IDInput[i]).attr('id', IDInput[i] + "_" + newID); //Cambiamos el id de los campos de la fila a clonar
     }
 
     fila.find('.btn-info').css('display', 'none');
@@ -277,13 +279,14 @@ $(function () {
     var clickID = $(".tableEditSpeech tbody tr.clonar:last").attr('id').replace('tr_', '');
     $('#form_opc .form-control-sm').val(''); // Genero el nuevo numero id
 
-    var newID = parseInt(clickID) + 1; //let IDInput = ['id_campo', 'nombre_speech', 'tipo_campo', 'tamano', 'obligatorio', 'obligatorio_hidden', 'editable', 'editable_hidden', 'opciones', 'view'];
-
-    var IDInput = ['nombreSpeech', 'descripcion', 'prioridad'];
+    var newID = parseInt(clickID) + 1;
+    var IDInput = ['nombreSpeech', 'descripcion'];
     fila = $(".tableEditSpeech tbody tr:eq()").clone().appendTo(".tableEditSpeech"); //Clonamos la fila
 
     for (var i = 0; i < IDInput.length; i++) {
-      fila.find('#' + IDInput[i]).attr('name', IDInput[i] + "_" + newID); //Cambiamos el nombre de los campos de la fila a clonar
+      fila.find('.' + IDInput[i]).attr('name', IDInput[i] + "_" + newID); //Cambiamos el nombre de los campos de la fila a clonar
+
+      fila.find('.' + IDInput[i]).attr('id', IDInput[i] + "_" + newID); //Cambiamos el id de los campos de la fila a clonar
     }
 
     fila.find('.btn-info').css('display', 'none');
@@ -309,223 +312,7 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-$(function () {
-  var currentURL = window.location.href;
-  /**
-   * Evento para seleccionar agentes
-   */
-
-  $(document).on('click', '#tableAgentes tbody tr', function (event) {
-    event.preventDefault();
-    var id = $(this).data("id");
-    $(".deleteAgente").slideDown();
-    $(".editAgente").slideDown();
-    $("#idSeleccionado").val(id);
-    $("#tableAgentes tbody tr").removeClass('table-primary');
-    $(this).addClass('table-primary');
-  });
-  ;
-  /**
-   * Evento para eliminar el Agente
-   *
-   */
-
-  $(document).on('click', '.deleteAgente', function (event) {
-    event.preventDefault();
-    Swal.fire({
-      title: 'Estas seguro?',
-      text: "Deseas eliminar el registro seleccionado!",
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, Eliminar!',
-      cancelButtonText: 'Cancelar'
-    }).then(function (result) {
-      if (result.value) {
-        var id = $("#idSeleccionado").val();
-        var _method = "DELETE";
-
-        var _token = $("input[name=_token]").val();
-
-        var url = currentURL + '/Agentes/' + id;
-        $.ajax({
-          url: url,
-          type: 'POST',
-          data: {
-            _token: _token,
-            _method: _method
-          },
-          success: function success(result) {
-            $('.viewResult').html(result);
-            $('.viewResult #tableAgentes').DataTable({
-              "lengthChange": false
-            });
-            Swal.fire('Eliminado!', 'El registro ha sido eliminado.', 'success');
-          }
-        });
-      }
-    });
-  });
-  /**
-   * Evento para mostrar el formulario de crear un nuevo Agente
-   */
-
-  $(document).on("click", ".newAgente", function (e) {
-    event.preventDefault();
-    $('#tituloModal').html('Alta de Agente');
-    $('#action').removeClass('deleteAgente');
-    $('#action').addClass('saveAgente');
-    var url = currentURL + "/Agentes/create";
-    $.get(url, function (data, textStatus, jqXHR) {
-      $('#modal').modal('show');
-      $("#modal-body").html(data);
-    });
-  });
-  /**
-   * Evento para visualizar la configuración del Agente
-   */
-
-  $(document).on('click', '.editAgente', function (event) {
-    event.preventDefault();
-    var id = $("#idSeleccionado").val();
-    var url = currentURL + '/Agentes/' + id + '/edit';
-    $('#tituloModal').html('Editar Agente');
-    $('#action').addClass('updateAgente');
-    $('#action').removeClass('saveAgente');
-    $.ajax({
-      url: url,
-      type: 'GET',
-      success: function success(result) {
-        $('#modal').modal({
-          backdrop: 'static',
-          keyboard: false
-        });
-        $("#modal-body").html(result);
-      }
-    });
-  });
-  /**
-   * Evento para guardar los cambios del Agente
-   */
-
-  $(document).on('click', '.updateAgente', function (event) {
-    event.preventDefault();
-    var id = $("#id").val();
-    var grupo = $("#grupo").val();
-    var tipo_licencia = $("#tipo_licencia").val();
-    var nivel = $("#nivel").val();
-    var nombre = $("#nombre").val();
-    var usuario = $("#usuario").val();
-    var contrasena = $("#contrasena").val();
-    var extension = $("#extension").val();
-    var canal = $("#canal").val();
-    var mix_monitor = $("input[name='mix_monitor']:checked").val();
-    var calificar_llamada = $("input[name='calificar_llamada']:checked").val();
-    var envio_sms = $("input[name='envio_sms']:checked").val();
-    var editar_datos = $("input[name='editar_datos']:checked").val();
-
-    var _token = $("input[name=_token]").val();
-
-    var _method = "PUT";
-    var url = currentURL + '/Agentes/' + id;
-    $.post(url, {
-      grupo: grupo,
-      tipo_licencia: tipo_licencia,
-      nivel: nivel,
-      nombre: nombre,
-      usuario: usuario,
-      contrasena: contrasena,
-      extension: extension,
-      Canales_id: canal,
-      mix_monitor: mix_monitor,
-      calificar_llamada: calificar_llamada,
-      envio_sms: envio_sms,
-      editar_datos: editar_datos,
-      _method: _method,
-      _token: _token
-    }, function (data, textStatus, xhr) {
-      $('#modal').modal('hide');
-      $('.modal-backdrop ').css('display', 'none');
-      $('.viewResult').html(data);
-      $('.viewResult #tableAgentes').DataTable({
-        "lengthChange": true,
-        "order": [[2, "asc"]]
-      });
-      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
-    }).fail(function (data) {
-      printErrorMsg(data.responseJSON.errors);
-    });
-  });
-  /**
-   * Evento para guardar el nuevo agente
-   */
-
-  $(document).on('click', '.saveAgente', function (event) {
-    event.preventDefault();
-    var grupo = $("#grupo").val();
-    var tipo_licencia = $("#tipo_licencia").val();
-    var nivel = $("#nivel").val();
-    var nombre = $("#nombre").val();
-    var usuario = $("#usuario").val();
-    var contrasena = $("#contrasena").val();
-    var extension = $("#extension").val();
-    var canal = $("#canal").val();
-    var mix_monitor = $("input[name='mix_monitor']:checked").val();
-    var calificar_llamada = $("input[name='calificar_llamada']:checked").val();
-    var envio_sms = $("input[name='envio_sms']:checked").val();
-    var editar_datos = $("input[name='editar_datos']:checked").val();
-    var Cat_Estado_Agente_id = $("#Cat_Estado_Agente_id").val();
-
-    var _token = $("input[name=_token]").val();
-
-    var url = currentURL + '/Agentes';
-    $.post(url, {
-      grupo: grupo,
-      tipo_licencia: tipo_licencia,
-      nivel: nivel,
-      nombre: nombre,
-      usuario: usuario,
-      contrasena: contrasena,
-      extension: extension,
-      Canales_id: canal,
-      mix_monitor: mix_monitor,
-      calificar_llamada: calificar_llamada,
-      envio_sms: envio_sms,
-      editar_datos: editar_datos,
-      Cat_Estado_Agente_id: Cat_Estado_Agente_id,
-      _token: _token
-    }, function (data, textStatus, xhr) {
-      $('#modal').modal('hide');
-      $('.modal-backdrop ').css('display', 'none');
-      $('.viewResult').html(data);
-      $('.viewResult #tableAgentes').DataTable({
-        "lengthChange": true,
-        "order": [[2, "asc"]]
-      });
-      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
-    }).fail(function (data) {
-      printErrorMsg(data.responseJSON.errors);
-    });
-  });
-  /**
-   * Funcion para mostrar los errores de los formularios
-   */
-
-  function printErrorMsg(msg) {
-    $(".print-error-msg").find("ul").html('');
-    $(".print-error-msg").css('display', 'block');
-    $(".form-control").removeClass('is-invalid');
-
-    for (var clave in msg) {
-      $("#" + clave).addClass('is-invalid');
-
-      if (msg.hasOwnProperty(clave)) {
-        $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
-      }
-    }
-  }
-});
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: C:\\xampp\\htdocs\\Nimbus\\resources\\js\\module_settings\\agentes.js: Unexpected token (123:0)\n\n  121 | \n  122 |         $.post(url, {\n> 123 | <<<<<<< HEAD\n      | ^\n  124 |                 grupo: grupo,\n  125 |                 tipo_licencia: tipo_licencia,\n  126 |                 nivel: nivel,\n    at Parser.raise (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:6931:17)\n    at Parser.unexpected (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:8324:16)\n    at Parser.parseIdentifierName (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:10283:18)\n    at Parser.parseIdentifier (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:10261:23)\n    at Parser.parseMaybePrivateName (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:9605:19)\n    at Parser.parsePropertyName (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:10073:98)\n    at Parser.parseObjectMember (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:9974:10)\n    at Parser.parseObj (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:9904:25)\n    at Parser.parseExprAtom (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:9526:28)\n    at Parser.parseExprSubscripts (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:9166:23)\n    at Parser.parseMaybeUnary (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:9146:21)\n    at Parser.parseExprOps (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:9012:23)\n    at Parser.parseMaybeConditional (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:8985:23)\n    at Parser.parseMaybeAssign (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:8931:21)\n    at Parser.parseExprListItem (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:10253:18)\n    at Parser.parseCallExpressionArguments (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:9363:22)\n    at Parser.parseSubscript (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:9271:29)\n    at Parser.parseSubscripts (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:9187:19)\n    at Parser.parseExprSubscripts (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:9176:17)\n    at Parser.parseMaybeUnary (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:9146:21)\n    at Parser.parseExprOps (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:9012:23)\n    at Parser.parseMaybeConditional (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:8985:23)\n    at Parser.parseMaybeAssign (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:8931:21)\n    at Parser.parseExpression (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:8881:23)\n    at Parser.parseStatementContent (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:10741:23)\n    at Parser.parseStatement (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:10612:17)\n    at Parser.parseBlockOrModuleBlockBody (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:11188:25)\n    at Parser.parseBlockBody (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:11175:10)\n    at Parser.parseBlock (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:11159:10)\n    at Parser.parseFunctionBody (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:10178:24)\n    at Parser.parseFunctionBodyAndFinish (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:10148:10)\n    at withTopicForbiddingContext (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:11320:12)\n    at Parser.withTopicForbiddingContext (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:10487:14)\n    at Parser.parseFunction (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:11319:10)\n    at Parser.parseFunctionExpression (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:9619:17)\n    at Parser.parseExprAtom (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:9532:21)\n    at Parser.parseExprSubscripts (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:9166:23)\n    at Parser.parseMaybeUnary (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:9146:21)\n    at Parser.parseExprOps (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:9012:23)\n    at Parser.parseMaybeConditional (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:8985:23)\n    at Parser.parseMaybeAssign (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:8931:21)\n    at Parser.parseExprListItem (C:\\xampp\\htdocs\\Nimbus\\node_modules\\@babel\\parser\\lib\\index.js:10253:18)");
 
 /***/ }),
 
@@ -575,9 +362,8 @@ $(function () {
 
   $(document).on('click', '.saveAudio', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var formData = new FormData(document.getElementById("altaaudio"));
-    var nombre = $("#name").val();
+    var nombre = $("#nombre").val();
     var descripcion = $("#descripcion").val();
     var labelFile = $("#labelFile").text();
     var file = $("#file").val();
@@ -587,24 +373,28 @@ $(function () {
     formData.append("nombre", nombre);
     formData.append("descripcion", descripcion);
     formData.append("ruta", labelFile);
-    formData.append("File", File);
+    formData.append("File", file);
     formData.append("_token", _token);
     var url = currentURL + '/Audios';
     $.ajax({
       url: url,
       type: "post",
-      dataType: "html",
+      //dataType: "html",
       data: formData,
       cache: false,
       contentType: false,
       processData: false
     }).done(function (data) {
+      $('#modal').modal('hide');
+      $('.modal-backdrop ').css('display', 'none');
       $('.viewResult').html(data);
       $('.viewResult #tableAudios').DataTable({
         "lengthChange": false
       });
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
-    Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
   });
   /**
    * Evento para eliminar el Audio
@@ -685,6 +475,23 @@ $(function () {
       }
     });
   });
+  /**
+   * Funcion para mostrar los errores de los formularios
+   */
+
+  function printErrorMsg(msg) {
+    $(".print-error-msg").find("ul").html('');
+    $(".print-error-msg").css('display', 'block');
+    $(".form-control").removeClass('is-invalid');
+
+    for (var clave in msg) {
+      $("#" + clave).addClass('is-invalid');
+
+      if (msg.hasOwnProperty(clave)) {
+        $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -736,7 +543,7 @@ $(function () {
       fila.find('#' + IDInput[i]).attr('name', IDInput[i] + "_" + newID); //Cambiamos el nombre de los campos de la fila a clonar
     }
 
-    fila.find('.btn-danger').css('display', 'block');
+    fila.find('.btn-danger').css('display', 'initial');
     fila.find('#id_calificacion').val('');
     fila.attr("id", 'tr_' + newID);
   });
@@ -746,17 +553,25 @@ $(function () {
 
   $(document).on('click', '.saveCalificaciones', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var dataForm = $("#formDataCalificaciones").serializeArray();
+    var data = {};
+    $(dataForm).each(function (index, obj) {
+      data[obj.name] = obj.value;
+    });
 
     var _token = $("input[name=_token]").val();
 
     var url = currentURL + '/calificaciones';
     $.post(url, {
-      dataForm: dataForm,
+      dataForm: data,
       _token: _token
     }, function (data, textStatus, xhr) {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
       $('.viewResult').html(data);
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
@@ -800,8 +615,11 @@ $(function () {
 
   $(document).on('click', '.updateCalificaciones', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var dataForm = $("#formDataCalificaciones").serializeArray();
+    var data = {};
+    $(dataForm).each(function (index, obj) {
+      data[obj.name] = obj.value;
+    });
     var id = $("#idSeleccionado").val();
 
     var _token = $("input[name=_token]").val();
@@ -809,15 +627,19 @@ $(function () {
     var _method = "PUT";
     var url = currentURL + '/calificaciones/' + id;
     $.post(url, {
-      dataForm: dataForm,
+      dataForm: data,
       _token: _token,
       _method: _method
     }, function (data, textStatus, xhr) {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
       $('.viewResult').html(data);
       $('.viewResult #tableCalificaciones').DataTable({
         "lengthChange": false
       });
       Swal.fire('Actualizado!', 'El registro ha sido actualiazdo.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
@@ -963,6 +785,21 @@ $(function () {
       }
     });
   });
+  /**
+   * Funcion para mostrar los errores de los formularios
+   */
+
+  function printErrorMsg(msg) {
+    $(".print-error-msg").find("ul").html('');
+    $(".print-error-msg").css('display', 'block');
+    $(".form-control").removeClass('is-invalid');
+    $(".print-error-msg").find("ul").append('<li>Es un campo obligatorio</li>');
+
+    for (var clave in msg) {
+      var data = clave.split('.');
+      $("[name='" + data[1] + "']").addClass('is-invalid');
+    }
+  }
 });
 
 /***/ }),
@@ -997,7 +834,6 @@ $(function () {
 
   $(document).on('click', '.saveEventoAgente', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var nombre = $("#nombre").val();
     var tiempo = $("#tiempo").val(); //let fechaini = $("#fechaini").val();
     //let fechafin = $("#fechafin").val();
@@ -1017,7 +853,12 @@ $(function () {
         "lengthChange": true,
         "order": [[0, "asc"]]
       });
+    }).done(function () {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
       Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
@@ -1105,7 +946,6 @@ $(function () {
 
   $(document).on('click', '.updateEventoAgente', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var id = $("#id").val();
     var nombre = $("#nombre").val();
     var tiempo = $("#tiempo").val();
@@ -1123,11 +963,33 @@ $(function () {
       $('.viewResult').html(data);
       $('.viewResult #tableEventosAgentes').DataTable({
         "lengthChange": true,
-        "order": [[1, "asc"]]
+        "order": [[0, "asc"]]
       });
+    }).done(function () {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
       Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
+  /**
+   * Funcion para mostrar los errores de los formularios
+   */
+
+  function printErrorMsg(msg) {
+    $(".print-error-msg").find("ul").html('');
+    $(".print-error-msg").css('display', 'block');
+    $(".form-control").removeClass('is-invalid');
+
+    for (var clave in msg) {
+      $("#" + clave).addClass('is-invalid');
+
+      if (msg.hasOwnProperty(clave)) {
+        $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
+      }
+    }
+  }
 });
 ;
 
@@ -1224,17 +1086,25 @@ $(function () {
 
   $(document).on('click', '.saveFormulario', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var dataForm = $("#formDataFormulario").serializeArray();
+    var data = {};
+    $(dataForm).each(function (index, obj) {
+      data[obj.name] = obj.value;
+    });
 
     var _token = $("input[name=_token]").val();
 
     var url = currentURL + '/formularios';
     $.post(url, {
-      dataForm: dataForm,
+      dataForm: data,
       _token: _token
     }, function (data, textStatus, xhr) {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
       $('.viewResult').html(data);
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
@@ -1289,20 +1159,28 @@ $(function () {
 
   $(document).on('click', '.updateFormulario', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var id = $("#idSeleccionado").val();
     var dataForm = $("#formDataFormulario").serializeArray();
+    var data = {};
+    $(dataForm).each(function (index, obj) {
+      data[obj.name] = obj.value;
+    });
 
     var _token = $("input[name=_token]").val();
 
     var _method = "PUT";
     var url = currentURL + '/formularios/' + id;
     $.post(url, {
-      dataForm: dataForm,
+      dataForm: data,
       _method: _method,
       _token: _token
     }, function (data, textStatus, xhr) {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
       $('.viewResult').html(data);
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
@@ -1348,6 +1226,21 @@ $(function () {
       }
     });
   });
+  /**
+   * Funcion para mostrar los errores de los formularios
+   */
+
+  function printErrorMsg(msg) {
+    $(".print-error-msg").find("ul").html('');
+    $(".print-error-msg").css('display', 'block');
+    $(".form-control").removeClass('is-invalid');
+    $(".print-error-msg").find("ul").append('<li>Es un campo obligatorio</li>');
+
+    for (var clave in msg) {
+      var data = clave.split('.');
+      $("[name='" + data[1] + "']").addClass('is-invalid');
+    }
+  }
 });
 
 /***/ }),
@@ -1382,7 +1275,6 @@ $(function () {
 
   $(document).on('click', '.saveGrupo', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var nombre = $("#nombre").val();
     var descripcion = $("#descripcion").val();
 
@@ -1397,9 +1289,14 @@ $(function () {
       $('.viewResult').html(data);
       $('.viewResult #tableGrupos').DataTable({
         "lengthChange": true,
-        "order": [[2, "asc"]]
+        "order": [[0, "asc"]]
       });
+    }).done(function () {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
       Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
@@ -1487,7 +1384,6 @@ $(function () {
 
   $(document).on('click', '.updateGrupo', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var id = $("#id").val();
     var nombre = $("#nombre").val();
     var descripcion = $("#descripcion").val();
@@ -1505,13 +1401,34 @@ $(function () {
       $('.viewResult').html(data);
       $('.viewResult #tableGrupos').DataTable({
         "lengthChange": true,
-        "order": [[2, "asc"]]
+        "order": [[0, "asc"]]
       });
+    }).done(function () {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
       Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
+  /**
+   * Funcion para mostrar los errores de los formularios
+   */
+
+  function printErrorMsg(msg) {
+    $(".print-error-msg").find("ul").html('');
+    $(".print-error-msg").css('display', 'block');
+    $(".form-control").removeClass('is-invalid');
+
+    for (var clave in msg) {
+      $("#" + clave).addClass('is-invalid');
+
+      if (msg.hasOwnProperty(clave)) {
+        $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
+      }
+    }
+  }
 });
-;
 
 /***/ }),
 
@@ -1678,22 +1595,28 @@ $(function () {
 
   $(document).on('click', '.updateSpeech', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
-    $('.tipo').removeAttr("disabled");
-    $('.nombre').removeAttr("disabled");
-    var id = $("#idSeleccionado").val();
     var dataForm = $("#editspeech").serializeArray();
+    var data = {};
+    $(dataForm).each(function (index, obj) {
+      data[obj.name] = obj.value;
+    });
+    var id = $("#idSeleccionado").val();
 
     var _token = $("input[name=_token]").val();
 
     var _method = "PUT";
     var url = currentURL + '/speech/' + id;
     $.post(url, {
-      dataForm: dataForm,
+      dataForm: data,
       _method: _method,
       _token: _token
     }, function (data, textStatus, xhr) {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
       $('.viewResult').html(data);
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
   /**
@@ -1702,24 +1625,46 @@ $(function () {
 
   $(document).on('click', '.saveSpeech', function (event) {
     event.preventDefault();
-    $('#modal').modal('hide');
     var dataForm = $("#altaspeech").serializeArray();
+    var data = {};
+    $(dataForm).each(function (index, obj) {
+      data[obj.name] = obj.value;
+    });
 
     var _token = $("input[name=_token]").val();
 
     var url = currentURL + '/speech';
     $.post(url, {
-      dataForm: dataForm,
+      dataForm: data,
       _token: _token
     }, function (data, textStatus, xhr) {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
       $('.viewResult').html(data);
       $('.viewResult #tableSpeech').DataTable({
         "lengthChange": true,
         "order": [[2, "asc"]]
       });
       Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
     });
   });
+  /**
+   * Funcion para mostrar los errores de los formularios
+   */
+
+  function printErrorMsg(msg) {
+    $(".print-error-msg").find("ul").html('');
+    $(".print-error-msg").css('display', 'block');
+    $(".form-control").removeClass('is-invalid');
+    $(".print-error-msg").find("ul").append('<li>Es un campo obligatorio</li>');
+
+    for (var clave in msg) {
+      var data = clave.split('.');
+      $("[name='" + data[1] + "']").addClass('is-invalid');
+    }
+  }
 });
 
 /***/ }),
@@ -2006,17 +1951,17 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\menu.js */"./resources/js/module_settings/menu.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\formularios.js */"./resources/js/module_settings/formularios.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\sub_formularios.js */"./resources/js/module_settings/sub_formularios.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\acciones_formularios.js */"./resources/js/module_settings/acciones_formularios.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\audios.js */"./resources/js/module_settings/audios.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\calificaciones.js */"./resources/js/module_settings/calificaciones.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\agentes.js */"./resources/js/module_settings/agentes.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\grupos.js */"./resources/js/module_settings/grupos.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\speech.js */"./resources/js/module_settings/speech.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\acciones_speech.js */"./resources/js/module_settings/acciones_speech.js");
-module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\eventos_agentes.js */"./resources/js/module_settings/eventos_agentes.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\menu.js */"./resources/js/module_settings/menu.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\formularios.js */"./resources/js/module_settings/formularios.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\sub_formularios.js */"./resources/js/module_settings/sub_formularios.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\acciones_formularios.js */"./resources/js/module_settings/acciones_formularios.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\audios.js */"./resources/js/module_settings/audios.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\calificaciones.js */"./resources/js/module_settings/calificaciones.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\agentes.js */"./resources/js/module_settings/agentes.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\grupos.js */"./resources/js/module_settings/grupos.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\speech.js */"./resources/js/module_settings/speech.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\acciones_speech.js */"./resources/js/module_settings/acciones_speech.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\eventos_agentes.js */"./resources/js/module_settings/eventos_agentes.js");
 
 
 /***/ })

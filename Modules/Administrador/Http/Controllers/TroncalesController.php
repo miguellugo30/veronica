@@ -5,6 +5,7 @@ namespace Modules\Administrador\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\Administrador\Http\Requests\TroncalesRequest;
 use PHPAMI\Ami;
 use nusoap_client;
 
@@ -55,7 +56,7 @@ class TroncalesController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(TroncalesRequest $request)
     {
         /**
          * Obtenemos todos los datos del formulario de alta y
@@ -138,7 +139,9 @@ class TroncalesController extends Controller
 
         $medias = Cat_IP_PBX::active()->get();
 
-        return view('administrador::troncales.edit', compact('troncal', 'id', 'distribuidores','medias') );
+        $troncales = Troncales_Sansay::active()->where('Troncales_id', $id)->first();
+
+        return view('administrador::troncales.edit', compact('troncal', 'id', 'distribuidores','medias', 'troncales'));
     }
 
     /**
@@ -147,7 +150,7 @@ class TroncalesController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(TroncalesRequest $request, $id)
     {
         /**
          * Actualizamos la troncal
@@ -160,19 +163,40 @@ class TroncalesController extends Controller
                                     'Cat_Distribuidor_id' => $request->input('Cat_Distribuidor_id'),
                                     //'Cat_IP_PBX_id' => $request->input('Cat_IP_PBX_id'),
                                 ]);
+        Troncales_Sansay::where('Troncales_id',$id)
+                                ->update([
+                                    'name' => $request->input('nombre'),
+                                    'host' => $request->input('ip_host'),
+                                    'Troncales_id' => $id
+                                ]);
+        /**
+         * Obtenemos la IP del Media Server
+         */
+        $ip = $request->input('Cat_IP_PBX_id');
+        /**
+         * Creamos una petición, para poder escribir
+         * los nuevos DID en el archivo EXTENSIONS_DID.CONF
+         */
 
+<<<<<<< HEAD
         $ip = $request->input('Cat_IP_PBX_id');
         /**
          * Creamos una petición, para poder escribir
          * las nuevas TRONCALES en el archivo SIP_TRONCALES.CONF
          */
+=======
+>>>>>>> 678ba4a9ff602e4ed42f27438df1bd892466f120
         $user = Auth::user();
         $empresa_id = $user->id_cliente;
         $pbx = Empresas::where('id',$empresa_id)->active()->with('Config_Empresas')->get()->first();
         $wsdl = 'http://'.$ip.'/ws-ms/index.php';
         $client =  new  nusoap_client( $wsdl );
         $result = $client->call('Troncales', array(
+<<<<<<< HEAD
                                                         'empresas_id' => $id
+=======
+                                                        'empresas_id' => $empresa_id
+>>>>>>> 678ba4a9ff602e4ed42f27438df1bd892466f120
                                                     ));
         /**
          * Si la respuesta es 1, se hace el reload del sip
@@ -186,7 +210,10 @@ class TroncalesController extends Controller
             $result  = $ami->command('dialplan Reload');
             $ami->disconnect();
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 678ba4a9ff602e4ed42f27438df1bd892466f120
         /**
          * Creamos el logs
          */

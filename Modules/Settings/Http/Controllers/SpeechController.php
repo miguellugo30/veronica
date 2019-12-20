@@ -10,6 +10,7 @@ use Nimbus\User;
 use Nimbus\Speech;
 use Nimbus\Opciones_Speech;
 use DB;
+use Modules\Settings\Http\Requests\SpeechRequest;
 
 class SpeechController extends Controller
 {
@@ -45,14 +46,11 @@ class SpeechController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(SpeechRequest $request)
     {
         $dataForm = $request->input('dataForm');
+        $data = $request->dataForm;
 
-        for ($i=0; $i < count( $dataForm ); $i++) {
-            $data[ $dataForm[$i]['name']] = $dataForm[$i]['value'];
-        }
-        //dd( $data );
         /**
          * Insertamos la información del Agente
          */
@@ -68,7 +66,6 @@ class SpeechController extends Controller
              'activo'=>1,
              'Empresas_id'=>$empresa_id
              ]);
-
         array_shift( $data );
         array_shift( $data );
         array_shift( $data );
@@ -123,19 +120,13 @@ class SpeechController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(SpeechRequest $request, $id)
     {
         $dataForm = $request->input('dataForm');
-        //dd($dataForm);
-
-        for ($i=0; $i < count( $dataForm ); $i++) {
-            $data[ $dataForm[$i]['name']] = $dataForm[$i]['value'];
-        }
+        $data = $request->dataForm;
         $idSpeech = $data['id'];
-        DB::table('Opciones_Speech')->where('Speech_id', $idSpeech)->delete();
+        Opciones_Speech::where('speech_id', $idSpeech)->delete();
 
-        array_shift( $data );
-        array_shift( $data );
         array_shift( $data );
         array_shift( $data );
 
@@ -155,12 +146,10 @@ class SpeechController extends Controller
                 $j = $j + 1;
 
             } else {
-
                 Opciones_Speech::where('speech_id',$idSpeech)->update([
                     'nombre' => $info[$i][0],
                     'texto' => $info[$i][1],
                     'prioridad' => $j,
-                    //'speech_id' => $idSpeech
                 ]);
                 $j = $j + 1;
             }

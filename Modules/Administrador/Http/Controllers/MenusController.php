@@ -10,6 +10,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Nimbus\Http\Controllers\LogController;
 use DB;
+use Modules\Administrador\Http\Requests\MenusRequest;
 
 class MenusController extends Controller
 {
@@ -52,7 +53,7 @@ class MenusController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(MenusRequest $request)
     {
         /**
          * Insertamos la informacion del formulario en la tabla permissions como en la tabla de categorias
@@ -128,7 +129,7 @@ class MenusController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(MenusRequest $request, $id)
     {
         /**
          * Actualizamos el menu

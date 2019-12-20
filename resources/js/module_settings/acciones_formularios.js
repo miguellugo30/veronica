@@ -14,7 +14,7 @@ $(function() {
             fila.find('#' + IDInput[i]).attr('name', IDInput[i] + "_" + newID); //Cambiamos el nombre de los campos de la fila a clonar
         }
         fila.find('.btn-info').css('display', 'none');
-        fila.find('#id_campo').attr('value', '')
+        fila.find('#id_campo').attr('value', '');
         fila.attr("id", 'tr_' + newID);
 
     });

@@ -6,7 +6,7 @@
         <div class="form-group">
             <label for="grupo"><b>Grupo *:</b></label>
             <select name="grupo" id="grupo" class="form-control form-control-sm">
-                <option value="">Sin Grupo</option>
+                <option disabled selected value="">Sin Grupo</option>
                 @foreach ($grupos as $grupo)
                     <option value="{{$grupo->id}}">{{$grupo->nombre}}</option>
                 @endforeach
@@ -17,7 +17,7 @@
         <div class="form-group">
             <label for="tipo_licencia"><b>Tipo Licencia *:</b></label>
             <select name="tipo_licencia" id="tipo_licencia" class="form-control form-control-sm">
-                <option value="">Selecciona un licencia</option>
+                <option disabled selected value="">Selecciona un licencia</option>
                 <option value="Inbound"  {{ ( $empresa->Config_Empresas->agentes_entrada != 0 ) ? '' : 'style=display:none' }}>Inbound</option>
                 <option value="Outbound" {{ ( $empresa->Config_Empresas->agentes_salida != 0 ) ? '' : 'style=display:none' }}>Outbound</option>
                 <option value="Full"     {{ ( $empresa->Config_Empresas->agentes_dual != 0 ) ? '' : 'style=display:none' }}>Full</option>
@@ -42,7 +42,7 @@
         <div class="form-group">
             <label for="canal"><b>Canal *:</b></label>
             <select name="canal" id="canal" class="form-control form-control-sm">
-                <option value="">Selecciona un canal</option>
+                <option disabled selected value="">Selecciona un canal</option>
                 @foreach ($canales as $canal)
                     <option value="{{$canal->id}}">{{$canal->Cat_Tipo_Canales->nombre}}</option>
                 @endforeach
@@ -50,12 +50,22 @@
         </div>
         <div class="form-group">
             <label for="extension"><b>Extensión *:</b></label>
+<<<<<<< HEAD
+            <input type="text" class="form-control form-control-sm" name="extension" id="extension"  placeholder="Extensión">
+=======
             <select name="extension" id="extension" class="form-control form-control-sm">
                 <option value="">Selecciona un extensión</option>
                 @foreach ($cat_extensiones as $extension)
                     <option value="{{$extension->extension}}">{{$extension->extension}}</option>
                 @endforeach
             </select>
+>>>>>>> 2c4ede2c82041d889eaa5ff6c8248298e78f16aa
+        </div>
+        <div class="form-group">
+            <small class="form-text text-muted"> <b>*Campos obligatorios.</b></small>
+        </div>
+        <div class="alert alert-danger print-error-msg" role="alert" style="display:none">
+            <ul></ul>
         </div>
     </div>
     <div class="col">

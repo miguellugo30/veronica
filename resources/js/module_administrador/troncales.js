@@ -23,34 +23,39 @@ $(function() {
      */
     $(document).on('click', '.saveTroncal', function(event) {
         event.preventDefault();
-        $('#modal').modal('hide');
 
         let nombre = $("#nombre").val();
         let descripcion = $("#descripcion").val();
         let ip_host = $("#ip_host").val();
         let Cat_IP_PBX_id = $("#mediaserver").val();
-        let Cat_Distribuidor_id = $("#distribuidores").val();
+        let distribuidores = $("#distribuidores").val();
         let _token = $("input[name=_token]").val();
         let url = currentURL + '/troncales';
 
         $.post(url, {
-            nombre: nombre,
-            descripcion: descripcion,
-            Cat_IP_PBX_id: Cat_IP_PBX_id,
-            ip_host: ip_host,
-            Cat_Distribuidor_id: Cat_Distribuidor_id,
-            _token: _token
-        }, function(data, textStatus, xhr) {
-            $('.viewResult').html(data);
-            $('.viewIndex #tableTroncales').DataTable({
-                "lengthChange": true
+                nombre: nombre,
+                descripcion: descripcion,
+                Cat_IP_PBX_id: Cat_IP_PBX_id,
+                ip_host: ip_host,
+                distribuidores: distribuidores,
+                _token: _token
+            }, function(data, textStatus, xhr) {
+                $('.viewResult').html(data);
+                $('.viewIndex #tableTroncales').DataTable({
+                    "lengthChange": true
+                });
+            }).done(function() {
+                $('.modal-backdrop ').css('display', 'none');
+                $('#modal').modal('hide');
+                Swal.fire(
+                    'Correcto!',
+                    'El registro ha sido guardado.',
+                    'success'
+                )
+            })
+            .fail(function(data) {
+                printErrorMsg(data.responseJSON.errors);
             });
-            Swal.fire(
-                'Correcto!',
-                'El registro ha sido guardado.',
-                'success'
-            )
-        });
     });
     /**
      * Evento para mostrar el formulario editar modulo
@@ -92,13 +97,12 @@ $(function() {
      */
     $(document).on('click', '.updateTrocal', function(event) {
         event.preventDefault();
-        $('#modal').modal('hide');
 
         let nombre = $("#nombre").val();
         let descripcion = $("#descripcion").val();
         let ip_host = $("#ip_host").val();
-        let Cat_IP_PBX_id = $("#ip_media").val();
-        let Cat_Distribuidor_id = $("#distribuidores").val();
+        let Cat_IP_PBX_id = $("#mediaserver").val();
+        let distribuidores = $("#distribuidores").val();
         let _token = $("input[name=_token]").val();
         let id = $("#idSeleccionado").val();
         let _method = "PUT";
@@ -112,7 +116,7 @@ $(function() {
                 descripcion: descripcion,
                 ip_host: ip_host,
                 Cat_IP_PBX_id: Cat_IP_PBX_id,
-                Cat_Distribuidor_id: Cat_Distribuidor_id,
+                distribuidores: distribuidores,
                 id: id,
                 _token: _token,
                 _method: _method
@@ -123,12 +127,17 @@ $(function() {
                 $('.viewIndex #tableTroncales').DataTable({
                     "lengthChange": true
                 });
-                Swal.fire(
-                    'Correcto!',
-                    'El registro ha sido guardado.',
-                    'success'
-                )
             }
+        }).done(function(data) {
+            $('.modal-backdrop ').css('display', 'none');
+            $('#modal').modal('hide');
+            Swal.fire(
+                'Correcto!',
+                'El registro ha sido guardado.',
+                'success'
+            )
+        }).fail(function(data) {
+            printErrorMsg(data.responseJSON.errors);
         });
     });
     /**
@@ -241,5 +250,18 @@ $(function() {
             }
         });
     });
-
+    /**
+     * Funcion para mostrar los errores de los formularios
+     */
+    function printErrorMsg(msg) {
+        $(".print-error-msg").find("ul").html('');
+        $(".print-error-msg").css('display', 'block');
+        $(".form-control").removeClass('is-invalid');
+        for (var clave in msg) {
+            $("#" + clave).addClass('is-invalid');
+            if (msg.hasOwnProperty(clave)) {
+                $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
+            }
+        }
+    }
 });

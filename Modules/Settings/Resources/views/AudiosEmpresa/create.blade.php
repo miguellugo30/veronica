@@ -7,25 +7,28 @@
                 Cargar Sonido/Grabación (Mono,8000 Hz,16 bit)
                 </div>
                 <div class="form-group">
-                    <label for="name">Nombre De La Grabación</label>
-                    <input type="text" class="form-control form-control-sm" id="name"  value="">
+                    <label for="nombre">Nombre De La Grabación *:</label>
+                    <input type="text" class="form-control form-control-sm" id="nombre"  value="">
                     @csrf
-                </div> 
+                </div>
                 <div class="form-group">
-                    <label for="descripcion">Descripción</label>
+                    <label for="descripcion">Descripción *:</label>
                     <input type="text" class="form-control form-control-sm" id="descripcion"  value="">
                 </div>
-                
-                <!-- CARGA DEL ARCHIVO -->                
+
+                <!-- CARGA DEL ARCHIVO -->
                 <div class="form-group">
                     <div class="custom-file">
                         <input type="file" class="custom-file-input form-control-sm" id="file" name="file" lang="es">
-                        <label class="custom-file-label" id='labelFile' for="file">Seleccionar Archivo .WAV</label>
-                    </div>                    
+                        <label class="custom-file-label" id='labelFile' for="file">Seleccionar Archivo .WAV *:</label>
+                    </div>
                 </div>
-                
-                
-                
+                <div class="form-group">
+                    <small class="form-text text-muted"> <b>*Campos obligatorios.</b></small>
+                </div>
+                <div class="alert alert-danger print-error-msg" role="alert" style="display:none">
+                    <ul></ul>
+                </div>
             </fieldset>
         </div>
     </form>

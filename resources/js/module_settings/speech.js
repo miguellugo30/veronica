@@ -99,21 +99,32 @@ $(function() {
      */
     $(document).on('click', '.updateSpeech', function(event) {
         event.preventDefault();
-        $('#modal').modal('hide');
-        $('.tipo').removeAttr("disabled");
-        $('.nombre').removeAttr("disabled");
-        let id = $("#idSeleccionado").val();
+
         let dataForm = $("#editspeech").serializeArray();
+        var data = {};
+        $(dataForm).each(function(index, obj) {
+            data[obj.name] = obj.value;
+        });
+        let id = $("#idSeleccionado").val();
         let _token = $("input[name=_token]").val();
         let _method = "PUT";
         let url = currentURL + '/speech/' + id;
 
         $.post(url, {
-            dataForm: dataForm,
+            dataForm: data,
             _method: _method,
             _token: _token
         }, function(data, textStatus, xhr) {
+            $('.modal-backdrop ').css('display', 'none');
+            $('#modal').modal('hide');
             $('.viewResult').html(data);
+            Swal.fire(
+                'Correcto!',
+                'El registro ha sido guardado.',
+                'success'
+            )
+        }).fail(function(data) {
+            printErrorMsg(data.responseJSON.errors);
         });
     });
     /**
@@ -121,17 +132,21 @@ $(function() {
      */
     $(document).on('click', '.saveSpeech', function(event) {
         event.preventDefault();
-        $('#modal').modal('hide');
 
         let dataForm = $("#altaspeech").serializeArray();
+        var data = {};
+        $(dataForm).each(function(index, obj) {
+            data[obj.name] = obj.value;
+        });
         let _token = $("input[name=_token]").val();
         let url = currentURL + '/speech';
 
         $.post(url, {
-            dataForm: dataForm,
+            dataForm: data,
             _token: _token
         }, function(data, textStatus, xhr) {
-
+            $('.modal-backdrop ').css('display', 'none');
+            $('#modal').modal('hide');
             $('.viewResult').html(data);
 
             $('.viewResult #tableSpeech').DataTable({
@@ -145,6 +160,22 @@ $(function() {
                 'El registro ha sido guardado.',
                 'success'
             )
+        }).fail(function(data) {
+            printErrorMsg(data.responseJSON.errors);
         });
     });
+
+    /**
+     * Funcion para mostrar los errores de los formularios
+     */
+    function printErrorMsg(msg) {
+        $(".print-error-msg").find("ul").html('');
+        $(".print-error-msg").css('display', 'block');
+        $(".form-control").removeClass('is-invalid');
+        $(".print-error-msg").find("ul").append('<li>Es un campo obligatorio</li>');
+        for (var clave in msg) {
+            var data = clave.split('.');
+            $("[name='" + data[1] + "']").addClass('is-invalid');
+        }
+    }
 });

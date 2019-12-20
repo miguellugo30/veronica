@@ -22,7 +22,6 @@ $(function() {
      */
     $(document).on("click", '.saveClient', function(event) {
         event.preventDefault();
-        $('#modal').modal('hide');
 
         let name = $("#name").val();
         let email = $("#email").val();
@@ -48,13 +47,17 @@ $(function() {
             $('.viewResult #tableUsuarios').DataTable({
                 "lengthChange": true
             });
+        }).done(function() {
+            $('.modal-backdrop ').css('display', 'none');
+            $('#modal').modal('hide');
             Swal.fire(
                 'Correcto!',
                 'El registro ha sido guardado.',
                 'success'
             )
+        }).fail(function(data) {
+            printErrorMsg(data.responseJSON.errors);
         });
-
     });
     /**
      * Evento para editar un usuario
@@ -95,7 +98,6 @@ $(function() {
      */
     $(document).on('click', '.updateClient', function(event) {
         event.preventDefault();
-        $('#modal').modal('hide');
 
         let name = $("#name").val();
         let id_user = $("#id_user").val();
@@ -128,12 +130,17 @@ $(function() {
                 $('.viewResult #tableUsuarios').DataTable({
                     "lengthChange": true
                 });
-                Swal.fire(
-                    'Correcto!',
-                    'El registro ha sido guardado.',
-                    'success'
-                )
             }
+        }).done(function(data) {
+            $('.modal-backdrop ').css('display', 'none');
+            $('#modal').modal('hide');
+            Swal.fire(
+                'Correcto!',
+                'El registro ha sido guardado.',
+                'success'
+            )
+        }).fail(function(data) {
+            printErrorMsg(data.responseJSON.errors);
         });
     });
     /**
@@ -239,5 +246,20 @@ $(function() {
             $("#sub_cat_" + id + " .mark2").prop("checked", false);
         }
     });
+
+    /**
+     * Funcion para mostrar los errores de los formularios
+     */
+    function printErrorMsg(msg) {
+        $(".print-error-msg").find("ul").html('');
+        $(".print-error-msg").css('display', 'block');
+        $(".form-control").removeClass('is-invalid');
+        for (var clave in msg) {
+            $("#" + clave).addClass('is-invalid');
+            if (msg.hasOwnProperty(clave)) {
+                $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
+            }
+        }
+    }
 
 });

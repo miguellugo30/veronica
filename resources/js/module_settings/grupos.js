@@ -22,7 +22,6 @@ $(function() {
      */
     $(document).on('click', '.saveGrupo', function(event) {
         event.preventDefault();
-        $('#modal').modal('hide');
 
         let nombre = $("#nombre").val();
         let descripcion = $("#descripcion").val();
@@ -30,25 +29,29 @@ $(function() {
         let url = currentURL + '/Grupos';
 
         $.post(url, {
-            nombre: nombre,
-            descripcion: descripcion,
-            _token: _token
-        }, function(data, textStatus, xhr) {
-
-            $('.viewResult').html(data);
-
-            $('.viewResult #tableGrupos').DataTable({
-                "lengthChange": true,
-                "order": [
-                    [2, "asc"]
-                ]
+                nombre: nombre,
+                descripcion: descripcion,
+                _token: _token
+            }, function(data, textStatus, xhr) {
+                $('.viewResult').html(data);
+                $('.viewResult #tableGrupos').DataTable({
+                    "lengthChange": true,
+                    "order": [
+                        [0, "asc"]
+                    ]
+                });
+            }).done(function() {
+                $('.modal-backdrop ').css('display', 'none');
+                $('#modal').modal('hide');
+                Swal.fire(
+                    'Correcto!',
+                    'El registro ha sido guardado.',
+                    'success'
+                )
+            })
+            .fail(function(data) {
+                printErrorMsg(data.responseJSON.errors);
             });
-            Swal.fire(
-                'Correcto!',
-                'El registro ha sido guardado.',
-                'success'
-            )
-        });
     });
     /**
      * Evento para seleccionar un  Grupo
@@ -133,9 +136,8 @@ $(function() {
      */
     $(document).on('click', '.updateGrupo', function(event) {
         event.preventDefault();
-        $('#modal').modal('hide');
-        let id = $("#id").val();
 
+        let id = $("#id").val();
         let nombre = $("#nombre").val();
         let descripcion = $("#descripcion").val();
         let _token = $("input[name=_token]").val();
@@ -143,26 +145,45 @@ $(function() {
         let url = currentURL + '/Grupos/' + id;
 
         $.post(url, {
-            nombre: nombre,
-            descripcion: descripcion,
-            _method: _method,
-            _token: _token
-        }, function(data, textStatus, xhr) {
-            $('.viewResult').html(data);
+                nombre: nombre,
+                descripcion: descripcion,
+                _method: _method,
+                _token: _token
+            }, function(data, textStatus, xhr) {
 
-            $('.viewResult #tableGrupos').DataTable({
-                "lengthChange": true,
-                "order": [
-                    [2, "asc"]
-                ]
+                $('.viewResult').html(data);
+                $('.viewResult #tableGrupos').DataTable({
+                    "lengthChange": true,
+                    "order": [
+                        [0, "asc"]
+                    ]
+                });
+            }).done(function() {
+                $('.modal-backdrop ').css('display', 'none');
+                $('#modal').modal('hide');
+                Swal.fire(
+                    'Correcto!',
+                    'El registro ha sido guardado.',
+                    'success'
+                )
+            })
+            .fail(function(data) {
+                printErrorMsg(data.responseJSON.errors);
             });
-            Swal.fire(
-                'Correcto!',
-                'El registro ha sido guardado.',
-                'success'
-            )
-        });
-
     });
+    /**
+     * Funcion para mostrar los errores de los formularios
+     */
+    function printErrorMsg(msg) {
+        $(".print-error-msg").find("ul").html('');
+        $(".print-error-msg").css('display', 'block');
+        $(".form-control").removeClass('is-invalid');
+        for (var clave in msg) {
+            $("#" + clave).addClass('is-invalid');
+            if (msg.hasOwnProperty(clave)) {
+                $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
+            }
+        }
+    }
 
-});;
+});

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Artisan;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Nimbus\Http\Controllers\LogController;
+use Modules\Administrador\Http\Requests\UsuariosRequest;
 
 class UsuariosController extends Controller
 {
@@ -57,7 +58,7 @@ class UsuariosController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(UsuariosRequest $request)
     {
         /**
          * Obtenemos todos los datos del formulario de alta
@@ -150,7 +151,7 @@ class UsuariosController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(UsuariosRequest $request, $id)
     {
         /**
          * Si el pass, viene vacio no lo actualizamos

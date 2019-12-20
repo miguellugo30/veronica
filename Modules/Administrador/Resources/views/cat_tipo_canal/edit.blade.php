@@ -1,6 +1,6 @@
 <div class="col-12" style="float:none; margin:auto">
     <div class="form-group">
-        <label for="distribuidor">Distribuidor</label>
+        <label for="distribuidor">Distribuidor *:</label>
         <select name="distribuidor" id="distribuidor" class="form-control form-control-sm">
             <option value="" >Selecciona un distribuidor</option>
             @foreach( $catdistriuidor as $distribuidor )
@@ -9,14 +9,20 @@
         </select>
     </div>
     <div class="form-group">
-        <label for="name">Nombre</label>
+        <label for="name">Nombre *:</label>
         <input type="text" class="form-control form-control-sm" id="nombre" placeholder="Nombre" value='{{ $tipocanales->nombre }}'>
         <input type="hidden" class="form-control" id="id" value='{{ $tipocanales->id }}'>
         @csrf
     </div>
     <div class="form-group">
-        <label for="prefijo">prefijo</label>
+        <label for="prefijo">prefijo *:</label>
         <input type="text" class="form-control" id="prefijo" placeholder="prefijo" value='{{ $tipocanales->prefijo }}'>
+    </div>
+    <div class="form-group">
+        <small class="form-text text-muted"> <b>*Campos obligatorios.</b></small>
+    </div>
+    <div class="alert alert-danger print-error-msg" role="alert" style="display:none">
+        <ul></ul>
     </div>
 </div>
 <!--div class="col-md-6" style="float:none; margin:auto">

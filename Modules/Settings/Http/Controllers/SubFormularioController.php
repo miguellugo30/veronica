@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Modules\Settings\Http\Requests\SubFormulariosRequest;
 
 use Nimbus\Formularios;
 use Nimbus\Sub_Formularios;
@@ -39,7 +40,7 @@ class SubFormularioController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(SubFormulariosRequest $request)
     {
         //
     }
@@ -85,7 +86,7 @@ class SubFormularioController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(SubFormulariosRequest $request, $id)
     {
 
         $dataForm = json_decode( $request->input('dataOpciones'), true );

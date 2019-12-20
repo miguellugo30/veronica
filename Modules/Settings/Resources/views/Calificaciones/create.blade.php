@@ -3,13 +3,13 @@
         <div class="row">
             <div class="col">
                 <div class="form-group">
-                    <label for="nombre"><b>Nombre del grupo</b></label>
+                    <label for="nombre"><b>Nombre del grupo *:</b></label>
                     <input type="text" class="form-control form-control-sm" id="nombre" name="nombre" placeholder="Nombre">
                 </div>
             </div>
             <div class="col">
                 <div class="form-group">
-                    <label for="nombre"><b> Descripción del grupo</b></label>
+                    <label for="descripcion"><b> Descripción del grupo *:</b></label>
                     <input type="text" class="form-control form-control-sm" id="descripcion" name="descripcion" placeholder="Descripcion">
                     @csrf
                 </div>
@@ -21,8 +21,8 @@
                 <table id='formulario' class="table table-striped table-sm tableNewForm">
                     <thead>
                         <tr>
-                            <th>Nombre Calificacion</th>
-                            <th>Formulario</th>
+                            <th>Nombre Calificacion *:</th>
+                            <th>Formulario *:</th>
                             <td><input type="button" class="btn btn-primary btn-sm" id = "addCalificaciones" value = "Agregar calificaciones" /></td>
                             <td></td>
                         </tr>
@@ -50,6 +50,12 @@
                     </tbody>
                 </table>
             </fieldset>
+        </div>
+        <div class="form-group">
+            <small class="form-text text-muted"> <b>*Campos obligatorios.</b></small>
+        </div>
+        <div class="alert alert-danger print-error-msg" role="alert" style="display:none">
+            <ul></ul>
         </div>
     </div>
 </form>

@@ -5,6 +5,7 @@ namespace Modules\Administrador\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\Administrador\Http\Requests\PbxRequest;
 use Nimbus\Cat_IP_PBX;
 use Nimbus\Cat_NAS;
 use Nimbus\BaseDatos;
@@ -49,7 +50,7 @@ class CatIpPbxController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(PbxRequest $request)
     {
         /**
          * Obtenemos todos los datos del formulario de alta y
@@ -119,7 +120,7 @@ class CatIpPbxController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(PbxRequest $request, $id)
     {
         /**
          * Recuperamos la informacion del PBX ha editar
