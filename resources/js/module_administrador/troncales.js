@@ -28,7 +28,7 @@ $(function() {
         let descripcion = $("#descripcion").val();
         let ip_host = $("#ip_host").val();
         let Cat_IP_PBX_id = $("#mediaserver").val();
-        let Cat_Distribuidor_id = $("#distribuidores").val();
+        let distribuidores = $("#distribuidores").val();
         let _token = $("input[name=_token]").val();
         let url = currentURL + '/troncales';
 
@@ -37,7 +37,7 @@ $(function() {
                 descripcion: descripcion,
                 Cat_IP_PBX_id: Cat_IP_PBX_id,
                 ip_host: ip_host,
-                Cat_Distribuidor_id: Cat_Distribuidor_id,
+                distribuidores: distribuidores,
                 _token: _token
             }, function(data, textStatus, xhr) {
                 $('.viewResult').html(data);
@@ -101,8 +101,8 @@ $(function() {
         let nombre = $("#nombre").val();
         let descripcion = $("#descripcion").val();
         let ip_host = $("#ip_host").val();
-        let Cat_IP_PBX_id = $("#ip_media").val();
-        let Cat_Distribuidor_id = $("#distribuidores").val();
+        let Cat_IP_PBX_id = $("#mediaserver").val();
+        let distribuidores = $("#distribuidores").val();
         let _token = $("input[name=_token]").val();
         let id = $("#idSeleccionado").val();
         let _method = "PUT";
@@ -116,7 +116,7 @@ $(function() {
                 descripcion: descripcion,
                 ip_host: ip_host,
                 Cat_IP_PBX_id: Cat_IP_PBX_id,
-                Cat_Distribuidor_id: Cat_Distribuidor_id,
+                distribuidores: distribuidores,
                 id: id,
                 _token: _token,
                 _method: _method

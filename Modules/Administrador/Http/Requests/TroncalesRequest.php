@@ -14,11 +14,11 @@ class TroncalesRequest extends FormRequest
     public function rules()
     {
         return [
+            'distribuidores' => 'required',
             'nombre' => 'required',
             'descripcion' => 'required',
-            //'Cat_IP_PBX_id' => 'required',
             'ip_host' => 'required|ip',
-            'Cat_Distribuidor_id' => 'required',
+            'mediaserver' => 'required',
         ];
     }
 
@@ -35,10 +35,11 @@ class TroncalesRequest extends FormRequest
     public function attributes()
     {
         return[
-            'nombre' => 'Nombre',
+            'distribuidores' => 'Distribuidor',
+            'nombre' => 'Troncal',
             'descripcion' => 'Descripcion',
             'ip_host' => 'Ip Host',
-            'Cat_Distribuidor_id' => 'Distribuidor',
+            'mediaserver' => 'Media Server',
         ];
     }
 }
