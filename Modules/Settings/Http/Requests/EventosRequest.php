@@ -28,4 +28,12 @@ class EventosRequest extends FormRequest
     {
         return true;
     }
+
+    public function attributes()
+    {
+        return[
+            'nombre' => 'Nombre',
+            'tiempo' => 'Tiempo',
+        ];
+    }
 }

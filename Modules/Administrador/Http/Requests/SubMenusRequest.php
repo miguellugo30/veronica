@@ -35,7 +35,7 @@ class SubMenusRequest extends FormRequest
         return[
             'nombre' => 'Nombre',
             'descripcion' => 'Descripcion',
-            'tipo' => 'Tipo',
+            'tipo' => 'Nivel',
         ];
     }
 }

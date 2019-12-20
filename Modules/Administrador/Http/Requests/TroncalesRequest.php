@@ -38,7 +38,7 @@ class TroncalesRequest extends FormRequest
             'distribuidores' => 'Distribuidor',
             'nombre' => 'Troncal',
             'descripcion' => 'Descripcion',
-            'ip_host' => 'Ip Host',
+            'ip_host' => 'IP Host',
             'mediaserver' => 'Media Server',
         ];
     }

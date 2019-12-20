@@ -14,9 +14,9 @@ class TipoCanalRequest extends FormRequest
     public function rules()
     {
         return [
+            'distribuidor' => 'required',
             'nombre' => 'required',
             'prefijo' => 'required',
-            'Cat_Distribuidor_id' => 'required',
         ];
     }
 
@@ -33,9 +33,9 @@ class TipoCanalRequest extends FormRequest
     public function attributes()
     {
         return[
+            'distribuidor' => 'Distribuidor',
             'nombre' => 'Nombre',
             'prefijo' => 'Prefijo',
-            'Cat_Distribuidor_id' => 'Distribuidor',
         ];
     }
 }

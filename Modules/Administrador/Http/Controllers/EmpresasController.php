@@ -58,7 +58,7 @@ class EmpresasController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(EmpresasRequest $request)
+    public function store(Request $request)
     {
         $dataModulos = array();
         $dataForm = $request->input('dataForm');
@@ -431,7 +431,7 @@ class EmpresasController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(EmpresasRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $data = array();
         $dataModulos = array();

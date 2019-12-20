@@ -16,11 +16,7 @@ use Nimbus\Agentes;
 use Nimbus\Canales;
 use Nimbus\Grupos;
 use Nimbus\Empresas;
-<<<<<<< HEAD
-use Modules\Settings\Http\Requests\AgentesRequest;
-=======
 use Nimbus\Cat_Extensiones;
->>>>>>> 2c4ede2c82041d889eaa5ff6c8248298e78f16aa
 
 class AgentesController extends Controller
 {
