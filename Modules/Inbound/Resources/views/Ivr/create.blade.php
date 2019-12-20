@@ -17,7 +17,7 @@
                         <input type="text" class="form-control form-control-sm" id="nombre" name="nombre" placeholder="Nombre IVR">
                     </td>
                     <td>
-                    <select name="mensaje_bienvenida_id" id="mensaje_bienvenida_id" class="form-control form-control-sm">
+                    <select name="mensaje_bienvenida_id" id="mensaje_bienvenida_id" class="form-control form-control-sm audiosSelect">
                         <option value="">Selecciona una opción</option>
                         @foreach ($audios as $audio)
                             <option value="{{$audio->id}}">{{$audio->nombre}}</option>
@@ -28,7 +28,7 @@
                         <input type="number" min="1" class="form-control form-control-sm" id="tiempo_espera" name="tiempo_espera" value="" placeholder="En segundos">
                     </td>
                     <td>
-                        <select name="mensaje_tiempo_espera_id" id="mensaje_tiempo_espera_id" class="form-control form-control-sm">
+                        <select name="mensaje_tiempo_espera_id" id="mensaje_tiempo_espera_id" class="form-control form-control-sm audiosSelect">
                             <option value="">Selecciona una opción</option>
                             @foreach ($audios as $audio)
                                 <option value="{{$audio->id}}">{{$audio->nombre}}</option>
@@ -36,7 +36,7 @@
                         </select>
                     </td>
                     <td>
-                        <select name="mensaje_opcion_invalida_id" id="mensaje_opcion_invalida_id" class="form-control form-control-sm">
+                        <select name="mensaje_opcion_invalida_id" id="mensaje_opcion_invalida_id" class="form-control form-control-sm audiosSelect">
                             <option value="">Selecciona una opción</option>
                             @foreach ($audios as $audio)
                                 <option value="{{$audio->id}}">{{$audio->nombre}}</option>
@@ -50,6 +50,9 @@
                 </tr>
             </tbody>
         </table>
+        <div class="form-group text-right">
+            <b>No se puede ocupar el mismo mensaje en diferentes opciones.</b>
+        </div>
         <br><br>
         <fieldset>
             <legend>

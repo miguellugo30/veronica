@@ -93,8 +93,6 @@ class AudiosEmpresasController extends Controller
         /** Mostrar principal  */
         return redirect()->route('Audios.index');
     }
-
-
     /**
      * Show the specified resource.
      * @param int $id

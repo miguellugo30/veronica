@@ -1,5 +1,8 @@
 <div class="row">
     <div class="col">
+        <div class="form-group text-right">
+            <b>* Campos obligatorios.</b>
+        </div>
         <div class="form-group">
             <label for="grupo"><b>Grupo *:</b></label>
             <select name="grupo" id="grupo" class="form-control form-control-sm">
@@ -44,11 +47,19 @@
                     <option value="{{$canal->id}}">{{$canal->Cat_Tipo_Canales->nombre}}</option>
                 @endforeach
             </select>
-            <!--input type="text" class="form-control form-control-sm" name="protocolo" id="protocolo"  placeholder=""-->
         </div>
         <div class="form-group">
             <label for="extension"><b>Extensión *:</b></label>
+<<<<<<< HEAD
             <input type="text" class="form-control form-control-sm" name="extension" id="extension"  placeholder="Extensión">
+=======
+            <select name="extension" id="extension" class="form-control form-control-sm">
+                <option value="">Selecciona un extensión</option>
+                @foreach ($cat_extensiones as $extension)
+                    <option value="{{$extension->extension}}">{{$extension->extension}}</option>
+                @endforeach
+            </select>
+>>>>>>> 2c4ede2c82041d889eaa5ff6c8248298e78f16aa
         </div>
         <div class="form-group">
             <small class="form-text text-muted"> <b>*Campos obligatorios.</b></small>
@@ -108,5 +119,8 @@
                 <label class="form-check-label" for="editar_datos2">No</label>
             </div>
         </fieldset>
+        <div class="alert alert-danger print-error-msg" role="alert" style="display:none">
+            <ul></ul>
+        </div>
     </div>
 </div>

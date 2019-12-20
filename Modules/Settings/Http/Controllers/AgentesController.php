@@ -9,13 +9,18 @@ use Nimbus\Http\Controllers\LogController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use nusoap_client;
+use Modules\Settings\Http\Requests\AgentesRequest;
+use PHPAMI\Ami;
 
-use Nimbus\User;
 use Nimbus\Agentes;
 use Nimbus\Canales;
 use Nimbus\Grupos;
 use Nimbus\Empresas;
+<<<<<<< HEAD
 use Modules\Settings\Http\Requests\AgentesRequest;
+=======
+use Nimbus\Cat_Extensiones;
+>>>>>>> 2c4ede2c82041d889eaa5ff6c8248298e78f16aa
 
 class AgentesController extends Controller
 {
@@ -47,10 +52,11 @@ class AgentesController extends Controller
         $empresa_id = $user->id_cliente;
 
         $empresa = Empresas::find( $empresa_id );
+        $cat_extensiones = Cat_Extensiones::active()->empresa( $empresa_id )->get();
         $canales = Canales::active()->where('Empresas_id', $empresa_id)->get();
         $grupos = Grupos::active()->where([['Empresas_id', '=', $empresa_id],['tipo_grupo','=','Agentes']])->get();
 
-        return view('settings::Agentes.create', compact('canales', 'grupos', 'empresa'));
+        return view('settings::Agentes.create', compact('canales', 'grupos', 'empresa', 'cat_extensiones'));
     }
 
     /**
@@ -141,10 +147,11 @@ class AgentesController extends Controller
 
         $empresa = Empresas::find( $empresa_id );
         $agente = Agentes::where('id',$id)->first();
+        $cat_extensiones = Cat_Extensiones::active()->empresa( $empresa_id )->get();
         $canales = Canales::active()->where('Empresas_id', $empresa_id)->get();
         $grupos = Grupos::active()->where([['Empresas_id', '=', $empresa_id],['tipo_grupo','=','Agentes']])->get();
 
-        return view('settings::Agentes.edit',compact('agente', 'canales', 'grupos', 'empresa'));
+        return view('settings::Agentes.edit',compact('agente', 'canales', 'grupos', 'empresa', 'cat_extensiones'));
     }
 
     /**

@@ -27,6 +27,13 @@ class Cat_Extensiones extends Model
     {
         return $query->where('activo', 1);
     }
+    /**
+     * Funcion para obtener solo los registros activos
+     */
+    public function scopeEmpresa($query, $empresa_id)
+    {
+        return $query->where('Empresas_id', $empresa_id);
+    }
     /*
     |--------------------------------------------------------------------------
     | RELACIONES DE BASE DE DATOS

@@ -14,7 +14,7 @@
  * Ruta Home del modulo de Recording
  */
 Route::prefix('recording')->group(function() {
-    Route::get('/', 'RecordingController@index')->middleware('auth')->name('recording');
+    Route::get('/', 'RecordingController@index');
 });
 /*
 |--------------------------------------------------------------------------
@@ -31,15 +31,11 @@ Route::group(['namespace' => '\Modules\Recording\Http\Controllers', 'prefix' => 
  * Rutas para CRUD de Inbound
  */
 Route::group(['namespace' => '\Modules\Recording\Http\Controllers', 'prefix' => 'recording', 'middleware' => 'auth'], function() {
+    Route::get('Inbound/descargar/{fecha_inicio}/{fecha_fin}', 'InboundController@update');
+    Route::post('Inbound/escuchar', 'InboundController@listen');
+    Route::post('Inbound/descargar', 'InboundController@dowloadZip');
     Route::resource('Inbound','InboundController');
-    Route::get('Inbound', 'InboundController@index');
     Route::post('Inbound/store/{id}', 'InboundController@store');
-    Route::get('Inbound/getGrabacion/{id}','InboundController@getGrabacion')->name('Inbound.getGrabacion');
-
-    Route::get('Inbound/getAgentes/{id}', 'InboundController@getAgentes')->name('Inbound.getAgentes');
-    Route::get('Inbound/getExtensiones/{id}','InboundController@getExtensiones')->name('Inbound.getExtensiones');
-    Route::get('Inbound/getCalificaciones/{id}','InboundController@getCalificaciones')->name('Inbound.getCalificaciones');
-    Route::get('Inbound/getGrabaciones/{id}','InboundController@getGrabaciones')->name('Inbound.getGrabaciones');
 
 });
 /**

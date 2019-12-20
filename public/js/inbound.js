@@ -1213,8 +1213,6 @@ $(function () {
    */
 
   $(document).on("click", ".generardesglose", function (e) {
-    //alert ('generar');
-
     /**
      * Esto contrae el body
      */
@@ -1232,27 +1230,27 @@ $(function () {
     var minuto_inicio = $("#min_inicio").val();
     var hora_fin = $("#hora_fin").val();
     var minuto_fin = $("#min_fin").val();
-    var numero_origen = $("#numero_origen").val();
-    var numero_destino = $("#numero_destino").val();
 
     var _token = $("input[name=_token]").val();
 
-    var url = currentURL + "/Desglose_llamadas/";
-    dateinicio = fechainicio + " " + hora_inicio + ":" + minuto_inicio + ":00";
-    datefin = fechafin + " " + hora_fin + ":" + minuto_fin + ":59";
+    var url = currentURL + "/Desglose_llamadas";
+    var dateinicio = fechainicio + " " + hora_inicio + ":" + minuto_inicio + ":00";
+    var datefin = fechafin + " " + hora_fin + ":" + minuto_fin + ":59";
     /**
      * Con esto mandamos las variables
      */
 
-    $.post(url, {
-      dateinicio: dateinicio,
-      datefin: datefin,
-      numero_origen: numero_origen,
-      numero_destino: numero_destino,
-      //Empresas_id: Empresas_id,
-      _token: _token
-    }, function (data, textStatus, xhr) {
-      $('.viewreportedesglose').html(data);
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {
+        dateinicio: dateinicio,
+        datefin: datefin,
+        _token: _token
+      },
+      success: function success(result) {
+        $('.viewreportedesglose').html(result);
+      }
     });
   });
   /**
@@ -1260,15 +1258,37 @@ $(function () {
    */
 
   $(document).on("click", ".nuevo-reporte", function (e) {
-    //alert ('generar');
-
     /**
      * Esto contrae el body
      */
+    $('.viewreportedesglose').html('');
     $('.body-filtro').slideDown();
     $('.nuevo-reporte').slideUp();
     $('#body-reporte').slideUp();
     e.preventDefault();
+  });
+  /**
+   * Evento para poder descargar el reporte
+   */
+
+  $(document).on("click", ".descargar-reporte", function (e) {
+    /**
+     * Con esto traemos las variables
+     */
+    var fechainicio = $("#fechainicio").val();
+    var fechafin = $("#fechafin").val();
+    var hora_inicio = $("#hora_inicio").val();
+    var minuto_inicio = $("#min_inicio").val();
+    var hora_fin = $("#hora_fin").val();
+    var minuto_fin = $("#min_fin").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var _method = "PUT";
+    dateinicio = fechainicio + " " + hora_inicio + ":" + minuto_inicio + ":00";
+    datefin = fechafin + " " + hora_fin + ":" + minuto_fin + ":59";
+    var url = currentURL + "/Desglose_llamadas/descargar/" + dateinicio + "/" + datefin;
+    $('#iFrameDescarga').attr('src', url);
   });
 });
 

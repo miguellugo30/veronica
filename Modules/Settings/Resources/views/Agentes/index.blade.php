@@ -9,8 +9,11 @@
                 <button type="button" class="btn btn-warning  btn-sm editAgente" style="display:none"><i class="fas fa-edit"></i> Editar</button>
             @endcan
             @can('create agentes')
+<<<<<<< HEAD
+=======
+                <button type="button" class="btn btn-primary btn-sm newAgente" ><i class="fas fa-plus"></i> Nuevo</button>
+>>>>>>> 2c4ede2c82041d889eaa5ff6c8248298e78f16aa
             @endcan
-            <button type="button" class="btn btn-primary btn-sm newAgente" ><i class="fas fa-plus"></i> Nuevo</button>
             <input type="hidden" name="idSeleccionado" id="idSeleccionado" value="">
         </div>
     </div><!-- /.box-header -->
