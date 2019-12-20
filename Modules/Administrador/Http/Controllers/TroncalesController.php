@@ -74,7 +74,7 @@ class TroncalesController extends Controller
         $ip = $request->input('Cat_IP_PBX_id');
         /**
          * Creamos una petición, para poder escribir
-         * los nuevos DID en el archivo EXTENSIONS_DID.CONF
+         * las nuevas TRONCALES en el archivo SIP_TRONCALES.CONF
          */
         $user = Auth::user();
         $empresa_id = $user->id_cliente;
@@ -82,7 +82,7 @@ class TroncalesController extends Controller
         $wsdl = 'http://'.$ip.'/ws-ms/index.php';
         $client =  new  nusoap_client( $wsdl );
         $result = $client->call('Troncales', array(
-                                                        'empresas_id' => $empresa_id
+                                                        'empresas_id' => $cat->id
                                                     ));
         /**
          * Si la respuesta es 1, se hace el reload del sip
@@ -160,6 +160,32 @@ class TroncalesController extends Controller
                                     'Cat_Distribuidor_id' => $request->input('Cat_Distribuidor_id'),
                                     //'Cat_IP_PBX_id' => $request->input('Cat_IP_PBX_id'),
                                 ]);
+
+        $ip = $request->input('Cat_IP_PBX_id');
+        /**
+         * Creamos una petición, para poder escribir
+         * las nuevas TRONCALES en el archivo SIP_TRONCALES.CONF
+         */
+        $user = Auth::user();
+        $empresa_id = $user->id_cliente;
+        $pbx = Empresas::where('id',$empresa_id)->active()->with('Config_Empresas')->get()->first();
+        $wsdl = 'http://'.$ip.'/ws-ms/index.php';
+        $client =  new  nusoap_client( $wsdl );
+        $result = $client->call('Troncales', array(
+                                                        'empresas_id' => $id
+                                                    ));
+        /**
+         * Si la respuesta es 1, se hace el reload del sip
+         */
+        if ($result['error'] == 1) {
+            $ami = new Ami();
+            if ($ami->connect($ip.':5038', $pbx->Config_Empresas->usuario_ami, $pbx->Config_Empresas->clave_ami, 'off') === false)
+            {
+                throw new \RuntimeException('Could not connect to Asterisk Management Interface.');
+            }
+            $result  = $ami->command('dialplan Reload');
+            $ami->disconnect();
+        }
 
         /**
          * Creamos el logs

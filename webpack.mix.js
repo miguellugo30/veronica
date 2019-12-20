@@ -30,8 +30,7 @@ mix.js([
         'resources/js/module_administrador/cat_tipo_canal.js',
         'resources/js/module_administrador/menu.js',
         'resources/js/module_administrador/cat_extensiones.js',
-        'resources/js/module_administrador/licenciasBria.js',
-        'resources/js/module_settings/menu.js',
+        'resources/js/module_administrador/licenciasBria.js'
     ], 'public/js/administrador.js')
     .js([
         'resources/js/module_settings/menu.js',
