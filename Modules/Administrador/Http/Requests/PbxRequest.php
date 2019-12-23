@@ -14,8 +14,9 @@ class PbxRequest extends FormRequest
     public function rules()
     {
         return [
+
+            'basedatos' => 'required',
             'media_server' => 'required',
-            'Cat_Base_Datos_id' => 'required',
             'ip_pbx' => 'required|ip',
         ];
     }
@@ -33,9 +34,10 @@ class PbxRequest extends FormRequest
     public function attributes()
     {
         return[
-            'media_server' => 'Media_Server',
-            'Cat_Base_Datos_id' => 'Base de Datos',
-            'ip_pbx' => 'Ip PBX',
+
+            'basedatos' => 'Base de Datos',
+            'media_server' => 'Media Server',
+            'ip_pbx' => 'IP PBX',
         ];
     }
 }

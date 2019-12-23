@@ -20,7 +20,7 @@
         <div class="form-group">
             <label for="cliente">Empresa *:</label>
             <select name="cliente" id="cliente" class="form-control form-control-sm">
-                <option disabled selected value="">Selecciona una empresa</option>
+                <option value="">Selecciona una empresa</option>
                 <option value="30">C3NTRO</option>
                 @foreach( $clientes as $cliente )
                 <option value="{{ $cliente->id }}">{{ $cliente->nombre }}</option>

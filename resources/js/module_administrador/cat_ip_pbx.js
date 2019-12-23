@@ -45,7 +45,7 @@ $(function() {
 
         let media_server = $("#media_server").val();
         let ip_pbx = $("#ip_pbx").val();
-        let Cat_Base_Datos_id = $("#basedatos").val();
+        let basedatos = $("#basedatos").val();
         let arr = $('[name="nas[]"]:checked').map(function() {
             return this.value;
         }).get();
@@ -54,7 +54,7 @@ $(function() {
 
         $.post(url, {
                 media_server: media_server,
-                Cat_Base_Datos_id: Cat_Base_Datos_id,
+                basedatos: basedatos,
                 ip_pbx: ip_pbx,
                 arr: arr,
                 _token: _token
@@ -99,7 +99,7 @@ $(function() {
 
         let media_server = $("#media_server").val();
         let ip_pbx = $("#ip_pbx").val();
-        let Cat_Base_Datos_id = $("#basedatos").val();
+        let basedatos = $("#basedatos").val();
         let arr = $('[name="nas[]"]:checked').map(function() {
             return this.value;
         }).get();
@@ -114,7 +114,7 @@ $(function() {
             data: {
                 media_server: media_server,
                 ip_pbx: ip_pbx,
-                Cat_Base_Datos_id: Cat_Base_Datos_id,
+                basedatos: basedatos,
                 arr: arr,
                 id: id,
                 _token: _token,

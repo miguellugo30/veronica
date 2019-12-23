@@ -174,7 +174,9 @@ $(function() {
     function printErrorMsg(msg) {
         $(".print-error-msg").find("ul").html('');
         $(".print-error-msg").css('display', 'block');
+        $(".form-control").removeClass('is-invalid');
         for (var clave in msg) {
+            $("#" + clave).addClass('is-invalid');
             if (msg.hasOwnProperty(clave)) {
                 $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
             }

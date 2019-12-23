@@ -29,4 +29,13 @@ class DataBaseRequest extends FormRequest
     {
         return true;
     }
+
+    public function attributes()
+    {
+        return[
+            'nombre' => 'Nombre',
+            'ubicacion' => 'Ubicacion',
+            'ip' => 'IP',
+        ];
+    }
 }

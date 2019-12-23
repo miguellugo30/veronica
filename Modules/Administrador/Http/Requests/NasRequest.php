@@ -28,4 +28,12 @@ class NasRequest extends FormRequest
     {
         return true;
     }
+
+    public function attributes()
+    {
+        return[
+            'nombre' => 'Nombre',
+            'ip_nas' => 'IP NAS',
+        ];
+    }
 }

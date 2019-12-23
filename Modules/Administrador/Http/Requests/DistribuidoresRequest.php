@@ -19,19 +19,9 @@ class DistribuidoresRequest extends FormRequest
             'distribuidor' => 'required',
             'numero_soporte' => 'required|numeric',
             'prefijo' => 'required|numeric',
-            //'img_header' => 'required|image',
-            //'img_pie' => 'required|image',
+
         ];
-        /*
-        $rules = ['data.servicio' => 'required'];
 
-        foreach ($this->request->get('data') as $key => $value)
-        {
-            $rules[ 'data.'.$key] = 'required';
-        }
-
-        return $rules;
-        */
     }
 
     /**

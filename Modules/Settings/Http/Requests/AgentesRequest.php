@@ -34,4 +34,18 @@ class AgentesRequest extends FormRequest
     {
         return true;
     }
+
+    public function attributes()
+    {
+        return[
+            'grupo' => 'Grupo',
+            'tipo_licencia' => 'Tipo Licencia',
+            'nivel' => 'Nivel',
+            'nombre' => 'Nombre',
+            'usuario' => 'Usuario',
+            'contrasena' => 'Contraseña',
+            'Canales_id' => 'Canal',
+            'extension' => 'Extension',
+        ];
+    }
 }

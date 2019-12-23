@@ -50,7 +50,7 @@ $(function() {
         $.post(url, {
                 nombre: nombre,
                 prefijo: prefijo,
-                Cat_Distribuidor_id: distribuidor,
+                distribuidor: distribuidor,
                 _token: _token
             }, function(data, textStatus, xhr) {
                 $('.viewResult').html(data);
@@ -107,7 +107,7 @@ $(function() {
             data: {
                 nombre: nombre,
                 prefijo: prefijo,
-                Cat_Distribuidor_id: distribuidor,
+                distribuidor: distribuidor,
                 _token: _token,
                 _method: _method
             },

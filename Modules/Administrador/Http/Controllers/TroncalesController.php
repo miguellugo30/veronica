@@ -183,7 +183,7 @@ class TroncalesController extends Controller
         $wsdl = 'http://'.$ip.'/ws-ms/index.php';
         $client =  new  nusoap_client( $wsdl );
         $result = $client->call('Troncales', array(
-                                                        'empresas_id' => $id
+                                                        'empresas_id' => $empresa_id
                                                     ));
         /**
          * Si la respuesta es 1, se hace el reload del sip

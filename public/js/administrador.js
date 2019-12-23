@@ -1339,7 +1339,7 @@ $(function () {
     event.preventDefault();
     var media_server = $("#media_server").val();
     var ip_pbx = $("#ip_pbx").val();
-    var Cat_Base_Datos_id = $("#basedatos").val();
+    var basedatos = $("#basedatos").val();
     var arr = $('[name="nas[]"]:checked').map(function () {
       return this.value;
     }).get();
@@ -1349,7 +1349,7 @@ $(function () {
     var url = currentURL + '/cat_ip_pbx';
     $.post(url, {
       media_server: media_server,
-      Cat_Base_Datos_id: Cat_Base_Datos_id,
+      basedatos: basedatos,
       ip_pbx: ip_pbx,
       arr: arr,
       _token: _token
@@ -1387,7 +1387,7 @@ $(function () {
     event.preventDefault();
     var media_server = $("#media_server").val();
     var ip_pbx = $("#ip_pbx").val();
-    var Cat_Base_Datos_id = $("#basedatos").val();
+    var basedatos = $("#basedatos").val();
     var arr = $('[name="nas[]"]:checked').map(function () {
       return this.value;
     }).get();
@@ -1403,7 +1403,7 @@ $(function () {
       data: {
         media_server: media_server,
         ip_pbx: ip_pbx,
-        Cat_Base_Datos_id: Cat_Base_Datos_id,
+        basedatos: basedatos,
         arr: arr,
         id: id,
         _token: _token,
@@ -1654,8 +1654,11 @@ $(function () {
   function printErrorMsg(msg) {
     $(".print-error-msg").find("ul").html('');
     $(".print-error-msg").css('display', 'block');
+    $(".form-control").removeClass('is-invalid');
 
     for (var clave in msg) {
+      $("#" + clave).addClass('is-invalid');
+
       if (msg.hasOwnProperty(clave)) {
         $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
       }
@@ -1721,7 +1724,7 @@ $(function () {
     $.post(url, {
       nombre: nombre,
       prefijo: prefijo,
-      Cat_Distribuidor_id: distribuidor,
+      distribuidor: distribuidor,
       _token: _token
     }, function (data, textStatus, xhr) {
       $('.viewResult').html(data);
@@ -1770,7 +1773,7 @@ $(function () {
       data: {
         nombre: nombre,
         prefijo: prefijo,
-        Cat_Distribuidor_id: distribuidor,
+        distribuidor: distribuidor,
         _token: _token,
         _method: _method
       },
@@ -3616,7 +3619,7 @@ $(function () {
     var nombre = $("#nombre").val();
     var descripcion = $("#descripcion").val();
     var ip_host = $("#ip_host").val();
-    var Cat_IP_PBX_id = $("#mediaserver").val();
+    var mediaserver = $("#mediaserver").val();
     var distribuidores = $("#distribuidores").val();
 
     var _token = $("input[name=_token]").val();
@@ -3625,7 +3628,7 @@ $(function () {
     $.post(url, {
       nombre: nombre,
       descripcion: descripcion,
-      Cat_IP_PBX_id: Cat_IP_PBX_id,
+      mediaserver: mediaserver,
       ip_host: ip_host,
       distribuidores: distribuidores,
       _token: _token
@@ -3681,7 +3684,7 @@ $(function () {
     var nombre = $("#nombre").val();
     var descripcion = $("#descripcion").val();
     var ip_host = $("#ip_host").val();
-    var Cat_IP_PBX_id = $("#mediaserver").val();
+    var mediaserver = $("#mediaserver").val();
     var distribuidores = $("#distribuidores").val();
 
     var _token = $("input[name=_token]").val();
@@ -3696,7 +3699,7 @@ $(function () {
         nombre: nombre,
         descripcion: descripcion,
         ip_host: ip_host,
-        Cat_IP_PBX_id: Cat_IP_PBX_id,
+        mediaserver: mediaserver,
         distribuidores: distribuidores,
         id: id,
         _token: _token,

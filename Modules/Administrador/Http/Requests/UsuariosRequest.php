@@ -36,9 +36,9 @@ class UsuariosRequest extends FormRequest
     {
         return[
             'name' => 'Nombre',
-            'email' => 'Correo Electronico',
+            'email' => 'E-mail',
             'password' => 'Contraseña',
-            'id_cliente' => 'Cliente',
+            'id_cliente' => 'Empresa',
             'rol' => 'Rol',
         ];
     }
