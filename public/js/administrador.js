@@ -2802,7 +2802,7 @@ $(function () {
       table = ' #tableUsuarios';
     } else if (id == 4) {
       url = currentURL + '/menus';
-      table = '';
+      table = '#tableMenus';
     } else if (id == 3) {
       url = currentURL + '/modulos';
       table = ' #tableModulos';
@@ -4107,64 +4107,10 @@ $(function () {
 
 /***/ }),
 
-/***/ "./resources/js/module_settings/menu.js":
-/*!**********************************************!*\
-  !*** ./resources/js/module_settings/menu.js ***!
-  \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-$(function () {
-  var currentURL = window.location.href;
-  /**
-   * Evento para el menu de sub categorias y mostrar la vista
-   */
-
-  $(document).on("click", ".sub-menu", function (e) {
-    e.preventDefault();
-    var id = $(this).data("id");
-
-    if (id == 21) {
-      url = currentURL + '/formularios';
-      table = ' #tableFormulario';
-    } else if (id == 22) {
-      url = currentURL + '/speech';
-      table = ' #tableSpeech';
-    } else if (id == 23) {
-      url = currentURL + '/calificaciones';
-      table = ' #tableCalificaciones';
-    } else if (id == 17) {
-      url = currentURL + '/Audios';
-      table = ' #tableAudios';
-    } else if (id == 28) {
-      url = currentURL + '/Agentes';
-      table = ' #tableAgentes';
-    } else if (id == 29) {
-      url = currentURL + '/Grupos';
-      table = ' #tableGrupos';
-    } else if (id == 22) {
-      url = currentURL + '/Speech';
-      table = ' #tableSpeech';
-    } else if (id == 35) {
-      url = currentURL + '/EventosAgentes';
-      table = ' #tableEventosAgentes';
-    }
-
-    $.get(url, function (data, textStatus, jqXHR) {
-      $(".viewResult").html(data);
-      $('.viewResult' + table).DataTable({
-        "lengthChange": true
-      });
-    });
-  });
-});
-
-/***/ }),
-
 /***/ 0:
-/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/module_administrador/usuarios.js ./resources/js/module_administrador/modulos.js ./resources/js/module_administrador/submenus.js ./resources/js/module_administrador/menus.js ./resources/js/module_administrador/distribuidores.js ./resources/js/module_administrador/dids.js ./resources/js/module_administrador/cat_estado_agente.js ./resources/js/module_administrador/cat_estado_cliente.js ./resources/js/module_administrador/cat_estado_empresa.js ./resources/js/module_administrador/cat_ip_pbx.js ./resources/js/module_administrador/cat_nas.js ./resources/js/module_administrador/troncales.js ./resources/js/module_administrador/canales.js ./resources/js/module_administrador/empresas.js ./resources/js/module_administrador/cat_base_datos.js ./resources/js/module_administrador/cat_tipo_canal.js ./resources/js/module_administrador/menu.js ./resources/js/module_administrador/cat_extensiones.js ./resources/js/module_administrador/licenciasBria.js ./resources/js/module_settings/menu.js ***!
-  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/module_administrador/usuarios.js ./resources/js/module_administrador/modulos.js ./resources/js/module_administrador/submenus.js ./resources/js/module_administrador/menus.js ./resources/js/module_administrador/distribuidores.js ./resources/js/module_administrador/dids.js ./resources/js/module_administrador/cat_estado_agente.js ./resources/js/module_administrador/cat_estado_cliente.js ./resources/js/module_administrador/cat_estado_empresa.js ./resources/js/module_administrador/cat_ip_pbx.js ./resources/js/module_administrador/cat_nas.js ./resources/js/module_administrador/troncales.js ./resources/js/module_administrador/canales.js ./resources/js/module_administrador/empresas.js ./resources/js/module_administrador/cat_base_datos.js ./resources/js/module_administrador/cat_tipo_canal.js ./resources/js/module_administrador/menu.js ./resources/js/module_administrador/cat_extensiones.js ./resources/js/module_administrador/licenciasBria.js ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4186,8 +4132,7 @@ __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador
 __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\cat_tipo_canal.js */"./resources/js/module_administrador/cat_tipo_canal.js");
 __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\menu.js */"./resources/js/module_administrador/menu.js");
 __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\cat_extensiones.js */"./resources/js/module_administrador/cat_extensiones.js");
-__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\licenciasBria.js */"./resources/js/module_administrador/licenciasBria.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\menu.js */"./resources/js/module_settings/menu.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\licenciasBria.js */"./resources/js/module_administrador/licenciasBria.js");
 
 
 /***/ })
