@@ -38,7 +38,7 @@ class UsuariosRequest extends FormRequest
             'name' => 'Nombre',
             'email' => 'E-mail',
             'password' => 'Contraseña',
-            'id_cliente' => 'Cliente',
+            'id_cliente' => 'Empresa',
             'rol' => 'Rol',
         ];
     }
