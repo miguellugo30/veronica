@@ -58,7 +58,7 @@ class UsuariosController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(UsuariosRequest $request)
+    public function store(Request $request)
     {
         /**
          * Obtenemos todos los datos del formulario de alta
@@ -151,7 +151,7 @@ class UsuariosController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(UsuariosRequest $request, $id)
+    public function update(Request $request, $id)
     {
         /**
          * Si el pass, viene vacio no lo actualizamos

@@ -3,5 +3,6 @@
     "/js/agente.js": "/js/agente.js",
     "/js/inbound.js": "/js/inbound.js",
     "/js/recording.js": "/js/recording.js",
-    "/js/settings.js": "/js/settings.js"
+    "/js/settings.js": "/js/settings.js",
+    "/js/viocemail.js": "/js/viocemail.js"
 }

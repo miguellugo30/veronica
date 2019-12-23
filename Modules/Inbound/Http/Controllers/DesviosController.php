@@ -51,6 +51,7 @@ class DesviosController extends Controller
      */
     public function store(DesviosRequest $request)
     {
+        $user = Auth::user();
         /**
         * Insertar información del desvio
         */
