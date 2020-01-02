@@ -120,39 +120,41 @@ $(function() {
         let url = currentURL + '/Agentes/' + id;
 
         $.post(url, {
-            grupo: grupo,
-            tipo_licencia: tipo_licencia,
-            nivel: nivel,
-            nombre: nombre,
-            usuario: usuario,
-            contrasena: contrasena,
-            extension: extension,
-            Canales_id: canal,
-            mix_monitor: mix_monitor,
-            calificar_llamada: calificar_llamada,
-            envio_sms: envio_sms,
-            editar_datos: editar_datos,
-            _method: _method,
-            _token: _token
-        }, function(data, textStatus, xhr) {
-
-            $('#modal').modal('hide');
-            $('.modal-backdrop ').css('display', 'none');
-            $('.viewResult').html(data);
-            $('.viewResult #tableAgentes').DataTable({
-                "lengthChange": true,
-                "order": [
-                    [2, "asc"]
-                ]
+                grupo: grupo,
+                tipo_licencia: tipo_licencia,
+                nivel: nivel,
+                nombre: nombre,
+                usuario: usuario,
+                contrasena: contrasena,
+                extension: extension,
+                Canales_id: canal,
+                canal: canal,
+                mix_monitor: mix_monitor,
+                calificar_llamada: calificar_llamada,
+                envio_sms: envio_sms,
+                editar_datos: editar_datos,
+                _method: _method,
+                _token: _token
+            }, function(data, textStatus, xhr) {
+                $('.viewResult').html(data);
+                $('.viewResult #tableAgentes').DataTable({
+                    "lengthChange": true,
+                    "order": [
+                        [2, "asc"]
+                    ]
+                });
+            }).done(function() {
+                $('.modal-backdrop ').css('display', 'none');
+                $('#modal').modal('hide');
+                Swal.fire(
+                    'Correcto!',
+                    'El registro ha sido guardado.',
+                    'success'
+                )
+            })
+            .fail(function(data) {
+                printErrorMsg(data.responseJSON.errors);
             });
-            Swal.fire(
-                'Correcto!',
-                'El registro ha sido guardado.',
-                'success'
-            )
-        }).fail(function(data) {
-            printErrorMsg(data.responseJSON.errors);
-        });
 
     });
     /**
@@ -178,39 +180,42 @@ $(function() {
         let url = currentURL + '/Agentes';
 
         $.post(url, {
-            grupo: grupo,
-            tipo_licencia: tipo_licencia,
-            nivel: nivel,
-            nombre: nombre,
-            usuario: usuario,
-            contrasena: contrasena,
-            extension: extension,
-            Canales_id: canal,
-            mix_monitor: mix_monitor,
-            calificar_llamada: calificar_llamada,
-            envio_sms: envio_sms,
-            editar_datos: editar_datos,
-            Cat_Estado_Agente_id: Cat_Estado_Agente_id,
-            _token: _token
-        }, function(data, textStatus, xhr) {
+                grupo: grupo,
+                tipo_licencia: tipo_licencia,
+                nivel: nivel,
+                nombre: nombre,
+                usuario: usuario,
+                contrasena: contrasena,
+                extension: extension,
+                Canales_id: canal,
+                canal: canal,
+                mix_monitor: mix_monitor,
+                calificar_llamada: calificar_llamada,
+                envio_sms: envio_sms,
+                editar_datos: editar_datos,
+                Cat_Estado_Agente_id: Cat_Estado_Agente_id,
+                _token: _token
+            }, function(data, textStatus, xhr) {
 
-            $('#modal').modal('hide');
-            $('.modal-backdrop ').css('display', 'none');
-            $('.viewResult').html(data);
-            $('.viewResult #tableAgentes').DataTable({
-                "lengthChange": true,
-                "order": [
-                    [2, "asc"]
-                ]
+                $('.viewResult').html(data);
+                $('.viewResult #tableAgentes').DataTable({
+                    "lengthChange": true,
+                    "order": [
+                        [2, "asc"]
+                    ]
+                });
+            }).done(function() {
+                $('.modal-backdrop ').css('display', 'none');
+                $('#modal').modal('hide');
+                Swal.fire(
+                    'Correcto!',
+                    'El registro ha sido guardado.',
+                    'success'
+                )
+            })
+            .fail(function(data) {
+                printErrorMsg(data.responseJSON.errors);
             });
-            Swal.fire(
-                'Correcto!',
-                'El registro ha sido guardado.',
-                'success'
-            )
-        }).fail(function(data) {
-            printErrorMsg(data.responseJSON.errors);
-        });
     });
     /**
      * Funcion para mostrar los errores de los formularios
@@ -226,4 +231,5 @@ $(function() {
             }
         }
     }
+
 });

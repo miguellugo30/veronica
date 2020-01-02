@@ -180,9 +180,8 @@ class TroncalesController extends Controller
         $ip = $request->input('Cat_IP_PBX_id');
         /**
          * Creamos una petición, para poder escribir
-         * los nuevos DID en el archivo EXTENSIONS_DID.CONF
+         * las nuevas TRONCALES en el archivo SIP_TRONCALES.CONF
          */
-
         $user = Auth::user();
         $empresa_id = $user->id_cliente;
         $pbx = Empresas::where('id',$empresa_id)->active()->with('Config_Empresas')->get()->first();

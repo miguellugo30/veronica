@@ -20,8 +20,8 @@ class AgentesRequest extends FormRequest
             'nombre' => 'required',
             'usuario' => 'required',
             'contrasena' => 'required',
-            'Canales_id' => 'required',
-            'extension' => 'required',
+            'extension' => 'required|numeric',
+            'canal' => 'required',
         ];
     }
 

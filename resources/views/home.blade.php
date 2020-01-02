@@ -89,12 +89,14 @@
                             </div>
                         </div>
                         <div class="col  text-center card m-1 bg-danger text-white ">
-                            <div class="pt-3">
-                                <i class="fas fa-envelope-square fa-5x"></i>
-                            </div>
-                            <div class="pt-3">
-                                <h6>Vioce Mail</h6>
-                            </div>
+                            <a href="{{url("/voicemail")}}">
+                                <div class="pt-3">
+                                    <i class="fas fa-envelope-square fa-5x"></i>
+                                </div>
+                                <div class="pt-3">
+                                    <h6>Vioce Mail</h6>
+                                </div>
+                            </a>
                         </div>
                         <div class="col  text-center card m-1 bg-info text-white ">
                             <div class="pt-3">

@@ -81,146 +81,15 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./resources/js/module_recording/Grabaciones.js":
-/*!******************************************************!*\
-  !*** ./resources/js/module_recording/Grabaciones.js ***!
-  \******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-$(function () {
-  var currentURL = window.location.href;
-  /**
-   * Evento para mostrar el boton de eliminar seleccionando una grabacion
-   */
-
-  $(document).on('click', '#tableGrabaciones tbody tr', function (event) {
-    event.preventDefault();
-    var id = $(this).data("id");
-    $(".deleteGrabacion").slideDown();
-    $(".downloadGrabacion").slideDown();
-    $("#idSeleccionado").val(id);
-    $("#tableGrabaciones tbody tr").removeClass('table-primary');
-    $(this).addClass('table-primary');
-  });
-  /**
-   * Evento para descargar la Grabacion
-   */
-
-  $(document).on("click", ".downloadGrabacion", function (event) {
-    event.preventDefault();
-    var id = $("#idSeleccionado").val(); //window.location.href = 'http://10.255.242.136/audios/temp2/Inbound_24/2019-11-05/11536501001-8466.wav';
-
-    $("#idSeleccionado").attr('href', 'http://10.255.242.136/audios/temp2/Inbound_24/2019-11-05/11536501001-8466.wav');
-    $("#idSeleccionado").attr('download', '');
-    $("#idSeleccionado").attr('target', '_blank');
-    /*
-    $('#tituloModal').html('Nuevo Audio');
-    $('#action').removeClass('deleteAudio');
-    $('#action').addClass('saveAudio');
-      let url = currentURL + "/Audios/create";
-      $.get(url, function(data, textStatus, jqXHR) {
-        $('#modal').modal('show');
-        $("#modal-body").html(data);
-    });
-    */
-  }); //Ingresa el nombre del archivo seleccionado en el campo del browser
-
-  $(document).on('change', '#file', function (e) {
-    $('#labelFile').html(e.target.files[0]['name']);
-  });
-  /**
-   * Evento para guardar el nuevo audio
-   */
-
-  $(document).on('click', '.saveAudio', function (event) {
-    event.preventDefault();
-    $('#modal').modal('hide');
-    var formData = new FormData(document.getElementById("altaaudio"));
-    var nombre = $("#name").val();
-    var descripcion = $("#descripcion").val();
-    var labelFile = $("#labelFile").text();
-    var file = $("#file").val();
-
-    var _token = $("input[name=_token]").val();
-
-    formData.append("nombre", nombre);
-    formData.append("descripcion", descripcion);
-    formData.append("ruta", labelFile);
-    formData.append("File", File);
-    formData.append("_token", _token);
-    var url = currentURL + '/Audios';
-    $.ajax({
-      url: url,
-      type: "post",
-      dataType: "html",
-      data: formData,
-      cache: false,
-      contentType: false,
-      processData: false
-    }).done(function (data) {
-      $('.viewResult').html(data);
-      $('.viewResult #tableAudios').DataTable({
-        "lengthChange": false
-      });
-    });
-    Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
-  });
-  /**
-   * Evento para eliminar el Audio
-   *
-   */
-
-  $(document).on('click', '.deleteAudio', function (event) {
-    event.preventDefault();
-    Swal.fire({
-      title: 'Estas seguro?',
-      text: "Deseas eliminar el registro seleccionado!",
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, Eliminar!',
-      cancelButtonText: 'Cancelar'
-    }).then(function (result) {
-      if (result.value) {
-        var id = $("#idSeleccionado").val();
-        var _method = "DELETE";
-
-        var _token = $("input[name=_token]").val();
-
-        var url = currentURL + '/Audios/' + id;
-        $.ajax({
-          url: url,
-          type: 'POST',
-          data: {
-            _token: _token,
-            _method: _method
-          },
-          success: function success(result) {
-            $('.viewResult').html(result);
-            $('.viewResult #tableAudios').DataTable({
-              "lengthChange": false
-            });
-            Swal.fire('Eliminado!', 'El registro ha sido eliminado.', 'success');
-          }
-        });
-      }
-    });
-  });
-});
-
-/***/ }),
-
-/***/ "./resources/js/module_recording/Inbound.js":
-/*!**************************************************!*\
-  !*** ./resources/js/module_recording/Inbound.js ***!
-  \**************************************************/
+/***/ "./resources/js/module_voicemail/grabacionesVoicemail.js":
+/*!***************************************************************!*\
+  !*** ./resources/js/module_voicemail/grabacionesVoicemail.js ***!
+  \***************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -241,7 +110,7 @@ $(function () {
     var fechaF = $("#fechaFin").val();
     var hrI = $("#hrIni").val();
     var hrF = $("#hrFin").val();
-    var url = currentURL + '/Inbound';
+    var url = currentURL + '/grabaciones_voicemial';
 
     var _token = $("input[name=_token]").val();
 
@@ -290,7 +159,7 @@ $(function () {
     var hrF = $("#hrFin").val();
     var fechaIni = fechaI + " " + hrI + ":00";
     var fechaFin = fechaF + " " + hrF + ":59";
-    var url = currentURL + "/Inbound/descargar/" + fechaIni + "/" + fechaFin;
+    var url = currentURL + "/grabaciones_voicemial/descargar/" + fechaIni + "/" + fechaFin;
     $('#iFrameDescarga').attr('src', url);
   });
   /**
@@ -300,7 +169,7 @@ $(function () {
   $(document).on('click', '.escuchar-grabacion', function (event) {
     event.preventDefault();
     var grab = $(this).attr('id');
-    var url = currentURL + '/Inbound/escuchar';
+    var url = currentURL + '/grabaciones_voicemial/escuchar';
 
     var _token = $("input[name=_token]").val();
 
@@ -355,7 +224,7 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
-    var url = currentURL + '/Inbound/descargar';
+    var url = currentURL + '/grabaciones_voicemial/descargar';
     $.ajax({
       url: url,
       type: 'POST',
@@ -366,6 +235,48 @@ $(function () {
       success: function success(result) {
         $('#iFrameDescarga').attr('src', result);
       }
+    });
+  });
+  /**
+   * Evento para enviar la grabación
+   */
+
+  $(document).on('click', '.enviar-grabacion', function (event) {
+    var _this = this;
+
+    event.preventDefault();
+    Swal.fire({
+      title: 'Ingrese los correos a los cuales se enviara la grabación.',
+      text: 'separar con ; si se desea enviar a mas de un correo.',
+      input: 'text',
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Enviar',
+      showLoaderOnConfirm: false
+    }).then(function (result) {
+      var correos = result.value;
+
+      var _token = $("input[name=_token]").val();
+
+      var idGrabacion = $(_this).attr('id');
+      var url = currentURL + '/grabaciones_voicemial/' + idGrabacion;
+      $.ajax({
+        url: url,
+        type: 'GET',
+        data: {
+          correos: correos,
+          _token: _token
+        },
+        success: function success(data) {
+          if (data['error']) {
+            Swal.fire('Enviado!', 'Se ha enviado la grabación.', 'success');
+          } else {
+            Swal.fire('Error!', data['mensaje'], 'error');
+          }
+        }
+      });
     });
   });
   /**
@@ -393,7 +304,7 @@ $(function () {
         var _token = $("input[name=_token]").val();
 
         var _method = "DELETE";
-        var url = currentURL + '/Inbound/0';
+        var url = currentURL + '/grabaciones_voicemial/0';
         $.ajax({
           url: url,
           type: 'POST',
@@ -407,7 +318,7 @@ $(function () {
             var fechaF = $("#fechaFin").val();
             var hrI = $("#hrIni").val();
             var hrF = $("#hrFin").val();
-            var url = currentURL + '/Inbound';
+            var url = currentURL + '/grabaciones_voicemial';
 
             var _token = $("input[name=_token]").val();
 
@@ -436,9 +347,9 @@ $(function () {
 
 /***/ }),
 
-/***/ "./resources/js/module_recording/menu.js":
+/***/ "./resources/js/module_voicemail/menu.js":
 /*!***********************************************!*\
-  !*** ./resources/js/module_recording/menu.js ***!
+  !*** ./resources/js/module_voicemail/menu.js ***!
   \***********************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
@@ -453,15 +364,9 @@ $(function () {
     e.preventDefault();
     var id = $(this).data("id");
 
-    if (id == 36) {
-      url = currentURL + '/Inbound';
-      table = ' #tableInbound';
-    } else if (id == 37) {
-      url = currentURL + '/Outbound';
-      table = ' #tableOutbound';
-    } else if (id == 38) {
-      url = currentURL + '/Manuales';
-      table = ' #tableManuales';
+    if (id == 24) {
+      url = currentURL + '/grabaciones_voicemial';
+      table = ' #grabacionesVoicemail';
     }
 
     $.get(url, function (data, textStatus, jqXHR) {
@@ -475,16 +380,15 @@ $(function () {
 
 /***/ }),
 
-/***/ 3:
-/*!***********************************************************************************************************************************************!*\
-  !*** multi ./resources/js/module_recording/menu.js ./resources/js/module_recording/Grabaciones.js ./resources/js/module_recording/Inbound.js ***!
-  \***********************************************************************************************************************************************/
+/***/ 4:
+/*!*************************************************************************************************************!*\
+  !*** multi ./resources/js/module_voicemail/menu.js ./resources/js/module_voicemail/grabacionesVoicemail.js ***!
+  \*************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_recording\menu.js */"./resources/js/module_recording/menu.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_recording\Grabaciones.js */"./resources/js/module_recording/Grabaciones.js");
-module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_recording\Inbound.js */"./resources/js/module_recording/Inbound.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_voicemail\menu.js */"./resources/js/module_voicemail/menu.js");
+module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_voicemail\grabacionesVoicemail.js */"./resources/js/module_voicemail/grabacionesVoicemail.js");
 
 
 /***/ })
