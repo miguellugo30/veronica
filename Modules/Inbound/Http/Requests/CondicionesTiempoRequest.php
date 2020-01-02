@@ -17,7 +17,14 @@ class CondicionesTiempoRequest extends FormRequest
 
         foreach ($this->request->get('dataForm') as $key => $value)
         {
-            $rules[ 'dataForm.'.$key] = 'required';
+            /**
+             * Buscamos si el id_campo es null para permitir agregar los nuevos campos
+             **/
+            if ($key == strpos($key,'id_campo')) {
+                $rules[ 'dataForm.'.$key] = 'nullable';
+            } else {
+                $rules[ 'dataForm.'.$key] = 'required';
+            }
         }
 
         return $rules;

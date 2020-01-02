@@ -16,7 +16,7 @@ class TipoCanalRequest extends FormRequest
         return [
             'distribuidor' => 'required',
             'nombre' => 'required',
-            'prefijo' => 'required',
+            'prefijo' => 'required|numeric',
         ];
     }
 

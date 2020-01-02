@@ -563,7 +563,7 @@ $(function () {
 
   $(document).on("click", ".editEdoAge", function (e) {
     e.preventDefault();
-    $('#tituloModal').html('Editar Tipo Canal');
+    $('#tituloModal').html('Editar Estado Agente');
     $('#action').removeClass('saveEdoAge');
     $('#action').addClass('updateEdoAge');
     var id = $("#idSeleccionado").val();
@@ -749,7 +749,7 @@ $(function () {
 
   $(document).on("click", ".editEdoCli", function (e) {
     e.preventDefault();
-    $('#tituloModal').html('Editar Tipo Canal');
+    $('#tituloModal').html('Editar Estado Cliente');
     $('#action').removeClass('saveEdoCli');
     $('#action').removeClass('saveOrderEdoCli');
     $('#action').addClass('updateEdoCli');

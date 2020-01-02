@@ -44,13 +44,13 @@ class CatEstadoAgenteController extends Controller
          * Obtenemos todos los datos del formulario de alta y
          * los insertamos la informacion del formulario
          */
-        Cat_Estado_Agente::create(  $request->all() );
+        $CAT = Cat_Estado_Agente::create(  $request->all() );
          /**
          * Creamos el logs
          */
         $cat = $mensaje = 'Se creo un nuevo registro, informacion capturada:'.var_export($request->all(), true);
         $log = new LogController;
-        $log->store('Insercion', 'Cat_Estado_Agente',$mensaje, $cat->id);
+        $log->store('Insercion', 'Cat_Estado_Agente',$mensaje, $CAT->id);
         /**
          * Redirigimos a la ruta index
          */

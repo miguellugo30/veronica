@@ -117,7 +117,7 @@ class DesviosController extends Controller
             /**
              * Creamos el logs
              */
-            $mensaje = 'Se edito un registro con id: '.$id.', informacion editada: '.var_export($request, true);
+            $mensaje = 'Se edito un registro con id: '.$id.', informacion editada: '.var_export($request->all(), true);
             $log = new LogController;
             $log->store('Actualizacion', 'Desvios',$mensaje, $id);
             return redirect()->route('Desvios.index');
