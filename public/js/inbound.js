@@ -469,7 +469,6 @@ $(function () {
     $.ajax({
       url: url,
       type: "post",
-      dataType: 'JSON',
       data: {
         dataForm: data,
         _method: _method,

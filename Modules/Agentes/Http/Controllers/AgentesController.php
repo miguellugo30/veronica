@@ -67,7 +67,7 @@ class AgentesController extends Controller
         Agentes::where( 'id', $request->id_agente )->update(['Cat_Estado_Agente_id' => 2]);
         Miembros_Campana::where( 'membername', $request->id_agente )->update(['Paused' => 0]);
         Crd_Asignacion_Agente::where('uniqueid', $request->uniqueid)->update(['fecha_calificacion' => $fecha]);
-        EventosAmiController::colgar_llamada( $request->canal );
+        EventosAmiController::colgar_llamada( $request->canal, $empresa_id );
         $despausar = EventosAmiController::despausar_agente( $request->canal, 'unpause' );
         CalificarLlamadaController::calificarllamada( $request );
         print_r( $despausar );

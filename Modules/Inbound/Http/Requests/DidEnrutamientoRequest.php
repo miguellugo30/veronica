@@ -17,12 +17,14 @@ class DidEnrutamientoRequest extends FormRequest
 
         foreach ($this->request->get('dataForm') as $key => $value)
         {
-            $rules[ 'dataForm.'.$key] = 'required';
+            if ( !preg_match('*\bid\b*i', str_replace('_', ' ', $key)) )
+            {
+                $rules[ 'dataForm.'.$key] = 'required';
+            }
         }
 
         return $rules;
     }
-
     /**
      * Determine if the user is authorized to make this request.
      *

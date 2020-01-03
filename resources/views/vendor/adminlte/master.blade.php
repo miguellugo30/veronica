@@ -114,6 +114,8 @@
         <script src="{{ asset('js/recording.js') }}"></script>
     @elseif( $modulo == 'Voicemail')
         <script src="{{ asset('js/viocemail.js') }}"></script>
+    @elseif( $modulo == 'Monitor')
+        <script src="{{ asset('js/monitor.js') }}"></script>
     @endif
 @endif
 

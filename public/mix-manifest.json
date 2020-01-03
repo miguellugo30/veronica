@@ -2,6 +2,7 @@
     "/js/administrador.js": "/js/administrador.js",
     "/js/agente.js": "/js/agente.js",
     "/js/inbound.js": "/js/inbound.js",
+    "/js/monitor.js": "/js/monitor.js",
     "/js/recording.js": "/js/recording.js",
     "/js/settings.js": "/js/settings.js",
     "/js/viocemail.js": "/js/viocemail.js"

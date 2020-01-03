@@ -66,6 +66,10 @@ mix.js([
         'resources/js/module_voicemail/grabacionesVoicemail.js',
     ], 'public/js/viocemail.js')
     .js([
+        'resources/js/module_monitor/menu.js',
+        'resources/js/module_monitor/monitoreo.js',
+    ], 'public/js/monitor.js')
+    .js([
         'resources/js/module_agentes/agentes.js',
         'resources/js/module_agentes/eventosPantallaAgente.js',
     ], 'public/js/agente.js');
