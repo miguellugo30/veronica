@@ -56,7 +56,11 @@ class CatIpPbxController extends Controller
          * Obtenemos todos los datos del formulario de alta y
          * los insertamos la informacion del formulario
          */
-        $cat = $pbx = Cat_IP_PBX::create(  $request->all() );
+        //$cat = $pbx = Cat_IP_PBX::create(  $request->all() );
+        $cat = $pbx = Cat_IP_PBX::create(['ip_pbx' => $request->input('ip_pbx'),
+                                          'media_server' => $request->input('media_server'),
+                                          'Cat_Base_Datos_id' => $request->input('basedatos')
+                                        ]);
         /**
          * Asignamos las categorias al usuario
          */
@@ -149,7 +153,7 @@ class CatIpPbxController extends Controller
                     ->update([
                         'ip_pbx' => $request->input('ip_pbx'),
                         'media_server' => $request->input('media_server'),
-                        'Cat_Base_Datos_id' => $request->input('Cat_Base_Datos_id'),
+                        'Cat_Base_Datos_id' => $request->input('basedatos'),
                     ]);
         /**
          * Creamos el logs

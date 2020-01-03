@@ -12,7 +12,7 @@ $(function() {
             table = ' #tableUsuarios';
         } else if (id == 4) {
             url = currentURL + '/menus';
-            table = '';
+            table = '#tableMenus';
         } else if (id == 3) {
             url = currentURL + '/modulos';
             table = ' #tableModulos';

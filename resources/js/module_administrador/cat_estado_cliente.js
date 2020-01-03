@@ -24,7 +24,7 @@ $(function() {
     $(document).on("click", ".editEdoCli", function(e) {
 
         e.preventDefault();
-        $('#tituloModal').html('Editar Tipo Canal');
+        $('#tituloModal').html('Editar Estado Cliente');
         $('#action').removeClass('saveEdoCli');
         $('#action').removeClass('saveOrderEdoCli');
         $('#action').addClass('updateEdoCli');

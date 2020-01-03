@@ -62,7 +62,12 @@ class TroncalesController extends Controller
          * Obtenemos todos los datos del formulario de alta y
          * los insertamos la información del formulario
          */
-        $cat = Troncales::create( $request->all() );
+        //$cat = Troncales::create( $request->all() );
+        $cat = Troncales::create([
+                                    'nombre' => $request->input('nombre'),
+                                    'descripcion' => $request->input('descripcion'),
+                                    'Cat_Distribuidor_id' => $request->input('distribuidores'),
+                                ]);
 
         Troncales_Sansay::create([
                                     'name' => $request->input('nombre'),
@@ -160,7 +165,7 @@ class TroncalesController extends Controller
                                     'nombre' => $request->input('nombre'),
                                     'descripcion' => $request->input('descripcion'),
                                     //'ip_host' => $request->input('ip_host'),
-                                    'Cat_Distribuidor_id' => $request->input('Cat_Distribuidor_id'),
+                                    'Cat_Distribuidor_id' => $request->input('distribuidores'),
                                     //'Cat_IP_PBX_id' => $request->input('Cat_IP_PBX_id'),
                                 ]);
         Troncales_Sansay::where('Troncales_id',$id)

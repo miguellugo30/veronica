@@ -24,7 +24,7 @@ $(function() {
     $(document).on("click", ".editEdoAge", function(e) {
 
         e.preventDefault();
-        $('#tituloModal').html('Editar Tipo Canal');
+        $('#tituloModal').html('Editar Estado Agente');
         $('#action').removeClass('saveEdoAge');
         $('#action').addClass('updateEdoAge');
 

@@ -211,7 +211,7 @@ class CampanasController extends Controller
             Miembros_Campana::create(
                 [
                     'membername' =>  $agentesParticipantes[$i],
-                    'queue_name' => $id,
+                    //'queue_name' => $id,
                     'interface' => $interface.$agentesParticipantes[$i],
                     'paused' => $estado,
                     'Agentes_id' =>  $agentesParticipantes[$i],
@@ -244,7 +244,7 @@ class CampanasController extends Controller
         Campanas::where('id',$id)
         ->update(['activo'=>'0']);
 
-        Miembros_Campana::where('queue_name', $id)->delete();
+        Miembros_Campana::where('Campanas_id', $id)->delete();
         /**
          * Creamos el logs
          */

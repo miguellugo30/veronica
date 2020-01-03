@@ -45,7 +45,11 @@ class TipoCanalcontroller extends Controller
          * Obtenemos todos los datos del formulario de alta y
          * los insertamos la informacion del formulario
          */
-        $cat = Cat_Tipo_Canales::create( $request->all() );
+        //$cat = Cat_Tipo_Canales::create( $request->all() );
+        $cat = Cat_Tipo_Canales::create(['nombre' => $request->input('nombre'),
+                                         'prefijo'=> $request->input('prefijo'),
+                                         'Cat_Distribuidor_id'=> $request->input('distribuidor')
+                                        ]);
         /**
          * Creamos el logs
          */
@@ -102,7 +106,7 @@ class TipoCanalcontroller extends Controller
                                 ->update([
                                     'nombre' => $request->input('nombre'),
                                     'prefijo' => $request->input('prefijo'),
-                                    'Cat_Distribuidor_id' => $request->input('Cat_Distribuidor_id')
+                                    'Cat_Distribuidor_id' => $request->input('distribuidor')
                                 ]);
         /**
          * Creamos el logs
