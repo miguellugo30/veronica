@@ -7,7 +7,7 @@
         <h1><b id="tiempo-no-disponible">00:00:00</b></h1>
     </div>
     <input type="hidden" name="agente_evento" id="agente_evento" value="{{$agente}}">
-    <input type="hidden" name="id_no_disponible" id="id_no_disponible" value="{{$evento->id}}">
+    <input type="hidden" name="id_no_disponible" id="id_no_disponible" value="{{ ( $evento == '' ) ? '' : $evento->id}}">
 </div>
 
 <script>

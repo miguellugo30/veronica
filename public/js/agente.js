@@ -116,8 +116,6 @@ document.addEventListener('DOMContentLoaded', function () {
       month: 'short',
       day: 'numeric'
     },
-    // customize the button names,
-    // otherwise they'd all just say "list"
     views: {
       listDay: {
         buttonText: 'Dia'
@@ -140,13 +138,14 @@ document.addEventListener('DOMContentLoaded', function () {
   calendar.render();
   var id_agente = $('#id_agente').val();
   var timer = null;
+  var currentURL = window.location.href.split('?');
 
   function start() {
     //use a one-off timer
     timer = setInterval(function () {
       $.ajax({
         method: "GET",
-        url: "agentes/" + id_agente,
+        url: currentURL[0] + "/" + id_agente,
         // Podrías separar las funciones de PHP en un fichero a parte
         data: {}
       }).done(function (msg) {
@@ -156,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function () {
           stop();
           $(".estado-agente").html("<i class='fa fa-circle text-danger'></i> " + obj['estado']);
           $(".colgar-llamada").prop("disabled", false);
-          $.get("agentes/" + id_agente + "/edit", function (data, textStatus, jqXHR) {
+          $.get(currentURL[0] + "/" + id_agente + "/edit", function (data, textStatus, jqXHR) {
             $(".view-call").html(data);
             $(".historico-llamadas").DataTable({
               "searching": false,
@@ -196,7 +195,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var datosFormulario = $(".formularioView").serializeArray();
     $.ajax({
       method: "POST",
-      url: "/agentes",
+      url: currentURL[0],
       // Podrías separar las funciones de PHP en un fichero a parte
       data: {
         canal: canal,
@@ -216,6 +215,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
   $(document).on("change", "#no_disponible", function (e) {
     var no_disponible = $(this).val();
+    var id_agente = $('#id_agente').val();
     var no_disponible_text = $('select[name="no_disponible"] option:selected').text();
 
     var _token = $("input[name=_token]").val();
@@ -225,11 +225,12 @@ document.addEventListener('DOMContentLoaded', function () {
     if (no_disponible != '0') {
       $.ajax({
         method: "POST",
-        url: "/agentes/no_disponible",
+        url: currentURL[0] + "/no_disponible",
         // Podrías separar las funciones de PHP en un fichero a parte
         data: {
           no_disponible: no_disponible,
           no_disponible_text: no_disponible_text,
+          id_agente: id_agente,
           _token: _token
         }
       }).done(function (msg) {
@@ -250,7 +251,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (no_disponible != '') {
       $.ajax({
         method: "POST",
-        url: "/agentes/agente_disponible",
+        url: currentURL[0] + "/agente_disponible",
         // Podrías separar las funciones de PHP en un fichero a parte
         data: {
           agente: agente,
@@ -278,6 +279,7 @@ document.addEventListener('DOMContentLoaded', function () {
 /***/ (function(module, exports) {
 
 $(function () {
+  var currentURL = window.location.href.split('?');
   $(document).on("click", ".colgar-llamada", function (e) {
     var canal = $("#canal").val();
 
@@ -285,7 +287,7 @@ $(function () {
 
     $.ajax({
       method: "POST",
-      url: "/agentes/colgar",
+      url: currentURL[0] + "/colgar",
       // Podrías separar las funciones de PHP en un fichero a parte
       data: {
         canal: canal,
@@ -300,7 +302,7 @@ $(function () {
 
     $.ajax({
       method: "POST",
-      url: "/agentes/historial-llamadas",
+      url: currentURL[0] + "/historial-llamadas",
       // Podrías separar las funciones de PHP en un fichero a parte
       data: {
         id_agente: id_agente,
@@ -317,7 +319,7 @@ $(function () {
 
     $.ajax({
       method: "POST",
-      url: "/agentes/llamadas-abandonadas",
+      url: currentURL[0] + "/llamadas-abandonadas",
       // Podrías separar las funciones de PHP en un fichero a parte
       data: {
         id_agente: id_agente,
@@ -335,7 +337,7 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
-    var url = currentURL.replace('agentes/') + '/logeo-extension';
+    var url = currentURL[0].replace('agentes/') + '/logeo-extension';
     $.ajax({
       url: url,
       type: 'POST',

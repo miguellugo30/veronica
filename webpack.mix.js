@@ -55,6 +55,7 @@ mix.js([
         'resources/js/module_inbound/ivr.js',
         'resources/js/module_inbound/Metricas_ACD.js',
         'resources/js/module_inbound/desglosellamadas.js',
+        'resources/js/module_inbound/real_time.js',
     ], 'public/js/inbound.js')
     .js([
         'resources/js/module_recording/menu.js',

@@ -22,8 +22,6 @@ document.addEventListener('DOMContentLoaded', function() {
         timeZone: 'UTC',
         defaultView: 'listDay',
         titleFormat: { year: 'numeric', month: 'short', day: 'numeric' },
-        // customize the button names,
-        // otherwise they'd all just say "list"
         views: {
             listDay: { buttonText: 'Dia' },
             listWeek: { buttonText: 'Semana' },
@@ -42,12 +40,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     var id_agente = $('#id_agente').val();
     var timer = null;
+    let currentURL = window.location.href.split('?');
 
     function start() { //use a one-off timer
         timer = setInterval(function() {
             $.ajax({
                 method: "GET",
-                url: "agentes/" + id_agente, // Podrías separar las funciones de PHP en un fichero a parte
+                url: currentURL[0] + "/" + id_agente, // Podrías separar las funciones de PHP en un fichero a parte
                 data: {}
             }).done(function(msg) {
 
@@ -60,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     $(".estado-agente").html("<i class='fa fa-circle text-danger'></i> " + obj['estado']);
                     $(".colgar-llamada").prop("disabled", false);
 
-                    $.get("agentes/" + id_agente + "/edit", function(data, textStatus, jqXHR) {
+                    $.get(currentURL[0] + "/" + id_agente + "/edit", function(data, textStatus, jqXHR) {
                         $(".view-call").html(data);
                         $(".historico-llamadas").DataTable({
                             "searching": false,
@@ -98,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         $.ajax({
             method: "POST",
-            url: "/agentes", // Podrías separar las funciones de PHP en un fichero a parte
+            url: currentURL[0], // Podrías separar las funciones de PHP en un fichero a parte
             data: {
                 canal: canal,
                 uniqueid: uniqueid,
@@ -119,6 +118,7 @@ document.addEventListener('DOMContentLoaded', function() {
     $(document).on("change", "#no_disponible", function(e) {
 
         let no_disponible = $(this).val();
+        let id_agente = $('#id_agente').val();
         let no_disponible_text = $('select[name="no_disponible"] option:selected').text();
         let _token = $("input[name=_token]").val();
 
@@ -127,10 +127,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (no_disponible != '0') {
             $.ajax({
                 method: "POST",
-                url: "/agentes/no_disponible", // Podrías separar las funciones de PHP en un fichero a parte
+                url: currentURL[0] + "/no_disponible", // Podrías separar las funciones de PHP en un fichero a parte
                 data: {
                     no_disponible: no_disponible,
                     no_disponible_text: no_disponible_text,
+                    id_agente: id_agente,
                     _token: _token
                 }
             }).done(function(msg) {
@@ -149,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (no_disponible != '') {
             $.ajax({
                 method: "POST",
-                url: "/agentes/agente_disponible", // Podrías separar las funciones de PHP en un fichero a parte
+                url: currentURL[0] + "/agente_disponible", // Podrías separar las funciones de PHP en un fichero a parte
                 data: {
                     agente: agente,
                     evento: evento,

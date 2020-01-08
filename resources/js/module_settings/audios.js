@@ -128,6 +128,7 @@ $(function() {
         let id = $(this).data("id-audio");
         let url = currentURL + '/Audios/' + id;
         let _token = $("input[name=_token]").val();
+        $("#tituloModal").html('Reproducir Grabación');
 
         $.ajax({
             url: url,
@@ -137,28 +138,8 @@ $(function() {
                 _token: _token
             },
             success: function(result) {
-
-                var src = currentURL.replace(/\/settings/g, '') + result;
-                var audio = new Audio();
-                var playPromise;
-
-                audio.src = src;
-                playPromise = audio.play();
-
-                if (playPromise) {
-                    playPromise.then(() => {
-                        // Audio Loading Successful
-                        // Audio playback takes time
-                        setTimeout(() => {
-                            // Follow up operation
-                            console.log("done.");
-                        }, audio.duration * 1000); // audio.duration is the length of the audio in seconds.
-
-
-                    }).catch((e) => {
-                        // Audio loading failure
-                    });
-                }
+                $('#modal').modal({ backdrop: 'static', keyboard: false });
+                $("#modal-body").html(result);
             }
         });
 

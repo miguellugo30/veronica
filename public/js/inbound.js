@@ -1800,12 +1800,14 @@ $(function () {
 /***/ (function(module, exports) {
 
 $(function () {
+  var timerListAgente = '';
   var currentURL = window.location.href;
   /**
    * Evento para el menu de sub categorias y mostrar la vista
    */
 
   $(document).on("click", ".sub-menu", function (e) {
+    stop(timerListAgente);
     e.preventDefault();
     var id = $(this).data("id");
 
@@ -1833,23 +1835,97 @@ $(function () {
     } else if (id == 40) {
       url = currentURL + '/Desglose_llamadas';
       table = ' #tableDesgloseLlamadas';
+    } else if (id == 26) {
+      url = currentURL + '/real_time/';
+      $.get(url, function (data, textStatus, jqXHR) {
+        $(".viewResult").html(data);
+        $('.viewResult listadoAgentes').DataTable({
+          "lengthChange": true
+        }); //start(url);
+
+        url = currentURL + '/real_time/0';
+        $.get(url, function (data, textStatus, jqXHR) {
+          $(".viewIndex").html(data);
+          $('.viewIndex listadoAgentes').DataTable({
+            "lengthChange": true
+          });
+        });
+        start(url);
+      });
     }
 
-    $.get(url, function (data, textStatus, jqXHR) {
-      $(".viewResult").html(data);
-      $('.viewResult' + table).DataTable({
-        "lengthChange": true
+    if (id != 26) {
+      stop(timerListAgente);
+      $.get(url, function (data, textStatus, jqXHR) {
+        $(".viewResult").html(data);
+        $('.viewResult' + table).DataTable({
+          "lengthChange": true
+        });
       });
-    });
+    }
+  });
+
+  function stop(timer) {
+    clearInterval(timer);
+  }
+
+  ;
+
+  function start(url) {
+    //use a one-off timer
+
+    /**
+     * Función para actualizar el listado de agentes
+     * para poder obtener el estado de los agentes
+     */
+    timerListAgente = setInterval(function () {
+      $.get(url, function (data, textStatus, jqXHR) {
+        $(".viewIndex").html(data);
+        $('.viewIndex listadoAgentes').DataTable({
+          "lengthChange": true
+        });
+      });
+    }, 3000);
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/module_inbound/real_time.js":
+/*!**************************************************!*\
+  !*** ./resources/js/module_inbound/real_time.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  var currentURL = window.location.href;
+  /**
+   * Evento para mostrar la pantalla del agente seleccionado
+   */
+
+  $(document).on("click", ".fa-desktop", function (e) {
+    event.preventDefault();
+    var idAgente = $(this).data('id');
+    var url = currentURL + "/real_time/agente/" + idAgente;
+    console.log(idAgente);
+    var tab = window.open(url, '_blank');
+
+    if (tab) {
+      tab.focus(); //ir a la pestaña
+    } else {
+      alert('Pestañas bloqueadas, activa las ventanas emergentes (Popups) ');
+      return false;
+    }
   });
 });
 
 /***/ }),
 
 /***/ 2:
-/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/module_inbound/menu.js ./resources/js/module_inbound/campanas.js ./resources/js/module_inbound/CondicionesTiempo.js ./resources/js/module_inbound/desvios.js ./resources/js/module_inbound/buzon_voz.js ./resources/js/module_inbound/Did_Enrutamiento.js ./resources/js/module_inbound/ivr.js ./resources/js/module_inbound/Metricas_ACD.js ./resources/js/module_inbound/desglosellamadas.js ***!
-  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/module_inbound/menu.js ./resources/js/module_inbound/campanas.js ./resources/js/module_inbound/CondicionesTiempo.js ./resources/js/module_inbound/desvios.js ./resources/js/module_inbound/buzon_voz.js ./resources/js/module_inbound/Did_Enrutamiento.js ./resources/js/module_inbound/ivr.js ./resources/js/module_inbound/Metricas_ACD.js ./resources/js/module_inbound/desglosellamadas.js ./resources/js/module_inbound/real_time.js ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1861,7 +1937,8 @@ __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\buzon_v
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\Did_Enrutamiento.js */"./resources/js/module_inbound/Did_Enrutamiento.js");
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\ivr.js */"./resources/js/module_inbound/ivr.js");
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\Metricas_ACD.js */"./resources/js/module_inbound/Metricas_ACD.js");
-module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\desglosellamadas.js */"./resources/js/module_inbound/desglosellamadas.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\desglosellamadas.js */"./resources/js/module_inbound/desglosellamadas.js");
+module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\real_time.js */"./resources/js/module_inbound/real_time.js");
 
 
 /***/ })

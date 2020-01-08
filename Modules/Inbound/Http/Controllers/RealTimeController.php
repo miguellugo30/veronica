@@ -1,102 +1,97 @@
 <?php
 
-namespace Modules\Agentes\Http\Controllers;
+namespace Modules\Inbound\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use DB;
-use Modules\Agentes\Http\Controllers\EventosAmiController;
-use Modules\Agentes\Http\Controllers\CalificarLlamadaController;
+use Illuminate\Support\Facades\Auth;
 use Modules\Agentes\Http\Controllers\EventosAgenteController;
+use Modules\Agentes\Http\Controllers\CalificarLlamadaController;
+use Modules\Agentes\Http\Controllers\EventosAmiController;
+use DB;
 use Nimbus\Http\Controllers\ZonaHorariaController;
 
 use Nimbus\Agentes;
-use Nimbus\Campanas;
-use Nimbus\Crd_Asignacion_Agente;
-use Nimbus\Miembros_Campana;
 use Nimbus\Eventos_Agentes;
+use Nimbus\Crd_Asignacion_Agente;
+use Nimbus\Campanas;
+use Nimbus\Miembros_Campana;
 
-class AgentesController extends Controller
+
+class RealTimeController extends Controller
 {
     /**
-     * Función para mostrar la pantalla del agente
+     * Display a listing of the resource.
+     * @return Response
      */
-    public function index( Request $request )
+    public function index()
     {
-        /**
-         * Obtenemos la modalidad en la cual esta el agente
-         */
-        $modalidad = DB::table('Campanas')
-                    ->join( 'Miembros_Campanas', 'Campanas.id', '=', 'Miembros_Campanas.Campanas_id' )
-                    ->select(
-                                'Campanas.modalidad_logue'
-                            )
-                    ->where('Campanas.activo', 1)
-                    ->where('Miembros_Campanas.membername', auth()->guard('agentes')->id())
-                    ->groupBy('modalidad_logue')
-                    ->first();
-
-        $evento = $request->evento;
-        /**
-         * Obtenemos los datos del agente
-         */
-        $agente = auth()->guard('agentes')->user();
-        /**
-         * Obtenemos los eventos por los cuales podrá ser pausado el agente
-         */
-        $eventosAgente = Eventos_Agentes::active()->where('Empresas_id', $agente->Empresas_id)->get();
-
-        return view('agentes::index', compact('agente', 'evento', 'eventosAgente', 'modalidad'));
+        return view('inbound::RealTime.index');
     }
     /**
-     * Función para calificar la llamada
-     */
-    public function store(Request $request)
-    {
-        $user = auth()->guard('agentes')->user();
-        $empresa_id = $user->Empresas_id;
-
-        $fecha = ZonaHorariaController::zona_horaria( $empresa_id );
-        /**
-         * Ponemos al agente en disponible.
-         */
-        Agentes::where( 'id', $request->id_agente )->update(['Cat_Estado_Agente_id' => 2]);
-        /**
-         * Dentro de la campana lo ponemos como despausado.
-         */
-        Miembros_Campana::where( 'membername', $request->id_agente )->update(['Paused' => 0]);
-        /**
-         * Actualizamos la fecha de calificación.
-         */
-        Crd_Asignacion_Agente::where('uniqueid', $request->uniqueid)->update(['fecha_calificacion' => $fecha]);
-        /**
-         * Generamos el evento para colgar llamada.
-         */
-        EventosAmiController::colgar_llamada( $request->canal, $empresa_id );
-        /**
-         * Despausamos al agente directamente en el MS.
-         */
-        $despausar = EventosAmiController::despausar_agente( $request->canal, 'unpause', $empresa_id );
-        /**
-         * Guardamos la calificación de la llamada.
-         */
-        CalificarLlamadaController::calificarllamada( $request );
-    }
-    /**
-     * Función para saber el estado del agente
+     * Show the specified resource.
+     * @param int $id
+     * @return Response
      */
     public function show($id)
     {
+        /**
+         * Sacamos los datos del agente y su empresa para obtener los agentes
+         */
+        $user = Auth::user();
+        $empresa_id = $user->id_cliente;
+
+        $agentes = Agentes::empresa( $empresa_id )->active()->get();
+
+        return view('inbound::RealTime.show', compact('agentes'));
+    }
+    /**
+     * Funcion para obtener la pantalla del agente
+     */
+    public function real_time_agente($id)
+    {
+        /**
+         * Sacamos los datos del agente y su empresa para obtener los agentes
+         */
+        $user = Auth::user();
+        $empresa_id = $user->id_cliente;
+        /**
+         * Verificamos que el agente sea de la empresa
+         */
+        $agente = Agentes::empresa( $empresa_id )->where('id', $id)->active()->get();
+
+        if (  $agente->isNotEmpty() )
+        {
+            $modalidad = DB::table('Campanas')
+                        ->join( 'Miembros_Campanas', 'Campanas.id', '=', 'Miembros_Campanas.Campanas_id' )
+                        ->select(
+                                    'Campanas.modalidad_logue'
+                                )
+                        ->where('Campanas.activo', 1)
+                        ->where('Miembros_Campanas.membername', $id)
+                        ->groupBy('modalidad_logue')
+                        ->first();
+            //$evento = $request->evento;
+            $evento = '';
+            $agente = $agente[0];
+            $eventosAgente = Eventos_Agentes::active()->where('Empresas_id', $empresa_id)->get();
+            return view('agentes::index', compact('agente', 'evento', 'eventosAgente', 'modalidad'));
+
+        }
+        else
+        {
+            return abort(403, 'Agente Invalido, no existe el agente o no pertenece a la empresa en uso.');
+        }
+    }
+    /**
+     * Función para obtener el estatus del agente
+     */
+    public function real_time_agente_status($id)
+    {
         $data = array();
-        /**
-         * Recuperamos el estado del agente
-         */
-        $agente = Agentes::select('Cat_Estado_Agente_id')->active()->where('id',$id)->get()->first();
-        /**
-         * Estado 4 y 8 en llamada
-         * Estado 3 en pausa
-         */
+        $agente = Agentes::active()->where('id',$id)->get()->first();
+
         if ( $agente->Cat_Estado_Agente_id == 4 || $agente->Cat_Estado_Agente_id == 8 ) {
             $data['status'] = 1;
             $data['estado'] = $agente->Cat_Estado_Agente->nombre;
@@ -112,9 +107,9 @@ class AgentesController extends Controller
         }
     }
     /**
-     * Mostrar la información de la llamada en curso
+     * Función para obtener los datos de la llamada
      */
-    public function edit($id)
+    public function real_time_agente_llamada($id)
     {
         /**
          * Obtenemos la llamada que fue asignada al agente
@@ -129,7 +124,7 @@ class AgentesController extends Controller
         $canal = $datos_llamada[0]->canal;
         $uniqueid = $datos_llamada[0]->uniqueid;
         /**
-         * Obtenemos la información de la campana a la cual esta el agente y la llamada
+         * Obtenemos la informacion de la campana a la cual esta el agente y la llamada
          */
         if ( $cdrDetalle->first()->aplicacion == 'Campanas' ) {
             $campana = Campanas::active()->where( 'id', $cdrDetalle->first()->id_aplicacion )->get()->first();
@@ -140,7 +135,7 @@ class AgentesController extends Controller
         $speech = $campana->speech;
         $grupo = $campana->Grupos->first();
         /**
-         * Obtenemos el histórico de llamadas de cliente
+         * Obtenemos el historico de llamdas de cliente
          */
         $historico = DB::table('Cdr_call_center')
                     ->join( 'Cdr_call_center_detalles', 'Cdr_call_center.uniqueid', '=', 'Cdr_call_center_detalles.uniqueid' )
@@ -168,37 +163,43 @@ class AgentesController extends Controller
      */
     public function colgar( Request $request )
     {
-        $agente = auth()->guard('agentes')->user();
+        /**
+         * Sacamos los datos del agente y su empresa para obtener los agentes
+         */
+        $user = Auth::user();
+        $empresa_id = $user->id_cliente;
         /**
          * Generamos un evento para colgar la llamada
          */
-        EventosAmiController::colgar_llamada( $request->canal, $agente->Empresas_id );
+        EventosAmiController::colgar_llamada( $request->canal, $empresa_id );
     }
     /**
-     * Funcion para poner como no disponible a un agente
+     * Función para poner como no disponible a un agente
      */
     public function no_disponible( Request $request )
     {
-        $agente = auth()->guard('agentes')->user();
-
-        EventosAgenteController::no_disponible( $agente->id, $agente->Empresas_id );
         /**
-         * Registramos el evento de no disponible del agente
+         * Sacamos los datos del agente y su empresa para obtener los agentes
          */
-        $evento = LogRegistroEventosController::registro_evento( auth()->guard('agentes')->id(), $request->no_disponible );
+        $user = Auth::user();
+        $empresa_id = $user->id_cliente;
+        $agente =  $request->id_agente;
+        $evento = '';
+
+        EventosAgenteController::no_disponible_real_time( $request->id_agente, $empresa_id );
 
         return view('agentes::cronometro', compact( 'agente', 'evento' ));
     }
     /**
-     * Funcion para poner como  disponible a un agente
+     * Función para poner como  disponible a un agente
      */
     public function agente_disponible( Request $request )
     {
-        $agente = auth()->guard('agentes')->user();
-        EventosAgenteController::agente_disponible( $request, $agente->id, $agente->Empresas_id );
+        $agente = Agentes::find( $request->agente );
+        EventosAgenteController::agente_disponible_real_time( $request, $agente->id, $agente->Empresas_id );
     }
     /**
-     * Funcion para mostrar el historial de llamadas contestadas
+     * Función para mostrar el historial de llamadas contestadas
      */
     public function historial_llamadas( Request $request )
     {
@@ -210,8 +211,8 @@ class AgentesController extends Controller
 
         return view('agentes::historial_llamadas', compact( 'inbound', 'outbound', 'manual' ) );
     }
-    /**
-     * Funcion para mostrar el historial de llamadas contestadas
+     /**
+     * Función para mostrar el historial de llamadas contestadas
      */
     public function llamadas_abandonadas( Request $request )
     {
@@ -224,11 +225,45 @@ class AgentesController extends Controller
         return view('agentes::historial_llamadas', compact( 'inbound', 'outbound', 'manual' ) );
     }
     /**
-     * Funcion para poner como  disponible a un agente
+     * Función para poner como  disponible a un agente
      */
-    public function logeoExtension()
+    public function logeoExtension( Request $request )
     {
-        $agente = auth()->guard('agentes')->user();
+        $agente = Agentes::find( $request->idAgente );
         EventosAgenteController::logeoExtension( $agente );
+    }
+    /**
+     * Función para calificar la llamada
+     */
+    public function store(Request $request)
+    {
+        $user = Auth::user();
+        $empresa_id = $user->id_cliente;
+
+        $fecha = ZonaHorariaController::zona_horaria( $empresa_id );
+        /**
+         * Ponemos al agente en disponible.
+         */
+        Agentes::where( 'id', $request->id_agente )->update(['Cat_Estado_Agente_id' => 2]);
+        /**
+         * Dentro de la campana lo ponemos como despausado.
+         */
+        Miembros_Campana::where( 'membername', $request->id_agente )->update(['Paused' => 0]);
+        /**
+         * Actualizamos la fecha de calificación.
+         */
+        Crd_Asignacion_Agente::where('uniqueid', $request->uniqueid)->update(['fecha_calificacion' => $fecha]);
+        /**
+         * Generamos el evento para colgar llamada.
+         */
+        EventosAmiController::colgar_llamada( $request->canal, $empresa_id );
+        /**
+         * Despausamos al agente directamente en el MS.
+         */
+        $despausar = EventosAmiController::despausar_agente( $request->canal, 'unpause', $empresa_id );
+        /**
+         * Guardamos la calificación de la llamada.
+         */
+        CalificarLlamadaController::calificarllamada( $request );
     }
 }

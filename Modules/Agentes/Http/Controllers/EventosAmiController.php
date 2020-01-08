@@ -25,10 +25,10 @@ class EventosAmiController extends Controller
 
     }
 
-    public static function despausar_agente( $interface, $accion )
+    public static function despausar_agente( $interface, $accion, $empresas_id )
     {
-        $agente = auth()->guard('agentes')->user();
-        $pbx = Empresas::empresa($agente->Empresas_id)->active()->with('Config_Empresas')->with('Config_Empresas.ms')->get()->first();
+
+        $pbx = Empresas::empresa($empresas_id)->active()->with('Config_Empresas')->with('Config_Empresas.ms')->get()->first();
 
         $ami = new Ami();
         if ($ami->connect($pbx->Config_Empresas->ms->ip_pbx.':5038', $pbx->Config_Empresas->usuario_ami, $pbx->Config_Empresas->clave_ami, 'off') === false)

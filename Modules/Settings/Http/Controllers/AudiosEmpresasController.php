@@ -107,7 +107,7 @@ class AudiosEmpresasController extends Controller
         /**
          * Obtener los datos del usuario logeado
          * **/
-        $user = User::find( Auth::id() );
+        $user = Auth::user();
         $empresa_id = $user->id_cliente;
         /**
          * Descargamos el archivo al media server
@@ -120,19 +120,23 @@ class AudiosEmpresasController extends Controller
                                                 'empresas_id' => $empresa_id,
                                                 'id_grabacion' => $audio->ruta
                                             ));
+        $error = $result['error'];
+
         if ( $result['error'] == 1 )
         {
             $archivo = explode( '/',  $audio->ruta );
             $ruta = Storage::disk('public')->getAdapter()->getPathPrefix();
-            //Storage::download('http:///'.$pbx->Config_Empresas->ms->ip_pbx.'/ws-ms/tmp/'.$archivo[1]);
             $source = file_get_contents( 'http://'.$pbx->Config_Empresas->ms->ip_pbx.'/ws-ms/tmp/'.$archivo[1] );
             file_put_contents( $ruta.'tmp/'.$archivo[1], $source );
-            //dd( Storage::url( '/tmp/'.$archivo[1] ) );
-            return Storage::url( 'tmp/'.$archivo[1] ) ;
+            $ruta = Storage::url( 'tmp/'.$archivo[1] ) ;
+            $mensaje = "";
         }
-        else{
-
+        else
+        {
+            $ruta = '';
+            $mensaje = $result['mensaje']."; id de error: ".$audio->ruta;
         }
+        return view('settings::AudiosEmpresa.show', compact( 'error', 'ruta', 'mensaje' ));
     }
 
     /**

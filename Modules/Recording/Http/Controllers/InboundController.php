@@ -90,7 +90,6 @@ class InboundController extends Controller
             $mensaje = $result['mensaje']."; id de error: ".$infoAudio[1];
         }
         return view('recording::Inbound.reproducir', compact( 'error', 'ruta', 'mensaje' ));
-
     }
 
     /**
