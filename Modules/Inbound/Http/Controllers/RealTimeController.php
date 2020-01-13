@@ -22,17 +22,14 @@ use Nimbus\Miembros_Campana;
 class RealTimeController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     * @return Response
+     * Función para mostrar la vista inicial
      */
     public function index()
     {
         return view('inbound::RealTime.index');
     }
     /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Response
+     * Función para sacar los agentes de la una empresa
      */
     public function show($id)
     {
@@ -47,7 +44,7 @@ class RealTimeController extends Controller
         return view('inbound::RealTime.show', compact('agentes'));
     }
     /**
-     * Funcion para obtener la pantalla del agente
+     * Función para obtener la pantalla del agente
      */
     public function real_time_agente($id)
     {
@@ -57,35 +54,53 @@ class RealTimeController extends Controller
         $user = Auth::user();
         $empresa_id = $user->id_cliente;
         /**
-         * Verificamos que el agente sea de la empresa
+         * Verificamos que no halla un agente monitoreandose
          */
-        $agente = Agentes::empresa( $empresa_id )->where('id', $id)->active()->get();
-
-        if (  $agente->isNotEmpty() )
+        $agentesMonitor = Agentes::empresa( $empresa_id )->where('monitoreo', 1)->active()->get();
+        if ( $agentesMonitor->isNotEmpty() )
         {
-
-            Agentes::where( 'id', $id )->update(['monitoreo' => 1]);
-
-            $modalidad = DB::table('Campanas')
-                        ->join( 'Miembros_Campanas', 'Campanas.id', '=', 'Miembros_Campanas.Campanas_id' )
-                        ->select(
-                                    'Campanas.modalidad_logue'
-                                )
-                        ->where('Campanas.activo', 1)
-                        ->where('Miembros_Campanas.membername', $id)
-                        ->groupBy('modalidad_logue')
-                        ->first();
-            //$evento = $request->evento;
-            $evento = '';
-            $agente = $agente[0];
-            $eventosAgente = Eventos_Agentes::active()->where('Empresas_id', $empresa_id)->get();
-            return view('agentes::index', compact('agente', 'evento', 'eventosAgente', 'modalidad'));
-
+            return abort(403, 'Ya se encuentra monitoreando un agente, solo se puede uno a la vez.');
         }
         else
         {
-            return abort(403, 'Agente Invalido, no existe el agente o no pertenece a la empresa en uso.');
+            /**
+             * Verificamos que el agente sea de la empresa
+             */
+            $agente = Agentes::empresa( $empresa_id )->where('id', $id)->active()->get();
+
+            if (  $agente->isNotEmpty() )
+            {
+
+                Agentes::where( 'id', $id )->update(['monitoreo' => 1]);
+
+                $modalidad = DB::table('Campanas')
+                            ->join( 'Miembros_Campanas', 'Campanas.id', '=', 'Miembros_Campanas.Campanas_id' )
+                            ->select(
+                                        'Campanas.modalidad_logue'
+                                    )
+                            ->where('Campanas.activo', 1)
+                            ->where('Miembros_Campanas.membername', $id)
+                            ->groupBy('modalidad_logue')
+                            ->first();
+                //$evento = $request->evento;
+                $monitoreo = 'monitoreo';
+                $evento = '';
+                $agente = $agente[0];
+                $eventosAgente = Eventos_Agentes::active()->where('Empresas_id', $empresa_id)->get();
+                return view('agentes::index', compact('agente', 'evento', 'eventosAgente', 'modalidad', 'monitoreo'));
+            }
+            else
+            {
+                return abort(403, 'Agente Invalido, no existe el agente o no pertenece a la empresa en uso.');
+            }
         }
+    }
+    /**
+     * Funcion para detener el monitoreo de un agente
+     */
+    public function detener_real_time($id)
+    {
+        Agentes::where( 'id', $id )->update(['monitoreo' => 0]);
     }
     /**
      * Función para obtener el estatus del agente

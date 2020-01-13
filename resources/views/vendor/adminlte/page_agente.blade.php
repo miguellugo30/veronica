@@ -331,7 +331,11 @@
     @stack('js')
     @yield('js')
     <!--script src="//{{-- Request::getHost() --}}:6001/socket.io/socket.io.js"></script-->
-    <script src="{{ asset('js/agente.js')}}" charset="utf-8"></script>
+    @if( isset($monitoreo) )
+        <script src="{{ asset('js/agente_monitoreo.js')}}" charset="utf-8"></script>
+    @else
+        <script src="{{ asset('js/agente.js')}}" charset="utf-8"></script>
+    @endif
     <script>
         /*
         $(window).bind('beforeunload', function(e) {

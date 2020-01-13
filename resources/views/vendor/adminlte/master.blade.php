@@ -104,9 +104,6 @@
     @elseif( $modulo == 'Administrador')
         <script src="{{ asset('js/administrador.js') }}"></script>
     @elseif( $modulo == 'Inbound')
-        <script src="https://code.highcharts.com/highcharts.js"></script>
-        <script src="https://code.highcharts.com/modules/exporting.js"></script>
-        <script src="https://code.highcharts.com/modules/export-data.js"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
         <script src="{{ asset('js/inbound.js') }}"></script>
@@ -118,6 +115,12 @@
         <script src="{{ asset('js/monitor.js') }}"></script>
     @endif
 @endif
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
 <script src="{{ asset('js/funciones_formularios.js') }}"></script>
 <script src='https://unpkg.com/@fullcalendar/core@4.3.1/main.min.js'></script>

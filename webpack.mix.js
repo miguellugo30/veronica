@@ -74,7 +74,11 @@ mix.js([
     .js([
         'resources/js/module_agentes/agentes.js',
         'resources/js/module_agentes/eventosPantallaAgente.js',
-    ], 'public/js/agente.js');
+    ], 'public/js/agente.js')
+    .js([
+        'resources/js/module_agentes/agentes_monitoreo.js',
+        'resources/js/module_agentes/eventosPantallaAgente_monitoreo.js',
+    ], 'public/js/agente_monitoreo.js');
 /*
 .sass('resources/sass/app.scss', 'public/css');
 mix.js('resources/js/app.js', 'public/js/all.js')

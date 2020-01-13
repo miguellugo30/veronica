@@ -92,7 +92,8 @@ class AgentesController extends Controller
         /**
          * Recuperamos el estado del agente
          */
-        $agente = Agentes::select('Cat_Estado_Agente_id')->active()->where('id',$id)->get()->first();
+        $agente = Agentes::select('Cat_Estado_Agente_id', 'monitoreo')->active()->where('id',$id)->get()->first();
+        $data['monitoreo'] = $agente->monitoreo;
         /**
          * Estado 4 y 8 en llamada
          * Estado 3 en pausa

@@ -72,13 +72,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 url: currentURL[0] + "/" + id_agente, // Podrías separar las funciones de PHP en un fichero a parte
                 data: {}
             }).done(function(msg) {
+
                 var obj = $.parseJSON(msg);
 
                 if (obj['status'] == 1) {
 
-                    if (obj['monitoreo'] == 0) {
-                        stop();
-                    }
+                    stop();
 
                     $(".estado-agente").html("<i class='fa fa-circle text-danger'></i> " + obj['estado']);
                     $(".colgar-llamada").prop("disabled", false);
@@ -94,19 +93,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 } else if (obj['status'] == 2) {
 
-                    if (obj['monitoreo'] == 0) {
-                        stop();
-                    }
+                    stop();
 
                     $(".estado-agente").html("<i class='fa fa-circle text-danger'></i> " + obj['estado']);
                     $("#modal-no-disponible").modal({ backdrop: 'static', keyboard: false });
 
-                } else if (obj['status'] == 0) {
-                    if (obj['monitoreo'] == 1) {
-                        $(".view-call").html('<div class="col-12 text-center" style="padding-top: 19%;"><i class="fas fa-spinner fa-10x fa-spin text-info"></i></div>');
-                        $(".estado-agente").html("<i class='fa fa-circle text-success'></i> Disponible");
-                        $(".colgar-llamada").prop("disabled", true);
-                    }
                 }
             });
         }, 3000);

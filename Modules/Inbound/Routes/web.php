@@ -81,6 +81,7 @@ Route::group(['namespace' => '\Modules\Inbound\Http\Controllers', 'prefix' => 'i
 */
 Route::group(['namespace' => '\Modules\Inbound\Http\Controllers', 'prefix' => 'inbound', 'middleware' => 'auth'], function() {
     Route::get('real_time/agente/{id}','RealTimeController@real_time_agente');
+    Route::get('real_time/detener/{id}','RealTimeController@detener_real_time');
     Route::get('real_time/agente/{id_agente}/{id}','RealTimeController@real_time_agente_status');
     Route::get('real_time/agente/{id_agente}/{id}/edit','RealTimeController@real_time_agente_llamada');
     Route::post('real_time/agente/{Agentes_id}/no_disponible','RealTimeController@no_disponible');

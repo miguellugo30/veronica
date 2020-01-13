@@ -81,15 +81,15 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 7);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./resources/js/module_agentes/agentes.js":
-/*!************************************************!*\
-  !*** ./resources/js/module_agentes/agentes.js ***!
-  \************************************************/
+/***/ "./resources/js/module_agentes/agentes_monitoreo.js":
+/*!**********************************************************!*\
+  !*** ./resources/js/module_agentes/agentes_monitoreo.js ***!
+  \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -173,10 +173,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var obj = $.parseJSON(msg);
 
         if (obj['status'] == 1) {
-          if (obj['monitoreo'] == 0) {
-            stop();
-          }
-
+          stop();
           $(".estado-agente").html("<i class='fa fa-circle text-danger'></i> " + obj['estado']);
           $(".colgar-llamada").prop("disabled", false);
           $.get(currentURL[0] + "/" + id_agente + "/edit", function (data, textStatus, jqXHR) {
@@ -188,21 +185,12 @@ document.addEventListener('DOMContentLoaded', function () {
             });
           });
         } else if (obj['status'] == 2) {
-          if (obj['monitoreo'] == 0) {
-            stop();
-          }
-
+          stop();
           $(".estado-agente").html("<i class='fa fa-circle text-danger'></i> " + obj['estado']);
           $("#modal-no-disponible").modal({
             backdrop: 'static',
             keyboard: false
           });
-        } else if (obj['status'] == 0) {
-          if (obj['monitoreo'] == 1) {
-            $(".view-call").html('<div class="col-12 text-center" style="padding-top: 19%;"><i class="fas fa-spinner fa-10x fa-spin text-info"></i></div>');
-            $(".estado-agente").html("<i class='fa fa-circle text-success'></i> Disponible");
-            $(".colgar-llamada").prop("disabled", true);
-          }
         }
       });
     }, 3000);
@@ -304,10 +292,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /***/ }),
 
-/***/ "./resources/js/module_agentes/eventosPantallaAgente.js":
-/*!**************************************************************!*\
-  !*** ./resources/js/module_agentes/eventosPantallaAgente.js ***!
-  \**************************************************************/
+/***/ "./resources/js/module_agentes/eventosPantallaAgente_monitoreo.js":
+/*!************************************************************************!*\
+  !*** ./resources/js/module_agentes/eventosPantallaAgente_monitoreo.js ***!
+  \************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -390,15 +378,15 @@ $(function () {
 
 /***/ }),
 
-/***/ 6:
-/*!*************************************************************************************************************!*\
-  !*** multi ./resources/js/module_agentes/agentes.js ./resources/js/module_agentes/eventosPantallaAgente.js ***!
-  \*************************************************************************************************************/
+/***/ 7:
+/*!*********************************************************************************************************************************!*\
+  !*** multi ./resources/js/module_agentes/agentes_monitoreo.js ./resources/js/module_agentes/eventosPantallaAgente_monitoreo.js ***!
+  \*********************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_agentes\agentes.js */"./resources/js/module_agentes/agentes.js");
-module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_agentes\eventosPantallaAgente.js */"./resources/js/module_agentes/eventosPantallaAgente.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_agentes\agentes_monitoreo.js */"./resources/js/module_agentes/agentes_monitoreo.js");
+module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_agentes\eventosPantallaAgente_monitoreo.js */"./resources/js/module_agentes/eventosPantallaAgente_monitoreo.js");
 
 
 /***/ })
