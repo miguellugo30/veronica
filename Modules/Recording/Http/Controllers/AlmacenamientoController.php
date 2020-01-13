@@ -29,8 +29,6 @@ class AlmacenamientoController extends Controller
         $buzon = Almacenamiento::active()->where('Empresas_id',$empresa_id)->sum('buzon_voz');
         $audios = Almacenamiento::active()->where('Empresas_id',$empresa_id)->sum('audios_empresa');
         $config_empresas = Config_Empresas::where('Empresas_id',$empresa_id)->get();
-        //$config_empresas = Config_Empresas::where('Empresas_id',$empresa_id)->sum(DB::raw("almacenamiento_posiciones+ almacenamiento_adicional"));
-        //dd($config_empresas);
 
         return view('recording::Almacenamiento.index',compact('empresa_id','inbound','outbound','manual','buzon','audios','config_empresas'));
     }
