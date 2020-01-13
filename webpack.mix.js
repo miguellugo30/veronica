@@ -55,6 +55,7 @@ mix.js([
         'resources/js/module_inbound/ivr.js',
         'resources/js/module_inbound/Metricas_ACD.js',
         'resources/js/module_inbound/desglosellamadas.js',
+        'resources/js/module_inbound/real_time.js',
     ], 'public/js/inbound.js')
     .js([
         'resources/js/module_recording/menu.js',
@@ -66,6 +67,10 @@ mix.js([
         'resources/js/module_voicemail/menu.js',
         'resources/js/module_voicemail/grabacionesVoicemail.js',
     ], 'public/js/viocemail.js')
+    .js([
+        'resources/js/module_monitor/menu.js',
+        'resources/js/module_monitor/monitoreo.js',
+    ], 'public/js/monitor.js')
     .js([
         'resources/js/module_agentes/agentes.js',
         'resources/js/module_agentes/eventosPantallaAgente.js',

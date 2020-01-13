@@ -1,5 +1,7 @@
 $(function() {
 
+    let currentURL = window.location.href.split('?');
+
     $(document).on("click", ".colgar-llamada", function(e) {
 
         let canal = $("#canal").val();
@@ -7,7 +9,7 @@ $(function() {
 
         $.ajax({
             method: "POST",
-            url: "/agentes/colgar", // Podrías separar las funciones de PHP en un fichero a parte
+            url: currentURL[0] + "/colgar", // Podrías separar las funciones de PHP en un fichero a parte
             data: {
                 canal: canal,
                 _token: _token
@@ -22,7 +24,7 @@ $(function() {
 
         $.ajax({
             method: "POST",
-            url: "/agentes/historial-llamadas", // Podrías separar las funciones de PHP en un fichero a parte
+            url: currentURL[0] + "/historial-llamadas", // Podrías separar las funciones de PHP en un fichero a parte
             data: {
                 id_agente: id_agente,
                 _token: _token
@@ -39,7 +41,7 @@ $(function() {
 
         $.ajax({
             method: "POST",
-            url: "/agentes/llamadas-abandonadas", // Podrías separar las funciones de PHP en un fichero a parte
+            url: currentURL[0] + "/llamadas-abandonadas", // Podrías separar las funciones de PHP en un fichero a parte
             data: {
                 id_agente: id_agente,
                 _token: _token
@@ -57,7 +59,7 @@ $(function() {
         let id_empresa = $("#id_empresa").val();
         let _token = $("input[name=_token]").val();
 
-        let url = currentURL.replace('agentes/') + '/logeo-extension';
+        let url = currentURL[0].replace('agentes/') + '/logeo-extension';
 
         $.ajax({
             url: url,

@@ -18,7 +18,7 @@
                     <thead>
                         <tr>
                             <th>Nombre</th>
-                            <th>Descripcion</th>
+                            <th>Descripción</th>
                             <th>Reproducir</th>
                         </tr>
                     </thead>
@@ -28,10 +28,7 @@
                                 <td>{{ $audio->nombre }}</td>
                                 <td>{{ $audio->descripcion }}</td>
                                 <td>
-                                    <i class="far fa-play-circle fa-2x reproducir-audio" data-id-audio="{{ $audio->id }}"></i>
-                                    <!--audio controls preload="metadata"><source src='http://10.255.242.136/audios/temp/{{ $audio->ruta }}' type="audio/wav">
-                                        Tu navegador no soporta audio, favor de obtener la ultima version
-                                    </audio-->
+                                    <i class="fas fa-volume-up fa-lg text-primary reproducir-audio" data-id-audio="{{ $audio->id }}"></i>
                                 </td>
                             </tr>
                         @endforeach
@@ -47,7 +44,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="tituloModal">Modal title</h5>
+                <h5 class="modal-title" id="tituloModal"></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

@@ -52,13 +52,18 @@
                                     <option value="hangup">Colgar llamada</option>
                                     <option value="Condiciones_Tiempo">Condición de Tiempo</option>
                                     <option value="Conferencia">Conferencia</option>
-                                    <option value="Desvios">Desvio</option>
+                                    <option value="Desvios">Desvío</option>
                                     <option value="Cat_Extensiones">Extensión</option>
                                     <option value="Ivr">IVR</option>
+                                    <option value="Buzon_Voz">Buzón de voz</option>
                                 </select>
                             </td>
                             <td>
-                                <div id="opcionesDestino_1" class="opcionesDestino"></div>
+                                <div id="opcionesDestino_1" class="opcionesDestino">
+                                    <select name="opciones_1" id="opciones"  class="form-control form-control-sm ">
+                                        <option value="">Selecciona una destino</option>
+                                    </select>
+                                </div>
                             </td>
                             <td class="tr_remove text-center">
                                 <button type="button" name="remove" class="btn btn-danger" style="display:none"><i class="fas fa-trash-alt"></i></button>
@@ -83,12 +88,13 @@
                                         <option value="Desvios"{{ $data[$i][2] == "Desvios"? 'selected = "selected"' : '' }}>Desvio</option>
                                         <option value="Cat_Extensiones"{{ $data[$i][2] == "Cat_Extensiones"? 'selected = "selected"' : '' }}>Extensión</option>
                                         <option value="Ivr"{{ $data[$i][2] == "Ivr"? 'selected = "selected"' : '' }}>IVR</option>
+                                        <option value="Buzon_Voz" {{ $data[$i][2] == "Buzon_Voz"? 'selected = "selected"' : '' }}>Buzón de Voz</option>
                                     </select>
                                 </td>
                                 <td>
                                     <div id="opcionesDestino_{{ $data[$i][0] }}" class="opcionesDestino">
                                         <select name="opciones_{{ $data[$i][0] }}" id="opciones" class="form-control form-control-sm">
-                                            <option value="">Selecciona una opción</option>
+                                            <option value="">Selecciona una destino</option>
                                             @foreach ($data[$i][4] as $v)
                                                 @if ($data[$i][2] == 'Cat_Extensiones')
                                                     <option value="{{ $v->id }}" {{ $data[$i][3] == $v->id ? 'selected = "selected"' : '' }} >{{$v->extension}}</option>

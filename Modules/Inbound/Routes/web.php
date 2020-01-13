@@ -76,4 +76,22 @@ Route::group(['namespace' => '\Modules\Inbound\Http\Controllers', 'prefix' => 'i
     Route::get('Desglose_llamadas/descargar/{fecha_inicio}/{fecha_fin}', 'DesgloseLlamadasController@update');
     Route::resource('Desglose_llamadas','DesgloseLlamadasController');
 });
+/**
+* Rutas para CRUD de Reporte de Desglose de llamadas
+*/
+Route::group(['namespace' => '\Modules\Inbound\Http\Controllers', 'prefix' => 'inbound', 'middleware' => 'auth'], function() {
+    Route::get('real_time/agente/{id}','RealTimeController@real_time_agente');
+    Route::get('real_time/agente/{id_agente}/{id}','RealTimeController@real_time_agente_status');
+    Route::get('real_time/agente/{id_agente}/{id}/edit','RealTimeController@real_time_agente_llamada');
+    Route::post('real_time/agente/{Agentes_id}/no_disponible','RealTimeController@no_disponible');
+    Route::post('real_time/agente/{Agentes_id}/agente_disponible','RealTimeController@agente_disponible');
+    Route::post('real_time/agente/{Agentes_id}/historial-llamadas','RealTimeController@historial_llamadas');
+    Route::post('real_time/agente/{Agentes_id}/llamadas-abandonadas','RealTimeController@llamadas_abandonadas');
+    Route::post('real_time/agente/{Agentes_id}/logeo-extension', 'RealTimeController@logeoExtension')->name('logeoExtension.agente');
+    Route::post('real_time/agente/{Agentes_id}/colgar', 'RealTimeController@colgar')->name('colgarExtension.agente');
+    Route::post('real_time/agente/{Agentes_id}', 'RealTimeController@store')->name('calificar.agente');
+
+    Route::get('real_time/agente/{id_agente}/formularios/{id}', '\Modules\Settings\Http\Controllers\FormulariosController@show');
+    Route::resource('real_time','RealTimeController');
+});
 

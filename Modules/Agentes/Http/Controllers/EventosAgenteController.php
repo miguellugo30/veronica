@@ -2,56 +2,108 @@
 
 namespace Modules\Agentes\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Routing\Controller;
-use Modules\Agentes\Http\Controllers\LogRegistroEventosController;
 use DB;
 use nusoap_client;
+use Illuminate\Routing\Controller;
 use Modules\Agentes\Http\Controllers\EventosAmiController;
+use Modules\Agentes\Http\Controllers\LogRegistroEventosController;
 
 use Nimbus\Miembros_Campana;
 use Nimbus\Agentes;
 use Nimbus\Empresas;
+use Nimbus\Crd_Asignacion_Agente;
 
 class EventosAgenteController extends Controller
 {
     /**
-     * Funcion para colgar llamada
+     * Funcion para poner como no disponible a un agente
      */
-    public function colgar( Request $request )
+    public static function no_disponible( $agente, $empresas_id )
     {
-        EventosAmiController::colgar_llamada( $request->canal );
+        /**
+         * Obtenemos el ultimo canal del agenete
+         */
+        $cdr = Crd_Asignacion_Agente::where('Agentes_id', $agente)->orderBy('id', 'desc')->first();
+        /**
+         * Pausamos al agente dentro de la campana en BD
+         */
+        Miembros_Campana::where( 'membername', $agente )->update(['Paused' => 1]);
+        /**
+         * Pausamos al agente dentro del MS
+         */
+        $pausa = EventosAmiController::despausar_agente( $cdr->canal, 'pause', $empresas_id );
+        //dd( $pausa );
+        /**
+         * Ponemos en estado no disponible al agente
+         */
+        Agentes::where( 'id', $agente )->update(['Cat_Estado_Agente_id' => 3]);
     }
     /**
      * Funcion para poner como no disponible a un agente
      */
-    public function no_disponible( Request $request )
+    public static function no_disponible_real_time( $agente, $empresas_id )
     {
-        $evento = LogRegistroEventosController::registro_evento( auth()->guard('agentes')->id(), $request->no_disponible );
-        //Miembros_Campana::where( 'membername', auth()->guard('agentes')->id() )->update(['Paused' => 1]);
-        EventosAmiController::despausar_agente( $request->canal, 'paused' );
-        Agentes::where( 'id', auth()->guard('agentes')->id() )->update(['Cat_Estado_Agente_id' => 3]);
+        /**
+         * Obtenemos el ultimo canal del agenete
+         */
+        $cdr = Crd_Asignacion_Agente::where('Agentes_id', $agente)->orderBy('id', 'desc')->first();
+        /**
+         * Pausamos al agente dentro del MS
+         */
+        $pausa = EventosAmiController::despausar_agente( $cdr->canal, 'pause', $empresas_id );
+        //dd( $pausa );
 
-        $agente = auth()->guard('agentes')->id();
-
-        return view('agentes::cronometro', compact( 'agente', 'evento' ));
     }
     /**
      * Funcion para poner como  disponible a un agente
      */
-    public function agente_disponible( Request $request )
+    public static function agente_disponible( $request, $agente, $empresas_id )
     {
-        LogRegistroEventosController::actualiza_evento( $request->agente, $request->evento );
-        Miembros_Campana::where( 'membername', $request->agente )->update(['Paused' => 0]);
-        Agentes::where( 'id', $request->agente )->update(['Cat_Estado_Agente_id' => 2]);
+        /**
+         * Registramos el evento de cuando se puso nuevamente en disponible el agente
+         */
+        LogRegistroEventosController::actualiza_evento( $agente, $request->evento );
+        /**
+         * Despausamos al agente dentro de la campana en BD
+         */
+        Miembros_Campana::where( 'membername', $agente )->update(['Paused' => 0]);
+        /**
+         * Ponemos en estado disponible al agente
+         */
+        Agentes::where( 'id', $agente )->update(['Cat_Estado_Agente_id' => 2]);
+        /**
+         * Obtenemos el ultimo canal del agente
+         */
+        $cdr = Crd_Asignacion_Agente::where('Agentes_id', $agente)->orderBy('id', 'desc')->first();
+        /**
+         * Despausamos al agente dentro del MS
+         */
+        EventosAmiController::despausar_agente( $cdr->canal, 'unpause', $empresas_id );
+
+    }
+    /**
+     * Funcion para poner como  disponible a un agente
+     */
+    public static function agente_disponible_real_time( $request, $agente, $empresas_id )
+    {
+        /**
+         * Obtenemos el ultimo canal del agente
+         */
+        $cdr = Crd_Asignacion_Agente::where('Agentes_id', $agente)->orderBy('id', 'desc')->first();
+        /**
+         * Despausamos al agente dentro del MS
+         */
+        EventosAmiController::despausar_agente( $cdr->canal, 'unpause', $empresas_id );
 
     }
     /**
      * Funcion para mostrar el historial de llamadas contestadas
      */
-    public function historial_llamadas( Request $request )
+    public static function historial_llamadas( $request )
     {
+        /**
+         * Obtenenos el historico de llamadas del agente en el dia
+         */
         $historico = DB::table('Cdr_call_center')
                     ->join( 'Cdr_call_center_detalles', 'Cdr_call_center.uniqueid', '=', 'Cdr_call_center_detalles.uniqueid' )
                     ->join( 'Cdr_Asignacion_Agente', 'Cdr_call_center_detalles.uniqueid', '=', 'Cdr_Asignacion_Agente.uniqueid' )
@@ -68,17 +120,16 @@ class EventosAgenteController extends Controller
                     ->whereDate('Cdr_call_center.fecha_inicio', DB::raw('curdate()'))
                     ->orderByRaw( 'Cdr_call_center.fecha_inicio, Cdr_call_center.tipo DESC' )->get();
 
-        $inbound = $historico->where('tipo', 'Inbound')->sortByDesc('fecha_inicio');
-        $outbound = $historico->where('tipo', 'Outbound')->sortByDesc('fecha_inicio');
-        $manual = $historico->where('tipo', 'Manual')->sortByDesc('fecha_inicio');
-
-        return view('agentes::historial_llamadas', compact( 'inbound', 'outbound', 'manual' ) );
+        return $historico;
     }
     /**
      * Funcion para mostrar el historial de llamadas abandonadas
      */
-    public function llamadas_abandonadas( Request $request )
+    public static function llamadas_abandonadas( $request )
     {
+        /**
+         * Obtenenos el historico de llamadas abandonadas del agente en el dia
+         */
         $historico = DB::table('Cdr_call_center')
                     ->join( 'Cdr_call_center_detalles', 'Cdr_call_center.uniqueid', '=', 'Cdr_call_center_detalles.uniqueid' )
                     ->select(
@@ -95,18 +146,13 @@ class EventosAgenteController extends Controller
                     ->whereIn('Cdr_call_center_detalles.id_aplicacion', [ DB::raw('select Miembros_Campanas.queue_name from Miembros_Campanas where membername =' .$request->id_agente) ] )
                     ->whereDate('Cdr_call_center.fecha_inicio', DB::raw('curdate()'))->get();
 
-        $inbound = $historico->where('tipo', 'Inbound')->sortByDesc('fecha_inicio');
-        $outbound = $historico->where('tipo', 'Outbound')->sortByDesc('fecha_inicio');
-        $manual = $historico->where('tipo', 'Manual')->sortByDesc('fecha_inicio');
-
-        return view('agentes::llamadas_abandonadas', compact( 'inbound', 'outbound', 'manual' ) );
+        return $historico;
     }
     /**
      * Funcion para poner como  disponible a un agente
      */
-    public function logeoExtension()
+    public static function logeoExtension( $agente )
     {
-        $agente = auth()->guard('agentes')->user();
         $pbx = Empresas::empresa($agente->Empresas_id)->active()->with('Config_Empresas')->with('Config_Empresas.ms')->get()->first();
         $wsdl = 'http://'.$pbx->Config_Empresas->ms->ip_pbx.'/ws-ms/index.php';
         $client =  new  nusoap_client( $wsdl );

@@ -58,7 +58,7 @@
 @endif
 
 </head>
-<body class="hold-transition @yield('body_class')" style="font-size: 0.8rem !important;" onbeforeunload="redireccionar()">
+<body class="hold-transition @yield('body_class')" style="font-size: 0.8rem !important;">
 
 @yield('body')
 
@@ -114,6 +114,8 @@
         <script src="{{ asset('js/recording.js') }}"></script>
     @elseif( $modulo == 'Voicemail')
         <script src="{{ asset('js/viocemail.js') }}"></script>
+    @elseif( $modulo == 'Monitor')
+        <script src="{{ asset('js/monitor.js') }}"></script>
     @endif
 @endif
 
