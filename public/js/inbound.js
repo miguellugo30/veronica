@@ -1904,12 +1904,12 @@ $(function () {
    * Evento para mostrar la pantalla del agente seleccionado
    */
 
-  $(document).on("click", ".fa-desktop", function (e) {
+  $(document).on("click", ".iniciar_monitoreo", function (e) {
     event.preventDefault();
-    var idAgente = $(this).data('id');
+    var idAgente = parseint($(this).data('id'));
     var url = currentURL + "/real_time/agente/" + idAgente;
-    console.log(idAgente);
     var tab = window.open(url, '_blank');
+    $('.iniciar_monitoreo').prop('disabled', true);
 
     if (tab) {
       tab.focus(); //ir a la pestaña

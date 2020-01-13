@@ -339,19 +339,22 @@
             // make AJAX call
             alert( "ESTA SEGURO DE SALIR" );
         });
-        window.addEventListener('beforeunload', function (e) {
-            return "Do you really want to close?";
-        });
+        */
         /*
+       window.addEventListener('beforeunload', function (e) {
+           return "Do you really want to close?";
+        });
+
         var bPreguntar = true;
 
         window.onbeforeunload = preguntarAntesDeSalir;
 
         function preguntarAntesDeSalir() {
             if (bPreguntar)
-                return "¿Seguro que quieres salir?";
+            return "¿Seguro que quieres salir?";
         }
-        *
+    */
+        /*
         var areYouReallySure = false;
         function areYouSure() {
             if(allowPrompt){

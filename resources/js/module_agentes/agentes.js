@@ -1,3 +1,26 @@
+var bPreguntar = true;
+
+window.onbeforeunload = preguntarAntesDeSalir;
+
+function preguntarAntesDeSalir() {
+    if (bPreguntar)
+        return "¿Seguro que quieres salir?";
+}
+
+/*
+$(window).bind('beforeunload', function(e) {
+    e.preventDefault();
+    var id_agente = $('#id_agente').val();
+    return '>>>>>Before You Go<<<<<<<< \n Your custom message go here';
+    console.log(id_agente);
+    if (window.btn_clicked) {
+        console.log('confirmo');
+    } else {
+        console.log('no confirmo');
+    }
+});
+*/
+
 $(function() {
 
     $(document).on("click", ".nav-link", function(e) {

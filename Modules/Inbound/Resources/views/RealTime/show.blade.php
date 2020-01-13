@@ -33,7 +33,12 @@
                 <td>{{$agente->extension}}</td>
                 <td>
                     @if ( $agente->Cat_Estado_Agente_id != 1 )
-                        <i class="fas fa-desktop fa-lg" data-id="{{$agente->id}}"></i>
+                        @if ($agente->monitoreo == 0)
+                            <button type="button" class="btn btn-primary btn-sm iniciar_monitoreo" data-id="{{$agente->id}}"><i class="far fa-eye"></i>  Iniciar</button>
+                        @else
+                            <button type="button" class="btn btn-danger btn-sm detener_monitoreo" data-id="{{$agente->id}}"><i class="far fa-eye-slash"></i> Detener</button>
+                        @endif
+                        <!--i class="fas fa-desktop fa-lg" data-id="{{--$agente->id--}}"></i-->
                     @endif
                 </td>
             </tr>

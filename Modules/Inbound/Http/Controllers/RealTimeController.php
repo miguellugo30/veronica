@@ -63,6 +63,9 @@ class RealTimeController extends Controller
 
         if (  $agente->isNotEmpty() )
         {
+
+            Agentes::where( 'id', $id )->update(['monitoreo' => 1]);
+
             $modalidad = DB::table('Campanas')
                         ->join( 'Miembros_Campanas', 'Campanas.id', '=', 'Miembros_Campanas.Campanas_id' )
                         ->select(

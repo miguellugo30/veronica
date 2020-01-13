@@ -58,7 +58,7 @@
 @endif
 
 </head>
-<body class="hold-transition @yield('body_class')" style="font-size: 0.8rem !important;" onbeforeunload="redireccionar()">
+<body class="hold-transition @yield('body_class')" style="font-size: 0.8rem !important;">
 
 @yield('body')
 
