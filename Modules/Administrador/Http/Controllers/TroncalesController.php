@@ -77,7 +77,7 @@ class TroncalesController extends Controller
         /**
          * Obtenemos la IP del Media Server
          */
-        $ip = $request->input('Cat_IP_PBX_id');
+        $ip = $request->input('mediaserver');
         /**
          * Creamos una petición, para poder escribir
          * las nuevas TRONCALES en el archivo SIP_TRONCALES.CONF
@@ -177,7 +177,7 @@ class TroncalesController extends Controller
         /**
          * Obtenemos la IP del Media Server
          */
-        $ip = $request->input('Cat_IP_PBX_id');
+        $ip = $request->input('mediaserver');
         /**
          * Creamos una petición, para poder escribir
          * las nuevas TRONCALES en el archivo SIP_TRONCALES.CONF

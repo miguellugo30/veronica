@@ -50,3 +50,11 @@ Route::group(['namespace' => '\Modules\Recording\Http\Controllers', 'prefix' => 
 Route::group(['namespace' => '\Modules\Recording\Http\Controllers', 'prefix' => 'recording', 'middleware' => 'auth'], function() {
     Route::resource('Manuales','ManualesController');
 });
+/**
+ * Rutas para CRUD de Almacenamiento
+ */
+Route::group(['namespace' => '\Modules\Recording\Http\Controllers', 'prefix' => 'recording', 'middleware' => 'auth'], function() {
+    //Route::post('campanas/validar_modo_logueo', 'CampanasController@validar_modo_logueo')->name('campanas.validar_modo_logueo');
+    //Route::post('campanas/eliminar-participantes', 'CampanasController@eliminar_participantes')->name('campanas.eliminar_participantes');
+    Route::resource('Almacenamiento','AlmacenamientoController');
+});

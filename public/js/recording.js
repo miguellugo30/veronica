@@ -86,6 +86,17 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./resources/js/module_recording/Almacenamiento.js":
+/*!*********************************************************!*\
+  !*** ./resources/js/module_recording/Almacenamiento.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
+
+/***/ }),
+
 /***/ "./resources/js/module_recording/Grabaciones.js":
 /*!******************************************************!*\
   !*** ./resources/js/module_recording/Grabaciones.js ***!
@@ -123,8 +134,8 @@ $(function () {
     $('#tituloModal').html('Nuevo Audio');
     $('#action').removeClass('deleteAudio');
     $('#action').addClass('saveAudio');
-      let url = currentURL + "/Audios/create";
-      $.get(url, function(data, textStatus, jqXHR) {
+     let url = currentURL + "/Audios/create";
+     $.get(url, function(data, textStatus, jqXHR) {
         $('#modal').modal('show');
         $("#modal-body").html(data);
     });
@@ -462,6 +473,9 @@ $(function () {
     } else if (id == 38) {
       url = currentURL + '/Manuales';
       table = ' #tableManuales';
+    } else if (id == 27) {
+      url = currentURL + '/Almacenamiento';
+      table = ' #tableAlmacenamiento';
     }
 
     $.get(url, function (data, textStatus, jqXHR) {
@@ -476,15 +490,16 @@ $(function () {
 /***/ }),
 
 /***/ 3:
-/*!***********************************************************************************************************************************************!*\
-  !*** multi ./resources/js/module_recording/menu.js ./resources/js/module_recording/Grabaciones.js ./resources/js/module_recording/Inbound.js ***!
-  \***********************************************************************************************************************************************/
+/*!*************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/module_recording/menu.js ./resources/js/module_recording/Grabaciones.js ./resources/js/module_recording/Inbound.js ./resources/js/module_recording/Almacenamiento.js ***!
+  \*************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_recording\menu.js */"./resources/js/module_recording/menu.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_recording\Grabaciones.js */"./resources/js/module_recording/Grabaciones.js");
-module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_recording\Inbound.js */"./resources/js/module_recording/Inbound.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_recording\menu.js */"./resources/js/module_recording/menu.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_recording\Grabaciones.js */"./resources/js/module_recording/Grabaciones.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_recording\Inbound.js */"./resources/js/module_recording/Inbound.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_recording\Almacenamiento.js */"./resources/js/module_recording/Almacenamiento.js");
 
 
 /***/ })

@@ -18,6 +18,9 @@ $(function() {
         } else if (id == 38) {
             url = currentURL + '/Manuales';
             table = ' #tableManuales';
+        } else if (id == 27) {
+            url = currentURL + '/Almacenamiento';
+            table = ' #tableAlmacenamiento';
         }
         $.get(url, function(data, textStatus, jqXHR) {
             $(".viewResult").html(data);

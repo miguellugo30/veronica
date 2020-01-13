@@ -60,6 +60,7 @@ mix.js([
         'resources/js/module_recording/menu.js',
         'resources/js/module_recording/Grabaciones.js',
         'resources/js/module_recording/Inbound.js',
+        'resources/js/module_recording/Almacenamiento.js',
     ], 'public/js/recording.js')
     .js([
         'resources/js/module_voicemail/menu.js',

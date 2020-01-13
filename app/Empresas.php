@@ -116,4 +116,11 @@ class Empresas extends Model
     {
         return $this->hasMany('Nimbus\Grabaciones');
     }
+    /**
+     * Relacion uno a muchos con almacenamiento
+     */
+    public function almacenamiento()
+    {
+        return $this->hasMany('Nimbus\almacenamiento');
+    }
 }
