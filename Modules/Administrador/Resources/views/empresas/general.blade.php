@@ -1,3 +1,63 @@
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<script>
+                                    $(function() {
+                                        Highcharts.chart('container', {
+                                            chart: {
+                                                plotBackgroundColor: null,
+                                                plotBorderWidth: null,
+                                                plotShadow: false,
+                                                type: 'pie',
+                                                options3d: {
+                                                enabled: true,
+                                                alpha: 45,
+                                                beta: 0
+                                            }
+                                            },
+                                            title: {
+                                                text: ''
+                                            },
+                                            tooltip: {
+                                                pointFormat: '{series.name}: <b>{point.percentage:.2f} %<br>Capacidad: {point.y:.2f} GB</b>'
+                                            },
+                                            accessibility: {
+                                                point: {
+                                                    valueSuffix: 'GB'
+                                                }
+                                            },
+                                            credits: {
+                                                enabled: false
+                                            },
+                                            plotOptions: {
+                                                pie: {
+                                                    allowPointSelect: true,
+                                                    cursor: 'pointer',
+                                                    depth: 35,
+                                                    dataLabels: {
+                                                        enabled: true,
+                                                        format: '<b>{point.name}</b>: {point.y:.2f} GB</b>'
+                                                    }
+                                                }
+                                            },
+                                            series: [{
+                                                name: 'Porcentaje en Disco',
+                                                colorByPoint: true,
+                                                data: [{
+                                                    name: 'Almacenamiento Posiciones',
+                                                    y: @foreach($config_empresas as $config) {{ $config->almacenamiento_posiciones/1024 }} @endforeach,
+                                                    sliced: true,
+                                                    selected: true
+                                                }, {
+                                                    name: 'Almacenamiento Adicional',
+                                                    y: @foreach($config_empresas as $config) {{ $config->almacenamiento_adicional/1024 }} @endforeach
+                                                }]
+                                            }]
+                                        });
+                                    });
+                                    </script>
 <div class="row">
     <div class="col">
         <div class="card">
@@ -96,7 +156,12 @@
                 </dl>
                 <div class="row">
                     <div class="col">
-                        <h1>AQUI VA LA GRAFICA</h1>
+                        <!--h1>AQUI VA LA GRAFICA</h1-->
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col" id="container"></div>
+                            </div><!-- /.row -->
+                        </div><!-- ./box-body -->
                     </div>
                 </div>
             </div>

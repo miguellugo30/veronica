@@ -88,7 +88,7 @@ class CatExtensionesController extends Controller
         /**
          * Obtenemos las licencias bria activas
          */
-        $licencias = LicenciasBria::active()->get();
+        $licencias = LicenciasBria::active()->where('disponibles','>','0')->get();
         /**
          * Obtenemos las extensiones que ya tiene la empresa
          */
@@ -152,6 +152,22 @@ class CatExtensionesController extends Controller
                                         'Cat_Licencias_Bria_id' =>  $info[$i][3],
                                     ]);
             /**
+             * Incrementamos el numero de licencias ocupadas
+             */
+            LicenciasBria::where( [
+                ['id', '=',  $info[$i][3] ],
+            ])->increment(
+                'ocupadas',1
+            );
+            /**
+             * Decrementamos el numero de licencias disponibles
+             */
+            LicenciasBria::where( [
+                ['id', '=',  $info[$i][3] ],
+            ])->decrement(
+                'disponibles',1
+            );
+            /**
              * Creamos el logs
              */
             $mensaje = 'Se edito un registro con id: '.$info[$i][0].', informacion editada: '.var_export($info[$i], true);
@@ -169,10 +185,30 @@ class CatExtensionesController extends Controller
         /**
          * Actualizamos a 0 la extension
          */
+        $cat = Cat_Extensiones::where('id', $id)->first();
+
         Cat_Extensiones::where( 'id', $id )
                                 ->update([
-                                    'activo' => 0
+                                    'activo' => 0,
+                                    'Cat_Licencias_Bria_id' => 0
                                 ]);
+        /**
+         * Decrementamos el numero de licencias ocupadas
+         */
+
+        LicenciasBria::where( [
+            ['id', '=',  $cat->Cat_Licencias_Bria_id ]
+        ])->decrement(
+            'ocupadas',1
+        );
+        /***
+         * Incrementamos el numero de licencias disponibles
+         */
+        LicenciasBria::where( [
+            ['id', '=', $cat->Cat_Licencias_Bria_id ]
+        ])->increment(
+            'disponibles',1
+        );
         /**
          * Creamos el logs
          */

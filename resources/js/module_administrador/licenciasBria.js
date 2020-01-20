@@ -76,6 +76,14 @@ $(function() {
         });
     });
     /**
+     * Evento para mostrar las empresas de una licencia
+     * Nota: popover es un componente de bootstrap
+     */
+    $(document).on("click", ".pop", function(event) {
+        $('[data-toggle="popover"]').popover({ container: 'body', animation: true, html: true, placement: "right", trigger: 'focus' });
+    });
+
+    /**
      * Funcion para mostrar los errores de los formularios
      */
     function printErrorMsg(msg) {

@@ -16,6 +16,7 @@
                             <th>Licencias</th>
                             <th>Ocupadas</th>
                             <th>Empresas</th>
+                            <th>Limite de licencias</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -25,7 +26,7 @@
                                 <td>{{ $licencia->Extensiones->count() }}</td>
                                 <td>
                                     @if ( $licencia->Extensiones->count() != 0 )
-                                        <button type="button" class="btn btn-lg btn-secondary btn-sm" data-toggle="popover" title="Empresas" data-content="
+                                        <button type="button" class="btn btn-lg btn-secondary btn-sm pop" data-toggle="popover" title="Empresas" data-content="
                                         <ul>
                                             @foreach ($licencia->Extensiones as $v)
                                                 {{ "<li>".$v->Empresas->nombre.": </li>"}}
@@ -34,6 +35,7 @@
                                         "> <i class="fas fa-eye"></i></button>
                                     @endif
                                 </td>
+                                <td>{{ $licencia->disponibles }}</td>
                             </tr>
                         @endforeach
                     </tbody>
