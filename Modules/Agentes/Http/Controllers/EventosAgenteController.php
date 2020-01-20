@@ -21,7 +21,7 @@ class EventosAgenteController extends Controller
     public static function no_disponible( $agente, $empresas_id )
     {
         /**
-         * Obtenemos el ultimo canal del agenete
+         * Obtenemos el ultimo canal del agente
          */
         $cdr = Crd_Asignacion_Agente::where('Agentes_id', $agente)->orderBy('id', 'desc')->first();
         /**
@@ -62,7 +62,7 @@ class EventosAgenteController extends Controller
         /**
          * Registramos el evento de cuando se puso nuevamente en disponible el agente
          */
-        LogRegistroEventosController::actualiza_evento( $agente, $request->evento );
+        LogRegistroEventosController::actualiza_evento( $agente, $request->evento, 0 );
         /**
          * Despausamos al agente dentro de la campana en BD
          */
@@ -163,6 +163,24 @@ class EventosAgenteController extends Controller
             'canal' => 'CANAL',
             'extension' => $agente->extension
         ));
+        /**
+         * Si la respuesta es 1, se cambia el estatus a disponible
+         */
+        if( $result['error'] == 1 )
+        {
+            /**
+             * Ponemos en estado disponible al agente
+             */
+            Agentes::where( 'id', $agente->id )->update(['Cat_Estado_Agente_id' => 2]);
+        }
+        else
+        {
+            /**
+             * Ponemos en estado logueado al agente
+             */
+            Agentes::where( 'id', $agente->id )->update(['Cat_Estado_Agente_id' => 11]);
+        }
+
         return json_encode($result);
     }
 }

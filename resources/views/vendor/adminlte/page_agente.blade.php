@@ -73,6 +73,7 @@
                                     {{ csrf_field() }}
                                     <input type="hidden" name="id_agente" id="id_agente" value="{{$agente->id}}">
                                     <input type="hidden" name="id_evento" id="id_evento" value="{{$evento}}">
+                                    <input type="hidden" name="cierre" id="cierre" value="0">
                                 </form>
                             @endif
                         </li>
@@ -99,7 +100,11 @@
                         <p>{{ $agente->nombre }}</p>
                         <p>Usr.: {{ $agente->usuario }}</p>
                         <p>Ext.: {{ $agente->extension_real }}</p>
-                        <a class="estado-agente"><i class="fa fa-circle text-success"></i> {{ $agente->Cat_Estado_Agente->nombre }}</a>
+                        @if ( $agente->Cat_Estado_Agente->nombre == 'Logueo' )
+                            <a class="estado-agente"><i class="fa fa-circle text-secondary"></i> {{ $agente->Cat_Estado_Agente->nombre }}</a>
+                        @else
+                            <a class="estado-agente"><i class="fa fa-circle text-success"></i> {{ $agente->Cat_Estado_Agente->nombre }}</a>
+                        @endif
                         <input type="hidden" name="id_agente" id="id_agente" value="{{$agente->id}}">
                         <input type="hidden" name="extension" id="extension" value="{{$agente->extension}}">
                         <input type="hidden" name="id_empresa" id="id_empresa" value="{{$agente->Empresas_id}}">

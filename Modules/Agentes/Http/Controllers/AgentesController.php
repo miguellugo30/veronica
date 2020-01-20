@@ -5,6 +5,7 @@ namespace Modules\Agentes\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 use DB;
 use Modules\Agentes\Http\Controllers\EventosAmiController;
 use Modules\Agentes\Http\Controllers\CalificarLlamadaController;
@@ -139,6 +140,25 @@ class AgentesController extends Controller
          * Obtenemos el Speech y el grupo de calificaciones
          */
         $speech = $campana->speech;
+        $campos = $speech->Opciones_Speech;
+
+        if ( $speech->tipo == 'dinamico' )
+        {
+            $bienvenida = DB::table('Opciones_Speech AS OS')
+                                ->join('appLaravel.speech AS S', 'OS.speech_id_hijo', '=', 'S.id')
+                                ->select(
+                                    'S.texto'
+                                )
+                                ->where('OS.id', $campos->where('tipo', 1)->first()->speech_id_hijo)
+                                ->where('OS.tipo', 1)
+                                ->first();
+        }
+        else
+        {
+            $bienvenida = '';
+        }
+
+
         $grupo = $campana->Grupos->first();
         /**
          * Obtenemos el histórico de llamadas de cliente
@@ -160,7 +180,7 @@ class AgentesController extends Controller
                     ->where('Cdr_call_center.callerid', $callerid)
                     ->whereDate('Cdr_call_center.fecha_inicio', DB::raw('curdate()'))->get();
 
-       return view('agentes::show', compact( 'campana', 'calledid', 'speech', 'historico', 'grupo', 'canal', 'uniqueid' ));
+       return view('agentes::show', compact( 'campana', 'calledid', 'historico', 'grupo', 'canal', 'uniqueid', 'speech', 'campos', 'bienvenida'));
     }
     /**
      * Funcion para colgar llamada
@@ -230,6 +250,6 @@ class AgentesController extends Controller
     public function logeoExtension()
     {
         $agente = auth()->guard('agentes')->user();
-        EventosAgenteController::logeoExtension( $agente );
+        return EventosAgenteController::logeoExtension( $agente );
     }
 }

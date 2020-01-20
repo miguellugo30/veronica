@@ -7,10 +7,10 @@
             @endcan
             @can('edit menus')
                 <button type="button" class="btn btn-warning btn-sm editMenu" style="display:none"><i class="fas fa-edit"></i> Editar</button>
-                <button type="button" class="btn btn-primary btn-sm orderignCat" data-widget="remove"><i class="fas fa-sort-numeric-down"></i> Ordenar</button>
+                <button type="button" class="btn btn-primary btn-sm orderignCat" style="display:none"><i class="fas fa-sort-numeric-down"></i> Ordenar</button>
             @endcan
             @can('create menus')
-                <button type="button" class="btn btn-primary btn-sm newMenu" data-widget="remove"><i class="fas fa-plus"></i> Nuevo</button>
+                <button type="button" class="btn btn-primary btn-sm newMenu"><i class="fas fa-plus"></i> Nuevo</button>
             @endcan
             <input type="hidden" name="idSeleccionado" id="idSeleccionado" value="">
             <input type="hidden" name="tipoSeleccionado" id="tipoSeleccionado" value="">
@@ -25,9 +25,9 @@
                         <thead>
                             <tr>
                                 <th></th>
-                                <th>Nombre</th>
+                                <th>Modulo</th>
+                                <th>Menu</th>
                                 <th>Descripción</th>
-                                <th>Prioridad</th>
                                 <th>tipo</th>
                             </tr>
                         </thead>
@@ -37,9 +37,9 @@
                                     <td class="details-control" data-id="{{ $categoria->id }}" style="text-align: center; cursor:pointer">
                                         <i class="fas fa-plus-circle mas"></i>
                                     </td>
+                                    <td>{{ $categoria->Modulos->nombre }}</td>
                                     <td>{{ $categoria->nombre }}</td>
                                     <td>{{ $categoria->descripcion }}</td>
-                                    <td>{{ $categoria->prioridad }}</td>
                                     <td>
                                         @if ($categoria->tipo == 1)
                                             Sistema
@@ -88,7 +88,7 @@ $(function() {
     table = $('.viewResult #tableMenus').DataTable({
                 "lengthChange": true,
                 "order": [
-                    [3, "asc"]
+                    [1, "asc"]
                 ]
             });
 
@@ -104,6 +104,7 @@ $(function() {
 
             $(".editMenu").slideUp();//Ocultamos el boton de editar
             $(".deleteMenu").slideUp();// Ocultamos el boton de eliminar
+            $(".orderignCat").slideUp();// Ocultamos el boton de eliminar
             $("#ordenSeleccionado").val(0);//Asignamos el valor del id, del elemento seleccionado
 
             $("#tableMenus tbody tr").removeClass('table-primary');//Quitamos la clase de seleccion
@@ -118,6 +119,7 @@ $(function() {
 
             $(".editMenu").slideDown();//Mostramos el boton de editar
             $(".deleteMenu").slideDown();//Mostramos el boton de eliminar
+            $(".orderignCat").slideDown();//Mostramos el boton de eliminar
 
             $("#idSeleccionado").val(id);//Asignamos el valor del id, del elemento seleccionado
             $("#tipoSeleccionado").val(1);//Asignamos el valor del id, del elemento seleccionado

@@ -42,6 +42,7 @@ Route::group(['namespace' => '\Modules\Settings\Http\Controllers', 'prefix' => '
  * Rutas para CRUD de Speech
  */
 Route::group(['namespace' => '\Modules\Settings\Http\Controllers', 'prefix' => 'settings', 'middleware' => 'auth'], function() {
+    Route::delete('speech/eliminar-opcion/{id}','OpcionesSpeechController@destroy');
     Route::resource('speech','SpeechController');
 });
 /**

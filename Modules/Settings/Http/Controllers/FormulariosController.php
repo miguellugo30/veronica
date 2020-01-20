@@ -189,12 +189,6 @@ class FormulariosController extends Controller
         $dataForm = $request->input('dataForm');
         $data = $request->dataForm;
 
-        /*
-        for ($i=0; $i < count( $dataForm ); $i++) {
-            $data[ $dataForm[$i]['name'] ] = $dataForm[$i]['value'];
-        }
-        */
-
         $idFormulario = $data['id_formulario'];
 
         array_shift( $data );

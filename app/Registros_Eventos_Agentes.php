@@ -9,10 +9,10 @@ class Registros_Eventos_Agentes extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'fecha_inicio', 'fecha_fin','Eventos_Agentes_id','Agentes_id',
+        'fecha_inicio', 'fecha_fin', 'cierre_correcto', 'Eventos_Agentes_id','Agentes_id',
     ];
     /**
-     * Nombre de la tabla que se ocupra
+     * Nombre de la tabla que se ocupara
      */
     protected $table = 'Registros_Eventos_Agentes';
     /*

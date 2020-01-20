@@ -12,7 +12,7 @@
 */
 
 //Route::group(['namespace' => '\Modules\Agentes\Http\Controllers', 'prefix' => 'agentes', 'middleware' => 'auth'], function() {
-Route::group(['namespace' => '\Modules\Agentes\Http\Controllers', 'middleware' => 'guest'], function() {
+Route::group(['namespace' => '\Modules\Agentes\Http\Controllers', 'middleware' => 'auth.agentes'], function() {
     Route::resource('agentes', 'AgentesController');
     Route::post('agentes/colgar', 'AgentesController@colgar')->name('colgar.agente');
     Route::post('agentes/no_disponible', 'AgentesController@no_disponible')->name('no_disponible.agente');
@@ -23,3 +23,4 @@ Route::group(['namespace' => '\Modules\Agentes\Http\Controllers', 'middleware' =
 });
 
 Route::get('/agentes/formularios/{id}', '\Modules\Settings\Http\Controllers\FormulariosController@show');
+Route::get('/agentes/speech/{id}', '\Modules\Settings\Http\Controllers\SpeechController@show');

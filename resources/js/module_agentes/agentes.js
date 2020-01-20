@@ -1,25 +1,39 @@
-var bPreguntar = true;
+var validNavigation = false;
 
-window.onbeforeunload = preguntarAntesDeSalir;
+window.onbeforeunload = function() {
+    if (!validNavigation) {
 
-function preguntarAntesDeSalir() {
-    if (bPreguntar)
-        return "¿Seguro que quieres salir?";
+        var id_agente = $('#id_agente').val();
+        let _token = $("input[name=_token]").val();
+        let id_evento = $('#id_evento').val();
+        let cierre = 1;
+
+        $.ajax({
+            type: 'POST',
+            async: false,
+            url: 'logout/agentes',
+            data: {
+                id_agente: id_agente,
+                id_evento: id_evento,
+                cierre: cierre,
+                _token: _token
+            },
+            success: function(data) {}
+        });
+
+    }
 }
 
-/*
-$(window).bind('beforeunload', function(e) {
-    e.preventDefault();
-    var id_agente = $('#id_agente').val();
-    return '>>>>>Before You Go<<<<<<<< \n Your custom message go here';
-    console.log(id_agente);
-    if (window.btn_clicked) {
-        console.log('confirmo');
-    } else {
-        console.log('no confirmo');
+function my_onkeydown_handler(event) {
+    switch (event.keyCode) {
+        case 116: // 'F5'
+            event.preventDefault();
+            event.keyCode = 0;
+            window.status = "F5 disabled";
+            break;
     }
-});
-*/
+}
+document.addEventListener("keydown", my_onkeydown_handler);
 
 $(function() {
 
@@ -72,6 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 url: currentURL[0] + "/" + id_agente, // Podrías separar las funciones de PHP en un fichero a parte
                 data: {}
             }).done(function(msg) {
+
                 var obj = $.parseJSON(msg);
 
                 if (obj['status'] == 1) {
@@ -102,9 +117,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     $("#modal-no-disponible").modal({ backdrop: 'static', keyboard: false });
 
                 } else if (obj['status'] == 0) {
+
                     if (obj['monitoreo'] == 1) {
                         $(".view-call").html('<div class="col-12 text-center" style="padding-top: 19%;"><i class="fas fa-spinner fa-10x fa-spin text-info"></i></div>');
-                        $(".estado-agente").html("<i class='fa fa-circle text-success'></i> Disponible");
                         $(".colgar-llamada").prop("disabled", true);
                     }
                 }

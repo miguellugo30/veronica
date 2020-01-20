@@ -123,6 +123,7 @@
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
 <script src="{{ asset('js/funciones_formularios.js') }}"></script>
+<script src="{{ asset('js/funciones_speech.js') }}"></script>
 <script src='https://unpkg.com/@fullcalendar/core@4.3.1/main.min.js'></script>
 <script src='https://unpkg.com/@fullcalendar/core@4.3.1/locales-all.js'></script>
 <script src='https://unpkg.com/@fullcalendar/list@4.3.0/main.min.js'></script>

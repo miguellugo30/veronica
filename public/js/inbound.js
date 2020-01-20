@@ -1067,7 +1067,7 @@ $(function () {
 
   $(document).on('click', '.agentesNoSeleccionados tr', function (event) {
     var fila = $(this);
-    var idAgente = $(this).data('id');
+    var idAgente = parseInt($(this).data('id'));
     var modoLogueo = $('#mlogeo').val();
     var bandera = true;
 
@@ -1096,11 +1096,13 @@ $(function () {
           }
 
           if (bandera) {
-            fila.clone().appendTo(".agentesSeleccionados"); //Clonamos la fila
+            if (!agentesParticipantes.includes(idAgente)) {
+              fila.clone().appendTo(".agentesSeleccionados"); //Clonamos la fila
 
-            agentesParticipantes.push(idAgente);
-            $("#agentes_participantes").val(JSON.stringify(agentesParticipantes));
-            fila.remove();
+              agentesParticipantes.push(idAgente);
+              $("#agentes_participantes").val(JSON.stringify(agentesParticipantes));
+              fila.remove();
+            }
           } else {
             Swal.fire('!Tenemos un problema!', 'No se puede agregar el agente seleccionado, ya que esta campaña tiene diferente modalidad de logueo a las cuales ya esta agregado el agente.', 'warning');
           }

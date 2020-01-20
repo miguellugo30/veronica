@@ -367,17 +367,22 @@ $(function () {
     var _token = $("input[name=_token]").val();
 
     var url = currentURL + '/Inbound/descargar';
-    $.ajax({
-      url: url,
-      type: 'POST',
-      data: {
-        valoresCheck: valoresCheck,
-        _token: _token
-      },
-      success: function success(result) {
-        $('#iFrameDescarga').attr('src', result);
-      }
-    });
+
+    if (valoresCheck.length == 0) {
+      Swal.fire('Error!', 'Debes elegir por lo menos una grabacion.', 'error');
+    } else {
+      $.ajax({
+        url: url,
+        type: 'POST',
+        data: {
+          valoresCheck: valoresCheck,
+          _token: _token
+        },
+        success: function success(result) {
+          $('#iFrameDescarga').attr('src', result);
+        }
+      });
+    }
   });
   /**
    * Evento para eliminar las grabaciones
@@ -385,63 +390,67 @@ $(function () {
 
   $(document).on('click', '.eliminar-grabaciones', function (event) {
     event.preventDefault();
-    Swal.fire({
-      title: '¿Estas seguro?',
-      text: "¿Deseas eliminar la(s) grabación(es) seleccionada(s)?. Esta acción la(s) eliminara físicamente y no podrá(n) ser recuperada(s).",
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Si, Eliminar!',
-      cancelButtonText: 'Cancelar'
-    }).then(function (result) {
-      if (result.value) {
-        var valoresCheck = [];
-        $("input[name='numcheck']:checked").each(function () {
-          valoresCheck.push(this.value);
-        });
-
-        var _token = $("input[name=_token]").val();
-
-        var _method = "DELETE";
-        var url = currentURL + '/Inbound/0';
-        $.ajax({
-          url: url,
-          type: 'POST',
-          data: {
-            valoresCheck: valoresCheck,
-            _method: _method,
-            _token: _token
-          },
-          success: function success(result) {
-            var fechaI = $("#fechaIni").val();
-            var fechaF = $("#fechaFin").val();
-            var hrI = $("#hrIni").val();
-            var hrF = $("#hrFin").val();
-            var url = currentURL + '/Inbound';
-
-            var _token = $("input[name=_token]").val();
-
-            var fechaIni = fechaI + " " + hrI + ":00";
-            var fechaFin = fechaF + " " + hrF + ":59";
-            $.ajax({
-              url: url,
-              type: 'POST',
-              data: {
-                fechaIni: fechaIni,
-                fechaFin: fechaFin,
-                _token: _token
-              },
-              success: function success(result) {
-                $("#rangoFiltro").html(fechaIni + " -- " + fechaFin);
-                $('.viewreportedesglose').html(result);
-              }
-            });
-            Swal.fire('Eliminado!', 'El registro ha sido eliminado.', 'success');
-          }
-        });
-      }
+    var valoresCheck = [];
+    $("input[name='numcheck']:checked").each(function () {
+      valoresCheck.push(this.value);
     });
+
+    if (valoresCheck.length == 0) {
+      Swal.fire('Error!', 'Debes elegir por lo menos una grabacion.', 'error');
+    } else {
+      Swal.fire({
+        title: '¿Estas seguro?',
+        text: "¿Deseas eliminar la(s) grabación(es) seleccionada(s)?. Esta acción la(s) eliminara físicamente y no podrá(n) ser recuperada(s).",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Si, Eliminar!',
+        cancelButtonText: 'Cancelar'
+      }).then(function (result) {
+        if (result.value) {
+          var _token = $("input[name=_token]").val();
+
+          var _method = "DELETE";
+          var url = currentURL + '/Inbound/0';
+          $.ajax({
+            url: url,
+            type: 'POST',
+            data: {
+              valoresCheck: valoresCheck,
+              _method: _method,
+              _token: _token
+            },
+            success: function success(result) {
+              var fechaI = $("#fechaIni").val();
+              var fechaF = $("#fechaFin").val();
+              var hrI = $("#hrIni").val();
+              var hrF = $("#hrFin").val();
+              var url = currentURL + '/Inbound';
+
+              var _token = $("input[name=_token]").val();
+
+              var fechaIni = fechaI + " " + hrI + ":00";
+              var fechaFin = fechaF + " " + hrF + ":59";
+              $.ajax({
+                url: url,
+                type: 'POST',
+                data: {
+                  fechaIni: fechaIni,
+                  fechaFin: fechaFin,
+                  _token: _token
+                },
+                success: function success(result) {
+                  $("#rangoFiltro").html(fechaIni + " -- " + fechaFin);
+                  $('.viewreportedesglose').html(result);
+                }
+              });
+              Swal.fire('Eliminado!', 'El registro ha sido eliminado.', 'success');
+            }
+          });
+        }
+      });
+    }
   });
 });
 

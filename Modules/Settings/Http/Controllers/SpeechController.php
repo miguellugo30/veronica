@@ -6,11 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Modules\Settings\Http\Requests\SpeechRequest;
+use DB;
+use Nimbus\Http\Controllers\LogController;
+
 use Nimbus\User;
 use Nimbus\Speech;
 use Nimbus\Opciones_Speech;
-use DB;
-use Modules\Settings\Http\Requests\SpeechRequest;
 
 class SpeechController extends Controller
 {
@@ -34,11 +36,13 @@ class SpeechController extends Controller
      */
     public function create()
     {
+        $user = Auth::user();
+        $empresa_id = $user->id_cliente;
         /**
-         * Obtener los tipos de speech para el tipo de
+         * Obtener los Speech
          */
-        $speech = Speech::all();
-        return view('settings::Speech.create',compact('speech'));
+        $speechs = Speech::empresa($empresa_id)->active()->get();
+        return view('settings::Speech.create',compact('speechs'));
     }
 
     /**
@@ -48,46 +52,67 @@ class SpeechController extends Controller
      */
     public function store(SpeechRequest $request)
     {
-        $dataForm = $request->input('dataForm');
         $data = $request->dataForm;
-
         /**
-         * Insertamos la información del Agente
+         * Obtenemos la información del Usuario
          */
         $user = User::find( Auth::id() );
         $empresa_id = $user->id_cliente;
         /**
          * Insertar información a la tabla de Speech
+         *
+         * Dependiendo del tipo de speech es la forma en que se guardara la información
          */
-         $speech = Speech::create([
-             'tipo'=>$data['tipo'],
-             'nombre'=>$data['nombre'],
-             'descripcion'=>$data['descripcion'],
-             'activo'=>1,
-             'Empresas_id'=>$empresa_id
-             ]);
-        array_shift( $data );
-        array_shift( $data );
-        array_shift( $data );
-        array_shift( $data );
+        if ( $data['tipo'] == 'estatico' )
+        {
+            Speech::create([
+                'tipo'=>$data['tipo'],
+                'nombre'=>$data['nombre'],
+                'descripcion'=>$data['descripcion'],
+                'texto'=>$data['descripcionSpeech'],
+                'Empresas_id'=>$empresa_id
+                ]);
+        }
+        else
+        {
+            $speech = Speech::create([
+                                        'tipo'=>$data['tipo'],
+                                        'nombre'=>$data['nombre'],
+                                        'descripcion'=>$data['descripcion'],
+                                        'texto'=>"",
+                                        'activo'=>1,
+                                        'Empresas_id'=>$empresa_id
+                                    ]);
+            /**
+             * Insertamos el Speech de Bienvenida
+             */
+            Opciones_Speech::create([
+                                        'tipo' => 1,
+                                        'nombre' => $data['nombre'],
+                                        'speech_id_hijo' => $data['speech-inicial'],
+                                        'speech_id' => $speech->id
+                                    ]);
+            array_shift( $data );
+            array_shift( $data );
+            array_shift( $data );
+            array_shift( $data );
 
-        $info = array_chunk( $data, 2 );
-        /**
-         * Insertamos la información de las Opciones Speech
-         */
-         $j = 1;
-         for ($i=0; $i < count( $info ); $i++) {
-
+            $info = array_chunk( $data, 2 );
+            /**
+             * Insertamos la información de las Opciones Speech
+             **/
+            for ($i=0; $i < count( $info ); $i++)
+            {
                 Opciones_Speech::create([
+                                            'tipo' => 0,
                                             'nombre' => $info[$i][0],
-                                            'texto' => $info[$i][1],
-                                            'prioridad' => $j,
+                                            'speech_id_hijo' => $info[$i][1],
                                             'speech_id' => $speech->id
                                         ]);
-                $j = $j + 1;
             }
-        return redirect()->route('speech.index');
+        }
 
+        return redirect()->route('speech.index');
     }
 
     /**
@@ -97,11 +122,19 @@ class SpeechController extends Controller
      */
     public function show($id)
     {
+        $bienvenida = '';
+
         $speech = Speech::find( $id );
         $campos = $speech->Opciones_Speech;
-        return view('settings::Speech.show', compact('speech', 'campos'));
-    }
 
+        if ( $speech->tipo == 'dinamico' )
+        {
+
+            $bienvenida = $this->textoBienvenida( $campos->where('tipo', 1)->first()->id );
+        }
+
+        return view('settings::Speech.show', compact('speech', 'campos', 'bienvenida'));
+    }
     /**
      * Show the form for editing the specified resource.
      * @param int $id
@@ -109,9 +142,20 @@ class SpeechController extends Controller
      */
     public function edit($id)
     {
-        //$speech = Speech::active()->get();
+        $bienvenida = '';
+
         $speech = Speech::find($id);
-        return view('settings::Speech.edit', compact('speech'));
+        $campos = $speech->Opciones_Speech;
+
+        if ( $speech->tipo == 'dinamico' )
+        {
+            $bienvenida = $this->textoBienvenida( $campos->where('tipo', 1)->first()->id );
+        }
+        /**
+         * Obtener los Speech
+         */
+        $speechs = Speech::empresa($speech->Empresas_id)->active()->get();
+        return view('settings::Speech.edit', compact('speech', 'campos', 'bienvenida', 'speechs'));
     }
 
     /**
@@ -122,37 +166,49 @@ class SpeechController extends Controller
      */
     public function update(SpeechRequest $request, $id)
     {
-        $dataForm = $request->input('dataForm');
-        $data = $request->dataForm;
-        $idSpeech = $data['id'];
-        Opciones_Speech::where('speech_id', $idSpeech)->delete();
-
-        array_shift( $data );
-        array_shift( $data );
-
-        $info = array_chunk( $data, 2 );
         /**
-         * Insertamos la información de las Opciones Speech
+         * Obtenemos el nombre del speech principal
          */
-        $j = 1;
-        for ($i=0; $i < count( $info ); $i++) {
-            if ($idSpeech != NULL) {
-                $opciones = Opciones_Speech::create([
-                    'nombre' => $info[$i][0],
-                    'texto' => $info[$i][1],
-                    'prioridad' => $j,
-                    'speech_id' => $idSpeech
-                ]);
-                $j = $j + 1;
+        $nombreSpeech = Speech::select('nombre', 'tipo')->where('id', $id)->first();
 
-            } else {
-                Opciones_Speech::where('speech_id',$idSpeech)->update([
-                    'nombre' => $info[$i][0],
-                    'texto' => $info[$i][1],
-                    'prioridad' => $j,
-                ]);
-                $j = $j + 1;
+        $data = $request->dataForm;
+
+        if ( $nombreSpeech->tipo == 'dinamico' )
+        {
+            /**
+             * Eliminamos las opciones originales del speech, para insertar las nuevas
+             **/
+            Opciones_Speech::where('speech_id', $id)->delete();
+            /**
+             * Insertamos el Speech de Bienvenida
+             **/
+            Opciones_Speech::create([
+                'tipo' => 1,
+                'nombre' => $nombreSpeech->nombre,
+                'speech_id_hijo' => $data['speech-inicial'],
+                'speech_id' => $id
+            ]);
+
+            array_shift( $data );
+            array_shift( $data );
+
+            $info = array_chunk( $data, 2 );
+            /**
+             * Insertamos la información de las Opciones Speech
+             **/
+            for ($i=0; $i < count( $info ); $i++)
+            {
+                Opciones_Speech::create([
+                        'tipo' => 0,
+                        'nombre' => $info[$i][0],
+                        'speech_id_hijo' => $info[$i][1],
+                        'speech_id' => $id
+                    ]);
             }
+        }
+        else
+        {
+            Speech::where( 'id', $id )->update(['texto' => $data['descripcionSpeech']]);
         }
        return redirect()->route('speech.index');
    }
@@ -164,8 +220,7 @@ class SpeechController extends Controller
      */
     public function destroy($id)
     {
-        Speech::where('id',$id)
-        ->update(['activo'=>'0']);
+        Speech::where('id',$id)->update(['activo'=>0]);
 
         return redirect()->route('speech.index');
          /**
@@ -174,5 +229,20 @@ class SpeechController extends Controller
         $mensaje = 'Se Elimino un registro con id: '.$id;
         $log = new LogController;
         $log->store('Eliminacion', 'Speech', $mensaje, $id);
+    }
+    /**
+     * Función para obtener el texto que corresponde a la opción
+     * de bienvenida
+     */
+    private function textoBienvenida($idOs )
+    {
+        return DB::table('Opciones_Speech AS OS')
+            ->join('appLaravel.speech AS S', 'OS.speech_id_hijo', '=', 'S.id')
+            ->select(
+                'S.texto'
+            )
+            ->where('OS.id', $idOs)
+            ->where('OS.tipo', 1)
+            ->first();
     }
 }
