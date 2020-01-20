@@ -338,8 +338,12 @@ class EmpresasController extends Controller
              * Buscamos la empresa ha editar
              */
             $empresa = Empresas::findOrFail($id);
+            /***
+             * Buscamos los datos del Almacenamiento para la grafica
+             */
+            $config_empresas = Config_Empresas::where('Empresas_id',$idEmpresa)->get();
 
-            return view('administrador::empresas.general', compact('empresa'));
+            return view('administrador::empresas.general', compact('empresa','config_empresas'));
 
         } else if( $data[1] == 'dataEmpresa' ) {
             /**

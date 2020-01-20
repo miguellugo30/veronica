@@ -7,6 +7,7 @@ $(function() {
 
         e.preventDefault();
         $(".updateEmpresa").slideUp();
+        $(".updateExtension").slideUp();
         $(".viewIndex").slideUp();
         $(".viewCreate").slideDown();
         let id_Empresa = $("#id_empresa").val();

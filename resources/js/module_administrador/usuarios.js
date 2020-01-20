@@ -202,10 +202,22 @@ $(function() {
             $(".modulosEmpresa").html(data);
         });
 
+        /***
+         * Condicion para que al elegir una empresa diferente a C3ntro, se deshabilite el rol de Super Administrador y Viceversa.
+         */
         if (id == 30) {
-            $("#rol").val(1);
+            $("#cliente option:contains('Selecciona una empresa')").remove();
+
+            if (!$("#rol option:contains('Super Administrador')").length) {
+                $("#rol option:contains('Selecciona un rol')").remove();
+                $("#rol").prepend("<option value='1'>Super Administrador</option>");
+            }
+
+            $("#rol option:contains('Super Administrador')").attr('selected', 'selected');
         } else {
-            $("#rol").val(2);
+            $("#cliente option:contains('Selecciona una empresa')").remove();
+            $("#rol option:contains('Super Administrador')").remove();
+            $("#rol option:contains('Administrador')").attr('selected', 'selected');
         }
     });
 
