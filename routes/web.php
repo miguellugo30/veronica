@@ -24,6 +24,7 @@ Route::post('/agentes/extension', 'AgentesLoginController@agentesExtension');
 Route::post('/logout/agentes', 'AgentesLoginController@agentesLogout')->name('agentes.logout');
 
 Route::get('/home', 'HomeController@index')->name('home');
+
 Route::get('/soporte/{token}', 'SoporteController@index');
 
 Route::prefix('administrador/')->group(function() {

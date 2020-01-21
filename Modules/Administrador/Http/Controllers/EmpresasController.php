@@ -767,32 +767,37 @@ class EmpresasController extends Controller
         return $password;
     }
 
-    public function generar_sesion( $id ){
+    public function generar_sesion( $id )
+    {
         /**
          * Obtenemos los permisos del usuario de la empresa seleccionada
          */
-        $user = User::find( Auth::id() );
-        $tokenConsulta = Token_Soporte::where([ ['Empresas_id', '=', $id] , ['users_id','=',$user->id] ])->get();
+        $user = Auth::user();
+        /**
+         * Obtenemos el usuario de soporte de la empresa
+         */
+        $usuarioSoporte = User::select('id', 'email', 'password')->where('email','like','soporte_'.$id.'%')->first();
 
-        if ( $tokenConsulta->isEmpty() ) {
+        $tokenConsulta = Token_Soporte::where([ ['Empresas_id', '=', $id] , ['users_id_soporte','=',$usuarioSoporte->id] , ['users_id','=',$user->id] ])->get();
 
+        if ( $tokenConsulta->isEmpty() )
+        {
             $token = sha1( $user->email.$user->password.$id.date('d-m-YH:i:s') );
             $date = Carbon::now()->addHour(1);
 
             Token_Soporte::create([
                 'token' =>   $token,
                 'caducidad' => $date,
+                'users_id_soporte' => $usuarioSoporte->id,
                 'users_id' => $user->id,
                 'Empresas_id' => $id
                 ]);
-
-        } else {
-
+        }
+        else
+        {
             $token =  $tokenConsulta[0]->token;
         }
 
         return $token;
-
     }
-
 }

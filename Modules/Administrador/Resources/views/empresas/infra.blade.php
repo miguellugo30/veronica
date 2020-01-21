@@ -1,10 +1,10 @@
 <div class="col-6" style="float:none; margin:auto">
     <div class="form-group">
-        <label class="sr-only" for="dominio">Dominio</label>
+        <label for="dominio"><b>Dominio *:</b></label>
         <div class="input-group mb-2">
-            <input type="text" class="form-control form-control-sm" id="dominio" name="dominio" placeholder="dominio" value="{{ str_replace(' ', '_', $empresa->nombre ) }}">
-            <div class="input-group-prepend ">
-                <div class="input-group-text form-control-sm">{{ $Cat_Distribuidor_id == 11 ? '.nimbuscca.mx' : '.nimbuscc.mx' }}</div>
+            <input type="text" class="form-control " id="dominio" name="dominio" placeholder="dominio" value="{{ str_replace(' ', '_', $empresa->nombre ) }}">
+            <div class="input-group-prepend">
+                <div class="input-group-text ">{{ $Cat_Distribuidor_id == 11 ? '.nimbuscca.mx' : '.nimbuscc.mx' }}</div>
             </div>
         </div>
         <input type="hidden" name="id_empresa" id="id_empresa" value="{{ $empresa->id }}">
@@ -13,7 +13,7 @@
         @csrf
     </div>
     <div class="form-group">
-        <label for="base_datos_empresa">Base de datos</label>
+        <label for="base_datos_empresa"><b>Base de datos *:</b></label>
         <select name="base_datos_empresa" id="base_datos_empresa" class="form-control form-control-sm">
             <option value="" >Selecciona una Base de datos</option>
             @if ( $empresa->Config_Empresas != null )
@@ -28,7 +28,7 @@
         </select>
     </div>
     <div class="form-group">
-        <label for="media_server_empresas">Media Server</label>
+        <label for="media_server_empresas"><b>Media Server *:</b></label>
         <select name="media_server_empresas" id="media_server_empresas" class="form-control form-control-sm">
             <option value="" >Selecciona un Media Server</option>
             @if ( $empresa->Config_Empresas != null )

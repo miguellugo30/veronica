@@ -23,7 +23,7 @@
         <tbody>
             @foreach( $dids as $did )
                 <tr>
-                    <td>
+                    <td class="text-center">
                         <input type="checkbox" name="editar_did_{{$did->id}}" id="editar_did" class="editar_did" value="{{ $did->id }}">
                     </td>
                     <td>

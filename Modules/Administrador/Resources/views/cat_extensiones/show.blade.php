@@ -19,7 +19,7 @@
         <tbody>
             @foreach ($extensiones as $extension)
                 <tr>
-                    <td><input type="checkbox" class="editar_extension" name="editar_extension_{{ $extension->id }}" id="editar_extension_{{ $extension->id }}" value="{{ $extension->id }}"></td>
+                    <td class="text-center"><input type="checkbox" class="editar_extension" name="editar_extension_{{ $extension->id }}" id="editar_extension_{{ $extension->id }}" value="{{ $extension->id }}"></td>
                     <td>
                         <select  class="form-control form-control-sm" name="canal_extension_{{ $extension->id }}" id="canal_extension_{{ $extension->id }}" disabled>
                             @foreach ($canales as $canal)

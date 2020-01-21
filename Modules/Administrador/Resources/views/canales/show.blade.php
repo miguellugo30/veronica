@@ -1,3 +1,9 @@
+<style>
+.input-group-text {
+    font-size: 0.87rem;
+}
+</style>
+
 <div class="col-12" style="text-align: right;">
     @can('create canales')
     <button type="button" class="btn btn-primary btn-sm newCanal" data-widget="remove"><i class="fas fa-plus"></i> Nuevo Canal</button>
@@ -23,7 +29,7 @@
     <tbody>
         @foreach ($canales as $canal)
             <tr>
-                <td><input type="checkbox" class="editar_canal" name="editar_canal_{{ $canal->id }}" id="editar_canal_{{ $canal->id }}" value="{{ $canal->id }}"></td>
+                <td class="text-center"><input type="checkbox" class="editar_canal" name="editar_canal_{{ $canal->id }}" id="editar_canal_{{ $canal->id }}" value="{{ $canal->id }}"></td>
                 <td>{{ $canal->Distribuidores->servicio }}</td>
                 <td>
                     <select name="tipo_Canal_{{ $canal->id }}" id="tipo_Canal_{{ $canal->id }}" class="form-control form-control-sm tipo_canal" data-pos="{{ $canal->id }}" disabled>
@@ -42,7 +48,7 @@
                 </td>
                 <td>
                     <div class="input-group mb-2">
-                        <div class="input-group-prepend ">
+                        <div class="input-group-prepend">
                             <div class="input-group-text form-control-sm">{{ substr( $canal->prefijo, 0, -2 ) }}</div>
                         </div>
                         <input type="text" class="form-control form-control-sm" name="prefijo_{{ $canal->id }}" id="prefijo_{{ $canal->id }}" value="{{ substr( $canal->prefijo, -2 ) }}" disabled>

@@ -3,7 +3,6 @@
 namespace Nimbus\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Nimbus\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Nimbus\Token_Soporte;
@@ -27,41 +26,56 @@ class HomeController extends Controller
      */
     public function index( Request $request )
     {
-
-        $user = User::find( Auth::id() );
+        //dd( $request );
+        $user = Auth::user();
         $pos = Str::contains($user->email, 'soporte_');
 
-        if ( $pos === true ) {
+        if ( $pos === true )
+        {
+            /**
+             * Obtenemos el id de usuario real que esta entrando soporte
+             */
+            $token = Token_Soporte::where( [ ['Empresas_id', '=', $user->id_cliente],['token', '=', $request->session()->get('token_soporte')] ] )->get();
 
-            $tokenSoporte = $request->session()->get('token_soporte');
-
-            $token = Token_Soporte::where( [ ['Empresas_id', '=', $user->id_cliente],['token', '=', $tokenSoporte] ] )->get();
-            $request->session()->put('user_real', $token[0]->users_id);
+            if ( $token->isEmpty() )
+            {
+                return abort(403, 'Token invalido, inicie una nueva sesión para soporte');
+            }
+            else
+            {
+                $request->session()->put('user_real', $token->first()->users_id);
+            }
         }
         /**
          * Obtenemos el rol del usuario logeado
-         */
+         **/
         $rol = $user->getRoleNames();
         /**
          * Verificamos que sea un usuario activo
-         */
-        if ( $user->status == 1 ) {
+         **/
+        if ( $user->status == 1 )
+        {
             /**
              * Si el rol es Super Administrador o  administrador lo redireccionamos a la vista administrador
-             */
-            if ( $rol[0] == 'Super Administrador' ) {
+             **/
+            if ( $rol[0] == 'Super Administrador' )
+            {
                 return redirect('administrador');
-            } else {
+            }
+            else
+            {
                 /**
                  * Obtenemos las categorias relacionadas al usuario
-                 */
+                 **/
                 $categorias = array();
 
                 $modulo = "Home";
 
                 return view('home', compact( 'rol', 'categorias', 'modulo' ));
             }
-        } else {
+        }
+        else
+        {
             return redirect('/')->withErrors('Usuario inactivo', 'message');
         }
     }

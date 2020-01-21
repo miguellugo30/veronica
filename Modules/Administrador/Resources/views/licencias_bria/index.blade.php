@@ -14,15 +14,16 @@
                     <thead>
                         <tr>
                             <th>Licencias</th>
+                            <th>Limite de licencias</th>
                             <th>Ocupadas</th>
                             <th>Empresas</th>
-                            <th>Limite de licencias</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($licencias as $licencia)
                             <tr data-id="{{ $licencia->id }}" style="cursor:pointer">
                                 <td>{{ $licencia->licencia }}</td>
+                                <td>{{ $licencia->disponibles }}</td>
                                 <td>{{ $licencia->Extensiones->count() }}</td>
                                 <td>
                                     @if ( $licencia->Extensiones->count() != 0 )
@@ -35,7 +36,6 @@
                                         "> <i class="fas fa-eye"></i></button>
                                     @endif
                                 </td>
-                                <td>{{ $licencia->disponibles }}</td>
                             </tr>
                         @endforeach
                     </tbody>

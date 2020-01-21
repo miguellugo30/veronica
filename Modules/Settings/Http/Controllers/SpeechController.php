@@ -210,6 +210,14 @@ class SpeechController extends Controller
         {
             Speech::where( 'id', $id )->update(['texto' => $data['descripcionSpeech']]);
         }
+
+        /**
+         * Creamos el logs
+         */
+        $mensaje = 'Se edito un registro con id: '.$id.', información editada: '.var_export($request->all(), true);
+        $log = new LogController;
+        $log->store('Actualización', 'Speech', $mensaje, $id);
+
        return redirect()->route('speech.index');
    }
 
@@ -223,7 +231,7 @@ class SpeechController extends Controller
         Speech::where('id',$id)->update(['activo'=>0]);
 
         return redirect()->route('speech.index');
-         /**
+        /**
          * Creamos el logs
          */
         $mensaje = 'Se Elimino un registro con id: '.$id;
