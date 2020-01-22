@@ -23,7 +23,7 @@ class MenusController extends Controller
         /**
          * Obtenemos los menus con estatus 1
          */
-        $categorias = Categorias::active()->get();
+        $categorias = Categorias::active()->with('Modulos')->get();
 
         return view('administrador::menus.index', compact('categorias') );
     }

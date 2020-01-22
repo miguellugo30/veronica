@@ -93,27 +93,43 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var bPreguntar = true;
-window.onbeforeunload = preguntarAntesDeSalir;
+var validNavigation = false;
 
-function preguntarAntesDeSalir() {
-  if (bPreguntar) return "¿Seguro que quieres salir?";
-}
-/*
-$(window).bind('beforeunload', function(e) {
-    e.preventDefault();
+window.onbeforeunload = function () {
+  if (!validNavigation) {
     var id_agente = $('#id_agente').val();
-    return '>>>>>Before You Go<<<<<<<< \n Your custom message go here';
-    console.log(id_agente);
-    if (window.btn_clicked) {
-        console.log('confirmo');
-    } else {
-        console.log('no confirmo');
-    }
-});
-*/
 
+    var _token = $("input[name=_token]").val();
 
+    var id_evento = $('#id_evento').val();
+    var cierre = 1;
+    $.ajax({
+      type: 'POST',
+      async: false,
+      url: 'logout/agentes',
+      data: {
+        id_agente: id_agente,
+        id_evento: id_evento,
+        cierre: cierre,
+        _token: _token
+      },
+      success: function success(data) {}
+    });
+  }
+};
+
+function my_onkeydown_handler(event) {
+  switch (event.keyCode) {
+    case 116:
+      // 'F5'
+      event.preventDefault();
+      event.keyCode = 0;
+      window.status = "F5 disabled";
+      break;
+  }
+}
+
+document.addEventListener("keydown", my_onkeydown_handler);
 $(function () {
   $(document).on("click", ".nav-link", function (e) {
     $('.nav-link').attr('data-toggle', 'tab');
@@ -200,7 +216,6 @@ document.addEventListener('DOMContentLoaded', function () {
         } else if (obj['status'] == 0) {
           if (obj['monitoreo'] == 1) {
             $(".view-call").html('<div class="col-12 text-center" style="padding-top: 19%;"><i class="fas fa-spinner fa-10x fa-spin text-info"></i></div>');
-            $(".estado-agente").html("<i class='fa fa-circle text-success'></i> Disponible");
             $(".colgar-llamada").prop("disabled", true);
           }
         }
@@ -382,7 +397,13 @@ $(function () {
         _token: _token
       },
       success: function success(result) {
-        console.log(result); // $(".viewFormularioCalificacion").html(result);
+        var obj = $.parseJSON(result);
+
+        if (obj['error'] == 1) {
+          $(".estado-agente").html("<i class='fa fa-circle text-success'></i> Disponible");
+        } else {
+          Swal.fire('Error!', 'No se ha podido generar el logueo de extension.', 'error');
+        }
       }
     });
   });

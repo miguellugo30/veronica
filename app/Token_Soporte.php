@@ -14,7 +14,7 @@ class Token_Soporte extends Model
      * Campos que pueden ser modificados
      */
     protected $fillable = [
-        'token', 'caducidad', 'users_id', 'Empresas_id',
+        'token', 'caducidad', 'users_id_soporte', 'users_id', 'Empresas_id',
     ];
     /**
      * Nombre de la tabla

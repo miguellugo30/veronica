@@ -5,7 +5,9 @@ namespace Modules\Settings\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Nimbus\Http\Controllers\LogController;
 use Nimbus\speech;
+use Nimbus\Opciones_Speech;
 
 class OpcionesSpeechController extends Controller
 {
@@ -76,9 +78,12 @@ class OpcionesSpeechController extends Controller
      */
     public function destroy($id)
     {
-        //
-        $ids = explode('&', $id);
-        $form = speech::find( $ids[1] );
-        $form->Opciones_Speech()->detach($ids[0]);
+        Opciones_Speech::where('id', $id)->delete();
+        /**
+         * Creamos el logs
+         */
+        $mensaje = 'Se Elimino un registro con id: '.$id;
+        $log = new LogController;
+        $log->store('Eliminacion', 'Opciones_Speech', $mensaje, $id);
     }
 }

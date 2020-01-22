@@ -7,8 +7,8 @@ $(function() {
     $(document).on('click', '#tableSpeech tbody tr', function(event) {
         event.preventDefault();
         let id = $(this).data("id");
-        $(".deleteSpeech").slideDown();
-        $(".editSpeech").slideDown();
+
+        $(".dropleft").slideDown();
         $("#idSeleccionado").val(id);
 
         $("#tableSpeech tbody tr").removeClass('table-primary');
@@ -70,7 +70,7 @@ $(function() {
         let url = currentURL + "/speech/create";
 
         $.get(url, function(data, textStatus, jqXHR) {
-            $('#modal').modal('show');
+            $('#modal').modal({ backdrop: 'static', keyboard: false });
             $("#modal-body").html(data);
         });
     });
@@ -126,6 +126,7 @@ $(function() {
         }).fail(function(data) {
             printErrorMsg(data.responseJSON.errors);
         });
+
     });
     /**
      * Evento para guardar el nuevo speech
@@ -138,6 +139,7 @@ $(function() {
         $(dataForm).each(function(index, obj) {
             data[obj.name] = obj.value;
         });
+
         let _token = $("input[name=_token]").val();
         let url = currentURL + '/speech';
 
@@ -163,6 +165,27 @@ $(function() {
         }).fail(function(data) {
             printErrorMsg(data.responseJSON.errors);
         });
+    });
+
+    /**
+     * Evento para guardar el nuevo speech
+     */
+    $(document).on('click', '.viewSpeech', function(event) {
+
+        event.preventDefault();
+        let id = $("#idSeleccionado").val();
+        $('#tituloModal').html('Vista de Speech');
+        let url = currentURL + '/speech/' + id;
+
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function(result) {
+                $('#modal').modal({ backdrop: 'static', keyboard: false });
+                $("#modal-body").html(result);
+            }
+        });
+
     });
 
     /**

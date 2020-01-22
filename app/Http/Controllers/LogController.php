@@ -4,7 +4,9 @@ namespace Nimbus\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Nimbus\Logs;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Nimbus\Token_Soporte;
 
 class LogController extends Controller
 {
@@ -27,13 +29,24 @@ class LogController extends Controller
      */
     public function store($accion, $tabla, $mensaje, $id)
     {
+
+        $user = Auth::user();
+        $id_user = $user->id;
+        $pos = Str::contains($user->email, 'soporte_');
+
+        if ( $pos === true )
+        {
+            $id_user = session('user_real');
+            $mensaje = "Usando la cuenta de soporte ".$mensaje;
+        }
+
         Logs::create([
             'nivel'=>2,
             'accion'=>$accion,
             'tabla'=>$tabla,
             'id_registro'=>$id,
             'mensaje'=>$mensaje,
-            'users_id'=>Auth::id(),
+            'users_id'=>$id_user,
         ]);
     }
 }

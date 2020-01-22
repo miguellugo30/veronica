@@ -19,12 +19,13 @@ class SoporteController extends Controller
         $sesion = Token_Soporte::where('token', $token)->get()->first();
         $caducidad = Carbon::parse( $sesion->caducidad );
 
-        if ( $caducidad->lessThanOrEqualTo(date('Y-m-d H:i:s')) ) {
+        if ( $caducidad->lessThanOrEqualTo(date('Y-m-d H:i:s')) )
+        {
             return abort(403, 'Token invalido, inicie una nueva sesión para soporte');
-        } else {
-
+        }
+        else
+        {
             $usuarioSoporte = User::where([ ['id_cliente', '=', $sesion->Empresas_id],['email','like','soporte_'.$sesion->Empresas_id.'%'] ])->get()->first();
-
             $email = $usuarioSoporte->email;
             //$password = $usuarioSoporte->password;
             $password = '12345678';

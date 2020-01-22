@@ -10,7 +10,7 @@ class Speech extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'tipo','nombre', 'descripcion','Empresas_id'
+        'tipo','nombre', 'descripcion', 'texto', 'Empresas_id',
     ];
     /**
      * Nombre de la tabla que se ocupara
@@ -47,6 +47,5 @@ class Speech extends Model
     public function Opciones_Speech()
     {
         return $this->hasMany('Nimbus\Opciones_Speech', 'speech_id');
-        //return $this->belongsTo('Nimbus\Opciones_Speech');
     }
 }

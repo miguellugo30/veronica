@@ -230,7 +230,7 @@ $(function() {
     $(document).on('click', '.agentesNoSeleccionados tr', function(event) {
 
         let fila = $(this);
-        let idAgente = $(this).data('id');
+        let idAgente = parseInt($(this).data('id'));
         let modoLogueo = $('#mlogeo').val();
         let bandera = true;
         let _token = $("input[name=_token]").val();
@@ -266,10 +266,14 @@ $(function() {
                     }
 
                     if (bandera) {
-                        fila.clone().appendTo(".agentesSeleccionados"); //Clonamos la fila
-                        agentesParticipantes.push(idAgente);
-                        $("#agentes_participantes").val(JSON.stringify(agentesParticipantes));
-                        fila.remove();
+
+                        if (!agentesParticipantes.includes(idAgente)) {
+                            fila.clone().appendTo(".agentesSeleccionados"); //Clonamos la fila
+                            agentesParticipantes.push(idAgente);
+                            $("#agentes_participantes").val(JSON.stringify(agentesParticipantes));
+                            fila.remove();
+                        }
+
                     } else {
                         Swal.fire(
                             '!Tenemos un problema!',

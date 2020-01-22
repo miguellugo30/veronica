@@ -72,9 +72,20 @@ $(function() {
                 _token: _token
             },
             success: function(result) {
-                console.log(result);
-                // $(".viewFormularioCalificacion").html(result);
+
+                var obj = $.parseJSON(result);
+
+                if (obj['error'] == 1) {
+                    $(".estado-agente").html("<i class='fa fa-circle text-success'></i> Disponible");
+                } else {
+                    Swal.fire(
+                        'Error!',
+                        'No se ha podido generar el logueo de extension.',
+                        'error'
+                    )
+                }
             }
+
         });
 
     });

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/highcharts-3d.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
@@ -68,13 +69,15 @@
         });
     });
 </script>
+=======
+>>>>>>> 1502b5e5d2690ca6f75dd592542fd53932ae472c
 <div class="row">
     <div class="col">
         <div class="card">
             <div class="card-header">
                 <i class="fas fa-info-circle"></i>
                 Informacion Empresa
-            </div>
+            </div><!-- .card-header -->
             <div class="card-body">
                 <dl class="row">
                     <dt class="col-sm-3">Id Empresa:</dt>
@@ -86,15 +89,14 @@
                     <dt class="col-sm-3">Estado:</dt>
                     <dd class="col-sm-9">{{ str_replace( '-', ' ', $empresa->Cat_Estado_Empresa->nombre ) }}</dd>
                 </dl>
-            </div>
-        </div>
-    </div>
-    <div class="col">
+            </div><!-- .card-body -->
+        </div><!-- .card -->
+        <br>
         <div class="card">
             <div class="card-header">
                 <i class="fas fa-server"></i>
                 Informacion Infraestructura
-            </div>
+            </div><!-- .card-header -->
             <div class="card-body">
                 <dl class="row">
                     <dt class="col-sm-3">Dominio:</dt>
@@ -108,17 +110,14 @@
                     <dt class="col-sm-3">IP MS:</dt>
                     <dd class="col-sm-9">{{ $empresa->Config_Empresas->ms->ip_pbx }}</dd>
                 </dl>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col">
+            </div><!-- .card-body -->
+        </div><!-- .card -->
+        <br>
         <div class="card">
             <div class="card-header">
                 <i class="fas fa-th"></i>
                 Modulos Contratados
-            </div>
+            </div><!-- .card-header -->
             <div class="card-body">
                 <div class="row">
                     <div class="col">
@@ -145,20 +144,17 @@
                             </li>
                         @endforeach
                         <ol>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <br>
-    <br>
-    <br>
+                    </div><!-- .col-->
+                </div><!-- .row -->
+            </div><!-- .card-body -->
+        </div><!-- .card -->
+    </div><!-- .col-->
     <div class="col">
         <div class="card">
             <div class="card-header">
                 <i class="fas fa-database"></i>
                 Almacenamiento
-            </div>
+            </div><!-- .card-header -->
             <div class="card-body">
                 <dl class="row">
                     <dt class="col-sm-3">Espacio Total:</dt>
@@ -166,9 +162,9 @@
                 </dl>
                 <div class="row">
                     <div class="col">
-                        <!--h1>AQUI VA LA GRAFICA</h1-->
                         <div class="box-body">
                             <div class="row">
+<<<<<<< HEAD
                                 <div class="col-md-12" id="container"></div>
                             </div><!-- /.row -->
                         </div><!-- ./box-body -->
@@ -177,4 +173,70 @@
             </div>
         </div>
     </div>
+=======
+                                <div class="col" id="container"></div>
+                            </div><!-- .row -->
+                        </div><!-- .box-body -->
+                    </div><!-- .col-->
+                </div><!-- .row -->
+            </div><!-- .card-body -->
+        </div><!-- .card -->
+    </div><!-- .col -->
+>>>>>>> 1502b5e5d2690ca6f75dd592542fd53932ae472c
 </div>
+<br>
+<script>
+    $(function() {
+        Highcharts.chart('container', {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie',
+                options3d: {
+                enabled: true,
+                alpha: 45,
+                beta: 0
+            }
+            },
+            title: {
+                text: ''
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.2f} %<br>Capacidad: {point.y:.2f} GB</b>'
+            },
+            accessibility: {
+                point: {
+                    valueSuffix: 'GB'
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    depth: 35,
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.y:.2f} GB</b>'
+                    }
+                }
+            },
+            series: [{
+                name: 'Porcentaje en Disco',
+                colorByPoint: true,
+                data: [{
+                    name: 'Almacenamiento Posiciones',
+                    y: @foreach($config_empresas as $config) {{ $config->almacenamiento_posiciones/1024 }} @endforeach,
+                    sliced: true,
+                    selected: true
+                }, {
+                    name: 'Almacenamiento Adicional',
+                    y: @foreach($config_empresas as $config) {{ $config->almacenamiento_adicional/1024 }} @endforeach
+                }]
+            }]
+        });
+    });
+</script>

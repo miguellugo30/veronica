@@ -8,21 +8,21 @@ class Opciones_Speech extends Model
 {
     //
     /*
-    * Esto sirve para insertar la fecha tipo timestamp debido a la configuracion de Laravel
+    * Esto sirve para insertar la fecha tipo timestamp debido a la configuración de Laravel
     */
     public $timestamps = false;
     /**
      * Campos que pueden ser modificados
      */
     protected $fillable = [
-        'nombre', 'texto', 'prioridad', 'speech_id'
+        'tipo', 'nombre', 'speech_id_hijo', 'speech_id',
     ];
     /**
      * Nombre de la tabla
      */
     protected $table = 'Opciones_Speech';
     /**
-     * Funcion para obtener solo los registros activos
+     * Función para obtener solo los registros activos
      */
 
     /*
@@ -34,7 +34,6 @@ class Opciones_Speech extends Model
      */
      public function Speech()
      {
-         return $this->belongsTo('Nimbus\speech');
-         //return $this->hasMany('Nimbus\speech');
+        return $this->belongsTo('Nimbus\speech');
      }
 }

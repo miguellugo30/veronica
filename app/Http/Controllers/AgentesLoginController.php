@@ -4,11 +4,14 @@ namespace Nimbus\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Modules\Agentes\Http\Controllers\LogRegistroEventosController;
+use Modules\Agentes\Http\Controllers\EventosAmiController;
+use DB;
 
 use Nimbus\Agentes;
 use Nimbus\Miembros_Campana;
+use Nimbus\Crd_Asignacion_Agente;
 
 class AgentesLoginController extends Controller
 {
@@ -67,9 +70,7 @@ class AgentesLoginController extends Controller
      */
     public function agentesLogout( Request $request )
     {
-        Auth::guard('agentes')->logout();
-
-        LogRegistroEventosController::actualiza_evento( $request->input('id_agente'), $request->input('id_evento') );
+        LogRegistroEventosController::actualiza_evento( $request->input('id_agente'), $request->input('id_evento'), $request->input('cierre') );
         /**
          * Ponemos al usuario en estado 1 = No Disponible
          */
@@ -78,6 +79,17 @@ class AgentesLoginController extends Controller
          * Ponemos al usuario en pausa dentro de la cola
          */
         $this->pausar_agente( $request->input('id_agente'), 1 );
+        /**
+         * Se valida que tenga un logueo de extension para colgar
+         */
+        $canal = Crd_Asignacion_Agente::select('canal')->where( 'Agentes_id', $request->input('id_agente') )->orderBy('id', 'desc')->first();
+        $empresa = Agentes::select('Empresas_id')->where( 'id', $request->input('id_agente') )->first();
+
+        if ( !empty( $canal ) ) {
+            $colgado = EventosAmiController::colgar_llamada( $canal->canal, $empresa->Empresas_id );
+        }
+
+        Auth::guard('agentes')->logout();
 
         return redirect('/agentes/login');
     }
@@ -97,16 +109,25 @@ class AgentesLoginController extends Controller
     {
         $agente = auth()->guard('agentes')->user();
 
-        if( $request->input('extension') == $agente->extension ){
+        /**
+         * Obtenemos la modalidad en la cual esta el agente
+         */
+        $modalidad = $this->modalidad_logueo( $agente->id );
 
+        /**
+         * Validamos que la extension ingreso sea la misma a la que
+         * se tiene guardad en la base de datos
+         */
+        if( $request->input('extension') == $agente->extension )
+        {
             /**
-             * Validamos que la extension no este ya disponible
+             * Validamos que la extension no este disponible
              */
             $disponible = $this->Valida_Agente( $agente->extension );
 
-            if ( $disponible->isEmpty() ) {
-
-                $this->Actualiza_Estado_Agente( $agente->id, 2 );
+            if ( $disponible->isEmpty() )
+            {
+                $this->Actualiza_Estado_Agente( $agente->id, $modalidad );
                 /**
                  * Ponemos al usuario en pausa dentro de la cola
                  */
@@ -115,25 +136,29 @@ class AgentesLoginController extends Controller
                 $evento = LogRegistroEventosController::registro_evento( $agente->id, 1 );
 
                 return redirect()->action('\Modules\Agentes\Http\Controllers\AgentesController@index', ['evento' => $evento->id]);
-                //return redirect('/agentes');
-            } else {
+            }
+            else
+            {
                 return back()->withErrors(['email' => 'La extension ya se encuentra en uso.']);
             }
-
-        } else {
-
+        }
+        else
+        {
             /**
-             * Validamos que la extension no este ya disponible
+             * Validamos que la extension no este disponible
              */
-            $disponible = $this->Valida_Agente( $agente->extension );
+            $disponible = $this->Valida_Agente( $request->input('extension') );
 
-            if ( $disponible->isEmpty() ) {
+            if ( $disponible->isEmpty() )
+            {
+                $this->Actualiza_Estado_Extension_Agente( $agente->id, $modalidad, $request->input('extension') );
 
-                LogRegistroEventosController::registro_evento( $agente->id, 1 );
+                $evento = LogRegistroEventosController::registro_evento( $agente->id, 1 );
 
-                $this->Actualiza_Estado_Extension_Agente( $agente->id, 2, $request->input('extension') );
-                return redirect('/agentes');
-            } else {
+                return redirect()->action('\Modules\Agentes\Http\Controllers\AgentesController@index', ['evento' => $evento->id]);
+            }
+            else
+            {
                 return back()->withErrors(['email' => 'La extension ya se encuentra en uso.']);
             }
         }
@@ -165,5 +190,35 @@ class AgentesLoginController extends Controller
     private function pausar_agente($id_agente, $estado)
     {
         Miembros_Campana::where( 'membername', $id_agente )->update(['paused' => $estado]);
+    }
+    /**
+     * Se validad la modalidad de logueo
+     */
+    private function modalidad_logueo($id_agente)
+    {
+        $modalidad = DB::table('Campanas')
+                    ->join( 'Miembros_Campanas', 'Campanas.id', '=', 'Miembros_Campanas.Campanas_id' )
+                    ->select(
+                                'Campanas.modalidad_logue'
+                            )
+                    ->where('Campanas.activo', 1)
+                    ->where('Miembros_Campanas.membername', $id_agente)
+                    ->groupBy('modalidad_logue')
+                    ->first();
+        /**
+         * Si la modalidad es canal abierto, se deja como estado logueado
+         * Si la modalidad es canal cerrado, se deja como estado disponible
+         */
+        if ( isset( $modalidad ) )
+        {
+            if ( $modalidad->modalidad_logue == 'canal_abierto' )
+            {
+                return 11;
+            }
+            else
+            {
+                return 2 ;
+            }
+        }
     }
 }

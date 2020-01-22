@@ -62,6 +62,48 @@
         <div class="col-4">
             <div class="box">
                 <div class="box-header with-border">
+                    <h3 class="box-title"><b>Script</b></h3>
+                    <div class="box-tools pull-right">
+                        <!--button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button-->
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-12 text-justify">
+                            @if ( $speech->tipo == 'estatico' )
+                                <div class="col">
+                                    <h5>{{ $speech->nombre }}</h5>
+                                    <p class="card-text text-justify">{{ $speech->texto }}</p>
+                                </div>
+                            @else
+                                <div class="col">
+                                    <h5 >{{ $speech->nombre }}</h5>
+                                    <hr>
+                                    <p class="card-text text-justify">{{ $bienvenida->texto }}</p>
+                                    <hr>
+                                    <div class="col text-center">
+                                        @foreach ($campos as $opcion)
+                                            @if ( $opcion->tipo == '0' )
+                                                <button type="button" class="btn btn-primary btn-sm opcion" data-speech-id="{{$speech->id}}" data-id='{{ $opcion->speech_id_hijo }}'>{{ $opcion->nombre }}</button>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                    <hr>
+                                    <div id="opcion_seleccionada_{{$speech->id}}" class="col" style="display:none"></div>
+                                </div>
+                            @endif
+
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- ./box-body -->
+            </div>
+            <!-- /.box -->
+            <div class="box">
+                <div class="box-header with-border">
                     <h3 class="box-title"><b>Datos del Cliente</b></h3>
                     <div class="box-tools pull-right">
                         <!--button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button-->
@@ -73,29 +115,6 @@
                         <div class="col-12 text-justify">
                             <p>Occaecat do consectetur mollit labore. Laboris reprehenderit quis voluptate pariatur qui. Pariatur veniam dolore tempor culpa quis occaecat ex aliqua id eu occaecat excepteur deserunt. Minim esse nostrud anim culpa anim mollit fugiat sunt. Consectetur in culpa quis esse nisi amet qui aute cupidatat ullamco sit in esse. Laboris sunt aute irure eu esse duis aliquip amet velit ad minim commodo laborum laboris. Deserunt veniam nisi id cillum consectetur irure nisi culpa anim.</p>
                             <p>Consequat velit velit irure reprehenderit enim culpa amet ut. Id cillum exercitation voluptate deserunt qui dolore aute aliqua enim proident. Non non occaecat eiusmod id. Fugiat exercitation do esse veniam id eiusmod deserunt. Ullamco duis ullamco Lorem sunt sunt commodo labore exercitation.</p>
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                    <!-- /.row -->
-                </div>
-                <!-- ./box-body -->
-            </div>
-            <!-- /.box -->
-            <div class="box">
-                <div class="box-header with-border">
-                    <h3 class="box-title"><b>Script</b></h3>
-                    <div class="box-tools pull-right">
-                        <!--button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button-->
-                    </div>
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body">
-                    <div class="row">
-                        <div class="col-12 text-justify">
-                        <p><b>{{ $speech->nombre }}</b></p>
-
-                        <p>{{ $speech->Opciones_Speech[0]->texto }}</p>
-
                         </div>
                         <!-- /.col -->
                     </div>

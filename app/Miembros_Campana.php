@@ -27,6 +27,10 @@ class Miembros_Campana extends Model
     {
         return $query->where('activo', 1);
     }
+
+    protected $casts = [
+        'Agentes_id' => 'integer',
+      ];
     /*
     |--------------------------------------------------------------------------
     | RELACIONES DE BASE DE DATOS
