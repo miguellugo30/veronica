@@ -40,6 +40,7 @@ $(function() {
         event.preventDefault();
 
         let licencia = $("#licencia").val();
+        let disponibles = $("#disponibles").val();
         let _token = $("input[name=_token]").val();
         let url = currentURL + '/licencias_bria';
 
@@ -48,6 +49,7 @@ $(function() {
             type: 'POST',
             data: {
                 licencia: licencia,
+                disponibles: disponibles,
                 _token: _token
             },
             beforeSend: function() {

@@ -15,6 +15,7 @@ use Nimbus\Modulos;
 use Nimbus\BaseDatos;
 use Nimbus\Dominios;
 use Nimbus\Config_Empresas;
+use Nimbus\Almacenamiento;
 use Nimbus\Canales;
 use Nimbus\Cat_Tipo_Canales;
 use Nimbus\Dids;
@@ -339,11 +340,16 @@ class EmpresasController extends Controller
              */
             $empresa = Empresas::findOrFail($id);
             /***
-             * Buscamos los datos del Almacenamiento para la grafica
+             * Buscamos los datos del Almacenamiento y Configuracion para la grafica
              */
             $config_empresas = Config_Empresas::where('Empresas_id',$idEmpresa)->get();
+            $inbound = Almacenamiento::active()->where('Empresas_id',$idEmpresa)->sum('grabaciones_entrada');
+            $outbound = Almacenamiento::active()->where('Empresas_id',$idEmpresa)->sum('grabaciones_salida');
+            $manual = Almacenamiento::active()->where('Empresas_id',$idEmpresa)->sum('grabaciones_manuales');
+            $buzon = Almacenamiento::active()->where('Empresas_id',$idEmpresa)->sum('buzon_voz');
+            $audios = Almacenamiento::active()->where('Empresas_id',$idEmpresa)->sum('audios_empresa');
 
-            return view('administrador::empresas.general', compact('empresa','config_empresas'));
+            return view('administrador::empresas.general', compact('empresa','config_empresas', 'inbound', 'outbound', 'manual', 'buzon', 'audios'));
 
         } else if( $data[1] == 'dataEmpresa' ) {
             /**

@@ -29,13 +29,13 @@
                                         <button type="button" class="btn btn-lg btn-secondary btn-sm pop" data-toggle="popover" title="Empresas" data-content="
                                         <ul>
                                             @foreach ($licencia->Extensiones as $v)
-                                                {{ "<li>".$v->Empresas->nombre.": </li>"}}
+                                                {{ "<li>".$v->Empresas->nombre.": </li>" }}
                                             @endforeach
                                         </ul>
                                         "> <i class="fas fa-eye"></i></button>
                                     @endif
                                 </td>
-                                <td>{{ $licencia->disponibles }}</td>
+                                <td>{{ ($licencia->disponibles)+($licencia->Extensiones->count()) }}</td>
                             </tr>
                         @endforeach
                     </tbody>

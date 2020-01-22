@@ -38,7 +38,9 @@ class ACDController extends Controller
      */
     public function store(Request $request)
     {
-        $cdr = DB::select('call estadisticas_llamadas');
+        $user = Auth::user();
+        $empresa_id = $user->id_cliente;
+        $cdr = DB::select("call estadisticas_llamadas('$empresa_id','$request->dateInicio','$request->dateFin')");
 
         //dd( $cdr );
         return view('inbound::ACD.show', compact( 'cdr' ));

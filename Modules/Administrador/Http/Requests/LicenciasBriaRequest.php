@@ -15,6 +15,7 @@ class LicenciasBriaRequest extends FormRequest
     {
         return [
             'licencia' => 'required',
+            'disponibles' => 'required|numeric|min:1',
         ];
     }
 
@@ -32,6 +33,7 @@ class LicenciasBriaRequest extends FormRequest
     {
         return[
             'licencia' => 'Licencia',
+            'disponibles' => 'Licencias Disponibles',
         ];
     }
 }

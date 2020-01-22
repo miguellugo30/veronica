@@ -5,6 +5,10 @@
         @csrf
     </div>
     <div class="form-group">
+        <label for="name">Numero de Licencias Disponibles *:</label>
+        <input type="number" class="form-control form-control-sm" id="disponibles" name="disponibles" placeholder="Licencias Disponibles">
+    </div>
+    <div class="form-group">
         <small class="form-text text-muted"> <b>*Campos obligatorios.</b></small>
     </div>
     <div class="alert alert-danger print-error-msg" role="alert" style="display:none">

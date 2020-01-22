@@ -14,7 +14,7 @@ class LicenciasBria extends Model
      * Campos que pueden ser modificados
      */
     protected $fillable = [
-        'licencia', 'ocupadas',
+        'licencia', 'ocupadas', 'disponibles',
     ];
     /**
      * Nombre de la tabla

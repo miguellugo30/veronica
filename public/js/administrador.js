@@ -2730,6 +2730,7 @@ $(function () {
   $(document).on('click', '.saveLicencia', function (event) {
     event.preventDefault();
     var licencia = $("#licencia").val();
+    var disponibles = $("#disponibles").val();
 
     var _token = $("input[name=_token]").val();
 
@@ -2739,6 +2740,7 @@ $(function () {
       type: 'POST',
       data: {
         licencia: licencia,
+        disponibles: disponibles,
         _token: _token
       },
       beforeSend: function beforeSend() {

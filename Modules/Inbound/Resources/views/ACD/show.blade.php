@@ -3,7 +3,7 @@
     @php
         $i = 1;
     @endphp
-    @foreach ($cdr as $v)
+    @foreach (dd($cdr) as $v)
         <div class="col">
             <div class="box box-primary">
                 <div class="box-header">
