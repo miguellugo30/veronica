@@ -1,76 +1,3 @@
-<<<<<<< HEAD
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/highcharts-3d.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="https://code.highcharts.com/modules/export-data.js"></script>
-<script src="https://code.highcharts.com/modules/accessibility.js"></script>
-<script>
-    $(function() {
-        Highcharts.chart('container', {
-            chart: {
-                plotBackgroundColor: null,
-                plotBorderWidth: null,
-                plotShadow: false,
-                type: 'pie',
-                options3d: {
-                enabled: true,
-                alpha: 45,
-                beta: 0
-            }
-            },
-            title: {
-                text: ''
-            },
-            tooltip: {
-                pointFormat: '{series.name}: <b>{point.percentage:.2f} %<br>Espacio {point.name}: {point.y:.2f} GB</b>'
-            },
-            accessibility: {
-                point: {
-                    valueSuffix: 'GB'
-                }
-            },
-            credits: {
-                enabled: false
-            },
-            plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    depth: 35,
-                    dataLabels: {
-                        enabled: true,
-                        format: '<b>{point.name}</b>: {point.y:.2f} GB</b>'
-                    }
-                }
-            },
-            series: [{
-                name: 'Porcentaje en Disco',
-                colorByPoint: true,
-                data: [{
-                    name: 'Disponible',
-                    y: @foreach($config_empresas as $config) {{ ((($config->almacenamiento_adicional)+($config->almacenamiento_posiciones))/1024)-($inbound+$outbound+$manual+$buzon+$audios)/1024 }} @endforeach
-                }, {
-                    name: 'Inbound',
-                    y: {{ ($inbound)/1024 }}
-                }, {
-                    name: 'Outbund',
-                    y: {{ ($outbound)/1024 }}
-                }, {
-                    name: 'Manual',
-                    y: {{ ($manual)/1024 }}
-                }, {
-                    name: 'Buzon de Voz',
-                    y: {{ ($buzon)/1024 }}
-                }, {
-                    name: 'Audios',
-                    y: {{ ($audios)/1024 }}
-                }]
-            }]
-        });
-    });
-</script>
-=======
->>>>>>> 1502b5e5d2690ca6f75dd592542fd53932ae472c
 <div class="row">
     <div class="col">
         <div class="card">
@@ -164,16 +91,6 @@
                     <div class="col">
                         <div class="box-body">
                             <div class="row">
-<<<<<<< HEAD
-                                <div class="col-md-12" id="container"></div>
-                            </div><!-- /.row -->
-                        </div><!-- ./box-body -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-=======
                                 <div class="col" id="container"></div>
                             </div><!-- .row -->
                         </div><!-- .box-body -->
@@ -182,11 +99,10 @@
             </div><!-- .card-body -->
         </div><!-- .card -->
     </div><!-- .col -->
->>>>>>> 1502b5e5d2690ca6f75dd592542fd53932ae472c
 </div>
 <br>
 <script>
-    $(function() {
+        $(function() {
         Highcharts.chart('container', {
             chart: {
                 plotBackgroundColor: null,
@@ -203,7 +119,7 @@
                 text: ''
             },
             tooltip: {
-                pointFormat: '{series.name}: <b>{point.percentage:.2f} %<br>Capacidad: {point.y:.2f} GB</b>'
+                pointFormat: '{series.name}: <b>{point.percentage:.2f} %<br>Espacio {point.name}: {point.y:.2f} GB</b>'
             },
             accessibility: {
                 point: {
@@ -228,13 +144,23 @@
                 name: 'Porcentaje en Disco',
                 colorByPoint: true,
                 data: [{
-                    name: 'Almacenamiento Posiciones',
-                    y: @foreach($config_empresas as $config) {{ $config->almacenamiento_posiciones/1024 }} @endforeach,
-                    sliced: true,
-                    selected: true
+                    name: 'Disponible',
+                    y: @foreach($config_empresas as $config) {{ ((($config->almacenamiento_adicional)+($config->almacenamiento_posiciones))/1024)-($inbound+$outbound+$manual+$buzon+$audios)/1024 }} @endforeach
                 }, {
-                    name: 'Almacenamiento Adicional',
-                    y: @foreach($config_empresas as $config) {{ $config->almacenamiento_adicional/1024 }} @endforeach
+                    name: 'Inbound',
+                    y: {{ ($inbound)/1024 }}
+                }, {
+                    name: 'Outbund',
+                    y: {{ ($outbound)/1024 }}
+                }, {
+                    name: 'Manual',
+                    y: {{ ($manual)/1024 }}
+                }, {
+                    name: 'Buzon de Voz',
+                    y: {{ ($buzon)/1024 }}
+                }, {
+                    name: 'Audios',
+                    y: {{ ($audios)/1024 }}
                 }]
             }]
         });
