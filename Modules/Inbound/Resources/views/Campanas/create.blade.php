@@ -5,7 +5,6 @@
                 <b>*Campos obligatorios.</b>
             </div>
             <fieldset>
-                <legend>Configuración:</legend>
                 <div class="form-group">
                     <label for="nombre"><b>Nombre *:</b></label>
                     <input type="text" class="form-control form-control-sm" id="nombre" placeholder="Nombre campaña" value="">
@@ -125,33 +124,36 @@
         </div>
         <div class="col">
             <fieldset >
-                <legend>Agentes que participan en la campaña <b><a class="nombreCampana"></a></b></legend>
+                <legend>Agentes que participan en la campaña <b><button type="button" class="btn btn-danger btn-sm float-right agentesSeleccionados">Quitar</button></b></legend>
                 <table class="table table-sm table-striped table-hover">
                     <thead class="thead-light">
                         <tr>
+                            <th scope="col text-center"><input type="checkbox" name="todos_selec" id="todos_selec"></th>
                             <th scope="col">Grupo</th>
                             <th scope="col">Nombre</th>
                             <th scope="col">Extension</th>
                         </tr>
                     </thead>
-                    <tbody class="agentesSeleccionados">
+                    <tbody class="agenteSelec">
 
                     </tbody>
                 </table>
             </fieldset>
             <fieldset >
-                <legend>Agentes que no participan en la campaña <b><a class="nombreCampana"></a></b></legend>
+                <legend>Agentes que no participan en la campaña <b><button type="button" class="btn btn-primary btn-sm float-right agentesNoSeleccionados">Agregar</button></b></legend>
                 <table class="table table-sm table-striped table-hover">
                     <thead class="thead-light">
                         <tr>
+                            <th scope="col text-center"><input type="checkbox" name="todos_no_selec" id="todos_no_selec"></th>
                             <th scope="col">Grupo</th>
                             <th scope="col">Nombre</th>
                             <th scope="col">Extension</th>
                         </tr>
                     </thead>
-                    <tbody class="agentesNoSeleccionados">
+                    <tbody class="agentesNoSelec">
                         @foreach ($agentes as $agente)
-                            <tr data-id="{{ $agente->id }}">
+                            <tr id="tr_{{ $agente->id }}">
+                                <td class="text-center"><input type="checkbox" class="agentes_no" name="agentes_no" value="{{ $agente->id }}"></td>
                                 <td></td>
                                 <td>{{ $agente->nombre }}</td>
                                 <td>{{ $agente->extension }}</td>

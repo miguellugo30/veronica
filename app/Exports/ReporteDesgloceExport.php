@@ -5,6 +5,7 @@ namespace Nimbus\Exports;
 use Modules\Inbound\Http\Controllers\QueryreportdesgloseController;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
+use DB;
 
 class ReporteDesgloceExport implements FromView
 {
@@ -21,8 +22,7 @@ class ReporteDesgloceExport implements FromView
 
     public function view(): View
     {
-        $data = QueryreportdesgloseController::query( $this->fecha_inicio, $this->fecha_fin, $this->empresa_id );
-
+        $data = DB::select("call SP_Desgloce_llamadas('$this->fecha_inicio','$this->fecha_fin',$this->empresa_id)");
         return view('inbound::DesgloseLlamadas.show', [
             'desglose' => $data
         ]);

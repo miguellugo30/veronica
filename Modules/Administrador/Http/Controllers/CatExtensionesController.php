@@ -157,15 +157,16 @@ class CatExtensionesController extends Controller
             LicenciasBria::where( [
                 ['id', '=',  $info[$i][3] ],
             ])->increment(
-                'ocupadas',1
+                'ocupadas'
             );
             /**
              * Decrementamos el numero de licencias disponibles
              */
             LicenciasBria::where( [
                 ['id', '=',  $info[$i][3] ],
+                ['disponibles','>','0'],
             ])->decrement(
-                'disponibles',1
+                'disponibles'
             );
             /**
              * Creamos el logs
@@ -197,9 +198,10 @@ class CatExtensionesController extends Controller
          */
 
         LicenciasBria::where( [
-            ['id', '=',  $cat->Cat_Licencias_Bria_id ]
+            ['id', '=',  $cat->Cat_Licencias_Bria_id ],
+            ['disponibles','>','0'],
         ])->decrement(
-            'ocupadas',1
+            'ocupadas'
         );
         /***
          * Incrementamos el numero de licencias disponibles
@@ -207,7 +209,7 @@ class CatExtensionesController extends Controller
         LicenciasBria::where( [
             ['id', '=', $cat->Cat_Licencias_Bria_id ]
         ])->increment(
-            'disponibles',1
+            'disponibles'
         );
         /**
          * Creamos el logs
