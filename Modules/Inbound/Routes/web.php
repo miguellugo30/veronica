@@ -67,6 +67,7 @@ Route::group(['namespace' => '\Modules\Inbound\Http\Controllers', 'prefix' => 'i
 * Rutas para CRUD de Metricas ACD
 */
 Route::group(['namespace' => '\Modules\Inbound\Http\Controllers', 'prefix' => 'inbound', 'middleware' => 'auth'], function() {
+    Route::get('Metricas_ACD/descargar/{fecha_inicio}/{fecha_fin}', 'ACDController@update');
     Route::resource('Metricas_ACD','ACDController');
 });
 /**
