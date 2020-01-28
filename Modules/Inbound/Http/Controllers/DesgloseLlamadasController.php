@@ -10,8 +10,6 @@ use Nimbus\Exports\ReporteDesgloceExport;
 use Maatwebsite\Excel\Facades\Excel;
 use DB;
 
-use Modules\Inbound\Http\Controllers\QueryreportdesgloseController;
-
 class DesgloseLlamadasController extends Controller
 {
     /**
@@ -31,7 +29,7 @@ class DesgloseLlamadasController extends Controller
         $user = Auth::user();
         $empresa_id = $user->id_cliente;
 
-        $desglose = DB::select("call SP_Desgloce_llamadas('$request->dateinicio','$request->datefin',$empresa_id)");
+        $desglose = DB::select("call SP_Desgloce_llamadas($empresa_id,'$request->dateinicio','$request->datefin')");
         return view('inbound::DesgloseLlamadas.show',compact('desglose'));
     }
     /**

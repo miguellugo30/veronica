@@ -22,7 +22,7 @@ class ReporteDesgloceExport implements FromView
 
     public function view(): View
     {
-        $data = DB::select("call SP_Desgloce_llamadas('$this->fecha_inicio','$this->fecha_fin',$this->empresa_id)");
+        $data = DB::select("call SP_Desgloce_llamadas($this->empresa_id,'$this->fecha_inicio','$this->fecha_fin')");
         return view('inbound::DesgloseLlamadas.show', [
             'desglose' => $data
         ]);
