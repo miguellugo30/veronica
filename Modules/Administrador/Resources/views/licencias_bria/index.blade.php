@@ -25,7 +25,7 @@
                             <tr data-id="{{ $licencia->id }}" style="cursor:pointer">
                                 <td>{{ $licencia->licencia }}</td>
                                 <td>{{ $licencia->disponibles }}</td>
-                                <td>{{ $licencia->Extensiones->count() }}</td>
+                                <td>{{ $licencia->disponibles - $licencia->Extensiones->count() == $licencia->disponibles ? 0 : $licencia->ocupadas }}</td>
                                 <td>
                                     @if ( $licencia->Extensiones->count() != 0 )
                                         <button type="button" class="btn btn-lg btn-secondary btn-sm pop" data-toggle="popover" title="Empresas" data-content="

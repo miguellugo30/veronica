@@ -1,11 +1,15 @@
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
 <!-- Main row -->
 <div class="row">
-    @php
+    {{--@php
         $i = 1;
     @endphp
-    @foreach (dd($cdr) as $v)
+    @foreach (dd($cdr) as $v)--}}
         <div class="col">
-            <div class="box box-primary">
+            <div class="box-primary">
                 <div class="box-header">
                     <i class="fas fa-bookmark"></i>
                     <h3 class="box-title">CAMPANA A</h3>
@@ -21,95 +25,59 @@
                                 </thead>
                                 <tbody>
                                     <tr >
+                                        <td>Todas</td>
+                                        <td class="text-center">{{ $todas[1] }}</td>
+                                        <td class="text-center">{{ number_format( ( ($todas[1]) * 100 ) / ( $todas[1] ), 2) }} %</td>
+                                    </tr>
+                                    <tr >
                                         <td>Contestadas</td>
-                                        <td class="text-center">{{ $v->var_llamadas_total }}</td>
-                                        <td class="text-center">{{ number_format( ( $v->var_llamadas_total * 100 ) / ( $v->var_llamadas_total + $v->var_llamadas_total_abandonadas ), 2) }} %</td>
+                                        <td class="text-center">{{ $contestadas[1] }}</td>
+                                        <td class="text-center">{{ number_format( ( $contestadas[1] * 100 ) / ( $todas[1] ), 2) }} %</td>
                                     </tr>
                                     <tr>
                                         <td>Abandonadas</td>
-                                        <td class="text-center">{{ $v->var_llamadas_total_abandonadas }}</td>
-                                        <td class="text-center">{{ number_format( ( $v->var_llamadas_total_abandonadas * 100 ) / ( $v->var_llamadas_total + $v->var_llamadas_total_abandonadas ), 2) }} %</td>
+                                        <td class="text-center">{{ $nocontestadas[1] }}</td>
+                                        <td class="text-center">{{ number_format( ( $nocontestadas[1] * 100 ) / ( $todas[1] ), 2) }} %</td>
                                     </tr>
                                     <tr>
                                         <td>Desviadas</td>
-                                        <td class="text-center"></td>
-                                        <td class="text-center"></td>
+                                        <td class="text-center">{{ $desviadas[1] }}</td>
+                                        <td class="text-center">{{ number_format( ( $desviadas[1] * 100 ) / ( $todas[1] ), 2) }} %</td>
                                     </tr>
                                     <tr>
                                         <td>Promedio de Espera</td>
-                                        <td class="text-center">00:00:08 Hrs.</td>
+                                        <td class="text-center">{{ $promediotiempoespera[1] }} Hrs.</td>
                                         <td class="text-center"></td>
                                     </tr>
                                     <tr>
                                         <td>Promedio de Llamada</td>
-                                        <td class="text-center">{{ gmdate( 'H:i:s', $v->var_tiempo_promedio_total_llamada ) }} Hrs.</td>
+                                        <td class="text-center">{{ $promediodellamada[1] }} Hrs.</td>
                                         <td class="text-center"></td>
                                     </tr>
                                     <tr>
                                         <td>Promedio de Abandono</td>
-                                        <td class="text-center">{{ gmdate( 'H:i:s',  $v->var_tiempo_promedio_abandono ) }} Hrs.</td>
+                                        <td class="text-center">{{ $promedioabandono[1] }} Hrs.</td>
                                         <td class="text-center"></td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                         <div class="col">
-                            <div id="container_{{$i}}" style="height: 300px;"></div>
+                            <div id="container_1" style="height: 300px;"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        @php
+        {{--@php
             $i++;
-        @endphp
-    @endforeach
+        @endphp--}}
+    {{--@endforeach--}}
 </div>
-
 <script>
 
 
 $(function() {
-    Highcharts.chart('container', {
-        chart: {
-            plotBackgroundColor: null,
-            plotBorderWidth: null,
-            plotShadow: false,
-            type: 'pie'
-        },
-        title: {
-            text: ''
-        },
-        tooltip: {
-            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-        },
-        plotOptions: {
-            pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
-                dataLabels: {
-                    enabled: true,
-                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-                }
-            }
-        },
-        series: [{
-            name: 'Llamadas',
-            colorByPoint: true,
-            data: [{
-                name: 'Contestadas',
-                y: 61.41,
-                sliced: true,
-                selected: true
-            }, {
-                name: 'Abandonadas',
-                y: 11.84
-            }, {
-                name: 'Desviadas',
-                y: 10.85
-            }]
-        }]
-    });
     Highcharts.chart('container_1', {
         chart: {
             plotBackgroundColor: null,
@@ -121,6 +89,46 @@ $(function() {
             text: ''
         },
         tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.2f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.2f} %'
+                }
+            }
+        },
+        series: [{
+            name: 'Llamadas',
+            colorByPoint: true,
+            data: [{
+                name: 'Contestadas',
+                y: {{ $contestadas[1] }},
+                sliced: true,
+                selected: true
+            }, {
+                name: 'Abandonadas',
+                y: {{ $nocontestadas[1] }}
+            }, {
+                name: 'Desviadas',
+                y: {{ $desviadas[1] }}
+            }]
+        }]
+    });
+    /*Highcharts.chart('container_', {
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: ''
+        },
+        tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
         },
         plotOptions: {
@@ -148,6 +156,6 @@ $(function() {
                 y: 10.85
             }]
         }]
-    });
+    });*/
 });
 </script>

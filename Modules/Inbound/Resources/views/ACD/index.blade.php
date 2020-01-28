@@ -16,6 +16,11 @@
 <div class="box box-primary">
     <div class="box-header with-border">
         <h3 class="box-title"><b><i class="fas fa-filter"></i> Filtro</b></h3>
+        <div class="box-tools pull-right">
+            <button class='btn btn-primary btn-sm nuevo-reporte' style='display:none'>
+                Nuevo Reporte
+            </button>
+        </div>
     </div><!-- /.box-header -->
     <div class="box-body">
         <div class="row filtro-reporte">
@@ -69,20 +74,24 @@
         </div><!-- /.row -->
     </div><!-- ./box-body -->
 </div>
-<!--div class="box box-primary box-reporte" >
+<div class="box box-primary" id='body-reporte' style='display:none'>
     <div class="box-header with-border">
         <h3 class="box-title"><b><i class="fas fa-filter"></i> Reporte</b></h3>
-    </div><!- /.box-header ->
+        <!--div class="box-tools pull-right">
+            <button class='btn btn-primary btn-sm descargar-reporte' >
+                <i class="fas fa-circle-notch fa-spin" style="display:none"></i>
+                Descargar
+            </button>
+        </div-->
+    </div><!-- /.box-header -->
     <div class="box-body">
         <div class="row">
-        </div><!- /.row ->
-    </div><!- ./box-body ->
-</div-->
-
-<div class="col-12 viewReporteACD">
-
+            <div class="col-12 viewReporteACD">
+            </div>
+        </div><!-- /.row -->
+    </div><!-- ./box-body -->
 </div>
-
+<iframe id="iFrameDescarga" src="" frameborder="0" style="display:none"></iframe>
 
 <script>
     /*
