@@ -12,7 +12,8 @@
                 <th>Editar</th>
                 <th>Canal</th>
                 <th>Extension</th>
-                <th>Licencia Bria</th>
+                <th>Licencia en uso</th>
+                <th>Licencias Bria</th>
                 <th></th>
             </tr>
         </thead>
@@ -31,10 +32,17 @@
                         <input class="form-control form-control-sm" type="text" name="extension_{{ $extension->id }}" id="extension_{{ $extension->id }}" value="{{ $extension->extension }}" disabled>
                     </td>
                     <td>
+                        @if ( $extension->Cat_Licencias_Bria_id != 0 )
+                            {{ $extension->Licencias->licencia }}
+                        @else
+                            Sin licencia.
+                        @endif
+                    </td>
+                    <td>
                         <select  class="form-control form-control-sm" name="licencia_extension_{{ $extension->id }}" id="licencia_extension_{{ $extension->id }}" disabled>
                             <option value="0">Selecciona una licencia</option>
                             @foreach ($licencias as $licencia)
-                                <option value="{{$licencia->id}}" {{ $licencia->id == $extension->Cat_Licencias_Bria_id ? "selected" : "" }}>{{ $licencia->licencia }}</option>
+                                <option value="{{$licencia->id}}">{{ $licencia->licencia }}</option>
                             @endforeach
                         </select>
                     </td>

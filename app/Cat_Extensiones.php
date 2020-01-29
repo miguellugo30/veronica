@@ -57,6 +57,6 @@ class Cat_Extensiones extends Model
      */
     public function Licencias()
     {
-        return $this->belongsTo('Nimbus\Cat_Licencias_Bria', 'Cat_Licencias_Bria_id');
+        return $this->belongsTo('Nimbus\LicenciasBria', 'Cat_Licencias_Bria_id');
     }
 }
