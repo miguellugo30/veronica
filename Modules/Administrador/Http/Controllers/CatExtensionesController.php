@@ -88,7 +88,7 @@ class CatExtensionesController extends Controller
         /**
          * Obtenemos las licencias bria activas
          */
-        $licencias = LicenciasBria::active()->whereColumn('disponibles','>','ocupadas')->get();
+        $licencias = LicenciasBria::active()->get();
         /**
          * Obtenemos las extensiones que ya tiene la empresa
          */

@@ -123,4 +123,11 @@ class Empresas extends Model
     {
         return $this->hasMany('Nimbus\almacenamiento');
     }
+    /**
+     * Relacion muchos a muchos con Cat_campos_plantillas
+     */
+    public function Cat_campos_plantillas()
+    {
+        return $this->belongsToMany('Nimbus\Cat_campos_plantillas', 'Campos_plantillas_empresa');
+    }
 }

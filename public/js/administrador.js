@@ -534,6 +534,194 @@ $(function () {
 
 /***/ }),
 
+/***/ "./resources/js/module_administrador/cat_campos_plantillas.js":
+/*!********************************************************************!*\
+  !*** ./resources/js/module_administrador/cat_campos_plantillas.js ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  var currentURL = window.location.href;
+  /**
+   * Evento para mostrar el formulario de crear un nuevo modulo
+   */
+
+  $(document).on("click", ".newCamPla", function (e) {
+    e.preventDefault();
+    $('#tituloModal').html('Nuevo Campo Plantilla');
+    $('#action').removeClass('updateCamPla');
+    $('#action').addClass('saveCamPla');
+    var url = currentURL + '/cat_campos_plantillas/create';
+    $.get(url, function (data, textStatus, jqXHR) {
+      $('#modal').modal('show');
+      $("#modal-body").html(data);
+    });
+  });
+  /**
+   * Evento para mostrar el formulario de edicion de un canal
+   */
+
+  $(document).on("click", ".editCamPla", function (e) {
+    e.preventDefault();
+    $('#tituloModal').html('Editar Campo Plantilla');
+    $('#action').removeClass('saveCamPla');
+    $('#action').addClass('updateCamPla');
+    var id = $("#idSeleccionado").val();
+    var url = currentURL + "/cat_campos_plantillas/" + id + "/edit";
+    $.get(url, function (data, textStatus, jqXHR) {
+      $('#modal').modal('show');
+      $("#modal-body").html(data);
+    });
+  });
+  /**
+   * Evento para guardar el nuevo modulo
+   */
+
+  $(document).on('click', '.saveCamPla', function (event) {
+    event.preventDefault();
+    var nombre = $("#nombre").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var url = currentURL + '/cat_campos_plantillas';
+    $.post(url, {
+      nombre: nombre,
+      _token: _token
+    }, function (data, textStatus, xhr) {
+      $('.viewResult').html(data);
+      $('.viewIndex #tableCamPla').DataTable({
+        "lengthChange": true
+      });
+    }).done(function () {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
+    });
+  });
+  /**
+   * Evento para seleccionar un solo campo plantilla y deseleccionar los demas
+   */
+
+  $(document).on('click', '#tableCamPla tbody tr', function (event) {
+    event.preventDefault();
+    var id = $(this).data("id");
+    $(".editCamPla").slideDown();
+    $(".deleteCamPla").slideDown();
+    $("#idSeleccionado").val(id);
+    $("#tableCamPla tbody tr").removeClass('table-primary');
+    $(this).addClass('table-primary');
+  });
+  /**
+   * Evento para cancelar la creacion/edicion del modulo
+   */
+
+  $(document).on("click", ".cancelCamPla", function (e) {
+    $(".viewIndex").slideDown();
+    $(".viewCreate").slideUp();
+    $(".viewCreate").html('');
+  });
+  /**
+   * Evento para editar el modulo
+   */
+
+  $(document).on('click', '.updateCamPla', function (event) {
+    event.preventDefault();
+    var nombre = $("#nombre").val();
+    var id = $("#id").val();
+    var _method = "PUT";
+
+    var _token = $("input[name=_token]").val();
+
+    var url = currentURL + '/cat_campos_plantillas/' + id;
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {
+        nombre: nombre,
+        _token: _token,
+        _method: _method
+      },
+      success: function success(result) {
+        $('.viewResult').html(result);
+        $('.viewCreate').slideUp();
+        $('.viewIndex #tableCamPla').DataTable({
+          "lengthChange": true
+        });
+      }
+    }).done(function (data) {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
+      Swal.fire('Correcto!', 'El registro ha sido actualizado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
+    });
+  });
+  /**
+   * Evento para eliminar el modulo
+   */
+
+  $(document).on('click', '.deleteCamPla', function (event) {
+    event.preventDefault();
+    Swal.fire({
+      title: 'Estas seguro?',
+      text: "Deseas eliminar el registro seleccionado!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Eliminar!',
+      cancelButtonText: 'Cancelar'
+    }).then(function (result) {
+      if (result.value) {
+        var id = $("#idSeleccionado").val();
+
+        var _token = $("input[name=_token]").val();
+
+        var _method = "DELETE";
+        var url = currentURL + '/cat_campos_plantillas/' + id;
+        $.ajax({
+          url: url,
+          type: 'POST',
+          data: {
+            _token: _token,
+            _method: _method
+          },
+          success: function success(result) {
+            $('.viewResult').html(result);
+            $('.viewCreate').slideUp();
+            $('.viewIndex #tableCamPla').DataTable({
+              "lengthChange": true
+            });
+            Swal.fire('Eliminado!', 'El registro ha sido eliminado.', 'success');
+          }
+        });
+      }
+    });
+  });
+  /**
+   * Funcion para mostrar los errores de los formularios
+   */
+
+  function printErrorMsg(msg) {
+    $(".print-error-msg").find("ul").html('');
+    $(".print-error-msg").css('display', 'block');
+    $(".form-control").removeClass('is-invalid');
+
+    for (var clave in msg) {
+      $("#" + clave).addClass('is-invalid');
+
+      if (msg.hasOwnProperty(clave)) {
+        $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
+      }
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/module_administrador/cat_estado_agente.js":
 /*!****************************************************************!*\
   !*** ./resources/js/module_administrador/cat_estado_agente.js ***!
@@ -2872,6 +3060,9 @@ $(function () {
     } else if (id == 5) {
       url = currentURL + '/smtp';
       table = ' #tableSmtp';
+    } else if (id == 41) {
+      url = currentURL + '/cat_campos_plantillas';
+      table = ' #tableCamPla';
     }
 
     $.get(url, function (data, textStatus, jqXHR) {
@@ -4138,12 +4329,34 @@ $(function () {
 /***/ }),
 
 /***/ 0:
-/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/module_administrador/usuarios.js ./resources/js/module_administrador/modulos.js ./resources/js/module_administrador/submenus.js ./resources/js/module_administrador/menus.js ./resources/js/module_administrador/distribuidores.js ./resources/js/module_administrador/dids.js ./resources/js/module_administrador/cat_estado_agente.js ./resources/js/module_administrador/cat_estado_cliente.js ./resources/js/module_administrador/cat_estado_empresa.js ./resources/js/module_administrador/cat_ip_pbx.js ./resources/js/module_administrador/cat_nas.js ./resources/js/module_administrador/troncales.js ./resources/js/module_administrador/canales.js ./resources/js/module_administrador/empresas.js ./resources/js/module_administrador/cat_base_datos.js ./resources/js/module_administrador/cat_tipo_canal.js ./resources/js/module_administrador/menu.js ./resources/js/module_administrador/cat_extensiones.js ./resources/js/module_administrador/licenciasBria.js ***!
-  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/module_administrador/usuarios.js ./resources/js/module_administrador/modulos.js ./resources/js/module_administrador/submenus.js ./resources/js/module_administrador/menus.js ./resources/js/module_administrador/distribuidores.js ./resources/js/module_administrador/dids.js ./resources/js/module_administrador/cat_estado_agente.js ./resources/js/module_administrador/cat_estado_cliente.js ./resources/js/module_administrador/cat_estado_empresa.js ./resources/js/module_administrador/cat_ip_pbx.js ./resources/js/module_administrador/cat_nas.js ./resources/js/module_administrador/troncales.js ./resources/js/module_administrador/canales.js ./resources/js/module_administrador/empresas.js ./resources/js/module_administrador/cat_base_datos.js ./resources/js/module_administrador/cat_tipo_canal.js ./resources/js/module_administrador/menu.js ./resources/js/module_administrador/cat_extensiones.js ./resources/js/module_administrador/licenciasBria.js ./resources/js/module_administrador/cat_campos_plantillas.js ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+<<<<<<< HEAD
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\usuarios.js */"./resources/js/module_administrador/usuarios.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\modulos.js */"./resources/js/module_administrador/modulos.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\submenus.js */"./resources/js/module_administrador/submenus.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\menus.js */"./resources/js/module_administrador/menus.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\distribuidores.js */"./resources/js/module_administrador/distribuidores.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\dids.js */"./resources/js/module_administrador/dids.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\cat_estado_agente.js */"./resources/js/module_administrador/cat_estado_agente.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\cat_estado_cliente.js */"./resources/js/module_administrador/cat_estado_cliente.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\cat_estado_empresa.js */"./resources/js/module_administrador/cat_estado_empresa.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\cat_ip_pbx.js */"./resources/js/module_administrador/cat_ip_pbx.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\cat_nas.js */"./resources/js/module_administrador/cat_nas.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\troncales.js */"./resources/js/module_administrador/troncales.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\canales.js */"./resources/js/module_administrador/canales.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\empresas.js */"./resources/js/module_administrador/empresas.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\cat_base_datos.js */"./resources/js/module_administrador/cat_base_datos.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\cat_tipo_canal.js */"./resources/js/module_administrador/cat_tipo_canal.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\menu.js */"./resources/js/module_administrador/menu.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\cat_extensiones.js */"./resources/js/module_administrador/cat_extensiones.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\licenciasBria.js */"./resources/js/module_administrador/licenciasBria.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\cat_campos_plantillas.js */"./resources/js/module_administrador/cat_campos_plantillas.js");
+=======
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\usuarios.js */"./resources/js/module_administrador/usuarios.js");
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\modulos.js */"./resources/js/module_administrador/modulos.js");
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\submenus.js */"./resources/js/module_administrador/submenus.js");
@@ -4163,6 +4376,7 @@ __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\c
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\menu.js */"./resources/js/module_administrador/menu.js");
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\cat_extensiones.js */"./resources/js/module_administrador/cat_extensiones.js");
 module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\licenciasBria.js */"./resources/js/module_administrador/licenciasBria.js");
+>>>>>>> db6863daa77c3c4a9f8b7deed84e30e5b8dcd0bd
 
 
 /***/ })
