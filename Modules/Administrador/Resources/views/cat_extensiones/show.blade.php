@@ -14,6 +14,7 @@
                 <th>Extension</th>
                 <th>Licencia Bria</th>
                 <th></th>
+                <th>Licencia Ocupada</th>
             </tr>
         </thead>
         <tbody>
@@ -34,12 +35,15 @@
                         <select  class="form-control form-control-sm" name="licencia_extension_{{ $extension->id }}" id="licencia_extension_{{ $extension->id }}" disabled>
                             <option value="0">Selecciona una licencia</option>
                             @foreach ($licencias as $licencia)
-                                <option value="{{$licencia->id}}" {{ $licencia->id == $extension->Cat_Licencias_Bria_id ? "selected" : "" }}>{{ $licencia->licencia }}</option>
+                                <option value="{{$licencia->id}}" {{ $licencia->id == $extension->Cat_Licencias_Bria_id ? "selected" : "" }} {{ $licencia->ocupadas >= $licencia->disponibles ? "hidden" : "" }}>{{ $licencia->licencia }}</option>
                             @endforeach
                         </select>
                     </td>
                     <td>
                         <button type="button" class="btn btn-danger btn-sm deleteExtension" id="delete_{{ $extension->id }}" style="display:none"><i class="fas fa-trash-alt"></i></button>
+                    </td>
+                    <td>
+                        <input class="form-control form-control-sm" type="text" name="licencia_ocupada_" id="licencia_ocupada_" value="@foreach ($licencias as $licencia){{$licencia->id == $extension->Cat_Licencias_Bria_id ? "$licencia->licencia" : ""}}@endforeach" disabled>
                     </td>
                 </tr>
             @endforeach

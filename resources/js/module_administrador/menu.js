@@ -64,6 +64,9 @@ $(function() {
         } else if (id == 5) {
             url = currentURL + '/smtp';
             table = ' #tableSmtp';
+        } else if (id == 41) {
+            url = currentURL + '/cat_campos_plantillas';
+            table = ' #tableCamPla';
         }
         $.get(url, function(data, textStatus, jqXHR) {
             $(".viewResult").html(data);

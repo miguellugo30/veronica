@@ -17,7 +17,6 @@
                             <th>Limite de licencias</th>
                             <th>Ocupadas</th>
                             <th>Empresas</th>
-                            <!--th></th-->
                         </tr>
                     </thead>
                     <tbody>
@@ -37,7 +36,6 @@
                                         "> <i class="fas fa-eye"></i></button>
                                     @endif
                                 </td>
-                                <!-- td>{{ ($licencia->disponibles)+($licencia->Extensiones->count()) }}</td -->
                             </tr>
                         @endforeach
                     </tbody>

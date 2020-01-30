@@ -157,3 +157,9 @@ Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix'
 Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
     Route::resource('licencias_bria','LicenciasBriaController');
 });
+/**
+ * Rutas de CRUD de Campos Plantillas
+ */
+Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
+    Route::resource('cat_campos_plantillas','CatCamposPlantillasController');
+});
