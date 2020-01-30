@@ -92,7 +92,7 @@ class CatExtensionesController extends Controller
         /**
          * Obtenemos las extensiones que ya tiene la empresa
          */
-        $extensiones = Cat_Extensiones::active()->where('Empresas_id', $id)->get();
+        $extensiones = Cat_Extensiones::active()->empresa($id)->with('Licencias')->get();
         $extCreadas = $extensiones->count();
         /**
          * Obtenemos las posiciones asignadas para la empresa

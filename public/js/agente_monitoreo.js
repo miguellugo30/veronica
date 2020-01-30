@@ -385,8 +385,8 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_agentes\agentes_monitoreo.js */"./resources/js/module_agentes/agentes_monitoreo.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_agentes\eventosPantallaAgente_monitoreo.js */"./resources/js/module_agentes/eventosPantallaAgente_monitoreo.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_agentes\agentes_monitoreo.js */"./resources/js/module_agentes/agentes_monitoreo.js");
+module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_agentes\eventosPantallaAgente_monitoreo.js */"./resources/js/module_agentes/eventosPantallaAgente_monitoreo.js");
 
 
 /***/ })

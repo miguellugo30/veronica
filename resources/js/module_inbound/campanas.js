@@ -227,14 +227,9 @@ $(function() {
     /**
      * Evento para agregar agentes a la campana
      */
-    $(document).on('click', '.agentesNoSeleccionados tr', function(event) {
+    $(document).on('click', '.agentesNoSeleccionados', function(event) {
 
-        let fila = $(this);
-        let idAgente = parseInt($(this).data('id'));
         let modoLogueo = $('#mlogeo').val();
-        let bandera = true;
-        let _token = $("input[name=_token]").val();
-        var url = currentURL + '/campanas/validar_modo_logueo';
 
         if (modoLogueo == "") {
 
@@ -246,59 +241,108 @@ $(function() {
 
         } else {
 
-            $.ajax({
-                url: url,
-                type: 'POST',
-                data: {
-                    _token: _token,
-                    idAgente: idAgente
-                },
-                success: function success(result) {
+            let _token = $("input[name=_token]").val();
+            let url = currentURL + '/campanas/validar_modo_logueo';
+            let agentesSeleccionados = [];
+            let agentesDiferentes = [];
+            let agentesValidos = [];
 
-                    for (var i = 0; i < result.length; i++) {
-
-                        if (modoLogueo === result[i]['modalidad_logue']) {
-                            bandera = true;
-                        } else {
-                            bandera = false;
-                            break;
-                        }
-                    }
-
-                    if (bandera) {
-
-                        if (!agentesParticipantes.includes(idAgente)) {
-                            fila.clone().appendTo(".agentesSeleccionados"); //Clonamos la fila
-                            agentesParticipantes.push(idAgente);
-                            $("#agentes_participantes").val(JSON.stringify(agentesParticipantes));
-                            fila.remove();
-                        }
-
-                    } else {
-                        Swal.fire(
-                            '!Tenemos un problema!',
-                            'No se puede agregar el agente seleccionado, ya que esta campaña tiene diferente modalidad de logueo a las cuales ya esta agregado el agente.',
-                            'warning'
-                        )
-                    }
-                }
+            $("input[name='agentes_no']:checked").each(function() {
+                agentesSeleccionados.push(parseInt(this.value));
             });
-        }
 
+            if (agentesSeleccionados.length == 0) {
+                Swal.fire(
+                    '!Tenemos un problema!',
+                    'Tienes que elegir por lo menos un agente que participara en esta campaña.',
+                    'warning'
+                )
+            } else {
+
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: {
+                        _token: _token,
+                        idAgente: agentesSeleccionados
+                    },
+                    success: function success(result) {
+
+                        for (let i = 0; i < agentesSeleccionados.length; i++) {
+
+                            for (let j = 0; j < result.length; j++) {
+
+                                if (agentesSeleccionados[i] === parseInt(result[j]['Agentes_id'])) {
+
+                                    if (modoLogueo === result[j]['modalidad_logue']) {
+                                        agentesValidos.push(agentesSeleccionados[i]);
+                                    } else {
+                                        agentesDiferentes.push(agentesSeleccionados[i]);
+                                    }
+                                }
+                            }
+                        }
+
+                        if (agentesDiferentes.length > 0) {
+
+                            for (let i = 0; i < agentesDiferentes.length; i++) {
+                                $("#tr_" + agentesDiferentes[i]).css('background-color', '#ffc0c0');
+                            }
+
+                            Swal.fire(
+                                '!Tenemos un problema!',
+                                'No se puede agregar los agentes marcados en rojo, ya que esta campaña tiene diferente modalidad de logueo a las cuales ya estan agregados los agentes.',
+                                'warning'
+                            )
+                        }
+
+                        if (agentesValidos.length > 0) {
+
+                            $('#todos_no_selec').prop('checked', false);
+
+                            for (let i = 0; i < agentesValidos.length; i++) {
+
+                                let fila = $("#tr_" + agentesValidos[i]);
+
+                                fila.attr("background-color", '');
+                                fila.clone().appendTo(".agenteSelec"); //Clonamos la fila
+
+                                $(".agenteSelec #tr_" + agentesValidos[i]).css('background-color', '');
+                                $(".agenteSelec #tr_" + agentesValidos[i] + " input[name='agentes_no']").prop('checked', false);
+
+                                agentesParticipantes.push(agentesValidos[i]);
+                                $("#agentes_participantes").val(JSON.stringify(agentesParticipantes));
+                                fila.remove();
+                            }
+                        }
+                    }
+                });
+            }
+        }
     });
     /**
      * Evento para quitar agentes a la campana
      */
-    $(document).on('click', '.agentesSeleccionados tr', function(event) {
-        $(this).clone().appendTo(".agentesNoSeleccionados"); //Clonamos la fila
+    $(document).on('click', '.agentesSeleccionados', function(event) {
 
-        let index = agentesParticipantes.indexOf($(this).data('id'));
+        $('#todos_selec').prop('checked', false);
 
-        if (index > -1) {
-            agentesParticipantes.splice(index, 1);
-        }
+        $(".agenteSelec input[name='agentes_no']:checked").each(function() {
+
+            let fila = $(".agenteSelec #tr_" + this.value);
+
+            let index = agentesParticipantes.indexOf(parseInt(this.value));
+
+            if (index > -1) {
+                agentesParticipantes.splice(index, 1);
+            }
+
+            fila.clone().appendTo(".agentesNoSelec"); //Clonamos la fila
+            fila.remove();
+        });
+
+        $(".agentesNoSelec input[name='agentes_no']").prop('checked', false);
         $("#agentes_participantes").val(JSON.stringify(agentesParticipantes));
-        $(this).remove();
 
     });
 
@@ -331,8 +375,8 @@ $(function() {
                         camapana_id: camapana_id
                     },
                     success: function(result) {
-                        $("#tableAgentesParticipantes tbody tr").each(function() {
-                            $(this).clone().appendTo(".agentesNoSeleccionados");
+                        $(".agenteSelec tr").each(function() {
+                            $(this).clone().appendTo(".agentesNoSelec");
                             let index = agentesParticipantes.indexOf($(this).data('id'));
 
                             if (index > -1) {
@@ -349,7 +393,18 @@ $(function() {
             }
         });
     });
-
+    /**
+     * Seleccionar todos los no seleccionados
+     */
+    $(document).on('change', '#todos_no_selec', function(event) {
+        $(".agentesNoSelec input[name='agentes_no']").prop('checked', $(this).prop("checked"));
+    });
+    /**
+     * Seleccionar todos los seleccionados
+     */
+    $(document).on('change', '#todos_selec', function(event) {
+        $(".agenteSelec input[name='agentes_no']").prop('checked', $(this).prop("checked"));
+    });
     /**
      * Evento para capturar el nombre de la campana y mostrar en la etiqueta
      */

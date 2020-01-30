@@ -22,24 +22,24 @@
                 <tbody>
                     @foreach ($desglose as $registro)
                         <tr data-id="{{ $registro->uniqueid }}" style="cursor:pointer">
-                            <td>{{ Str::title( $registro->campana ) }}</td>
-                            <td>{{ $registro->callerid }}</td>
-                            <td>{{ $registro->calledid }}</td>
-                            <td>{{ date('d-m-Y', strtotime($registro->fecha_inicio)) }}</td>
-                            <td>{{ date('H:i:s', strtotime($registro->fecha_inicio)) }}</td>
+                            <td>{{ Str::title( $registro->nombre_campana ) }}</td>
+                            <td>{{ $registro->origen }}</td>
+                            <td>{{ $registro->destino }}</td>
+                            <td>{{ date('d-m-Y', strtotime($registro->hora_Inicio)) }}</td>
+                            <td>{{ date('H:i:s', strtotime($registro->hora_Inicio)) }}</td>
                             <td>
-                                @if($registro->fecha_respuesta == null)
+                                @if($registro->hora_respuesta == null)
                                     00:00:00
                                 @else
-                                    {{ date('H:i:s', strtotime($registro->fecha_respuesta)) }}
+                                    {{ date('H:i:s', strtotime($registro->hora_respuesta)) }}
                                 @endif
                             </td>
-                            <td>{{ date('H:i:s', strtotime($registro->fecha_fin)) }}</td>
+                            <td>{{ date('H:i:s', strtotime($registro->hora_fin)) }}</td>
                             <td>
-                                @if($registro->fecha_calificacion == null)
+                                @if($registro->hora_definicion == null)
                                     00:00:00
                                 @else
-                                    {{ date('H:i:s', strtotime($registro->fecha_calificacion)) }}
+                                    {{ date('H:i:s', strtotime($registro->hora_definicion)) }}
                                 @endif
                             </td>
                             <td>
@@ -59,11 +59,11 @@
                             </td>
                             <td>{{ $registro->agente }}</td>
                             <td>
-                                @if($registro->event == 'COMPLETEAGENT')
+                                @if($registro->evento == 'COMPLETEAGENT')
                                     AGENTE
-                                @elseif($registro->event == 'COMPLETECALLER')
+                                @elseif($registro->evento == 'COMPLETECALLER')
                                     CLIENTE
-                                @elseif($registro->event == 'ABANDON')
+                                @elseif($registro->evento == 'ABANDON')
                                     ABANDONADA
                                 @endif
                             </td>
@@ -107,9 +107,7 @@ $(function() {
                     "pageLength": 20
                 });
     $('#tabledesglose thead tr th.buscar').on( 'keyup', "input",function () {
-       console.log(this.value, $(this).parent().index())
-        table
-            .column( $(this).parent().index() )
+        table.column( $(this).parent().index() )
             .search( this.value )
             .draw();
     } );

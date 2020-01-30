@@ -44,6 +44,6 @@ class Modulos extends Model
      */
     public function Categorias()
     {
-        return $this->hasMany('Nimbus\Categorias');
+        return $this->hasMany('Nimbus\Categorias')->where('activo',  1);
     }
 }

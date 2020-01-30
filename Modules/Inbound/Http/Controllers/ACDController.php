@@ -40,19 +40,10 @@ class ACDController extends Controller
     {
         $user = Auth::user();
         $empresa_id = $user->id_cliente;
-        $cdr = DB::select("call SP_Metricas_ACD_TEST('$empresa_id','$request->dateInicio','$request->dateFin')");
-        $array = $cdr[0]->JSON;
-        $array = explode(",",$array);
-        $todas = str_replace('"','',explode('":"',$array[0]));
-        $contestadas = str_replace('"','',explode('":"',$array[1]));
-        $nocontestadas = str_replace('"','',explode('":"',$array[2]));
-        $desviadas = str_replace('"','',explode('":"',$array[3]));
-        $promediodellamada = str_replace('"','',explode('":"',$array[4]));
-        $promediotiempoespera = str_replace('"','',explode('":"',$array[5]));
-        $promedioabandono = str_replace('}','',str_replace('"','',explode('":"',$array[6])));
+        $cdr = DB::select("call SP_Metricas_ACD('$empresa_id','$request->dateInicio','$request->dateFin')");
+        $array = json_decode( $cdr[0]->JSON );
 
-        return view('inbound::ACD.show', compact( 'todas','contestadas','nocontestadas','desviadas','promediodellamada','promediotiempoespera','promedioabandono' ));
-
+        return view('inbound::ACD.show', compact( 'array' ));
     }
 
     /**
