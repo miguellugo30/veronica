@@ -128,6 +128,6 @@ class Empresas extends Model
      */
     public function Cat_campos_plantillas()
     {
-        return $this->belongsToMany('Nimbus\Cat_campos_plantillas', 'Campos_plantillas_empresa');
+        return $this->belongsToMany('Nimbus\Cat_campos_plantillas', 'Campos_plantillas_empresa', 'fk_empresas_id', 'fk_cat_campos_plantilla_id');
     }
 }

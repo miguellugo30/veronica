@@ -21,12 +21,18 @@
                     <thead>
                         <tr>
                             <th>Nombre</th>
+                            <th>Empresa</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($cat_campos_plantillas as $cat_campo)
                             <tr data-id="{{ $cat_campo->id }}" style="cursor:pointer">
                                 <td>{{ $cat_campo->nombre }}</td>
+                                <td><button type="button" class="btn btn-lg btn-secondary btn-sm pop" data-toggle="popover" title="Empresa" data-content="
+                                    @foreach ($cat_campo->Empresas as $v)
+                                    {{ "<li>".$v->nombre.": </li>" }}
+                                    @endforeach
+                                "><i class="fas fa-eye"></i></button></td>
                             </tr>
                         @endforeach
                     </tbody>

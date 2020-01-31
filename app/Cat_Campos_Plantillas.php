@@ -14,7 +14,7 @@ class Cat_Campos_Plantillas extends Model
      * Campos que pueden ser modificados
      */
     protected $fillable = [
-        'id', 'nombre',
+        'nombre',
     ];
     /**
      * Nombre de la tabla
@@ -30,6 +30,6 @@ class Cat_Campos_Plantillas extends Model
      */
     public function Empresas()
     {
-        return $this->belongsToMany('Nimbus\Empresas', 'Campos_plantillas_empresa');
+        return $this->belongsToMany('Nimbus\Empresas', 'Campos_plantillas_empresa', 'fk_cat_campos_plantilla_id', 'fk_empresas_id');
     }
 }

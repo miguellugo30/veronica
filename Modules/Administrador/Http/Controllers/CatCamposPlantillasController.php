@@ -19,7 +19,8 @@ class CatCamposPlantillasController extends Controller
      */
     public function index()
     {
-        $cat_campos_plantillas = Cat_Campos_Plantillas::get();
+        $cat_campos_plantillas = Cat_Campos_Plantillas::with('Empresas')->get();
+        //dd($cat_campos_plantillas);
         return view('administrador::cat_campos_plantillas.index', compact('cat_campos_plantillas'));
     }
 
@@ -44,6 +45,19 @@ class CatCamposPlantillasController extends Controller
          * los insertamos la informacion del formulario
          */
         $cat = Cat_Campos_Plantillas::create(  $request->all() );
+        /**
+         * Obtenemos id de la empresa
+         */
+        $user = Auth::user();
+        $empresa_id = $user->id_cliente;
+        /**
+         * Buscamos la empresa
+         */
+        $empresa = Empresas::findOrFail($empresa_id);
+        /**
+         * Vinculamos los campos con la empresa
+         */
+        $empresa->Cat_campos_plantillas()->attach($cat);
         /**
          * Creamos el logs
          */
@@ -114,6 +128,20 @@ class CatCamposPlantillasController extends Controller
      */
     public function destroy($id)
     {
+        /**
+         * Obtenemos id de la empresa
+         */
+        $user = Auth::user();
+        $empresa_id = $user->id_cliente;
+        /**
+         * Buscamos la empresa
+         */
+        $empresa = Empresas::findOrFail($empresa_id);
+        /**
+         * Desvinculamos todos los campos a la empresa
+         */
+        $empresa->Cat_campos_plantillas()->detach($id);
+        //dd($empresa);
         /**
          * Actualizamos los campos
          */
