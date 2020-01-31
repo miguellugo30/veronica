@@ -149,7 +149,7 @@ class AgentesController extends Controller
                                 ->select(
                                     'S.texto'
                                 )
-                                ->where('OS.id', $campos->where('tipo', 1)->first()->speech_id_hijo)
+                                ->where('OS.id', $campos->where('tipo', 1)->first()->id)
                                 ->where('OS.tipo', 1)
                                 ->first();
         }
