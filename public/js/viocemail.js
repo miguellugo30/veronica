@@ -387,8 +387,8 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_voicemail\menu.js */"./resources/js/module_voicemail/menu.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_voicemail\grabacionesVoicemail.js */"./resources/js/module_voicemail/grabacionesVoicemail.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_voicemail\menu.js */"./resources/js/module_voicemail/menu.js");
+module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_voicemail\grabacionesVoicemail.js */"./resources/js/module_voicemail/grabacionesVoicemail.js");
 
 
 /***/ })
