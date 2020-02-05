@@ -3003,64 +3003,64 @@ $(function () {
     var currentURL = window.location.href;
     var id = $(this).data("id");
 
-    if (id == 6) {
+    if (id == 'sub-6') {
       url = currentURL + '/usuarios';
       table = ' #tableUsuarios';
-    } else if (id == 4) {
+    } else if (id == 'sub-4') {
       url = currentURL + '/menus';
       table = '#tableMenus';
-    } else if (id == 3) {
+    } else if (id == 'sub-3') {
       url = currentURL + '/modulos';
       table = ' #tableModulos';
-    } else if (id == 1) {
+    } else if (id == 'sub-1') {
       url = currentURL + '/distribuidor';
       table = ' #tableDistribuidores';
-    } else if (id == 8) {
+    } else if (id == 'sub-8') {
       url = currentURL + '/did';
       table = ' #tableDid';
-    } else if (id == 10) {
+    } else if (id == 'sub-10') {
       url = currentURL + '/cat_empresa';
       table = ' #tableEdoEmp';
-    } else if (id == 11) {
+    } else if (id == 'sub-11') {
       url = currentURL + '/cat_ip_pbx';
       table = ' #tablePbx';
-    } else if (id == 12) {
+    } else if (id == 'sub-12') {
       url = currentURL + '/cat_nas';
       table = ' #tableNas';
-    } else if (id == 13) {
+    } else if (id == 'sub-13') {
       url = currentURL + '/cat_agente';
       table = ' #tableEdoAge';
-    } else if (id == 14) {
+    } else if (id == 'sub-14') {
       url = currentURL + '/cat_cliente';
       table = ' #tableEdoCli';
-    } else if (id == 9) {
+    } else if (id == 'sub-9') {
       url = currentURL + '/troncales';
       table = ' #tableTroncales';
-    } else if (id == 15) {
+    } else if (id == 'sub-15') {
       url = currentURL + '/canales';
       table = ' #tableCanales';
-    } else if (id == 2) {
+    } else if (id == 'sub-2') {
       url = currentURL + '/empresas';
       table = ' #tableEmpresas';
-    } else if (id == 16) {
+    } else if (id == 'sub-16') {
       url = currentURL + '/basedatos';
       table = ' #tableBaseDatos';
-    } else if (id == 17) {
+    } else if (id == 'sub-17') {
       url = currentURL + '/cat_tipo_canales';
       table = ' #tableTiposCanal';
-    } else if (id == 19) {
+    } else if (id == 'sub-19') {
       url = currentURL + '/licencias_bria';
       table = ' #licencias_bria';
-    } else if (id == 20) {
+    } else if (id == 'sub-20') {
       url = currentURL + '/logs';
       table = '#tableLogs';
-    } else if (id == 21) {
+    } else if (id == 'sub-21') {
       url = currentURL + '/formularios';
       table = ' #tableFormularios';
-    } else if (id == 5) {
+    } else if (id == 'sub-5') {
       url = currentURL + '/smtp';
       table = ' #tableSmtp';
-    } else if (id == 41) {
+    } else if (id == 'sub-41') {
       url = currentURL + '/cat_campos_plantillas';
       table = ' #tableCamPla';
     }
@@ -3076,6 +3076,7 @@ $(function () {
     });
   });
 });
+'sub-';
 
 /***/ }),
 
