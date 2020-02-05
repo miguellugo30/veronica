@@ -100,7 +100,7 @@
                     @foreach ($categorias as $categoria)
                         @can( $categoria->permiso )
                             @if( $categoria->Sub_Categorias->count() == 0 )
-                                <li class="sub-menu" data-id="{{ $categoria->id }}">
+                                <li class="sub-menu" data-id="cat-{{ $categoria->id }}">
                             @else
                                 <li class="treeview">
                             @endif
@@ -112,7 +112,7 @@
                                     <ul class="treeview-menu">
                                         @foreach ($categoria->Sub_Categorias as $sub)
                                             @can( $sub->permiso )
-                                                <li class="sub-menu" data-id="{{ $sub->id }}"><a href="#"><i class="far fa-building"></i> {{ $sub->nombre }}</a></li>
+                                                <li class="sub-menu" data-id="sub-{{ $sub->id }}"><a href="#"><i class="far fa-building"></i> {{ $sub->nombre }}</a></li>
                                             @endcan
                                         @endforeach
                                     </ul>

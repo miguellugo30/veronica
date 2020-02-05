@@ -473,16 +473,16 @@ $(function () {
     e.preventDefault();
     var id = $(this).data("id");
 
-    if (id == 36) {
+    if (id == 'sub-36') {
       url = currentURL + '/Inbound';
       table = ' #tableInbound';
-    } else if (id == 37) {
+    } else if (id == 'sub-37') {
       url = currentURL + '/Outbound';
       table = ' #tableOutbound';
-    } else if (id == 38) {
+    } else if (id == 'sub-38') {
       url = currentURL + '/Manuales';
       table = ' #tableManuales';
-    } else if (id == 27) {
+    } else if (id == 'cat-27') {
       url = currentURL + '/Almacenamiento';
       table = ' #tableAlmacenamiento';
     }

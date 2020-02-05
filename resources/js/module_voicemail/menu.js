@@ -9,7 +9,7 @@ $(function() {
         e.preventDefault();
         let id = $(this).data("id");
 
-        if (id == 24) {
+        if (id == 'cat-24') {
             url = currentURL + '/grabaciones_voicemial';
             table = ' #grabacionesVoicemail';
         }

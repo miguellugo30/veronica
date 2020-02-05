@@ -9,31 +9,32 @@ $(function() {
         e.preventDefault();
         let id = $(this).data("id");
 
-        if (id == 21) {
+        if (id == 'sub-21') {
             url = currentURL + '/formularios';
             table = ' #tableFormulario';
-        } else if (id == 22) {
+        } else if (id == 'sub-22') {
             url = currentURL + '/speech';
             table = ' #tableSpeech';
-        } else if (id == 23) {
+        } else if (id == 'sub-23') {
             url = currentURL + '/calificaciones';
             table = ' #tableCalificaciones';
-        } else if (id == 17) {
+        } else if (id == 'cat-17') {
             url = currentURL + '/Audios';
             table = ' #tableAudios';
-        } else if (id == 28) {
+        } else if (id == 'sub-28') {
             url = currentURL + '/Agentes';
             table = ' #tableAgentes';
-        } else if (id == 29) {
+        } else if (id == 'sub-29') {
             url = currentURL + '/Grupos';
             table = ' #tableGrupos';
-        } else if (id == 22) {
-            url = currentURL + '/Speech';
-            table = ' #tableSpeech';
-        } else if (id == 35) {
+        } else if (id == 'sub-35') {
             url = currentURL + '/EventosAgentes';
             table = ' #tableEventosAgentes';
+        } else if (id == 'cat-28') {
+            url = currentURL + '/Plantillas';
+            table = ' #tableEventosAgentes';
         }
+
         $.get(url, function(data, textStatus, jqXHR) {
             $(".viewResult").html(data);
             $('.viewResult' + table).DataTable({

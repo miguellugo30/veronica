@@ -1897,31 +1897,31 @@ $(function () {
     e.preventDefault();
     var id = $(this).data("id");
 
-    if (id == 16) {
+    if (id == 'cat-16') {
       url = currentURL + '/campanas';
       table = ' #tableFormulario';
-    } else if (id == 32) {
+    } else if (id == 'sub-32') {
       url = currentURL + '/Condiciones_Tiempo';
       table = ' #tableCondicionesTiempo';
-    } else if (id == 31) {
+    } else if (id == 'sub-31') {
       url = currentURL + '/Desvios';
       table = ' #tableDesvios';
-    } else if (id == 34) {
+    } else if (id == 'sub-34') {
       url = currentURL + '/Buzon_Voz';
       table = ' #tableBuzonVoz';
-    } else if (id == 30) {
+    } else if (id == 'sub-30') {
       url = currentURL + '/Did_Enrutamiento';
       table = ' #tableDidEnrutamiento';
-    } else if (id == 6) {
+    } else if (id == 'cat-6') {
       url = currentURL + '/Ivr';
       table = ' #tableivr';
-    } else if (id == 39) {
+    } else if (id == 'sub-39') {
       url = currentURL + '/Metricas_ACD';
       table = ' #tableACD';
-    } else if (id == 40) {
+    } else if (id == 'sub-40') {
       url = currentURL + '/Desglose_llamadas';
       table = ' #tableDesgloseLlamadas';
-    } else if (id == 26) {
+    } else if (id == 'cat-26') {
       url = currentURL + '/real_time/';
       $.get(url, function (data, textStatus, jqXHR) {
         $(".viewResult").html(data);
