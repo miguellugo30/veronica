@@ -5,6 +5,9 @@ namespace Modules\Settings\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
+use Nimbus\Cat_Plantilla;
+use Nimbus\Cat_Campos_Plantillas;
 
 class PlantillasController extends Controller
 {
@@ -14,7 +17,15 @@ class PlantillasController extends Controller
      */
     public function index()
     {
-        return view('settings::Plantillas.index');
+        /**
+         * Sacamos los datos del agente y su empresa para obtener los agentes
+         */
+        $user = Auth::user();
+        $empresa_id = $user->id_cliente;
+
+        $plantillas = Cat_Plantilla::empresa($empresa_id)->active()->get();
+
+        return view('settings::Plantillas.index', compact('plantillas'));
     }
 
     /**
@@ -23,7 +34,19 @@ class PlantillasController extends Controller
      */
     public function create()
     {
-        return view('settings::create');
+        /**
+         * Sacamos los datos del agente y su empresa para obtener los agentes
+         */
+        $user = Auth::user();
+        $empresa_id = $user->id_cliente;
+        /**
+         * Obtenemos todos los campos que estan asignados a la empresa
+         */
+        $campos = Cat_Campos_Plantillas::with('Empresas')->get();
+
+        dd( $campos );
+
+        return view('settings::Plantillas.create');
     }
 
     /**

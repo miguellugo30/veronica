@@ -32,7 +32,7 @@ $(function() {
             table = ' #tableEventosAgentes';
         } else if (id == 'cat-28') {
             url = currentURL + '/Plantillas';
-            table = ' #tableEventosAgentes';
+            table = ' #tablePlantillas';
         }
 
         $.get(url, function(data, textStatus, jqXHR) {

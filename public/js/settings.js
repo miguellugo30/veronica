@@ -1731,7 +1731,7 @@ $(function () {
       table = ' #tableEventosAgentes';
     } else if (id == 'cat-28') {
       url = currentURL + '/Plantillas';
-      table = ' #tableEventosAgentes';
+      table = ' #tablePlantillas';
     }
 
     $.get(url, function (data, textStatus, jqXHR) {
@@ -1752,7 +1752,24 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
+$(function () {
+  var currentURL = window.location.href;
+  /**
+   * Evento para mostrar el formulario de crear una nueva plantilla
+   */
 
+  $(document).on("click", ".newPlantillas", function (e) {
+    event.preventDefault();
+    $('#tituloModal').html('Alta de Plantilla');
+    $('#action').removeClass('deletePlantilla');
+    $('#action').addClass('savePlantilla');
+    var url = currentURL + "/Plantillas/create";
+    $.get(url, function (data, textStatus, jqXHR) {
+      $('#modal').modal('show');
+      $("#modal-body").html(data);
+    });
+  });
+});
 
 /***/ }),
 
