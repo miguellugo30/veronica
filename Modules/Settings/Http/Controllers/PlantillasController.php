@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Nimbus\Cat_Plantilla;
 use Nimbus\Cat_Campos_Plantillas;
+use DB;
 
 class PlantillasController extends Controller
 {
@@ -42,11 +43,15 @@ class PlantillasController extends Controller
         /**
          * Obtenemos todos los campos que estan asignados a la empresa
          */
-        $campos = Cat_Campos_Plantillas::with('Empresas')->get();
 
-        dd( $campos );
+        //$campos = Cat_Campos_Plantillas::get();
+        $campos = DB::table('Cat_campos_plantillas')
+                    ->select('Cat_campos_plantillas.id', 'Cat_campos_plantillas.nombre')
+                    ->join('Campos_plantillas_empresa', 'Campos_plantillas_empresa.fk_cat_campos_plantilla_id', '=', 'Cat_campos_plantillas.id')
+                    ->where('Campos_plantillas_empresa.fk_empresas_id', $empresa_id)
+                    ->get();
 
-        return view('settings::Plantillas.create');
+        return view('settings::Plantillas.create', compact('campos'));
     }
 
     /**

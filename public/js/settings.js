@@ -1752,9 +1752,6 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-<<<<<<< HEAD
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nError: ENOENT: no such file or directory, open 'C:\\wamp64\\www\\Nimbus\\resources\\js\\module_settings\\plantillas.js'");
-=======
 $(function () {
   var currentURL = window.location.href;
   /**
@@ -1772,8 +1769,28 @@ $(function () {
       $("#modal-body").html(data);
     });
   });
+  /**
+   * Evento para agregar una nueva fila para campos nuevos en el formulario
+   */
+
+  $(document).on('click', '#addCampo', function () {
+    var clickID = $("#tablaCampos tbody tr.clonar:last").attr('id').replace('tr_', ''); // Genero el nuevo numero id
+
+    var newID = parseInt(clickID) + 1;
+    var IDInput = ['campo_id', 'num_marcar', 'mostrar', 'editable'];
+    fila = $("#tablaCampos tbody tr:eq()").clone().appendTo("#tablaCampos"); //Clonamos la fila
+
+    for (var i = 0; i < IDInput.length; i++) {
+      fila.find('.' + IDInput[i]).attr('name', IDInput[i] + "_" + newID); //Cambiamos el nombre de los campos de la fila a clonar
+
+      fila.find('.' + IDInput[i]).attr('id', IDInput[i] + "_" + newID); //Cambiamos el nombre de los campos de la fila a clonar
+    }
+
+    fila.find('.btn-info').css('display', 'none');
+    fila.find('#id_campo').attr('value', '');
+    fila.attr("id", 'tr_' + newID);
+  });
 });
->>>>>>> Outbound-Plantillas
 
 /***/ }),
 
