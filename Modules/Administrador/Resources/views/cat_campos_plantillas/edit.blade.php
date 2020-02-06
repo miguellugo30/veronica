@@ -6,14 +6,20 @@
         @csrf
     </div>
     <div class="form-group">
+        <label for="empresa">Empresa *:</label>
+        <select name="empresa" id="empresa" class="form-control form-control-sm">
+            <option value="" >Selecciona una Empresa</option>
+            @foreach( $Empresas as $empresa )
+                @foreach($cat_campos_plantillas->Empresas as $emp)
+                    <option value="{{ $empresa->id }}" {{ $empresa->id == $emp->id ? 'selected' : ''}}>{{ $empresa->nombre }}</option>
+                @endforeach
+            @endforeach
+        </select>
+    </div>
+    <div class="form-group">
         <small class="form-text text-muted"> <b>*Campos obligatorios.</b></small>
     </div>
     <div class="alert alert-danger print-error-msg" role="alert" style="display:none">
         <ul></ul>
     </div>
 </div>
-<!--div class="col-6" style="float:none; margin:auto">
-    <button type="submit" class="btn btn-warning btn-sm cancelEdoEmp"><i class="fas fa-times"></i> Cancelar</button>
-    <button type="submit" class="btn btn-danger btn-sm deleteEdoEmp"><i class="fas fa-trash-alt"></i> Eliminar</button>
-    <button type="submit" class="btn btn-primary btn-sm updateEdoEmp float-right"><i class="fas fa-save"></i> Guardar</button>
-</div-->

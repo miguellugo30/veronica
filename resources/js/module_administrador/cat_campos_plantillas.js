@@ -43,11 +43,13 @@ $(function() {
         event.preventDefault();
 
         let nombre = $("#nombre").val();
+        let empresa = $("#empresa").val();
         let _token = $("input[name=_token]").val();
         let url = currentURL + '/cat_campos_plantillas';
 
         $.post(url, {
                 nombre: nombre,
+                empresa: empresa,
                 _token: _token
             }, function(data, textStatus, xhr) {
 
@@ -98,6 +100,7 @@ $(function() {
         event.preventDefault();
 
         let nombre = $("#nombre").val();
+        let empresa = $("#empresa").val();
         let id = $("#id").val();
         let _method = "PUT";
         let _token = $("input[name=_token]").val();
@@ -108,6 +111,7 @@ $(function() {
             type: 'POST',
             data: {
                 nombre: nombre,
+                empresa: empresa,
                 _token: _token,
                 _method: _method
             },
@@ -173,6 +177,13 @@ $(function() {
                 });
             }
         });
+    });
+    /**
+     * Evento para mostrar las empresas de una licencia
+     * Nota: popover es un componente de bootstrap
+     */
+    $(document).on("click", ".pop", function(event) {
+        $('[data-toggle="popover"]').popover({ container: 'body', animation: true, html: true, placement: "right", trigger: 'focus' });
     });
 
     /**

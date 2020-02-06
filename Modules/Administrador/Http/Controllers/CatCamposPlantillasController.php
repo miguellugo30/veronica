@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Nimbus\Cat_Campos_Plantillas;
 use Nimbus\Empresas;
+use DB;
 use Illuminate\Support\Facades\Auth;
 use Nimbus\Http\Controllers\LogController;
 use Modules\Administrador\Http\Requests\CamposPlantillasRequest;
@@ -20,7 +21,7 @@ class CatCamposPlantillasController extends Controller
     public function index()
     {
         $cat_campos_plantillas = Cat_Campos_Plantillas::with('Empresas')->get();
-        //dd($cat_campos_plantillas);
+
         return view('administrador::cat_campos_plantillas.index', compact('cat_campos_plantillas'));
     }
 
@@ -30,7 +31,12 @@ class CatCamposPlantillasController extends Controller
      */
     public function create()
     {
-        return view('administrador::cat_campos_plantillas.create');
+        /**
+         * Obtenemos todas las empresas
+         */
+        $Empresas = Empresas::active()->get();
+
+        return view('administrador::cat_campos_plantillas.create', compact('Empresas'));
     }
 
     /**
@@ -41,19 +47,14 @@ class CatCamposPlantillasController extends Controller
     public function store(CamposPlantillasRequest $request)
     {
         /**
-         * Obtenemos todos los datos del formulario de alta y
-         * los insertamos la informacion del formulario
+         * Obtenemos todos los datos del formulario de alta e
+         * insertamos la informacion del formulario
          */
         $cat = Cat_Campos_Plantillas::create(  $request->all() );
         /**
-         * Obtenemos id de la empresa
-         */
-        $user = Auth::user();
-        $empresa_id = $user->id_cliente;
-        /**
          * Buscamos la empresa
          */
-        $empresa = Empresas::findOrFail($empresa_id);
+        $empresa = Empresas::findOrFail($request->empresa);
         /**
          * Vinculamos los campos con la empresa
          */
@@ -88,10 +89,15 @@ class CatCamposPlantillasController extends Controller
     public function edit($id)
     {
         /**
+         * Obtenemos todas las empresas
+         */
+        $Empresas = Empresas::active()->get();
+        /**
          * Obtenemos la informacion del catalogo a editar
          */
         $cat_campos_plantillas = Cat_Campos_Plantillas::findOrFail( $id );
-        return view('administrador::cat_campos_plantillas.edit', compact('cat_campos_plantillas', 'id'));
+
+        return view('administrador::cat_campos_plantillas.edit', compact('Empresas','cat_campos_plantillas', 'id'));
     }
 
     /**
@@ -103,11 +109,17 @@ class CatCamposPlantillasController extends Controller
     public function update(CamposPlantillasRequest $request, $id)
     {
         /**
-         * Actualizamos los campos
+         * Actualizamos los campos en la tabla Cat_Campos_Plantillas
          */
         Cat_Campos_Plantillas::where( 'id', $id )
         ->update([
             'nombre' => $request->input('nombre')
+        ]);
+        /**
+         * Actualizamos los campos de la tabla Campos_plantillas_empresa
+         */
+        DB::table('Campos_plantillas_empresa')->where('fk_cat_campos_plantilla_id',$id)->update([
+            'fk_empresas_id' => $request->input('empresa')
         ]);
         /**
          * Creamos el logs
@@ -129,21 +141,11 @@ class CatCamposPlantillasController extends Controller
     public function destroy($id)
     {
         /**
-         * Obtenemos id de la empresa
+         * Borramos los campos de la tabla Campos_plantillas_empresa
          */
-        $user = Auth::user();
-        $empresa_id = $user->id_cliente;
+        DB::table('Campos_plantillas_empresa')->where('fk_cat_campos_plantilla_id',$id)->delete();
         /**
-         * Buscamos la empresa
-         */
-        $empresa = Empresas::findOrFail($empresa_id);
-        /**
-         * Desvinculamos todos los campos a la empresa
-         */
-        $empresa->Cat_campos_plantillas()->detach($id);
-        //dd($empresa);
-        /**
-         * Actualizamos los campos
+         * Borramos los campos de la tabla Cat_Campos_Plantillas
          */
         Cat_Campos_Plantillas::where( 'id', $id )
         ->delete();

@@ -505,10 +505,10 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_recording\menu.js */"./resources/js/module_recording/menu.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_recording\Grabaciones.js */"./resources/js/module_recording/Grabaciones.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_recording\Inbound.js */"./resources/js/module_recording/Inbound.js");
-module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_recording\Almacenamiento.js */"./resources/js/module_recording/Almacenamiento.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_recording\menu.js */"./resources/js/module_recording/menu.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_recording\Grabaciones.js */"./resources/js/module_recording/Grabaciones.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_recording\Inbound.js */"./resources/js/module_recording/Inbound.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_recording\Almacenamiento.js */"./resources/js/module_recording/Almacenamiento.js");
 
 
 /***/ })

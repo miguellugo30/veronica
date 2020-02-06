@@ -15,6 +15,7 @@ class CamposPlantillasRequest extends FormRequest
     {
         return [
             'nombre' => 'required',
+            'empresa' => 'required',
         ];
     }
 
@@ -32,6 +33,7 @@ class CamposPlantillasRequest extends FormRequest
     {
         return[
             'nombre' => 'Nombre',
+            'empresa' => 'Empresa',
         ];
     }
 }
