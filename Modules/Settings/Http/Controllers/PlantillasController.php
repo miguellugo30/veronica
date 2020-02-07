@@ -7,11 +7,27 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Nimbus\Cat_Plantilla;
-use Nimbus\Cat_Campos_Plantillas;
+use Nimbus\Plantillas_campos;
 use DB;
 
 class PlantillasController extends Controller
 {
+
+    protected $empresa_id;
+
+    /**
+     * Constructor para obtener el id empresa
+     * con base al usuario que esta usando la sesion
+     */
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            $this->empresa_id = Auth::user()->id_cliente;
+
+            return $next($request);
+        });
+    }
+
     /**
      * Display a listing of the resource.
      * @return Response
@@ -19,12 +35,9 @@ class PlantillasController extends Controller
     public function index()
     {
         /**
-         * Sacamos los datos del agente y su empresa para obtener los agentes
+         * Obtenemos las plantillas de la empresa
          */
-        $user = Auth::user();
-        $empresa_id = $user->id_cliente;
-
-        $plantillas = Cat_Plantilla::empresa($empresa_id)->active()->get();
+        $plantillas = Cat_Plantilla::empresa( $this->empresa_id )->active()->get();
 
         return view('settings::Plantillas.index', compact('plantillas'));
     }
@@ -36,19 +49,12 @@ class PlantillasController extends Controller
     public function create()
     {
         /**
-         * Sacamos los datos del agente y su empresa para obtener los agentes
-         */
-        $user = Auth::user();
-        $empresa_id = $user->id_cliente;
-        /**
          * Obtenemos todos los campos que estan asignados a la empresa
          */
-
-        //$campos = Cat_Campos_Plantillas::get();
         $campos = DB::table('Cat_campos_plantillas')
                     ->select('Cat_campos_plantillas.id', 'Cat_campos_plantillas.nombre')
                     ->join('Campos_plantillas_empresa', 'Campos_plantillas_empresa.fk_cat_campos_plantilla_id', '=', 'Cat_campos_plantillas.id')
-                    ->where('Campos_plantillas_empresa.fk_empresas_id', $empresa_id)
+                    ->where('Campos_plantillas_empresa.fk_empresas_id', $this->empresa_id)
                     ->get();
 
         return view('settings::Plantillas.create', compact('campos'));
@@ -61,7 +67,35 @@ class PlantillasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->dataForm;
+        $nombrePlantilla = $data['nombre'];
+        array_shift( $data );
+        array_shift( $data );
+
+        /**
+         * Insertar información de la plantilla
+         **/
+         $plantilla = Cat_Plantilla::create([
+                                            'nombre' => $nombrePlantilla,
+                                            'fk_empresas_id' => $this->empresa_id
+                                            ]);
+
+        $info = array_chunk( $data, 4 );
+        /**
+         * Insertamos la información de los campos
+         */
+        for ($i=0; $i < count( $info ); $i++) {
+
+            Plantillas_campos::create([
+                            'fk_campos_plantilla_empresa_fk_cat_campos_plantilla_id' => $info[$i][0],
+                            'fk_campos_plantilla_empresa_empresas_id' => $this->empresa_id,
+                            'fk_cat_plantilla_id' =>  $plantilla->id,
+                            'editable' => (int)$info[$i][2],
+                            'marcar' => (int)$info[$i][1],
+                            'mostrar' => (int)$info[0][3]
+                        ]);
+        }
+        return redirect()->route('Plantillas.index');
     }
 
     /**
