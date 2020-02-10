@@ -2,21 +2,12 @@
     <div class="box-header with-border">
         <h3 class="box-title"><i class="fas fa-th-list"></i> Plantillas</h3>
         <div class="box-tools pull-right">
-            <div class="btn-group dropleft" style="display:none" >
-                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Accion
-                </button>
-                <div class="dropdown-menu">
-                    @can('edit plantillas')
-                        <a class="dropdown-item editPlantillas"><i class="fas fa-edit"></i> Editar</a>
-                        <a class="dropdown-item viewPlantillas"><i class="fas fa-eye"></i> Visualizar</a>
-                    @endcan
-                    <div class="dropdown-divider"></div>
-                    @can('delete plantillas')
-                        <a class="dropdown-item deleteSpeech"><i class="fas fa-trash-alt"></i> Elminar</a>
-                    @endcan
-                </div>
-            </div>
+            @can('delete plantillas')
+                <button type="button" class="btn btn-danger btn-sm deletePlantilla" style="display:none"><i class="fas fa-trash-alt"></i> Elminar</button>
+            @endcan
+            @can('edit plantillas')
+                <button type="button" class="btn btn-warning btn-sm editPlantillas" style="display:none"><i class="fas fa-edit"></i> Editar</button>
+            @endcan
             @can('create plantillas')
                 <button type="button" class="btn btn-primary btn-sm newPlantillas"><i class="fas fa-plus"></i> Nuevo</button>
             @endcan
@@ -34,8 +25,8 @@
                     </thead>
                     <tbody>
                         @foreach ($plantillas as $plantilla)
-                            <tr>
-                            <td>{{$plantilla->nombre}}</td>
+                            <tr data-id="{{$plantilla->id}}">
+                                <td>{{$plantilla->nombre}}</td>
                             </tr>
                         @endforeach
                     </tbody>
