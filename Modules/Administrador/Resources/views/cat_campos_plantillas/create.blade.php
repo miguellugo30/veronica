@@ -4,15 +4,24 @@
         <input type="text" class="form-control form-control-sm" id="nombre" placeholder="Nombre">
         @csrf
     </div>
-    <div class="form-group">
-        <label for="empresa">Empresa *:</label>
-        <select name="empresa" id="empresa" class="form-control form-control-sm">
-            <option value="" >Selecciona una Empresa</option>
-            @foreach( $Empresas as $empresa )
-                <option value="{{ $empresa->id }}">{{ $empresa->nombre }}</option>
-            @endforeach
-        </select>
-    </div>
+    <label for="empresa">Selecciona la(s) Empresa(s)</label>
+        <div class="form-row col-md-12">
+            <div class="col-md-5">
+                <select name="empresa" id="empresa" class="form-control form-control-sm" multiple>
+                    @foreach( $Empresas as $empresa )
+                        <option value="{{ $empresa->id }}">{{ $empresa->nombre }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-md-2">
+                <input type="button" class="form-control form-control-sm btnRight" id="btnRight" value="&gt;&gt;">
+                <input type="button" class="form-control form-control-sm btnLeft" id="btnLeft" value="&lt;&lt;">
+            </div>
+            <div class="col-md-5">
+                <select name="empresaAdd" id="empresaAdd" class="form-control form-control-sm" multiple>
+                </select>
+            </div>
+        </div>
     <div class="form-group">
         <small class="form-text text-muted"> <b>*Campos obligatorios.</b></small>
     </div>

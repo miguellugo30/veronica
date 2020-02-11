@@ -21,14 +21,14 @@
                     <thead>
                         <tr>
                             <th>Nombre</th>
-                            <th>Empresa</th>
+                            <th>Empresa(s)</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($cat_campos_plantillas as $cat_campo)
                             <tr data-id="{{ $cat_campo->id }}" style="cursor:pointer">
                                 <td>{{ $cat_campo->nombre }}</td>
-                                <td><button type="button" class="btn btn-lg btn-secondary btn-sm pop" data-toggle="popover" title="Empresa" data-content="
+                                <td><button type="button" class="btn btn-lg btn-secondary btn-sm pop" data-toggle="popover" title="Empresas" data-content="
                                     @foreach ($cat_campo->Empresas as $v)
                                     {{ "<li>".$v->nombre.": </li>" }}
                                     @endforeach

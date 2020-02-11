@@ -572,6 +572,7 @@ $(function () {
     $.get(url, function (data, textStatus, jqXHR) {
       $('#modal').modal('show');
       $("#modal-body").html(data);
+      $("#empresaAdd option").prop('selected', true);
     });
   });
   /**
@@ -581,7 +582,7 @@ $(function () {
   $(document).on('click', '.saveCamPla', function (event) {
     event.preventDefault();
     var nombre = $("#nombre").val();
-    var empresa = $("#empresa").val();
+    var empresa = $("#empresaAdd").val();
 
     var _token = $("input[name=_token]").val();
 
@@ -632,7 +633,7 @@ $(function () {
   $(document).on('click', '.updateCamPla', function (event) {
     event.preventDefault();
     var nombre = $("#nombre").val();
-    var empresa = $("#empresa").val();
+    var empresa = $("#empresaAdd").val();
     var id = $("#id").val();
     var _method = "PUT";
 
@@ -706,7 +707,7 @@ $(function () {
     });
   });
   /**
-   * Evento para mostrar las empresas de una licencia
+   * Evento para mostrar las empresas de un campo plantilla
    * Nota: popover es un componente de bootstrap
    */
 
@@ -718,6 +719,25 @@ $(function () {
       placement: "right",
       trigger: 'focus'
     });
+  });
+  /**
+   * Evento para quitar empresas
+   */
+
+  $(document).on("click", '.btnLeft', function (event) {
+    var selectedItem = $("#empresaAdd option:selected");
+    $("#empresa").append(selectedItem);
+    $("#empresaAdd option").prop('selected', true);
+    $("#empresa option").prop('selected', true);
+  });
+  /**
+   * Evento para agregar empresas
+   */
+
+  $(document).on("click", '.btnRight', function (event) {
+    var selectedItem = $("#empresa option:selected");
+    $("#empresaAdd").append(selectedItem);
+    $("#empresaAdd option").prop('selected', true);
   });
   /**
    * Funcion para mostrar los errores de los formularios

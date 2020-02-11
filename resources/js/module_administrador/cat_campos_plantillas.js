@@ -34,6 +34,7 @@ $(function() {
         $.get(url, function(data, textStatus, jqXHR) {
             $('#modal').modal('show');
             $("#modal-body").html(data);
+            $("#empresaAdd option").prop('selected', true);
         });
     });
     /**
@@ -43,7 +44,7 @@ $(function() {
         event.preventDefault();
 
         let nombre = $("#nombre").val();
-        let empresa = $("#empresa").val();
+        let empresa = $("#empresaAdd").val();
         let _token = $("input[name=_token]").val();
         let url = currentURL + '/cat_campos_plantillas';
 
@@ -100,7 +101,7 @@ $(function() {
         event.preventDefault();
 
         let nombre = $("#nombre").val();
-        let empresa = $("#empresa").val();
+        let empresa = $("#empresaAdd").val();
         let id = $("#id").val();
         let _method = "PUT";
         let _token = $("input[name=_token]").val();
@@ -179,11 +180,28 @@ $(function() {
         });
     });
     /**
-     * Evento para mostrar las empresas de una licencia
+     * Evento para mostrar las empresas de un campo plantilla
      * Nota: popover es un componente de bootstrap
      */
     $(document).on("click", ".pop", function(event) {
         $('[data-toggle="popover"]').popover({ container: 'body', animation: true, html: true, placement: "right", trigger: 'focus' });
+    });
+    /**
+     * Evento para quitar empresas
+     */
+    $(document).on("click", '.btnLeft', function(event) {
+        let selectedItem = $("#empresaAdd option:selected");
+        $("#empresa").append(selectedItem);
+        $("#empresaAdd option").prop('selected', true);
+        $("#empresa option").prop('selected', true);
+    });
+    /**
+     * Evento para agregar empresas
+     */
+    $(document).on("click", '.btnRight', function(event) {
+        let selectedItem = $("#empresa option:selected");
+        $("#empresaAdd").append(selectedItem);
+        $("#empresaAdd option").prop('selected', true);
     });
 
     /**

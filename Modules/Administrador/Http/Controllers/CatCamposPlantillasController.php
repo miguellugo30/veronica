@@ -58,7 +58,13 @@ class CatCamposPlantillasController extends Controller
         /**
          * Vinculamos los campos con la empresa
          */
-        $empresa->Cat_campos_plantillas()->attach($cat);
+        //$empresa->Cat_campos_plantillas()->attach($cat);
+        for ($i=0; $i < count($empresa); $i++) {
+            DB::table('Campos_plantillas_empresa')->insert([
+                'fk_cat_campos_plantilla_id' => $cat->id,
+                'fk_empresas_id' => $request->empresa[$i]
+            ]);
+        }
         /**
          * Creamos el logs
          */
@@ -89,15 +95,30 @@ class CatCamposPlantillasController extends Controller
     public function edit($id)
     {
         /**
-         * Obtenemos todas las empresas
+         * Consultamos las empresas que tienen asignados los campos plantilla
          */
-        $Empresas = Empresas::active()->get();
+        $EmpresasAdd = DB::table('Campos_plantillas_empresa')->where('fk_cat_campos_plantilla_id',$id)->get();
+        /**
+         * Extraemos los ID,s de las empresas que estan asociadas para posterior consultarlas
+         */
+        $emps = array();
+        for ($i=0; $i < count($EmpresasAdd); $i++) {
+            array_push($emps,$EmpresasAdd[$i]->fk_empresas_id);
+        }
+        /**
+         * Obtenemos todas las empresas que estan asociadas
+         */
+        $Empresas = Empresas::active()->whereIn('id',$emps)->get();
+        /**
+         * Obtenemos todas las empresas que no estan asociadas
+         */
+        $Empresas2 = Empresas::active()->whereNotIn ('id',$emps)->get();
         /**
          * Obtenemos la informacion del catalogo a editar
          */
         $cat_campos_plantillas = Cat_Campos_Plantillas::findOrFail( $id );
 
-        return view('administrador::cat_campos_plantillas.edit', compact('Empresas','cat_campos_plantillas', 'id'));
+        return view('administrador::cat_campos_plantillas.edit', compact('Empresas','Empresas2','cat_campos_plantillas', 'id'));
     }
 
     /**
@@ -116,15 +137,35 @@ class CatCamposPlantillasController extends Controller
             'nombre' => $request->input('nombre')
         ]);
         /**
-         * Actualizamos los campos de la tabla Campos_plantillas_empresa
+         * Buscamos las empresa
          */
-        DB::table('Campos_plantillas_empresa')->where('fk_cat_campos_plantilla_id',$id)->update([
-            'fk_empresas_id' => $request->input('empresa')
-        ]);
+        $empresa = Empresas::findOrFail($request->empresa);
+        /**
+         * Extraemos los ID,s de las empresas que estan asociadas para posterior consultarlas
+         */
+        $empr = array();
+        for ($i=0; $i < count($empresa); $i++) {
+            array_push($empr,$empresa[$i]->id);
+        }
+
+        /**
+         * Borramos los campos de la tabla Campos_plantillas_empresa
+         */
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        DB::table('Campos_plantillas_empresa')->where('fk_cat_campos_plantilla_id',$id)->delete();
+        /**
+         * Vinculamos los campos con la empresa
+         */
+        for ($i=0; $i < count($empr); $i++) {
+            DB::table('Campos_plantillas_empresa')->insert([
+                'fk_cat_campos_plantilla_id' => $id,
+                'fk_empresas_id' => $request->empresa[$i]
+            ]);
+        }
         /**
          * Creamos el logs
          */
-        $mensaje = 'Se edito un registro con id: '.$id.', informacion editada: '.var_export($request->all(), true);
+        $mensaje = 'Se actualizo un registro con id: '.$id.', informacion actualizada: '.var_export($request->all(), true);
         $log = new LogController;
         $log->store('Actualizacion', 'Cat_campos_plantillas',$mensaje, $id);
         /**
@@ -143,6 +184,7 @@ class CatCamposPlantillasController extends Controller
         /**
          * Borramos los campos de la tabla Campos_plantillas_empresa
          */
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
         DB::table('Campos_plantillas_empresa')->where('fk_cat_campos_plantilla_id',$id)->delete();
         /**
          * Borramos los campos de la tabla Cat_Campos_Plantillas

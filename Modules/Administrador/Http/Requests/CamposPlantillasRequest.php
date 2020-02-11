@@ -16,6 +16,7 @@ class CamposPlantillasRequest extends FormRequest
         return [
             'nombre' => 'required',
             'empresa' => 'required',
+            //'empresaAdd' => 'required',
         ];
     }
 
@@ -33,7 +34,20 @@ class CamposPlantillasRequest extends FormRequest
     {
         return[
             'nombre' => 'Nombre',
-            'empresa' => 'Empresa',
+            'empresa'=> 'Empresa',
+        ];
+    }
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'nombre.required' => 'El campo Nombre es obligatorio',
+            'empresa.required'  => 'Debe agregar al menos una empresa',
         ];
     }
 }
+
