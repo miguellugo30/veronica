@@ -45,4 +45,11 @@ class Cat_Plantilla extends Model
     {
         return $this->belongsTo('Nimbus\Empresas', 'fk_empresas_id','id');
     }
+    /**
+     * Relación uno a muchos con Empresas
+     */
+    public function Plantillas_campos()
+    {
+        return $this->hasMany('Nimbus\Plantillas_campos', 'fk_cat_plantilla_id','id');
+    }
 }
