@@ -86,6 +86,201 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./resources/js/module_settings/Prefijos_Marcacion.js":
+/*!************************************************************!*\
+  !*** ./resources/js/module_settings/Prefijos_Marcacion.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  var currentURL = window.location.href;
+  /**
+   * Evento para mostrar el formulario de crear una nueva plantilla
+   */
+
+  $(document).on("click", ".newPrefijoMarcacion", function (e) {
+    event.preventDefault();
+    $('#tituloModal').html('Alta de Prefijo Marcacion');
+    $('#action').removeClass('deletePrefijoMarcacion');
+    $('#action').addClass('savePrefijoMarcacion');
+    var url = currentURL + "/PrefijosMarcacion/create";
+    $.get(url, function (data, textStatus, jqXHR) {
+      $('#modal').modal('show');
+      $("#modal-body").html(data);
+    });
+  });
+  /**
+   * Evento para guardar el nuevo Prefijo de Marcacion
+   */
+
+  $(document).on('click', '.savePrefijoMarcacion', function (event) {
+    event.preventDefault(); //let dataForm = $("#altaprefijo").serializeArray();
+
+    var nombre = $("#nombre").val();
+    var descripcion = $("#descripcion").val();
+    var prefijo = $("#prefijo").val();
+    var prefijoNuevo = $("#prefijoNuevo").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var url = currentURL + '/PrefijosMarcacion';
+    $.post(url, {
+      nombre: nombre,
+      descripcion: descripcion,
+      prefijo: prefijo,
+      prefijoNuevo: prefijoNuevo,
+      _token: _token
+    }, function (data, textStatus, xhr) {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
+      $('.viewResult').html(data);
+      $('.viewResult #tablePrefijosMarcacion').DataTable({
+        "lengthChange": true,
+        "order": [[3, "asc"]]
+      });
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
+    });
+  });
+  /**
+   * Evento para seleccionar un Prefijo
+   */
+
+  $(document).on('click', '#tablePrefijosMarcacion tbody tr', function (event) {
+    event.preventDefault();
+    var id = $(this).data("id");
+    $(".editPrefijoMarcacion").slideDown();
+    $(".deletePrefijoMarcacion").slideDown();
+    $("#idSeleccionado").val(id);
+    $("#tablePrefijosMarcacion tbody tr").removeClass('table-primary');
+    $(this).addClass('table-primary');
+  });
+  /**
+   * Evento para visualizar la configuración del Agente
+   */
+
+  $(document).on('click', '.editPrefijoMarcacion', function (event) {
+    event.preventDefault();
+    var id = $("#idSeleccionado").val();
+    var url = currentURL + '/PrefijosMarcacion/' + id + '/edit';
+    $('#tituloModal').html('Editar Prefijos');
+    $('#action').addClass('updatePrefijoMarcacion');
+    $('#action').removeClass('savePrefijoMarcacion');
+    $.ajax({
+      url: url,
+      type: 'GET',
+      success: function success(result) {
+        $('#modal').modal({
+          backdrop: 'static',
+          keyboard: false
+        });
+        $("#modal-body").html(result);
+      }
+    });
+  });
+  /**
+   * Evento para guardar los cambios del Agente
+   */
+
+  $(document).on('click', '.updatePrefijoMarcacion', function (event) {
+    event.preventDefault();
+    var id = $("#idSeleccionado").val();
+    var nombre = $("#nombre").val();
+    var descripcion = $("#descripcion").val();
+    var prefijo = $("#prefijo").val();
+    var prefijoNuevo = $("#prefijoNuevo").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var _method = "PUT";
+    var url = currentURL + '/PrefijosMarcacion/' + id;
+    $.post(url, {
+      id: id,
+      nombre: nombre,
+      descripcion: descripcion,
+      prefijo: prefijo,
+      prefijoNuevo: prefijoNuevo,
+      _method: _method,
+      _token: _token
+    }, function (data, textStatus, xhr) {
+      $('.viewResult').html(data);
+      $('.viewResult #tablePrefijosMarcacion').DataTable({
+        "lengthChange": true,
+        "order": [[2, "asc"]]
+      });
+    }).done(function () {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
+    });
+  });
+  /**
+   * Evento para eliminar un Prefijo
+   *
+   */
+
+  $(document).on('click', '.deletePrefijoMarcacion', function (event) {
+    event.preventDefault();
+    Swal.fire({
+      title: 'Estas seguro?',
+      text: "Deseas eliminar el registro seleccionado!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Eliminar!',
+      cancelButtonText: 'Cancelar'
+    }).then(function (result) {
+      if (result.value) {
+        var id = $("#idSeleccionado").val();
+        var _method = "DELETE";
+
+        var _token = $("input[name=_token]").val();
+
+        var url = currentURL + '/PrefijosMarcacion/' + id;
+        $.ajax({
+          url: url,
+          type: 'POST',
+          data: {
+            _token: _token,
+            _method: _method
+          },
+          success: function success(result) {
+            $('.viewResult').html(result);
+            $('.viewResult #tablePrefijosMarcacion').DataTable({
+              "lengthChange": false
+            });
+            Swal.fire('Eliminado!', 'El registro ha sido eliminado.', 'success');
+          }
+        });
+      }
+    });
+  });
+  /**
+   * Funcion para mostrar los errores de los formularios
+   */
+
+  function printErrorMsg(msg) {
+    $(".print-error-msg").find("ul").html('');
+    $(".print-error-msg").css('display', 'block');
+    $(".form-control").removeClass('is-invalid');
+
+    for (var clave in msg) {
+      $("#" + clave).addClass('is-invalid');
+
+      if (msg.hasOwnProperty(clave)) {
+        $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
+      }
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/module_settings/acciones_formularios.js":
 /*!**************************************************************!*\
   !*** ./resources/js/module_settings/acciones_formularios.js ***!
@@ -1732,6 +1927,9 @@ $(function () {
     } else if (id == 'cat-28') {
       url = currentURL + '/Plantillas';
       table = ' #tablePlantillas';
+    } else if (id == 'cat-30') {
+      url = currentURL + '/PrefijosMarcacion';
+      table = ' #tablePrefijosMarcacion';
     }
 
     $.get(url, function (data, textStatus, jqXHR) {
@@ -2485,9 +2683,9 @@ $(function () {
 /***/ }),
 
 /***/ 1:
-/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/module_settings/menu.js ./resources/js/module_settings/formularios.js ./resources/js/module_settings/sub_formularios.js ./resources/js/module_settings/acciones_formularios.js ./resources/js/module_settings/audios.js ./resources/js/module_settings/calificaciones.js ./resources/js/module_settings/agentes.js ./resources/js/module_settings/grupos.js ./resources/js/module_settings/speech.js ./resources/js/module_settings/acciones_speech.js ./resources/js/module_settings/eventos_agentes.js ./resources/js/module_settings/plantillas.js ***!
-  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/module_settings/menu.js ./resources/js/module_settings/formularios.js ./resources/js/module_settings/sub_formularios.js ./resources/js/module_settings/acciones_formularios.js ./resources/js/module_settings/audios.js ./resources/js/module_settings/calificaciones.js ./resources/js/module_settings/agentes.js ./resources/js/module_settings/grupos.js ./resources/js/module_settings/speech.js ./resources/js/module_settings/acciones_speech.js ./resources/js/module_settings/eventos_agentes.js ./resources/js/module_settings/plantillas.js ./resources/js/module_settings/Prefijos_Marcacion.js ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2502,7 +2700,8 @@ __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\grup
 __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\speech.js */"./resources/js/module_settings/speech.js");
 __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\acciones_speech.js */"./resources/js/module_settings/acciones_speech.js");
 __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\eventos_agentes.js */"./resources/js/module_settings/eventos_agentes.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\plantillas.js */"./resources/js/module_settings/plantillas.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\plantillas.js */"./resources/js/module_settings/plantillas.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\Prefijos_Marcacion.js */"./resources/js/module_settings/Prefijos_Marcacion.js");
 
 
 /***/ })

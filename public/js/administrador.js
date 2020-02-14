@@ -2769,7 +2769,7 @@ $(function () {
     var _token = $("input[name=_token]").val();
 
     var dato = id + "." + opcion;
-    $("#accionActualizar").removeClass('updateExtension updateCanal updateEmpresa updateDid');
+    $("#accionActualizar").removeClass('updateExtension updateCanal updateEmpresa updateDid updatePrefijos');
 
     if (opcion == 'dataGeneral') {
       $('.updateEmpresa').slideUp();
@@ -2785,6 +2785,10 @@ $(function () {
     } else if (opcion == 'dataDids') {
       url = currentURL + '/did/' + id;
       $("#accionActualizar").addClass('updateDid');
+      $('#accionActualizar').slideDown();
+    } else if (opcion == 'dataPrefijos') {
+      url = currentURL + '/prefijos_marcacion/' + id;
+      $("#accionActualizar").addClass('updatePrefijos');
       $('#accionActualizar').slideDown();
     } else {
       url = currentURL + '/empresas/' + dato;
@@ -3683,6 +3687,156 @@ $(function () {
 
 /***/ }),
 
+/***/ "./resources/js/module_administrador/prefijos_marcacion.js":
+/*!*****************************************************************!*\
+  !*** ./resources/js/module_administrador/prefijos_marcacion.js ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  var currentURL = window.location.href;
+  /**
+   * Evento para mostrar el formulario de crear una nueva plantilla
+   */
+
+  $(document).on("click", ".newPrefijoMarcacion", function (e) {
+    e.preventDefault();
+    $("#accionActualizar").slideUp();
+    $(".viewIndex").slideUp();
+    $(".viewCreate").slideDown();
+    var id_empresa = $("#id_empresa").val();
+    var url = currentURL + '/prefijos_marcacion/create/' + id_empresa;
+    $.get(url, function (data, textStatus, jqXHR) {
+      $('#formDataEmpresa').html(data);
+    });
+  });
+  /**
+   * Evento para guardar el nuevo Prefijo de Marcacion
+   */
+
+  $(document).on('click', '.savePrefijoMarcacion', function (event) {
+    event.preventDefault(); //let dataForm = $("#formDataEmpresa").serializeArray();
+
+    var nombre = $("#nombre").val();
+    var descripcion = $("#descripcion").val();
+    var prefijo = $("#prefijo").val();
+    var prefijoNuevo = $("#prefijoNuevo").val();
+    var id = $("#id_empresa").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var url = currentURL + '/prefijos_marcacion';
+    $.post(url, {
+      id: id,
+      nombre: nombre,
+      descripcion: descripcion,
+      prefijo: prefijo,
+      prefijoNuevo: prefijoNuevo,
+      _token: _token
+    }, function (data, textStatus, xhr) {
+      var url = currentURL + "/prefijos_marcacion/" + id;
+      $.get(url, function (data, textStatus, jqXHR) {
+        $('#formDataEmpresa').html(data);
+        $('#tablePrefijosMarcacion').DataTable({
+          "lengthChange": true
+        });
+      });
+    });
+  });
+  /**
+   * Evento para habilitar la edicion del prefijo seleccionado
+   */
+
+  $(document).on('click', '.editar_prefijo', function (event) {
+    var id = $(this).val();
+    /**
+     * Habilitamos los inputs para editar
+     */
+
+    if ($(this).prop('checked')) {
+      $("#nombre_" + id).prop("disabled", false);
+      $("#descripcion_" + id).prop("disabled", false);
+      $("#prefijo_" + id).prop("disabled", false);
+      $("#prefijoNuevo_" + id).prop("disabled", false);
+      $("#delete_" + id).slideDown();
+      $("#accionActualizar").slideDown();
+    } else {
+      $("#nombre_" + id).prop("disabled", true);
+      $("#descripcion_" + id).prop("disabled", true);
+      $("#prefijo_" + id).prop("disabled", true);
+      $("#prefijoNuevo_" + id).prop("disabled", true);
+      $("#delete_" + id).slideUp();
+      $("#accionActualizar").slideUp();
+    }
+  });
+  /**
+   * Evento para editar el modulo
+   */
+
+  $(document).on('click', '.updatePrefijos', function (event) {
+    event.preventDefault();
+    var dataForm = $("#formDataEmpresa").serializeArray();
+
+    var _token = $("input[name=_token]").val();
+
+    var id = $("#id_empresa").val();
+    var _method = "PUT";
+    var url = currentURL + '/prefijos_marcacion/' + id;
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {
+        dataForm: dataForm,
+        _token: _token,
+        _method: _method
+      },
+      success: function success(result) {
+        var url = currentURL + "/prefijos_marcacion/" + id;
+        $.get(url, function (data, textStatus, jqXHR) {
+          $('#formDataEmpresa').html(data);
+          $('#tablePrefijosMarcacion').DataTable({
+            "lengthChange": true
+          });
+        });
+      }
+    });
+  });
+  /**
+   * Evento para eliminar el prefijo
+   */
+
+  $(document).on('click', '.deletePrefijo', function (event) {
+    event.preventDefault();
+    var id = $(this).attr('id').replace('delete_', '');
+
+    var _token = $("input[name=_token]").val();
+
+    var _method = "DELETE";
+    var url = currentURL + '/prefijos_marcacion/' + id;
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {
+        _token: _token,
+        _method: _method
+      },
+      success: function success(result) {
+        var id = $("#id_empresa").val();
+        var url = currentURL + "/prefijos_marcacion/" + id;
+        $.get(url, function (data, textStatus, jqXHR) {
+          $('#formDataEmpresa').html(data);
+          $('#tablePrefijosMarcacion').DataTable({
+            "lengthChange": true
+          });
+        });
+      }
+    });
+  });
+});
+
+/***/ }),
+
 /***/ "./resources/js/module_administrador/submenus.js":
 /*!*******************************************************!*\
   !*** ./resources/js/module_administrador/submenus.js ***!
@@ -4368,32 +4522,33 @@ $(function () {
 /***/ }),
 
 /***/ 0:
-/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/module_administrador/usuarios.js ./resources/js/module_administrador/modulos.js ./resources/js/module_administrador/submenus.js ./resources/js/module_administrador/menus.js ./resources/js/module_administrador/distribuidores.js ./resources/js/module_administrador/dids.js ./resources/js/module_administrador/cat_estado_agente.js ./resources/js/module_administrador/cat_estado_cliente.js ./resources/js/module_administrador/cat_estado_empresa.js ./resources/js/module_administrador/cat_ip_pbx.js ./resources/js/module_administrador/cat_nas.js ./resources/js/module_administrador/troncales.js ./resources/js/module_administrador/canales.js ./resources/js/module_administrador/empresas.js ./resources/js/module_administrador/cat_base_datos.js ./resources/js/module_administrador/cat_tipo_canal.js ./resources/js/module_administrador/menu.js ./resources/js/module_administrador/cat_extensiones.js ./resources/js/module_administrador/licenciasBria.js ./resources/js/module_administrador/cat_campos_plantillas.js ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/module_administrador/usuarios.js ./resources/js/module_administrador/modulos.js ./resources/js/module_administrador/submenus.js ./resources/js/module_administrador/menus.js ./resources/js/module_administrador/distribuidores.js ./resources/js/module_administrador/dids.js ./resources/js/module_administrador/cat_estado_agente.js ./resources/js/module_administrador/cat_estado_cliente.js ./resources/js/module_administrador/cat_estado_empresa.js ./resources/js/module_administrador/cat_ip_pbx.js ./resources/js/module_administrador/cat_nas.js ./resources/js/module_administrador/troncales.js ./resources/js/module_administrador/canales.js ./resources/js/module_administrador/empresas.js ./resources/js/module_administrador/cat_base_datos.js ./resources/js/module_administrador/cat_tipo_canal.js ./resources/js/module_administrador/menu.js ./resources/js/module_administrador/cat_extensiones.js ./resources/js/module_administrador/licenciasBria.js ./resources/js/module_administrador/cat_campos_plantillas.js ./resources/js/module_administrador/prefijos_marcacion.js ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\usuarios.js */"./resources/js/module_administrador/usuarios.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\modulos.js */"./resources/js/module_administrador/modulos.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\submenus.js */"./resources/js/module_administrador/submenus.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\menus.js */"./resources/js/module_administrador/menus.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\distribuidores.js */"./resources/js/module_administrador/distribuidores.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\dids.js */"./resources/js/module_administrador/dids.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\cat_estado_agente.js */"./resources/js/module_administrador/cat_estado_agente.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\cat_estado_cliente.js */"./resources/js/module_administrador/cat_estado_cliente.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\cat_estado_empresa.js */"./resources/js/module_administrador/cat_estado_empresa.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\cat_ip_pbx.js */"./resources/js/module_administrador/cat_ip_pbx.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\cat_nas.js */"./resources/js/module_administrador/cat_nas.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\troncales.js */"./resources/js/module_administrador/troncales.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\canales.js */"./resources/js/module_administrador/canales.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\empresas.js */"./resources/js/module_administrador/empresas.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\cat_base_datos.js */"./resources/js/module_administrador/cat_base_datos.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\cat_tipo_canal.js */"./resources/js/module_administrador/cat_tipo_canal.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\menu.js */"./resources/js/module_administrador/menu.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\cat_extensiones.js */"./resources/js/module_administrador/cat_extensiones.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\licenciasBria.js */"./resources/js/module_administrador/licenciasBria.js");
-module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\cat_campos_plantillas.js */"./resources/js/module_administrador/cat_campos_plantillas.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\usuarios.js */"./resources/js/module_administrador/usuarios.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\modulos.js */"./resources/js/module_administrador/modulos.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\submenus.js */"./resources/js/module_administrador/submenus.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\menus.js */"./resources/js/module_administrador/menus.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\distribuidores.js */"./resources/js/module_administrador/distribuidores.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\dids.js */"./resources/js/module_administrador/dids.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\cat_estado_agente.js */"./resources/js/module_administrador/cat_estado_agente.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\cat_estado_cliente.js */"./resources/js/module_administrador/cat_estado_cliente.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\cat_estado_empresa.js */"./resources/js/module_administrador/cat_estado_empresa.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\cat_ip_pbx.js */"./resources/js/module_administrador/cat_ip_pbx.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\cat_nas.js */"./resources/js/module_administrador/cat_nas.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\troncales.js */"./resources/js/module_administrador/troncales.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\canales.js */"./resources/js/module_administrador/canales.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\empresas.js */"./resources/js/module_administrador/empresas.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\cat_base_datos.js */"./resources/js/module_administrador/cat_base_datos.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\cat_tipo_canal.js */"./resources/js/module_administrador/cat_tipo_canal.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\menu.js */"./resources/js/module_administrador/menu.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\cat_extensiones.js */"./resources/js/module_administrador/cat_extensiones.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\licenciasBria.js */"./resources/js/module_administrador/licenciasBria.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\cat_campos_plantillas.js */"./resources/js/module_administrador/cat_campos_plantillas.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\prefijos_marcacion.js */"./resources/js/module_administrador/prefijos_marcacion.js");
 
 
 /***/ })

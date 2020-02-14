@@ -130,4 +130,11 @@ class Empresas extends Model
     {
         return $this->belongsToMany('Nimbus\Cat_campos_plantillas', 'Campos_plantillas_empresa', 'fk_empresas_id', 'fk_cat_campos_plantilla_id');
     }
+    /**
+     * Relacion uno a muchos con Prefijos_marcacion
+     */
+    public function Prefijos_marcacion()
+    {
+        return $this->hasMany('Nimbus\Prefijos_marcacion');
+    }
 }

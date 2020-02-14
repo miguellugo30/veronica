@@ -83,3 +83,9 @@ Route::group(['namespace' => '\Modules\Settings\Http\Controllers', 'prefix' => '
 Route::group(['namespace' => '\Modules\Settings\Http\Controllers', 'prefix' => 'settings', 'middleware' => 'auth'], function() {
     Route::resource('Plantillas','PlantillasController');
 });
+/**
+ * Rutas para CRUD de Prefijos Marcacion
+ */
+Route::group(['namespace' => '\Modules\Settings\Http\Controllers', 'prefix' => 'settings', 'middleware' => 'auth'], function() {
+    Route::resource('PrefijosMarcacion','PrefijosMarcacionController');
+});

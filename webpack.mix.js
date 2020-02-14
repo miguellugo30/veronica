@@ -31,7 +31,8 @@ mix.js([
         'resources/js/module_administrador/menu.js',
         'resources/js/module_administrador/cat_extensiones.js',
         'resources/js/module_administrador/licenciasBria.js',
-        'resources/js/module_administrador/cat_campos_plantillas.js'
+        'resources/js/module_administrador/cat_campos_plantillas.js',
+        'resources/js/module_administrador/prefijos_marcacion.js',
     ], 'public/js/administrador.js')
     .js([
         'resources/js/module_settings/menu.js',
@@ -46,6 +47,7 @@ mix.js([
         'resources/js/module_settings/acciones_speech.js',
         'resources/js/module_settings/eventos_agentes.js',
         'resources/js/module_settings/plantillas.js',
+        'resources/js/module_settings/Prefijos_Marcacion.js',
     ], 'public/js/settings.js')
     .js([
         'resources/js/module_inbound/menu.js',
