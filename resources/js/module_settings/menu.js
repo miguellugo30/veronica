@@ -33,6 +33,9 @@ $(function() {
         } else if (id == 'cat-28') {
             url = currentURL + '/Plantillas';
             table = ' #tablePlantillas';
+        } else if (id == 'cat-30') {
+            url = currentURL + '/PrefijosMarcacion';
+            table = ' #tablePrefijosMarcacion';
         }
 
         $.get(url, function(data, textStatus, jqXHR) {

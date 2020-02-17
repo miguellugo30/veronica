@@ -12,6 +12,7 @@
             <li data-opcion="dataDids" class="list-group-item">Dids</li>
             <li data-opcion="dataAplicaciones" class="list-group-item">Aplicaciones</li>
             <li data-opcion="dataPerfiles" class="list-group-item">Perfiles de Marcado</li>
+            <li data-opcion="dataPrefijos" class="list-group-item">Prefijos de Marcacion</li>
         </ul>
         <br><br>
     </div>

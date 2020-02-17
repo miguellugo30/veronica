@@ -23,6 +23,7 @@ use Nimbus\Troncales;
 use Nimbus\Cat_Extensiones;
 use Nimbus\Token_Soporte;
 use Nimbus\User;
+use Nimbus\PrefijosMarcacion;
 use Modules\Administrador\Http\Requests\EmpresasRequest;
 
 class EmpresasController extends Controller
@@ -735,6 +736,10 @@ class EmpresasController extends Controller
 
                 return view('administrador::dids.create', compact( 'canales', 'id'));
             }
+
+        } else if( $data['action'] == 'dataPrefijos' ) {
+            $id = $data['id_empresa'];
+            dd($id);
 
         }
     }

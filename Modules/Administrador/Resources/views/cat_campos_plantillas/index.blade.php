@@ -2,13 +2,13 @@
     <div class="box-header with-border">
         <h3 class="box-title"><b><i class="far fa-list-alt"></i> Campos Plantillas</b></h3>
         <div class="box-tools pull-right">
-            @can('delete estados')
+            @can('delete campos plantillas')
                 <button type="button" class="btn btn-danger  btn-sm deleteCamPla" style="display:none"><i class="fas fa-trash-alt"></i> Elminar</button>
             @endcan
-            @can('edit estados')
+            @can('edit campos plantillas')
                 <button type="button" class="btn btn-warning btn-sm editCamPla" style="display:none"><i class="fas fa-edit"></i> Editar</button>
             @endcan
-            @can('create estados')
+            @can('create campos plantillas')
                 <button type="button" class="btn btn-primary btn-sm newCamPla" data-widget="remove"><i class="fas fa-plus"></i> Nuevo</button>
             @endcan
             <input type="hidden" name="idSeleccionado" id="idSeleccionado" value="">
