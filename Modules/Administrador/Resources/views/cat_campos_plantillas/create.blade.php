@@ -7,18 +7,18 @@
     <label for="empresa">Selecciona la(s) Empresa(s)</label>
         <div class="form-row col-md-12">
             <div class="col-md-5">
-                <select name="empresa" id="empresa" class="form-control form-control-sm" multiple>
+                <select name="empresa" id="empresa" class="form-control form-control-lg" multiple>
                     @foreach( $Empresas as $empresa )
                         <option value="{{ $empresa->id }}">{{ $empresa->nombre }}</option>
                     @endforeach
                 </select>
             </div>
             <div class="col-md-2">
-                <input type="button" class="form-control form-control-sm btnRight" id="btnRight" value="&gt;&gt;">
-                <input type="button" class="form-control form-control-sm btnLeft" id="btnLeft" value="&lt;&lt;">
+                <button type="button" class="btn btn-success btn-lg activate btnRight"><i class="fas fa-forward"></i></button>
+                <button type="button" class="btn btn-danger btn-lg activate btnLeft"><i class="fas fa-backward"></i></button>
             </div>
             <div class="col-md-5">
-                <select name="empresaAdd" id="empresaAdd" class="form-control form-control-sm" multiple>
+                <select name="empresaAdd" id="empresaAdd" class="form-control form-control-lg" multiple>
                 </select>
             </div>
         </div>
