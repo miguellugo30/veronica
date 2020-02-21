@@ -42,6 +42,13 @@ Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix'
     Route::resource('extensiones','CatExtensionesController');
 });
 /**
+ * Rutas de CRUD de Perfiles
+ */
+Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
+    Route::get('/perfil_marcacion/create/{id}', 'PerfilMarcacionController@create');
+    Route::resource('perfil_marcacion','PerfilMarcacionController');
+});
+/**
  * Rutas de CRUD de Prefijos
  */
 Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {

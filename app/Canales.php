@@ -66,5 +66,11 @@ class Canales extends Model
     {
         return $this->hasOne('Nimbus\Cat_Tipo_Canales', 'id', 'Cat_Canales_Tipo_id');
     }
-
+    /**
+     * Relacion uno a muchos con Perfil_marcacion
+     */
+    public function Perfil_marcacion()
+    {
+        return $this->hasMany('Nimbus\Perfil_marcacion', 'fk_canales_id', 'id');
+    }
 }

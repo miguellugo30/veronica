@@ -59,6 +59,13 @@ class Dids extends Model
    {
       return $this->hasOne('Nimbus\Did_Enrutamiento', 'Dids_id', 'id')->orderby('prioridad');
    }
+   /**
+    * Relacion uno a muchos con Perfil_marcacion
+    */
+   public function Perfil_marcacion()
+   {
+       return $this->hasMany('Nimbus\Perfil_marcacion');
+   }
 }
 
 ?>

@@ -2769,7 +2769,7 @@ $(function () {
     var _token = $("input[name=_token]").val();
 
     var dato = id + "." + opcion;
-    $("#accionActualizar").removeClass('updateExtension updateCanal updateEmpresa updateDid updatePrefijos');
+    $("#accionActualizar").removeClass('updateExtension updateCanal updateEmpresa updateDid updatePrefijos updatePerfil');
 
     if (opcion == 'dataGeneral') {
       $('.updateEmpresa').slideUp();
@@ -2786,10 +2786,12 @@ $(function () {
       url = currentURL + '/did/' + id;
       $("#accionActualizar").addClass('updateDid');
       $('#accionActualizar').slideDown();
+    } else if (opcion == 'dataPerfiles') {
+      url = currentURL + '/perfil_marcacion/' + id;
+      $("#accionActualizar").addClass('updatePerfil'); //$('#accionActualizar').slideDown();
     } else if (opcion == 'dataPrefijos') {
       url = currentURL + '/prefijos_marcacion/' + id;
-      $("#accionActualizar").addClass('updatePrefijos');
-      $('#accionActualizar').slideDown();
+      $("#accionActualizar").addClass('updatePrefijos'); //$('#accionActualizar').slideDown();
     } else {
       url = currentURL + '/empresas/' + dato;
       $("#accionActualizar").addClass('updateEmpresa');
@@ -3687,6 +3689,165 @@ $(function () {
 
 /***/ }),
 
+/***/ "./resources/js/module_administrador/perfil_marcacion.js":
+/*!***************************************************************!*\
+  !*** ./resources/js/module_administrador/perfil_marcacion.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  var currentURL = window.location.href;
+  /**
+   * Evento para mostrar el formulario de crear una nueva plantilla
+   */
+
+  $(document).on("click", ".newPerfilMarcacion", function (e) {
+    e.preventDefault();
+    $("#accionActualizar").slideUp();
+    $(".viewIndex").slideUp();
+    $(".viewCreate").slideDown();
+    var id_empresa = $("#id_empresa").val();
+    var url = currentURL + '/perfil_marcacion/create/' + id_empresa;
+    $.get(url, function (data, textStatus, jqXHR) {
+      $('#formDataEmpresa').html(data);
+    });
+  });
+  /**
+   * Evento para guardar el nuevo Prefijo de Marcacion
+   */
+
+  $(document).on('click', '.savePerfilMarcacion', function (event) {
+    event.preventDefault(); //let dataForm = $("#formDataEmpresa").serializeArray();
+
+    var prefijo = $("#prefijo").val();
+    var perfil = $("#perfil").val();
+    var canal = $("#canal").val();
+    var did = $("#did").val();
+    var id = $("#id_empresa").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var url = currentURL + '/perfil_marcacion';
+    $.post(url, {
+      id: id,
+      prefijo: prefijo,
+      perfil: perfil,
+      canal: canal,
+      did: did,
+      _token: _token
+    }, function (data, textStatus, xhr) {
+      var url = currentURL + "/perfil_marcacion/" + id;
+      $.get(url, function (data, textStatus, jqXHR) {
+        $('#formDataEmpresa').html(data);
+        $('#tablePerfilMarcacion').DataTable({
+          "lengthChange": true
+        });
+      });
+    });
+  });
+  /**
+   * Evento para habilitar la edicion del prefijo seleccionado
+   */
+
+  $(document).on('click', '.editar_perfil', function (event) {
+    var id = $(this).val();
+    /**
+     * Habilitamos los inputs para editar
+     */
+
+    if ($(this).prop('checked')) {
+      $("#prefijo_" + id).prop("disabled", false);
+      $("#perfil_" + id).prop("disabled", false);
+      $("#canal_" + id).prop("disabled", false);
+      $("#did_" + id).prop("disabled", false);
+      $("#delete_" + id).slideDown();
+      $("#accionActualizar").slideDown();
+    } else {
+      $("#prefijo_" + id).prop("disabled", true);
+      $("#perfil_" + id).prop("disabled", true);
+      $("#canal_" + id).prop("disabled", true);
+      $("#did_" + id).prop("disabled", true);
+      $("#delete_" + id).slideUp();
+      $("#accionActualizar").slideUp();
+    }
+  });
+  /**
+   * Evento para editar el modulo
+   */
+
+  $(document).on('click', '.updatePerfil', function (event) {
+    event.preventDefault();
+    var dataForm = $("#formDataEmpresa").serializeArray();
+    console.log(dataForm);
+
+    var _token = $("input[name=_token]").val();
+
+    var id = $("#id_empresa").val();
+    var _method = "PUT";
+    var url = currentURL + '/perfil_marcacion/' + id;
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {
+        dataForm: dataForm,
+        _token: _token,
+        _method: _method
+      },
+      success: function success(result) {
+        var url = currentURL + "/perfil_marcacion/" + id;
+        $.get(url, function (data, textStatus, jqXHR) {
+          $('#formDataEmpresa').html(data);
+          $('#tablePerfilMarcacion').DataTable({
+            "lengthChange": true
+          });
+        });
+      }
+    });
+  });
+  /**
+   * Evento para eliminar el prefijo
+   */
+
+  $(document).on('click', '.deletePerfil', function (event) {
+    event.preventDefault();
+    var id = $(this).attr('id').replace('delete_', '');
+    var prefijo = $("#tr_" + id).attr("data-prefijo");
+    var perfil = $("#tr_" + id).attr("data-perfil");
+    var canal = $("#tr_" + id).attr("data-canal");
+    var did = $("#tr_" + id).attr("data-did");
+
+    var _token = $("input[name=_token]").val();
+
+    var _method = "DELETE";
+    var url = currentURL + '/perfil_marcacion/' + id;
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {
+        prefijo: prefijo,
+        perfil: perfil,
+        canal: canal,
+        did: did,
+        _token: _token,
+        _method: _method
+      },
+      success: function success(result) {
+        var id = $("#id_empresa").val();
+        var url = currentURL + "/perfil_marcacion/" + id;
+        $.get(url, function (data, textStatus, jqXHR) {
+          $('#formDataEmpresa').html(data);
+          $('#tablePerfilMarcacion').DataTable({
+            "lengthChange": true
+          });
+        });
+      }
+    });
+  });
+});
+
+/***/ }),
+
 /***/ "./resources/js/module_administrador/prefijos_marcacion.js":
 /*!*****************************************************************!*\
   !*** ./resources/js/module_administrador/prefijos_marcacion.js ***!
@@ -4522,9 +4683,9 @@ $(function () {
 /***/ }),
 
 /***/ 0:
-/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/module_administrador/usuarios.js ./resources/js/module_administrador/modulos.js ./resources/js/module_administrador/submenus.js ./resources/js/module_administrador/menus.js ./resources/js/module_administrador/distribuidores.js ./resources/js/module_administrador/dids.js ./resources/js/module_administrador/cat_estado_agente.js ./resources/js/module_administrador/cat_estado_cliente.js ./resources/js/module_administrador/cat_estado_empresa.js ./resources/js/module_administrador/cat_ip_pbx.js ./resources/js/module_administrador/cat_nas.js ./resources/js/module_administrador/troncales.js ./resources/js/module_administrador/canales.js ./resources/js/module_administrador/empresas.js ./resources/js/module_administrador/cat_base_datos.js ./resources/js/module_administrador/cat_tipo_canal.js ./resources/js/module_administrador/menu.js ./resources/js/module_administrador/cat_extensiones.js ./resources/js/module_administrador/licenciasBria.js ./resources/js/module_administrador/cat_campos_plantillas.js ./resources/js/module_administrador/prefijos_marcacion.js ***!
-  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/module_administrador/usuarios.js ./resources/js/module_administrador/modulos.js ./resources/js/module_administrador/submenus.js ./resources/js/module_administrador/menus.js ./resources/js/module_administrador/distribuidores.js ./resources/js/module_administrador/dids.js ./resources/js/module_administrador/cat_estado_agente.js ./resources/js/module_administrador/cat_estado_cliente.js ./resources/js/module_administrador/cat_estado_empresa.js ./resources/js/module_administrador/cat_ip_pbx.js ./resources/js/module_administrador/cat_nas.js ./resources/js/module_administrador/troncales.js ./resources/js/module_administrador/canales.js ./resources/js/module_administrador/empresas.js ./resources/js/module_administrador/cat_base_datos.js ./resources/js/module_administrador/cat_tipo_canal.js ./resources/js/module_administrador/menu.js ./resources/js/module_administrador/cat_extensiones.js ./resources/js/module_administrador/licenciasBria.js ./resources/js/module_administrador/cat_campos_plantillas.js ./resources/js/module_administrador/prefijos_marcacion.js ./resources/js/module_administrador/perfil_marcacion.js ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4548,7 +4709,8 @@ __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador
 __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\cat_extensiones.js */"./resources/js/module_administrador/cat_extensiones.js");
 __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\licenciasBria.js */"./resources/js/module_administrador/licenciasBria.js");
 __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\cat_campos_plantillas.js */"./resources/js/module_administrador/cat_campos_plantillas.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\prefijos_marcacion.js */"./resources/js/module_administrador/prefijos_marcacion.js");
+__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\prefijos_marcacion.js */"./resources/js/module_administrador/prefijos_marcacion.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_administrador\perfil_marcacion.js */"./resources/js/module_administrador/perfil_marcacion.js");
 
 
 /***/ })

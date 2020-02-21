@@ -4,25 +4,22 @@ namespace Nimbus;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PrefijosMarcacion extends Model
+class Perfiles extends Model
 {
-    /*
-    * Esto sirve para insertar la fecha tipo timestamp debido a la configuracion de Laravel
-    */
-    public $timestamps = false;
-
+  /*
+   * Esto sirve para insertar la fecha tipo timestamp debido a la configuracion de Laravel
+   */
+   public $timestamps = false;
     /**
      * Campos que pueden ser modificados
      */
     protected $fillable = [
-        'nombre', 'descripcion' , 'prefijo', 'prefijo_nuevo', 'fk_empresas_id', 'activo',
+        'nombre', 'descripcion' , 'fk_empresas_id', 'activo',
      ];
-
-     /**
+    /**
      * Nombre de la tabla
      */
-    protected $table = 'Prefijos_marcacion';
-
+    protected $table = 'Perfiles';
     /**
      * Funcion para obtener solo los registros activos
      */
@@ -30,18 +27,10 @@ class PrefijosMarcacion extends Model
     {
         return $query->where('activo', 1);
     }
-
     /*
     |--------------------------------------------------------------------------
     | RELACIONES DE BASE DE DATOS
     |--------------------------------------------------------------------------
-    /**
-    * Relacion muchos a uno con Distribuidores
-    */
-    public function Empresas()
-    {
-       return $this->belongsTo('Nimbus\Empresas', 'fk_empresas_id');
-    }
     /**
      * Relacion uno a muchos con Perfil_marcacion
      */
