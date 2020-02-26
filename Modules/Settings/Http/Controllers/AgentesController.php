@@ -167,10 +167,10 @@ class AgentesController extends Controller
                     'extension' => $request->input('extension'),
                     'nivel' => $request->input('nivel'),
                     'Canales_id' => $request->input('Canales_id'),
-                    'mix_monitor' => $request->input('mix_monitor'),
-                    'calificar_llamada' => $request->input('calificar_llamada'),
-                    'envio_sms' => $request->input('envio_sms'),
-                    'editar_datos' => $request->input('editar_datos'),
+                    'mix_monitor' => (int)$request->input('mix_monitor'),
+                    'calificar_llamada' => (int)$request->input('calificar_llamada'),
+                    'envio_sms' => (int)$request->input('envio_sms'),
+                    'editar_datos' => (int)$request->input('editar_datos'),
                 ]);
             /**
              * Creamos el logs

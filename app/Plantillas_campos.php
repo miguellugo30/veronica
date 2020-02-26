@@ -20,6 +20,7 @@ class Plantillas_campos extends Model
         'editable',
         'marcar',
         'mostrar',
+        'orden',
     ];
     /**
      * Nombre de la tabla
@@ -28,16 +29,15 @@ class Plantillas_campos extends Model
     /**
      * Función para obtener solo los registros activos
      */
-
     /*
     |--------------------------------------------------------------------------
     | RELACIONES DE BASE DE DATOS
     |--------------------------------------------------------------------------
     /**
-     * Muchos a uno con Speech
-     public function Speech()
-     {
-         return $this->belongsTo('Nimbus\speech');
-        }
-        */
+     * Relacion muchos a uno con Cat_Plantilla
+     */
+    public function Cat_Plantilla()
+    {
+        return $this->belongsTo('Nimbus\Cat_plantilla', 'id', 'fk_cat_plantilla_id');
+    }
 }

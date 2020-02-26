@@ -48,6 +48,7 @@ mix.js([
         'resources/js/module_settings/eventos_agentes.js',
         'resources/js/module_settings/plantillas.js',
         'resources/js/module_settings/Prefijos_Marcacion.js',
+        'resources/js/module_settings/baseDatos.js',
     ], 'public/js/settings.js')
     .js([
         'resources/js/module_inbound/menu.js',

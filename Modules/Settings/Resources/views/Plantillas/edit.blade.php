@@ -59,6 +59,7 @@
         <div class="form-group">
             <small class="form-text text-muted"> <b>*Campos obligatorios.</b></small>
         </div>
+
         <div class="alert alert-danger print-error-msg" role="alert" style="display:none">
             <ul></ul>
         </div>

@@ -78,6 +78,7 @@ class PlantillasController extends Controller
         /**
          * Insertamos la información de los campos
          **/
+        $j = 1;
         for ($i=0; $i < count( $info ); $i++) {
 
             Plantillas_campos::create([
@@ -86,8 +87,10 @@ class PlantillasController extends Controller
                             'fk_cat_plantilla_id' =>  $plantilla->id,
                             'editable' => (int)$info[$i][3],
                             'marcar' => (int)$info[$i][1],
-                            'mostrar' => (int)$info[$i][2]
+                            'mostrar' => (int)$info[$i][2],
+                            'orden' => (int)$j
                         ]);
+            $j++;
         }
 
         /**
@@ -108,7 +111,16 @@ class PlantillasController extends Controller
      */
     public function show($id)
     {
-        return view('settings::Plantillas.show');
+        /**
+         * Obtenemos las plantillas de la empresa
+         */
+        $plantilla = Cat_Plantilla::with('Plantillas_campos')->where( 'id', $id )->active()->first();
+        /**
+         * Obtenemos todos los campos que estan asignados a la empresa
+         */
+        $campos = $this->campos_plantillas();
+
+        return view('settings::Plantillas.show', compact('campos', 'plantilla'));
     }
 
     /**
@@ -153,17 +165,19 @@ class PlantillasController extends Controller
          * Insertamos los nuevos campos de la plantilla
          */
         $info = array_chunk( $data, 4 );
-
+        $j = 1;
         for ($i=0; $i < count( $info ); $i++) {
 
             Plantillas_campos::create([
-                            'fk_campos_plantilla_empresa_fk_cat_campos_plantilla_id' => (int)$info[$i][0],
+                'fk_campos_plantilla_empresa_fk_cat_campos_plantilla_id' => (int)$info[$i][0],
                             'fk_campos_plantilla_empresa_empresas_id' => $this->empresa_id,
                             'fk_cat_plantilla_id' =>  $id,
                             'editable' => (int)$info[$i][3],
                             'marcar' => (int)$info[$i][1],
-                            'mostrar' => (int)$info[$i][2]
-                        ]);
+                            'mostrar' => (int)$info[$i][2],
+                            'orden' => (int)$j
+                            ]);
+            $j++;
         }
 
         /**

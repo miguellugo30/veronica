@@ -151,7 +151,24 @@ class RealTimeController extends Controller
          * Obtenemos el Speech y el grupo de calificaciones
          */
         $speech = $campana->speech;
+        $campos = $speech->Opciones_Speech;
         $grupo = $campana->Grupos->first();
+
+        if ( $speech->tipo == 'dinamico' )
+        {
+            $bienvenida = DB::table('Opciones_Speech AS OS')
+                                ->join('appLaravel.speech AS S', 'OS.speech_id_hijo', '=', 'S.id')
+                                ->select(
+                                    'S.texto'
+                                )
+                                ->where('OS.id', $campos->where('tipo', 1)->first()->id)
+                                ->where('OS.tipo', 1)
+                                ->first();
+        }
+        else
+        {
+            $bienvenida = '';
+        }
         /**
          * Obtenemos el historico de llamdas de cliente
          */
@@ -172,7 +189,7 @@ class RealTimeController extends Controller
                     ->where('Cdr_call_center.callerid', $callerid)
                     ->whereDate('Cdr_call_center.fecha_inicio', DB::raw('curdate()'))->get();
 
-       return view('agentes::show', compact( 'campana', 'calledid', 'speech', 'historico', 'grupo', 'canal', 'uniqueid' ));
+       return view('agentes::show', compact( 'campana', 'calledid', 'speech', 'historico', 'grupo', 'canal', 'uniqueid', 'speech', 'campos', 'bienvenida' ));
     }
     /**
      * Funcion para colgar llamada

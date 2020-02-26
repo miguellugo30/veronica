@@ -46,7 +46,7 @@ class Campanas extends Model
      */
     public function Base_Datos()
     {
-        return $this->hasOne('Nimbus\Base_Datos', 'id', 'Base_Datos_id');
+        return $this->hasOne('Nimbus\Bases_datos', 'id', 'Base_Datos_id');
     }
     /**
      * Relacion uno a uno con Formularios
