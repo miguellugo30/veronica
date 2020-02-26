@@ -95,3 +95,9 @@ Route::group(['namespace' => '\Modules\Settings\Http\Controllers', 'prefix' => '
 Route::group(['namespace' => '\Modules\Settings\Http\Controllers', 'prefix' => 'settings', 'middleware' => 'auth'], function() {
     Route::resource('BaseDatos','BaseDatosController');
 });
+/*
+ * Rutas para CRUD de Perfil Marcacion
+ */
+Route::group(['namespace' => '\Modules\Settings\Http\Controllers', 'prefix' => 'settings', 'middleware' => 'auth'], function() {
+    Route::resource('Perfil_Marcacion','PerfilMarcacionController');
+});

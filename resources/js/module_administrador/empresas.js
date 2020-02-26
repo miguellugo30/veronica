@@ -268,7 +268,7 @@ $(function() {
         let _token = $("input[name=_token]").val();
         let dato = id + "." + opcion;
 
-        $("#accionActualizar").removeClass('updateExtension updateCanal updateEmpresa updateDid updatePrefijos');
+        $("#accionActualizar").removeClass('updateExtension updateCanal updateEmpresa updateDid updatePrefijos updatePerfil');
 
         if (opcion == 'dataGeneral') {
             $('.updateEmpresa').slideUp();
@@ -285,10 +285,14 @@ $(function() {
             url = currentURL + '/did/' + id;
             $("#accionActualizar").addClass('updateDid');
             $('#accionActualizar').slideDown();
+        } else if (opcion == 'dataPerfiles') {
+            url = currentURL + '/perfil_marcacion/' + id;
+            $("#accionActualizar").addClass('updatePerfil');
+            //$('#accionActualizar').slideDown();
         } else if (opcion == 'dataPrefijos') {
             url = currentURL + '/prefijos_marcacion/' + id;
             $("#accionActualizar").addClass('updatePrefijos');
-            $('#accionActualizar').slideDown();
+            //$('#accionActualizar').slideDown();
         } else {
             url = currentURL + '/empresas/' + dato;
             $("#accionActualizar").addClass('updateEmpresa');

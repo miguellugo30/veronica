@@ -36,9 +36,15 @@ $(function() {
         } else if (id == 'cat-30') {
             url = currentURL + '/PrefijosMarcacion';
             table = ' #tablePrefijosMarcacion';
+<<<<<<< HEAD
         } else if (id == 'cat-29') {
             url = currentURL + '/BaseDatos';
             table = ' #tableBaseDatos';
+=======
+        } else if (id == 'cat-31') {
+            url = currentURL + '/Perfil_Marcacion';
+            table = ' #tablePerfilMarcacion';
+>>>>>>> 6f9a765161bb7f2837349611b8d64fc273f964e8
         }
 
         $.get(url, function(data, textStatus, jqXHR) {
