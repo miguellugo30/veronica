@@ -2357,15 +2357,12 @@ $(function () {
     } else if (id == 'cat-30') {
       url = currentURL + '/PrefijosMarcacion';
       table = ' #tablePrefijosMarcacion';
-<<<<<<< HEAD
     } else if (id == 'cat-29') {
       url = currentURL + '/BaseDatos';
       table = ' #tableBaseDatos';
-=======
     } else if (id == 'cat-31') {
       url = currentURL + '/Perfil_Marcacion';
       table = ' #tablePerfilMarcacion';
->>>>>>> 6f9a765161bb7f2837349611b8d64fc273f964e8
     }
 
     $.get(url, function (data, textStatus, jqXHR) {
@@ -3119,10 +3116,9 @@ $(function () {
 /***/ }),
 
 /***/ 1:
-<<<<<<< HEAD
-/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/module_settings/menu.js ./resources/js/module_settings/formularios.js ./resources/js/module_settings/sub_formularios.js ./resources/js/module_settings/acciones_formularios.js ./resources/js/module_settings/audios.js ./resources/js/module_settings/calificaciones.js ./resources/js/module_settings/agentes.js ./resources/js/module_settings/grupos.js ./resources/js/module_settings/speech.js ./resources/js/module_settings/acciones_speech.js ./resources/js/module_settings/eventos_agentes.js ./resources/js/module_settings/plantillas.js ./resources/js/module_settings/Prefijos_Marcacion.js ./resources/js/module_settings/baseDatos.js ***!
-  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/module_settings/menu.js ./resources/js/module_settings/formularios.js ./resources/js/module_settings/sub_formularios.js ./resources/js/module_settings/acciones_formularios.js ./resources/js/module_settings/audios.js ./resources/js/module_settings/calificaciones.js ./resources/js/module_settings/agentes.js ./resources/js/module_settings/grupos.js ./resources/js/module_settings/speech.js ./resources/js/module_settings/acciones_speech.js ./resources/js/module_settings/eventos_agentes.js ./resources/js/module_settings/plantillas.js ./resources/js/module_settings/Prefijos_Marcacion.js ./resources/js/module_settings/baseDatos.js ./resources/js/module_settings/Perfil_Marcacion.js ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3139,29 +3135,8 @@ __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\accion
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\eventos_agentes.js */"./resources/js/module_settings/eventos_agentes.js");
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\plantillas.js */"./resources/js/module_settings/plantillas.js");
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\Prefijos_Marcacion.js */"./resources/js/module_settings/Prefijos_Marcacion.js");
-module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\baseDatos.js */"./resources/js/module_settings/baseDatos.js");
-=======
-/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/module_settings/menu.js ./resources/js/module_settings/formularios.js ./resources/js/module_settings/sub_formularios.js ./resources/js/module_settings/acciones_formularios.js ./resources/js/module_settings/audios.js ./resources/js/module_settings/calificaciones.js ./resources/js/module_settings/agentes.js ./resources/js/module_settings/grupos.js ./resources/js/module_settings/speech.js ./resources/js/module_settings/acciones_speech.js ./resources/js/module_settings/eventos_agentes.js ./resources/js/module_settings/plantillas.js ./resources/js/module_settings/Prefijos_Marcacion.js ./resources/js/module_settings/Perfil_Marcacion.js ***!
-  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\menu.js */"./resources/js/module_settings/menu.js");
-__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\formularios.js */"./resources/js/module_settings/formularios.js");
-__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\sub_formularios.js */"./resources/js/module_settings/sub_formularios.js");
-__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\acciones_formularios.js */"./resources/js/module_settings/acciones_formularios.js");
-__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\audios.js */"./resources/js/module_settings/audios.js");
-__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\calificaciones.js */"./resources/js/module_settings/calificaciones.js");
-__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\agentes.js */"./resources/js/module_settings/agentes.js");
-__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\grupos.js */"./resources/js/module_settings/grupos.js");
-__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\speech.js */"./resources/js/module_settings/speech.js");
-__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\acciones_speech.js */"./resources/js/module_settings/acciones_speech.js");
-__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\eventos_agentes.js */"./resources/js/module_settings/eventos_agentes.js");
-__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\plantillas.js */"./resources/js/module_settings/plantillas.js");
-__webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\Prefijos_Marcacion.js */"./resources/js/module_settings/Prefijos_Marcacion.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\module_settings\Perfil_Marcacion.js */"./resources/js/module_settings/Perfil_Marcacion.js");
->>>>>>> 6f9a765161bb7f2837349611b8d64fc273f964e8
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\baseDatos.js */"./resources/js/module_settings/baseDatos.js");
+module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\Perfil_Marcacion.js */"./resources/js/module_settings/Perfil_Marcacion.js");
 
 
 /***/ })
