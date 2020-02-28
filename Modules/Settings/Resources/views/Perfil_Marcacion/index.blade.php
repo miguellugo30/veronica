@@ -12,9 +12,6 @@
                 <button type="button" class="btn btn-primary btn-sm newPerfilMarcacion"><i class="fas fa-plus"></i> Nuevo</button>
             @endcan
             <input type="hidden" name="idSeleccionado" id="idSeleccionado" value="">
-            <input type="hidden" name="idSeleccionado2" id="idSeleccionado2" value="">
-            <input type="hidden" name="idSeleccionado3" id="idSeleccionado3" value="">
-            <input type="hidden" name="idSeleccionado4" id="idSeleccionado4" value="">
         </div>
     </div><!-- /.box-header -->
     <div class="box-body">
@@ -23,9 +20,10 @@
                 <table id="tablePerfilMarcacion" class="display table table-bordered table-hover table-sm" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Prefijo de Marcacion</th>
-                            <th>Perfil</th>
-                            <th>Canal</th>
+                            <th>Nombre</th>
+                            <th>Descripcion</th>
+                            <th>Prefijo Marcacion</th>
+                            <th>canal</th>
                             <th>Did</th>
                         </tr>
                     </thead>
@@ -36,12 +34,13 @@
                     :: Did
                     -->
                     <tbody>
-                        @foreach ($perfil_marcacion as $perfil)
-                            <tr data-prefijo="{{ $perfil->PrefijosMarcacion->id }}" data-perfil="{{ $perfil->Perfiles->id }}" data-canal="{{ $perfil->Canales->Cat_Tipo_Canales->id }}" data-did="{{ $perfil->Dids->id }}">
-                                <td>{{ $perfil->PrefijosMarcacion->nombre }}</td>
-                                <td>{{ $perfil->Perfiles->nombre }}</td>
-                                <td>{{ $perfil->Canales->Cat_Tipo_Canales->nombre }}</td>
-                                <td>{{ $perfil->Dids->did }}</td>
+                        @foreach ($perfil_marcacion as $marcacion)
+                            <tr data-id="{{ $marcacion->Perfiles->id }}">
+                                <td>{{ $marcacion->Perfiles->nombre }}</td>
+                                <td>{{ $marcacion->Perfiles->descripcion }}</td>
+                                <td>{{ $marcacion->PrefijosMarcacion->nombre }}</td>
+                                <td>{{ $marcacion->Canales->Cat_Tipo_Canales->nombre }}</td>
+                                <td>{{ $marcacion->Dids->did }}</td>
                             </tr>
                         @endforeach
                     </tbody>

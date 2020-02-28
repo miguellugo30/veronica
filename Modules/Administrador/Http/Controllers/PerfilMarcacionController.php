@@ -25,12 +25,14 @@ class PerfilMarcacionController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
+        $empresa_id = $user->id_cliente;
         /**
-         * Obtenemos todos los Perfiles de marcacion
+         * Recuperamos todos los Perfiles que esten activos
          */
-        $perfil_marcacion = Perfil_Marcacion::active()->with('PrefijosMarcacion')->with('Perfiles')->with('Canales')->with('Dids')->get();
+        $perfiles = Perfiles::active()->where('fk_empresas_id',$empresa_id)->get();
 
-        return view('administrador::perfil_Marcacion.index', compact('perfil_marcacion'));
+        return view('administrador::perfil_Marcacion.index', compact('perfiles'));
     }
 
     /**
@@ -40,23 +42,19 @@ class PerfilMarcacionController extends Controller
     public function create($id)
     {
         /**
-         * Obtenemos todos los Prefijos
+         * Recuperamos todos los prefijos de la empresa
          */
-        $prefijos = PrefijosMarcacion::active()->get();
+        $prefijos = PrefijosMarcacion::active()->where('fk_empresas_id',$id)->get();
         /**
-         * Obtenemos todos los Perfiles
+         * Obtenemos los canales de la empresa
          */
-        $perfiles = Perfiles::active()->get();
+        $canales= Canales::active()->where('Empresas_id',$id)->with('Cat_Tipo_Canales')->get();
         /**
-         * Obtenemos todos los Canales
+         * Obtenemos los did's de la empresa
          */
-        $canales = Canales::active()->with('Cat_Tipo_Canales')->get();
-        /**
-         * Obtenemos todos los Dids
-         */
-        $did = Dids::active()->get();
+        $did= Dids::active()->where('Empresas_id',$id)->get();
 
-        return view('administrador::perfil_Marcacion.create', compact('prefijos','perfiles','canales','did','id'));
+        return view('administrador::perfil_Marcacion.create', compact('id','prefijos','canales','did'));
     }
 
     /**
@@ -66,10 +64,22 @@ class PerfilMarcacionController extends Controller
      */
     public function store(Request $request)
     {
+        /**
+         * Creamos los datos del formulario en la tabla Prefijos_Marcacion
+         */
+        $perfiles = Perfiles::create([
+            'nombre' => $request->input('nombre'),
+            'descripcion' => $request->input('descripcion'),
+            'fk_empresas_id' => $request->input('id'),
+            'activo' => 1
+        ]);
+        /**
+         * Creamos los datos del Formulario en la tabla Perfil_marcacion
+         */
         DB::statement('SET FOREIGN_KEY_CHECKS=0');
-        $perfil_marcacion = Perfil_Marcacion::create([
+        Perfil_Marcacion::create([
             'fk_prefijos_marcacion_id' => $request->prefijo,
-            'fk_perfiles_id' => $request->perfil,
+            'fk_perfiles_id' => $perfiles->id,
             'fk_canales_id' => $request->canal,
             'fk_dids_id' => $request->did,
             'activo' => 1
@@ -79,11 +89,7 @@ class PerfilMarcacionController extends Controller
          */
         $mensaje = 'Se creo un nuevo registro, informacion capturada:'.var_export($request->all(), true);
         $log = new LogController;
-        $log->store('Insercion', 'Perfil_marcacion',$mensaje, $perfil_marcacion->id);
-        /**
-         * Redirigimos a la ruta index
-         */
-        return redirect()->route('perfil_marcacion.index');
+        $log->store('Insercion', 'Perfiles',$mensaje, $request->input('id'));
     }
 
     /**
@@ -91,30 +97,35 @@ class PerfilMarcacionController extends Controller
      * @param int $id
      * @return Response
      */
-    public function show(Request $request, $idEmpresa)
+    public function show($idEmpresa)
     {
         /**
-         * Obtenemos todos los Perfiles de marcacion
+         * Obtenemos todos los perfiles de marcacion
          */
-        $perfil_marcacion = Perfil_Marcacion::active()->with('PrefijosMarcacion')->with('Perfiles')->with('Canales')->with('Dids')->get();
+        $perfil_marcacion = Perfil_Marcacion::active()->with('PrefijosMarcacion')
+        ->whereHas('PrefijosMarcacion', function($query) use ($idEmpresa)  {
+            $query->where('fk_empresas_id', $idEmpresa);
+        })->with('Perfiles')->whereHas('Perfiles', function($query) use ($idEmpresa)  {
+            $query->where('fk_empresas_id', $idEmpresa);
+        })->with('Canales')->whereHas('Canales', function($query) use ($idEmpresa)  {
+            $query->where('Empresas_id', $idEmpresa);
+        })->with('Dids')->whereHas('Dids', function($query) use ($idEmpresa)  {
+            $query->where('Empresas_id', $idEmpresa);
+        })->get();
         /**
-         * Obtenemos todos los Prefijos
+         * Recuperamos todos los prefijos de la empresa
          */
-        $prefijos = PrefijosMarcacion::active()->get();
+        $prefijos = PrefijosMarcacion::active()->where('fk_empresas_id',$idEmpresa)->get();
         /**
-         * Obtenemos todos los Perfiles
+         * Obtenemos los canales de la empresa
          */
-        $perfiles = Perfiles::active()->get();
+        $canales= Canales::active()->where('Empresas_id',$idEmpresa)->with('Cat_Tipo_Canales')->get();
         /**
-         * Obtenemos todos los Canales
+         * Obtenemos los did's de la empresa
          */
-        $canales = Canales::active()->with('Cat_Tipo_Canales')->get();
-        /**
-         * Obtenemos todos los Dids
-         */
-        $did = Dids::active()->get();
+        $did= Dids::active()->where('Empresas_id',$idEmpresa)->get();
 
-        return view('administrador::perfil_marcacion.show', compact('idEmpresa','perfil_marcacion','prefijos','perfiles','canales','did'))->withRequest($request);
+        return view('administrador::perfil_marcacion.show', compact('idEmpresa','perfil_marcacion','prefijos','canales','did'));
     }
 
     /**
@@ -122,9 +133,9 @@ class PerfilMarcacionController extends Controller
      * @param int $id
      * @return Response
      */
-    public function edit(Request $request, $id)
+    public function edit($id)
     {
-        return view('administrador::perfil_marcacion.edit',compact('prefijos','perfiles','canales','did'))->withRequest($request);
+        return view('administrador::perfil_marcacion.edit');
     }
 
     /**
@@ -135,8 +146,6 @@ class PerfilMarcacionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $perfil_marcacion = Perfil_Marcacion::active()->get();
-
         $dataForm = $request->input('dataForm');
 
         for ($i=0; $i < count($dataForm); $i++) {
@@ -147,50 +156,30 @@ class PerfilMarcacionController extends Controller
         array_shift( $data );
         array_shift( $data );
 
-        $info = array_chunk( $data, 5);
+        $info = array_chunk( $data, 6);
 
         for ($i=0; $i < count($info); $i++) {
-            DB::statement('SET FOREIGN_KEY_CHECKS=0');
-            Perfil_Marcacion::where([
-                ['fk_prefijos_marcacion_id','=',$perfil_marcacion[$i]['fk_prefijos_marcacion_id']],
-                ['fk_perfiles_id','=',$perfil_marcacion[$i]['fk_perfiles_id']],
-                ['fk_canales_id','=',$perfil_marcacion[$i]['fk_canales_id']],
-                ['fk_dids_id','=',$perfil_marcacion[$i]['fk_dids_id']],
-                ['activo','=',1],
+            Perfiles::where([
+                ['id','=',$info[$i][0]],
+                ['fk_empresas_id','=',$id],
             ])->update([
-                'fk_prefijos_marcacion_id' => $info[$i][1],
-                'fk_perfiles_id' => $info[$i][2],
-                'fk_canales_id' => $info[$i][3],
-                'fk_dids_id' => $info[$i][4],
+                'nombre' => $info[$i][1],
+                'descripcion' => $info[$i][2],
                 'activo' => 1
             ]);
+            DB::statement('SET FOREIGN_KEY_CHECKS=0');
+            Perfil_Marcacion::active()->where('fk_perfiles_id',$info[$i][0])->update([
+                'fk_prefijos_marcacion_id' => $info[$i][3],
+                'fk_canales_id' => $info[$i][4],
+                'fk_dids_id' => $info[$i][5],
+            ]);
+            /**
+             * Creamos el logs
+             */
+            $mensaje = 'Se edito un registro con id: '.$info[$i][0].', informacion editada: '.var_export($info[$i], true);
+            $log = new LogController;
+            $log->store('Actualizacion', 'Perfiles',$mensaje, $id);
         }
-        /*
-        DB::statement('SET FOREIGN_KEY_CHECKS=0');
-        Perfil_Marcacion::active()->where([
-            ['fk_prefijos_marcacion_id','=',$request->prefijo],
-            ['fk_perfiles_id','=',$request->perfil],
-            ['fk_canales_id','=',$request->canal],
-            ['fk_dids_id','=',$request->did],
-        ])
-        ->update([
-            'fk_prefijos_marcacion_id' => $request->prefijo2,
-            'fk_perfiles_id' => $request->perfil2,
-            'fk_canales_id' => $request->canal2,
-            'fk_dids_id' => $request->did2,
-            'activo' => 1
-        ]);
-        */
-        /**
-         * Creamos el logs
-         */
-        /*
-        $mensaje = 'Se edito un registro con id: '.$id.', informacion editada: '.var_export($request->all(), true);
-        $log = new LogController;
-        $log->store('Actualizacion', 'Perfil_marcacion',$mensaje, $id);
-        */
-
-        return redirect()->route('perfil_marcacion.index');
     }
 
     /**
@@ -198,24 +187,20 @@ class PerfilMarcacionController extends Controller
      * @param int $id
      * @return Response
      */
-    public function destroy(Request $request, $id)
+    public function destroy($id)
     {
         /**
-         * Actualizamos el Perfil a activo 0
+         * Actualizamos el prefijo a activo 0
          */
-        /*
-         Perfil_Marcacion::where('fk_dids_id',$id)->update([
-            'activo' => 0,
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        Perfil_Marcacion::active()->where('fk_perfiles_id', $id)->update([
+            'activo' => 0
         ]);
-        */
-        Perfil_Marcacion::where([
-            ['fk_prefijos_marcacion_id','=',$request->prefijo],
-            ['fk_perfiles_id','=',$request->perfil],
-            ['fk_canales_id','=',$request->canal],
-            ['fk_dids_id','=',$request->did],
-        ])->update([
-            'activo' => 0,
-        ]);
-
+        /**
+         * Creamos el logs
+         */
+        $mensaje = 'Se Elimino un registro con id: '.$id;
+        $log = new LogController;
+        $log->store('Eliminacion', 'Perfil_marcacion', $mensaje, $id);
     }
 }

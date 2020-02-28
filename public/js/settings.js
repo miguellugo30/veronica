@@ -115,10 +115,10 @@ $(function () {
    */
 
   $(document).on('click', '.savePerfilMarcacion', function (event) {
-    event.preventDefault(); //let dataForm = $("#altaprefijo").serializeArray();
-
+    event.preventDefault();
+    var nombre = $("#nombre").val();
+    var descripcion = $("#descripcion").val();
     var prefijo = $("#prefijo").val();
-    var perfil = $("#perfil").val();
     var canal = $("#canal").val();
     var did = $("#did").val();
 
@@ -126,8 +126,9 @@ $(function () {
 
     var url = currentURL + '/Perfil_Marcacion';
     $.post(url, {
+      nombre: nombre,
+      descripcion: descripcion,
       prefijo: prefijo,
-      perfil: perfil,
       canal: canal,
       did: did,
       _token: _token
@@ -137,7 +138,7 @@ $(function () {
       $('.viewResult').html(data);
       $('.viewResult #tablePerfilMarcacion').DataTable({
         "lengthChange": true,
-        "order": [[3, "asc"]]
+        "order": [[0, "asc"]]
       });
       Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
     }).fail(function (data) {
@@ -145,21 +146,15 @@ $(function () {
     });
   });
   /**
-   * Evento para seleccionar un Prefijo
+   * Evento para seleccionar un Perfil
    */
 
   $(document).on('click', '#tablePerfilMarcacion tbody tr', function (event) {
     event.preventDefault();
-    var prefijo = $(this).data("prefijo");
-    var perfil = $(this).data("perfil");
-    var canal = $(this).data("canal");
-    var did = $(this).data("did");
+    var id = $(this).data("id");
     $(".editPerfilMarcacion").slideDown();
     $(".deletePerfilMarcacion").slideDown();
-    $("#idSeleccionado").val(prefijo);
-    $("#idSeleccionado2").val(perfil);
-    $("#idSeleccionado3").val(canal);
-    $("#idSeleccionado4").val(did);
+    $("#idSeleccionado").val(id);
     $("#tablePerfilMarcacion tbody tr").removeClass('table-primary');
     $(this).addClass('table-primary');
   });
@@ -169,23 +164,13 @@ $(function () {
 
   $(document).on('click', '.editPerfilMarcacion', function (event) {
     event.preventDefault();
-    var id = $("#idSeleccionado4").val();
-    var prefijo = $("#idSeleccionado").val();
-    var perfil = $("#idSeleccionado2").val();
-    var canal = $("#idSeleccionado3").val();
-    var did = $("#idSeleccionado4").val();
+    var id = $("#idSeleccionado").val();
     var url = currentURL + '/Perfil_Marcacion/' + id + '/edit';
-    $('#tituloModal').html('Editar Perfil');
+    $('#tituloModal').html('Editar Perfil Marcacion');
     $('#action').addClass('updatePerfilMarcacion');
     $('#action').removeClass('savePerfilMarcacion');
     $.ajax({
       url: url,
-      data: {
-        prefijo: prefijo,
-        perfil: perfil,
-        canal: canal,
-        did: did
-      },
       type: 'GET',
       success: function success(result) {
         $('#modal').modal({
@@ -202,15 +187,12 @@ $(function () {
 
   $(document).on('click', '.updatePerfilMarcacion', function (event) {
     event.preventDefault();
-    var id = $("#idSeleccionado4").val();
-    var prefijo = $("#idSeleccionado").val();
-    var perfil = $("#idSeleccionado2").val();
-    var canal = $("#idSeleccionado3").val();
-    var did = $("#idSeleccionado4").val();
-    var prefijo2 = $("#prefijo").val();
-    var perfil2 = $("#perfil").val();
-    var canal2 = $("#canal").val();
-    var did2 = $("#did").val();
+    var id = $("#idSeleccionado").val();
+    var nombre = $("#nombre").val();
+    var descripcion = $("#descripcion").val();
+    var prefijo = $("#prefijo").val();
+    var canal = $("#canal").val();
+    var did = $("#did").val();
 
     var _token = $("input[name=_token]").val();
 
@@ -218,21 +200,18 @@ $(function () {
     var url = currentURL + '/Perfil_Marcacion/' + id;
     $.post(url, {
       id: id,
+      nombre: nombre,
+      descripcion: descripcion,
       prefijo: prefijo,
-      perfil: perfil,
       canal: canal,
       did: did,
-      prefijo2: prefijo2,
-      perfil2: perfil2,
-      canal2: canal2,
-      did2: did2,
       _method: _method,
       _token: _token
     }, function (data, textStatus, xhr) {
       $('.viewResult').html(data);
       $('.viewResult #tablePerfilMarcacion').DataTable({
         "lengthChange": true,
-        "order": [[2, "asc"]]
+        "order": [[0, "asc"]]
       });
     }).done(function () {
       $('.modal-backdrop ').css('display', 'none');
@@ -260,11 +239,7 @@ $(function () {
       cancelButtonText: 'Cancelar'
     }).then(function (result) {
       if (result.value) {
-        var id = $("#idSeleccionado4").val();
-        var prefijo = $("#idSeleccionado").val();
-        var perfil = $("#idSeleccionado2").val();
-        var canal = $("#idSeleccionado3").val();
-        var did = $("#idSeleccionado4").val();
+        var id = $("#idSeleccionado").val();
         var _method = "DELETE";
 
         var _token = $("input[name=_token]").val();
@@ -274,11 +249,6 @@ $(function () {
           url: url,
           type: 'POST',
           data: {
-            id: id,
-            prefijo: prefijo,
-            perfil: perfil,
-            canal: canal,
-            did: did,
             _token: _token,
             _method: _method
           },
