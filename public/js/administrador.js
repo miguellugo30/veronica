@@ -3718,21 +3718,22 @@ $(function () {
    */
 
   $(document).on('click', '.savePerfilMarcacion', function (event) {
-    event.preventDefault(); //let dataForm = $("#formDataEmpresa").serializeArray();
-
+    event.preventDefault();
+    var nombre = $("#nombre").val();
+    var descripcion = $("#descripcion").val();
+    var id = $("#id_empresa").val();
     var prefijo = $("#prefijo").val();
-    var perfil = $("#perfil").val();
     var canal = $("#canal").val();
     var did = $("#did").val();
-    var id = $("#id_empresa").val();
 
     var _token = $("input[name=_token]").val();
 
     var url = currentURL + '/perfil_marcacion';
     $.post(url, {
       id: id,
+      nombre: nombre,
+      descripcion: descripcion,
       prefijo: prefijo,
-      perfil: perfil,
       canal: canal,
       did: did,
       _token: _token
@@ -3757,15 +3758,17 @@ $(function () {
      */
 
     if ($(this).prop('checked')) {
+      $("#nombre_" + id).prop("disabled", false);
+      $("#descripcion_" + id).prop("disabled", false);
       $("#prefijo_" + id).prop("disabled", false);
-      $("#perfil_" + id).prop("disabled", false);
       $("#canal_" + id).prop("disabled", false);
       $("#did_" + id).prop("disabled", false);
       $("#delete_" + id).slideDown();
       $("#accionActualizar").slideDown();
     } else {
+      $("#nombre_" + id).prop("disabled", true);
+      $("#descripcion_" + id).prop("disabled", true);
       $("#prefijo_" + id).prop("disabled", true);
-      $("#perfil_" + id).prop("disabled", true);
       $("#canal_" + id).prop("disabled", true);
       $("#did_" + id).prop("disabled", true);
       $("#delete_" + id).slideUp();
@@ -3779,7 +3782,6 @@ $(function () {
   $(document).on('click', '.updatePerfil', function (event) {
     event.preventDefault();
     var dataForm = $("#formDataEmpresa").serializeArray();
-    console.log(dataForm);
 
     var _token = $("input[name=_token]").val();
 
@@ -3812,10 +3814,6 @@ $(function () {
   $(document).on('click', '.deletePerfil', function (event) {
     event.preventDefault();
     var id = $(this).attr('id').replace('delete_', '');
-    var prefijo = $("#tr_" + id).attr("data-prefijo");
-    var perfil = $("#tr_" + id).attr("data-perfil");
-    var canal = $("#tr_" + id).attr("data-canal");
-    var did = $("#tr_" + id).attr("data-did");
 
     var _token = $("input[name=_token]").val();
 
@@ -3825,10 +3823,6 @@ $(function () {
       url: url,
       type: 'POST',
       data: {
-        prefijo: prefijo,
-        perfil: perfil,
-        canal: canal,
-        did: did,
         _token: _token,
         _method: _method
       },

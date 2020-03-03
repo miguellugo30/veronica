@@ -14,8 +14,9 @@ class PerfilMarcacionRequest extends FormRequest
     public function rules()
     {
         return [
+            'nombre' => 'required',
+            'descripcion' => 'required',
             'prefijo' => 'required',
-            'perfil' => 'required',
             'canal' => 'required',
             'did' => 'required',
         ];
@@ -34,17 +35,11 @@ class PerfilMarcacionRequest extends FormRequest
     public function attributes()
     {
         return[
+            'nombre' => 'Nombre',
+            'descripcion' => 'Descripcion',
             'prefijo' => 'Prefijo',
-            'perfil' => 'Perfil',
             'canal' => 'Canal',
             'did' => 'Did',
-        ];
-    }
-
-    public function messages()
-    {
-        return [
-            'did.unique' => 'Este Perfil de marcacion ya ha sido registrado, favor de seleccionar otro',
         ];
     }
 }

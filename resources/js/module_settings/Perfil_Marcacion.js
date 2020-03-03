@@ -25,17 +25,18 @@ $(function() {
     $(document).on('click', '.savePerfilMarcacion', function(event) {
         event.preventDefault();
 
-        //let dataForm = $("#altaprefijo").serializeArray();
+        let nombre = $("#nombre").val();
+        let descripcion = $("#descripcion").val();
         let prefijo = $("#prefijo").val();
-        let perfil = $("#perfil").val();
         let canal = $("#canal").val();
         let did = $("#did").val();
         let _token = $("input[name=_token]").val();
         let url = currentURL + '/Perfil_Marcacion';
 
         $.post(url, {
+            nombre: nombre,
+            descripcion: descripcion,
             prefijo: prefijo,
-            perfil: perfil,
             canal: canal,
             did: did,
             _token: _token
@@ -47,7 +48,7 @@ $(function() {
             $('.viewResult #tablePerfilMarcacion').DataTable({
                 "lengthChange": true,
                 "order": [
-                    [3, "asc"]
+                    [0, "asc"]
                 ]
             });
             Swal.fire(
@@ -61,22 +62,16 @@ $(function() {
     });
 
     /**
-     * Evento para seleccionar un Prefijo
+     * Evento para seleccionar un Perfil
      */
     $(document).on('click', '#tablePerfilMarcacion tbody tr', function(event) {
 
         event.preventDefault();
-        let prefijo = $(this).data("prefijo");
-        let perfil = $(this).data("perfil");
-        let canal = $(this).data("canal");
-        let did = $(this).data("did");
+        let id = $(this).data("id");
         $(".editPerfilMarcacion").slideDown();
         $(".deletePerfilMarcacion").slideDown();
 
-        $("#idSeleccionado").val(prefijo);
-        $("#idSeleccionado2").val(perfil);
-        $("#idSeleccionado3").val(canal);
-        $("#idSeleccionado4").val(did);
+        $("#idSeleccionado").val(id);
 
         $("#tablePerfilMarcacion tbody tr").removeClass('table-primary');
         $(this).addClass('table-primary');
@@ -87,25 +82,15 @@ $(function() {
     $(document).on('click', '.editPerfilMarcacion', function(event) {
 
         event.preventDefault();
-        var id = $("#idSeleccionado4").val();
-        var prefijo = $("#idSeleccionado").val();
-        var perfil = $("#idSeleccionado2").val();
-        var canal = $("#idSeleccionado3").val();
-        var did = $("#idSeleccionado4").val();
+        var id = $("#idSeleccionado").val();
         var url = currentURL + '/Perfil_Marcacion/' + id + '/edit';
 
-        $('#tituloModal').html('Editar Perfil');
+        $('#tituloModal').html('Editar Perfil Marcacion');
         $('#action').addClass('updatePerfilMarcacion');
         $('#action').removeClass('savePerfilMarcacion');
 
         $.ajax({
             url: url,
-            data: {
-                prefijo: prefijo,
-                perfil: perfil,
-                canal: canal,
-                did: did
-            },
             type: 'GET',
             success: function success(result) {
                 $('#modal').modal({ backdrop: 'static', keyboard: false });
@@ -119,29 +104,23 @@ $(function() {
     $(document).on('click', '.updatePerfilMarcacion', function(event) {
         event.preventDefault();
 
-        var id = $("#idSeleccionado4").val();
-        let prefijo = $("#idSeleccionado").val();
-        let perfil = $("#idSeleccionado2").val();
-        let canal = $("#idSeleccionado3").val();
-        let did = $("#idSeleccionado4").val();
-        let prefijo2 = $("#prefijo").val();
-        let perfil2 = $("#perfil").val();
-        let canal2 = $("#canal").val();
-        let did2 = $("#did").val();
+        var id = $("#idSeleccionado").val();
+        let nombre = $("#nombre").val();
+        let descripcion = $("#descripcion").val();
+        let prefijo = $("#prefijo").val();
+        let canal = $("#canal").val();
+        let did = $("#did").val();
         let _token = $("input[name=_token]").val();
         let _method = "PUT";
         let url = currentURL + '/Perfil_Marcacion/' + id;
 
         $.post(url, {
                 id: id,
+                nombre: nombre,
+                descripcion: descripcion,
                 prefijo: prefijo,
-                perfil: perfil,
                 canal: canal,
                 did: did,
-                prefijo2: prefijo2,
-                perfil2: perfil2,
-                canal2: canal2,
-                did2: did2,
                 _method: _method,
                 _token: _token
             }, function(data, textStatus, xhr) {
@@ -149,7 +128,7 @@ $(function() {
                 $('.viewResult #tablePerfilMarcacion').DataTable({
                     "lengthChange": true,
                     "order": [
-                        [2, "asc"]
+                        [0, "asc"]
                     ]
                 });
             }).done(function() {
@@ -183,11 +162,7 @@ $(function() {
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.value) {
-                let id = $("#idSeleccionado4").val();
-                let prefijo = $("#idSeleccionado").val();
-                let perfil = $("#idSeleccionado2").val();
-                let canal = $("#idSeleccionado3").val();
-                let did = $("#idSeleccionado4").val();
+                let id = $("#idSeleccionado").val();
                 let _method = "DELETE";
                 let _token = $("input[name=_token]").val();
                 let url = currentURL + '/Perfil_Marcacion/' + id;
@@ -196,11 +171,6 @@ $(function() {
                     url: url,
                     type: 'POST',
                     data: {
-                        id: id,
-                        prefijo: prefijo,
-                        perfil: perfil,
-                        canal: canal,
-                        did: did,
                         _token: _token,
                         _method: _method
                     },
