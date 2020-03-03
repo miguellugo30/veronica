@@ -86,6 +86,399 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./resources/js/module_settings/Perfil_Marcacion.js":
+/*!**********************************************************!*\
+  !*** ./resources/js/module_settings/Perfil_Marcacion.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  var currentURL = window.location.href;
+  /**
+   * Evento para mostrar el formulario de crear una nueva plantilla
+   */
+
+  $(document).on("click", ".newPerfilMarcacion", function (e) {
+    e.preventDefault();
+    $('#tituloModal').html('Alta de Perfil Marcacion');
+    $('#action').removeClass('deletePerfilMarcacion');
+    $('#action').addClass('savePerfilMarcacion');
+    var url = currentURL + "/Perfil_Marcacion/create";
+    $.get(url, function (data, textStatus, jqXHR) {
+      $('#modal').modal('show');
+      $("#modal-body").html(data);
+    });
+  });
+  /**
+   * Evento para guardar el nuevo Prefijo de Marcacion
+   */
+
+  $(document).on('click', '.savePerfilMarcacion', function (event) {
+    event.preventDefault();
+    var nombre = $("#nombre").val();
+    var descripcion = $("#descripcion").val();
+    var prefijo = $("#prefijo").val();
+    var canal = $("#canal").val();
+    var did = $("#did").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var url = currentURL + '/Perfil_Marcacion';
+    $.post(url, {
+      nombre: nombre,
+      descripcion: descripcion,
+      prefijo: prefijo,
+      canal: canal,
+      did: did,
+      _token: _token
+    }, function (data, textStatus, xhr) {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
+      $('.viewResult').html(data);
+      $('.viewResult #tablePerfilMarcacion').DataTable({
+        "lengthChange": true,
+        "order": [[0, "asc"]]
+      });
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
+    });
+  });
+  /**
+   * Evento para seleccionar un Perfil
+   */
+
+  $(document).on('click', '#tablePerfilMarcacion tbody tr', function (event) {
+    event.preventDefault();
+    var id = $(this).data("id");
+    $(".editPerfilMarcacion").slideDown();
+    $(".deletePerfilMarcacion").slideDown();
+    $("#idSeleccionado").val(id);
+    $("#tablePerfilMarcacion tbody tr").removeClass('table-primary');
+    $(this).addClass('table-primary');
+  });
+  /**
+   * Evento para visualizar la configuración del Agente
+   */
+
+  $(document).on('click', '.editPerfilMarcacion', function (event) {
+    event.preventDefault();
+    var id = $("#idSeleccionado").val();
+    var url = currentURL + '/Perfil_Marcacion/' + id + '/edit';
+    $('#tituloModal').html('Editar Perfil Marcacion');
+    $('#action').addClass('updatePerfilMarcacion');
+    $('#action').removeClass('savePerfilMarcacion');
+    $.ajax({
+      url: url,
+      type: 'GET',
+      success: function success(result) {
+        $('#modal').modal({
+          backdrop: 'static',
+          keyboard: false
+        });
+        $("#modal-body").html(result);
+      }
+    });
+  });
+  /**
+   * Evento para guardar los cambios del Agente
+   */
+
+  $(document).on('click', '.updatePerfilMarcacion', function (event) {
+    event.preventDefault();
+    var id = $("#idSeleccionado").val();
+    var nombre = $("#nombre").val();
+    var descripcion = $("#descripcion").val();
+    var prefijo = $("#prefijo").val();
+    var canal = $("#canal").val();
+    var did = $("#did").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var _method = "PUT";
+    var url = currentURL + '/Perfil_Marcacion/' + id;
+    $.post(url, {
+      id: id,
+      nombre: nombre,
+      descripcion: descripcion,
+      prefijo: prefijo,
+      canal: canal,
+      did: did,
+      _method: _method,
+      _token: _token
+    }, function (data, textStatus, xhr) {
+      $('.viewResult').html(data);
+      $('.viewResult #tablePerfilMarcacion').DataTable({
+        "lengthChange": true,
+        "order": [[0, "asc"]]
+      });
+    }).done(function () {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
+    });
+  });
+  /**
+   * Evento para eliminar un Prefijo
+   *
+   */
+
+  $(document).on('click', '.deletePerfilMarcacion', function (event) {
+    event.preventDefault();
+    Swal.fire({
+      title: 'Estas seguro?',
+      text: "Deseas eliminar el registro seleccionado!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Eliminar!',
+      cancelButtonText: 'Cancelar'
+    }).then(function (result) {
+      if (result.value) {
+        var id = $("#idSeleccionado").val();
+        var _method = "DELETE";
+
+        var _token = $("input[name=_token]").val();
+
+        var url = currentURL + '/Perfil_Marcacion/' + id;
+        $.ajax({
+          url: url,
+          type: 'POST',
+          data: {
+            _token: _token,
+            _method: _method
+          },
+          success: function success(result) {
+            $('.viewResult').html(result);
+            $('.viewResult #tablePerfilMarcacion').DataTable({
+              "lengthChange": false
+            });
+            Swal.fire('Eliminado!', 'El registro ha sido eliminado.', 'success');
+          }
+        });
+      }
+    });
+  });
+  /**
+   * Funcion para mostrar los errores de los formularios
+   */
+
+  function printErrorMsg(msg) {
+    $(".print-error-msg").find("ul").html('');
+    $(".print-error-msg").css('display', 'block');
+    $(".form-control").removeClass('is-invalid');
+
+    for (var clave in msg) {
+      $("#" + clave).addClass('is-invalid');
+
+      if (msg.hasOwnProperty(clave)) {
+        $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
+      }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/module_settings/Prefijos_Marcacion.js":
+/*!************************************************************!*\
+  !*** ./resources/js/module_settings/Prefijos_Marcacion.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  var currentURL = window.location.href;
+  /**
+   * Evento para mostrar el formulario de crear una nueva plantilla
+   */
+
+  $(document).on("click", ".newPrefijoMarcacion", function (e) {
+    event.preventDefault();
+    $('#tituloModal').html('Alta de Prefijo Marcacion');
+    $('#action').removeClass('deletePrefijoMarcacion');
+    $('#action').addClass('savePrefijoMarcacion');
+    var url = currentURL + "/PrefijosMarcacion/create";
+    $.get(url, function (data, textStatus, jqXHR) {
+      $('#modal').modal('show');
+      $("#modal-body").html(data);
+    });
+  });
+  /**
+   * Evento para guardar el nuevo Prefijo de Marcacion
+   */
+
+  $(document).on('click', '.savePrefijoMarcacion', function (event) {
+    event.preventDefault(); //let dataForm = $("#altaprefijo").serializeArray();
+
+    var nombre = $("#nombre").val();
+    var descripcion = $("#descripcion").val();
+    var prefijo = $("#prefijo").val();
+    var prefijoNuevo = $("#prefijoNuevo").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var url = currentURL + '/PrefijosMarcacion';
+    $.post(url, {
+      nombre: nombre,
+      descripcion: descripcion,
+      prefijo: prefijo,
+      prefijoNuevo: prefijoNuevo,
+      _token: _token
+    }, function (data, textStatus, xhr) {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
+      $('.viewResult').html(data);
+      $('.viewResult #tablePrefijosMarcacion').DataTable({
+        "lengthChange": true,
+        "order": [[3, "asc"]]
+      });
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
+    });
+  });
+  /**
+   * Evento para seleccionar un Prefijo
+   */
+
+  $(document).on('click', '#tablePrefijosMarcacion tbody tr', function (event) {
+    event.preventDefault();
+    var id = $(this).data("id");
+    $(".editPrefijoMarcacion").slideDown();
+    $(".deletePrefijoMarcacion").slideDown();
+    $("#idSeleccionado").val(id);
+    $("#tablePrefijosMarcacion tbody tr").removeClass('table-primary');
+    $(this).addClass('table-primary');
+  });
+  /**
+   * Evento para visualizar la configuración del Agente
+   */
+
+  $(document).on('click', '.editPrefijoMarcacion', function (event) {
+    event.preventDefault();
+    var id = $("#idSeleccionado").val();
+    var url = currentURL + '/PrefijosMarcacion/' + id + '/edit';
+    $('#tituloModal').html('Editar Prefijos');
+    $('#action').addClass('updatePrefijoMarcacion');
+    $('#action').removeClass('savePrefijoMarcacion');
+    $.ajax({
+      url: url,
+      type: 'GET',
+      success: function success(result) {
+        $('#modal').modal({
+          backdrop: 'static',
+          keyboard: false
+        });
+        $("#modal-body").html(result);
+      }
+    });
+  });
+  /**
+   * Evento para guardar los cambios del Agente
+   */
+
+  $(document).on('click', '.updatePrefijoMarcacion', function (event) {
+    event.preventDefault();
+    var id = $("#idSeleccionado").val();
+    var nombre = $("#nombre").val();
+    var descripcion = $("#descripcion").val();
+    var prefijo = $("#prefijo").val();
+    var prefijoNuevo = $("#prefijoNuevo").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var _method = "PUT";
+    var url = currentURL + '/PrefijosMarcacion/' + id;
+    $.post(url, {
+      id: id,
+      nombre: nombre,
+      descripcion: descripcion,
+      prefijo: prefijo,
+      prefijoNuevo: prefijoNuevo,
+      _method: _method,
+      _token: _token
+    }, function (data, textStatus, xhr) {
+      $('.viewResult').html(data);
+      $('.viewResult #tablePrefijosMarcacion').DataTable({
+        "lengthChange": true,
+        "order": [[2, "asc"]]
+      });
+    }).done(function () {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
+    });
+  });
+  /**
+   * Evento para eliminar un Prefijo
+   *
+   */
+
+  $(document).on('click', '.deletePrefijoMarcacion', function (event) {
+    event.preventDefault();
+    Swal.fire({
+      title: 'Estas seguro?',
+      text: "Deseas eliminar el registro seleccionado!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Eliminar!',
+      cancelButtonText: 'Cancelar'
+    }).then(function (result) {
+      if (result.value) {
+        var id = $("#idSeleccionado").val();
+        var _method = "DELETE";
+
+        var _token = $("input[name=_token]").val();
+
+        var url = currentURL + '/PrefijosMarcacion/' + id;
+        $.ajax({
+          url: url,
+          type: 'POST',
+          data: {
+            _token: _token,
+            _method: _method
+          },
+          success: function success(result) {
+            $('.viewResult').html(result);
+            $('.viewResult #tablePrefijosMarcacion').DataTable({
+              "lengthChange": false
+            });
+            Swal.fire('Eliminado!', 'El registro ha sido eliminado.', 'success');
+          }
+        });
+      }
+    });
+  });
+  /**
+   * Funcion para mostrar los errores de los formularios
+   */
+
+  function printErrorMsg(msg) {
+    $(".print-error-msg").find("ul").html('');
+    $(".print-error-msg").css('display', 'block');
+    $(".form-control").removeClass('is-invalid');
+
+    for (var clave in msg) {
+      $("#" + clave).addClass('is-invalid');
+
+      if (msg.hasOwnProperty(clave)) {
+        $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
+      }
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/module_settings/acciones_formularios.js":
 /*!**************************************************************!*\
   !*** ./resources/js/module_settings/acciones_formularios.js ***!
@@ -616,6 +1009,7 @@ $(function () {
     $('#tituloModal').html('Nuevo Audio');
     $('#action').removeClass('deleteAudio');
     $('#action').addClass('saveAudio');
+    $("#action").css('display', '');
     var url = currentURL + "/Audios/create";
     $.get(url, function (data, textStatus, jqXHR) {
       $('#modal').modal('show');
@@ -718,6 +1112,7 @@ $(function () {
     var _token = $("input[name=_token]").val();
 
     $("#tituloModal").html('Reproducir Grabación');
+    $("#action").css('display', 'none');
     $.ajax({
       url: url,
       type: 'GET',
@@ -731,6 +1126,203 @@ $(function () {
           keyboard: false
         });
         $("#modal-body").html(result);
+      }
+    });
+  });
+  /**
+   * Funcion para mostrar los errores de los formularios
+   */
+
+  function printErrorMsg(msg) {
+    $(".print-error-msg").find("ul").html('');
+    $(".print-error-msg").css('display', 'block');
+    $(".form-control").removeClass('is-invalid');
+
+    for (var clave in msg) {
+      $("#" + clave).addClass('is-invalid');
+
+      if (msg.hasOwnProperty(clave)) {
+        $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
+      }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/module_settings/baseDatos.js":
+/*!***************************************************!*\
+  !*** ./resources/js/module_settings/baseDatos.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  var currentURL = window.location.href;
+  /**
+   * Evento para mostrar el formulario de crear un nueva base de datos
+   */
+
+  $(document).on("click", ".newBaseDatos", function (e) {
+    e.preventDefault();
+    $('#tituloModal').html('Nueva base de datos');
+    var url = currentURL + '/BaseDatos/create';
+    $('#action').removeClass('updateBaseDatos');
+    $('#action').addClass('saveBaseDatos');
+    $.ajax({
+      url: url,
+      type: 'GET',
+      success: function success(result) {
+        $('#modal').modal({
+          backdrop: 'static',
+          keyboard: false
+        });
+        $("#modal-body").html(result);
+      }
+    });
+  });
+  /**
+   * Evento para mostrar el formulario de crear un nueva base de datos
+   */
+
+  $(document).on("change", "#plantilla", function (e) {
+    var id = $(this).val();
+    var url = currentURL + '/Plantillas/' + id;
+    $.ajax({
+      url: url,
+      type: 'GET',
+      success: function success(result) {
+        $(".detailPlantilla").html(result);
+      }
+    });
+  });
+  /**
+   * Evento para guardar el nuevo distribuidores
+   */
+
+  $(document).on('click', '.saveBaseDatos', function (event) {
+    event.preventDefault();
+    var formData = new FormData(document.getElementById("NewBaseDatosForm"));
+    var nombre = $("#nombre").val();
+    var plantilla = $("#plantilla").val();
+
+    var _token = $("input[name=_token]").val();
+
+    formData.append("nombre", nombre);
+    formData.append("plantilla", plantilla);
+    formData.append("_token", _token);
+    var url = currentURL + '/BaseDatos';
+    $.ajax({
+      url: url,
+      type: "POST",
+      data: formData,
+      cache: false,
+      contentType: false,
+      processData: false,
+      beforeSend: function beforeSend() {
+        // setting a timeout
+        $(".div-cargando").css('display', 'block');
+      }
+    }).done(function (data) {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
+      $('.viewResult').html(data);
+      $('.viewResult #tableBaseDatos').DataTable({
+        "lengthChange": false
+      });
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      if (data.status == 403) {
+        $(".print-error-msg").find("ul").html('');
+        $(".print-error-msg").css('display', 'block');
+        $(".print-error-msg").find("ul").append('<li>' + data.responseJSON.message + '</li>');
+      } else {
+        printErrorMsg(data.responseJSON.errors);
+      }
+    });
+  });
+  /**
+   * Evento para seleccionar una base de datos
+   */
+
+  $(document).on('click', '#tableBaseDatos tbody tr', function (event) {
+    event.preventDefault();
+    var id = $(this).data("id");
+    $(".editBaseDatos").slideDown();
+    $(".deleteBaseDatos").slideDown();
+    $("#idSeleccionado").val(id);
+    $("#tableBaseDatos tbody tr").removeClass('table-primary');
+    $(this).addClass('table-primary');
+  });
+  /**
+   * Evento para editar una base de datos
+   */
+
+  $(document).on('click', '.editBaseDatos', function (event) {
+    event.preventDefault();
+    var id = $("#idSeleccionado").val();
+    $('#tituloModal').html('Editar Base de datos');
+    var url = currentURL + '/BaseDatos/' + id + '/edit';
+    $('#action').addClass('updateBaseDatos');
+    $('#action').removeClass('saveBaseDatos');
+    $.ajax({
+      url: url,
+      type: 'GET',
+      success: function success(result) {
+        $('#modal').modal({
+          backdrop: 'static',
+          keyboard: false
+        });
+        $("#modal-body").html(result);
+      }
+    });
+  });
+  /**
+   * Evento para guardar el nuevo modulo
+   */
+
+  $(document).on('click', '.updateBaseDatos', function (event) {
+    event.preventDefault();
+    $(".print-error-msg").css('display', 'none');
+    var formData = new FormData(document.getElementById("NewBaseDatosForm"));
+    var id = $("#idSeleccionado").val();
+    var accion = $("#accion").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var _method = "PUT";
+    formData.append("accion", accion);
+    formData.append("_token", _token);
+    formData.append("_method", _method);
+    var url = currentURL + '/BaseDatos/' + id;
+    $.ajax({
+      url: url,
+      type: "POST",
+      data: formData,
+      cache: false,
+      contentType: false,
+      processData: false,
+      beforeSend: function beforeSend() {
+        // setting a timeout
+        $(".div-cargando").css('display', 'block');
+      }
+    }).done(function (data) {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
+      $('.viewResult').html(data);
+      $('.viewResult #tableBaseDatos').DataTable({
+        "lengthChange": false
+      });
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      $(".div-cargando").css('display', 'none');
+
+      if (data.status == 403) {
+        $(".print-error-msg").find("ul").html('');
+        $(".print-error-msg").css('display', 'block');
+        $(".print-error-msg").find("ul").append('<li>' + data.responseJSON.message + '</li>');
+      } else {
+        printErrorMsg(data.responseJSON.errors);
       }
     });
   });
@@ -1708,30 +2300,39 @@ $(function () {
     e.preventDefault();
     var id = $(this).data("id");
 
-    if (id == 21) {
+    if (id == 'sub-21') {
       url = currentURL + '/formularios';
       table = ' #tableFormulario';
-    } else if (id == 22) {
+    } else if (id == 'sub-22') {
       url = currentURL + '/speech';
       table = ' #tableSpeech';
-    } else if (id == 23) {
+    } else if (id == 'sub-23') {
       url = currentURL + '/calificaciones';
       table = ' #tableCalificaciones';
-    } else if (id == 17) {
+    } else if (id == 'cat-17') {
       url = currentURL + '/Audios';
       table = ' #tableAudios';
-    } else if (id == 28) {
+    } else if (id == 'sub-28') {
       url = currentURL + '/Agentes';
       table = ' #tableAgentes';
-    } else if (id == 29) {
+    } else if (id == 'sub-29') {
       url = currentURL + '/Grupos';
       table = ' #tableGrupos';
-    } else if (id == 22) {
-      url = currentURL + '/Speech';
-      table = ' #tableSpeech';
-    } else if (id == 35) {
+    } else if (id == 'sub-35') {
       url = currentURL + '/EventosAgentes';
       table = ' #tableEventosAgentes';
+    } else if (id == 'cat-28') {
+      url = currentURL + '/Plantillas';
+      table = ' #tablePlantillas';
+    } else if (id == 'cat-30') {
+      url = currentURL + '/PrefijosMarcacion';
+      table = ' #tablePrefijosMarcacion';
+    } else if (id == 'cat-29') {
+      url = currentURL + '/BaseDatos';
+      table = ' #tableBaseDatos';
+    } else if (id == 'cat-31') {
+      url = currentURL + '/Perfil_Marcacion';
+      table = ' #tablePerfilMarcacion';
     }
 
     $.get(url, function (data, textStatus, jqXHR) {
@@ -1739,6 +2340,264 @@ $(function () {
       $('.viewResult' + table).DataTable({
         "lengthChange": true
       });
+    });
+  });
+});
+
+/***/ }),
+
+/***/ "./resources/js/module_settings/plantillas.js":
+/*!****************************************************!*\
+  !*** ./resources/js/module_settings/plantillas.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  var currentURL = window.location.href;
+  /**
+   * Evento para mostrar el formulario de crear una nueva plantilla
+   */
+
+  $(document).on("click", ".newPlantillas", function (e) {
+    event.preventDefault();
+    $('#tituloModal').html('Alta de Plantilla');
+    $('#action').removeClass('deletePlantilla');
+    $('#action').addClass('savePlantilla');
+    var url = currentURL + "/Plantillas/create";
+    $.get(url, function (data, textStatus, jqXHR) {
+      $('#modal').modal('show');
+      $("#modal-body").html(data);
+    });
+  });
+  /**
+   * Evento para agregar una nueva fila para campos nuevos en el formulario
+   */
+
+  $(document).on('click', '#addCampo', function () {
+    var clickID = $("#tablaCampos tbody tr.clonar:last").attr('id').replace('tr_', ''); // Genero el nuevo numero id
+
+    var newID = parseInt(clickID) + 1;
+    var IDInput = ['campo_id', 'num_marcar', 'mostrar', 'editable'];
+    fila = $("#tablaCampos tbody tr:eq()").clone().appendTo("#tablaCampos"); //Clonamos la fila
+
+    for (var i = 0; i < IDInput.length; i++) {
+      fila.find('.' + IDInput[i]).attr('name', IDInput[i] + "_" + newID); //Cambiamos el nombre de los campos de la fila a clonar
+
+      fila.find('.' + IDInput[i]).attr('id', IDInput[i] + "_" + newID); //Cambiamos el nombre de los campos de la fila a clonar
+    }
+
+    fila.find('.btn-danger').css('display', 'inherit');
+    fila.find('#id_campo').attr('value', '');
+    fila.attr("id", 'tr_' + newID);
+  });
+  /**
+   * Evento para eliminar una fila de la tabla de nuevo formulario
+   */
+
+  $(document).on('click', '.tr_clone_remove', function () {
+    var tr = $(this).closest('tr');
+    tr.remove();
+  });
+  /**
+   * Evento para guardar la nueva plantilla
+   */
+
+  $(document).on('click', '.savePlantilla', function (event) {
+    event.preventDefault();
+    var data = {};
+    $('#altaCampo input, select').each(function () {
+      var nombre = String(this.name);
+
+      if (nombre == 'nombre') {
+        data[nombre] = this.value;
+      }
+
+      if (nombre != '' && nombre != 'nombre') {
+        var id = "input[name='" + nombre + "']";
+
+        if (nombre.indexOf('campo_id') == 0) {
+          valor = this.value;
+        } else {
+          if ($(id).is(':checked')) {
+            valor = 1;
+          } else {
+            valor = 0;
+          }
+        }
+
+        data[nombre] = valor;
+      }
+    });
+
+    var _token = $("input[name=_token]").val();
+
+    var url = currentURL + '/Plantillas';
+    $.post(url, {
+      dataForm: data,
+      _token: _token
+    }, function (data, textStatus, xhr) {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
+      $('.viewResult').html(data);
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
+    });
+  });
+  /**
+   * Evento para marcar los numeros a marcar
+   */
+
+  $(document).on("click", '.todos_num_marcar', function () {
+    $(this).closest("table").find("tbody .num_marcar").prop("checked", this.checked).closest("tr").toggleClass("selected", this.checked);
+  });
+  /**
+   * Evento para marcar los campos a mostrar
+   */
+
+  $(document).on("click", '.todos_mostrar', function () {
+    $(this).closest("table").find("tbody .mostrar").prop("checked", this.checked).closest("tr").toggleClass("selected", this.checked);
+  });
+  /**
+   * Evento para marcar los editables
+   */
+
+  $(document).on("click", '.todos_editable', function () {
+    $(this).closest("table").find("tbody .editable").prop("checked", this.checked).closest("tr").toggleClass("selected", this.checked);
+  });
+  /**
+   * Evento para seleccionar una plantilla
+   */
+
+  $(document).on('click', '#tablePlantillas tbody tr', function (event) {
+    event.preventDefault();
+    var id = $(this).data("id");
+    $(".editPlantillas").slideDown();
+    $(".deletePlantilla").slideDown();
+    $("#idSeleccionado").val(id);
+    $("#tablePlantillas tbody tr").removeClass('table-primary');
+    $(this).addClass('table-primary');
+  });
+  /**
+   * Evento para editar una plantilla
+   */
+
+  $(document).on('click', '.editPlantillas', function (event) {
+    event.preventDefault();
+    var id = $("#idSeleccionado").val();
+    $('#tituloModal').html('Editar Plantilla');
+    var url = currentURL + '/Plantillas/' + id + '/edit';
+    $('#action').addClass('updatePlantilla');
+    $('#action').removeClass('savePlantilla');
+    $.ajax({
+      url: url,
+      type: 'GET',
+      success: function success(result) {
+        $('#modal').modal({
+          backdrop: 'static',
+          keyboard: false
+        });
+        $("#modal-body").html(result);
+      }
+    });
+  });
+  /**
+   * Evento para actualizar una plantilla
+   */
+
+  $(document).on('click', '.updatePlantilla', function (event) {
+    var data = {};
+    var id = $("#idSeleccionado").val();
+    $('#altaCampo input, select').each(function () {
+      var nombre = String(this.name);
+
+      if (nombre != 'tablePlantillas_length') {
+        if (nombre == 'nombre') {
+          data[nombre] = this.value;
+        }
+
+        if (nombre != '' && nombre != 'nombre') {
+          var _id = "input[name='" + nombre + "']";
+
+          if (nombre.indexOf('campo_id') == 0) {
+            valor = this.value;
+          } else {
+            if ($(_id).is(':checked')) {
+              valor = 1;
+            } else {
+              valor = 0;
+            }
+          }
+
+          data[nombre] = valor;
+        }
+      }
+    });
+    var _method = 'PUT';
+
+    var _token = $("input[name=_token]").val();
+
+    var url = currentURL + '/Plantillas/' + id;
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {
+        _token: _token,
+        _method: _method,
+        data: data
+      },
+      success: function success(result) {
+        $('.modal-backdrop ').css('display', 'none');
+        $('#modal').modal('hide');
+        $('.viewResult').html(result);
+        $('.viewResult #tablePlantillas').DataTable({
+          "lengthChange": false
+        });
+        Swal.fire('Correcto!', 'El registro ha sido editado.', 'success');
+      }
+    });
+  });
+  /**
+   * Evento para eliminar una platilla
+   *
+   */
+
+  $(document).on('click', '.deletePlantilla', function (event) {
+    event.preventDefault();
+    Swal.fire({
+      title: 'Estas seguro?',
+      text: "Deseas eliminar el registro seleccionado!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Eliminar!',
+      cancelButtonText: 'Cancelar'
+    }).then(function (result) {
+      if (result.value) {
+        var id = $("#idSeleccionado").val();
+        var _method = "DELETE";
+
+        var _token = $("input[name=_token]").val();
+
+        var url = currentURL + '/Plantillas/' + id;
+        $.ajax({
+          url: url,
+          type: 'POST',
+          data: {
+            _token: _token,
+            _method: _method
+          },
+          success: function success(result) {
+            $('.viewResult').html(result);
+            $('.viewResult #tablePlantillas').DataTable({
+              "lengthChange": false
+            });
+            Swal.fire('Eliminado!', 'El registro ha sido eliminado.', 'success');
+          }
+        });
+      }
     });
   });
 });
@@ -2227,9 +3086,9 @@ $(function () {
 /***/ }),
 
 /***/ 1:
-/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/module_settings/menu.js ./resources/js/module_settings/formularios.js ./resources/js/module_settings/sub_formularios.js ./resources/js/module_settings/acciones_formularios.js ./resources/js/module_settings/audios.js ./resources/js/module_settings/calificaciones.js ./resources/js/module_settings/agentes.js ./resources/js/module_settings/grupos.js ./resources/js/module_settings/speech.js ./resources/js/module_settings/acciones_speech.js ./resources/js/module_settings/eventos_agentes.js ***!
-  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/module_settings/menu.js ./resources/js/module_settings/formularios.js ./resources/js/module_settings/sub_formularios.js ./resources/js/module_settings/acciones_formularios.js ./resources/js/module_settings/audios.js ./resources/js/module_settings/calificaciones.js ./resources/js/module_settings/agentes.js ./resources/js/module_settings/grupos.js ./resources/js/module_settings/speech.js ./resources/js/module_settings/acciones_speech.js ./resources/js/module_settings/eventos_agentes.js ./resources/js/module_settings/plantillas.js ./resources/js/module_settings/Prefijos_Marcacion.js ./resources/js/module_settings/baseDatos.js ./resources/js/module_settings/Perfil_Marcacion.js ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2243,7 +3102,11 @@ __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\agente
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\grupos.js */"./resources/js/module_settings/grupos.js");
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\speech.js */"./resources/js/module_settings/speech.js");
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\acciones_speech.js */"./resources/js/module_settings/acciones_speech.js");
-module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\eventos_agentes.js */"./resources/js/module_settings/eventos_agentes.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\eventos_agentes.js */"./resources/js/module_settings/eventos_agentes.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\plantillas.js */"./resources/js/module_settings/plantillas.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\Prefijos_Marcacion.js */"./resources/js/module_settings/Prefijos_Marcacion.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\baseDatos.js */"./resources/js/module_settings/baseDatos.js");
+module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_settings\Perfil_Marcacion.js */"./resources/js/module_settings/Perfil_Marcacion.js");
 
 
 /***/ })

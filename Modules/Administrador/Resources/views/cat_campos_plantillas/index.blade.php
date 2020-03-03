@@ -2,13 +2,13 @@
     <div class="box-header with-border">
         <h3 class="box-title"><b><i class="far fa-list-alt"></i> Campos Plantillas</b></h3>
         <div class="box-tools pull-right">
-            @can('delete estados')
+            @can('delete campos plantillas')
                 <button type="button" class="btn btn-danger  btn-sm deleteCamPla" style="display:none"><i class="fas fa-trash-alt"></i> Elminar</button>
             @endcan
-            @can('edit estados')
+            @can('edit campos plantillas')
                 <button type="button" class="btn btn-warning btn-sm editCamPla" style="display:none"><i class="fas fa-edit"></i> Editar</button>
             @endcan
-            @can('create estados')
+            @can('create campos plantillas')
                 <button type="button" class="btn btn-primary btn-sm newCamPla" data-widget="remove"><i class="fas fa-plus"></i> Nuevo</button>
             @endcan
             <input type="hidden" name="idSeleccionado" id="idSeleccionado" value="">
@@ -21,14 +21,14 @@
                     <thead>
                         <tr>
                             <th>Nombre</th>
-                            <th>Empresa</th>
+                            <th>Empresa(s)</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($cat_campos_plantillas as $cat_campo)
                             <tr data-id="{{ $cat_campo->id }}" style="cursor:pointer">
                                 <td>{{ $cat_campo->nombre }}</td>
-                                <td><button type="button" class="btn btn-lg btn-secondary btn-sm pop" data-toggle="popover" title="Empresa" data-content="
+                                <td><button type="button" class="btn btn-lg btn-secondary btn-sm pop" data-toggle="popover" title="Empresas" data-content="
                                     @foreach ($cat_campo->Empresas as $v)
                                     {{ "<li>".$v->nombre.": </li>" }}
                                     @endforeach

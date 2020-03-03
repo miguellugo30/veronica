@@ -5,6 +5,27 @@
         <input type="hidden" name="id" id="id" value="{{ $id }}">
         @csrf
     </div>
+    <label for="empresa">Selecciona la(s) Empresa(s)</label>
+        <div class="form-row col-md-12">
+            <div class="col-md-5">
+                <select name="empresa" id="empresa" class="form-control form-control-sm" size="15" multiple>
+                    @foreach( $Empresas2 as $empresa2 )
+                    <option value="{{ $empresa2->id }}">{{ $empresa2->nombre }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-md-2 btn-group-vertical">
+                <button type="button" class="btn activate btnRight"><i class="fas fa-forward"></i></button>
+                <button type="button" class="btn activate btnLeft"><i class="fas fa-backward"></i></button>
+            </div>
+            <div class="col-md-5">
+                <select name="empresaAdd" id="empresaAdd" class="form-control form-control-sm" size="15" multiple>
+                    @foreach( $Empresas as $empresa )
+                    <option value="{{ $empresa->id }}">{{ $empresa->nombre }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
     <div class="form-group">
         <small class="form-text text-muted"> <b>*Campos obligatorios.</b></small>
     </div>
@@ -12,8 +33,3 @@
         <ul></ul>
     </div>
 </div>
-<!--div class="col-6" style="float:none; margin:auto">
-    <button type="submit" class="btn btn-warning btn-sm cancelEdoEmp"><i class="fas fa-times"></i> Cancelar</button>
-    <button type="submit" class="btn btn-danger btn-sm deleteEdoEmp"><i class="fas fa-trash-alt"></i> Eliminar</button>
-    <button type="submit" class="btn btn-primary btn-sm updateEdoEmp float-right"><i class="fas fa-save"></i> Guardar</button>
-</div-->

@@ -103,7 +103,7 @@ $(function () {
     e.preventDefault();
     var id = $(this).data("id");
 
-    if (id == 23) {
+    if (id == 'cat-23') {
       url = currentURL + '/monitoreo';
       table = ' #monitoreo';
     }

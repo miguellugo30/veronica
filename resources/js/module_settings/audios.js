@@ -20,6 +20,7 @@ $(function() {
         $('#tituloModal').html('Nuevo Audio');
         $('#action').removeClass('deleteAudio');
         $('#action').addClass('saveAudio');
+        $("#action").css('display', '');
 
         let url = currentURL + "/Audios/create";
 
@@ -130,6 +131,8 @@ $(function() {
         let _token = $("input[name=_token]").val();
         $("#tituloModal").html('Reproducir Grabación');
 
+        $("#action").css('display', 'none');
+
         $.ajax({
             url: url,
             type: 'GET',
@@ -142,7 +145,6 @@ $(function() {
                 $("#modal-body").html(result);
             }
         });
-
     });
 
     /**

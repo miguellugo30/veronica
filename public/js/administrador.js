@@ -572,6 +572,7 @@ $(function () {
     $.get(url, function (data, textStatus, jqXHR) {
       $('#modal').modal('show');
       $("#modal-body").html(data);
+      $("#empresaAdd option").prop('selected', true);
     });
   });
   /**
@@ -581,12 +582,14 @@ $(function () {
   $(document).on('click', '.saveCamPla', function (event) {
     event.preventDefault();
     var nombre = $("#nombre").val();
+    var empresa = $("#empresaAdd").val();
 
     var _token = $("input[name=_token]").val();
 
     var url = currentURL + '/cat_campos_plantillas';
     $.post(url, {
       nombre: nombre,
+      empresa: empresa,
       _token: _token
     }, function (data, textStatus, xhr) {
       $('.viewResult').html(data);
@@ -630,6 +633,7 @@ $(function () {
   $(document).on('click', '.updateCamPla', function (event) {
     event.preventDefault();
     var nombre = $("#nombre").val();
+    var empresa = $("#empresaAdd").val();
     var id = $("#id").val();
     var _method = "PUT";
 
@@ -641,6 +645,7 @@ $(function () {
       type: 'POST',
       data: {
         nombre: nombre,
+        empresa: empresa,
         _token: _token,
         _method: _method
       },
@@ -700,6 +705,39 @@ $(function () {
         });
       }
     });
+  });
+  /**
+   * Evento para mostrar las empresas de un campo plantilla
+   * Nota: popover es un componente de bootstrap
+   */
+
+  $(document).on("click", ".pop", function (event) {
+    $('[data-toggle="popover"]').popover({
+      container: 'body',
+      animation: true,
+      html: true,
+      placement: "right",
+      trigger: 'focus'
+    });
+  });
+  /**
+   * Evento para quitar empresas
+   */
+
+  $(document).on("click", '.btnLeft', function (event) {
+    var selectedItem = $("#empresaAdd option:selected");
+    $("#empresa").append(selectedItem);
+    $("#empresaAdd option").prop('selected', true);
+    $("#empresa option").prop('selected', true);
+  });
+  /**
+   * Evento para agregar empresas
+   */
+
+  $(document).on("click", '.btnRight', function (event) {
+    var selectedItem = $("#empresa option:selected");
+    $("#empresaAdd").append(selectedItem);
+    $("#empresaAdd option").prop('selected', true);
   });
   /**
    * Funcion para mostrar los errores de los formularios
@@ -2731,7 +2769,7 @@ $(function () {
     var _token = $("input[name=_token]").val();
 
     var dato = id + "." + opcion;
-    $("#accionActualizar").removeClass('updateExtension updateCanal updateEmpresa updateDid');
+    $("#accionActualizar").removeClass('updateExtension updateCanal updateEmpresa updateDid updatePrefijos updatePerfil');
 
     if (opcion == 'dataGeneral') {
       $('.updateEmpresa').slideUp();
@@ -2748,6 +2786,12 @@ $(function () {
       url = currentURL + '/did/' + id;
       $("#accionActualizar").addClass('updateDid');
       $('#accionActualizar').slideDown();
+    } else if (opcion == 'dataPerfiles') {
+      url = currentURL + '/perfil_marcacion/' + id;
+      $("#accionActualizar").addClass('updatePerfil'); //$('#accionActualizar').slideDown();
+    } else if (opcion == 'dataPrefijos') {
+      url = currentURL + '/prefijos_marcacion/' + id;
+      $("#accionActualizar").addClass('updatePrefijos'); //$('#accionActualizar').slideDown();
     } else {
       url = currentURL + '/empresas/' + dato;
       $("#accionActualizar").addClass('updateEmpresa');
@@ -3003,64 +3047,64 @@ $(function () {
     var currentURL = window.location.href;
     var id = $(this).data("id");
 
-    if (id == 6) {
+    if (id == 'sub-6') {
       url = currentURL + '/usuarios';
       table = ' #tableUsuarios';
-    } else if (id == 4) {
+    } else if (id == 'sub-4') {
       url = currentURL + '/menus';
       table = '#tableMenus';
-    } else if (id == 3) {
+    } else if (id == 'sub-3') {
       url = currentURL + '/modulos';
       table = ' #tableModulos';
-    } else if (id == 1) {
+    } else if (id == 'sub-1') {
       url = currentURL + '/distribuidor';
       table = ' #tableDistribuidores';
-    } else if (id == 8) {
+    } else if (id == 'sub-8') {
       url = currentURL + '/did';
       table = ' #tableDid';
-    } else if (id == 10) {
+    } else if (id == 'sub-10') {
       url = currentURL + '/cat_empresa';
       table = ' #tableEdoEmp';
-    } else if (id == 11) {
+    } else if (id == 'sub-11') {
       url = currentURL + '/cat_ip_pbx';
       table = ' #tablePbx';
-    } else if (id == 12) {
+    } else if (id == 'sub-12') {
       url = currentURL + '/cat_nas';
       table = ' #tableNas';
-    } else if (id == 13) {
+    } else if (id == 'sub-13') {
       url = currentURL + '/cat_agente';
       table = ' #tableEdoAge';
-    } else if (id == 14) {
+    } else if (id == 'sub-14') {
       url = currentURL + '/cat_cliente';
       table = ' #tableEdoCli';
-    } else if (id == 9) {
+    } else if (id == 'sub-9') {
       url = currentURL + '/troncales';
       table = ' #tableTroncales';
-    } else if (id == 15) {
+    } else if (id == 'sub-15') {
       url = currentURL + '/canales';
       table = ' #tableCanales';
-    } else if (id == 2) {
+    } else if (id == 'sub-2') {
       url = currentURL + '/empresas';
       table = ' #tableEmpresas';
-    } else if (id == 16) {
+    } else if (id == 'sub-16') {
       url = currentURL + '/basedatos';
       table = ' #tableBaseDatos';
-    } else if (id == 17) {
+    } else if (id == 'sub-17') {
       url = currentURL + '/cat_tipo_canales';
       table = ' #tableTiposCanal';
-    } else if (id == 19) {
+    } else if (id == 'sub-19') {
       url = currentURL + '/licencias_bria';
       table = ' #licencias_bria';
-    } else if (id == 20) {
+    } else if (id == 'sub-20') {
       url = currentURL + '/logs';
       table = '#tableLogs';
-    } else if (id == 21) {
+    } else if (id == 'sub-21') {
       url = currentURL + '/formularios';
       table = ' #tableFormularios';
-    } else if (id == 5) {
+    } else if (id == 'sub-5') {
       url = currentURL + '/smtp';
       table = ' #tableSmtp';
-    } else if (id == 41) {
+    } else if (id == 'sub-41') {
       url = currentURL + '/cat_campos_plantillas';
       table = ' #tableCamPla';
     }
@@ -3076,6 +3120,7 @@ $(function () {
     });
   });
 });
+'sub-';
 
 /***/ }),
 
@@ -3640,6 +3685,309 @@ $(function () {
       }
     }
   }
+});
+
+/***/ }),
+
+/***/ "./resources/js/module_administrador/perfil_marcacion.js":
+/*!***************************************************************!*\
+  !*** ./resources/js/module_administrador/perfil_marcacion.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  var currentURL = window.location.href;
+  /**
+   * Evento para mostrar el formulario de crear una nueva plantilla
+   */
+
+  $(document).on("click", ".newPerfilMarcacion", function (e) {
+    e.preventDefault();
+    $("#accionActualizar").slideUp();
+    $(".viewIndex").slideUp();
+    $(".viewCreate").slideDown();
+    var id_empresa = $("#id_empresa").val();
+    var url = currentURL + '/perfil_marcacion/create/' + id_empresa;
+    $.get(url, function (data, textStatus, jqXHR) {
+      $('#formDataEmpresa').html(data);
+    });
+  });
+  /**
+   * Evento para guardar el nuevo Prefijo de Marcacion
+   */
+
+  $(document).on('click', '.savePerfilMarcacion', function (event) {
+    event.preventDefault();
+    var nombre = $("#nombre").val();
+    var descripcion = $("#descripcion").val();
+    var id = $("#id_empresa").val();
+    var prefijo = $("#prefijo").val();
+    var canal = $("#canal").val();
+    var did = $("#did").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var url = currentURL + '/perfil_marcacion';
+    $.post(url, {
+      id: id,
+      nombre: nombre,
+      descripcion: descripcion,
+      prefijo: prefijo,
+      canal: canal,
+      did: did,
+      _token: _token
+    }, function (data, textStatus, xhr) {
+      var url = currentURL + "/perfil_marcacion/" + id;
+      $.get(url, function (data, textStatus, jqXHR) {
+        $('#formDataEmpresa').html(data);
+        $('#tablePerfilMarcacion').DataTable({
+          "lengthChange": true
+        });
+      });
+    });
+  });
+  /**
+   * Evento para habilitar la edicion del prefijo seleccionado
+   */
+
+  $(document).on('click', '.editar_perfil', function (event) {
+    var id = $(this).val();
+    /**
+     * Habilitamos los inputs para editar
+     */
+
+    if ($(this).prop('checked')) {
+      $("#nombre_" + id).prop("disabled", false);
+      $("#descripcion_" + id).prop("disabled", false);
+      $("#prefijo_" + id).prop("disabled", false);
+      $("#canal_" + id).prop("disabled", false);
+      $("#did_" + id).prop("disabled", false);
+      $("#delete_" + id).slideDown();
+      $("#accionActualizar").slideDown();
+    } else {
+      $("#nombre_" + id).prop("disabled", true);
+      $("#descripcion_" + id).prop("disabled", true);
+      $("#prefijo_" + id).prop("disabled", true);
+      $("#canal_" + id).prop("disabled", true);
+      $("#did_" + id).prop("disabled", true);
+      $("#delete_" + id).slideUp();
+      $("#accionActualizar").slideUp();
+    }
+  });
+  /**
+   * Evento para editar el modulo
+   */
+
+  $(document).on('click', '.updatePerfil', function (event) {
+    event.preventDefault();
+    var dataForm = $("#formDataEmpresa").serializeArray();
+
+    var _token = $("input[name=_token]").val();
+
+    var id = $("#id_empresa").val();
+    var _method = "PUT";
+    var url = currentURL + '/perfil_marcacion/' + id;
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {
+        dataForm: dataForm,
+        _token: _token,
+        _method: _method
+      },
+      success: function success(result) {
+        var url = currentURL + "/perfil_marcacion/" + id;
+        $.get(url, function (data, textStatus, jqXHR) {
+          $('#formDataEmpresa').html(data);
+          $('#tablePerfilMarcacion').DataTable({
+            "lengthChange": true
+          });
+        });
+      }
+    });
+  });
+  /**
+   * Evento para eliminar el prefijo
+   */
+
+  $(document).on('click', '.deletePerfil', function (event) {
+    event.preventDefault();
+    var id = $(this).attr('id').replace('delete_', '');
+
+    var _token = $("input[name=_token]").val();
+
+    var _method = "DELETE";
+    var url = currentURL + '/perfil_marcacion/' + id;
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {
+        _token: _token,
+        _method: _method
+      },
+      success: function success(result) {
+        var id = $("#id_empresa").val();
+        var url = currentURL + "/perfil_marcacion/" + id;
+        $.get(url, function (data, textStatus, jqXHR) {
+          $('#formDataEmpresa').html(data);
+          $('#tablePerfilMarcacion').DataTable({
+            "lengthChange": true
+          });
+        });
+      }
+    });
+  });
+});
+
+/***/ }),
+
+/***/ "./resources/js/module_administrador/prefijos_marcacion.js":
+/*!*****************************************************************!*\
+  !*** ./resources/js/module_administrador/prefijos_marcacion.js ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  var currentURL = window.location.href;
+  /**
+   * Evento para mostrar el formulario de crear una nueva plantilla
+   */
+
+  $(document).on("click", ".newPrefijoMarcacion", function (e) {
+    e.preventDefault();
+    $("#accionActualizar").slideUp();
+    $(".viewIndex").slideUp();
+    $(".viewCreate").slideDown();
+    var id_empresa = $("#id_empresa").val();
+    var url = currentURL + '/prefijos_marcacion/create/' + id_empresa;
+    $.get(url, function (data, textStatus, jqXHR) {
+      $('#formDataEmpresa').html(data);
+    });
+  });
+  /**
+   * Evento para guardar el nuevo Prefijo de Marcacion
+   */
+
+  $(document).on('click', '.savePrefijoMarcacion', function (event) {
+    event.preventDefault(); //let dataForm = $("#formDataEmpresa").serializeArray();
+
+    var nombre = $("#nombre").val();
+    var descripcion = $("#descripcion").val();
+    var prefijo = $("#prefijo").val();
+    var prefijoNuevo = $("#prefijoNuevo").val();
+    var id = $("#id_empresa").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var url = currentURL + '/prefijos_marcacion';
+    $.post(url, {
+      id: id,
+      nombre: nombre,
+      descripcion: descripcion,
+      prefijo: prefijo,
+      prefijoNuevo: prefijoNuevo,
+      _token: _token
+    }, function (data, textStatus, xhr) {
+      var url = currentURL + "/prefijos_marcacion/" + id;
+      $.get(url, function (data, textStatus, jqXHR) {
+        $('#formDataEmpresa').html(data);
+        $('#tablePrefijosMarcacion').DataTable({
+          "lengthChange": true
+        });
+      });
+    });
+  });
+  /**
+   * Evento para habilitar la edicion del prefijo seleccionado
+   */
+
+  $(document).on('click', '.editar_prefijo', function (event) {
+    var id = $(this).val();
+    /**
+     * Habilitamos los inputs para editar
+     */
+
+    if ($(this).prop('checked')) {
+      $("#nombre_" + id).prop("disabled", false);
+      $("#descripcion_" + id).prop("disabled", false);
+      $("#prefijo_" + id).prop("disabled", false);
+      $("#prefijoNuevo_" + id).prop("disabled", false);
+      $("#delete_" + id).slideDown();
+      $("#accionActualizar").slideDown();
+    } else {
+      $("#nombre_" + id).prop("disabled", true);
+      $("#descripcion_" + id).prop("disabled", true);
+      $("#prefijo_" + id).prop("disabled", true);
+      $("#prefijoNuevo_" + id).prop("disabled", true);
+      $("#delete_" + id).slideUp();
+      $("#accionActualizar").slideUp();
+    }
+  });
+  /**
+   * Evento para editar el modulo
+   */
+
+  $(document).on('click', '.updatePrefijos', function (event) {
+    event.preventDefault();
+    var dataForm = $("#formDataEmpresa").serializeArray();
+
+    var _token = $("input[name=_token]").val();
+
+    var id = $("#id_empresa").val();
+    var _method = "PUT";
+    var url = currentURL + '/prefijos_marcacion/' + id;
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {
+        dataForm: dataForm,
+        _token: _token,
+        _method: _method
+      },
+      success: function success(result) {
+        var url = currentURL + "/prefijos_marcacion/" + id;
+        $.get(url, function (data, textStatus, jqXHR) {
+          $('#formDataEmpresa').html(data);
+          $('#tablePrefijosMarcacion').DataTable({
+            "lengthChange": true
+          });
+        });
+      }
+    });
+  });
+  /**
+   * Evento para eliminar el prefijo
+   */
+
+  $(document).on('click', '.deletePrefijo', function (event) {
+    event.preventDefault();
+    var id = $(this).attr('id').replace('delete_', '');
+
+    var _token = $("input[name=_token]").val();
+
+    var _method = "DELETE";
+    var url = currentURL + '/prefijos_marcacion/' + id;
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {
+        _token: _token,
+        _method: _method
+      },
+      success: function success(result) {
+        var id = $("#id_empresa").val();
+        var url = currentURL + "/prefijos_marcacion/" + id;
+        $.get(url, function (data, textStatus, jqXHR) {
+          $('#formDataEmpresa').html(data);
+          $('#tablePrefijosMarcacion').DataTable({
+            "lengthChange": true
+          });
+        });
+      }
+    });
+  });
 });
 
 /***/ }),
@@ -4329,9 +4677,9 @@ $(function () {
 /***/ }),
 
 /***/ 0:
-/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/module_administrador/usuarios.js ./resources/js/module_administrador/modulos.js ./resources/js/module_administrador/submenus.js ./resources/js/module_administrador/menus.js ./resources/js/module_administrador/distribuidores.js ./resources/js/module_administrador/dids.js ./resources/js/module_administrador/cat_estado_agente.js ./resources/js/module_administrador/cat_estado_cliente.js ./resources/js/module_administrador/cat_estado_empresa.js ./resources/js/module_administrador/cat_ip_pbx.js ./resources/js/module_administrador/cat_nas.js ./resources/js/module_administrador/troncales.js ./resources/js/module_administrador/canales.js ./resources/js/module_administrador/empresas.js ./resources/js/module_administrador/cat_base_datos.js ./resources/js/module_administrador/cat_tipo_canal.js ./resources/js/module_administrador/menu.js ./resources/js/module_administrador/cat_extensiones.js ./resources/js/module_administrador/licenciasBria.js ./resources/js/module_administrador/cat_campos_plantillas.js ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/module_administrador/usuarios.js ./resources/js/module_administrador/modulos.js ./resources/js/module_administrador/submenus.js ./resources/js/module_administrador/menus.js ./resources/js/module_administrador/distribuidores.js ./resources/js/module_administrador/dids.js ./resources/js/module_administrador/cat_estado_agente.js ./resources/js/module_administrador/cat_estado_cliente.js ./resources/js/module_administrador/cat_estado_empresa.js ./resources/js/module_administrador/cat_ip_pbx.js ./resources/js/module_administrador/cat_nas.js ./resources/js/module_administrador/troncales.js ./resources/js/module_administrador/canales.js ./resources/js/module_administrador/empresas.js ./resources/js/module_administrador/cat_base_datos.js ./resources/js/module_administrador/cat_tipo_canal.js ./resources/js/module_administrador/menu.js ./resources/js/module_administrador/cat_extensiones.js ./resources/js/module_administrador/licenciasBria.js ./resources/js/module_administrador/cat_campos_plantillas.js ./resources/js/module_administrador/prefijos_marcacion.js ./resources/js/module_administrador/perfil_marcacion.js ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4354,7 +4702,9 @@ __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\c
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\menu.js */"./resources/js/module_administrador/menu.js");
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\cat_extensiones.js */"./resources/js/module_administrador/cat_extensiones.js");
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\licenciasBria.js */"./resources/js/module_administrador/licenciasBria.js");
-module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\cat_campos_plantillas.js */"./resources/js/module_administrador/cat_campos_plantillas.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\cat_campos_plantillas.js */"./resources/js/module_administrador/cat_campos_plantillas.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\prefijos_marcacion.js */"./resources/js/module_administrador/prefijos_marcacion.js");
+module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_administrador\perfil_marcacion.js */"./resources/js/module_administrador/perfil_marcacion.js");
 
 
 /***/ })

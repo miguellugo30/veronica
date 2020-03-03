@@ -14,7 +14,7 @@ class Cat_Tipo_Canales extends Model
      * Campos que pueden ser modificados
      */
     protected $fillable = [
-       'nombre','prefijo','Cat_Distribuidor_id',
+       'nombre','prefijo','Cat_Distribuidor_id','Cat_Canales_Tipo_id',
     ];
     /**
      * Nombre de la tabla
@@ -44,6 +44,6 @@ class Cat_Tipo_Canales extends Model
      */
     public function Canales()
     {
-        return $this->hasOne('Nimbus\Canales', 'id', 'Cat_Tipo_Canales_id');
+        return $this->hasOne('Nimbus\Canales', 'id', 'Cat_Canales_Tipo_id');
     }
 }

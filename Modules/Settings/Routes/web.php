@@ -77,3 +77,27 @@ Route::group(['namespace' => '\Modules\Settings\Http\Controllers', 'prefix' => '
 Route::group(['namespace' => '\Modules\Settings\Http\Controllers', 'prefix' => 'settings', 'middleware' => 'auth'], function() {
     Route::resource('EventosAgentes','EventosAgentesController');
 });
+/**
+ * Rutas para CRUD de Plantillas
+ */
+Route::group(['namespace' => '\Modules\Settings\Http\Controllers', 'prefix' => 'settings', 'middleware' => 'auth'], function() {
+    Route::resource('Plantillas','PlantillasController');
+});
+/**
+ * Rutas para CRUD de Prefijos Marcacion
+ */
+Route::group(['namespace' => '\Modules\Settings\Http\Controllers', 'prefix' => 'settings', 'middleware' => 'auth'], function() {
+    Route::resource('PrefijosMarcacion','PrefijosMarcacionController');
+});
+/**
+ * Rutas para CRUD de Base de Datos
+ */
+Route::group(['namespace' => '\Modules\Settings\Http\Controllers', 'prefix' => 'settings', 'middleware' => 'auth'], function() {
+    Route::resource('BaseDatos','BaseDatosController');
+});
+/*
+ * Rutas para CRUD de Perfil Marcacion
+ */
+Route::group(['namespace' => '\Modules\Settings\Http\Controllers', 'prefix' => 'settings', 'middleware' => 'auth'], function() {
+    Route::resource('Perfil_Marcacion','PerfilMarcacionController');
+});

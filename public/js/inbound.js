@@ -602,17 +602,36 @@ $(function () {
 $(function () {
   var currentURL = window.location.href;
   /**
+   * Evento para deshabilitar reporte con base si se eligio
+   * general o una campana en especifico.
+   */
+
+  $(document).on("change", "#campana", function (e) {
+    if ($(this).val() == 0) {
+      $("#tendencia").prop('disabled', true);
+      $("#calificaciones").prop('disabled', true);
+    } else {
+      $("#tendencia").prop('disabled', false);
+      $("#calificaciones").prop('disabled', false);
+    }
+  });
+  /**
+   * Evento para mostrar el input para el tiempo de evaluación
+   * en tendencia
+   */
+
+  $(document).on("change", "input[name=nivel-servicio]", function (e) {
+    if (this.checked) {
+      $("#div-tiempo-evaluacion").slideDown();
+    } else {
+      $("#div-tiempo-evaluacion").slideUp();
+    }
+  });
+  /**
    * Evento para el menu de sub categorias y mostrar la vista
    */
 
   $(document).on("click", ".generarReporteACD", function (e) {
-    /**
-     * Esto contrae el body
-     */
-    $('.filtro-reporte').slideUp();
-    $('.nuevo-reporte').slideDown();
-    $('#body-reporte').slideDown();
-    e.preventDefault();
     var url = currentURL + '/Metricas_ACD';
     var fecha_inicio = $("#fecha-inicio").val();
     var hora_inicio = $("#hora_inicio").val();
@@ -622,20 +641,45 @@ $(function () {
     var min_fin = $("#min_fin").val();
     dateInicio = fecha_inicio + " " + hora_inicio + ":" + min_inicio + ":00";
     dateFin = fecha_fin + " " + hora_fin + ":" + min_fin + ":00";
+    var campana = $("#campana").val();
+    var tiempoEvaluacion = $("#tiempo-evalucaion").val();
 
     var _token = $("input[name=_token]").val();
 
-    $.ajax({
-      url: url,
-      type: "post",
-      data: {
-        dateInicio: dateInicio,
-        dateFin: dateFin,
-        _token: _token
+    var data = {};
+    $('input[type=checkbox]').each(function () {
+      if (this.checked) {
+        data[this.id] = 1;
+      } else {
+        data[this.id] = 0;
       }
-    }).done(function (data) {
-      $('.viewReporteACD').html(data);
     });
+
+    if (data['nivel-servicio'] == 1 && tiempoEvaluacion == '') {
+      Swal.fire('Error!', 'Tienes que ingresar un tiempo de evaluación.', 'error');
+    } else {
+      /**
+       * Esto contrae el body
+       */
+      $('.filtro-reporte').slideUp();
+      $('.nuevo-reporte').slideDown();
+      $('#viewReporte').slideDown();
+      e.preventDefault();
+      $.ajax({
+        url: url,
+        type: "post",
+        data: {
+          dateInicio: dateInicio,
+          dateFin: dateFin,
+          campana: campana,
+          data: data,
+          tiempoEvaluacion: tiempoEvaluacion,
+          _token: _token
+        }
+      }).done(function (data) {
+        $('.viewReporte').html(data);
+      });
+    }
   });
   /**
    * Evento para mostrar el formulario de crear un nuevo reporte
@@ -645,10 +689,10 @@ $(function () {
     /**
      * Esto contrae el body
      */
-    $('.viewReporteACD').html('');
+    $('.viewReporte').html('');
     $('.filtro-reporte').slideDown();
     $('.nuevo-reporte').slideUp();
-    $('#body-reporte').slideUp();
+    $('#viewReporte').slideUp();
     e.preventDefault();
   });
   /**
@@ -665,10 +709,6 @@ $(function () {
     var minuto_inicio = $("#min_inicio").val();
     var hora_fin = $("#hora_fin").val();
     var minuto_fin = $("#min_fin").val();
-
-    var _token = $("input[name=_token]").val();
-
-    var _method = "PUT";
     dateinicio = fechainicio + " " + hora_inicio + ":" + minuto_inicio + ":00";
     datefin = fechafin + " " + hora_fin + ":" + minuto_fin + ":59";
     var url = currentURL + "/Metricas_ACD/descargar/" + dateinicio + "/" + datefin;
@@ -1897,31 +1937,34 @@ $(function () {
     e.preventDefault();
     var id = $(this).data("id");
 
-    if (id == 16) {
+    if (id == 'cat-16') {
       url = currentURL + '/campanas';
-      table = ' #tableFormulario';
-    } else if (id == 32) {
+      table = '#tableFormulario';
+    } else if (id == 'sub-32') {
       url = currentURL + '/Condiciones_Tiempo';
-      table = ' #tableCondicionesTiempo';
-    } else if (id == 31) {
+      table = '#tableCondicionesTiempo';
+    } else if (id == 'sub-31') {
       url = currentURL + '/Desvios';
-      table = ' #tableDesvios';
-    } else if (id == 34) {
+      table = '#tableDesvios';
+    } else if (id == 'sub-34') {
       url = currentURL + '/Buzon_Voz';
-      table = ' #tableBuzonVoz';
-    } else if (id == 30) {
+      table = '#tableBuzonVoz';
+    } else if (id == 'sub-30') {
       url = currentURL + '/Did_Enrutamiento';
-      table = ' #tableDidEnrutamiento';
-    } else if (id == 6) {
+      table = '#tableDidEnrutamiento';
+    } else if (id == 'cat-6') {
       url = currentURL + '/Ivr';
-      table = ' #tableivr';
-    } else if (id == 39) {
+      table = '#tableivr';
+    } else if (id == 'sub-39') {
       url = currentURL + '/Metricas_ACD';
-      table = ' #tableACD';
-    } else if (id == 40) {
+      table = '#tableACD';
+    } else if (id == 'sub-40') {
       url = currentURL + '/Desglose_llamadas';
-      table = ' #tableDesgloseLlamadas';
-    } else if (id == 26) {
+      table = '#tableDesgloseLlamadas';
+    } else if (id == 'sub-42') {
+      url = currentURL + '/ReporteCalificaciones';
+      table = '#tableDesgloseLlamadas';
+    } else if (id == 'cat-26') {
       url = currentURL + '/real_time/';
       $.get(url, function (data, textStatus, jqXHR) {
         $(".viewResult").html(data);
@@ -1941,8 +1984,10 @@ $(function () {
     }
 
     if (id != 26) {
+      console.log(url);
       stop(timerListAgente);
       $.get(url, function (data, textStatus, jqXHR) {
+        console.log(data);
         $(".viewResult").html(data);
         $('.viewResult' + table).DataTable({
           "lengthChange": true
@@ -2015,10 +2060,76 @@ $(function () {
 
 /***/ }),
 
+/***/ "./resources/js/module_inbound/reporteCalificaciones.js":
+/*!**************************************************************!*\
+  !*** ./resources/js/module_inbound/reporteCalificaciones.js ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  var currentURL = window.location.href;
+  /**
+   * Evento para el menu de sub categorias y mostrar la vista
+   */
+
+  $(document).on("click", ".generarReporteCalificaciones", function (e) {
+    var url = currentURL + '/ReporteCalificaciones';
+    var fecha_inicio = $("#fecha-inicio").val();
+    var hora_inicio = $("#hora_inicio").val();
+    var min_inicio = $("#min_inicio").val();
+    var fecha_fin = $("#fecha-fin").val();
+    var hora_fin = $("#hora_fin").val();
+    var min_fin = $("#min_fin").val();
+    dateInicio = fecha_inicio + " " + hora_inicio + ":" + min_inicio + ":00";
+    dateFin = fecha_fin + " " + hora_fin + ":" + min_fin + ":00";
+    var campana = $("#campana").val();
+
+    var _token = $("input[name=_token]").val();
+    /**
+     * Esto contrae el body
+     */
+
+
+    $('.filtro-reporte').slideUp();
+    $('.nuevo-reporte').slideDown();
+    $('#viewReporte').slideDown();
+    e.preventDefault();
+    $.ajax({
+      url: url,
+      type: "post",
+      data: {
+        dateInicio: dateInicio,
+        dateFin: dateFin,
+        campana: campana,
+        _token: _token
+      }
+    }).done(function (data) {
+      $('.viewReporte').html(data);
+    });
+  });
+  /**
+   * Evento para mostrar el formulario de crear un nuevo reporte
+   */
+
+  $(document).on("click", ".nuevo-reporte", function (e) {
+    /**
+     * Esto contrae el body
+     */
+    $('.viewReporte').html('');
+    $('.filtro-reporte').slideDown();
+    $('.nuevo-reporte').slideUp();
+    $('#viewReporte').slideUp();
+    e.preventDefault();
+  });
+});
+
+/***/ }),
+
 /***/ 2:
-/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/module_inbound/menu.js ./resources/js/module_inbound/campanas.js ./resources/js/module_inbound/CondicionesTiempo.js ./resources/js/module_inbound/desvios.js ./resources/js/module_inbound/buzon_voz.js ./resources/js/module_inbound/Did_Enrutamiento.js ./resources/js/module_inbound/ivr.js ./resources/js/module_inbound/Metricas_ACD.js ./resources/js/module_inbound/desglosellamadas.js ./resources/js/module_inbound/real_time.js ***!
-  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/module_inbound/menu.js ./resources/js/module_inbound/campanas.js ./resources/js/module_inbound/CondicionesTiempo.js ./resources/js/module_inbound/desvios.js ./resources/js/module_inbound/buzon_voz.js ./resources/js/module_inbound/Did_Enrutamiento.js ./resources/js/module_inbound/ivr.js ./resources/js/module_inbound/Metricas_ACD.js ./resources/js/module_inbound/desglosellamadas.js ./resources/js/module_inbound/real_time.js ./resources/js/module_inbound/reporteCalificaciones.js ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2031,7 +2142,8 @@ __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\Did_Enr
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\ivr.js */"./resources/js/module_inbound/ivr.js");
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\Metricas_ACD.js */"./resources/js/module_inbound/Metricas_ACD.js");
 __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\desglosellamadas.js */"./resources/js/module_inbound/desglosellamadas.js");
-module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\real_time.js */"./resources/js/module_inbound/real_time.js");
+__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\real_time.js */"./resources/js/module_inbound/real_time.js");
+module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_inbound\reporteCalificaciones.js */"./resources/js/module_inbound/reporteCalificaciones.js");
 
 
 /***/ })

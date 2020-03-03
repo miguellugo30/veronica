@@ -41,6 +41,20 @@ Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix'
     Route::get('/extensiones/create/{id}', 'CatExtensionesController@create');
     Route::resource('extensiones','CatExtensionesController');
 });
+/**
+ * Rutas de CRUD de Perfiles
+ */
+Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
+    Route::get('/perfil_marcacion/create/{id}', 'PerfilMarcacionController@create');
+    Route::resource('perfil_marcacion','PerfilMarcacionController');
+});
+/**
+ * Rutas de CRUD de Prefijos
+ */
+Route::group(['namespace' => '\Modules\Administrador\Http\Controllers', 'prefix' => 'administrador'], function() {
+    Route::get('/prefijos_marcacion/create/{id}', 'PrefijosMarcacionController@create');
+    Route::resource('prefijos_marcacion','PrefijosMarcacionController');
+});
 /*
 |--------------------------------------------------------------------------
 | RUTAS PARA EL SUB MODULO DE VOZ

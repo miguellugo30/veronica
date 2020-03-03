@@ -28,7 +28,7 @@ class InboundController extends Controller
         /**
          * Obtenemos las categorias relacionadas al usuario
          */
-        $categorias = Categorias::where('modulos_id', 1)->get();
+        $categorias = Categorias::where('modulos_id', 1)->orderby('prioridad')->get();
         $modulo = "Inbound";
 
         return view('inbound::index', compact( 'rol', 'categorias', 'modulo' ));

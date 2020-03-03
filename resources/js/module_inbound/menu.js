@@ -10,31 +10,35 @@ $(function() {
         stop(timerListAgente);
         e.preventDefault();
         let id = $(this).data("id");
-        if (id == 16) {
+
+        if (id == 'cat-16') {
             url = currentURL + '/campanas';
-            table = ' #tableFormulario';
-        } else if (id == 32) {
+            table = '#tableFormulario';
+        } else if (id == 'sub-32') {
             url = currentURL + '/Condiciones_Tiempo';
-            table = ' #tableCondicionesTiempo';
-        } else if (id == 31) {
+            table = '#tableCondicionesTiempo';
+        } else if (id == 'sub-31') {
             url = currentURL + '/Desvios';
-            table = ' #tableDesvios';
-        } else if (id == 34) {
+            table = '#tableDesvios';
+        } else if (id == 'sub-34') {
             url = currentURL + '/Buzon_Voz';
-            table = ' #tableBuzonVoz';
-        } else if (id == 30) {
+            table = '#tableBuzonVoz';
+        } else if (id == 'sub-30') {
             url = currentURL + '/Did_Enrutamiento';
-            table = ' #tableDidEnrutamiento';
-        } else if (id == 6) {
+            table = '#tableDidEnrutamiento';
+        } else if (id == 'cat-6') {
             url = currentURL + '/Ivr';
-            table = ' #tableivr';
-        } else if (id == 39) {
+            table = '#tableivr';
+        } else if (id == 'sub-39') {
             url = currentURL + '/Metricas_ACD';
-            table = ' #tableACD';
-        } else if (id == 40) {
+            table = '#tableACD';
+        } else if (id == 'sub-40') {
             url = currentURL + '/Desglose_llamadas';
-            table = ' #tableDesgloseLlamadas';
-        } else if (id == 26) {
+            table = '#tableDesgloseLlamadas';
+        } else if (id == 'sub-42') {
+            url = currentURL + '/ReporteCalificaciones';
+            table = '#tableDesgloseLlamadas';
+        } else if (id == 'cat-26') {
 
             url = currentURL + '/real_time/';
 
@@ -57,8 +61,12 @@ $(function() {
         }
 
         if (id != 26) {
+
+            console.log(url)
+
             stop(timerListAgente);
             $.get(url, function(data, textStatus, jqXHR) {
+                console.log(data);
                 $(".viewResult").html(data);
                 $('.viewResult' + table).DataTable({
                     "lengthChange": true

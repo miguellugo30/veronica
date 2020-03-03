@@ -4,6 +4,24 @@
         <input type="text" class="form-control form-control-sm" id="nombre" placeholder="Nombre">
         @csrf
     </div>
+    <label for="empresa">Selecciona la(s) Empresa(s)</label>
+        <div class="form-row col-md-12">
+            <div class="col-md-5">
+                <select name="empresa" id="empresa" class="form-control form-control-sm" size="15" multiple>
+                    @foreach( $Empresas as $empresa )
+                        <option value="{{ $empresa->id }}">{{ $empresa->nombre }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-md-2 btn-group-vertical">
+                <button type="button" class="btn activate btnRight"><i class="fas fa-forward"></i></button>
+                <button type="button" class="btn activate btnLeft"><i class="fas fa-backward"></i></button>
+            </div>
+            <div class="col-md-5">
+                <select name="empresaAdd" id="empresaAdd" class="form-control form-control-sm" size="15" multiple>
+                </select>
+            </div>
+        </div>
     <div class="form-group">
         <small class="form-text text-muted"> <b>*Campos obligatorios.</b></small>
     </div>
@@ -11,7 +29,3 @@
         <ul></ul>
     </div>
 </div>
-<!--div class="col-6" style="float:none; margin:auto">
-    <button type="submit" class="btn btn-warning btn-sm cancelCamPla"><i class="fas fa-times"></i> Cancelar</button>
-    <button type="submit" class="btn btn-primary btn-sm saveCamPla float-right"><i class="fas fa-save"></i> Guardar</button>
-</div-->
