@@ -9,7 +9,7 @@ class DatosFormularios extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'uniqueid', 'Calificaciones_id', 'Formularios_id', 'Campos_id', 'valor'
+        'uniqueid', 'Calificaciones_id', 'Formularios_id', 'Campos_id', 'valor', 'fk_campanas_id', 'fecha_registro_llamada'
     ];
     /**
      * Nombre de la tabla que se ocupra
