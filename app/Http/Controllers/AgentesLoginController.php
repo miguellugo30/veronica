@@ -127,7 +127,7 @@ class AgentesLoginController extends Controller
 
             if ( $disponible->isEmpty() )
             {
-                $this->Actualiza_Estado_Agente( $agente->id, $modalidad );
+                $this->Actualiza_Estado_Agente( $agente->id, 11 );
                 /**
                  * Ponemos al usuario en pausa dentro de la cola
                  */

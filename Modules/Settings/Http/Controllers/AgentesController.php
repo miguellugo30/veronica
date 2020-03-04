@@ -71,10 +71,25 @@ class AgentesController extends Controller
          * Insertamos el nuevo agentes
          */
         $datos = $request->all();
-        $datos['Empresas_id'] = $empresa_id;
-        $datos['password'] = Hash::make( $datos['contrasena'] );
-        $datos['email'] = $datos['usuario'];
-        $agente = Agentes::create($datos);
+        //$datos['Empresas_id'] = $empresa_id;
+        //$datos['password'] = Hash::make( $datos['contrasena'] );
+        //$datos['email'] = $datos['usuario'];
+        $agente = Agentes::create([
+                    'nombre' => $request->input('nombre'),
+                    'usuario' => $request->input('usuario'),
+                    'email' => $request->input('usuario'),
+                    'password' => Hash::make( $datos['contrasena'] ),
+                    'contrasena' => $request->input('contrasena'),
+                    'extension' => $request->input('extension'),
+                    'nivel' => $request->input('nivel'),
+                    'Canales_id' => $request->input('Canales_id'),
+                    'mix_monitor' => (int)$request->input('mix_monitor'),
+                    'calificar_llamada' => (int)$request->input('calificar_llamada'),
+                    'envio_sms' => (int)$request->input('envio_sms'),
+                    'editar_datos' => (int)$request->input('editar_datos'),
+                    'Cat_Estado_Agente_id' => 1,
+                    'Empresas_id' => $empresa_id
+        ]);
         /**
          * Buscamos el grupo para poderlo vincular al agente
          */
