@@ -5,12 +5,21 @@ namespace Modules\Agentes\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+
 use Nimbus\DatosFormularios;
+use Nimbus\Cdr_call_center_detalles;
 
 class CalificarLlamadaController extends Controller
 {
+
     public static function calificarllamada( Request $request )
     {
+        /**
+         * Obtenemos el id de la campana y fecha inicio de la llamada
+         */
+        $datoLlamada = Cdr_call_center_detalles::select('id_aplicacion', 'fecha_inicio')->where('uniqueid', $request->uniqueid)->where('aplicacion', 'Campanas')->first();
+
+        //dd( $datoLlamada );
 
         $dataForm = $request->datosFormulario;
 
@@ -29,7 +38,9 @@ class CalificarLlamadaController extends Controller
                 'Calificaciones_id' => $request->id_calificacion,
                 'Formularios_id' => $idFormulario,
                 'Campos_id' => str_replace( 'campo_', '', $idCampos[$i] ),
-                'valor' => $v
+                'valor' => $v,
+                'fk_campanas_id' => $datoLlamada->id_aplicacion,
+                'fecha_registro_llamada' => $datoLlamada->fecha_inicio
            ]);
            $i++;
 
