@@ -6,9 +6,9 @@
         <div class="form-group">
             <label for="grupo"><b>Grupo *:</b></label>
             <select name="grupo" id="grupo" class="form-control form-control-sm">
-                <option value="">Sin Grupo</option>
+                <option disabled selected value="">Sin Grupo</option>
                 @foreach ($grupos as $grupo)
-                    <option value="{{$grupo->id}}" {{($grupo->id == $agente->nombre) ? 'selected = "selected"':'' }}>{{$grupo->nombre}}</option>
+                    <option value="{{$grupo->id}}" {{($grupo->id == $agente->Grupos[0]->pivot->grupos_id) ? 'selected = "selected"':'' }}>{{$grupo->nombre}}</option>
                 @endforeach
             </select>
             <input type="hidden" name="id" id="id"  value="{{$agente->id}}">
@@ -25,7 +25,7 @@
         </div>
         <div class="form-group">
             <label for="nivel"><b>Nivel *:</b></label>
-            <input type="number" class="form-control form-control-sm" name="nivel" id="nivel"  placeholder="Nivel" min="0"  value="{{$agente->nivel}}">
+            <input type="number" class="form-control form-control-sm" name="nivel" id="nivel"  placeholder="Nivel" min="0" max="5" value="{{$agente->nivel}}">
         </div>
         <div class="form-group">
             <label for="nombre"><b>Nombre *:</b></label>

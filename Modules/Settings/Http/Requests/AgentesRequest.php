@@ -46,6 +46,7 @@ class AgentesRequest extends FormRequest
             'contrasena' => 'Contraseña',
             'Canales_id' => 'Canal',
             'extension' => 'Extension',
+            'canal' => 'Canal',
         ];
     }
 }

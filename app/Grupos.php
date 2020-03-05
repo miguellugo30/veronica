@@ -14,7 +14,7 @@ class Grupos extends Model
      * Campos que se usaran en el proceso de la vista
      */
     protected $fillable = [
-        'nombre','descripcion','activo', 'tipo_grupo', 'Empresas_id',
+        'id','nombre','descripcion','activo', 'tipo_grupo', 'Empresas_id',
     ];
     /**
      * Nombre de la tabla

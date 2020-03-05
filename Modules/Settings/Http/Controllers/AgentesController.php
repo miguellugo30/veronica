@@ -81,7 +81,9 @@ class AgentesController extends Controller
                     'password' => Hash::make( $datos['contrasena'] ),
                     'contrasena' => $request->input('contrasena'),
                     'extension' => $request->input('extension'),
+                    'extension_real' => $request->input('extension'),
                     'nivel' => $request->input('nivel'),
+                    'tipo_licencia' => $request->input('tipo_licencia'),
                     'Canales_id' => $request->input('Canales_id'),
                     'mix_monitor' => (int)$request->input('mix_monitor'),
                     'calificar_llamada' => (int)$request->input('calificar_llamada'),
@@ -157,7 +159,7 @@ class AgentesController extends Controller
         $empresa_id = $user->id_cliente;
 
         $empresa = Empresas::find( $empresa_id );
-        $agente = Agentes::where('id',$id)->first();
+        $agente = Agentes::where('id',$id)->with('Grupos')->first();
         $cat_extensiones = Cat_Extensiones::active()->empresa( $empresa_id )->get();
         $canales = Canales::active()->where('Empresas_id', $empresa_id)->get();
         $grupos = Grupos::active()->where([['Empresas_id', '=', $empresa_id],['tipo_grupo','=','Agentes']])->get();
@@ -178,9 +180,13 @@ class AgentesController extends Controller
             ->update([
                     'nombre' => $request->input('nombre'),
                     'usuario' => $request->input('usuario'),
+                    'email' => $request->input('usuario'),
+                    'password' => Hash::make( $request->input('contrasena') ),
                     'contrasena' => $request->input('contrasena'),
                     'extension' => $request->input('extension'),
+                    'extension_real' => $request->input('extension'),
                     'nivel' => $request->input('nivel'),
+                    'tipo_licencia' => $request->input('tipo_licencia'),
                     'Canales_id' => $request->input('Canales_id'),
                     'mix_monitor' => (int)$request->input('mix_monitor'),
                     'calificar_llamada' => (int)$request->input('calificar_llamada'),
@@ -205,7 +211,7 @@ class AgentesController extends Controller
     public function destroy($id)
     {
         Agentes::where('id',$id)
-        ->update(['activo'=>'0']);
+        ->update(['activo'=>0]);
 
         return redirect()->route('Agentes.index');
          /**
