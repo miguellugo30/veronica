@@ -294,7 +294,6 @@ class CampanasController extends Controller
                                 'Campanas.modalidad_logue'
                             )
                     ->whereIn('Miembros_Campanas.Agentes_id', $request->idAgente)
-                    ->where('Campanas.activo', 1)
                     ->groupBy('Miembros_Campanas.Agentes_id', 'Campanas.modalidad_logue')
                     ->get();
 
