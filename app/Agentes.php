@@ -67,7 +67,7 @@ class Agentes extends  Authenticatable
      */
     public function Miembros_Campana()
     {
-        return $this->belongsTo('Nimbus\Miembros_Campana');
+        return $this->belongsTo('Nimbus\Miembros_Campana', 'id', 'Agentes_id');
     }
     /**
      * Uno a muchos con Grupos_Agentes

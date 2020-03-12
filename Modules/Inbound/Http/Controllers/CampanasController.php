@@ -101,6 +101,7 @@ class CampanasController extends Controller
          * Insertar información el tabla de Miembros_Campana
          */
         $agentesParticipantes = json_decode( $request->input('agentesParticipantes') );
+
         for ($i=0; $i < count($agentesParticipantes); $i++) {
             /**
              * Obtenemos el estado actual ( Pause ) del agente
@@ -118,6 +119,10 @@ class CampanasController extends Controller
                 ]
             );
         }
+        /**
+         * Borramos los miembros que previamente fueron cargados
+        */
+        Miembros_Campana::where('queue_name', NULL)->where('interface',NULL)->delete();
         /**
          * Creamos el logs
          */
@@ -202,6 +207,7 @@ class CampanasController extends Controller
          * Insertar información el tabla de Miembros_Campana
          */
         $agentesParticipantes = json_decode( $request->input('agentesParticipantes') );
+
         for ($i=0; $i < count($agentesParticipantes); $i++) {
             /**
              * Obtenemos el estado actual ( Pause ) del agente
@@ -242,7 +248,7 @@ class CampanasController extends Controller
     public function destroy($id)
     {
         Campanas::where('id',$id)
-        ->update(['activo'=>'0']);
+        ->update(['activo'=>0]);
 
         Miembros_Campana::where('Campanas_id', $id)->delete();
         /**
@@ -259,6 +265,28 @@ class CampanasController extends Controller
      */
     public function validar_modo_logueo( Request $request )
     {
+        /**
+         * Borramos todos los miembros que se encuentran en la tabla Miembros_Campana para que nos permita agregar los agentes seleccionados
+         */
+        Miembros_Campana::whereIn('Agentes_id', $request->idAgente)->delete();
+            /**
+             * Obtenemos el ultimo id insertado de las campañas
+             */
+            $Campana_id = Campanas::orderBy('id','DESC')->pluck('id')->first();
+
+            /**
+             * Iteramos los id's de los agentes para posteriormente sean creados en la tabla Miembros_Campana
+             */
+            foreach ($request->idAgente as $key) {
+                Miembros_Campana::create(
+                    [
+                        'membername' => $key,
+                        'Agentes_id' => $key,
+                        'Campanas_id' => $Campana_id
+                    ]
+                );
+            }
+
         $modalidad = DB::table('Miembros_Campanas')
                     ->join( 'Campanas', 'Campanas.id', '=', 'Miembros_Campanas.Campanas_id' )
                     ->select(
@@ -266,7 +294,6 @@ class CampanasController extends Controller
                                 'Campanas.modalidad_logue'
                             )
                     ->whereIn('Miembros_Campanas.Agentes_id', $request->idAgente)
-                    ->where('Campanas.activo', 1)
                     ->groupBy('Miembros_Campanas.Agentes_id', 'Campanas.modalidad_logue')
                     ->get();
 
