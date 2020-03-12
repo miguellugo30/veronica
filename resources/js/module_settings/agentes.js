@@ -110,6 +110,7 @@ $(function() {
         let usuario = $("#usuario").val();
         let contrasena = $("#contrasena").val();
         let extension = $("#extension").val();
+        let perfil = $("#perfil").val();
         let canal = $("#canal").val();
         let mix_monitor = $("input[name='mix_monitor']:checked").val();
         let calificar_llamada = $("input[name='calificar_llamada']:checked").val();
@@ -127,6 +128,7 @@ $(function() {
                 usuario: usuario,
                 contrasena: contrasena,
                 extension: extension,
+                perfil: perfil,
                 Canales_id: canal,
                 canal: canal,
                 mix_monitor: mix_monitor,
@@ -170,6 +172,7 @@ $(function() {
         let usuario = $("#usuario").val();
         let contrasena = $("#contrasena").val();
         let extension = $("#extension").val();
+        let perfil = $("#perfil").val();
         let canal = $("#canal").val();
         let mix_monitor = $("input[name='mix_monitor']:checked").val();
         let calificar_llamada = $("input[name='calificar_llamada']:checked").val();
@@ -179,43 +182,73 @@ $(function() {
         let _token = $("input[name=_token]").val();
         let url = currentURL + '/Agentes';
 
-        $.post(url, {
-                grupo: grupo,
-                tipo_licencia: tipo_licencia,
-                nivel: nivel,
-                nombre: nombre,
-                usuario: usuario,
-                contrasena: contrasena,
-                extension: extension,
-                Canales_id: canal,
-                canal: canal,
-                mix_monitor: mix_monitor,
-                calificar_llamada: calificar_llamada,
-                envio_sms: envio_sms,
-                editar_datos: editar_datos,
-                Cat_Estado_Agente_id: Cat_Estado_Agente_id,
-                _token: _token
-            }, function(data, textStatus, xhr) {
+        if (perfil == 0 && canal == 0) {
+            Swal.fire(
+                'Error!',
+                'Debes elegir un Canal o Perfil de marcacion.',
+                'error'
+            )
+        } else {
 
-                $('.viewResult').html(data);
-                $('.viewResult #tableAgentes').DataTable({
-                    "lengthChange": true,
-                    "order": [
-                        [2, "asc"]
-                    ]
+            $.post(url, {
+                    grupo: grupo,
+                    tipo_licencia: tipo_licencia,
+                    nivel: nivel,
+                    nombre: nombre,
+                    usuario: usuario,
+                    contrasena: contrasena,
+                    extension: extension,
+                    perfil: perfil,
+                    Canales_id: canal,
+                    canal: canal,
+                    mix_monitor: mix_monitor,
+                    calificar_llamada: calificar_llamada,
+                    envio_sms: envio_sms,
+                    editar_datos: editar_datos,
+                    Cat_Estado_Agente_id: Cat_Estado_Agente_id,
+                    _token: _token
+                }, function(data, textStatus, xhr) {
+
+                    $('.viewResult').html(data);
+                    $('.viewResult #tableAgentes').DataTable({
+                        "lengthChange": true,
+                        "order": [
+                            [2, "asc"]
+                        ]
+                    });
+                }).done(function() {
+                    $('.modal-backdrop ').css('display', 'none');
+                    $('#modal').modal('hide');
+                    Swal.fire(
+                        'Correcto!',
+                        'El registro ha sido guardado.',
+                        'success'
+                    )
+                })
+                .fail(function(data) {
+                    printErrorMsg(data.responseJSON.errors);
                 });
-            }).done(function() {
-                $('.modal-backdrop ').css('display', 'none');
-                $('#modal').modal('hide');
-                Swal.fire(
-                    'Correcto!',
-                    'El registro ha sido guardado.',
-                    'success'
-                )
-            })
-            .fail(function(data) {
-                printErrorMsg(data.responseJSON.errors);
-            });
+        }
+    });
+    /**
+     * Evento para guardar el nuevo agente
+     */
+    $(document).on('change', '.canal-perfil', function(event) {
+        console.log(this.name);
+        console.log(this.value);
+        if (this.name == 'canal' && this.value != 0) {
+            $("#perfil").prop('disabled', true);
+            $("#canal").prop('disabled', false);
+        } else if (this.name == 'canal' && this.value == 0) {
+            $("#perfil").prop('disabled', false);
+        } else if (this.name == 'perfil' && this.value != 0) {
+            $("#canal").prop('disabled', true);
+            $("#perfil").prop('disabled', false);
+        } else if (this.name == 'perfil' && this.value == 0) {
+            $("#canal").prop('disabled', false);
+        }
+
+
     });
     /**
      * Funcion para mostrar los errores de los formularios

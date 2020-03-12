@@ -6,9 +6,9 @@
         <div class="form-group">
             <label for="grupo"><b>Grupo *:</b></label>
             <select name="grupo" id="grupo" class="form-control form-control-sm">
-                <option disabled selected value="">Sin Grupo</option>
+                <option value="0">Sin Grupo</option>
                 @foreach ($grupos as $grupo)
-                    <option value="{{$grupo->id}}" {{($grupo->id == $agente->Grupos[0]->pivot->grupos_id) ? 'selected = "selected"':'' }}>{{$grupo->nombre}}</option>
+                    <option value="{{$grupo->id}}" >{{$grupo->nombre}}</option>
                 @endforeach
             </select>
             <input type="hidden" name="id" id="id"  value="{{$agente->id}}">
@@ -40,20 +40,29 @@
             <input type="text" class="form-control form-control-sm" name="contrasena" id="contrasena" placeholder="Contraseña" value="{{$agente->contrasena}}">
         </div>
         <div class="form-group">
+            <label for="extension"><b>Extensión *:</b></label>
+            <select name="extension" id="extension" class="form-control form-control-sm">
+                <option value="">Selecciona un extensión</option>
+                @foreach ($cat_extensiones as $extension)
+                <option value="{{$extension->extension}}" {{ $agente->extension_real == $extension->extension ? 'selected=selected' : '' }}>{{$extension->extension}}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="form-group">
             <label for="canal"><b>Canal *:</b></label>
             <select name="canal" id="canal" class="form-control form-control-sm">
-                <option value="">Selecciona un canal</option>
+                <option value="0">Sin canal</option>
                 @foreach ($canales as $canal)
                     <option value="{{$canal->id}}" {{($canal->id == $agente->Canales_id) ? 'selected = "selected"':'' }}>{{$canal->Cat_Tipo_Canales->nombre}}</option>
                 @endforeach
             </select>
         </div>
         <div class="form-group">
-            <label for="extension"><b>Extensión *:</b></label>
-            <select name="extension" id="extension" class="form-control form-control-sm">
-                <option value="">Selecciona un extensión</option>
-                @foreach ($cat_extensiones as $extension)
-                    <option value="{{$extension->extension}}" {{ $agente->extension_real == $extension->extension ? 'selected=selected' : '' }}>{{$extension->extension}}</option>
+            <label for="perfil"><b>Perfil de marcación *:</b></label>
+            <select name="perfil" id="perfil" class="form-control form-control-sm canal-perfil">
+                <option value="0">Sin perfil de marcación</option>
+                @foreach ($perfiles as $perfil)
+                    <option value="{{$perfil->id}}" {{($perfil->id == $agente->id_perfil_marcacion) ? 'selected = "selected"':'' }}>{{$perfil->nombre}}</option>
                 @endforeach
             </select>
         </div>

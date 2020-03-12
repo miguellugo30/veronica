@@ -17,21 +17,31 @@ use Nimbus\Canales;
 use Nimbus\Grupos;
 use Nimbus\Empresas;
 use Nimbus\Cat_Extensiones;
+use Nimbus\Perfiles;
 
 class AgentesController extends Controller
 {
+    private $empresa_id;
+
+    /**
+     * Constructor para obtener el id empresa
+     * con base al usuario que esta usando la sesion
+     */
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            $this->empresa_id = Auth::user()->id_cliente;
+
+            return $next($request);
+        });
+    }
     /**
      * Display a listing of the resource.
      * @return Response
      */
     public function index()
     {
-        /**
-         * Sacamos los datos del agente y su empresa para obtener los agentes
-         */
-        $user = Auth::user();
-        $empresa_id = $user->id_cliente;
-        $agentes = Agentes::empresa($empresa_id)->active()->with('Canales')->with('Grupos')->get();
+        $agentes = Agentes::empresa( $this->empresa_id )->active()->with('Canales')->with('Grupos')->with('Perfiles')->get();
         return view('settings::Agentes.index',compact('agentes'));
     }
 
@@ -44,15 +54,15 @@ class AgentesController extends Controller
         /**
          * Obtenemos el id empresa del usuario para obtener los canales
          */
-        $user = Auth::user();
-        $empresa_id = $user->id_cliente;
 
-        $empresa = Empresas::find( $empresa_id );
-        $cat_extensiones = Cat_Extensiones::active()->empresa( $empresa_id )->get();
-        $canales = Canales::active()->where('Empresas_id', $empresa_id)->get();
-        $grupos = Grupos::active()->where([['Empresas_id', '=', $empresa_id],['tipo_grupo','=','Agentes']])->get();
 
-        return view('settings::Agentes.create', compact('canales', 'grupos', 'empresa', 'cat_extensiones'));
+        $empresa = Empresas::find( $this->empresa_id );
+        $cat_extensiones = Cat_Extensiones::active()->empresa( $this->empresa_id )->get();
+        $canales = Canales::active()->where('Empresas_id', $this->empresa_id)->get();
+        $grupos = Grupos::active()->where([['Empresas_id', '=', $this->empresa_id],['tipo_grupo','=','Agentes']])->get();
+        $perfiles = Perfiles::active()->empresa( $this->empresa_id )->get();
+
+        return view('settings::Agentes.create', compact('canales', 'grupos', 'empresa', 'cat_extensiones', 'perfiles'));
     }
 
     /**
@@ -63,58 +73,49 @@ class AgentesController extends Controller
     public function store(AgentesRequest $request)
     {
         /**
-         * Insertamos la información del Agente
-         */
-        $user = Auth::user();
-        $empresa_id = $user->id_cliente;
-        /**
          * Insertamos el nuevo agentes
          */
-        $datos = $request->all();
-        //$datos['Empresas_id'] = $empresa_id;
-        //$datos['password'] = Hash::make( $datos['contrasena'] );
-        //$datos['email'] = $datos['usuario'];
         $agente = Agentes::create([
-                    'nombre' => $request->input('nombre'),
-                    'usuario' => $request->input('usuario'),
-                    'email' => $request->input('usuario'),
-                    'password' => Hash::make( $datos['contrasena'] ),
-                    'contrasena' => $request->input('contrasena'),
-                    'extension' => $request->input('extension'),
-                    'extension_real' => $request->input('extension'),
-                    'nivel' => $request->input('nivel'),
-                    'tipo_licencia' => $request->input('tipo_licencia'),
-                    'Canales_id' => $request->input('Canales_id'),
-                    'mix_monitor' => (int)$request->input('mix_monitor'),
-                    'calificar_llamada' => (int)$request->input('calificar_llamada'),
-                    'envio_sms' => (int)$request->input('envio_sms'),
-                    'editar_datos' => (int)$request->input('editar_datos'),
+                    'nombre' => $request->nombre,
+                    'usuario' => $request->usuario,
+                    'email' => $request->usuario,
+                    'password' => Hash::make( $request->contrasena ),
+                    'contrasena' => $request->contrasena,
+                    'extension' => $request->extension,
+                    'extension_real' => $request->extension,
+                    'nivel' => $request->nivel,
+                    'tipo_licencia' => $request->tipo_licencia,
+                    'Canales_id' => $request->Canales_id,
+                    'mix_monitor' => (int)$request->mix_monitor,
+                    'id_perfil_marcacion' => (int)$request->perfil,
+                    'calificar_llamada' => (int)$request->calificar_llamada,
+                    'envio_sms' => (int)$request->envio_sms,
+                    'editar_datos' => (int)$request->editar_datos,
                     'Cat_Estado_Agente_id' => 1,
-                    'Empresas_id' => $empresa_id
+                    'Empresas_id' => $this->empresa_id
         ]);
         /**
          * Buscamos el grupo para poderlo vincular al agente
          */
-        if( $datos['grupo'] != '' ){
-
-            $grupo = Grupos::find(  $datos['grupo'] );
+        if( $request->grupo != 0 )
+        {
+            $grupo = Grupos::find( $request->grupo );
             $grupo->Agentes()->attach($agente->id);
-
         }
         /**
          * Creamos una petición, para poder escribir
          * los agentes en el archivo AGENTS.CONF
          */
-        $pbx = Empresas::empresa($empresa_id)->active()->with('Config_Empresas')->with('Config_Empresas.ms')->get()->first();
+        $pbx = Empresas::empresa( $this->empresa_id )->active()->with('Config_Empresas')->with('Config_Empresas.ms')->get()->first();
         $wsdl = 'http://'.$pbx->Config_Empresas->ms->ip_pbx.'/ws-ms/index.php';
         $client =  new  nusoap_client( $wsdl );
         $result = $client->call('AgentesConf', array(
-                                                        'empresas_id' => $empresa_id
+                                                        'empresas_id' => $this->empresa_id
                                                     ));
         /**
          * Si la respuesta es 1, se hace el reload del sip
          */
-        if ($result['result'] == 1) {
+        if ($result['error'] == 1) {
             $ami = new Ami();
             if ($ami->connect($pbx->Config_Empresas->ms->ip_pbx.':5038', $pbx->Config_Empresas->usuario_ami, $pbx->Config_Empresas->clave_ami, 'off') === false)
             {
@@ -126,9 +127,9 @@ class AgentesController extends Controller
         /**
          * Creamos el logs
          */
-        $mensaje = 'Se creo un nuevo registro, informacion capturada:'.var_export($request->all(), true);
+        $mensaje = 'Se creo un nuevo registro, información capturada:'.var_export($request->all(), true);
         $log = new LogController;
-        $log->store('Insercion', 'Agentes',$mensaje, $agente->id);
+        $log->store('Inserción', 'Agentes',$mensaje, $agente->id);
         /**
          * Redirigimos a la ruta index
          */
@@ -152,19 +153,14 @@ class AgentesController extends Controller
      */
     public function edit($id)
     {
-        /**
-         * Obtenemos el id empresa del usuario para obtener los canales
-         */
-        $user = Auth::user();
-        $empresa_id = $user->id_cliente;
+        $empresa = Empresas::find( $this->empresa_id );
+        $agente = Agentes::where('id',$id)->with('Canales')->with('Grupos')->with('Perfiles')->first();
+        $cat_extensiones = Cat_Extensiones::active()->empresa( $this->empresa_id )->get();
+        $canales = Canales::active()->where('Empresas_id', $this->empresa_id )->get();
+        $grupos = Grupos::active()->where([['Empresas_id', '=', $this->empresa_id],['tipo_grupo','=','Agentes']])->get();
+        $perfiles = Perfiles::active()->empresa( $this->empresa_id )->get();
 
-        $empresa = Empresas::find( $empresa_id );
-        $agente = Agentes::where('id',$id)->with('Grupos')->first();
-        $cat_extensiones = Cat_Extensiones::active()->empresa( $empresa_id )->get();
-        $canales = Canales::active()->where('Empresas_id', $empresa_id)->get();
-        $grupos = Grupos::active()->where([['Empresas_id', '=', $empresa_id],['tipo_grupo','=','Agentes']])->get();
-
-        return view('settings::Agentes.edit',compact('agente', 'canales', 'grupos', 'empresa', 'cat_extensiones'));
+        return view('settings::Agentes.edit',compact('agente', 'canales', 'grupos', 'empresa', 'cat_extensiones', 'perfiles'));
     }
 
     /**
@@ -189,6 +185,7 @@ class AgentesController extends Controller
                     'tipo_licencia' => $request->input('tipo_licencia'),
                     'Canales_id' => $request->input('Canales_id'),
                     'mix_monitor' => (int)$request->input('mix_monitor'),
+                    'id_perfil_marcacion' => (int)$request->perfil,
                     'calificar_llamada' => (int)$request->input('calificar_llamada'),
                     'envio_sms' => (int)$request->input('envio_sms'),
                     'editar_datos' => (int)$request->input('editar_datos'),
@@ -196,9 +193,9 @@ class AgentesController extends Controller
             /**
              * Creamos el logs
              */
-            $mensaje = 'Se edito un registro con id: '.$id.', informacion editada: '.var_export($request->all(), true);
+            $mensaje = 'Se edito un registro con id: '.$id.', información editada: '.var_export($request->all(), true);
             $log = new LogController;
-            $log->store('Actualizacion', 'Agentes',$mensaje, $id);
+            $log->store('Actualización', 'Agentes',$mensaje, $id);
             return redirect()->route('Agentes.index');
 
     }
@@ -219,7 +216,7 @@ class AgentesController extends Controller
          */
         $mensaje = 'Se Elimino un registro con id: '.$id;
         $log = new LogController;
-        $log->store('Eliminacion', 'Agentes', $mensaje, $id);
+        $log->store('Eliminación', 'Agentes', $mensaje, $id);
 
     }
 }

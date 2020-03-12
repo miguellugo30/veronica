@@ -90,5 +90,12 @@ class Agentes extends  Authenticatable
     {
         return $this->hasMany('Nimbus\Registros_Eventos_Agentes', 'Agentes_id', 'id');
     }
+    /**
+     * Uno a uno con Perfiles
+     */
+    public function Perfiles()
+    {
+        return $this->hasMany('Nimbus\Perfiles', 'id', 'id_perfil_marcacion');
+    }
 
 }
