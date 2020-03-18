@@ -64,6 +64,7 @@ mix.js([
         'resources/js/module_inbound/desglosellamadas.js',
         'resources/js/module_inbound/real_time.js',
         'resources/js/module_inbound/reporteCalificaciones.js',
+        'resources/js/module_inbound/reporte_llamadas_agentes.js',
     ], 'public/js/inbound.js')
     .js([
         'resources/js/module_recording/menu.js',

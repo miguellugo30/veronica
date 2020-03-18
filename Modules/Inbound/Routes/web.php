@@ -84,6 +84,12 @@ Route::group(['namespace' => '\Modules\Inbound\Http\Controllers', 'prefix' => 'i
     Route::resource('ReporteCalificaciones','ReporteCalificacionesController');
 });
 /**
+* Rutas para CRUD de Reporte de Llamadas por agentes
+*/
+Route::group(['namespace' => '\Modules\Inbound\Http\Controllers', 'prefix' => 'inbound', 'middleware' => 'auth'], function() {
+    Route::resource('ReporteLlamadasAgentes','ReporteLlamadasAgentesController');
+});
+/**
 * Rutas para CRUD de Reporte de Desglose de llamadas
 */
 Route::group(['namespace' => '\Modules\Inbound\Http\Controllers', 'prefix' => 'inbound', 'middleware' => 'auth'], function() {
