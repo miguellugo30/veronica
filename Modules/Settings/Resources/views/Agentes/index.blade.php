@@ -47,9 +47,9 @@
                                 <td>{{ $agente->nombre }}</td>
                                 <td>{{ $agente->usuario }}</td>
                                 <td>{{ $agente->contrasena }}</td>
-                                <td>{{ $agente->extension }}</td>
+                                <td>{{ $agente->extension_real }}</td>
                                 <td>{{ $agente->Canales->Cat_Tipo_Canales->nombre }}</td>
-                                <td> </td>
+                                <td>{{ $agente->Perfiles[0]->nombre }}</td>
                                 <td> </td>
                             </tr>
                         @endforeach

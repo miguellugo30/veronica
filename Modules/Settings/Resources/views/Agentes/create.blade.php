@@ -6,7 +6,7 @@
         <div class="form-group">
             <label for="grupo"><b>Grupo *:</b></label>
             <select name="grupo" id="grupo" class="form-control form-control-sm">
-                <option disabled selected value="">Sin Grupo</option>
+                <option value="0">Sin Grupo</option>
                 @foreach ($grupos as $grupo)
                     <option value="{{$grupo->id}}">{{$grupo->nombre}}</option>
                 @endforeach
@@ -17,7 +17,7 @@
         <div class="form-group">
             <label for="tipo_licencia"><b>Tipo Licencia *:</b></label>
             <select name="tipo_licencia" id="tipo_licencia" class="form-control form-control-sm">
-                <option disabled selected value="">Selecciona un licencia</option>
+                <option value="">Selecciona un licencia</option>
                 <option value="Inbound"  {{ ( $empresa->Config_Empresas->agentes_entrada != 0 ) ? '' : 'style=display:none' }}>Inbound</option>
                 <option value="Outbound" {{ ( $empresa->Config_Empresas->agentes_salida != 0 ) ? '' : 'style=display:none' }}>Outbound</option>
                 <option value="Full"     {{ ( $empresa->Config_Empresas->agentes_dual != 0 ) ? '' : 'style=display:none' }}>Full</option>
@@ -40,20 +40,29 @@
             <input type="text" class="form-control form-control-sm" name="contrasena" id="contrasena" placeholder="Contraseña">
         </div>
         <div class="form-group">
+            <label for="extension"><b>Extensión *:</b></label>
+            <select name="extension" id="extension" class="form-control form-control-sm">
+                <option value="">Selecciona un extensión</option>
+                @foreach ($cat_extensiones as $extension)
+                    <option value="{{$extension->extension}}">{{$extension->extension}}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="form-group">
             <label for="canal"><b>Canal *:</b></label>
-            <select name="canal" id="canal" class="form-control form-control-sm">
-                <option value="">Selecciona un canal</option>
+            <select name="canal" id="canal" class="form-control form-control-sm canal-perfil">
+                <option value="0">Sin canal</option>
                 @foreach ($canales as $canal)
                     <option value="{{$canal->id}}">{{$canal->Cat_Tipo_Canales->nombre}}</option>
                 @endforeach
             </select>
         </div>
         <div class="form-group">
-            <label for="extension"><b>Extensión *:</b></label>
-            <select name="extension" id="extension" class="form-control form-control-sm">
-                <option value="">Selecciona un extensión</option>
-                @foreach ($cat_extensiones as $extension)
-                    <option value="{{$extension->extension}}">{{$extension->extension}}</option>
+            <label for="perfil"><b>Perfil de marcación *:</b></label>
+            <select name="perfil" id="perfil" class="form-control form-control-sm canal-perfil">
+                <option value="0">Sin perfil de marcación</option>
+                @foreach ($perfiles as $perfil)
+                    <option value="{{$perfil->id}}">{{$perfil->nombre}}</option>
                 @endforeach
             </select>
         </div>
@@ -68,7 +77,7 @@
         <fieldset>
             <legend><b>Opciones</b></legend>
             <div class="form-group">
-                <label for="grabacion"><b>Grabacion</b></label>
+                <label for="grabacion"><b>Grabación</b></label>
             </div>
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="mix_monitor" id="mix_monitor" value="1" checked>
@@ -92,7 +101,7 @@
             </div>
             <div class="form-group">
                 <br>
-                <label for="envio_sms"><b>Envio SMS</b></label>
+                <label for="envio_sms"><b>Envió SMS</b></label>
             </div>
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="envio_sms" id="envio_sms" value="1">

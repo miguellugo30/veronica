@@ -134,8 +134,8 @@ $(function () {
     $('#tituloModal').html('Nuevo Audio');
     $('#action').removeClass('deleteAudio');
     $('#action').addClass('saveAudio');
-      let url = currentURL + "/Audios/create";
-      $.get(url, function(data, textStatus, jqXHR) {
+     let url = currentURL + "/Audios/create";
+     $.get(url, function(data, textStatus, jqXHR) {
         $('#modal').modal('show');
         $("#modal-body").html(data);
     });
@@ -505,10 +505,10 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_recording\menu.js */"./resources/js/module_recording/menu.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_recording\Grabaciones.js */"./resources/js/module_recording/Grabaciones.js");
-__webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_recording\Inbound.js */"./resources/js/module_recording/Inbound.js");
-module.exports = __webpack_require__(/*! C:\wamp64\www\Nimbus\resources\js\module_recording\Almacenamiento.js */"./resources/js/module_recording/Almacenamiento.js");
+__webpack_require__(/*! /var/www/html/repo-v2/Nimbus/resources/js/module_recording/menu.js */"./resources/js/module_recording/menu.js");
+__webpack_require__(/*! /var/www/html/repo-v2/Nimbus/resources/js/module_recording/Grabaciones.js */"./resources/js/module_recording/Grabaciones.js");
+__webpack_require__(/*! /var/www/html/repo-v2/Nimbus/resources/js/module_recording/Inbound.js */"./resources/js/module_recording/Inbound.js");
+module.exports = __webpack_require__(/*! /var/www/html/repo-v2/Nimbus/resources/js/module_recording/Almacenamiento.js */"./resources/js/module_recording/Almacenamiento.js");
 
 
 /***/ })

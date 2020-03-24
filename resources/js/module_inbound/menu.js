@@ -38,6 +38,9 @@ $(function() {
         } else if (id == 'sub-42') {
             url = currentURL + '/ReporteCalificaciones';
             table = '#tableDesgloseLlamadas';
+        } else if (id == 'sub-43') {
+            url = currentURL + '/ReporteLlamadasAgentes';
+            table = '#tableDesgloseLlamadas';
         } else if (id == 'cat-26') {
 
             url = currentURL + '/real_time/';
