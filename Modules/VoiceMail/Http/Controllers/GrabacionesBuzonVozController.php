@@ -50,22 +50,8 @@ class GrabacionesBuzonVozController extends Controller
         $user = Auth::user();
         $empresa_id = $user->id_cliente;
 
-        $Grabaciones = DB::table('Grabaciones_buzon_voz')
-                            ->join( 'Cdr_call_center_detalles', 'Cdr_call_center_detalles.uniqueid', '=', 'Grabaciones_buzon_voz.uniqueid' )
-                            ->select(
-                                        'Grabaciones_buzon_voz.id',
-                                        'Grabaciones_buzon_voz.uniqueid',
-                                        'Grabaciones_buzon_voz.fecha_inicio',
-                                        'Grabaciones_buzon_voz.fecha_fin',
-                                        'Grabaciones_buzon_voz.callerid',
-                                        'Grabaciones_buzon_voz.nombre_archivo',
-                                        'Grabaciones_buzon_voz.estado',
-                                        DB::raw("IF(Cdr_call_center_detalles.aplicacion='Buzon_Voz', (SELECT Buzon_Voz.nombre FROM Buzon_Voz WHERE Buzon_Voz.id = Cdr_call_center_detalles.id_aplicacion),'') AS buzon")
-                                    )
-                            ->where('Grabaciones_buzon_voz.Empresas_id', $empresa_id)
-                            ->whereBetween( 'Grabaciones_buzon_voz.fecha_inicio', [ $request->fechaIni, $request->fechaFin ] )
-                            ->whereIn( 'Grabaciones_buzon_voz.estado', [1,2] )
-                            ->get();
+        $Grabaciones = DB::select( "call SP_Buzon_de_voz(".$empresa_id.",'$request->fechaIni','$request->fechaFin')");
+
 
         return view('voicemail::grabacionesVoiceMail.show',compact('Grabaciones'));
     }
@@ -85,6 +71,7 @@ class GrabacionesBuzonVozController extends Controller
         /**
          * Recuperamos la grabación ha enviar
          */
+        /*
         $grabacion = DB::table('Grabaciones_buzon_voz')
                             ->join( 'Cdr_call_center_detalles', 'Cdr_call_center_detalles.uniqueid', '=', 'Grabaciones_buzon_voz.uniqueid' )
                             ->select(
@@ -97,6 +84,9 @@ class GrabacionesBuzonVozController extends Controller
                             ->where('Grabaciones_buzon_voz.id', $id)
                             ->where('Cdr_call_center_detalles.aplicacion', 'Buzon_Voz')
                             ->first();
+        */
+        $grabacion = DB::select( "call SP_Parametros_buzon(".$id.")");
+
         /**
          * Inicializamos la conexión al WS
          */
@@ -108,7 +98,7 @@ class GrabacionesBuzonVozController extends Controller
          */
         $result =  $cliente->call('BajarGrabacionLlamada', array(
                                                                         'empresas_id' => $empresa_id,
-                                                                        'id_grabacion' => $grabacion->nombre_archivo,
+                                                                        'id_grabacion' => $id,
                                                                         'tipo' => "Voicemail"
                                                                     ));
 

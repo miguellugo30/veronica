@@ -273,7 +273,6 @@ class CampanasController extends Controller
              * Obtenemos el ultimo id insertado de las campañas
              */
             $Campana_id = Campanas::orderBy('id','DESC')->pluck('id')->first();
-
             /**
              * Iteramos los id's de los agentes para posteriormente sean creados en la tabla Miembros_Campana
              */
@@ -286,16 +285,8 @@ class CampanasController extends Controller
                     ]
                 );
             }
-
-        $modalidad = DB::table('Miembros_Campanas')
-                    ->join( 'Campanas', 'Campanas.id', '=', 'Miembros_Campanas.Campanas_id' )
-                    ->select(
-                                'Miembros_Campanas.Agentes_id',
-                                'Campanas.modalidad_logue'
-                            )
-                    ->whereIn('Miembros_Campanas.Agentes_id', $request->idAgente)
-                    ->groupBy('Miembros_Campanas.Agentes_id', 'Campanas.modalidad_logue')
-                    ->get();
+        $idAgente = implode(",", $request->idAgente);
+        $modalidad = DB::select( "call SP_Modalidad_logeos('$idAgente')");
 
         return $modalidad;
     }

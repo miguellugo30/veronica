@@ -172,22 +172,7 @@ class RealTimeController extends Controller
         /**
          * Obtenemos el historico de llamdas de cliente
          */
-        $historico = DB::table('Cdr_call_center')
-                    ->join( 'Cdr_call_center_detalles', 'Cdr_call_center.uniqueid', '=', 'Cdr_call_center_detalles.uniqueid' )
-                    ->join( 'Cdr_Asignacion_Agente', 'Cdr_call_center_detalles.uniqueid', '=', 'Cdr_Asignacion_Agente.uniqueid' )
-                    ->join( 'Agentes', 'Cdr_Asignacion_Agente.Agentes_id', '=', 'Agentes.id' )
-                    ->select(
-                                'Cdr_call_center.uniqueid',
-                                'Cdr_call_center.callerid',
-                                'Cdr_call_center.calledid',
-                                'Cdr_call_center.fecha_inicio',
-                                'Cdr_call_center_detalles.aplicacion',
-                                'Cdr_call_center_detalles.id_aplicacion',
-                                'Agentes.nombre',
-                                DB::raw("IF(Cdr_call_center_detalles.aplicacion='Campana','', (SELECT Campanas.nombre FROM Campanas WHERE Campanas.id = Cdr_call_center_detalles.id_aplicacion)) AS campana")
-                            )
-                    ->where('Cdr_call_center.callerid', $callerid)
-                    ->whereDate('Cdr_call_center.fecha_inicio', DB::raw('curdate()'))->get();
+        $historico = DB::select( "call SP_Historial_llamadas_clientes('$callerid')");
 
        return view('agentes::show', compact( 'campana', 'calledid', 'speech', 'historico', 'grupo', 'canal', 'uniqueid', 'speech', 'campos', 'bienvenida' ));
     }

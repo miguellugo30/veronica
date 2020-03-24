@@ -104,21 +104,7 @@ class EventosAgenteController extends Controller
         /**
          * Obtenenos el historico de llamadas del agente en el dia
          */
-        $historico = DB::table('Cdr_call_center')
-                    ->join( 'Cdr_call_center_detalles', 'Cdr_call_center.uniqueid', '=', 'Cdr_call_center_detalles.uniqueid' )
-                    ->join( 'Cdr_Asignacion_Agente', 'Cdr_call_center_detalles.uniqueid', '=', 'Cdr_Asignacion_Agente.uniqueid' )
-                    ->join( 'Agentes', 'Cdr_Asignacion_Agente.Agentes_id', '=', 'Agentes.id' )
-                    ->select(
-                                'Cdr_call_center.uniqueid',
-                                'Cdr_call_center.tipo',
-                                'Cdr_call_center.calledid',
-                                'Cdr_call_center.fecha_inicio',
-                                'Cdr_call_center.fecha_fin',
-                                DB::raw("IF(Cdr_call_center_detalles.aplicacion='Campana','', (SELECT Campanas.nombre FROM Campanas WHERE Campanas.id = Cdr_call_center_detalles.id_aplicacion)) AS campana")
-                            )
-                    ->where('Cdr_Asignacion_Agente.Agentes_id', $request->id_agente)
-                    ->whereDate('Cdr_call_center.fecha_inicio', DB::raw('curdate()'))
-                    ->orderByRaw( 'Cdr_call_center.fecha_inicio, Cdr_call_center.tipo DESC' )->get();
+        $historico = DB::select( "call SP_Pantalla_agentes($request->id_agente)");
 
         return $historico;
     }
@@ -130,21 +116,7 @@ class EventosAgenteController extends Controller
         /**
          * Obtenenos el historico de llamadas abandonadas del agente en el dia
          */
-        $historico = DB::table('Cdr_call_center')
-                    ->join( 'Cdr_call_center_detalles', 'Cdr_call_center.uniqueid', '=', 'Cdr_call_center_detalles.uniqueid' )
-                    ->select(
-                                'Cdr_call_center.uniqueid',
-                                'Cdr_call_center.tipo',
-                                'Cdr_call_center.calledid',
-                                'Cdr_call_center.fecha_inicio',
-                                'Cdr_call_center.fecha_fin',
-                                'Cdr_call_center.hangup',
-                                DB::raw("IF(Cdr_call_center_detalles.aplicacion='Campana','', (SELECT Campanas.nombre FROM Campanas WHERE Campanas.id = Cdr_call_center_detalles.id_aplicacion)) AS campana")
-                            )
-                    ->where('Cdr_call_center.hangup', 'ABANDON')
-                    ->where('Cdr_call_center_detalles.aplicacion', 'Campanas')
-                    ->whereIn('Cdr_call_center_detalles.id_aplicacion', [ DB::raw('select Miembros_Campanas.queue_name from Miembros_Campanas where membername =' .$request->id_agente) ] )
-                    ->whereDate('Cdr_call_center.fecha_inicio', DB::raw('curdate()'))->get();
+        $historico = DB::select( "call SP_Llamadas_abandonadas_agente($request->id_agente)");
 
         return $historico;
     }
