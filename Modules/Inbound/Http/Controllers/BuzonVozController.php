@@ -111,6 +111,7 @@ class BuzonVozController extends Controller
             ->update([
                 'nombre' => $request->nombre,
                 'tiempo_maximo'   => $request->tiempo_maximo,
+                'terminacion'   => $request->terminacion,
                 'correos' => $request->correos,
                 'Audios_Empresa_id' => $request->Audios_Empresa_id,
                 'Empresas_id' => $request->Empresas_id

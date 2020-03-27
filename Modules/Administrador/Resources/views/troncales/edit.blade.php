@@ -27,7 +27,7 @@
         <select name="mediaserver" id="mediaserver" class="form-control form-control-sm">
             <option value="" >Selecciona un Media Server</option>
             @foreach( $medias as $ms )
-                <option value="{{ $ms->ip_pbx }}">{{ $ms->ip_pbx }} || {{ $ms->media_server }}</option>
+                <option value="{{ $ms->ip_pbx }}" {{ $ms->ip_pbx == $troncales->host ? 'selected="selected"' : '' }}>{{ $ms->ip_pbx }} || {{ $ms->media_server }}</option>
             @endforeach
         </select>
     </div>
