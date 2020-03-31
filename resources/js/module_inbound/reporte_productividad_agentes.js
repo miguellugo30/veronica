@@ -4,9 +4,9 @@ $(function() {
     /**
      * Evento para el menu de sub categorias y mostrar la vista
      */
-    $(document).on("click", ".generarReporteLlamadasAgentes", function(e) {
+    $(document).on("click", ".generarReporteProductividadAgentes", function(e) {
 
-        let url = currentURL + '/ReporteLlamadasAgentes';
+        let url = currentURL + '/ReporteProductividadAgentes';
         let fecha_inicio = $("#fecha-inicio").val();
         let hora_inicio = $("#hora_inicio").val();
         let min_inicio = $("#min_inicio").val();
@@ -20,8 +20,18 @@ $(function() {
 
         let agente = $("#agente").val();
         let grupo = $("#grupo").val();
-        let campana = $("#campana").val();
         let _token = $("input[name=_token]").val();
+        let arr = {};
+
+        $('input[type=checkbox]').each(function() {
+
+            if (this.checked) {
+                arr[this.id] = 1;
+            } else {
+                arr[this.id] = 0;
+            }
+
+        });
 
         if (agente == 0) {
             agente = 'NULL';
@@ -29,10 +39,6 @@ $(function() {
         if (grupo == 0) {
             grupo = 'NULL';
         }
-        if (campana == 0) {
-            campana = 'NULL';
-        }
-
         /**
          * Esto contrae el body
          */
@@ -49,12 +55,19 @@ $(function() {
                     dateFin: dateFin,
                     agente: agente,
                     grupo: grupo,
-                    campana: campana,
                     _token: _token
                 }
             })
             .done(function(data) {
+
                 $('.viewReporte').html(data);
+
+                for (var id in arr) {
+
+                    if (arr[id] == 0) {
+                        $("." + id).css('display', 'none')
+                    }
+                }
             });
     });
     /**
@@ -75,6 +88,30 @@ $(function() {
             $("#agente").prop('disabled', false);
         }
 
+    });
+    /**
+     * Evento para deshabilitar todos los checkbox, de las llamadas
+     */
+    $(document).on('change', '#llamadas', function(event) {
+        if ($(this).is(':checked')) {
+            // Hacer algo si el checkbox ha sido seleccionado
+            $(".checkbox-llamadas").prop("checked", true);
+        } else {
+            // Hacer algo si el checkbox ha sido deseleccionado
+            $(".checkbox-llamadas").prop("checked", false);
+        }
+    });
+    /**
+     * Evento para deshabilitar todos los checkbox de tiempos
+     */
+    $(document).on('change', '#tiempos', function(event) {
+        if ($(this).is(':checked')) {
+            // Hacer algo si el checkbox ha sido seleccionado
+            $(".checkbox-tiempos").prop("checked", true);
+        } else {
+            // Hacer algo si el checkbox ha sido deseleccionado
+            $(".checkbox-tiempos").prop("checked", false);
+        }
     });
     /**
      * Evento para mostrar el formulario de crear un nuevo reporte

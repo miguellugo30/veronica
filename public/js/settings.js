@@ -1277,6 +1277,7 @@ $(function () {
   $(document).on('click', '#tableBaseDatos tbody tr', function (event) {
     event.preventDefault();
     var id = $(this).data("id");
+    $(".dropleft").slideDown();
     $(".editBaseDatos").slideDown();
     $(".deleteBaseDatos").slideDown();
     $("#idSeleccionado").val(id);
@@ -1303,6 +1304,32 @@ $(function () {
           keyboard: false
         });
         $("#modal-body").html(result);
+      }
+    });
+  });
+  /**
+   * Evento para ver una base de datos
+   */
+
+  $(document).on('click', '.viewBaseDatos', function (event) {
+    event.preventDefault();
+    var id = $("#idSeleccionado").val();
+    $('#tituloModalRegistros').html('Visualizar Base de datos');
+    var url = currentURL + '/BaseDatos/' + id;
+    $('#action').addClass('updateBaseDatos');
+    $('#action').removeClass('saveBaseDatos');
+    $.ajax({
+      url: url,
+      type: 'GET',
+      success: function success(result) {
+        $('#modalRegistros').modal({
+          backdrop: 'static',
+          keyboard: false
+        });
+        $("#modal-body-registros").html(result);
+        $('#registroBaseDatos').DataTable({
+          "lengthChange": true
+        });
       }
     });
   });

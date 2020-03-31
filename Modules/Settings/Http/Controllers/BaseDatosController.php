@@ -122,7 +122,24 @@ class BaseDatosController extends Controller
      */
     public function show($id)
     {
-        return view('settings::show');
+        /**
+         * Obtenemos la base de datos a editar
+         */
+        $baseDatos = Bases_Datos::find($id);
+        /**
+         * Obtenemos los datos de la base de datos seleccionada
+         **/
+        $registros = DB::select( "call SP_Muestra_Base_Datos(".$baseDatos->fk_cat_plantilla_id.",".$id.")");
+        /**
+         * Obtenemos las plantillas que esta asociada a la base de datos
+         */
+        $plantilla = Cat_Plantilla::where( 'id', $baseDatos->fk_cat_plantilla_id )->with('Plantillas_campos')->first();
+        /**
+         * Obtenemos todos los campos que estan asignados a la empresa
+         */
+        $campos = $this->campos( $plantilla, $this->campos_plantillas() );
+
+        return view('settings::BaseDatos.show', compact('plantilla', 'registros', 'campos'));
     }
 
     /**
@@ -265,7 +282,7 @@ class BaseDatosController extends Controller
 
         return $dataArray;
     }
-        /**
+    /**
      * Funcion para obtener los campos que se tiene
      * asigando a la empresa
      */
@@ -281,5 +298,24 @@ class BaseDatosController extends Controller
                     ->get();
 
         return $campos;
+    }
+    /**
+     * Funcion para obtener los campos que se usan en la plantilla
+     */
+    public function campos( $plantilla, $campos )
+    {
+        $data = [];
+
+        foreach ($plantilla->Plantillas_campos->sortBy('orden') as $campo)
+        {
+            foreach ($campos as $v)
+            {
+                if ($v->id == $campo->fk_campos_plantilla_empresa_fk_cat_campos_plantilla_id)
+                {
+                     array_push($data, $v->nombre);
+                }
+            }
+        }
+        return $data;
     }
 }

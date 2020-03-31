@@ -41,6 +41,9 @@ $(function() {
         } else if (id == 'sub-43') {
             url = currentURL + '/ReporteLlamadasAgentes';
             table = '#tableDesgloseLlamadas';
+        } else if (id == 'sub-44') {
+            url = currentURL + '/ReporteProductividadAgentes';
+            table = '#tableDesgloseLlamadas';
         } else if (id == 'cat-26') {
 
             url = currentURL + '/real_time/';
@@ -65,11 +68,8 @@ $(function() {
 
         if (id != 26) {
 
-            console.log(url)
-
             stop(timerListAgente);
             $.get(url, function(data, textStatus, jqXHR) {
-                console.log(data);
                 $(".viewResult").html(data);
                 $('.viewResult' + table).DataTable({
                     "lengthChange": true
