@@ -7,6 +7,7 @@ use nusoap_client;
 use Illuminate\Routing\Controller;
 use Modules\Agentes\Http\Controllers\EventosAmiController;
 use Modules\Agentes\Http\Controllers\LogRegistroEventosController;
+use Nimbus\Http\Controllers\ZonaHorariaController;
 
 use Nimbus\Miembros_Campana;
 use Nimbus\Agentes;
@@ -31,12 +32,15 @@ class EventosAgenteController extends Controller
         /**
          * Pausamos al agente dentro del MS
          */
-        $pausa = EventosAmiController::despausar_agente( $cdr->canal, 'pause', $empresas_id );
-        //dd( $pausa );
+        //$pausa = EventosAmiController::despausar_agente( $cdr->canal, 'pause', $empresas_id );
         /**
-         * Ponemos en estado no disponible al agente
+         * Obtenemos la zona horaria de la empresa
          */
-        Agentes::where( 'id', $agente )->update(['Cat_Estado_Agente_id' => 3]);
+        $fecha = ZonaHorariaController::zona_horaria( $empresas_id );
+        /**
+         * Ponemos al usuario en estado 1 = No Disponible
+         */
+        DB::select("CALL SP_Actualiza_Estado_Agentes(".$agente.",3,0,'$fecha')");
     }
     /**
      * Funcion para poner como no disponible a un agente
@@ -51,8 +55,6 @@ class EventosAgenteController extends Controller
          * Pausamos al agente dentro del MS
          */
         $pausa = EventosAmiController::despausar_agente( $cdr->canal, 'pause', $empresas_id );
-        //dd( $pausa );
-
     }
     /**
      * Funcion para poner como  disponible a un agente
@@ -67,10 +69,14 @@ class EventosAgenteController extends Controller
          * Despausamos al agente dentro de la campana en BD
          */
         Miembros_Campana::where( 'membername', $agente )->update(['Paused' => 0]);
+         /**
+         * Obtenemos la zona horaria de la empresa
+         */
+        $fecha = ZonaHorariaController::zona_horaria( $empresas_id );
         /**
          * Ponemos en estado disponible al agente
          */
-        Agentes::where( 'id', $agente )->update(['Cat_Estado_Agente_id' => 2]);
+        DB::select("CALL SP_Actualiza_Estado_Agentes(".$agente.",2,0,'$fecha')");
         /**
          * Obtenemos el ultimo canal del agente
          */
@@ -78,8 +84,7 @@ class EventosAgenteController extends Controller
         /**
          * Despausamos al agente dentro del MS
          */
-        EventosAmiController::despausar_agente( $cdr->canal, 'unpause', $empresas_id );
-
+        //EventosAmiController::despausar_agente( $cdr->canal, 'unpause', $empresas_id );
     }
     /**
      * Funcion para poner como  disponible a un agente
@@ -125,6 +130,8 @@ class EventosAgenteController extends Controller
      */
     public static function logeoExtension( $agente )
     {
+        $fecha = ZonaHorariaController::zona_horaria_agente( $agente->id );
+
         $pbx = Empresas::empresa($agente->Empresas_id)->active()->with('Config_Empresas')->with('Config_Empresas.ms')->get()->first();
         $wsdl = 'http://'.$pbx->Config_Empresas->ms->ip_pbx.'/ws-ms/index.php';
         $client =  new  nusoap_client( $wsdl );
@@ -143,14 +150,14 @@ class EventosAgenteController extends Controller
             /**
              * Ponemos en estado disponible al agente
              */
-            Agentes::where( 'id', $agente->id )->update(['Cat_Estado_Agente_id' => 2]);
+            DB::select("CALL SP_Actualiza_Estado_Agentes(".$agente->id.",2,0,'$fecha')");
         }
         else
         {
             /**
              * Ponemos en estado logueado al agente
              */
-            Agentes::where( 'id', $agente->id )->update(['Cat_Estado_Agente_id' => 11]);
+            DB::select("CALL SP_Actualiza_Estado_Agentes(".$agente->id.",11,0,'$fecha')");
         }
 
         return json_encode($result);

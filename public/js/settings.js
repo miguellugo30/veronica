@@ -3148,21 +3148,21 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /var/www/html/repo-v2/Nimbus/resources/js/module_settings/menu.js */"./resources/js/module_settings/menu.js");
-__webpack_require__(/*! /var/www/html/repo-v2/Nimbus/resources/js/module_settings/formularios.js */"./resources/js/module_settings/formularios.js");
-__webpack_require__(/*! /var/www/html/repo-v2/Nimbus/resources/js/module_settings/sub_formularios.js */"./resources/js/module_settings/sub_formularios.js");
-__webpack_require__(/*! /var/www/html/repo-v2/Nimbus/resources/js/module_settings/acciones_formularios.js */"./resources/js/module_settings/acciones_formularios.js");
-__webpack_require__(/*! /var/www/html/repo-v2/Nimbus/resources/js/module_settings/audios.js */"./resources/js/module_settings/audios.js");
-__webpack_require__(/*! /var/www/html/repo-v2/Nimbus/resources/js/module_settings/calificaciones.js */"./resources/js/module_settings/calificaciones.js");
-__webpack_require__(/*! /var/www/html/repo-v2/Nimbus/resources/js/module_settings/agentes.js */"./resources/js/module_settings/agentes.js");
-__webpack_require__(/*! /var/www/html/repo-v2/Nimbus/resources/js/module_settings/grupos.js */"./resources/js/module_settings/grupos.js");
-__webpack_require__(/*! /var/www/html/repo-v2/Nimbus/resources/js/module_settings/speech.js */"./resources/js/module_settings/speech.js");
-__webpack_require__(/*! /var/www/html/repo-v2/Nimbus/resources/js/module_settings/acciones_speech.js */"./resources/js/module_settings/acciones_speech.js");
-__webpack_require__(/*! /var/www/html/repo-v2/Nimbus/resources/js/module_settings/eventos_agentes.js */"./resources/js/module_settings/eventos_agentes.js");
-__webpack_require__(/*! /var/www/html/repo-v2/Nimbus/resources/js/module_settings/plantillas.js */"./resources/js/module_settings/plantillas.js");
-__webpack_require__(/*! /var/www/html/repo-v2/Nimbus/resources/js/module_settings/Prefijos_Marcacion.js */"./resources/js/module_settings/Prefijos_Marcacion.js");
-__webpack_require__(/*! /var/www/html/repo-v2/Nimbus/resources/js/module_settings/baseDatos.js */"./resources/js/module_settings/baseDatos.js");
-module.exports = __webpack_require__(/*! /var/www/html/repo-v2/Nimbus/resources/js/module_settings/Perfil_Marcacion.js */"./resources/js/module_settings/Perfil_Marcacion.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Nimbus\resources\js\module_settings\menu.js */"./resources/js/module_settings/menu.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Nimbus\resources\js\module_settings\formularios.js */"./resources/js/module_settings/formularios.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Nimbus\resources\js\module_settings\sub_formularios.js */"./resources/js/module_settings/sub_formularios.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Nimbus\resources\js\module_settings\acciones_formularios.js */"./resources/js/module_settings/acciones_formularios.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Nimbus\resources\js\module_settings\audios.js */"./resources/js/module_settings/audios.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Nimbus\resources\js\module_settings\calificaciones.js */"./resources/js/module_settings/calificaciones.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Nimbus\resources\js\module_settings\agentes.js */"./resources/js/module_settings/agentes.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Nimbus\resources\js\module_settings\grupos.js */"./resources/js/module_settings/grupos.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Nimbus\resources\js\module_settings\speech.js */"./resources/js/module_settings/speech.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Nimbus\resources\js\module_settings\acciones_speech.js */"./resources/js/module_settings/acciones_speech.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Nimbus\resources\js\module_settings\eventos_agentes.js */"./resources/js/module_settings/eventos_agentes.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Nimbus\resources\js\module_settings\plantillas.js */"./resources/js/module_settings/plantillas.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Nimbus\resources\js\module_settings\Prefijos_Marcacion.js */"./resources/js/module_settings/Prefijos_Marcacion.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Nimbus\resources\js\module_settings\baseDatos.js */"./resources/js/module_settings/baseDatos.js");
+module.exports = __webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Nimbus\resources\js\module_settings\Perfil_Marcacion.js */"./resources/js/module_settings/Perfil_Marcacion.js");
 
 
 /***/ })

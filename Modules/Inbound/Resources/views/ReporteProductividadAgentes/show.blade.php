@@ -13,7 +13,7 @@
                             <th class="contestadas">Contestadas</th>
                             <th class="omitidas">Omitidas</th>
                             @foreach ($estados as $item => $value )
-                                <th class="{{ \Str::kebab( \Str::lower( $item ) ) }}" colspan='3'>{{ $item }}</th>
+                                <th class="{{ \Str::kebab( \Str::lower( $item ) ) }}" colspan='2'>{{ $item }}</th>
                             @endforeach
                         </tr>
                         <tr class="text-center">
@@ -22,7 +22,7 @@
                             <th class="contestadas">#</th>
                             <th class="omitidas">#</th>
                             @foreach ($estados as $item => $value )
-                                <th class="{{ \Str::kebab( \Str::lower( $item ) ) }}" >Eventos</th>
+                                <!--th class="{{-- \Str::kebab( \Str::lower( $item ) ) --}}" >Eventos</th-->
                                 <th class="{{ \Str::kebab( \Str::lower( $item ) ) }}" >Promedio</th>
                                 <th class="{{ \Str::kebab( \Str::lower( $item ) ) }}" >Total</th>
                             @endforeach
@@ -57,11 +57,11 @@
                                     @endfor
 
                                     @if ( $bandera )
-                                        <td class="{{ \Str::kebab( \Str::lower( $item ) ) }}" >{{ $estado[$j]['Eventos'] }}</td>
+                                        <!--td class="{{-- \Str::kebab( \Str::lower( $item ) ) --}}" >{{-- $estado[$j]['Eventos'] --}}</td-->
                                         <td class="{{ \Str::kebab( \Str::lower( $item ) ) }}" >{{ $estado[$j]['Promedio'] }}</td>
                                         <td class="{{ \Str::kebab( \Str::lower( $item ) ) }}" >{{ $estado[$j]['Total'] }}</td>
                                     @else
-                                        <td class="{{ \Str::kebab( \Str::lower( $item ) ) }}" >0</td>
+                                        <!--td class="{{-- \Str::kebab( \Str::lower( $item ) ) --}}" >0</td-->
                                         <td class="{{ \Str::kebab( \Str::lower( $item ) ) }}" >00:00:00</td>
                                         <td class="{{ \Str::kebab( \Str::lower( $item ) ) }}" >00:00:00</td>
                                     @endif

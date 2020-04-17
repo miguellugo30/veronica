@@ -93,31 +93,33 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
+/*
 var validNavigation = false;
 
-window.onbeforeunload = function () {
-  if (!validNavigation) {
-    var id_agente = $('#id_agente').val();
+window.onbeforeunload = function() {
+    if (!validNavigation) {
 
-    var _token = $("input[name=_token]").val();
+        var id_agente = $('#id_agente').val();
+        let _token = $("input[name=_token]").val();
+        let id_evento = $('#id_evento').val();
+        let cierre = 1;
 
-    var id_evento = $('#id_evento').val();
-    var cierre = 1;
-    $.ajax({
-      type: 'POST',
-      async: false,
-      url: 'logout/agentes',
-      data: {
-        id_agente: id_agente,
-        id_evento: id_evento,
-        cierre: cierre,
-        _token: _token
-      },
-      success: function success(data) {}
-    });
-  }
-};
+        $.ajax({
+            type: 'POST',
+            async: false,
+            url: 'logout/agentes',
+            data: {
+                id_agente: id_agente,
+                id_evento: id_evento,
+                cierre: cierre,
+                _token: _token
+            },
+            success: function(data) {}
+        });
 
+    }
+}
+*/
 function my_onkeydown_handler(event) {
   switch (event.keyCode) {
     case 116:
@@ -186,6 +188,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Podrías separar las funciones de PHP en un fichero a parte
         data: {}
       }).done(function (msg) {
+        console.log(msg);
         var obj = $.parseJSON(msg);
 
         if (obj['status'] == 1) {
@@ -418,8 +421,8 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /var/www/html/repo-v2/Nimbus/resources/js/module_agentes/agentes.js */"./resources/js/module_agentes/agentes.js");
-module.exports = __webpack_require__(/*! /var/www/html/repo-v2/Nimbus/resources/js/module_agentes/eventosPantallaAgente.js */"./resources/js/module_agentes/eventosPantallaAgente.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Nimbus\resources\js\module_agentes\agentes.js */"./resources/js/module_agentes/agentes.js");
+module.exports = __webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Nimbus\resources\js\module_agentes\eventosPantallaAgente.js */"./resources/js/module_agentes/eventosPantallaAgente.js");
 
 
 /***/ })
