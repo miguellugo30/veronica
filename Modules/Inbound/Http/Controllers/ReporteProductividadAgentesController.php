@@ -72,6 +72,7 @@ class ReporteProductividadAgentesController extends Controller
         $llamadas = DB::select("CALL SP_Productividad_Agentes(".$request->agente.",".$request->grupo.",'$request->dateInicio','$request->dateFin')");
         //dd( $llamadas );
         $data = $this->procesarInfo($llamadas);
+        //dd( $data );
 
         $estados = array(
                             'Tiempo Disponible' => 2,
@@ -157,14 +158,16 @@ class ReporteProductividadAgentesController extends Controller
                 $idAgente = $v['fk_agentes_id'];
             }
 
-            if ( $j ==  ( count( $data ) -1 ) ) {
+            if ( $j ==  ( count( $data ) -1 ) )
+            {
                 array_push( $d, $w );
             }
         }
 
         for ($i=0; $i < count( $d ); $i++)
         {
-            for ($j=0; $j < count( $d[$i] ); $j++) {
+            for ($j=0; $j < count( $d[$i] ); $j++)
+            {
 
                 $v = $d[$i][$j];
 
@@ -173,11 +176,23 @@ class ReporteProductividadAgentesController extends Controller
                             'nombre' => $v['nombre'],
                             'Recibidas' => $v['Recibidas'],
                             'Contestadas' => $v['Contestadas'],
-                            'omitidas' => $v['omitidas']
+                            'omitidas' => $v['omitidas'],
                         );
 
+                if ( $j == 0 )
+                {
+                    $w = array(
+                            'Estadoid' => 12,
+                            'Estado' => 'Tiempo Definiendo Llamada',
+                            'Eventos' => 0,
+                            'Promedio' => $v['Promedio_definiendo_llamada'],
+                            'Total' => $v['Total_definiendo_llamada']
+                    );
+                    array_push( $estados, $w );
+                }
+
                 $y = array(
-                            'Estadoid' => $v['Estadoid'],
+                            'Estadoid' => (int)$v['Estadoid'],
                             'Estado' => $v['Estado'],
                             'Eventos' => $v['Eventos'],
                             'Promedio' => $v['Promedio'],

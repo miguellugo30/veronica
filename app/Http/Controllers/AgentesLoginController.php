@@ -7,11 +7,14 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use Modules\Agentes\Http\Controllers\LogRegistroEventosController;
 use Modules\Agentes\Http\Controllers\EventosAmiController;
+use Nimbus\Http\Controllers\ZonaHorariaController;
+use Carbon\Carbon;
 use DB;
 
 use Nimbus\Agentes;
 use Nimbus\Miembros_Campana;
 use Nimbus\Crd_Asignacion_Agente;
+use Nimbus\HistorialEventosAgentes;
 
 class AgentesLoginController extends Controller
 {
@@ -26,6 +29,7 @@ class AgentesLoginController extends Controller
      * @var string
      */
     protected $redirectTo = '/agentes';
+    private $agente;
 
     /**
      * Create a new controller instance.
@@ -35,31 +39,44 @@ class AgentesLoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
-    }
+        /**
+         * Obtenemos la fecha, formateada, con la zona horaria
+         */
+        $this->middleware(function ($request, $next) {
+            $this->agente = auth()->guard('agentes')->user();
 
+            return $next($request);
+        });
+    }
+    /**
+     * Funcion para mostrar el formulario de inicio de sesion para el agente
+     */
     public function showAgentesLoginForm()
     {
         return view('vendor.adminlte.login_agente', ['url' => 'agentes'] );
     }
-
+    /**
+     * Funcion para generar el inicio de sesion
+     * Valida si no existe ya una sesion
+     * Si no se manda la pantalla para confirmar la extension
+     */
     public function agentesLogin(Request $request)
     {
-        if (auth()->guard('agentes')->attempt(['email' => $request->email, 'password' => $request->password])) {
-
+        if (auth()->guard('agentes')->attempt(['email' => $request->email, 'password' => $request->password]))
+        {
+            //$fecha = $this->zona_horaria( auth()->guard('agentes')->id() );
+            $fecha = ZonaHorariaController::zona_horaria_agente( auth()->guard('agentes')->id() );
+            $v = DB::select("CALL SP_Inserta_Estado_Agentes(".auth()->guard('agentes')->id().",'$fecha')");
             /**
-             * Validamos que el usuario no este ya logueado
+             * Si no hay sesion activa, se manda a pantalla para confirmar extension
+             * Si no se regresa con errores de inicio de sesion
              */
-            $logueado = $this->Valida_Agente( auth()->guard('agentes')->id() );
-
-            if ( $logueado->isEmpty() ) {
-                /**
-                 * Ponemos al usuario en estado 11 = Logueado
-                 */
-                $this->Actualiza_Estado_Agente( auth()->guard('agentes')->id(), 11 );
-
-                $agente = auth()->guard('agentes')->user();
-                return redirect('agentes/extension')->with('agente', $agente);
-            } else {
+            if ( $v[0]->Error )
+            {
+                return redirect('agentes/extension')->with('agente', $this->agente);
+            }
+            else
+            {
                 return back()->withErrors(['email' => 'El usuario ya tiene sesion activa.']);
             }
         }
@@ -70,11 +87,15 @@ class AgentesLoginController extends Controller
      */
     public function agentesLogout( Request $request )
     {
+
+        //$fecha = $this->zona_horaria( auth()->guard('agentes')->id() );
+        $fecha = ZonaHorariaController::zona_horaria_agente( auth()->guard('agentes')->id() );
+
         LogRegistroEventosController::actualiza_evento( $request->input('id_agente'), $request->input('id_evento'), $request->input('cierre') );
         /**
          * Ponemos al usuario en estado 1 = No Disponible
          */
-        $this->Actualiza_Estado_Agente( $request->input('id_agente'), 1 );
+        DB::select("CALL SP_Actualiza_Estado_Agentes(".auth()->guard('agentes')->id().",1,0,'$fecha')");
         /**
          * Ponemos al usuario en pausa dentro de la cola
          */
@@ -85,8 +106,9 @@ class AgentesLoginController extends Controller
         $canal = Crd_Asignacion_Agente::select('canal')->where( 'Agentes_id', $request->input('id_agente') )->orderBy('id', 'desc')->first();
         $empresa = Agentes::select('Empresas_id')->where( 'id', $request->input('id_agente') )->first();
 
-        if ( !empty( $canal ) ) {
-            $colgado = EventosAmiController::colgar_llamada( $canal->canal, $empresa->Empresas_id );
+        if ( !empty( $canal ) )
+        {
+            //$colgado = EventosAmiController::colgar_llamada( $canal->canal, $empresa->Empresas_id );
         }
 
         Auth::guard('agentes')->logout();
@@ -107,33 +129,29 @@ class AgentesLoginController extends Controller
      */
     public function agentesExtension( Request $request )
     {
-        $agente = auth()->guard('agentes')->user();
-
         /**
          * Obtenemos la modalidad en la cual esta el agente
          */
-        $modalidad = $this->modalidad_logueo( $agente->id );
-
+        $modalidad = $this->modalidad_logueo( $this->agente->id );
         /**
          * Validamos que la extension ingreso sea la misma a la que
          * se tiene guardad en la base de datos
          */
-        if( $request->input('extension') == $agente->extension )
+        if( $request->input('extension') == $this->agente->extension )
         {
             /**
              * Validamos que la extension no este disponible
              */
-            $disponible = $this->Valida_Agente( $agente->extension );
+            $disponible = $this->Valida_Extension( $this->agente->extension );
 
-            if ( $disponible->isEmpty() )
+            if ( $disponible->Historial_Eventos->first()->fk_cat_estado_agente_id == 1 || $disponible->Historial_Eventos->first()->fk_cat_estado_agente_id == 11 )
             {
-                $this->Actualiza_Estado_Agente( $agente->id, 11 );
                 /**
                  * Ponemos al usuario en pausa dentro de la cola
                  */
-                $this->pausar_agente( $agente->id, 0 );
+                $this->pausar_agente( $this->agente->id, 0 );
 
-                $evento = LogRegistroEventosController::registro_evento( $agente->id, 1 );
+                $evento = LogRegistroEventosController::registro_evento( $this->agente->id, 1 );
 
                 return redirect()->action('\Modules\Agentes\Http\Controllers\AgentesController@index', ['evento' => $evento->id]);
             }
@@ -147,13 +165,13 @@ class AgentesLoginController extends Controller
             /**
              * Validamos que la extension no este disponible
              */
-            $disponible = $this->Valida_Agente( $request->input('extension') );
+            $disponible = $this->Valida_Extension( $request->input('extension') );
 
-            if ( $disponible->isEmpty() )
+            if ( $disponible->Historial_Eventos->first()->fk_cat_estado_agente_id == 1 || $disponible->Historial_Eventos->first()->fk_cat_estado_agente_id == 11 )
             {
-                $this->Actualiza_Estado_Extension_Agente( $agente->id, $modalidad, $request->input('extension') );
+                $this->Actualiza_Estado_Extension_Agente( $this->agente->id, $modalidad, $request->input('extension') );
 
-                $evento = LogRegistroEventosController::registro_evento( $agente->id, 1 );
+                $evento = LogRegistroEventosController::registro_evento( $this->agente->id, 1 );
 
                 return redirect()->action('\Modules\Agentes\Http\Controllers\AgentesController@index', ['evento' => $evento->id]);
             }
@@ -166,23 +184,23 @@ class AgentesLoginController extends Controller
     /**
      * Funcion para validar si el Agente/Extension esta disponible
      */
-    private function Valida_Agente( $id_agente)
+    private function Valida_Extension( $extension)
     {
-        return Agentes::where('id',$id_agente)->whereIn('Cat_Estado_Agente_id',[2,3,4,8])->get();
-    }
-    /**
-     * Funcion para actualizar el estado del agente/extension
-     */
-    private function Actualiza_Estado_Agente( $id_agente, $estado)
-    {
-        Agentes::where( 'id', $id_agente )->update(['Cat_Estado_Agente_id' => $estado]);
+        return Agentes::where('extension',$extension)->with(['Historial_Eventos' => function ($query)  {
+            $query->orderBy('fecha_registro', 'desc')
+                    ->first();
+        }])->first();
     }
     /**
      * Funcion para actualizar la extension y el estado del agente/extension
      */
     private function Actualiza_Estado_Extension_Agente( $id_agente, $estado, $extension)
     {
-        Agentes::where( 'id', $id_agente )->update(['extension' => $extension,'Cat_Estado_Agente_id' => $estado]);
+        Agentes::where( 'id', $id_agente )->update(['extension' => $extension]);
+
+        //$fecha = $this->zona_horaria( auth()->guard('agentes')->id() );
+        $fecha = ZonaHorariaController::zona_horaria_agente( auth()->guard('agentes')->id() );
+        DB::select("CALL SP_Actualiza_Estado_Agentes(".$id_agente.",'$estado','NULL','$fecha')");
     }
     /**
      * Funcion para poner el agente en pausa
@@ -221,4 +239,12 @@ class AgentesLoginController extends Controller
             }
         }
     }
+    /*
+     * Funcion para setear la hora conforme a la zona horaria de la empresa
+     public static function zona_horaria( $id_agente )
+     {
+         $zona = DB::select("CALL SP_Obten_Zona_Horaria(".$id_agente.")");
+         return Carbon::createFromFormat('Y-m-d H:i:s', Carbon::now($zona[0]->zona_horaria))->toDateTimeString();
+        }
+    */
 }

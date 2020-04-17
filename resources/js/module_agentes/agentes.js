@@ -1,3 +1,4 @@
+/*
 var validNavigation = false;
 
 window.onbeforeunload = function() {
@@ -23,7 +24,7 @@ window.onbeforeunload = function() {
 
     }
 }
-
+*/
 function my_onkeydown_handler(event) {
     switch (event.keyCode) {
         case 116: // 'F5'
@@ -86,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 url: currentURL[0] + "/" + id_agente, // Podrías separar las funciones de PHP en un fichero a parte
                 data: {}
             }).done(function(msg) {
-
+                console.log(msg)
                 var obj = $.parseJSON(msg);
 
                 if (obj['status'] == 1) {

@@ -3,9 +3,7 @@
 namespace Modules\Agentes\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Auth;
 use DB;
 use Modules\Agentes\Http\Controllers\EventosAmiController;
 use Modules\Agentes\Http\Controllers\CalificarLlamadaController;
@@ -17,6 +15,7 @@ use Nimbus\Campanas;
 use Nimbus\Crd_Asignacion_Agente;
 use Nimbus\Miembros_Campana;
 use Nimbus\Eventos_Agentes;
+use Nimbus\HistorialEventosAgentes;
 
 class AgentesController extends Controller
 {
@@ -40,6 +39,13 @@ class AgentesController extends Controller
 
         $evento = $request->evento;
         /**
+         * Recuperamos el estado del agente
+         */
+        $agenteEstado = HistorialEventosAgentes::select('fk_cat_estado_agente_id', 'monitoreo')
+                                            ->where('fk_agentes_id',auth()->guard('agentes')->id())
+                                            ->orderBy('fecha_registro', 'desc')
+                                            ->first();
+        /**
          * Obtenemos los datos del agente
          */
         $agente = auth()->guard('agentes')->user();
@@ -48,7 +54,7 @@ class AgentesController extends Controller
          */
         $eventosAgente = Eventos_Agentes::active()->where('Empresas_id', $agente->Empresas_id)->get();
 
-        return view('agentes::index', compact('agente', 'evento', 'eventosAgente', 'modalidad'));
+        return view('agentes::index', compact('agente', 'evento', 'eventosAgente', 'modalidad', 'agenteEstado'));
     }
     /**
      * Función para calificar la llamada
@@ -60,9 +66,9 @@ class AgentesController extends Controller
 
         $fecha = ZonaHorariaController::zona_horaria( $empresa_id );
         /**
-         * Ponemos al agente en disponible.
+         * Ponemos en estado disponible al agente
          */
-        Agentes::where( 'id', $request->id_agente )->update(['Cat_Estado_Agente_id' => 2]);
+        DB::select("CALL SP_Actualiza_Estado_Agentes(".$request->id_agente.",2,0,'$fecha')");
         /**
          * Dentro de la campana lo ponemos como despausado.
          */
@@ -74,11 +80,11 @@ class AgentesController extends Controller
         /**
          * Generamos el evento para colgar llamada.
          */
-        EventosAmiController::colgar_llamada( $request->canal, $empresa_id );
+        //EventosAmiController::colgar_llamada( $request->canal, $empresa_id );
         /**
          * Despausamos al agente directamente en el MS.
          */
-        $despausar = EventosAmiController::despausar_agente( $request->canal, 'unpause', $empresa_id );
+        //$despausar = EventosAmiController::despausar_agente( $request->canal, 'unpause', $empresa_id );
         /**
          * Guardamos la calificación de la llamada.
          */
@@ -93,17 +99,21 @@ class AgentesController extends Controller
         /**
          * Recuperamos el estado del agente
          */
-        $agente = Agentes::select('Cat_Estado_Agente_id', 'monitoreo')->active()->where('id',$id)->get()->first();
+        $agente = HistorialEventosAgentes::select('fk_cat_estado_agente_id', 'monitoreo')
+                                            ->where('fk_agentes_id',$id)
+                                            ->orderBy('fecha_registro', 'desc')
+                                            ->first();
+
         $data['monitoreo'] = $agente->monitoreo;
         /**
          * Estado 4 y 8 en llamada
          * Estado 3 en pausa
          */
-        if ( $agente->Cat_Estado_Agente_id == 4 || $agente->Cat_Estado_Agente_id == 8 ) {
+        if ( $agente->fk_cat_estado_agente_id == 4 || $agente->fk_cat_estado_agente_id == 8 ) {
             $data['status'] = 1;
             $data['estado'] = $agente->Cat_Estado_Agente->nombre;
             return json_encode( $data );
-        } else if( $agente->Cat_Estado_Agente_id == 3 ) {
+        } else if( $agente->fk_cat_estado_agente_id == 3 ) {
             $data['status'] = 2;
             $data['estado'] = $agente->Cat_Estado_Agente->nombre;
             return json_encode( $data );
