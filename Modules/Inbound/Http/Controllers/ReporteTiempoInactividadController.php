@@ -8,11 +8,11 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use DB;
 
-use Nimbus\Cat_Estado_Agente;
 use Nimbus\Agentes;
 use Nimbus\Grupos;
+use Nimbus\Eventos_Agentes;
 
-class ReporteProductividadAgentesController extends Controller
+class ReporteTiempoInactividadController extends Controller
 {
     private $empresa_id;
     /**
@@ -41,12 +41,12 @@ class ReporteProductividadAgentesController extends Controller
          * Recuperamos los grupos de la empresa
          */
         $grupos = Grupos::empresa( $this->empresa_id )->active()->where('tipo_grupo','Agentes')->get();
-                /**
-         * Recuperamos los grupos de la empresa
+        /**
+         * Recuperamos los eventos de los agentes de la empresa
          */
-        $estados = Cat_Estado_Agente::active()->get();
+        $eventos = Eventos_Agentes::empresa( $this->empresa_id )->active()->get();
 
-        return view('inbound::ReporteProductividadAgentes.index',compact('agentes', 'grupos', 'estados'));
+        return view('inbound::ReporteTiempoInactividad.index', compact('agentes', 'grupos', 'eventos'));
     }
 
     /**
@@ -55,7 +55,7 @@ class ReporteProductividadAgentesController extends Controller
      */
     public function create()
     {
-        return view('inbound::create');
+        return view('inbound::ReporteTiempoInactividad.create');
     }
 
     /**
@@ -65,30 +65,19 @@ class ReporteProductividadAgentesController extends Controller
      */
     public function store(Request $request)
     {
-        set_time_limit(0);
-        ini_set('memory_limit', -1);
+         /**
+         * Recuperamos los eventos de los agentes de la empresa
+         */
+        $eventos = Eventos_Agentes::empresa( $this->empresa_id )->active()->get();
         /**
          * Obtenemos la productividad del agente o del grupo de agentes
          **/
-        $llamadas = DB::select("CALL SP_Productividad_Agentes(".$request->agente.",".$request->grupo.",'$request->dateInicio','$request->dateFin')");
+        $tiempos = DB::select("CALL SP_Tiempo_No_Disponible_Agente(".$request->agente.",".$request->grupo.",'$request->dateInicio','$request->dateFin')");
 
-        $data = $this->procesarInfo($llamadas);
+        $data = $this->procesarInfo($tiempos);
 
-        $estados = array(
-                            'Tiempo Disponible' => 2,
-                            'Tiempo Logueo' => 11,
-                            'Tiempo no disponible' => 1,
-                            'Tiempo marcador manual' => 10,
-                            'Tiempo llamada programada' => 5,
-                            'Tiempo en llamada inbound' => 8,
-                            'Tiempo definiendo llamada inbound' => 12,
-                            'Tiempo total inbound' => 0,
-                            'Tiempo en llamada Outbound' => 4,
-                            'Tiempo definiendo llamada Outbound' => 13,
-                            'Tiempo total Outbound' => 0,
-                        );
+        return view('inbound::ReporteTiempoInactividad.show',compact('data', 'eventos'));
 
-        return view('inbound::ReporteProductividadAgentes.show',compact('data', 'estados'));
     }
 
     /**
@@ -98,7 +87,7 @@ class ReporteProductividadAgentesController extends Controller
      */
     public function show($id)
     {
-        return view('inbound::show');
+        return view('inbound::ReporteTiempoInactividad.show');
     }
 
     /**
@@ -108,7 +97,7 @@ class ReporteProductividadAgentesController extends Controller
      */
     public function edit($id)
     {
-        return view('inbound::edit');
+        return view('inbound::ReporteTiempoInactividad.edit');
     }
 
     /**
@@ -132,13 +121,13 @@ class ReporteProductividadAgentesController extends Controller
         //
     }
 
-    public function procesarInfo( $data )
+    public function  procesarInfo( $data )
     {
         $v = get_object_vars( $data[0] );
         //$idAgente = 0;
         $w = [];
         $d = [];
-        $idAgente = $v['fk_agentes_id'];
+        $idAgente = $v['usuario'];
         $info = [];
         $estados = [];
 
@@ -146,7 +135,7 @@ class ReporteProductividadAgentesController extends Controller
         {
             $v = get_object_vars( $data[$j] );
 
-            if ( $idAgente == $v['fk_agentes_id'])
+            if ( $idAgente == $v['usuario'])
             {
                 array_push( $w, $v );
             }
@@ -155,7 +144,7 @@ class ReporteProductividadAgentesController extends Controller
                 array_push( $d, $w );
                 $w = [];
                 array_push( $w, $v );
-                $idAgente = $v['fk_agentes_id'];
+                $idAgente = $v['usuario'];
             }
 
             if ( $j ==  ( count( $data ) -1 ) )
@@ -171,32 +160,12 @@ class ReporteProductividadAgentesController extends Controller
 
                 $v = $d[$i][$j];
 
-                $z = array(
-                            'id_agente' => $v['id_agente'],
-                            'nombre' => $v['nombre'],
-                            'Recibidas' => $v['Recibidas'],
-                            'Contestadas' => $v['Contestadas'],
-                            'omitidas' => $v['omitidas'],
-                        );
-
-                if ( $j == 0 )
-                {
-                    $w = array(
-                            'Estadoid' => 12,
-                            'Estado' => 'Tiempo Definiendo Llamada',
-                            'Eventos' => 0,
-                            'Promedio' => $v['Promedio_definiendo_llamada'],
-                            'Total' => $v['Total_definiendo_llamada']
-                    );
-                    array_push( $estados, $w );
-                }
+                $z = array( 'usuario' => $v['usuario'] );
 
                 $y = array(
-                            'Estadoid' => (int)$v['Estadoid'],
-                            'Estado' => $v['Estado'],
-                            'Eventos' => $v['Eventos'],
-                            'Promedio' => $v['Promedio'],
-                            'Total' => $v['Total']
+                            'nombre' => $v['nombre'],
+                            'Tiempo_estado_total' => $v['Tiempo_estado_total'],
+                            'Tiempo_estado_promedio' =>  $v['Tiempo_estado_promedio'],
                         );
 
                 array_push( $estados, $y );
@@ -210,5 +179,4 @@ class ReporteProductividadAgentesController extends Controller
         }
         return $info;
     }
-
 }

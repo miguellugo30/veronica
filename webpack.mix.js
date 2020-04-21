@@ -66,6 +66,7 @@ mix.js([
         'resources/js/module_inbound/reporteCalificaciones.js',
         'resources/js/module_inbound/reporte_llamadas_agentes.js',
         'resources/js/module_inbound/reporte_productividad_agentes.js',
+        'resources/js/module_inbound/reporteTiempoInactivo.js',
     ], 'public/js/inbound.js')
     .js([
         'resources/js/module_recording/menu.js',

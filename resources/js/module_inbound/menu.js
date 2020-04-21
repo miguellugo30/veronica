@@ -44,6 +44,9 @@ $(function() {
         } else if (id == 'sub-44') {
             url = currentURL + '/ReporteProductividadAgentes';
             table = '#tableDesgloseLlamadas';
+        } else if (id == 'sub-45') {
+            url = currentURL + '/ReporteTiempoInactivo';
+            table = '#tableReporteTiempoInactivo';
         } else if (id == 'cat-26') {
 
             url = currentURL + '/real_time/';
