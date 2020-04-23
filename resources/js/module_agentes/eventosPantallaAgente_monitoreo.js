@@ -79,4 +79,34 @@ $(function() {
 
     });
 
+    $(document).on('click', '.realizar-transferir-llamada', function(event) {
+
+        let idAgente = $("#id_agente").val();
+        let canal = $("#canal").val();
+        let destino_transferencia = $("#destino_transferencia").val();
+        let opciones_transferencia = $("#opciones_transferencia").val();
+        let id_empresa = $("#id_empresa").val();
+        let _token = $("input[name=_token]").val();
+
+        let url = currentURL[0].replace('agentes/') + '/transferir-llamada';
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: {
+                idAgente: idAgente,
+                canal: canal,
+                destino_transferencia: destino_transferencia,
+                opciones_transferencia: opciones_transferencia,
+                extension: extension,
+                id_empresa: id_empresa,
+                _token: _token
+            },
+            success: function(result) {
+                console.log(result);
+            }
+        });
+
+    });
+
 });

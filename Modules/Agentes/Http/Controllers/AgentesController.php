@@ -12,6 +12,7 @@ use Nimbus\Http\Controllers\ZonaHorariaController;
 
 use Nimbus\Agentes;
 use Nimbus\Campanas;
+use Nimbus\Cat_Extensiones;
 use Nimbus\Crd_Asignacion_Agente;
 use Nimbus\Miembros_Campana;
 use Nimbus\Eventos_Agentes;
@@ -268,5 +269,21 @@ class AgentesController extends Controller
         $e = new EventosAgenteController();
 
         return $e->logeoExtension( $agente );
+    }
+    /**
+     * Funcion para transferir una llamada
+     */
+    public function transferir_llamada( Request $request )
+    {
+        $e = new EventosAgenteController();
+        $contexto = 'dial_exten_logeo_web';
+
+        if ( $request->destino_transferencia == 'Cat_Extensiones' ) {
+            $extension = Cat_Extensiones::find( $request->opciones_transferencia );
+            $data = $extension->extension;
+        }
+
+
+        return $e->logeoExtension( $request->canal, $contexto, $data );
     }
 }

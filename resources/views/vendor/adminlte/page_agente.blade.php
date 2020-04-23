@@ -377,7 +377,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-sm btn-danger float-left" data-dismiss="modal"><i class="fas fa-times"></i> Cancelar</button>
-                    <button type="button" class="btn btn-sm btn-primary" id="agente-disponible">Transferir</button>
+                    <button type="button" class="btn btn-sm btn-primary" id="realizar-transferir-llamada">Transferir</button>
                 </div>
             </div>
         </div>
