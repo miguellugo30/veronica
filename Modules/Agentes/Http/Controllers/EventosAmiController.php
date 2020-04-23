@@ -9,100 +9,65 @@ use Nimbus\Empresas;
 
 class EventosAmiController extends Controller
 {
-    public static function colgar_llamada( $canal, $empresas_id )
+    private $pbx;
+    /**
+     * Constructor para obtener el PBX de una empresa
+     */
+    public function __construct( $empresa_id )
     {
-        $pbx = Empresas::empresa($empresas_id)->active()->with('Config_Empresas')->with('Config_Empresas.ms')->get()->first();
-
-        $ami = new Ami();
-        if ($ami->connect($pbx->Config_Empresas->ms->ip_pbx.':5038', $pbx->Config_Empresas->usuario_ami, $pbx->Config_Empresas->clave_ami, 'off') === false)
-        {
-            throw new \RuntimeException('Could not connect to Asterisk Management Interface.');
-        }
-
-        $result = $ami->command('hangup request '.$canal);
-        $ami->disconnect();
-        return $result;
-
+        $this->pbx = Empresas::empresa( $empresa_id )->active()->with('Config_Empresas')->with('Config_Empresas.ms')->get()->first();
     }
 
-    public static function despausar_agente( $interface, $accion, $empresas_id )
+    private function conectarAmi()
     {
-
-        $pbx = Empresas::empresa($empresas_id)->active()->with('Config_Empresas')->with('Config_Empresas.ms')->get()->first();
-
         $ami = new Ami();
-        if ($ami->connect($pbx->Config_Empresas->ms->ip_pbx.':5038', $pbx->Config_Empresas->usuario_ami, $pbx->Config_Empresas->clave_ami, 'off') === false)
+        if ($ami->connect($this->pbx->Config_Empresas->ms->ip_pbx.':5038', $this->pbx->Config_Empresas->usuario_ami, $this->pbx->Config_Empresas->clave_ami, 'off') === false)
         {
             throw new \RuntimeException('Could not connect to Asterisk Management Interface.');
         }
 
-        $result = $ami->command('queue '.$accion.' member '.$interface);
-        return $result;
-
-        $ami->disconnect();
+        return $ami;
     }
 
-    public static function redirect_monitoreo( $canal, $empresas_id )
+    public function colgar_llamada( $canal )
     {
-        $pbx = Empresas::empresa($empresas_id)->active()->with('Config_Empresas')->with('Config_Empresas.ms')->get()->first();
-
-        $ami = new Ami();
-        if ($ami->connect($pbx->Config_Empresas->ms->ip_pbx.':5038', $pbx->Config_Empresas->usuario_ami, $pbx->Config_Empresas->clave_ami, 'off') === false)
-        {
-            throw new \RuntimeException('Could not connect to Asterisk Management Interface.');
-        }
-
-        $result = $ami->command('channel redirect '.$canal.' espera_monitoreo,monitorea,1');
+        $result = $this->conectarAmi()->command('hangup request '.$canal);
+        $this->conectarAmi()->disconnect();
         return $result;
-
-        $ami->disconnect();
     }
 
-    public static function redirect_monitoreo_espera( $canal, $empresas_id )
+    public function despausar_agente( $interface, $accion )
     {
-        $pbx = Empresas::empresa($empresas_id)->active()->with('Config_Empresas')->with('Config_Empresas.ms')->get()->first();
-
-        $ami = new Ami();
-        if ($ami->connect($pbx->Config_Empresas->ms->ip_pbx.':5038', $pbx->Config_Empresas->usuario_ami, $pbx->Config_Empresas->clave_ami, 'off') === false)
-        {
-            throw new \RuntimeException('Could not connect to Asterisk Management Interface.');
-        }
-
-        $result = $ami->command('channel redirect '.$canal.' espera_monitoreo,s,11');
+        $result = $this->conectarAmi()->command('queue '.$accion.' member '.$interface);
+        $this->conectarAmi()->disconnect();
         return $result;
-
-        $ami->disconnect();
     }
 
-    public static function redirect_coaching( $canal, $empresas_id )
+    public function redirect_monitoreo( $canal )
     {
-        $pbx = Empresas::empresa($empresas_id)->active()->with('Config_Empresas')->with('Config_Empresas.ms')->get()->first();
-
-        $ami = new Ami();
-        if ($ami->connect($pbx->Config_Empresas->ms->ip_pbx.':5038', $pbx->Config_Empresas->usuario_ami, $pbx->Config_Empresas->clave_ami, 'off') === false)
-        {
-            throw new \RuntimeException('Could not connect to Asterisk Management Interface.');
-        }
-
-        $result = $ami->command('channel redirect '.$canal.' espera_monitoreo,couchea,1');
+        $result = $this->conectarAmi()->command('channel redirect '.$canal.' espera_monitoreo,monitorea,1');
+        $this->conectarAmi()->disconnect();
         return $result;
-
-        $ami->disconnect();
     }
 
-    public static function redirect_conferencia( $canal, $empresas_id )
+    public function redirect_monitoreo_espera( $canal )
     {
-        $pbx = Empresas::empresa($empresas_id)->active()->with('Config_Empresas')->with('Config_Empresas.ms')->get()->first();
-
-        $ami = new Ami();
-        if ($ami->connect($pbx->Config_Empresas->ms->ip_pbx.':5038', $pbx->Config_Empresas->usuario_ami, $pbx->Config_Empresas->clave_ami, 'off') === false)
-        {
-            throw new \RuntimeException('Could not connect to Asterisk Management Interface.');
-        }
-
-        $result = $ami->command('channel redirect '.$canal.' espera_monitoreo,wisper,1');
+        $result = $this->conectarAmi()->command('channel redirect '.$canal.' espera_monitoreo,s,11');
+        $this->conectarAmi()->disconnect();
         return $result;
+    }
 
-        $ami->disconnect();
+    public function redirect_coaching( $canal )
+    {
+        $result = $this->conectarAmi()->command('channel redirect '.$canal.' espera_monitoreo,couchea,1');
+        $this->conectarAmi()->disconnect();
+        return $result;
+    }
+
+    public function redirect_conferencia( $canal )
+    {
+        $result = $this->conectarAmi()->command('channel redirect '.$canal.' espera_monitoreo,wisper,1');
+        $this->conectarAmi()->disconnect();
+        return $result;
     }
 }

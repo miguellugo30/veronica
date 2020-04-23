@@ -188,7 +188,6 @@ document.addEventListener('DOMContentLoaded', function () {
         // Podrías separar las funciones de PHP en un fichero a parte
         data: {}
       }).done(function (msg) {
-        console.log(msg);
         var obj = $.parseJSON(msg);
 
         if (obj['status'] == 1) {
@@ -331,6 +330,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 $(function () {
   var currentURL = window.location.href.split('?');
+  /**
+   * Evento para colgar la llamada
+   */
+
   $(document).on("click", ".colgar-llamada", function (e) {
     var canal = $("#canal").val();
 
@@ -346,6 +349,10 @@ $(function () {
       }
     }).done(function (msg) {});
   });
+  /**
+   * Evento para mostrar el historial de llamadas
+   */
+
   $(document).on("click", "#view-historial-llamadas", function (e) {
     var id_agente = $("#id_agente").val();
 
@@ -363,6 +370,10 @@ $(function () {
       $('.result-historial-llamada').html(msg);
     });
   });
+  /**
+   * Evento para mostrar el historial de lladamas perdidas
+   */
+
   $(document).on("click", "#view-llamadas-perdidas", function (e) {
     var id_agente = $("#id_agente").val();
 
@@ -380,6 +391,10 @@ $(function () {
       $('.result-llamadas-abandonadas').html(msg);
     });
   });
+  /**
+   * Evento para el logueo de extension
+   */
+
   $(document).on('click', '.logeo-extension', function (event) {
     var idAgente = $("#id_agente").val();
     var canal = $("#canal").val();
@@ -409,6 +424,46 @@ $(function () {
         }
       }
     });
+  });
+  /**
+   * Evento para mostrar el modal para la trasferencia de llamada
+   */
+
+  $(document).on("click", ".transferir-llamada", function (e) {
+    $("#modal-transferencia").modal({
+      backdrop: 'static',
+      keyboard: false
+    });
+  });
+  /**
+   * Evento para mostrar las opciones del destino selecionado
+   */
+
+  $(document).on('change', '#destino_transferencia', function (event) {
+    var opccion = $(this).val();
+    var id_empresa = $("#id_empresa").val();
+    var id = 0 + '&' + opccion + '&1&' + id_empresa;
+    var url = currentURL[0].replace('agentes/') + '/opciones_transferencia/' + id;
+
+    if (opccion == 'Cat_Extensiones') {
+      $('.opcion-transferir-extension').slideDown();
+    } else {
+      $('.opcion-transferir-extension').slideUp();
+    }
+
+    if (opccion == 'Numero_Saliente') {
+      $('.input-telefono-transferir').slideDown();
+      $('#opciones_transferencia').slideUp();
+    } else {
+      $('.input-telefono-transferir').slideUp();
+      $('#opciones_transferencia').slideDown();
+      $.ajax({
+        url: url,
+        type: "GET"
+      }).done(function (data) {
+        $('#opciones_transferencia').html(data);
+      });
+    }
   });
 });
 

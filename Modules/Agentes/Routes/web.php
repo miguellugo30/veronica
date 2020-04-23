@@ -24,3 +24,4 @@ Route::group(['namespace' => '\Modules\Agentes\Http\Controllers', 'middleware' =
 
 Route::get('/agentes/formularios/{id}', '\Modules\Settings\Http\Controllers\FormulariosController@show');
 Route::get('/agentes/speech/{id}', '\Modules\Settings\Http\Controllers\SpeechController@show');
+Route::get('/agentes/opciones_transferencia/{id}', '\Modules\Inbound\Http\Controllers\DidEnrutamientoController@show');

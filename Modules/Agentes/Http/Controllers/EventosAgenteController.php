@@ -19,7 +19,7 @@ class EventosAgenteController extends Controller
     /**
      * Funcion para poner como no disponible a un agente
      */
-    public static function no_disponible( $agente, $empresas_id )
+    public function no_disponible( $agente, $empresas_id )
     {
         /**
          * Obtenemos el ultimo canal del agente
@@ -32,7 +32,8 @@ class EventosAgenteController extends Controller
         /**
          * Pausamos al agente dentro del MS
          */
-        //$pausa = EventosAmiController::despausar_agente( $cdr->canal, 'pause', $empresas_id );
+        $evento = new EventosAmiController( $empresas_id );
+        $pausa = $evento->despausar_agente( $cdr->canal, 'pause' );
         /**
          * Obtenemos la zona horaria de la empresa
          */
@@ -54,7 +55,8 @@ class EventosAgenteController extends Controller
         /**
          * Pausamos al agente dentro del MS
          */
-        $pausa = EventosAmiController::despausar_agente( $cdr->canal, 'pause', $empresas_id );
+        $evento = new EventosAmiController( $empresas_id );
+        $pausa = $evento->despausar_agente( $cdr->canal, 'pause' );
     }
     /**
      * Funcion para poner como  disponible a un agente
@@ -84,7 +86,8 @@ class EventosAgenteController extends Controller
         /**
          * Despausamos al agente dentro del MS
          */
-        //EventosAmiController::despausar_agente( $cdr->canal, 'unpause', $empresas_id );
+        $evento = new EventosAmiController( $empresas_id );
+        $evento->despausar_agente( $cdr->canal, 'unpause' );
     }
     /**
      * Funcion para poner como  disponible a un agente
@@ -98,7 +101,8 @@ class EventosAgenteController extends Controller
         /**
          * Despausamos al agente dentro del MS
          */
-        EventosAmiController::despausar_agente( $cdr->canal, 'unpause', $empresas_id );
+        $evento = new EventosAmiController( $empresas_id );
+        $evento->despausar_agente( $cdr->canal, 'unpause' );
 
     }
     /**

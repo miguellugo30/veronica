@@ -93,10 +93,10 @@
             <section class="sidebar">
                 <!-- Sidebar user panel -->
                 <div class="user-panel">
-                    <div class="pull-left image" style="margin-top: 8px;">
-                        <img src="{{ Storage::url('/fondo/avatar5.png') }}" class="img-circled-block " alt="User Image">
-                    </div>
-                    <div class="pull-left info" >
+                    <!--div class="pull-left image" style="margin-top: 8px;">
+                        <img src="{{-- Storage::url('/fondo/avatar5.png') --}}" class="img-circled-block " alt="User Image">
+                    </div-->
+                    <div class=" info" >
                         <p>{{ $agente->nombre }}</p>
                         <p>Usr.: {{ $agente->usuario }}</p>
                         <p>Ext.: {{ $agente->extension_real }}</p>
@@ -135,26 +135,14 @@
                 </div>
                 <hr>
                     <div class="col text-center">
-                        <label for=""><b>Transferir llamada</b></label>
-                        <div class="input-group">
-                            <select name="" id="" class="form-control form-control-sm">
-                                <option value="">a</option>
-                                <option value="">b</option>
-                                <option value="">c</option>
-                            </select>
-                            <div class="btn-group" role="group">
-                                <button id="btnGroupDrop1" type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fas fa-exchange-alt text-white"></i>
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                    <a class="dropdown-item" href="#">Transferir llamada</a>
-                                    <a class="dropdown-item" href="#">Transferir llamada y pantalla</a>
-                                </div>
-                            </div>
-                            <!--div class="input-group-prepend">
-                                <div class="input-group-text btn-primary" style="cursor:pointer"><i class="fas fa-exchange-alt text-white"></i></div>
-                            </div-->
-                        </div>
+                        <label for=""><b>Opciones Avanzadas</b></label>
+                        <br>
+                        <button type="button" class="btn btn-primary m-1 transferir-llamada">
+                            <i class="fas fa-exchange-alt"></i>
+                        </button>
+                        <button type="button" class="btn btn-primary m-1 conferencia-llamada">
+                            <i class="fas fa-users"></i>
+                        </button>
                     </div>
                 <hr>
                     <div class="col text-center">
@@ -323,6 +311,73 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-primary" id="agente-disponible">Disponible</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- FIN MODAL NO DISPONIBLE -->
+    <!-- MODAL NO DISPONIBLE -->
+    <div class="modal fade" id="modal-transferencia" tabindex="-1" role="dialog" aria-labelledby="title-no-disponible" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="title-no-disponible"></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="col">
+                        <table class="table table-bordered">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Destino</th>
+                                    <th>Opcion</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <select class="form-control form-control-sm"  name="destino_transferencia" id="destino_transferencia">
+                                            <option value="">Selecciona una opcion</option>
+                                            <option value="Audios_Empresa" >Anuncio</option>
+                                            <option value="Aplicacion">Aplicación</option>
+                                            <option value="Campanas">Campaña</option>
+                                            <option value="hangup">Colgar llamada</option>
+                                            <option value="Condiciones_Tiempo">Condición de Tiempo</option>
+                                            <option value="Conferencia">Conferencia</option>
+                                            <option value="Desvios">Desvío</option>
+                                            <option value="Cat_Extensiones">Extensión</option>
+                                            <option value="Ivr">IVR</option>
+                                            <option value="Buzon_Voz">Buzón de voz</option>
+                                            <option value="Numero_Saliente">Numero saliente</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <div class="col input-telefono-transferir" style="display:none">
+                                            <input type="text" class="form-control form-control-sm" id="telefono_transferir" placeholder="Telefono">
+                                        </div>
+                                        <div id="opciones_transferencia" class="opciones_transferencia">
+                                            <select name="opciones_1" id="opciones"  class="form-control form-control-sm ">
+                                                <option value="">Selecciona una opcion</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="opcion-transferir-extension" style="display:none">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="tranferir-pantalla">
+                                            <label class="form-check-label" for="tranferir-pantalla">
+                                                Transferir con pantalla
+                                            </label>
+                                          </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger float-left" data-dismiss="modal"><i class="fas fa-times"></i> Cancelar</button>
+                    <button type="button" class="btn btn-sm btn-primary" id="agente-disponible">Transferir</button>
                 </div>
             </div>
         </div>

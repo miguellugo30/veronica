@@ -111,8 +111,12 @@ class DidEnrutamientoController extends Controller
         $destino = $data[1];
         $num = $data[2];
 
-        $user = Auth::user();
-        $empresa_id = $user->id_cliente;
+        if ( isset( $data[3] ) ) {
+            $empresa_id = $data[3];
+        } else {
+            $user = Auth::user();
+            $empresa_id = $user->id_cliente;
+        }
 
         if ($data[1] == 'Audios_Empresa') {
             $info = Audios_Empresa::active()->where('Empresas_id', $empresa_id)->get();

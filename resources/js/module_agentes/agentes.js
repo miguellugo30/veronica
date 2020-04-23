@@ -87,7 +87,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 url: currentURL[0] + "/" + id_agente, // Podrías separar las funciones de PHP en un fichero a parte
                 data: {}
             }).done(function(msg) {
-                console.log(msg)
                 var obj = $.parseJSON(msg);
 
                 if (obj['status'] == 1) {

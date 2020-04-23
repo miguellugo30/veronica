@@ -80,11 +80,12 @@ class AgentesController extends Controller
         /**
          * Generamos el evento para colgar llamada.
          */
-        //EventosAmiController::colgar_llamada( $request->canal, $empresa_id );
+        $e = new EventosAmiController( $empresa_id );
+        $e->colgar_llamada( $request->canal, $empresa_id );
         /**
          * Despausamos al agente directamente en el MS.
          */
-        //$despausar = EventosAmiController::despausar_agente( $request->canal, 'unpause', $empresa_id );
+        $despausar = $e->despausar_agente( $request->canal, 'unpause' );
         /**
          * Guardamos la calificación de la llamada.
          */
@@ -168,7 +169,6 @@ class AgentesController extends Controller
             $bienvenida = '';
         }
 
-
         $grupo = $campana->Grupos->first();
         /**
          * Obtenemos el histórico de llamadas de cliente
@@ -203,7 +203,8 @@ class AgentesController extends Controller
         /**
          * Generamos un evento para colgar la llamada
          */
-        EventosAmiController::colgar_llamada( $request->canal, $agente->Empresas_id );
+        $e = new EventosAmiController( $agente->Empresas_id );
+        $e->colgar_llamada( $request->canal );
     }
     /**
      * Funcion para poner como no disponible a un agente
@@ -212,7 +213,8 @@ class AgentesController extends Controller
     {
         $agente = auth()->guard('agentes')->user();
 
-        EventosAgenteController::no_disponible( $agente->id, $agente->Empresas_id );
+        $e = new EventosAgenteController();
+        $e->no_disponible( $agente->id, $agente->Empresas_id );
         /**
          * Registramos el evento de no disponible del agente
          */
@@ -226,14 +228,16 @@ class AgentesController extends Controller
     public function agente_disponible( Request $request )
     {
         $agente = auth()->guard('agentes')->user();
-        EventosAgenteController::agente_disponible( $request, $agente->id, $agente->Empresas_id );
+        $e = new EventosAgenteController();
+        $e->agente_disponible( $request, $agente->id, $agente->Empresas_id );
     }
     /**
      * Funcion para mostrar el historial de llamadas contestadas
      */
     public function historial_llamadas( Request $request )
     {
-        $historico = EventosAgenteController::historial_llamadas( $request );
+        $e = new EventosAgenteController();
+        $historico = $e->historial_llamadas( $request );
 
         $inbound = $historico->where('tipo', 'Inbound')->sortByDesc('fecha_inicio');
         $outbound = $historico->where('tipo', 'Outbound')->sortByDesc('fecha_inicio');
@@ -246,7 +250,8 @@ class AgentesController extends Controller
      */
     public function llamadas_abandonadas( Request $request )
     {
-        $historico = EventosAgenteController::llamadas_abandonadas( $request );
+        $e = new EventosAgenteController();
+        $historico = $e->llamadas_abandonadas( $request );
 
         $inbound = $historico->where('tipo', 'Inbound')->sortByDesc('fecha_inicio');
         $outbound = $historico->where('tipo', 'Outbound')->sortByDesc('fecha_inicio');
@@ -260,6 +265,8 @@ class AgentesController extends Controller
     public function logeoExtension()
     {
         $agente = auth()->guard('agentes')->user();
-        return EventosAgenteController::logeoExtension( $agente );
+        $e = new EventosAgenteController();
+
+        return $e->logeoExtension( $agente );
     }
 }
