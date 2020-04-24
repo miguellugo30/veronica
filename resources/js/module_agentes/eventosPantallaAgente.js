@@ -141,7 +141,7 @@ $(function() {
     $(document).on('click', '#realizar-transferir-llamada', function(event) {
 
         let idAgente = $("#id_agente").val();
-        let canal = $("#canal").val();
+        let canal = $("#canal_entrante").val();
         let destino_transferencia = $("#destino_transferencia").val();
         let opciones_transferencia = $("#opciones").val();
         let id_empresa = $("#id_empresa").val();

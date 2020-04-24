@@ -467,7 +467,7 @@ $(function () {
   });
   $(document).on('click', '#realizar-transferir-llamada', function (event) {
     var idAgente = $("#id_agente").val();
-    var canal = $("#canal").val();
+    var canal = $("#canal_entrante").val();
     var destino_transferencia = $("#destino_transferencia").val();
     var opciones_transferencia = $("#opciones").val();
     var id_empresa = $("#id_empresa").val();
