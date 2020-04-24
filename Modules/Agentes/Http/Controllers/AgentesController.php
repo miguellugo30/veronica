@@ -288,7 +288,6 @@ class AgentesController extends Controller
             $data = $extension->extension;
         }
 
-
         return $e->redirect_transferencia( $request->canal, $contexto, $data );
     }
 }
