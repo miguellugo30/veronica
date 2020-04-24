@@ -275,7 +275,7 @@ class AgentesController extends Controller
      */
     public function transferir_llamada( Request $request )
     {
-        $e = new EventosAgenteController();
+        $e = new EventosAmiController( $request->id_empresa );
         $contexto = 'dial_exten_logeo_web';
 
         if ( $request->destino_transferencia == 'Cat_Extensiones' ) {
@@ -284,6 +284,6 @@ class AgentesController extends Controller
         }
 
 
-        return $e->logeoExtension( $request->canal, $contexto, $data );
+        return $e->redirect_transferencia( $request->canal, $contexto, $data );
     }
 }
