@@ -169,7 +169,6 @@ $(function() {
                     canal: canal,
                     destino_transferencia: destino_transferencia,
                     opciones_transferencia: opciones_transferencia,
-                    extension: extension,
                     id_empresa: id_empresa,
                     _token: _token
                 },
