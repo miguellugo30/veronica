@@ -5,6 +5,7 @@
                 <b>{{ ucwords( $campana->nombre ) }}</b>
                 <small>{{$calledid}}</small>
                 <input type="hidden" id="canal" name="canal" value="{{ $canal }}">
+                <input type="hidden" id="canal_entrante" name="canal_entrante" value="{{ $canal_entrante->canal }}">
                 <input type="hidden" id="uniqueid" name="uniqueid" value="{{ $uniqueid }}">
             </h4>
         </div>

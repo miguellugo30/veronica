@@ -9,6 +9,9 @@ class Cdr_call_center extends Model
     //
     public $timestamps = false;
 
+    protected $fillable = [
+        'tipo', 'uniqueid','callerid','calledid','fecha_inicio','fecha_fin', 'hangup', 'Empresas_id', 'canal'
+    ];
     /**
      * Nombre de la tabla que se ocupra
      */

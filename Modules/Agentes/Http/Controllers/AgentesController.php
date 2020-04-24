@@ -13,6 +13,7 @@ use Nimbus\Http\Controllers\ZonaHorariaController;
 use Nimbus\Agentes;
 use Nimbus\Campanas;
 use Nimbus\Cat_Extensiones;
+use Nimbus\Cdr_call_center;
 use Nimbus\Crd_Asignacion_Agente;
 use Nimbus\Miembros_Campana;
 use Nimbus\Eventos_Agentes;
@@ -143,6 +144,10 @@ class AgentesController extends Controller
         $canal = $datos_llamada[0]->canal;
         $uniqueid = $datos_llamada[0]->uniqueid;
         /**
+         * Obtenemos el canal de llamada entrante
+         */
+        $canal_entrante = Cdr_call_center::select('canal')->where('uniqueid', $uniqueid)->get();
+        /**
          * Obtenemos la información de la campana a la cual esta el agente y la llamada
          */
         if ( $cdrDetalle->first()->aplicacion == 'Campanas' ) {
@@ -191,7 +196,7 @@ class AgentesController extends Controller
                     ->where('Cdr_call_center.callerid', $callerid)
                     ->whereDate('Cdr_call_center.fecha_inicio', DB::raw('curdate()'))->get();
 
-       return view('agentes::show', compact( 'campana', 'calledid', 'historico', 'grupo', 'canal', 'uniqueid', 'speech', 'campos', 'bienvenida'));
+       return view('agentes::show', compact( 'campana', 'calledid', 'historico', 'grupo', 'canal', 'uniqueid', 'speech', 'campos', 'bienvenida', 'canal_entrante'));
     }
     /**
      * Funcion para colgar llamada
