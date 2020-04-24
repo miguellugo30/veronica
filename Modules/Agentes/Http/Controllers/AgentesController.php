@@ -146,7 +146,9 @@ class AgentesController extends Controller
         /**
          * Obtenemos el canal de llamada entrante
          */
-        $canal_entrante = Cdr_call_center::where('uniqueid', $uniqueid)->get();
+        $canal_entrante = Cdr_call_center::where('uniqueid', $uniqueid)->first();
+
+
         /**
          * Obtenemos la información de la campana a la cual esta el agente y la llamada
          */
