@@ -465,6 +465,39 @@ $(function () {
       });
     }
   });
+  $(document).on('click', '#realizar-transferir-llamada', function (event) {
+    var idAgente = $("#id_agente").val();
+    var canal = $("#canal").val();
+    var destino_transferencia = $("#destino_transferencia").val();
+    var opciones_transferencia = $("#opciones").val();
+    var id_empresa = $("#id_empresa").val();
+
+    var _token = $("input[name=_token]").val();
+
+    console.log(idAgente + " " + canal + " " + destino_transferencia + " " + opciones_transferencia + " " + id_empresa + " " + _token);
+
+    if (canal == null) {
+      Swal.fire('Error!', 'No se puede transferir, sin tener una llamada activa.', 'error');
+    } else {
+      var url = currentURL[0].replace('agentes/') + '/transferir-llamada';
+      $.ajax({
+        url: url,
+        type: 'POST',
+        data: {
+          idAgente: idAgente,
+          canal: canal,
+          destino_transferencia: destino_transferencia,
+          opciones_transferencia: opciones_transferencia,
+          extension: extension,
+          id_empresa: id_empresa,
+          _token: _token
+        },
+        success: function success(result) {
+          console.log(result);
+        }
+      });
+    }
+  });
 });
 
 /***/ }),

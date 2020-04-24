@@ -321,7 +321,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="title-no-disponible"></h4>
+                    <h4 class="modal-title">Transferencia de llamada</h4>
                 </div>
                 <div class="modal-body">
                     <div class="col">
