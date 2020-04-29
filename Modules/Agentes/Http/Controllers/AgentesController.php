@@ -302,7 +302,7 @@ class AgentesController extends Controller
         }
         else
         {
-            $contexto = 'transferencia_extension';
+            $contexto = 'transferencia_aplicacion';
             $extension = 's';
             $contexto_hijo = 'Inbound_'.$id_destino;
         }
