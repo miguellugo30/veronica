@@ -80,7 +80,7 @@ class EventosAmiController extends Controller
         }
         else
         {
-            $this->conectarAmi()->setVar($canal, 'DST', $destino);
+            $this->conectarAmi()->setVar($canal, 'DEST', $destino);
             $this->conectarAmi()->setVar($canal, 'APLI_ID', $id_destino);
             $this->conectarAmi()->setVar($canal, 'CONTEXTO', $contexto_hijo);
         }
