@@ -293,12 +293,13 @@ class AgentesController extends Controller
         if ( $request->destino_transferencia == 'Cat_Extensiones' )
         {
             $extension = Cat_Extensiones::find( $request->opciones_transferencia );
-            $data = $extension->extension;
             $contexto = 'transferencia_extension';
+            $data = '1153650'.$extension->extension;
         }
         else
         {
             $contexto = 'Inbound_'.$request->opciones_transferencia;
+            $data = 's';
         }
 
         return $e->redirect_transferencia( $request->canal, $contexto, $data );

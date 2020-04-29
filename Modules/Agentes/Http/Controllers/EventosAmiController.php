@@ -73,7 +73,7 @@ class EventosAmiController extends Controller
 
     public function redirect_transferencia( $canal, $contexto, $extension )
     {
-        $result = $this->conectarAmi()->command('channel redirect '.$canal.' '.$contexto.',1153650'.$extension.',1');
+        $result = $this->conectarAmi()->command('channel redirect '.$canal.' '.$contexto.','.$extension.',1');
         $this->conectarAmi()->disconnect();
         return $result;
     }
