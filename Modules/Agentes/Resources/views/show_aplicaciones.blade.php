@@ -1,0 +1,12 @@
+<select name="opciones" id="opciones" class="form-control form-control-sm">
+    <option value="">Selecciona una destino</option>
+    @if ( $opcion == 'Cat_Extensiones' )
+        @foreach ($aplicaciones as $v)
+            <option value="{{ $v->id }}">{{ $v->nombre }}</option>
+        @endforeach
+    @else
+        @foreach ($aplicaciones as $v => $w)
+        <option value="{{ $w->id }}">{{ $w->nombre }}</option>
+    @endforeach
+    @endif
+</select>

@@ -338,7 +338,7 @@
                                         <select class="form-control form-control-sm"  name="destino_transferencia" id="destino_transferencia">
                                             <option value="">Selecciona una opcion</option>
                                             @foreach ($aplicaciones as $aplicacion)
-                                                <option value="{{ $aplicacion->id }}" >{{ $aplicacion->aplicacion }}</option>
+                                                <option value="{{ $aplicacion->aplicacion }}" >{{ str_replace('_', ' ', $aplicacion->aplicacion) }}</option>
                                             @endforeach
                                             <option value="Cat_Extensiones">Extensión</option>
                                             <option value="Numero_Saliente">Numero saliente</option>

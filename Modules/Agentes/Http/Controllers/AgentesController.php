@@ -10,7 +10,6 @@ use Modules\Agentes\Http\Controllers\CalificarLlamadaController;
 use Modules\Agentes\Http\Controllers\EventosAgenteController;
 use Nimbus\Http\Controllers\ZonaHorariaController;
 
-use Nimbus\Agentes;
 use Nimbus\Did_Enrutamiento;
 use Nimbus\Campanas;
 use Nimbus\Cat_Extensiones;
@@ -71,9 +70,9 @@ class AgentesController extends Controller
     public function store(Request $request)
     {
         $user = auth()->guard('agentes')->user();
-        $empresa_id = $user->Empresas_id;
+        auth()->guard('agentes')->user()->Empresas_id = $user->Empresas_id;
 
-        $fecha = ZonaHorariaController::zona_horaria( $empresa_id );
+        $fecha = ZonaHorariaController::zona_horaria( auth()->guard('agentes')->user()->Empresas_id );
         /**
          * Ponemos en estado disponible al agente
          */
@@ -89,8 +88,8 @@ class AgentesController extends Controller
         /**
          * Generamos el evento para colgar llamada.
          */
-        $e = new EventosAmiController( $empresa_id );
-        $e->colgar_llamada( $request->canal, $empresa_id );
+        $e = new EventosAmiController( auth()->guard('agentes')->user()->Empresas_id );
+        $e->colgar_llamada( $request->canal, auth()->guard('agentes')->user()->Empresas_id );
         /**
          * Despausamos al agente directamente en el MS.
          */
@@ -290,13 +289,53 @@ class AgentesController extends Controller
     public function transferir_llamada( Request $request )
     {
         $e = new EventosAmiController( $request->id_empresa );
-        $contexto = 'transferencia_extension';
 
-        if ( $request->destino_transferencia == 'Cat_Extensiones' ) {
+        if ( $request->destino_transferencia == 'Cat_Extensiones' )
+        {
             $extension = Cat_Extensiones::find( $request->opciones_transferencia );
             $data = $extension->extension;
+            $contexto = 'transferencia_extension';
+        }
+        else
+        {
+            $contexto = 'Inbound_'.$request->opciones_transferencia;
         }
 
         return $e->redirect_transferencia( $request->canal, $contexto, $data );
+    }
+    /**
+     * Funcion para obtener las aplicacion de prioridad 1 que estan configuradas
+     * en el MS
+     */
+    public function AplicacionMS( Request $request )
+    {
+
+        $opcion = $request->opcion;
+
+        if ( $opcion != 'Cat_Extensiones' )
+        {
+            $aplicaciones = DB::table('Did_Enrutamiento')
+                            ->join( 'Dids', 'Did_Enrutamiento.Dids_id', '=', 'Dids.id' )
+                            ->select(
+                                'Did_Enrutamiento.id',
+                                'Did_Enrutamiento.aplicacion',
+                                'Did_Enrutamiento.tabla',
+                                'Did_Enrutamiento.tabla_id',
+                                DB::raw("(SELECT ".$opcion .".nombre FROM ".$opcion ." WHERE ".$opcion .".id = Did_Enrutamiento.tabla_id) AS nombre")
+                            )
+                            ->where('Did_Enrutamiento.prioridad', 1)
+                            ->where('Did_Enrutamiento.activo', 1)
+                            ->where('Did_Enrutamiento.tabla', $opcion)
+                            ->where('Dids.empresas_id', auth()->guard('agentes')->user()->Empresas_id )->get();
+        }
+        else if ( $opcion == 'Cat_Extensiones' )
+        {
+            $aplicaciones = Cat_Extensiones::select( 'id', 'extension as nombre' )->active()->where('Empresas_id', auth()->guard('agentes')->user()->Empresas_id)->get();
+        }
+
+        //dd($aplicaciones);
+
+        return view('agentes::show_aplicaciones', compact( 'aplicaciones', 'opcion' ) );
+
     }
 }

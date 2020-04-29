@@ -440,18 +440,16 @@ $(function () {
    */
 
   $(document).on('change', '#destino_transferencia', function (event) {
-    var opccion = $(this).val();
-    var id_empresa = $("#id_empresa").val();
-    var id = 0 + '&' + opccion + '&1&' + id_empresa;
-    var url = currentURL[0].replace('agentes/') + '/opciones_transferencia/' + id;
+    var opcion = $(this).val();
+    var url = currentURL[0].replace('agentes/') + '/aplicaciones-ms/' + opcion;
 
-    if (opccion == 'Cat_Extensiones') {
+    if (opcion == 'Cat_Extensiones') {
       $('.opcion-transferir-extension').slideDown();
     } else {
       $('.opcion-transferir-extension').slideUp();
     }
 
-    if (opccion == 'Numero_Saliente') {
+    if (opcion == 'Numero_Saliente') {
       $('.input-telefono-transferir').slideDown();
       $('#opciones_transferencia').slideUp();
     } else {
@@ -459,6 +457,9 @@ $(function () {
       $('#opciones_transferencia').slideDown();
       $.ajax({
         url: url,
+        data: {
+          opcion: opcion
+        },
         type: "GET"
       }).done(function (data) {
         $('#opciones_transferencia').html(data);
@@ -493,6 +494,7 @@ $(function () {
         },
         success: function success(result) {
           console.log(result);
+          $("#modal-transferencia").modal('hide');
         }
       });
     }
