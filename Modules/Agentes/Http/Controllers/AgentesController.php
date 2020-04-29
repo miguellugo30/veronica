@@ -290,19 +290,20 @@ class AgentesController extends Controller
     {
         $e = new EventosAmiController( $request->id_empresa );
 
-        $v = explode( '|', $request->opciones_transferencia );
-        $id_destino = $v[1];
         $destino = $request->destino_transferencia;
 
         if ( $request->destino_transferencia == 'Cat_Extensiones' )
         {
             $extension = Cat_Extensiones::find( $request->opciones_transferencia );
             $contexto = 'transferencia_extension';
+            $id_destino = $request->opciones_transferencia;
             $extension = '1153650'.$extension->extension;
             $contexto_hijo = '';
         }
         else
         {
+            $v = explode( '|', $request->opciones_transferencia );
+            $id_destino = $v[1];
             $contexto = 'transferencia_aplicacion';
             $extension = 's';
             $contexto_hijo = 'Inbound_'.$v[0];
