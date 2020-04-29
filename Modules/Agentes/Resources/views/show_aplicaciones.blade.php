@@ -6,7 +6,7 @@
         @endforeach
     @else
         @foreach ($aplicaciones as $v => $w)
-        <option value="{{ $w->tabla_id }}">{{ $w->nombre }}</option>
+        <option value="{{ $w->id.'|'.$w->tabla_id }}">{{ $w->nombre }}</option>
     @endforeach
     @endif
 </select>

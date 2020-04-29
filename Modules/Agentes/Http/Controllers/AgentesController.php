@@ -290,7 +290,8 @@ class AgentesController extends Controller
     {
         $e = new EventosAmiController( $request->id_empresa );
 
-        $id_destino = $request->opciones_transferencia;
+        $v = explode( '|', $request->opciones_transferencia );
+        $id_destino = $v[1];
         $destino = $request->destino_transferencia;
 
         if ( $request->destino_transferencia == 'Cat_Extensiones' )
@@ -304,7 +305,7 @@ class AgentesController extends Controller
         {
             $contexto = 'transferencia_aplicacion';
             $extension = 's';
-            $contexto_hijo = 'Inbound_'.$id_destino;
+            $contexto_hijo = 'Inbound_'.$v[0];
         }
 
         return $e->redirect_transferencia( $request->canal, $contexto, $extension, $id_destino, $destino, $contexto_hijo );
