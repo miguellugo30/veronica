@@ -337,16 +337,10 @@
                                     <td>
                                         <select class="form-control form-control-sm"  name="destino_transferencia" id="destino_transferencia">
                                             <option value="">Selecciona una opcion</option>
-                                            <option value="Audios_Empresa" >Anuncio</option>
-                                            <option value="Aplicacion">Aplicación</option>
-                                            <option value="Campanas">Campaña</option>
-                                            <option value="hangup">Colgar llamada</option>
-                                            <option value="Condiciones_Tiempo">Condición de Tiempo</option>
-                                            <option value="Conferencia">Conferencia</option>
-                                            <option value="Desvios">Desvío</option>
+                                            @foreach ($aplicaciones as $aplicacion)
+                                                <option value="{{ $aplicacion->id }}" >{{ $aplicacion->aplicacion }}</option>
+                                            @endforeach
                                             <option value="Cat_Extensiones">Extensión</option>
-                                            <option value="Ivr">IVR</option>
-                                            <option value="Buzon_Voz">Buzón de voz</option>
                                             <option value="Numero_Saliente">Numero saliente</option>
                                         </select>
                                     </td>

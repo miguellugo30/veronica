@@ -34,7 +34,7 @@ class Did_Enrutamiento extends Model
     */
     public function Did()
     {
-        return $this->hasOne('Nimbus\Dids');
+        return $this->hasOne('Nimbus\Dids', 'id', 'Dids_id');
     }
 
 }

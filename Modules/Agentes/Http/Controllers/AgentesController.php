@@ -11,6 +11,7 @@ use Modules\Agentes\Http\Controllers\EventosAgenteController;
 use Nimbus\Http\Controllers\ZonaHorariaController;
 
 use Nimbus\Agentes;
+use Nimbus\Did_Enrutamiento;
 use Nimbus\Campanas;
 use Nimbus\Cat_Extensiones;
 use Nimbus\Cdr_call_center;
@@ -55,8 +56,14 @@ class AgentesController extends Controller
          * Obtenemos los eventos por los cuales podrá ser pausado el agente
          */
         $eventosAgente = Eventos_Agentes::active()->where('Empresas_id', $agente->Empresas_id)->get();
+        /**
+         * Obtenemos las aplicaciones que estan activas en el MS
+         */
+        $aplicaciones = Did_Enrutamiento::select('id', 'aplicacion')->active()->where( 'prioridad', 1 )->with(['Did' => function ($query){
+                        $query->empresa( auth()->guard('agentes')->user()->Empresas_id )->active();
+                }])->get();
 
-        return view('agentes::index', compact('agente', 'evento', 'eventosAgente', 'modalidad', 'agenteEstado'));
+        return view('agentes::index', compact('agente', 'evento', 'eventosAgente', 'modalidad', 'agenteEstado', 'aplicaciones'));
     }
     /**
      * Función para calificar la llamada
@@ -289,7 +296,6 @@ class AgentesController extends Controller
             $extension = Cat_Extensiones::find( $request->opciones_transferencia );
             $data = $extension->extension;
         }
-
 
         return $e->redirect_transferencia( $request->canal, $contexto, $data );
     }
