@@ -202,7 +202,7 @@ class ACDController extends Controller
                         'Total_de_Llamadas' => 0,
                         'Total_Llamadas_Correctas' => 0,
                         'Promedio_en_Espera' => '00:00:00',
-                        'Service_Level' => '0%',
+                        'Service_Level' => '100%',
                     ];
                     array_push($array, $a);
                 }

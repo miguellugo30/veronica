@@ -24,7 +24,7 @@
     </div><!-- /.box-header -->
     <div class="box-body">
         <div class="row filtro-reporte justify-content-md-center">
-            <div class="col-6 viewIndex">
+            <div class="col-8 viewIndex">
                 <div class="container">
                     <div class="row justify-content-md-center">
                         <div class="alert alert-dark col-10" role="alert">
