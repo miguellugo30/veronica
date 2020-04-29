@@ -71,8 +71,19 @@ class EventosAmiController extends Controller
         return $result;
     }
 
-    public function redirect_transferencia( $canal, $contexto, $extension )
+    public function redirect_transferencia( $canal, $contexto, $extension, $id_destino, $destino, $contexto_hijo )
     {
+
+        if ( $destino == 'Cat_Extensiones' )
+        {
+            $this->conectarAmi()->setVar($canal, 'ID_AGENTE', $id_destino);
+        }
+        else
+        {
+            $this->conectarAmi()->setVar($canal, 'DST', $destino);
+            $this->conectarAmi()->setVar($canal, 'APLI_ID', $id_destino);
+            $this->conectarAmi()->setVar($canal, 'CONTEXTO', $contexto_hijo);
+        }
         $result = $this->conectarAmi()->command('channel redirect '.$canal.' '.$contexto.','.$extension.',1');
         $this->conectarAmi()->disconnect();
         return $result;

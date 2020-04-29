@@ -290,19 +290,24 @@ class AgentesController extends Controller
     {
         $e = new EventosAmiController( $request->id_empresa );
 
+        $id_destino = $request->opciones_transferencia;
+        $destino = $request->destino_transferencia;
+
         if ( $request->destino_transferencia == 'Cat_Extensiones' )
         {
             $extension = Cat_Extensiones::find( $request->opciones_transferencia );
             $contexto = 'transferencia_extension';
-            $data = '1153650'.$extension->extension;
+            $extension = '1153650'.$extension->extension;
+            $contexto_hijo = '';
         }
         else
         {
-            $contexto = 'Inbound_'.$request->opciones_transferencia;
-            $data = 's';
+            $contexto = 'transferencia_extension';
+            $extension = 's';
+            $contexto_hijo = 'Inbound_'.$id_destino;
         }
 
-        return $e->redirect_transferencia( $request->canal, $contexto, $data );
+        return $e->redirect_transferencia( $request->canal, $contexto, $extension, $id_destino, $destino, $contexto_hijo );
     }
     /**
      * Funcion para obtener las aplicacion de prioridad 1 que estan configuradas
