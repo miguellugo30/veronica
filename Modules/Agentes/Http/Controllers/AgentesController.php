@@ -283,7 +283,7 @@ class AgentesController extends Controller
     public function transferir_llamada( Request $request )
     {
         $e = new EventosAmiController( $request->id_empresa );
-        $contexto = 'dial_exten_logeo_web';
+        $contexto = 'transferencia_extension';
 
         if ( $request->destino_transferencia == 'Cat_Extensiones' ) {
             $extension = Cat_Extensiones::find( $request->opciones_transferencia );
