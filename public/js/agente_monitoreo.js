@@ -255,7 +255,7 @@ document.addEventListener('DOMContentLoaded', function () {
           _token: _token
         }
       }).done(function (msg) {
-        $(".modal-body").html(msg);
+        $("#modal-no-disponible .modal-body").html(msg);
         $("#modal-no-disponible").modal({
           backdrop: 'static',
           keyboard: false
@@ -283,7 +283,7 @@ document.addEventListener('DOMContentLoaded', function () {
         $(".estado-agente").html("<i class='fa fa-circle text-success'></i> Disponible");
         $('#no_disponible option[value="0"]').attr("selected", true);
         $("#modal-no-disponible").modal('hide');
-        $(".modal-body").html('');
+        $("#modal-no-disponible .modal-body").html('');
         start();
       });
     }
