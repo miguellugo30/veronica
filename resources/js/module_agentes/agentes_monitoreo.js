@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     _token: _token
                 }
             }).done(function(msg) {
-                $("#modal-no-disponible .modal-body").html(msg)
+                $("#modal-no-disponible  .modal-body").html(msg)
                 $("#modal-no-disponible").modal({ backdrop: 'static', keyboard: false });
             });
         }
