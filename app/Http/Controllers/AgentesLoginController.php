@@ -112,7 +112,7 @@ class AgentesLoginController extends Controller
         /**
          * Se valida que tenga un logueo de extension para colgar
          */
-        $canal = CanalAgentes::select('canal')->where( 'Agentes_id', $request->id_agente )->first();
+        $canal = CanalAgentes::select('canal')->where( 'fk_agentes_id', $request->id_agente )->first();
         if ( !empty( $canal ) )
         {
             $e = new EventosAmiController( $empresa->Empresas_id );
