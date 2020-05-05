@@ -160,7 +160,7 @@ class AgentesLoginController extends Controller
                     foreach ($miembros as $miembro)
                     {
                         $e = new EventosAmiController( $this->agente->Empresas_id );
-                        $colgado = $e->addMember( $miembro->Campanas_id, $miembro->interface );
+                        $colgado = $e->addMember( $miembro->Campanas_id, $miembro->interface, $this->agente->id );
                     }
                 }
 
@@ -200,7 +200,7 @@ class AgentesLoginController extends Controller
                     foreach ($miembros as $miembro)
                     {
                         $e = new EventosAmiController( $this->agente->Empresas_id );
-                        $colgado = $e->addMember( $miembro->Campanas_id, $miembro->interface );
+                        $colgado = $e->addMember( $miembro->Campanas_id, $miembro->interface, $this->agente->id );
                     }
                 }
 

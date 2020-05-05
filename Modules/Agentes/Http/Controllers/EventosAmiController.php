@@ -108,17 +108,19 @@ class EventosAmiController extends Controller
     /**
      * Funcion para agregar un agente a las diferentes campañas que esta agregado
      */
-    public function addMember( $queue, $interface )
+    public function addMember( $queue, $interface, $agente_id )
     {
-        $result = $this->conectarAmi()->queueAdd( $queue, $interface, 1 );
+        $result = $this->conectarAmi()->queueAdd( $queue, $interface, 1, $agente_id );
         $this->conectarAmi()->disconnect();
         return $result;
     }
     /**
      * Funcion para quitar a un las diferentes campañas que esta agregado
      */
-    public function removeMember()
+    public function removeMember($queue, $interface)
     {
-        # code...
+        $result = $this->conectarAmi()->queueRemove( $queue, $interface, 1 );
+        $this->conectarAmi()->disconnect();
+        return $result;
     }
 }
