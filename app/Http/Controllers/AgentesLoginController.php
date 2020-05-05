@@ -105,7 +105,8 @@ class AgentesLoginController extends Controller
 
         if ( !empty( $canal ) )
         {
-            $colgado = EventosAmiController::colgar_llamada( $canal->canal, $empresa->Empresas_id );
+            $e = new EventosAmiController( $empresa->Empresas_id );
+            $colgado = $e->colgar_llamada( $canal->canal );
         }
 
         Auth::guard('agentes')->logout();
