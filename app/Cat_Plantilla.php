@@ -64,6 +64,6 @@ class Cat_Plantilla extends Model
      */
     public function Plantillas_campos()
     {
-        return $this->hasMany('Nimbus\Plantillas_campos', 'fk_cat_plantilla_id','id');
+        return $this->hasMany('Nimbus\Plantillas_campos', 'fk_cat_plantilla_id','id')->orderBy('orden');
     }
 }

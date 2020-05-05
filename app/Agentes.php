@@ -104,5 +104,12 @@ class Agentes extends  Authenticatable
     {
         return $this->hasMany('Nimbus\HistorialEventosAgentes', 'fk_agentes_id', 'id');
     }
+    /**
+     * Relacion uno a uno con Canal_agentes
+     */
+    public function Canal()
+    {
+        return $this->hasOne('Nimbus\CanalAgentes', 'fk_agentes_id', 'id');
+    }
 
 }

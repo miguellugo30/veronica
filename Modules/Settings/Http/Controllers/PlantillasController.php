@@ -67,6 +67,7 @@ class PlantillasController extends Controller
         $data = $request->dataForm;
         $nombrePlantilla = $data['nombre'];
         array_shift( $data );
+        array_shift( $data );
         /**
          * Insertar información de la plantilla
          **/
@@ -96,9 +97,9 @@ class PlantillasController extends Controller
         /**
          * Creamos el logs
          */
-        $mensaje = 'Se creo un nuevo registro, información capturada: '.var_export($request->dataForm, true);
-        $log = new LogController;
-        $log->store('Inserción', 'Cat_Plantilla', $mensaje, '');
+        //$mensaje = 'Se creo un nuevo registro, información capturada: '.var_export($request->dataForm, true);
+        //$log = new LogController;
+        //$log->store('Inserción', 'Cat_Plantilla', $mensaje, '');
 
 
         return redirect()->route('Plantillas.index');

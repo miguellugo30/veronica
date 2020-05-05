@@ -22,6 +22,7 @@ class Registros_base extends Model
         'fecha_actualizacion',
         'fecha_baja',
         'activo',
+        'no_registro'
     ];
     /**
      * Nombre de la tabla

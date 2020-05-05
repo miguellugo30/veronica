@@ -8,12 +8,12 @@ use Illuminate\Support\Facades\Auth;
 use Modules\Agentes\Http\Controllers\LogRegistroEventosController;
 use Modules\Agentes\Http\Controllers\EventosAmiController;
 use Nimbus\Http\Controllers\ZonaHorariaController;
-use Carbon\Carbon;
 use DB;
 
 use Nimbus\Agentes;
 use Nimbus\Miembros_Campana;
 use Nimbus\Crd_Asignacion_Agente;
+use Nimbus\CanalAgentes;
 
 class AgentesLoginController extends Controller
 {
@@ -97,10 +97,7 @@ class AgentesLoginController extends Controller
          * Ponemos al usuario en pausa dentro de la cola
          */
         $this->pausar_agente( $request->input('id_agente'), 1 );
-        /**
-         * Se valida que tenga un logueo de extension para colgar
-         */
-        $canal = Crd_Asignacion_Agente::select('canal')->where( 'Agentes_id', $request->input('id_agente') )->orderBy('id', 'desc')->first();
+
         $empresa = Agentes::select('Empresas_id')->where( 'id', $request->input('id_agente') )->first();
         /**
          * Obtenemos la informacion de la tabla miembros campana
@@ -112,6 +109,10 @@ class AgentesLoginController extends Controller
             $e = new EventosAmiController( $this->agente->Empresas_id );
             $colgado = $e->removeMember( $miembro->Campanas_id, $miembro->interface );
         }
+        /**
+         * Se valida que tenga un logueo de extension para colgar
+         */
+        $canal = CanalAgentes::select('canal')->where( 'Agentes_id', $request->id_agente )->first();
         if ( !empty( $canal ) )
         {
             $e = new EventosAmiController( $empresa->Empresas_id );
