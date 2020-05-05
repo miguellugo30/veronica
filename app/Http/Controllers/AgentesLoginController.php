@@ -14,7 +14,6 @@ use DB;
 use Nimbus\Agentes;
 use Nimbus\Miembros_Campana;
 use Nimbus\Crd_Asignacion_Agente;
-use Nimbus\HistorialEventosAgentes;
 
 class AgentesLoginController extends Controller
 {
@@ -64,7 +63,6 @@ class AgentesLoginController extends Controller
     {
         if (auth()->guard('agentes')->attempt(['email' => $request->email, 'password' => $request->password]))
         {
-            //$fecha = $this->zona_horaria( auth()->guard('agentes')->id() );
             $fecha = ZonaHorariaController::zona_horaria_agente( auth()->guard('agentes')->id() );
             $v = DB::select("CALL SP_Inserta_Estado_Agentes(".auth()->guard('agentes')->id().",'$fecha')");
             /**
@@ -88,7 +86,6 @@ class AgentesLoginController extends Controller
     public function agentesLogout( Request $request )
     {
 
-        //$fecha = $this->zona_horaria( auth()->guard('agentes')->id() );
         $fecha = ZonaHorariaController::zona_horaria_agente( auth()->guard('agentes')->id() );
 
         LogRegistroEventosController::actualiza_evento( $request->input('id_agente'), $request->input('id_evento'), $request->input('cierre') );
@@ -108,7 +105,7 @@ class AgentesLoginController extends Controller
 
         if ( !empty( $canal ) )
         {
-            //$colgado = EventosAmiController::colgar_llamada( $canal->canal, $empresa->Empresas_id );
+            $colgado = EventosAmiController::colgar_llamada( $canal->canal, $empresa->Empresas_id );
         }
 
         Auth::guard('agentes')->logout();
@@ -132,15 +129,15 @@ class AgentesLoginController extends Controller
         /**
          * Obtenemos la modalidad en la cual esta el agente
          */
-        $modalidad = $this->modalidad_logueo( $this->agente->id );
+        list( $estado, $modalidad ) = $this->modalidad_logueo( $this->agente->id );
         /**
          * Validamos que la extension ingreso sea la misma a la que
-         * se tiene guardad en la base de datos
+         * se tiene guardada en la base de datos
          */
         if( $request->input('extension') == $this->agente->extension )
         {
             /**
-             * Validamos que la extension no este disponible
+             * Validamos que la extension no este ocupada
              */
             $disponible = $this->Valida_Extension( $this->agente->extension );
 
@@ -150,6 +147,21 @@ class AgentesLoginController extends Controller
                  * Ponemos al usuario en pausa dentro de la cola
                  */
                 $this->pausar_agente( $this->agente->id, 0 );
+                /**
+                 * Si la modalidad de la campana es Canal cerrado agregamos a los agentes en
+                 * las colas que este
+                 */
+                if ( $modalidad == 'canal_cerrado' )
+                {
+                    /**
+                     * Obtenemos la informacion de la tabla miembros campana
+                     */
+                    $miembros = Miembros_Campana::where('Agentes_id', $this->agente->id)->get();
+                    foreach ($miembros as $miembro)
+                    {
+                        $colgado = EventosAmiController::addMember( $miembro->Campanas_id, $miembro->interface );
+                    }
+                }
 
                 $evento = LogRegistroEventosController::registro_evento( $this->agente->id, 1 );
 
@@ -163,15 +175,32 @@ class AgentesLoginController extends Controller
         else
         {
             /**
-             * Validamos que la extension no este disponible
+             * Validamos que la extension no este ocupada
              */
             $disponible = $this->Valida_Extension( $request->input('extension') );
 
             if ( $disponible->Historial_Eventos->first()->fk_cat_estado_agente_id == 1 || $disponible->Historial_Eventos->first()->fk_cat_estado_agente_id == 11 )
             {
-                $this->Actualiza_Estado_Extension_Agente( $this->agente->id, $modalidad, $request->input('extension') );
-
+                $this->Actualiza_Estado_Extension_Agente( $this->agente->id, $estado, $request->input('extension') );
+                /**
+                 * Agregamos al agente dentro de las campanas
+                 */
                 $evento = LogRegistroEventosController::registro_evento( $this->agente->id, 1 );
+                /**
+                 * Si la modalidad de la campana es Canal cerrado agregamos a los agentes en
+                 * las colas que este
+                 */
+                if ( $modalidad == 'canal_cerrado' )
+                {
+                    /**
+                     * Obtenemos la informacion de la tabla miembros campana
+                     */
+                    $miembros = Miembros_Campana::where('Agentes_id', $this->agente->id)->get();
+                    foreach ($miembros as $miembro)
+                    {
+                        $colgado = EventosAmiController::addMember( $miembro->Campanas_id, $miembro->interface );
+                    }
+                }
 
                 return redirect()->action('\Modules\Agentes\Http\Controllers\AgentesController@index', ['evento' => $evento->id]);
             }
@@ -198,7 +227,6 @@ class AgentesLoginController extends Controller
     {
         Agentes::where( 'id', $id_agente )->update(['extension' => $extension]);
 
-        //$fecha = $this->zona_horaria( auth()->guard('agentes')->id() );
         $fecha = ZonaHorariaController::zona_horaria_agente( auth()->guard('agentes')->id() );
         DB::select("CALL SP_Actualiza_Estado_Agentes(".$id_agente.",'$estado','NULL','$fecha')");
     }
@@ -231,20 +259,12 @@ class AgentesLoginController extends Controller
         {
             if ( $modalidad->modalidad_logue == 'canal_abierto' )
             {
-                return 11;
+                return array( 11, $modalidad->modalidad_logue );
             }
             else
             {
-                return 2 ;
+                return array( 2, $modalidad->modalidad_logue );
             }
         }
     }
-    /*
-     * Funcion para setear la hora conforme a la zona horaria de la empresa
-     public static function zona_horaria( $id_agente )
-     {
-         $zona = DB::select("CALL SP_Obten_Zona_Horaria(".$id_agente.")");
-         return Carbon::createFromFormat('Y-m-d H:i:s', Carbon::now($zona[0]->zona_horaria))->toDateTimeString();
-        }
-    */
 }

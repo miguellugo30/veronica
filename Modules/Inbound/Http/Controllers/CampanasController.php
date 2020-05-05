@@ -107,12 +107,20 @@ class CampanasController extends Controller
              * Obtenemos el estado actual ( Pause ) del agente
              */
             $estado = $this->estado_agente( $agentesParticipantes[$i] );
+            /**
+             * Si la modalidad de logueo es canal cerrado, obtenemos la extension de los agentes
+             */
+            $extension = $agentesParticipantes[$i];
+            if ( $request->input('mlogeo') == 'canal_cerrado' ) {
+                $c = Agentes::select('extension')->where('id', $agentesParticipantes[$i] )->first();
+                $extension = $c->extension;
+            }
 
             Miembros_Campana::create(
                 [
                     'membername' =>  $agentesParticipantes[$i],
                     //'queue_name' => $campana->id,
-                    'interface' => $interface.$agentesParticipantes[$i],
+                    'interface' => $interface.$extension,
                     'paused' => $estado['paused'],
                     'Agentes_id' =>  $agentesParticipantes[$i],
                     'Campanas_id'   => $campana->id
@@ -213,12 +221,20 @@ class CampanasController extends Controller
              * Obtenemos el estado actual ( Pause ) del agente
              */
             $estado = $this->estado_agente( $agentesParticipantes[$i] );
+            /**
+             * Si la modalidad de logueo es canal cerrado, obtenemos la extension de los agentes
+             */
+            $extension = $agentesParticipantes[$i];
+            if ( $request->input('mlogeo') == 'canal_cerrado' ) {
+                $c = Agentes::select('extension')->where('id', $agentesParticipantes[$i] )->first();
+                $extension = $c->extension;
+            }
 
             Miembros_Campana::create(
                 [
                     'membername' =>  $agentesParticipantes[$i],
                     //'queue_name' => $id,
-                    'interface' => $interface.$agentesParticipantes[$i],
+                    'interface' => $interface.$extension,
                     'paused' => $estado,
                     'Agentes_id' =>  $agentesParticipantes[$i],
                     'Campanas_id'   => $id
