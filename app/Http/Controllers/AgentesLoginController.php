@@ -140,6 +140,8 @@ class AgentesLoginController extends Controller
          * Obtenemos la modalidad en la cual esta el agente
          */
         list( $estado, $modalidad ) = $this->modalidad_logueo( $this->agente->id );
+
+        //dd( $estado );
         /**
          * Validamos que la extension ingreso sea la misma a la que
          * se tiene guardada en la base de datos
@@ -163,6 +165,8 @@ class AgentesLoginController extends Controller
                  */
                 if ( $modalidad == 'canal_cerrado' )
                 {
+                    $fecha = ZonaHorariaController::zona_horaria_agente( auth()->guard('agentes')->id() );
+                    DB::select("CALL SP_Actualiza_Estado_Agentes(".auth()->guard('agentes')->id().",$estado,NULL,'$fecha')");
                     /**
                      * Obtenemos la informacion de la tabla miembros campana
                      */
@@ -203,6 +207,8 @@ class AgentesLoginController extends Controller
                  */
                 if ( $modalidad == 'canal_cerrado' )
                 {
+                    $fecha = ZonaHorariaController::zona_horaria_agente( auth()->guard('agentes')->id() );
+                    DB::select("CALL SP_Actualiza_Estado_Agentes(".auth()->guard('agentes')->id().",$estado,NULL,'$fecha')");
                     /**
                      * Obtenemos la informacion de la tabla miembros campana
                      */
