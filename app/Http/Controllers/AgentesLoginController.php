@@ -102,7 +102,16 @@ class AgentesLoginController extends Controller
          */
         $canal = Crd_Asignacion_Agente::select('canal')->where( 'Agentes_id', $request->input('id_agente') )->orderBy('id', 'desc')->first();
         $empresa = Agentes::select('Empresas_id')->where( 'id', $request->input('id_agente') )->first();
-
+        /**
+         * Obtenemos la informacion de la tabla miembros campana
+         * Para quitar al agente de la campanas
+         */
+        $miembros = Miembros_Campana::where('Agentes_id', $request->id_agente )->get();
+        foreach ($miembros as $miembro)
+        {
+            $e = new EventosAmiController( $this->agente->Empresas_id );
+            $colgado = $e->removeMember( $miembro->Campanas_id, $miembro->interface );
+        }
         if ( !empty( $canal ) )
         {
             $e = new EventosAmiController( $empresa->Empresas_id );

@@ -119,7 +119,7 @@ class EventosAmiController extends Controller
      */
     public function removeMember($queue, $interface)
     {
-        $result = $this->conectarAmi()->queueRemove( $queue, $interface, 1 );
+        $result = $this->conectarAmi()->queueRemove( $queue, $interface );
         $this->conectarAmi()->disconnect();
         return $result;
     }
