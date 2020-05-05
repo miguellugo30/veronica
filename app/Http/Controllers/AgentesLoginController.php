@@ -159,7 +159,8 @@ class AgentesLoginController extends Controller
                     $miembros = Miembros_Campana::where('Agentes_id', $this->agente->id)->get();
                     foreach ($miembros as $miembro)
                     {
-                        $colgado = EventosAmiController::addMember( $miembro->Campanas_id, $miembro->interface );
+                        $e = new EventosAmiController( $this->agente->Empresas_id );
+                        $colgado = $e->addMember( $miembro->Campanas_id, $miembro->interface );
                     }
                 }
 
@@ -198,7 +199,8 @@ class AgentesLoginController extends Controller
                     $miembros = Miembros_Campana::where('Agentes_id', $this->agente->id)->get();
                     foreach ($miembros as $miembro)
                     {
-                        $colgado = EventosAmiController::addMember( $miembro->Campanas_id, $miembro->interface );
+                        $e = new EventosAmiController( $this->agente->Empresas_id );
+                        $colgado = $e->addMember( $miembro->Campanas_id, $miembro->interface );
                     }
                 }
 
