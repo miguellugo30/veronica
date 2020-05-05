@@ -110,7 +110,7 @@ class EventosAmiController extends Controller
      */
     public function addMember( $queue, $interface, $agente_id )
     {
-        $result = $this->conectarAmi()->queueAdd( $queue, $interface, 1, $agente_id );
+        $result = $this->conectarAmi()->command( 'queue add member '.$interface.' to '.$queue.' penalty 0 as '.$agente_id );
         $this->conectarAmi()->disconnect();
         return $result;
     }
