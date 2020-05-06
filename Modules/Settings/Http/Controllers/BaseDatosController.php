@@ -72,12 +72,12 @@ class BaseDatosController extends Controller
         /**
          * Creamos la base de datos
          */
-        $baseDatos = Bases_Datos::create([
-                                            'fk_empresas_id' => $this->empresa_id,
-                                            'fk_cat_plantilla_id' => $request->plantilla,
-                                            'nombre' => $request->nombre,
-                                            'fecha_creacion' => date( 'Y-m-d H:i:s'),
-                                        ]);
+         $baseDatos = Bases_Datos::create([
+             'fk_empresas_id' => $this->empresa_id,
+             'fk_cat_plantilla_id' => $request->plantilla,
+             'nombre' => $request->nombre,
+             'fecha_creacion' => date( 'Y-m-d H:i:s'),
+             ]);
         /**
          * Obtenemos la plantilla seleccionada
          */
@@ -261,6 +261,8 @@ class BaseDatosController extends Controller
         $dataArray = [];
         $fecha_registro = date( 'Y-m-d H:i:s');
 
+        $num_campos = count( $campos );
+        $j = 1;
         foreach ($data->data as $key ) {
 
             $i = 0;
@@ -271,10 +273,15 @@ class BaseDatosController extends Controller
                     'fk_cat_plantilla_id' => $plantilla,
                     'fk_bases_datos' => $idBaseDatos,
                     'valor' => $v,
-                    'fecha_registro' => $fecha_registro
+                    'fecha_registro' => $fecha_registro,
+                    'no_registro' => $j,
                 );
 
                 $dataArray[] = $data;
+
+                if (  ($i + 1 ) == $num_campos ) {
+                    $j++;
+                }
 
                 $i++;
             }
