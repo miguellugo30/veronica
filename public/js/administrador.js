@@ -2136,13 +2136,13 @@ $(function () {
 
   /*$(document).on('dblclick', '#tableDid tbody tr', function(event) {
       event.preventDefault();
-       $(".viewIndex").slideUp();
+        $(".viewIndex").slideUp();
       $(".viewCreate").slideDown();
-       let id = $(this).data("id");
+        let id = $(this).data("id");
       let url = currentURL + "/did/" + id + "/edit";
       $.get(url, function(data, textStatus, jqXHR) {
           $(".viewCreate").html(data);
-       });
+        });
   });
   */
 

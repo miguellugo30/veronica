@@ -213,4 +213,60 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     });
+    /**
+     * Evento para transferir llamadas
+     */
+    $(document).on('click', '#realizar-transferir-llamada', function(event) {
+
+        let idAgente = $("#id_agente").val();
+        let canal = $("#canal_entrante").val();
+        let destino_transferencia = $("#destino_transferencia").val();
+        let opciones_transferencia = $("#opciones").val();
+        let id_empresa = $("#id_empresa").val();
+        let uniqueid = $("#uniqueid").val();
+        let _token = $("input[name=_token]").val();
+        let transferirPantalla = null;
+
+        if ($('#tranferir-pantalla').is(':checked')) {
+            transferirPantalla = 1;
+        } else {
+            transferirPantalla = 0;
+        }
+        if (canal == null) {
+
+            Swal.fire(
+                'Error!',
+                'No se puede transferir, sin tener una llamada activa.',
+                'error'
+            )
+
+        } else {
+
+            let url = currentURL[0].replace('agentes/') + '/transferir-llamada';
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: {
+                    idAgente: idAgente,
+                    canal: canal,
+                    destino_transferencia: destino_transferencia,
+                    opciones_transferencia: opciones_transferencia,
+                    id_empresa: id_empresa,
+                    uniqueid: uniqueid,
+                    transferirPantalla: transferirPantalla,
+                    _token: _token
+                },
+                success: function(result) {
+                    console.log(result);
+                    if (transferirPantalla == 1) {
+                        start();
+                    }
+                    $("#modal-transferencia").modal('hide');
+                }
+            });
+
+        }
+
+    });
 });

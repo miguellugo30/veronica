@@ -110,7 +110,7 @@ $(function() {
         let opcion = $(this).val();
         let url = currentURL[0].replace('agentes/') + '/aplicaciones-ms/' + opcion;
 
-        if (opcion == 'Cat_Extensiones') {
+        if (opcion == 'Agentes') {
             $('.opcion-transferir-extension').slideDown();
         } else {
             $('.opcion-transferir-extension').slideUp();
@@ -137,48 +137,5 @@ $(function() {
                     $('#opciones_transferencia').html(data);
                 });
         }
-    });
-
-    $(document).on('click', '#realizar-transferir-llamada', function(event) {
-
-        let idAgente = $("#id_agente").val();
-        let canal = $("#canal_entrante").val();
-        let destino_transferencia = $("#destino_transferencia").val();
-        let opciones_transferencia = $("#opciones").val();
-        let id_empresa = $("#id_empresa").val();
-        let _token = $("input[name=_token]").val();
-
-        console.log(idAgente + " " + canal + " " + destino_transferencia + " " + opciones_transferencia + " " + id_empresa + " " + _token);
-
-        if (canal == null) {
-
-            Swal.fire(
-                'Error!',
-                'No se puede transferir, sin tener una llamada activa.',
-                'error'
-            )
-
-        } else {
-
-            let url = currentURL[0].replace('agentes/') + '/transferir-llamada';
-
-            $.ajax({
-                url: url,
-                type: 'POST',
-                data: {
-                    idAgente: idAgente,
-                    canal: canal,
-                    destino_transferencia: destino_transferencia,
-                    opciones_transferencia: opciones_transferencia,
-                    id_empresa: id_empresa,
-                    _token: _token
-                },
-                success: function(result) {
-                    console.log(result);
-                    $("#modal-transferencia").modal('hide');
-                }
-            });
-        }
-
     });
 });

@@ -341,6 +341,7 @@
                                                 <option value="{{ $aplicacion->aplicacion }}" >{{ str_replace('_', ' ', $aplicacion->aplicacion) }}</option>
                                             @endforeach
                                             <option value="Cat_Extensiones">Extensión</option>
+                                            <option value="Agentes">Agentes</option>
                                             <option value="Numero_Saliente">Numero saliente</option>
                                         </select>
                                     </td>

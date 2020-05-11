@@ -134,8 +134,8 @@ $(function () {
     $('#tituloModal').html('Nuevo Audio');
     $('#action').removeClass('deleteAudio');
     $('#action').addClass('saveAudio');
-     let url = currentURL + "/Audios/create";
-     $.get(url, function(data, textStatus, jqXHR) {
+      let url = currentURL + "/Audios/create";
+      $.get(url, function(data, textStatus, jqXHR) {
         $('#modal').modal('show');
         $("#modal-body").html(data);
     });

@@ -317,6 +317,57 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     }
   });
+  /**
+   * Evento para transferir llamadas
+   */
+
+  $(document).on('click', '#realizar-transferir-llamada', function (event) {
+    var idAgente = $("#id_agente").val();
+    var canal = $("#canal_entrante").val();
+    var destino_transferencia = $("#destino_transferencia").val();
+    var opciones_transferencia = $("#opciones").val();
+    var id_empresa = $("#id_empresa").val();
+    var uniqueid = $("#uniqueid").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var transferirPantalla = null;
+
+    if ($('#tranferir-pantalla').is(':checked')) {
+      transferirPantalla = 1;
+    } else {
+      transferirPantalla = 0;
+    }
+
+    if (canal == null) {
+      Swal.fire('Error!', 'No se puede transferir, sin tener una llamada activa.', 'error');
+    } else {
+      var url = currentURL[0].replace('agentes/') + '/transferir-llamada';
+      $.ajax({
+        url: url,
+        type: 'POST',
+        data: {
+          idAgente: idAgente,
+          canal: canal,
+          destino_transferencia: destino_transferencia,
+          opciones_transferencia: opciones_transferencia,
+          id_empresa: id_empresa,
+          uniqueid: uniqueid,
+          transferirPantalla: transferirPantalla,
+          _token: _token
+        },
+        success: function success(result) {
+          console.log(result);
+
+          if (transferirPantalla == 1) {
+            start();
+          }
+
+          $("#modal-transferencia").modal('hide');
+        }
+      });
+    }
+  });
 });
 
 /***/ }),
@@ -443,7 +494,7 @@ $(function () {
     var opcion = $(this).val();
     var url = currentURL[0].replace('agentes/') + '/aplicaciones-ms/' + opcion;
 
-    if (opcion == 'Cat_Extensiones') {
+    if (opcion == 'Agentes') {
       $('.opcion-transferir-extension').slideDown();
     } else {
       $('.opcion-transferir-extension').slideUp();
@@ -463,39 +514,6 @@ $(function () {
         type: "GET"
       }).done(function (data) {
         $('#opciones_transferencia').html(data);
-      });
-    }
-  });
-  $(document).on('click', '#realizar-transferir-llamada', function (event) {
-    var idAgente = $("#id_agente").val();
-    var canal = $("#canal_entrante").val();
-    var destino_transferencia = $("#destino_transferencia").val();
-    var opciones_transferencia = $("#opciones").val();
-    var id_empresa = $("#id_empresa").val();
-
-    var _token = $("input[name=_token]").val();
-
-    console.log(idAgente + " " + canal + " " + destino_transferencia + " " + opciones_transferencia + " " + id_empresa + " " + _token);
-
-    if (canal == null) {
-      Swal.fire('Error!', 'No se puede transferir, sin tener una llamada activa.', 'error');
-    } else {
-      var url = currentURL[0].replace('agentes/') + '/transferir-llamada';
-      $.ajax({
-        url: url,
-        type: 'POST',
-        data: {
-          idAgente: idAgente,
-          canal: canal,
-          destino_transferencia: destino_transferencia,
-          opciones_transferencia: opciones_transferencia,
-          id_empresa: id_empresa,
-          _token: _token
-        },
-        success: function success(result) {
-          console.log(result);
-          $("#modal-transferencia").modal('hide');
-        }
       });
     }
   });

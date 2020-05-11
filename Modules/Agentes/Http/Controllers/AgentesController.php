@@ -13,6 +13,7 @@ use Nimbus\Http\Controllers\ZonaHorariaController;
 use Nimbus\Did_Enrutamiento;
 use Nimbus\Campanas;
 use Nimbus\Cat_Extensiones;
+use Nimbus\Cdr_Asigancion_Agente;
 use Nimbus\Cdr_call_center;
 use Nimbus\Crd_Asignacion_Agente;
 use Nimbus\Miembros_Campana;
@@ -299,6 +300,29 @@ class AgentesController extends Controller
             $id_destino = $request->opciones_transferencia;
             $extension = '1153650'.$extension->extension;
             $contexto_hijo = '';
+            /**
+             * Si se encuentra la transferencia de pantalla
+             * se hacen las acciones
+             */
+            if ( $request->transferirPantalla == 1 )
+            {
+                /**
+                 * Se recupera el id del agente que tiene en uso la extension
+                 * a transferir
+                 */
+                $extension = 'agent/'.$request->opciones_transferencia;
+                /**
+                 * Actualizamos el registro en CDR Asignacion Agente
+                 * para el agente que ahora tendra la llamada
+                 */
+                Crd_Asignacion_Agente::where('uniqueid', $request->uniqueid)->update(['Agentes_id' => $request->opciones_transferencia]);
+                /**
+                 * Ponemos en estado disponible al agente
+                 */
+                $fecha = ZonaHorariaController::zona_horaria( auth()->guard('agentes')->user()->Empresas_id );
+                DB::select("CALL SP_Actualiza_Estado_Agentes(".$request->id_agente.",2,0,'$fecha')");
+            }
+
         }
         else
         {
@@ -320,7 +344,16 @@ class AgentesController extends Controller
 
         $opcion = $request->opcion;
 
-        if ( $opcion != 'Cat_Extensiones' )
+        if ( $opcion == 'Cat_Extensiones' )
+        {
+            $aplicaciones = Cat_Extensiones::select( 'id', 'extension as nombre' )->active()->where('Empresas_id', auth()->guard('agentes')->user()->Empresas_id)->get();
+        }
+        else if ( $opcion == 'Agentes' )
+        {
+            $fecha = ZonaHorariaController::zona_horaria( auth()->guard('agentes')->user()->Empresas_id );
+            $aplicaciones = DB::select( "call SP_Agentes_Activos_Empresa(".auth()->guard('agentes')->user()->Empresas_id.", '".$fecha."')");
+        }
+        else
         {
             $aplicaciones = DB::table('Did_Enrutamiento')
                             ->join( 'Dids', 'Did_Enrutamiento.Dids_id', '=', 'Dids.id' )
@@ -336,13 +369,6 @@ class AgentesController extends Controller
                             ->where('Did_Enrutamiento.tabla', $opcion)
                             ->where('Dids.empresas_id', auth()->guard('agentes')->user()->Empresas_id )->get();
         }
-        else if ( $opcion == 'Cat_Extensiones' )
-        {
-            $aplicaciones = Cat_Extensiones::select( 'id', 'extension as nombre' )->active()->where('Empresas_id', auth()->guard('agentes')->user()->Empresas_id)->get();
-        }
-
-        //dd($aplicaciones);
-
         return view('agentes::show_aplicaciones', compact( 'aplicaciones', 'opcion' ) );
 
     }
