@@ -311,7 +311,7 @@ class AgentesController extends Controller
                  * Se recupera el id del agente que tiene en uso la extension
                  * a transferir
                  */
-                $extension = 'agent/'.$request->opciones_transferencia;
+                $extension = 'Agent/'.$request->opciones_transferencia;
                 /**
                  * Actualizamos el registro en CDR Asignacion Agente
                  * para el agente que ahora tendra la llamada
