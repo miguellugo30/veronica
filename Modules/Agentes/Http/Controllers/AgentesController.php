@@ -316,12 +316,12 @@ class AgentesController extends Controller
                  * Actualizamos el registro en CDR Asignacion Agente
                  * para el agente que ahora tendra la llamada
                  */
-                DB::select("CALL SP_Actualiza_Estado_Agentes(".$request->id_agente.",".$request->opciones_transferencia.",0,'$fecha')");
+                DB::select("CALL SP_Actualiza_Estado_Agentes(".$request->opciones_transferencia.",8,0,'$fecha')");
                 Crd_Asignacion_Agente::where('uniqueid', $request->uniqueid)->update(['Agentes_id' => $request->opciones_transferencia]);
                 /**
                  * Ponemos en estado disponible al agente
                  */
-                DB::select("CALL SP_Actualiza_Estado_Agentes(".$request->id_agente.",2,0,'$fecha')");
+                DB::select("CALL SP_Actualiza_Estado_Agentes(".$request->idAgente.",2,0,'$fecha')");
             }
             else
             {
