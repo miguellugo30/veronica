@@ -306,6 +306,7 @@ class AgentesController extends Controller
              */
             if ( $request->transferirPantalla == 1 )
             {
+                $fecha = ZonaHorariaController::zona_horaria( auth()->guard('agentes')->user()->Empresas_id );
                 /**
                  * Se recupera el id del agente que tiene en uso la extension
                  * a transferir
@@ -315,11 +316,11 @@ class AgentesController extends Controller
                  * Actualizamos el registro en CDR Asignacion Agente
                  * para el agente que ahora tendra la llamada
                  */
+                DB::select("CALL SP_Actualiza_Estado_Agentes(".$request->id_agente.",".$request->opciones_transferencia.",0,'$fecha')");
                 Crd_Asignacion_Agente::where('uniqueid', $request->uniqueid)->update(['Agentes_id' => $request->opciones_transferencia]);
                 /**
                  * Ponemos en estado disponible al agente
                  */
-                $fecha = ZonaHorariaController::zona_horaria( auth()->guard('agentes')->user()->Empresas_id );
                 DB::select("CALL SP_Actualiza_Estado_Agentes(".$request->id_agente.",2,0,'$fecha')");
             }
             else
