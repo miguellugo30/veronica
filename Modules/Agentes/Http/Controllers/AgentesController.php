@@ -293,7 +293,7 @@ class AgentesController extends Controller
 
         $destino = $request->destino_transferencia;
 
-        if ( $request->destino_transferencia == 'Cat_Extensiones' )
+        if ( $request->destino_transferencia == 'Cat_Extensiones' || $request->destino_transferencia == 'Agentes' )
         {
             $extension = Cat_Extensiones::find( $request->opciones_transferencia );
             $contexto = 'transferencia_extension';
