@@ -295,10 +295,10 @@ class AgentesController extends Controller
 
         if ( $request->destino_transferencia == 'Cat_Extensiones' || $request->destino_transferencia == 'Agentes' )
         {
-            $extension = Cat_Extensiones::find( $request->opciones_transferencia );
+
             $contexto = 'transferencia_extension';
             $id_destino = $request->opciones_transferencia;
-            $extension = '1153650'.$extension->extension;
+
             $contexto_hijo = '';
             /**
              * Si se encuentra la transferencia de pantalla
@@ -321,6 +321,12 @@ class AgentesController extends Controller
                  */
                 $fecha = ZonaHorariaController::zona_horaria( auth()->guard('agentes')->user()->Empresas_id );
                 DB::select("CALL SP_Actualiza_Estado_Agentes(".$request->id_agente.",2,0,'$fecha')");
+            }
+            else
+            {
+                $extension = Cat_Extensiones::find( $request->opciones_transferencia );
+                $extension = '1153650'.$extension->extension;
+
             }
 
         }
