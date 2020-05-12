@@ -154,8 +154,6 @@ class AgentesController extends Controller
          * Obtenemos el canal de llamada entrante
          */
         $canal_entrante = Cdr_call_center::where('uniqueid', $uniqueid)->first();
-
-
         /**
          * Obtenemos la información de la campana a la cual esta el agente y la llamada
          */
@@ -296,8 +294,6 @@ class AgentesController extends Controller
         if ( $request->destino_transferencia == 'Cat_Extensiones' || $request->destino_transferencia == 'Agentes' )
         {
             $contexto = 'transferencia_extension';
-            $id_destino = $request->opciones_transferencia;
-
             $contexto_hijo = '';
             /**
              * Si se encuentra la transferencia de pantalla
@@ -312,6 +308,7 @@ class AgentesController extends Controller
                  */
                 $opcionTransferencia = explode( '|', $request->opciones_transferencia );
                 $extension = $opcionTransferencia[1];
+                $id_destino = $opcionTransferencia[2];
                 /**
                  * Actualizamos el registro en CDR Asignacion Agente
                  * para el agente que ahora tendra la llamada
@@ -327,6 +324,7 @@ class AgentesController extends Controller
             {
                 $extension = Cat_Extensiones::find( $request->opciones_transferencia );
                 $extension = '1153650'.$extension->extension;
+                $id_destino = $request->opciones_transferencia;
             }
 
         }
