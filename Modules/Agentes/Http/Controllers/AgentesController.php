@@ -92,6 +92,7 @@ class AgentesController extends Controller
          */
         $e = new EventosAmiController( auth()->guard('agentes')->user()->Empresas_id );
         $e->colgar_llamada( $request->canal, auth()->guard('agentes')->user()->Empresas_id );
+        $e->colgar_llamada( $request->canal_entrante, auth()->guard('agentes')->user()->Empresas_id );
         /**
          * Despausamos al agente directamente en el MS.
          */

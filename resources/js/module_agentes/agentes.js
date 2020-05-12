@@ -138,6 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         let id_agente = $('#id_agente').val();
         let canal = $("#canal").val();
+        let canal_entrante = $("#canal_entrante").val();
         let id_calificacion = $("#calificacion option:selected").data('calificacionid');
         let uniqueid = $("#uniqueid").val();
         let _token = $("input[name=_token]").val();
@@ -151,6 +152,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 uniqueid: uniqueid,
                 id_calificacion: id_calificacion,
                 id_agente: id_agente,
+                canal_entrante: canal_entrante,
+
                 datosFormulario: datosFormulario,
                 _token: _token
             }
