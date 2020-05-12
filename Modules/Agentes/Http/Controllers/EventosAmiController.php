@@ -91,7 +91,7 @@ class EventosAmiController extends Controller
     public function redirect_transferencia( $canal, $contexto, $extension, $id_destino, $destino, $contexto_hijo )
     {
 
-        if ( $destino == 'Cat_Extensiones' )
+        if ( $destino == 'Cat_Extensiones' || $destino == 'Agentes' )
         {
             $this->conectarAmi()->setVar($canal, 'ID_AGENTE', $id_destino);
         }
