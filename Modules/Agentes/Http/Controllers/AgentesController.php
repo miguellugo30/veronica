@@ -318,11 +318,13 @@ class AgentesController extends Controller
                  * Actualizamos el registro en CDR Asignacion Agente
                  * para el agente que ahora tendra la llamada
                  */
+                $e->despausar_agente( 'Agent/'.$opcionTransferencia[0], 'pause' );
                 DB::select("CALL SP_Actualiza_Estado_Agentes(".$opcionTransferencia[0].",8,0,'$fecha')");
                 Crd_Asignacion_Agente::where(['uniqueid' => $request->uniqueid, 'canal' => 'Agent/'.$opcionTransferencia[0]])->update(['Agentes_id' => $opcionTransferencia[0]]);
                 /**
                  * Ponemos en estado disponible al agente
                  */
+                $e->despausar_agente( 'Agent/'.$request->idAgente, 'unpause' );
                 DB::select("CALL SP_Actualiza_Estado_Agentes(".$request->idAgente.",2,0,'$fecha')");
             }
             else
