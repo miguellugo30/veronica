@@ -2,7 +2,7 @@
     <option value="">Selecciona una destino</option>
     @if ( $opcion == 'Agentes' )
         @foreach ($aplicaciones as $v)
-            <option value="{{ $v->id }}">{{ $v->extension_real }}</option>
+            <option value="{{ $v->id.'|'.$v->extension }}">{{ $v->extension_real }}</option>
         @endforeach
     @elseif ( $opcion == 'Cat_Extensiones' )
         @foreach ($aplicaciones as $v)

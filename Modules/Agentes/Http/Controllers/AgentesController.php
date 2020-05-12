@@ -295,9 +295,6 @@ class AgentesController extends Controller
 
         if ( $request->destino_transferencia == 'Cat_Extensiones' || $request->destino_transferencia == 'Agentes' )
         {
-
-            $extension = Cat_Extensiones::find( $request->opciones_transferencia );
-            $extension = '1153650'.$extension->extension;
             $contexto = 'transferencia_extension';
             $id_destino = $request->opciones_transferencia;
 
@@ -313,17 +310,23 @@ class AgentesController extends Controller
                  * Se recupera el id del agente que tiene en uso la extension
                  * a transferir
                  */
-
+                $opcionTransferencia = explode( '|', $request->opciones_transferencia );
+                $extension = $opcionTransferencia[1];
                 /**
                  * Actualizamos el registro en CDR Asignacion Agente
                  * para el agente que ahora tendra la llamada
                  */
-                DB::select("CALL SP_Actualiza_Estado_Agentes(".$request->opciones_transferencia.",8,0,'$fecha')");
-                Crd_Asignacion_Agente::where('uniqueid', $request->uniqueid)->update(['Agentes_id' => $request->opciones_transferencia]);
+                DB::select("CALL SP_Actualiza_Estado_Agentes(".$opcionTransferencia[0].",8,0,'$fecha')");
+                Crd_Asignacion_Agente::where('uniqueid', $request->uniqueid)->update(['Agentes_id' => $opcionTransferencia[1]]);
                 /**
                  * Ponemos en estado disponible al agente
                  */
                 DB::select("CALL SP_Actualiza_Estado_Agentes(".$request->idAgente.",2,0,'$fecha')");
+            }
+            else
+            {
+                $extension = Cat_Extensiones::find( $request->opciones_transferencia );
+                $extension = '1153650'.$extension->extension;
             }
 
         }
