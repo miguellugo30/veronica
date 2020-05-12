@@ -317,7 +317,7 @@ class AgentesController extends Controller
                  * para el agente que ahora tendra la llamada
                  */
                 DB::select("CALL SP_Actualiza_Estado_Agentes(".$opcionTransferencia[0].",8,0,'$fecha')");
-                Crd_Asignacion_Agente::where('uniqueid', $request->uniqueid)->update(['Agentes_id' => $opcionTransferencia[1]]);
+                Crd_Asignacion_Agente::where('uniqueid', $request->uniqueid)->update(['Agentes_id' => $opcionTransferencia[0]]);
                 /**
                  * Ponemos en estado disponible al agente
                  */
