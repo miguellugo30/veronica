@@ -15,6 +15,7 @@ use Nimbus\Campanas;
 use Nimbus\Cat_Extensiones;
 use Nimbus\Cdr_Asigancion_Agente;
 use Nimbus\Cdr_call_center;
+use Nimbus\Cdr_call_center_detalles;
 use Nimbus\Crd_Asignacion_Agente;
 use Nimbus\Miembros_Campana;
 use Nimbus\Eventos_Agentes;
@@ -141,15 +142,19 @@ class AgentesController extends Controller
         /**
          * Obtenemos la llamada que fue asignada al agente
          */
-        $datos_llamada = Crd_Asignacion_Agente::where( 'Agentes_id', $id )->orderBy('id', 'desc')->limit(1)->get();
-	    $cdrDetalle = $datos_llamada[0]->CDR_Detalles->orderBy('id', 'desc')->limit(1)->get();
+        $datos_llamada = Crd_Asignacion_Agente::where( 'Agentes_id', $id )->orderBy('id', 'desc')->limit(1)->first();
+
+	    $cdrDetalle =  Cdr_call_center_detalles::where( 'uniqueid', $datos_llamada->uniqueid )->orderBy('id', 'desc')->first();
+	    //$cdrDetalle = $datos_llamada[0]->CDR_Detalles->orderBy('id', 'desc')->limit(1)->get();
 	    /**
          * Obtenemos el CALLED y CALLER
          */
-        $calledid = $datos_llamada[0]->CDR_Detalles->CDR->first()->calledid;
-        $callerid = $datos_llamada[0]->CDR_Detalles->CDR->first()->callerid;
-        $canal = $datos_llamada[0]->canal;
-        $uniqueid = $datos_llamada[0]->uniqueid;
+        $CDR = Cdr_call_center::where( 'uniqueid', $datos_llamada->uniqueid )->orderBy('id', 'desc')->first();
+        //dd( $CDR );
+        $calledid = $CDR->first()->calledid;
+        $callerid = $CDR->first()->callerid;
+        $canal = $datos_llamada->canal;
+        $uniqueid = $datos_llamada->uniqueid;
         /**
          * Obtenemos el canal de llamada entrante
          */
@@ -157,7 +162,7 @@ class AgentesController extends Controller
         /**
          * Obtenemos la información de la campana a la cual esta el agente y la llamada
          */
-        if ( $cdrDetalle->first()->aplicacion == 'Campanas' ) {
+        if ( $cdrDetalle->aplicacion == 'Campanas' ) {
             $campana = Campanas::active()->where( 'id', $cdrDetalle->first()->id_aplicacion )->get()->first();
         }
         /**
