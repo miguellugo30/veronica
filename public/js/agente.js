@@ -361,6 +361,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
           if (transferirPantalla == 1) {
             start();
+            $(".view-call").html('');
           }
 
           $("#modal-transferencia").modal('hide');
