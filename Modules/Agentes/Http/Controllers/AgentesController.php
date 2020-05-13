@@ -2,18 +2,19 @@
 
 namespace Modules\Agentes\Http\Controllers;
 
+use DB;
+use nusoap_client;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use DB;
-use Modules\Agentes\Http\Controllers\EventosAmiController;
-use Modules\Agentes\Http\Controllers\CalificarLlamadaController;
-use Modules\Agentes\Http\Controllers\EventosAgenteController;
 use Nimbus\Http\Controllers\ZonaHorariaController;
+use Modules\Agentes\Http\Controllers\EventosAmiController;
+use Modules\Agentes\Http\Controllers\EventosAgenteController;
+use Modules\Agentes\Http\Controllers\CalificarLlamadaController;
 
 use Nimbus\Did_Enrutamiento;
 use Nimbus\Campanas;
 use Nimbus\Cat_Extensiones;
-use Nimbus\Cdr_Asigancion_Agente;
+use Nimbus\Empresas;
 use Nimbus\Cdr_call_center;
 use Nimbus\Cdr_call_center_detalles;
 use Nimbus\Crd_Asignacion_Agente;
@@ -23,6 +24,36 @@ use Nimbus\HistorialEventosAgentes;
 
 class AgentesController extends Controller
 {
+
+    private $empresa_id;
+    private $timeZone;
+    private $fecha;
+    /**
+     * Constructor para obtener el id empresa
+     * con base al usuario que esta usando la sesion
+     */
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            $this->empresa_id = auth()->guard('agentes')->user()->Empresas_id;
+
+            return $next($request);
+        });
+
+        $this->timeZone = ZonaHorariaController::zona_horaria( $this->empresa_id );
+
+        $pbx = Empresas::empresa( $this->empresa_id )->active()->with('Config_Empresas')->with('Config_Empresas.ms')->get()->first();
+        $wsdl = 'http://'.$pbx->Config_Empresas->ms->ip_pbx.'/ws-ms/index.php';
+        $client =  new  nusoap_client( $wsdl );
+
+        $result = $client->call('TimeMs', array(
+            'timeZona' => $this->timeZone
+        ));
+
+        $this->fecha = $result['mensaje'];
+
+    }
+
     /**
      * Función para mostrar la pantalla del agente
      */
@@ -52,16 +83,16 @@ class AgentesController extends Controller
         /**
          * Obtenemos los datos del agente
          */
-        $agente = auth()->guard('agentes')->user();
+        //$agente = auth()->guard('agentes')->user();
         /**
          * Obtenemos los eventos por los cuales podrá ser pausado el agente
          */
-        $eventosAgente = Eventos_Agentes::active()->where('Empresas_id', $agente->Empresas_id)->get();
+        $eventosAgente = Eventos_Agentes::active()->where('Empresas_id', $this->empresa_id)->get();
         /**
          * Obtenemos las aplicaciones que estan activas en el MS
          */
         $aplicaciones = Did_Enrutamiento::select('id', 'aplicacion')->active()->where( 'prioridad', 1 )->with(['Did' => function ($query){
-                        $query->empresa( auth()->guard('agentes')->user()->Empresas_id )->active();
+                        $query->empresa( $this->empresa_id )->active();
                 }])->get();
 
         return view('agentes::index', compact('agente', 'evento', 'eventosAgente', 'modalidad', 'agenteEstado', 'aplicaciones'));
@@ -71,14 +102,13 @@ class AgentesController extends Controller
      */
     public function store(Request $request)
     {
-        $user = auth()->guard('agentes')->user();
-        auth()->guard('agentes')->user()->Empresas_id = $user->Empresas_id;
+        //$user = auth()->guard('agentes')->user();
 
-        $fecha = ZonaHorariaController::zona_horaria( auth()->guard('agentes')->user()->Empresas_id );
+        //$fecha = ZonaHorariaController::zona_horaria( $this->empresa_id );
         /**
          * Ponemos en estado disponible al agente
          */
-        DB::select("CALL SP_Actualiza_Estado_Agentes(".$request->id_agente.",2,0,'$fecha')");
+        DB::select("CALL SP_Actualiza_Estado_Agentes(".$request->id_agente.",2,0,'".$this->fecha."')");
         /**
          * Dentro de la campana lo ponemos como despausado.
          */
@@ -86,13 +116,13 @@ class AgentesController extends Controller
         /**
          * Actualizamos la fecha de calificación.
          */
-        Crd_Asignacion_Agente::where('uniqueid', $request->uniqueid)->update(['fecha_calificacion' => $fecha]);
+        Crd_Asignacion_Agente::where('uniqueid', $request->uniqueid)->update(['fecha_calificacion' => $this->fecha]);
         /**
          * Generamos el evento para colgar llamada.
          */
-        $e = new EventosAmiController( auth()->guard('agentes')->user()->Empresas_id );
-        $e->colgar_llamada( $request->canal, auth()->guard('agentes')->user()->Empresas_id );
-        $e->colgar_llamada( $request->canal_entrante, auth()->guard('agentes')->user()->Empresas_id );
+        $e = new EventosAmiController( $this->empresa_id );
+        $e->colgar_llamada( $request->canal, $this->empresa_id );
+        $e->colgar_llamada( $request->canal_entrante, $this->empresa_id );
         /**
          * Despausamos al agente directamente en el MS.
          */
@@ -146,12 +176,10 @@ class AgentesController extends Controller
         $datos_llamada = Crd_Asignacion_Agente::where( 'Agentes_id', $id )->orderBy('id', 'desc')->limit(1)->first();
 
 	    $cdrDetalle =  Cdr_call_center_detalles::where( 'uniqueid', $datos_llamada->uniqueid )->orderBy('id', 'desc')->first();
-	    //$cdrDetalle = $datos_llamada[0]->CDR_Detalles->orderBy('id', 'desc')->limit(1)->get();
 	    /**
          * Obtenemos el CALLED y CALLER
          */
         $CDR = Cdr_call_center::where( 'uniqueid', $datos_llamada->uniqueid )->orderBy('id', 'desc')->first();
-        //dd( $CDR );
         $calledid = $CDR->first()->calledid;
         $callerid = $CDR->first()->callerid;
         $canal = $datos_llamada->canal;
@@ -218,11 +246,11 @@ class AgentesController extends Controller
      */
     public function colgar( Request $request )
     {
-        $agente = auth()->guard('agentes')->user();
+        //$agente = auth()->guard('agentes')->user();
         /**
          * Generamos un evento para colgar la llamada
          */
-        $e = new EventosAmiController( $agente->Empresas_id );
+        $e = new EventosAmiController( $this->empresa_id );
         $e->colgar_llamada( $request->canal );
     }
     /**
@@ -233,7 +261,7 @@ class AgentesController extends Controller
         $agente = auth()->guard('agentes')->user();
 
         $e = new EventosAgenteController();
-        $e->no_disponible( $agente->id, $agente->Empresas_id );
+        $e->no_disponible( $agente->id, $this->empresa_id );
         /**
          * Registramos el evento de no disponible del agente
          */
@@ -248,7 +276,7 @@ class AgentesController extends Controller
     {
         $agente = auth()->guard('agentes')->user();
         $e = new EventosAgenteController();
-        $e->agente_disponible( $request, $agente->id, $agente->Empresas_id );
+        $e->agente_disponible( $request, $agente->id, $this->empresa_id );
     }
     /**
      * Funcion para mostrar el historial de llamadas contestadas
@@ -307,7 +335,7 @@ class AgentesController extends Controller
              */
             if ( $request->transferirPantalla == 1 )
             {
-                $fecha = ZonaHorariaController::zona_horaria( auth()->guard('agentes')->user()->Empresas_id );
+                //$fecha = ZonaHorariaController::zona_horaria( $this->empresa_id );
                 /**
                  * Se recupera el id del agente que tiene en uso la extension
                  * a transferir
@@ -320,13 +348,13 @@ class AgentesController extends Controller
                  * para el agente que ahora tendra la llamada
                  */
                 $e->despausar_agente( 'Agent/'.$opcionTransferencia[0], 'pause' );
-                DB::select("CALL SP_Actualiza_Estado_Agentes(".$opcionTransferencia[0].",8,0,'$fecha')");
+                DB::select("CALL SP_Actualiza_Estado_Agentes(".$opcionTransferencia[0].",8,0,'".$this->fecha."')");
                 Crd_Asignacion_Agente::where(['uniqueid' => $request->uniqueid])->update(['Agentes_id' => $opcionTransferencia[0], 'canal' => 'Agent/'.$opcionTransferencia[0]]);
                 /**
                  * Ponemos en estado disponible al agente
                  */
                 $e->despausar_agente( 'Agent/'.$request->idAgente, 'unpause' );
-                DB::select("CALL SP_Actualiza_Estado_Agentes(".$request->idAgente.",2,0,'$fecha')");
+                DB::select("CALL SP_Actualiza_Estado_Agentes(".$request->idAgente.",2,0,'".$this->fecha."')");
             }
             else
             {
@@ -358,12 +386,12 @@ class AgentesController extends Controller
 
         if ( $opcion == 'Cat_Extensiones' )
         {
-            $aplicaciones = Cat_Extensiones::select( 'id', 'extension as nombre' )->active()->where('Empresas_id', auth()->guard('agentes')->user()->Empresas_id)->get();
+            $aplicaciones = Cat_Extensiones::select( 'id', 'extension as nombre' )->active()->where('Empresas_id', $this->empresa_id)->get();
         }
         else if ( $opcion == 'Agentes' )
         {
-            $fecha = ZonaHorariaController::zona_horaria( auth()->guard('agentes')->user()->Empresas_id );
-            $aplicaciones = DB::select( "call SP_Agentes_Activos_Empresa(".auth()->guard('agentes')->user()->Empresas_id.", '".$fecha."')");
+            //$fecha = ZonaHorariaController::zona_horaria( $this->empresa_id );
+            $aplicaciones = DB::select( "call SP_Agentes_Activos_Empresa(".$this->empresa_id.", '".$this->fecha."')");
         }
         else
         {
@@ -379,7 +407,7 @@ class AgentesController extends Controller
                             ->where('Did_Enrutamiento.prioridad', 1)
                             ->where('Did_Enrutamiento.activo', 1)
                             ->where('Did_Enrutamiento.tabla', $opcion)
-                            ->where('Dids.empresas_id', auth()->guard('agentes')->user()->Empresas_id )->get();
+                            ->where('Dids.empresas_id', $this->empresa_id )->get();
         }
         return view('agentes::show_aplicaciones', compact( 'aplicaciones', 'opcion' ) );
 
