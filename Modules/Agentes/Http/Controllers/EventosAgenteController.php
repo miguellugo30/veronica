@@ -10,40 +10,11 @@ use Modules\Agentes\Http\Controllers\LogRegistroEventosController;
 use Nimbus\Http\Controllers\ZonaHorariaController;
 
 use Nimbus\Miembros_Campana;
-use Nimbus\Agentes;
 use Nimbus\Empresas;
 use Nimbus\Crd_Asignacion_Agente;
 
 class EventosAgenteController extends Controller
 {
-    private $empresa_id;
-    private $timeZone;
-    private $fecha;
-    /**
-     * Constructor para obtener el id empresa
-     * con base al usuario que esta usando la sesion
-     */
-    public function __construct()
-    {
-        $this->middleware(function ($request, $next) {
-            $this->empresa_id = auth()->guard('agentes')->user()->Empresas_id;
-
-            return $next($request);
-        });
-
-        $this->timeZone = ZonaHorariaController::zona_horaria( $this->empresa_id );
-
-        $pbx = Empresas::empresa( $this->empresa_id )->active()->with('Config_Empresas')->with('Config_Empresas.ms')->get()->first();
-        $wsdl = 'http://'.$pbx->Config_Empresas->ms->ip_pbx.'/ws-ms/index.php';
-        $client =  new  nusoap_client( $wsdl );
-
-        $result = $client->call('TimeMs', array(
-            'timeZona' => $this->timeZone
-        ));
-
-        $this->fecha = $result['mensaje'];
-
-    }
     /**
      * Funcion para poner como no disponible a un agente
      */
@@ -61,15 +32,16 @@ class EventosAgenteController extends Controller
          * Pausamos al agente dentro del MS
          */
         $evento = new EventosAmiController( $empresas_id );
-        $pausa = $evento->despausar_agente( $cdr->canal, 'pause' );
+        $evento->despausar_agente( $cdr->canal, 'pause' );
         /**
          * Obtenemos la zona horaria de la empresa
          */
-        //$fecha = ZonaHorariaController::zona_horaria( $empresas_id );
+        $e = new ZonaHorariaController();
+        $fecha = $e->zona_horaria( $empresas_id, NULL );
         /**
          * Ponemos al usuario en estado 1 = No Disponible
          */
-        DB::select("CALL SP_Actualiza_Estado_Agentes(".$agente.",3,0,'".$this->fecha."')");
+        DB::select("CALL SP_Actualiza_Estado_Agentes(".$agente.",3,0,'".$fecha."')");
     }
     /**
      * Funcion para poner como no disponible a un agente
@@ -84,7 +56,7 @@ class EventosAgenteController extends Controller
          * Pausamos al agente dentro del MS
          */
         $evento = new EventosAmiController( $empresas_id );
-        $pausa = $evento->despausar_agente( $cdr->canal, 'pause' );
+        $evento->despausar_agente( $cdr->canal, 'pause' );
     }
     /**
      * Funcion para poner como  disponible a un agente
@@ -102,11 +74,12 @@ class EventosAgenteController extends Controller
          /**
          * Obtenemos la zona horaria de la empresa
          */
-        //$fecha = ZonaHorariaController::zona_horaria( $empresas_id );
+        $e = new ZonaHorariaController();
+        $fecha = $e->zona_horaria( $empresas_id, NULL );
         /**
          * Ponemos en estado disponible al agente
          */
-        DB::select("CALL SP_Actualiza_Estado_Agentes(".$agente.",2,0,'".$this->fecha."')");
+        DB::select("CALL SP_Actualiza_Estado_Agentes(".$agente.",2,0,'".$fecha."')");
         /**
          * Obtenemos el ultimo canal del agente
          */
@@ -142,7 +115,6 @@ class EventosAgenteController extends Controller
          * Obtenenos el historico de llamadas del agente en el dia
          */
         $historico = DB::select( "call SP_Pantalla_agentes($request->id_agente)");
-
         return $historico;
     }
     /**
@@ -154,7 +126,6 @@ class EventosAgenteController extends Controller
          * Obtenenos el historico de llamadas abandonadas del agente en el dia
          */
         $historico = DB::select( "call SP_Llamadas_abandonadas_agente($request->id_agente)");
-
         return $historico;
     }
     /**
@@ -162,7 +133,8 @@ class EventosAgenteController extends Controller
      */
     public function logeoExtension( $agente )
     {
-        //$fecha = ZonaHorariaController::zona_horaria_agente( $agente->id );
+        $e = new ZonaHorariaController();
+        $fecha = $e->zona_horaria( $agente->Empresas_id, NULL );
 
         $pbx = Empresas::empresa($agente->Empresas_id)->active()->with('Config_Empresas')->with('Config_Empresas.ms')->get()->first();
         $wsdl = 'http://'.$pbx->Config_Empresas->ms->ip_pbx.'/ws-ms/index.php';
@@ -182,14 +154,14 @@ class EventosAgenteController extends Controller
             /**
              * Ponemos en estado disponible al agente
              */
-            DB::select("CALL SP_Actualiza_Estado_Agentes(".$agente->id.",2,0,'".$this->fecha."')");
+            DB::select("CALL SP_Actualiza_Estado_Agentes(".$agente->id.",2,0,'".$fecha."')");
         }
         else
         {
             /**
              * Ponemos en estado logueado al agente
              */
-            DB::select("CALL SP_Actualiza_Estado_Agentes(".$agente->id.",11,0,'".$this->fecha."')");
+            DB::select("CALL SP_Actualiza_Estado_Agentes(".$agente->id.",11,0,'".$fecha."')");
         }
 
         return json_encode($result);

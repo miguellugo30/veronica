@@ -2,18 +2,17 @@
 
 namespace Nimbus\Http\Controllers;
 
+use DB;
 use Illuminate\Http\Request;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use Nimbus\Http\Controllers\ZonaHorariaController;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Modules\Agentes\Http\Controllers\LogRegistroEventosController;
 use Modules\Agentes\Http\Controllers\EventosAmiController;
-use Nimbus\Http\Controllers\ZonaHorariaController;
-use DB;
 
 use Nimbus\Agentes;
-use Nimbus\Miembros_Campana;
-use Nimbus\Crd_Asignacion_Agente;
 use Nimbus\CanalAgentes;
+use Nimbus\Miembros_Campana;
 
 class AgentesLoginController extends Controller
 {
@@ -29,6 +28,8 @@ class AgentesLoginController extends Controller
      */
     protected $redirectTo = '/agentes';
     private $agente;
+    private $timeZone;
+    private $fecha;
 
     /**
      * Create a new controller instance.
@@ -63,7 +64,12 @@ class AgentesLoginController extends Controller
     {
         if (auth()->guard('agentes')->attempt(['email' => $request->email, 'password' => $request->password]))
         {
-            $fecha = ZonaHorariaController::zona_horaria_agente( auth()->guard('agentes')->id() );
+            /**
+             * Obtenemos la fecha
+             */
+            $e = new ZonaHorariaController();
+            $fecha = $e->zona_horaria( NULL ,auth()->guard('agentes')->id() );
+
             $v = DB::select("CALL SP_Inserta_Estado_Agentes(".auth()->guard('agentes')->id().",'$fecha')");
             /**
              * Si no hay sesion activa, se manda a pantalla para confirmar extension
@@ -86,7 +92,8 @@ class AgentesLoginController extends Controller
     public function agentesLogout( Request $request )
     {
 
-        $fecha = ZonaHorariaController::zona_horaria_agente( auth()->guard('agentes')->id() );
+        $e = new ZonaHorariaController();
+        $fecha = $e->zona_horaria(NULL, auth()->guard('agentes')->id() );
 
         LogRegistroEventosController::actualiza_evento( $request->input('id_agente'), $request->input('id_evento'), $request->input('cierre') );
         /**
@@ -107,7 +114,7 @@ class AgentesLoginController extends Controller
         foreach ($miembros as $miembro)
         {
             $e = new EventosAmiController( $this->agente->Empresas_id );
-            $colgado = $e->removeMember( $miembro->Campanas_id, $miembro->interface );
+            $e->removeMember( $miembro->Campanas_id, $miembro->interface );
         }
         /**
          * Se valida que tenga un logueo de extension para colgar
@@ -116,7 +123,7 @@ class AgentesLoginController extends Controller
         if ( !empty( $canal ) )
         {
             $e = new EventosAmiController( $empresa->Empresas_id );
-            $colgado = $e->colgar_llamada( $canal->canal );
+            $e->colgar_llamada( $canal->canal );
         }
 
         Auth::guard('agentes')->logout();
@@ -141,8 +148,6 @@ class AgentesLoginController extends Controller
          * Obtenemos la modalidad en la cual esta el agente
          */
         list( $estado, $modalidad ) = $this->modalidad_logueo( $this->agente->id );
-
-        //dd( $estado );
         /**
          * Validamos que la extension ingreso sea la misma a la que
          * se tiene guardada en la base de datos
@@ -166,7 +171,8 @@ class AgentesLoginController extends Controller
                  */
                 if ( $modalidad == 'canal_cerrado' )
                 {
-                    $fecha = ZonaHorariaController::zona_horaria_agente( auth()->guard('agentes')->id() );
+                    $e = new ZonaHorariaController();
+                    $fecha = $e->zona_horaria( NULL, auth()->guard('agentes')->id() );
                     DB::select("CALL SP_Actualiza_Estado_Agentes(".auth()->guard('agentes')->id().",$estado,NULL,'$fecha')");
                     /**
                      * Obtenemos la informacion de la tabla miembros campana
@@ -175,7 +181,7 @@ class AgentesLoginController extends Controller
                     foreach ($miembros as $miembro)
                     {
                         $e = new EventosAmiController( $this->agente->Empresas_id );
-                        $colgado = $e->addMember( $miembro->Campanas_id, $miembro->interface, $this->agente->id );
+                        $e->addMember( $miembro->Campanas_id, $miembro->interface, $this->agente->id );
                     }
                 }
 
@@ -208,7 +214,8 @@ class AgentesLoginController extends Controller
                  */
                 if ( $modalidad == 'canal_cerrado' )
                 {
-                    $fecha = ZonaHorariaController::zona_horaria_agente( auth()->guard('agentes')->id() );
+                    $e = new ZonaHorariaController();
+                    $fecha = $e->zona_horaria( NULL, auth()->guard('agentes')->id() );
                     DB::select("CALL SP_Actualiza_Estado_Agentes(".auth()->guard('agentes')->id().",$estado,NULL,'$fecha')");
                     /**
                      * Obtenemos la informacion de la tabla miembros campana
@@ -217,7 +224,7 @@ class AgentesLoginController extends Controller
                     foreach ($miembros as $miembro)
                     {
                         $e = new EventosAmiController( $this->agente->Empresas_id );
-                        $colgado = $e->addMember( $miembro->Campanas_id, $miembro->interface, $this->agente->id );
+                        $e->addMember( $miembro->Campanas_id, $miembro->interface, $this->agente->id );
                     }
                 }
 
@@ -245,8 +252,8 @@ class AgentesLoginController extends Controller
     private function Actualiza_Estado_Extension_Agente( $id_agente, $estado, $extension)
     {
         Agentes::where( 'id', $id_agente )->update(['extension' => $extension]);
-
-        $fecha = ZonaHorariaController::zona_horaria_agente( auth()->guard('agentes')->id() );
+        $e = new ZonaHorariaController();
+        $fecha = $e->zona_horaria( NULL, auth()->guard('agentes')->id() );
         DB::select("CALL SP_Actualiza_Estado_Agentes(".$id_agente.",'$estado','NULL','$fecha')");
     }
     /**

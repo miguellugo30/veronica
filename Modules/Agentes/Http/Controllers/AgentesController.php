@@ -3,7 +3,6 @@
 namespace Modules\Agentes\Http\Controllers;
 
 use DB;
-use nusoap_client;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Nimbus\Http\Controllers\ZonaHorariaController;
@@ -14,7 +13,6 @@ use Modules\Agentes\Http\Controllers\CalificarLlamadaController;
 use Nimbus\Did_Enrutamiento;
 use Nimbus\Campanas;
 use Nimbus\Cat_Extensiones;
-use Nimbus\Empresas;
 use Nimbus\Cdr_call_center;
 use Nimbus\Cdr_call_center_detalles;
 use Nimbus\Crd_Asignacion_Agente;
@@ -26,7 +24,6 @@ class AgentesController extends Controller
 {
 
     private $empresa_id;
-    private $timeZone;
     private $fecha;
     /**
      * Constructor para obtener el id empresa
@@ -37,21 +34,11 @@ class AgentesController extends Controller
         $this->middleware(function ($request, $next) {
             $this->empresa_id = auth()->guard('agentes')->user()->Empresas_id;
 
+            $e = new ZonaHorariaController();
+            $this->fecha = $e->zona_horaria( $this->empresa_id, NULL );
+
             return $next($request);
         });
-
-        $this->timeZone = ZonaHorariaController::zona_horaria( $this->empresa_id );
-
-        $pbx = Empresas::empresa( $this->empresa_id )->active()->with('Config_Empresas')->with('Config_Empresas.ms')->get()->first();
-        $wsdl = 'http://'.$pbx->Config_Empresas->ms->ip_pbx.'/ws-ms/index.php';
-        $client =  new  nusoap_client( $wsdl );
-
-        $result = $client->call('TimeMs', array(
-            'timeZona' => $this->timeZone
-        ));
-
-        $this->fecha = $result['mensaje'];
-
     }
 
     /**
@@ -83,7 +70,7 @@ class AgentesController extends Controller
         /**
          * Obtenemos los datos del agente
          */
-        //$agente = auth()->guard('agentes')->user();
+        $agente = auth()->guard('agentes')->user();
         /**
          * Obtenemos los eventos por los cuales podrá ser pausado el agente
          */
@@ -102,9 +89,6 @@ class AgentesController extends Controller
      */
     public function store(Request $request)
     {
-        //$user = auth()->guard('agentes')->user();
-
-        //$fecha = ZonaHorariaController::zona_horaria( $this->empresa_id );
         /**
          * Ponemos en estado disponible al agente
          */
@@ -126,7 +110,7 @@ class AgentesController extends Controller
         /**
          * Despausamos al agente directamente en el MS.
          */
-        $despausar = $e->despausar_agente( $request->canal, 'unpause' );
+        $e->despausar_agente( $request->canal, 'unpause' );
         /**
          * Guardamos la calificación de la llamada.
          */
@@ -246,7 +230,6 @@ class AgentesController extends Controller
      */
     public function colgar( Request $request )
     {
-        //$agente = auth()->guard('agentes')->user();
         /**
          * Generamos un evento para colgar la llamada
          */
@@ -335,7 +318,6 @@ class AgentesController extends Controller
              */
             if ( $request->transferirPantalla == 1 )
             {
-                //$fecha = ZonaHorariaController::zona_horaria( $this->empresa_id );
                 /**
                  * Se recupera el id del agente que tiene en uso la extension
                  * a transferir
