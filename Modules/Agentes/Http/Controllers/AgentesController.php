@@ -9,7 +9,7 @@ use Nimbus\Http\Controllers\ZonaHorariaController;
 use Modules\Agentes\Http\Controllers\EventosAmiController;
 use Modules\Agentes\Http\Controllers\EventosAgenteController;
 use Modules\Agentes\Http\Controllers\CalificarLlamadaController;
-
+use Nimbus\Agentes;
 use Nimbus\Did_Enrutamiento;
 use Nimbus\Campanas;
 use Nimbus\Cat_Extensiones;
@@ -308,10 +308,40 @@ class AgentesController extends Controller
 
         $destino = $request->destino_transferencia;
 
-        if ( $request->destino_transferencia == 'Cat_Extensiones' || $request->destino_transferencia == 'Agentes' )
+        if ( $request->destino_transferencia == 'Cat_Extensiones'  )
         {
             $contexto = 'transferencia_extension';
             $contexto_hijo = '';
+            $extensiones = Cat_Extensiones::find( $request->opciones_transferencia );
+            $extension = '1153650'.$extensiones->extension;//Extension a donde se transfiere la llamada
+            $id_destino = $request->opciones_transferencia;//ID de Extension a donde se transfiere la llamada
+            /**
+             * Obtenemos el ID del agente que esta usando la extension
+             */
+            $agente = Agentes::select('id')->where([ 'Empresas_id' => $extensiones->Empresas_id, 'extension_real' => $extension->extension ])->first();
+             /**
+             * Ponemos en pausa al agente que le vamos a transferir la llamada
+             */
+            $e->despausar_agente( 'Agent/'.$agente->id, 'pause' );
+            DB::select("CALL SP_Actualiza_Estado_Agentes(".$agente->id.",8,0,'".$this->fecha."')");
+            /**
+             * Ponemos en despausa al agente que hara la transferencia
+             */
+            $e->despausar_agente( 'Agent/'.$request->idAgente, 'unpause' );
+            DB::select("CALL SP_Actualiza_Estado_Agentes(".$request->idAgente.",2,0,'".$this->fecha."')");
+        }
+        elseif( $request->destino_transferencia == 'Agentes' )
+        {
+            $contexto = 'transferencia_extension';
+            $contexto_hijo = '';
+            /**
+             * Se recupera el id del agente que tiene en uso la extension
+             * a transferir
+             */
+            $opcionTransferencia = explode( '|', $request->opciones_transferencia );
+            $agente = $opcionTransferencia[0];//ID de agente a quien se transfiere la llamada
+            $extension = $opcionTransferencia[1];//Extension a donde se transfiere la llamada
+            $id_destino = $opcionTransferencia[2];//ID de Extension a donde se transfiere la llamada
             /**
              * Si se encuentra la transferencia de pantalla
              * se hacen las acciones
@@ -319,32 +349,21 @@ class AgentesController extends Controller
             if ( $request->transferirPantalla == 1 )
             {
                 /**
-                 * Se recupera el id del agente que tiene en uso la extension
-                 * a transferir
-                 */
-                $opcionTransferencia = explode( '|', $request->opciones_transferencia );
-                $extension = $opcionTransferencia[1];
-                $id_destino = $opcionTransferencia[2];
-                /**
                  * Actualizamos el registro en CDR Asignacion Agente
                  * para el agente que ahora tendra la llamada
                  */
-                $e->despausar_agente( 'Agent/'.$opcionTransferencia[0], 'pause' );
-                DB::select("CALL SP_Actualiza_Estado_Agentes(".$opcionTransferencia[0].",8,0,'".$this->fecha."')");
-                Crd_Asignacion_Agente::where(['uniqueid' => $request->uniqueid])->update(['Agentes_id' => $opcionTransferencia[0], 'canal' => 'Agent/'.$opcionTransferencia[0]]);
-                /**
-                 * Ponemos en estado disponible al agente
-                 */
-                $e->despausar_agente( 'Agent/'.$request->idAgente, 'unpause' );
-                DB::select("CALL SP_Actualiza_Estado_Agentes(".$request->idAgente.",2,0,'".$this->fecha."')");
+                Crd_Asignacion_Agente::where(['uniqueid' => $request->uniqueid])->update(['Agentes_id' => $agente, 'canal' => 'Agent/'.$agente]);
             }
-            else
-            {
-                $extension = Cat_Extensiones::find( $request->opciones_transferencia );
-                $extension = '1153650'.$extension->extension;
-                $id_destino = $request->opciones_transferencia;
-            }
-
+            /**
+             * Ponemos en pausa al agente que le vamos a transferir la llamada
+             */
+            $e->despausar_agente( 'Agent/'.$agente, 'pause' );
+            DB::select("CALL SP_Actualiza_Estado_Agentes(".$agente.",8,0,'".$this->fecha."')");
+            /**
+             * Ponemos en despausa al agente que hara la transferencia
+             */
+            $e->despausar_agente( 'Agent/'.$request->idAgente, 'unpause' );
+            DB::select("CALL SP_Actualiza_Estado_Agentes(".$request->idAgente.",2,0,'".$this->fecha."')");
         }
         else
         {
@@ -393,5 +412,14 @@ class AgentesController extends Controller
         }
         return view('agentes::show_aplicaciones', compact( 'aplicaciones', 'opcion' ) );
 
+    }
+    /**
+     * Funcion para generar una conferencia
+     */
+    public function realizarConferencia(Request $request)
+    {
+        $e = new EventosAmiController( $request->id_empresa );
+
+    return $e->conferencia($request->canal, $request->canal_entrante, $request->id_empresa);
     }
 }

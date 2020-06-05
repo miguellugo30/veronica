@@ -22,6 +22,7 @@ Route::group(['namespace' => '\Modules\Agentes\Http\Controllers', 'middleware' =
     Route::post('agentes/logeo-extension', 'AgentesController@logeoExtension')->name('logeoExtension.agente');
     Route::post('agentes/transferir-llamada', 'AgentesController@transferir_llamada')->name('transferirLlamada.agente');
     Route::get('agentes/aplicaciones-ms/{opcion}', 'AgentesController@AplicacionMS')->name('aplicacionesMS.agente');
+    Route::post('agentes/conferencia-llamada', 'AgentesController@realizarConferencia')->name('conferenciaLlamada.agente');
 });
 
 Route::get('/agentes/formularios/{id}', '\Modules\Settings\Http\Controllers\FormulariosController@show');

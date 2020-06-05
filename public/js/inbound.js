@@ -2497,20 +2497,20 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Nimbus\resources\js\module_inbound\menu.js */"./resources/js/module_inbound/menu.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Nimbus\resources\js\module_inbound\campanas.js */"./resources/js/module_inbound/campanas.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Nimbus\resources\js\module_inbound\CondicionesTiempo.js */"./resources/js/module_inbound/CondicionesTiempo.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Nimbus\resources\js\module_inbound\desvios.js */"./resources/js/module_inbound/desvios.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Nimbus\resources\js\module_inbound\buzon_voz.js */"./resources/js/module_inbound/buzon_voz.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Nimbus\resources\js\module_inbound\Did_Enrutamiento.js */"./resources/js/module_inbound/Did_Enrutamiento.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Nimbus\resources\js\module_inbound\ivr.js */"./resources/js/module_inbound/ivr.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Nimbus\resources\js\module_inbound\Metricas_ACD.js */"./resources/js/module_inbound/Metricas_ACD.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Nimbus\resources\js\module_inbound\desglosellamadas.js */"./resources/js/module_inbound/desglosellamadas.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Nimbus\resources\js\module_inbound\real_time.js */"./resources/js/module_inbound/real_time.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Nimbus\resources\js\module_inbound\reporteCalificaciones.js */"./resources/js/module_inbound/reporteCalificaciones.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Nimbus\resources\js\module_inbound\reporte_llamadas_agentes.js */"./resources/js/module_inbound/reporte_llamadas_agentes.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Nimbus\resources\js\module_inbound\reporte_productividad_agentes.js */"./resources/js/module_inbound/reporte_productividad_agentes.js");
-module.exports = __webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Nimbus\resources\js\module_inbound\reporteTiempoInactivo.js */"./resources/js/module_inbound/reporteTiempoInactivo.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_inbound\menu.js */"./resources/js/module_inbound/menu.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_inbound\campanas.js */"./resources/js/module_inbound/campanas.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_inbound\CondicionesTiempo.js */"./resources/js/module_inbound/CondicionesTiempo.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_inbound\desvios.js */"./resources/js/module_inbound/desvios.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_inbound\buzon_voz.js */"./resources/js/module_inbound/buzon_voz.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_inbound\Did_Enrutamiento.js */"./resources/js/module_inbound/Did_Enrutamiento.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_inbound\ivr.js */"./resources/js/module_inbound/ivr.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_inbound\Metricas_ACD.js */"./resources/js/module_inbound/Metricas_ACD.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_inbound\desglosellamadas.js */"./resources/js/module_inbound/desglosellamadas.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_inbound\real_time.js */"./resources/js/module_inbound/real_time.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_inbound\reporteCalificaciones.js */"./resources/js/module_inbound/reporteCalificaciones.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_inbound\reporte_llamadas_agentes.js */"./resources/js/module_inbound/reporte_llamadas_agentes.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_inbound\reporte_productividad_agentes.js */"./resources/js/module_inbound/reporte_productividad_agentes.js");
+module.exports = __webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_inbound\reporteTiempoInactivo.js */"./resources/js/module_inbound/reporteTiempoInactivo.js");
 
 
 /***/ })

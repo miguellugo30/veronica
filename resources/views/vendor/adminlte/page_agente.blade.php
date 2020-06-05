@@ -378,6 +378,55 @@
         </div>
     </div>
     <!-- FIN MODAL NO DISPONIBLE -->
+    <!-- MODAL NO DISPONIBLE -->
+    <div class="modal fade" id="modal-conferencia" tabindex="-1" role="dialog" aria-labelledby="title-no-disponible" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Conferencia de llamadas</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="col">
+                        <table class="table table-bordered">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Destino</th>
+                                    <th>Opcion</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <select class="form-control form-control-sm"  name="destino_conferencia" id="destino_conferencia">
+                                            <option value="">Selecciona una opcion</option>
+                                            <option value="Cat_Extensiones">Extensión</option>
+                                            <option value="Agentes">Agentes</option>
+                                            <option value="Numero_Saliente">Numero saliente</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <div class="col input-telefono-conferencia" style="display:none">
+                                            <input type="text" class="form-control form-control-sm" id="telefono_conferencia" placeholder="Telefono">
+                                        </div>
+                                        <div id="opciones_conferencia" class="opciones_conferencia">
+                                            <select name="opciones_1" id="opciones_conf"  class="form-control form-control-sm ">
+                                                <option value="">Selecciona una opcion</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger float-left" data-dismiss="modal"><i class="fas fa-times"></i> Cancelar</button>
+                    <button type="button" class="btn btn-sm btn-primary" id="realizar-conferencia-llamada">Conferencia</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- FIN MODAL NO DISPONIBLE -->
 
 @stop
 

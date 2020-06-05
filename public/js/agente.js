@@ -360,12 +360,45 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         success: function success(result) {
           console.log(result);
+          $("#modal-transferencia").modal('hide');
+        }
+      });
+    }
+  });
+  /**
+   * Evento para transferir llamadas
+   */
 
-          if (transferirPantalla == 1) {
-            start();
-            $(".view-call").html('');
-          }
+  $(document).on('click', '#realizar-conferencia-llamada', function (event) {
+    var idAgente = $("#id_agente").val();
+    var canal = $("#canal").val();
+    var canal_entrante = $("#canal_entrante").val();
+    var destino_conferencia = $("#destino_conferencia").val();
+    var opciones_conferencia = $("#opciones_conf").val();
+    var id_empresa = $("#id_empresa").val();
+    var uniqueid = $("#uniqueid").val();
 
+    var _token = $("input[name=_token]").val();
+
+    if (canal_entrante == null) {
+      Swal.fire('Error!', 'No se puede transferir, sin tener una llamada activa.', 'error');
+    } else {
+      var url = currentURL[0].replace('agentes/') + '/conferencia-llamada';
+      $.ajax({
+        url: url,
+        type: 'POST',
+        data: {
+          idAgente: idAgente,
+          canal: canal,
+          canal_entrante: canal_entrante,
+          destino_conferencia: destino_conferencia,
+          opciones_conferencia: opciones_conferencia,
+          id_empresa: id_empresa,
+          uniqueid: uniqueid,
+          _token: _token
+        },
+        success: function success(result) {
+          console.log(result);
           $("#modal-transferencia").modal('hide');
         }
       });
@@ -520,6 +553,41 @@ $(function () {
       });
     }
   });
+  /**
+   * Evento para mostrar el modal para la conferencia de llamada
+   */
+
+  $(document).on("click", ".conferencia-llamada", function (e) {
+    $("#modal-conferencia").modal({
+      backdrop: 'static',
+      keyboard: false
+    });
+  });
+  /**
+   * Evento para mostrar las opciones del destino selecionado
+   */
+
+  $(document).on('change', '#destino_conferencia', function (event) {
+    var opcion = $(this).val();
+    var url = currentURL[0].replace('agentes/') + '/aplicaciones-ms/' + opcion;
+
+    if (opcion == 'Numero_Saliente') {
+      $('.input-telefono-conferencia').slideDown();
+      $('#opciones_conferencia').slideUp();
+    } else {
+      $('.input-telefono-conferencia').slideUp();
+      $('#opciones_conferencia').slideDown();
+      $.ajax({
+        url: url,
+        data: {
+          opcion: opcion
+        },
+        type: "GET"
+      }).done(function (data) {
+        $('#opciones_conferencia').html(data);
+      });
+    }
+  });
 });
 
 /***/ }),
@@ -531,8 +599,8 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Nimbus\resources\js\module_agentes\agentes.js */"./resources/js/module_agentes/agentes.js");
-module.exports = __webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Nimbus\resources\js\module_agentes\eventosPantallaAgente.js */"./resources/js/module_agentes/eventosPantallaAgente.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_agentes\agentes.js */"./resources/js/module_agentes/agentes.js");
+module.exports = __webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_agentes\eventosPantallaAgente.js */"./resources/js/module_agentes/eventosPantallaAgente.js");
 
 
 /***/ })

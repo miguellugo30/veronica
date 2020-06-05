@@ -138,4 +138,40 @@ $(function() {
                 });
         }
     });
+    /**
+     * Evento para mostrar el modal para la conferencia de llamada
+     */
+    $(document).on("click", ".conferencia-llamada", function(e) {
+        $("#modal-conferencia").modal({ backdrop: 'static', keyboard: false });
+    });
+    /**
+     * Evento para mostrar las opciones del destino selecionado
+     */
+    $(document).on('change', '#destino_conferencia', function(event) {
+
+        let opcion = $(this).val();
+        let url = currentURL[0].replace('agentes/') + '/aplicaciones-ms/' + opcion;
+
+        if (opcion == 'Numero_Saliente') {
+
+            $('.input-telefono-conferencia').slideDown();
+            $('#opciones_conferencia').slideUp();
+
+        } else {
+
+            $('.input-telefono-conferencia').slideUp();
+            $('#opciones_conferencia').slideDown();
+
+            $.ajax({
+                    url: url,
+                    data: {
+                        opcion: opcion
+                    },
+                    type: "GET",
+                })
+                .done(function(data) {
+                    $('#opciones_conferencia').html(data);
+                });
+        }
+    });
 });

@@ -123,4 +123,19 @@ class EventosAmiController extends Controller
         $this->conectarAmi()->disconnect();
         return $result;
     }
+    /**
+     * Funcion para generar las conferencias
+     */
+    public function conferencia($canalAgente, $canalLlamada, $empresa_id)
+    {
+        $this->conectarAmi()->setVar($canalAgente, 'IDEMPRESA', $empresa_id);
+        $this->conectarAmi()->setVar($canalLlamada, 'IDEMPRESA', $empresa_id);
+        $this->conectarAmi()->setVar($canalLlamada, 'T_ESPERA', '2');
+
+        $result = $this->conectarAmi()->redirect( $canalAgente, $canalLlamada, 's', 'conferencia', 1 );
+
+        $this->conectarAmi()->disconnect();
+        return $result;
+
+    }
 }

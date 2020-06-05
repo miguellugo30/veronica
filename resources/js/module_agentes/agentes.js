@@ -262,10 +262,54 @@ document.addEventListener('DOMContentLoaded', function() {
                 },
                 success: function(result) {
                     console.log(result);
-                    if (transferirPantalla == 1) {
-                        start();
-                        $(".view-call").html('');
-                    }
+                    $("#modal-transferencia").modal('hide');
+                }
+            });
+
+        }
+
+    });
+    /**
+     * Evento para transferir llamadas
+     */
+    $(document).on('click', '#realizar-conferencia-llamada', function(event) {
+
+        let idAgente = $("#id_agente").val();
+        let canal = $("#canal").val();
+        let canal_entrante = $("#canal_entrante").val();
+        let destino_conferencia = $("#destino_conferencia").val();
+        let opciones_conferencia = $("#opciones_conf").val();
+        let id_empresa = $("#id_empresa").val();
+        let uniqueid = $("#uniqueid").val();
+        let _token = $("input[name=_token]").val();
+
+        if (canal_entrante == null) {
+
+            Swal.fire(
+                'Error!',
+                'No se puede transferir, sin tener una llamada activa.',
+                'error'
+            )
+
+        } else {
+
+            let url = currentURL[0].replace('agentes/') + '/conferencia-llamada';
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: {
+                    idAgente: idAgente,
+                    canal: canal,
+                    canal_entrante: canal_entrante,
+                    destino_conferencia: destino_conferencia,
+                    opciones_conferencia: opciones_conferencia,
+                    id_empresa: id_empresa,
+                    uniqueid: uniqueid,
+                    _token: _token
+                },
+                success: function(result) {
+                    console.log(result);
                     $("#modal-transferencia").modal('hide');
                 }
             });

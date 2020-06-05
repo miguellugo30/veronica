@@ -28,9 +28,6 @@ class AgentesLoginController extends Controller
      */
     protected $redirectTo = '/agentes';
     private $agente;
-    private $timeZone;
-    private $fecha;
-
     /**
      * Create a new controller instance.
      *
