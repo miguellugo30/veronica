@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -25,6 +25,6 @@ class Cat_Estado_Empresa extends Model
      */
     public function Empresa()
     {
-        return $this->hasOne('Nimbus\Empresas');
+        return $this->hasOne('App\Empresas');
     }
 }

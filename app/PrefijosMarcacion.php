@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -40,14 +40,14 @@ class PrefijosMarcacion extends Model
     */
     public function Empresas()
     {
-       return $this->belongsTo('Nimbus\Empresas', 'fk_empresas_id');
+       return $this->belongsTo('App\Empresas', 'fk_empresas_id');
     }
     /**
      * Relacion uno a muchos con Perfil_marcacion
      */
     public function Perfil_marcacion()
     {
-        return $this->hasMany('Nimbus\Perfil_marcacion');
+        return $this->hasMany('App\Perfil_marcacion');
     }
 
 }

@@ -6,15 +6,15 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use Nimbus\User;
-use Nimbus\PrefijosMarcacion;
-use Nimbus\Perfiles;
-use Nimbus\Canales;
-use Nimbus\Dids;
-use Nimbus\Perfil_Marcacion;
-use Nimbus\Cat_Tipo_Canales;
+use App\User;
+use App\PrefijosMarcacion;
+use App\Perfiles;
+use App\Canales;
+use App\Dids;
+use App\Perfil_Marcacion;
+use App\Cat_Tipo_Canales;
 use DB;
-use Nimbus\Http\Controllers\LogController;
+use App\Http\Controllers\LogController;
 use Modules\Settings\Http\Requests\PerfilMarcacionRequest;
 
 class PerfilMarcacionController extends Controller

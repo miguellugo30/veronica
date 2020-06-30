@@ -5,7 +5,7 @@ namespace Modules\Agentes\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Nimbus\Events\answerdEvent;
+use App\Events\answerdEvent;
 
 class EventosPanelController extends Controller
 {

@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Session;
-use Nimbus\User;
-use Nimbus\Categorias;
+use App\User;
+use App\Categorias;
 use Illuminate\Support\Facades\Auth;
 
 class AdministradorController extends Controller
@@ -25,11 +25,14 @@ class AdministradorController extends Controller
         /**
          * Obtenemos el rol del usuario logeado
          */
-        $rol = $user->getRoleNames();
+        $rol = array('Super Administrador');
         /**
          * Obtenemos las categorias relacionadas al usuario
          */
-        $categorias = Categorias::active()->where('modulos_id', 18)->with('Sub_Categorias')->get();
+        $categorias = Categorias::active()->where('modulos_id', 13)->with('Sub_Categorias')->get();
+
+        //dd( $rol );
+
         $modulo = "Administrador";
 
         return view('administrador::index', compact( 'rol', 'categorias', 'modulo' ) );

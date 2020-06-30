@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Session;
-use Nimbus\User;
-use Nimbus\Categorias;
+use App\User;
+use App\Categorias;
 use Illuminate\Support\Facades\Auth;
-use Nimbus\Grabaciones;
+use App\Grabaciones;
 
 
 class GrabacionesController extends Controller

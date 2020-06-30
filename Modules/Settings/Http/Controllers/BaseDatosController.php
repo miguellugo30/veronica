@@ -10,12 +10,12 @@ use Modules\Settings\Http\Requests\baseDatosRequest;
 use Maatwebsite\Excel\Facades\Excel;
 use DB;
 
-use Nimbus\Imports\BaseDatosImport;
+use App\Imports\BaseDatosImport;
 
-use Nimbus\Cat_Plantilla;
-use Nimbus\Bases_Datos;
-use Nimbus\Registros_base;
-use Nimbus\Plantillas_campos;
+use App\Cat_Plantilla;
+use App\Bases_Datos;
+use App\Registros_base;
+use App\Plantillas_campos;
 
 class BaseDatosController extends Controller
 {

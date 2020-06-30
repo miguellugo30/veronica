@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -25,14 +25,14 @@ class Campanas_Configuracion extends Model
      */
     public function Campanas()
     {
-        return $this->hasOne('Nimbus\Campanas', 'Campanas_id', 'id');
+        return $this->hasOne('App\Campanas', 'Campanas_id', 'id');
     }
     /**
     * Relacion uno a uno con Adios_Empresas
     */
     public function Audios_Empresa()
     {
-        return $this->hasOne('Nimbus\Audios_Empresa','ruta','periodic_announce');
+        return $this->hasOne('App\Audios_Empresa','ruta','periodic_announce');
     }
 
 

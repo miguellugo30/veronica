@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -31,34 +31,34 @@ class Config_Empresas extends Model
     */
     public function Empresas()
     {
-        return $this->hasOne('Nimbus\Empresas', 'id');
+        return $this->hasOne('App\Empresas', 'id');
     }
     /**
     * Relacion muchos a uno con Cat_Distribuidor
     */
     public function Distribuidores()
     {
-        return $this->belongsTo('Nimbus\Cat_Distribuidor', 'Cat_Distribuidor_id', 'id');
+        return $this->belongsTo('App\Cat_Distribuidor', 'Cat_Distribuidor_id', 'id');
     }
     /**
      * Relacion uno a uno con Base de Datos
      */
     public function BaseDatos()
     {
-        return $this->belongsTo('Nimbus\BaseDatos', 'Cat_Base_Datos_id');
+        return $this->belongsTo('App\BaseDatos', 'Cat_Base_Datos_id');
     }
     /**
      * Relacion uno a uno con IP PBX
      */
     public function ms()
     {
-        return $this->belongsTo('Nimbus\Cat_IP_PBX', 'Cat_IP_PBX_id');
+        return $this->belongsTo('App\Cat_IP_PBX', 'Cat_IP_PBX_id');
     }
     /**
      * Relacion uno a uno con Dominio
      */
     public function Dominio()
     {
-        return $this->belongsTo('Nimbus\Dominios', 'Dominios_id');
+        return $this->belongsTo('App\Dominios', 'Dominios_id');
     }
 }

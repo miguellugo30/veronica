@@ -8,9 +8,9 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use DB;
 
-use Nimbus\Cat_Estado_Agente;
-use Nimbus\Agentes;
-use Nimbus\Grupos;
+use App\Cat_Estado_Agente;
+use App\Agentes;
+use App\Grupos;
 
 class ReporteProductividadAgentesController extends Controller
 {

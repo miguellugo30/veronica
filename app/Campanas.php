@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -39,48 +39,48 @@ class Campanas extends Model
      */
     public function Empresas()
     {
-        return $this->belongsTo('Nimbus\Empresas', 'Empresas_id','id');
+        return $this->belongsTo('App\Empresas', 'Empresas_id','id');
     }
     /**
      * Relacion uno a uno con Base_Datos
      */
     public function Base_Datos()
     {
-        return $this->hasOne('Nimbus\Bases_datos', 'id', 'Base_Datos_id');
+        return $this->hasOne('App\Bases_datos', 'id', 'Base_Datos_id');
     }
     /**
      * Relacion uno a uno con Formularios
      */
     public function Formularios()
     {
-        return $this->hasOne('Nimbus\Formularios', 'id', 'Formularios_id');
+        return $this->hasOne('App\Formularios', 'id', 'Formularios_id');
     }
     /**
      * Relacion uno a muchos con Calificaciones
      */
     public function Grupos()
     {
-        return $this->hasMany('Nimbus\Grupos', 'id', 'Grupos_id');
+        return $this->hasMany('App\Grupos', 'id', 'Grupos_id');
     }
     /**
      * Relacion uno a uno con Campanas_Configuracion
      */
     public function Campanas_Configuracion()
     {
-        return $this->hasOne('Nimbus\Campanas_Configuracion', 'Campanas_id','id');
+        return $this->hasOne('App\Campanas_Configuracion', 'Campanas_id','id');
     }
     /**
      * Uno a muchos con Agentes
      */
     public function Miembros_Campana()
     {
-        return $this->belongsTo('Nimbus\Miembros_Campana');
+        return $this->belongsTo('App\Miembros_Campana');
     }
     /**
      * Relacion uno a uno con Speech
      */
     public function Speech()
     {
-        return $this->hasOne('Nimbus\Speech', 'id','speech_id');
+        return $this->hasOne('App\Speech', 'id','speech_id');
     }
 }

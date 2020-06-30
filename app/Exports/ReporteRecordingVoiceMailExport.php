@@ -1,10 +1,10 @@
 <?php
 
-namespace Nimbus\Exports;
+namespace App\Exports;
 
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
-use Nimbus\Grabaciones_buzon_voz;
+use App\Grabaciones_buzon_voz;
 
 class ReporteRecordingVoiceMailExport implements FromView
 {

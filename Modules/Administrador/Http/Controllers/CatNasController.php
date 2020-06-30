@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Administrador\Http\Requests\NasRequest;
-use Nimbus\Cat_NAS;
-use Nimbus\Http\Controllers\LogController;
+use App\Cat_NAS;
+use App\Http\Controllers\LogController;
 
 class CatNasController extends Controller
 {

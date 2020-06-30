@@ -1,11 +1,11 @@
 <?php
 
-namespace Nimbus\Http\Controllers;
+namespace App\Http\Controllers;
 
 use DB;
 use nusoap_client;
-use Nimbus\Agentes;
-use Nimbus\Empresas;
+use App\Agentes;
+use App\Empresas;
 
 class ZonaHorariaController extends Controller
 {

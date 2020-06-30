@@ -6,12 +6,12 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use Nimbus\Http\Controllers\LogController;
+use App\Http\Controllers\LogController;
 use Modules\Settings\Http\Requests\EventosRequest;
 
-use Nimbus\User;
-use Nimbus\Eventos_Agentes;
-use Nimbus\Agentes;
+use App\User;
+use App\Eventos_Agentes;
+use App\Agentes;
 
 class EventosAgentesController extends Controller
 {

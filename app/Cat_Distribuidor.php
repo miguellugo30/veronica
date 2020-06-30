@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -30,14 +30,14 @@ class Cat_Distribuidor extends Model
      */
     public function Troncales()
     {
-        return $this->hasMany('Nimbus\Troncales', 'Cat_Distribuidor_id');
+        return $this->hasMany('App\Troncales', 'Cat_Distribuidor_id');
     }
     /**
      * Relacion uno a muchos con Canales
      */
     public function Canales()
     {
-        return $this->hasMany('Nimbus\Canales');
+        return $this->hasMany('App\Canales');
     }
     /**
      * Relacion uno a muchos con Config Empresas
@@ -51,13 +51,13 @@ class Cat_Distribuidor extends Model
      */
     public function Config_Empresas()
     {
-        return $this->hasManyThrough( 'Nimbus\Empresas', 'Nimbus\Config_Empresas', 'Cat_Distribuidor_id', 'id', 'id', 'Empresas_id' );
+        return $this->hasManyThrough( 'App\Empresas', 'App\Config_Empresas', 'Cat_Distribuidor_id', 'id', 'id', 'Empresas_id' );
     }
     /**
      * Relacion uno a muchos con Tipo_Canales
      */
     public function Cat_Tipo_Canales()
     {
-        return $this->hasMany('Nimbus\Cat_Tipo_Canales','id','Cat_Distribuidor_id');
+        return $this->hasMany('App\Cat_Tipo_Canales','id','Cat_Distribuidor_id');
     }
 }

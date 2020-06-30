@@ -2,11 +2,11 @@
 
 namespace Modules\Administrador\Http\Controllers;
 
-use Nimbus\Sub_Categorias;
+use App\Sub_Categorias;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Nimbus\Http\Controllers\LogController;
+use App\Http\Controllers\LogController;
 use DB;
 use Modules\Administrador\Http\Requests\SubMenusRequest;
 

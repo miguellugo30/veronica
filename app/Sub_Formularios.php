@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -37,13 +37,13 @@ class Sub_Formularios extends Model
      */
     public function Formularios()
     {
-        return $this->belongsTo('Nimbus\Formularios', 'Formularios_id', 'id');
+        return $this->belongsTo('App\Formularios', 'Formularios_id', 'id');
     }
     /**
      * Relacion muchos a uno con Cat_Distribuidor
      */
     public function Campos()
     {
-        return $this->belongsTo('Nimbus\Campos', 'Campos_id', 'id');
+        return $this->belongsTo('App\Campos', 'Campos_id', 'id');
     }
 }

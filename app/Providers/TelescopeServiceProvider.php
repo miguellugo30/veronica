@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus\Providers;
+namespace App\Providers;
 
 use Laravel\Telescope\Telescope;
 use Illuminate\Support\Facades\Gate;

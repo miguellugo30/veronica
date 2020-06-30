@@ -73,12 +73,12 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => Nimbus\User::class,
+            'model' => App\User::class,
         ],
 
         'agentes' => [
             'driver' => 'eloquent',
-            'model' => Nimbus\Agentes::class,
+            'model' => App\Agentes::class,
         ],
 
         // 'users' => [

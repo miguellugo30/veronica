@@ -8,11 +8,11 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use nusoap_client;
 
-use Nimbus\Http\Controllers\LogController;
-use Nimbus\Audios_Empresa;
-use Nimbus\User;
+use App\Http\Controllers\LogController;
+use App\Audios_Empresa;
+use App\User;
 use Storage;
-use Nimbus\Empresas;
+use App\Empresas;
 use File;
 use Modules\Settings\Http\Requests\AudiosRequest;
 

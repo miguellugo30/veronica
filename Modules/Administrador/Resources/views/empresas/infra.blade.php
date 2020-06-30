@@ -4,7 +4,7 @@
         <div class="input-group mb-2">
             <input type="text" class="form-control " id="dominio" name="dominio" placeholder="dominio" value="{{ str_replace(' ', '_', $empresa->nombre ) }}">
             <div class="input-group-prepend">
-                <div class="input-group-text ">{{ $Cat_Distribuidor_id == 11 ? '.nimbuscca.mx' : '.nimbuscc.mx' }}</div>
+                <div class="input-group-text ">{{ $Cat_Distribuidor_id == 11 ? '.Appcca.mx' : '.Appcc.mx' }}</div>
             </div>
         </div>
         <input type="hidden" name="id_empresa" id="id_empresa" value="{{ $empresa->id }}">

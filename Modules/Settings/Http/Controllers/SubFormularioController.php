@@ -8,9 +8,9 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Modules\Settings\Http\Requests\SubFormulariosRequest;
 
-use Nimbus\Formularios;
-use Nimbus\Sub_Formularios;
-use Nimbus\Campos;
+use App\Formularios;
+use App\Sub_Formularios;
+use App\Campos;
 
 class SubFormularioController extends Controller
 {

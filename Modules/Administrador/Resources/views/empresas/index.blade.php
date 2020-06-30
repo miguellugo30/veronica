@@ -28,7 +28,7 @@
                                 <td>{{$empresa->nombre}}</td>
                                 <td>{{$empresa->nombre}}</td>
                                 <td>
-                                    <input type="hidden" id="dominio_empresa" value="http://info.nimbus.mx">
+                                    <input type="hidden" id="dominio_empresa" value="http://info.App.mx">
                                     <button type="button" data-id_empresa="{{ $empresa->id }}" name="link" class="btn btn-info linkEmpresa"><i class="fas fa-sign-in-alt"></i></button>
                                 </td>
                             </tr>

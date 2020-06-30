@@ -5,19 +5,19 @@ namespace Modules\Settings\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Nimbus\Http\Controllers\LogController;
+use App\Http\Controllers\LogController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use nusoap_client;
 use Modules\Settings\Http\Requests\AgentesRequest;
 use PHPAMI\Ami;
 
-use Nimbus\Agentes;
-use Nimbus\Canales;
-use Nimbus\Grupos;
-use Nimbus\Empresas;
-use Nimbus\Cat_Extensiones;
-use Nimbus\Perfiles;
+use App\Agentes;
+use App\Canales;
+use App\Grupos;
+use App\Empresas;
+use App\Cat_Extensiones;
+use App\Perfiles;
 
 class AgentesController extends Controller
 {

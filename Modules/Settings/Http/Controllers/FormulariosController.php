@@ -8,11 +8,11 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Modules\Settings\Http\Requests\FormulariosRequest;
 
-use Nimbus\User;
-use Nimbus\Campos;
-use Nimbus\Formularios;
-use Nimbus\Sub_Formularios;
-use Nimbus\Cat_Tipo_Marcacion;
+use App\User;
+use App\Campos;
+use App\Formularios;
+use App\Sub_Formularios;
+use App\Cat_Tipo_Marcacion;
 use DB;
 
 class FormulariosController extends Controller

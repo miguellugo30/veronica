@@ -47,7 +47,7 @@
     <![endif]-->
 
     <!-- Google Font -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,600,700,300italic,400italic,600italic">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu">
 
     <link rel='stylesheet' href='https://unpkg.com/@fullcalendar/core@4.3.1/main.min.css' />
     <link rel='stylesheet' href='https://unpkg.com/@fullcalendar/list@4.3.0/main.min.css' />

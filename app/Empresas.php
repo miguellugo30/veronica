@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -44,97 +44,97 @@ class Empresas extends Model
      */
     public function Dids()
     {
-        return $this->hasMany('Nimbus\Dids');
+        return $this->hasMany('App\Dids');
     }
     /**
      * Relacion uno a muchos con Did
      */
     public function Canales()
     {
-        return $this->hasMany('Nimbus\Canales');
+        return $this->hasMany('App\Canales');
     }
     /**
      * Relacion uno a uno con Config Empresas
      */
     public function Config_Empresas()
     {
-        return $this->hasOne('Nimbus\Config_Empresas', 'Empresas_id', 'id');
+        return $this->hasOne('App\Config_Empresas', 'Empresas_id', 'id');
     }
     /**
      * Relacion muchos a muchos con Modulos
      */
     public function Modulos()
     {
-        return $this->belongsToMany('Nimbus\Modulos', 'Modulos_Empresas')->orderBy('prioridad');
+        return $this->belongsToMany('App\Modulos', 'Modulos_Empresas')->orderBy('prioridad');
     }
     /**
      * Relacion uno a uno con Cat_Estado_Empresas
      */
     public function Cat_Estado_Empresa()
     {
-        return $this->hasOne('Nimbus\Cat_Estado_Empresa', 'id', 'Cat_Estado_Empresa_id');
+        return $this->hasOne('App\Cat_Estado_Empresa', 'id', 'Cat_Estado_Empresa_id');
     }
      /**
      * Relacion uno a muchos con Cat_Extensiones
      */
     public function Cat_Extensiones()
     {
-        return $this->hasMany('Nimbus\Cat_Extensiones');
+        return $this->hasMany('App\Cat_Extensiones');
     }
     /**
      * Relacion uno a muchos con Sub_Formularios
      */
     public function Formularios()
     {
-        return $this->hasMany('Nimbus\Formularios');
+        return $this->hasMany('App\Formularios');
     }
     /**
      * Relacion uno a muchos con Speech
      */
     public function Speech()
     {
-        return $this->hasMany('Nimbus\speech');
+        return $this->hasMany('App\speech');
     }
     /**
      * Relacion uno a muchos con Agentes
      */
     public function Agentes()
     {
-        return $this->hasMany('Nimbus\Agentes');
+        return $this->hasMany('App\Agentes');
     }
     /**
      * Relacion uno a muchos con Speech
      */
     public function Eventos_Agentes()
     {
-        return $this->hasMany('Nimbus\Eventos_Agentes');
+        return $this->hasMany('App\Eventos_Agentes');
     }
     /**
      * Relacion uno a muchos con Grabaciones
      */
     public function Grabaciones()
     {
-        return $this->hasMany('Nimbus\Grabaciones');
+        return $this->hasMany('App\Grabaciones');
     }
     /**
      * Relacion uno a muchos con almacenamiento
      */
     public function almacenamiento()
     {
-        return $this->hasMany('Nimbus\almacenamiento');
+        return $this->hasMany('App\almacenamiento');
     }
     /**
      * Relacion muchos a muchos con Cat_campos_plantillas
      */
     public function Cat_campos_plantillas()
     {
-        return $this->belongsToMany('Nimbus\Cat_campos_plantillas', 'Campos_plantillas_empresa', 'fk_empresas_id', 'fk_cat_campos_plantilla_id');
+        return $this->belongsToMany('App\Cat_campos_plantillas', 'Campos_plantillas_empresa', 'fk_empresas_id', 'fk_cat_campos_plantilla_id');
     }
     /**
      * Relacion uno a muchos con Prefijos_marcacion
      */
     public function Prefijos_marcacion()
     {
-        return $this->hasMany('Nimbus\Prefijos_marcacion');
+        return $this->hasMany('App\Prefijos_marcacion');
     }
 }

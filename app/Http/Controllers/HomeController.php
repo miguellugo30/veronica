@@ -1,11 +1,11 @@
 <?php
 
-namespace Nimbus\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-use Nimbus\Token_Soporte;
+use App\Token_Soporte;
 
 class HomeController extends Controller
 {

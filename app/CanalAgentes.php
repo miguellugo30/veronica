@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -29,6 +29,6 @@ class CanalAgentes extends Model
      */
     public function Agente()
     {
-       return $this->belongsTo('Nimbus\Agentes', 'id', 'fk_agentes_id');
+       return $this->belongsTo('App\Agentes', 'id', 'fk_agentes_id');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -38,6 +38,6 @@ class Plantillas_campos extends Model
      */
     public function Cat_Plantilla()
     {
-        return $this->belongsTo('Nimbus\Cat_plantilla', 'id', 'fk_cat_plantilla_id');
+        return $this->belongsTo('App\Cat_plantilla', 'id', 'fk_cat_plantilla_id');
     }
 }

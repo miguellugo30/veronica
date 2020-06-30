@@ -5,7 +5,7 @@ namespace Modules\Agentes\Http\Controllers;
 use Illuminate\Routing\Controller;
 use Carbon\Carbon;
 
-use Nimbus\Registros_Eventos_Agentes;
+use App\Registros_Eventos_Agentes;
 
 class LogRegistroEventosController extends Controller
 {

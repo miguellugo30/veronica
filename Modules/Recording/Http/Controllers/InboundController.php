@@ -7,15 +7,15 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Modules\Recording\Http\Controllers\QueryReporteRecordingInboundController;
-use Nimbus\Exports\ReporteRecordingInboundExport;
+use App\Exports\ReporteRecordingInboundExport;
 use Maatwebsite\Excel\Facades\Excel;
 use nusoap_client;
 use Storage;
 use Illuminate\Support\Facades\Artisan;
-use Nimbus\Http\Controllers\LogController;
+use App\Http\Controllers\LogController;
 
-use Nimbus\Empresas;
-use Nimbus\Grabaciones;
+use App\Empresas;
+use App\Grabaciones;
 
 class InboundController extends Controller
 {
@@ -147,13 +147,13 @@ class InboundController extends Controller
             }
 
         }
-        /**
+        /*
          * CREAMOS EL ZIP CON LOS ARCHIVOS
+         $zipper = new \Chumper\Zipper\Zipper;
+         $ruta = glob(public_path( '/storage/tmp/'.$empresa_id.'/*' ) );
+         $zipper->make('storage/tmp/grabaciones_'.$empresa_id.'.zip')->add( $ruta )->close();
+         $zipper->close();
          **/
-        $zipper = new \Chumper\Zipper\Zipper;
-        $ruta = glob(public_path( '/storage/tmp/'.$empresa_id.'/*' ) );
-        $zipper->make('storage/tmp/grabaciones_'.$empresa_id.'.zip')->add( $ruta )->close();
-        $zipper->close();
         /**
          * Borramos el directorio temporal
          */

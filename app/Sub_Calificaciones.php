@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -43,6 +43,6 @@ class Sub_Calificaciones extends Model
      */
     public function Formularios()
     {
-        return $this->hasOne('Nimbus\Formularios', 'id', 'Formularios_id');
+        return $this->hasOne('App\Formularios', 'id', 'Formularios_id');
     }
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace Nimbus\Console\Commands;
+namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Nimbus\Token_Soporte;
+use App\Token_Soporte;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 

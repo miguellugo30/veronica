@@ -39,7 +39,7 @@
                     <!-- /.navbar-collapse -->
             @else
             <!-- Logo -->
-            <a href="{{ url(config('adminlte.dashboard_url', 'home')) }}" class="logo" style="background-color: #3c8dbc">
+            <a href="{{ url(config('adminlte.dashboard_url', 'home')) }}" class="logo">
                 <!-- mini logo for sidebar mini 50x50 pixels -->
                 <span class="logo-mini">{!! config('adminlte.logo_mini', '<b>A</b>LT') !!}</span>
                 <!-- logo for regular state and mobile devices -->
@@ -105,17 +105,17 @@
                                 <li class="treeview">
                             @endif
                                 <a>
-                                    <i class="{{ $categoria->class_icon }} fa-2x"> </i>
-                                    <span> {{ $categoria->nombre }} </span>
+                                    <i class="{{ $categoria->class_icon }}"></i>
+                                    <span style="font-size: 1rem"> {{ " ".$categoria->nombre }} </span>
                                 </a>
                                 @if( $categoria->Sub_Categorias->count() > 0 )
-                                    <ul class="treeview-menu">
-                                        @foreach ($categoria->Sub_Categorias as $sub)
-                                            @can( $sub->permiso )
-                                                <li class="sub-menu" data-id="sub-{{ $sub->id }}"><a href="#"><i class="far fa-building"></i> {{ $sub->nombre }}</a></li>
-                                            @endcan
-                                        @endforeach
-                                    </ul>
+                                <ul class="treeview-menu">
+                                    @foreach ($categoria->Sub_Categorias as $sub)
+                                        @can( $sub->permiso )
+                                            <li class="sub-menu" data-id="sub-{{ $sub->id }}"><a href="#"><i class="far fa-building"></i> {{ $sub->nombre }}</a></li>
+                                        @endcan
+                                    @endforeach
+                                </ul>
                                 @endif
                             </li>
                         @endcan

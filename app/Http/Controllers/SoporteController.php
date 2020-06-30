@@ -1,10 +1,10 @@
 <?php
 
-namespace Nimbus\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Carbon\Carbon;
-use Nimbus\Token_Soporte;
-use Nimbus\User;
+use App\Token_Soporte;
+use App\User;
 
 class SoporteController extends Controller
 {

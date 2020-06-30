@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -36,41 +36,41 @@ class Canales extends Model
      */
     public function Dids()
     {
-        return $this->hasMany('Nimbus\Dids');
+        return $this->hasMany('App\Dids');
     }
     /**
     * Relacion muchos a uno con Troncales
     */
     public function Troncales()
     {
-       return $this->belongsTo('Nimbus\Troncales', 'Troncales_id');
+       return $this->belongsTo('App\Troncales', 'Troncales_id');
     }
     /**
     * Relacion muchos a uno con Distribuidores
     */
     public function Distribuidores()
     {
-       return $this->belongsTo('Nimbus\Cat_Distribuidor', 'Cat_Distribuidor_id');
+       return $this->belongsTo('App\Cat_Distribuidor', 'Cat_Distribuidor_id');
     }
     /**
     * Relacion muchos a uno con Distribuidores
     */
     public function Empresas()
     {
-       return $this->belongsTo('Nimbus\Empresas', 'Empresas_id');
+       return $this->belongsTo('App\Empresas', 'Empresas_id');
     }
     /**
      * Relacion uno a uno con Cat_Tipo_Canales
      */
     public function Cat_Tipo_Canales()
     {
-        return $this->hasOne('Nimbus\Cat_Tipo_Canales', 'id', 'Cat_Canales_Tipo_id');
+        return $this->hasOne('App\Cat_Tipo_Canales', 'id', 'Cat_Canales_Tipo_id');
     }
     /**
      * Relacion uno a muchos con Perfil_marcacion
      */
     public function Perfil_marcacion()
     {
-        return $this->hasMany('Nimbus\Perfil_marcacion', 'fk_canales_id', 'id');
+        return $this->hasMany('App\Perfil_marcacion', 'fk_canales_id', 'id');
     }
 }

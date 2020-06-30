@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -32,6 +32,6 @@ class Inbound extends Model
      */
     public function Campanas()
     {
-        return $this->belongsTo('Nimbus\Campanas', 'id_grabacion','id');
+        return $this->belongsTo('App\Campanas', 'id_grabacion','id');
     }
 }

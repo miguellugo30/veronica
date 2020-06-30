@@ -8,9 +8,9 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use DB;
 
-use Nimbus\Agentes;
-use Nimbus\Grupos;
-use Nimbus\Eventos_Agentes;
+use App\Agentes;
+use App\Grupos;
+use App\Eventos_Agentes;
 
 class ReporteTiempoInactividadController extends Controller
 {

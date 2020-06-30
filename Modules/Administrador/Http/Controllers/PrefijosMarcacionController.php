@@ -5,9 +5,9 @@ namespace Modules\Administrador\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Nimbus\PrefijosMarcacion;
-use Nimbus\User;
-use Nimbus\Http\Controllers\LogController;
+use App\PrefijosMarcacion;
+use App\User;
+use App\Http\Controllers\LogController;
 use Illuminate\Support\Facades\Auth;
 
 class PrefijosMarcacionController extends Controller

@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -25,13 +25,13 @@ class BaseDatos extends Model
      */
     public function PBX()
     {
-        return $this->hasMany('Nimbus\Cat_IP_PBX');
+        return $this->hasMany('App\Cat_IP_PBX');
     }
     /**
      * Relacion uno a uno con Config Empresas
      */
     public function Config_Empresas()
     {
-        return $this->hasOne('Nimbus\Config_Empresas', 'Cat_IP_PBX_id', 'id');
+        return $this->hasOne('App\Config_Empresas', 'Cat_IP_PBX_id', 'id');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -43,27 +43,27 @@ class Cat_Plantilla extends Model
      */
     public function Empresas()
     {
-        return $this->belongsTo('Nimbus\Empresas', 'fk_empresas_id','id');
+        return $this->belongsTo('App\Empresas', 'fk_empresas_id','id');
     }
     /**
      * Relación muchos a uno con Empresas
      */
     public function BaseDatos()
     {
-        return $this->hasMany('Nimbus\Bases_Datos', 'fk_cat_plantilla_id','id');
+        return $this->hasMany('App\Bases_Datos', 'fk_cat_plantilla_id','id');
     }
     /**
      * Relación muchos a uno con Empresas
      */
     public function Registros_base()
     {
-        return $this->hasMany('Nimbus\Registros_base', 'fk_cat_plantilla_id','id');
+        return $this->hasMany('App\Registros_base', 'fk_cat_plantilla_id','id');
     }
     /**
      * Relación uno a muchos con Empresas
      */
     public function Plantillas_campos()
     {
-        return $this->hasMany('Nimbus\Plantillas_campos', 'fk_cat_plantilla_id','id')->orderBy('orden');
+        return $this->hasMany('App\Plantillas_campos', 'fk_cat_plantilla_id','id')->orderBy('orden');
     }
 }

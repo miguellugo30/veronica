@@ -1,6 +1,6 @@
 <?php
 //MODELO DE DID
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -43,28 +43,28 @@ class Dids extends Model
     */
    public function Empresas()
    {
-      return $this->belongsTo('Nimbus\Empresas', 'Empresas_id', 'id');
+      return $this->belongsTo('App\Empresas', 'Empresas_id', 'id');
    }
    /**
    * Relacion muchos a uno con Canales
    */
    public function Canales()
    {
-      return $this->belongsTo('Nimbus\Canales', 'Canales_id', 'id');
+      return $this->belongsTo('App\Canales', 'Canales_id', 'id');
    }
    /**
    * Relacion uno a uno con Did_Entrutamiento
    */
    public function Did_Enrutamiento()
    {
-      return $this->hasOne('Nimbus\Did_Enrutamiento', 'Dids_id', 'id')->orderby('prioridad');
+      return $this->hasOne('App\Did_Enrutamiento', 'Dids_id', 'id')->orderby('prioridad');
    }
    /**
     * Relacion uno a muchos con Perfil_marcacion
     */
    public function Perfil_marcacion()
    {
-       return $this->hasMany('Nimbus\Perfil_marcacion');
+       return $this->hasMany('App\Perfil_marcacion');
    }
 }
 

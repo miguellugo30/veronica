@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -29,13 +29,13 @@ class HistorialEventosAgentes extends Model
      */
     public function Agentes()
     {
-        return $this->belongsTo('Nimbus\Agentes', 'fk_agentes_id', 'id');
+        return $this->belongsTo('App\Agentes', 'fk_agentes_id', 'id');
     }
     /**
      * Uno a muchos con Grupos_Agentes
      */
     public function Cat_Estado_Agente()
     {
-        return $this->belongsTo('Nimbus\Cat_Estado_Agente', 'fk_cat_estado_agente_id', 'id');
+        return $this->belongsTo('App\Cat_Estado_Agente', 'fk_cat_estado_agente_id', 'id');
     }
 }

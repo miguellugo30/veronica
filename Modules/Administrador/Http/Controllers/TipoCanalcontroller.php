@@ -5,9 +5,9 @@ namespace Modules\Administrador\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Nimbus\Cat_Tipo_Canales;
-use Nimbus\Cat_Distribuidor;
-use Nimbus\Http\Controllers\LogController;
+use App\Cat_Tipo_Canales;
+use App\Cat_Distribuidor;
+use App\Http\Controllers\LogController;
 use Modules\Administrador\Http\Requests\TipoCanalRequest;
 
 class TipoCanalcontroller extends Controller

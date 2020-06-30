@@ -9,15 +9,15 @@ use Illuminate\Support\Facades\Auth;
 use DB;
 use Modules\Inbound\Http\Requests\CampanasRequest;
 
-use Nimbus\User;
-use Nimbus\Http\Controllers\LogController;
-use Nimbus\Campanas;
-use Nimbus\Audios_Empresa;
-use Nimbus\Campanas_Configuracion;
-use Nimbus\Agentes;
-use Nimbus\Miembros_Campana;
-use Nimbus\Speech;
-use Nimbus\Grupos;
+use App\User;
+use App\Http\Controllers\LogController;
+use App\Campanas;
+use App\Audios_Empresa;
+use App\Campanas_Configuracion;
+use App\Agentes;
+use App\Miembros_Campana;
+use App\Speech;
+use App\Grupos;
 
 class CampanasController extends Controller
 {

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use Nimbus\Exports\ReporteDesgloceExport;
+use App\Exports\ReporteDesgloceExport;
 use Maatwebsite\Excel\Facades\Excel;
 use DB;
 

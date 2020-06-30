@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus\Exports;
+namespace App\Exports;
 
 use Modules\Inbound\Http\Controllers\QueryreportdesgloseController;
 use Illuminate\Contracts\View\View;

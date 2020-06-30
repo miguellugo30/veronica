@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -29,7 +29,7 @@ class Cdr_Asigancion_Agente extends Model
      */
     public function Cdr_call_center_detalles()
     {
-        return $this->belongsTo('Nimbus\Cdr_call_center_detalles', 'uniqueid','uniqueid');
+        return $this->belongsTo('App\Cdr_call_center_detalles', 'uniqueid','uniqueid');
     }
 
 }

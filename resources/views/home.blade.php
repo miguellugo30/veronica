@@ -1,13 +1,13 @@
 @extends('adminlte::master')
 
-@section('title', 'Nimbus CCC')
+@section('title', 'App CCC')
 
 <div class="content-wrapper" style="margin-left: 0px;">
     <div class="container">
         <div class="row justify-content-md-center">
             <div class="card mb-3">
-                <!--img src="http://104.152.200.148/ccs/Empresas/imagenes/modulos_superior.jpg" class="card-img-top img-fluid" alt="Nimbus CCC"-->
-                <img src="https://3pm93uct67m3g6as311i2ld1-wpengine.netdna-ssl.com/wp-content/uploads/2016/10/Call-Center-Solution-Dubai.jpg" class="card-img-top img-fluid" alt="Nimbus CCC">
+                <!--img src="http://104.152.200.148/ccs/Empresas/imagenes/modulos_superior.jpg" class="card-img-top img-fluid" alt="App CCC"-->
+                <img src="https://3pm93uct67m3g6as311i2ld1-wpengine.netdna-ssl.com/wp-content/uploads/2016/10/Call-Center-Solution-Dubai.jpg" class="card-img-top img-fluid" alt="App CCC">
                 <div class="card-body col-lg-12 justify-content-md-center" style="display: flex;">
                     <div class="row col-lg-12 ">
 

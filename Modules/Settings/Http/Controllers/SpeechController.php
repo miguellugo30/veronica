@@ -8,11 +8,11 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Modules\Settings\Http\Requests\SpeechRequest;
 use DB;
-use Nimbus\Http\Controllers\LogController;
+use App\Http\Controllers\LogController;
 
-use Nimbus\User;
-use Nimbus\Speech;
-use Nimbus\Opciones_Speech;
+use App\User;
+use App\Speech;
+use App\Opciones_Speech;
 
 class SpeechController extends Controller
 {

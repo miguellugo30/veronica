@@ -7,11 +7,11 @@ use nusoap_client;
 use Illuminate\Routing\Controller;
 use Modules\Agentes\Http\Controllers\EventosAmiController;
 use Modules\Agentes\Http\Controllers\LogRegistroEventosController;
-use Nimbus\Http\Controllers\ZonaHorariaController;
+use App\Http\Controllers\ZonaHorariaController;
 
-use Nimbus\Miembros_Campana;
-use Nimbus\Empresas;
-use Nimbus\Crd_Asignacion_Agente;
+use App\Miembros_Campana;
+use App\Empresas;
+use App\Crd_Asignacion_Agente;
 
 class EventosAgenteController extends Controller
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -32,13 +32,13 @@ class Buzon_Voz extends Model
      */
     public function Empresas()
     {
-        return $this->belongsTo('Nimbus\Empresas', 'Empresas_id','id');
+        return $this->belongsTo('App\Empresas', 'Empresas_id','id');
     }
     /**
      * Relacion uno a uno con Caneles
      */
     public function Audios_Empresa()
     {
-        return $this->hasOne('Nimbus\Audios_Empresa', 'id', 'Audios_Empresa_id');
+        return $this->hasOne('App\Audios_Empresa', 'id', 'Audios_Empresa_id');
     }
 }

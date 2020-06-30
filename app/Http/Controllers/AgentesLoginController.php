@@ -1,18 +1,18 @@
 <?php
 
-namespace Nimbus\Http\Controllers;
+namespace App\Http\Controllers;
 
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Nimbus\Http\Controllers\ZonaHorariaController;
+use App\Http\Controllers\ZonaHorariaController;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Modules\Agentes\Http\Controllers\LogRegistroEventosController;
 use Modules\Agentes\Http\Controllers\EventosAmiController;
 
-use Nimbus\Agentes;
-use Nimbus\CanalAgentes;
-use Nimbus\Miembros_Campana;
+use App\Agentes;
+use App\CanalAgentes;
+use App\Miembros_Campana;
 
 class AgentesLoginController extends Controller
 {

@@ -5,20 +5,20 @@ namespace Modules\Agentes\Http\Controllers;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Nimbus\Http\Controllers\ZonaHorariaController;
+use App\Http\Controllers\ZonaHorariaController;
 use Modules\Agentes\Http\Controllers\EventosAmiController;
 use Modules\Agentes\Http\Controllers\EventosAgenteController;
 use Modules\Agentes\Http\Controllers\CalificarLlamadaController;
-use Nimbus\Agentes;
-use Nimbus\Did_Enrutamiento;
-use Nimbus\Campanas;
-use Nimbus\Cat_Extensiones;
-use Nimbus\Cdr_call_center;
-use Nimbus\Cdr_call_center_detalles;
-use Nimbus\Crd_Asignacion_Agente;
-use Nimbus\Miembros_Campana;
-use Nimbus\Eventos_Agentes;
-use Nimbus\HistorialEventosAgentes;
+use App\Agentes;
+use App\Did_Enrutamiento;
+use App\Campanas;
+use App\Cat_Extensiones;
+use App\Cdr_call_center;
+use App\Cdr_call_center_detalles;
+use App\Crd_Asignacion_Agente;
+use App\Miembros_Campana;
+use App\Eventos_Agentes;
+use App\HistorialEventosAgentes;
 
 class AgentesController extends Controller
 {

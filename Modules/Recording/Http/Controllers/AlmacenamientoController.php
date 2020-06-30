@@ -5,10 +5,10 @@ namespace Modules\Recording\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Nimbus\User;
+use App\User;
 use Illuminate\Support\Facades\Auth;
-USE Nimbus\Almacenamiento;
-USE Nimbus\Config_Empresas;
+USE App\Almacenamiento;
+USE App\Config_Empresas;
 USE DB;
 class AlmacenamientoController extends Controller
 {

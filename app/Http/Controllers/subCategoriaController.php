@@ -1,9 +1,9 @@
 <?php
 
-namespace Nimbus\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Session;
-use Nimbus\Categorias;
+use App\Categorias;
 use Illuminate\Http\Request;
 
 class subCategoriaController extends Controller

@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -36,7 +36,7 @@ class Condiciones_Tiempo extends Model
      */
     public function Grupos()
     {
-        return $this->belongsTo('Nimbus\Grupos', 'Grupos_id', 'id');
+        return $this->belongsTo('App\Grupos', 'Grupos_id', 'id');
     }
 
 }

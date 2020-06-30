@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'title' => 'Nimbus CCC',
+    'title' => 'Veronica CCC',
 
     'title_prefix' => '',
 
@@ -30,9 +30,9 @@ return [
     |
     */
 
-    'logo' => '<b>Nimbus</b>CCC',
+    'logo' => '<b>Veronica </b>CCC',
 
-    'logo_mini' => '<b>C</b>CC',
+    'logo_mini' => '<b>V </b>CCC',
 
     /*
     |--------------------------------------------------------------------------
@@ -45,7 +45,7 @@ return [
     |
     */
 
-    'skin' => 'blue',
+    'skin' => 'green',
 
     /*
     |--------------------------------------------------------------------------

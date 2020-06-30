@@ -5,11 +5,11 @@ namespace Modules\Settings\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Nimbus\PrefijosMarcacion;
-use Nimbus\User;
+use App\PrefijosMarcacion;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use Modules\Settings\Http\Requests\PrefijosMarcacionRequest;
-use Nimbus\Http\Controllers\LogController;
+use App\Http\Controllers\LogController;
 
 class PrefijosMarcacionController extends Controller
 {

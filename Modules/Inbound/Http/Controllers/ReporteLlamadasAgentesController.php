@@ -7,9 +7,9 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use DB;
-use Nimbus\Campanas;
-use Nimbus\Agentes;
-use Nimbus\Grupos;
+use App\Campanas;
+use App\Agentes;
+use App\Grupos;
 
 class ReporteLlamadasAgentesController extends Controller
 {

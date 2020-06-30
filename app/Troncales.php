@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -36,20 +36,20 @@ class Troncales extends Model
      */
     public function Cat_Distribuidor()
     {
-        return $this->belongsTo('Nimbus\Cat_Distribuidor', 'Cat_Distribuidor_id');
+        return $this->belongsTo('App\Cat_Distribuidor', 'Cat_Distribuidor_id');
     }
     /**
      * Relacion uno a muchos con Canales
      */
     public function Canales()
     {
-        return $this->hasMany('Nimbus\Canales');
+        return $this->hasMany('App\Canales');
     }
     /**
      * Relación muchos a muchos con empresas
      */
     public function Troncales_Sansay()
     {
-        return $this->hasOne('Nimbus\Troncales_Sansay');
+        return $this->hasOne('App\Troncales_Sansay');
     }
 }

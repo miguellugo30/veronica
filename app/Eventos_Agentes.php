@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -43,13 +43,13 @@ class Eventos_Agentes extends Model
      */
     public function Registros_Eventos_Agentes()
     {
-        return $this->hasMany('Nimbus\Registro_Eventos_Agentes');
+        return $this->hasMany('App\Registro_Eventos_Agentes');
     }
     /**
      * Muchos a uno con Empresas
      */
     public function Empresas()
     {
-        return $this->belongsTo('Nimbus\Empresas', 'Empresas_id', 'id');
+        return $this->belongsTo('App\Empresas', 'Empresas_id', 'id');
     }
 }

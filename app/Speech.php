@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -39,13 +39,13 @@ class Speech extends Model
      */
     public function Empresas()
     {
-        return $this->belongsTo('Nimbus\Empresas', 'Empresas_id', 'id');
+        return $this->belongsTo('App\Empresas', 'Empresas_id', 'id');
     }
     /**
      * Relacion uno a muchos con Speech
      */
     public function Opciones_Speech()
     {
-        return $this->hasMany('Nimbus\Opciones_Speech', 'speech_id');
+        return $this->hasMany('App\Opciones_Speech', 'speech_id');
     }
 }

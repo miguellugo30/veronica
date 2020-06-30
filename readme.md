@@ -1,6 +1,6 @@
 <p align="center"><img src="http://10.255.244.103/2019-06-13.jpg"></p>
 
-## Acerca de Nimbus Cloud Contact Center
+## Acerca de App Cloud Contact Center
 
 Version 0.1.0
 

@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Veronica'),
 
     /*
     |--------------------------------------------------------------------------
@@ -166,17 +166,16 @@ return [
         */
         Spatie\Permission\PermissionServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
-        Chumper\Zipper\ZipperServiceProvider::class,
         /*
         * Application Service Providers...
         */
-        Nimbus\Providers\AppServiceProvider::class,
-        Nimbus\Providers\AuthServiceProvider::class,
-        // Nimbus\Providers\BroadcastServiceProvider::class,
-        Nimbus\Providers\EventServiceProvider::class,
-        Nimbus\Providers\TelescopeServiceProvider::class,
-        Nimbus\Providers\RouteServiceProvider::class,
-        JeroenNoten\LaravelAdminLte\ServiceProvider::class,
+        App\Providers\AppServiceProvider::class,
+        App\Providers\AuthServiceProvider::class,
+        // App\Providers\BroadcastServiceProvider::class,
+        App\Providers\EventServiceProvider::class,
+        //App\Providers\TelescopeServiceProvider::class,
+        App\Providers\RouteServiceProvider::class,
+        //JeroenNoten\LaravelAdminLte\ServiceProvider::class,
 
     ],
 
@@ -229,7 +228,6 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-        'Zipper' => Chumper\Zipper\Zipper::class,
     ],
 
 ];

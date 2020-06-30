@@ -5,12 +5,12 @@ namespace Modules\Administrador\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Nimbus\Canales;
-use Nimbus\Cat_Distribuidor;
-use Nimbus\Cat_Tipo_Canales;
-use Nimbus\Empresas;
-use Nimbus\Troncales;
-use Nimbus\Http\Controllers\LogController;
+use App\Canales;
+use App\Cat_Distribuidor;
+use App\Cat_Tipo_Canales;
+use App\Empresas;
+use App\Troncales;
+use App\Http\Controllers\LogController;
 
 class CanalesController extends Controller
 {

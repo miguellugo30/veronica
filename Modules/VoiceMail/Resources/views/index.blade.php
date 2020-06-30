@@ -2,7 +2,7 @@
 {{--@extends('recording::layouts.master')--}}
 
 
-@section('title', 'Nimbus CCC')
+@section('title', 'App CCC')
 
 @section('content_header')
     <!--h1>This view is loaded from module: {!! config('recording.name') !!}</h1-->

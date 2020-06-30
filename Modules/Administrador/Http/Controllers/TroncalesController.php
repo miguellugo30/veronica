@@ -9,12 +9,12 @@ use Modules\Administrador\Http\Requests\TroncalesRequest;
 use PHPAMI\Ami;
 use nusoap_client;
 
-use Nimbus\Empresas;
-use Nimbus\Troncales;
-use Nimbus\Troncales_Sansay;
-use Nimbus\Cat_Distribuidor;
-use Nimbus\Cat_IP_PBX;
-use Nimbus\Http\Controllers\LogController;
+use App\Empresas;
+use App\Troncales;
+use App\Troncales_Sansay;
+use App\Cat_Distribuidor;
+use App\Cat_IP_PBX;
+use App\Http\Controllers\LogController;
 use Illuminate\Support\Facades\Auth;
 
 class TroncalesController extends Controller

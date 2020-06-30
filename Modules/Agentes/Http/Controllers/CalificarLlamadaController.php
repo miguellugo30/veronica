@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 
-use Nimbus\DatosFormularios;
-use Nimbus\Cdr_call_center_detalles;
+use App\DatosFormularios;
+use App\Cdr_call_center_detalles;
 
 class CalificarLlamadaController extends Controller
 {

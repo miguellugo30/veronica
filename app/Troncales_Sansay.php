@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -36,6 +36,6 @@ class Troncales_Sansay extends Model
      */
     public function Troncales()
     {
-        return $this->hasOne('Nimbus\Troncales', 'Troncaless_id');
+        return $this->hasOne('App\Troncales', 'Troncaless_id');
     }
 }

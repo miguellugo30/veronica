@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -43,20 +43,20 @@ class Grupos extends Model
      */
     public function Agentes()
     {
-        return $this->belongsToMany('Nimbus\Agentes', 'Grupos_Agentes');
+        return $this->belongsToMany('App\Agentes', 'Grupos_Agentes');
     }
     /**
      * Relacion muchos a muchos con Condiciones de tiempo
      */
     public function Condiciones_Tiempo()
     {
-        return $this->hasMany('Nimbus\Condiciones_Tiempo');
+        return $this->hasMany('App\Condiciones_Tiempo');
     }
     /**
      * Relacion muchos a muchos con Grupos_Agentes
      */
     public function Calificaciones()
     {
-        return $this->belongsToMany('Nimbus\Calificaciones', 'Grupo_Calificaciones');
+        return $this->belongsToMany('App\Calificaciones', 'Grupo_Calificaciones');
     }
 }

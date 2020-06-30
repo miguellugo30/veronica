@@ -5,8 +5,8 @@ namespace Modules\Administrador\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Nimbus\Cat_Estado_Cliente;
-use Nimbus\Http\Controllers\LogController;
+use App\Cat_Estado_Cliente;
+use App\Http\Controllers\LogController;
 use Modules\Administrador\Http\Requests\EstadoClienteRequest;
 
 class CatEstadoClienteController extends Controller

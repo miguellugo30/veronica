@@ -10,10 +10,10 @@ use nusoap_client;
 use DB;
 use Modules\Agentes\Http\Controllers\EventosAmiController;
 
-use Nimbus\Agentes;
-use Nimbus\Grupos;
-use Nimbus\Empresas;
-use Nimbus\Monitoreo;
+use App\Agentes;
+use App\Grupos;
+use App\Empresas;
+use App\Monitoreo;
 
 class MonitoreoController extends Controller
 {

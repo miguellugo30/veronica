@@ -5,10 +5,10 @@ namespace Modules\Administrador\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Nimbus\Cat_Distribuidor;
+use App\Cat_Distribuidor;
 use Storage;
 use File;
-use Nimbus\Http\Controllers\LogController;
+use App\Http\Controllers\LogController;
 use Modules\Administrador\Http\Requests\DistribuidoresRequest;
 
 class DistribuidoresController extends Controller

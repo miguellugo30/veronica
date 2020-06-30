@@ -385,8 +385,8 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_agentes\agentes_monitoreo.js */"./resources/js/module_agentes/agentes_monitoreo.js");
-module.exports = __webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_agentes\eventosPantallaAgente_monitoreo.js */"./resources/js/module_agentes/eventosPantallaAgente_monitoreo.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\veronica\resources\js\module_agentes\agentes_monitoreo.js */"./resources/js/module_agentes/agentes_monitoreo.js");
+module.exports = __webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\veronica\resources\js\module_agentes\eventosPantallaAgente_monitoreo.js */"./resources/js/module_agentes/eventosPantallaAgente_monitoreo.js");
 
 
 /***/ })

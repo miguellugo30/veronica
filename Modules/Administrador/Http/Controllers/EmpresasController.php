@@ -8,22 +8,22 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 /* MODELOS */
-use Nimbus\Empresas;
-use Nimbus\Cat_Distribuidor;
-use Nimbus\Cat_IP_PBX;
-use Nimbus\Modulos;
-use Nimbus\BaseDatos;
-use Nimbus\Dominios;
-use Nimbus\Config_Empresas;
-use Nimbus\Almacenamiento;
-use Nimbus\Canales;
-use Nimbus\Cat_Tipo_Canales;
-use Nimbus\Dids;
-use Nimbus\Troncales;
-use Nimbus\Cat_Extensiones;
-use Nimbus\Token_Soporte;
-use Nimbus\User;
-use Nimbus\PrefijosMarcacion;
+use App\Empresas;
+use App\Cat_Distribuidor;
+use App\Cat_IP_PBX;
+use App\Modulos;
+use App\BaseDatos;
+use App\Dominios;
+use App\Config_Empresas;
+use App\Almacenamiento;
+use App\Canales;
+use App\Cat_Tipo_Canales;
+use App\Dids;
+use App\Troncales;
+use App\Cat_Extensiones;
+use App\Token_Soporte;
+use App\User;
+use App\PrefijosMarcacion;
 use Modules\Administrador\Http\Requests\EmpresasRequest;
 
 class EmpresasController extends Controller
@@ -115,9 +115,9 @@ class EmpresasController extends Controller
              * Creamos el nuevo dominio
              */
             if ($request->input('Cat_Distribuidor_id') == 11) {
-                $dominio = str_replace(' ', '_', $data['dominio']).".nimbuscca.mx";
+                $dominio = str_replace(' ', '_', $data['dominio']).".Appcca.mx";
             } else {
-                $dominio = str_replace(' ', '_', $data['dominio']).".nimbuscca.mx";
+                $dominio = str_replace(' ', '_', $data['dominio']).".Appcca.mx";
             }
             /**
              * Guardamos la informacion del nuevo dominio
@@ -510,9 +510,9 @@ class EmpresasController extends Controller
              * Creamos el nuevo dominio
              */
             if ($data['Cat_Distribuidor_id'] == 11) {
-                $dominio = str_replace(' ', '_', $data['dominio']).".nimbuscca.mx";
+                $dominio = str_replace(' ', '_', $data['dominio']).".Appcca.mx";
             } else {
-                $dominio = str_replace(' ', '_', $data['dominio']).".nimbuscca.mx";
+                $dominio = str_replace(' ', '_', $data['dominio']).".Appcca.mx";
             }
             /**
              * Actualizamos la informacion del dominio

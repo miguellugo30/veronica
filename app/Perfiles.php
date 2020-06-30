@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -43,7 +43,7 @@ class Perfiles extends Model
      */
     public function Perfil_marcacion()
     {
-        return $this->hasMany('Nimbus\Perfil_marcacion');
+        return $this->hasMany('App\Perfil_marcacion');
     }
 
 }
