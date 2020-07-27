@@ -1,4 +1,4 @@
-<div class="box box-primary">
+<div class="box box-primary showEmpresas">
     <div class="box-header with-border">
         <h3 class="box-title"><i class="fas fa-building"></i> Empresas</h3>
         <div class="box-tools pull-right">
@@ -36,7 +36,18 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col-12 viewCreate"></div>
         </div><!-- /.row -->
     </div><!-- ./box-body -->
 </div>
+<div class="box box-primary viewCreate" style="display: none">
+    <div class="box-header with-border">
+        <h3 class="box-title"><i class="fas fa-building"></i>Nueva Empresa</h3>
+    </div><!-- /.box-header -->
+    <div class="box-body " >
+        <div class="row">
+            <div class="col viewWizarEmpresa table-responsive">
+            </div>
+        </div><!-- /.row -->
+    </div><!-- ./box-body -->
+</div>
+

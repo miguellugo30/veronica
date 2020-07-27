@@ -205,7 +205,7 @@ $(function() {
         /***
          * Condicion para que al elegir una empresa diferente a C3ntro, se deshabilite el rol de Super Administrador y Viceversa.
          */
-        if (id == 30) {
+        if (id == 1) {
             $("#cliente option:contains('Selecciona una empresa')").remove();
 
             if (!$("#rol option:contains('Super Administrador')").length) {

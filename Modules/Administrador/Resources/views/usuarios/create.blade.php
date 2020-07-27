@@ -21,7 +21,7 @@
             <label for="cliente">Empresa *:</label>
             <select name="cliente" id="cliente" class="form-control form-control-sm">
                 <option value="">Selecciona una empresa</option>
-                <option value="30">C3NTRO</option>
+                <option value="1">Veronica</option>
                 @foreach( $clientes as $cliente )
                 <option value="{{ $cliente->id }}">{{ $cliente->nombre }}</option>
                 @endforeach

@@ -115,7 +115,7 @@ class CatEstadoEmpresaController extends Controller
          */
         Cat_Estado_Empresa::where( 'id', $id )
         ->update([
-            'activo' => '0'
+            'activo' => 0
         ]);
         /**
          * Creamos el logs

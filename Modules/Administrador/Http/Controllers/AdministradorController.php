@@ -6,12 +6,64 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Session;
-use App\User;
-use App\Categorias;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Contracts\Events\Dispatcher;
+use JeroenNoten\LaravelAdminLte\Events\BuildingMenu;
+use Illuminate\Support\Str;
+/**
+ * Modelos
+ */
+use App\Categorias;
+
 
 class AdministradorController extends Controller
 {
+
+    public function __construct(Dispatcher $events)
+    {
+
+        $this->middleware('auth');
+
+        $events->listen(BuildingMenu::class, function (BuildingMenu $event)
+        {
+            $categorias = Categorias::active()->where('modulos_id', 13)->with('Sub_Categorias')->get();
+
+            $menu = array();
+
+            foreach ($categorias as $v)
+            {
+                $a = [
+                    'text' => $v->nombre,
+                    'key' => Str::camel($v->nombre),
+                    'id' => $v->id,
+                    'url' => "",
+                    'icon' => $v->class_icon,
+                    'can' => $v->permiso,
+                    'clase' => 'menu'
+                ];
+
+                $sub_menu = array();
+
+                if ( $v->Sub_Categorias->isNotEmpty() )
+                {
+                    foreach ($v->Sub_Categorias as $k)
+                    {
+                        $e = [
+                                'text' => $k->nombre,
+                                'id' => $k->id,
+                                'can' => $k->permiso,
+                                'url'  => '',
+                            ];
+
+                        array_push( $sub_menu, $e );
+                    }
+                    $a['submenu'] = $sub_menu;
+                }
+                array_push( $menu, $a );
+           }
+           $event->menu->add( ...$menu );
+        });
+    }
     /**
      * Display a listing of the resource.
      * @return Response

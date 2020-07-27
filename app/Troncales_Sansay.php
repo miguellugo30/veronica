@@ -36,6 +36,6 @@ class Troncales_Sansay extends Model
      */
     public function Troncales()
     {
-        return $this->hasOne('App\Troncales', 'Troncaless_id');
+        return $this->belongsTo('App\Troncales', 'Troncales_id');
     }
 }

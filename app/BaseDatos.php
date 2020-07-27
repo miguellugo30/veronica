@@ -21,6 +21,13 @@ class BaseDatos extends Model
      */
     protected $table = 'Cat_Base_Datos';
     /**
+     * Funcion para obtener solo los registros activos
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('activo', 1);
+    }
+    /**
      * Relacion uno a muchos con IP_PBX
      */
     public function PBX()

@@ -121,7 +121,7 @@ class CatNasController extends Controller
          */
         Cat_NAS::where( 'id', $id )
         ->update([
-            'activo' => '0'
+            'activo' => 0
         ]);
         /**
          * Creamos el logs

@@ -174,7 +174,7 @@ class CatIpPbxController extends Controller
     {
         Cat_IP_PBX::where( 'id', $id )
                 ->update([
-                    'activo' => '0'
+                    'activo' => 0
                 ]);
         /**
          * Creamos el logs

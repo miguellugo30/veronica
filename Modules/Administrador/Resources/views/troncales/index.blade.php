@@ -33,7 +33,7 @@
                                 <td>{{ $troncal->Cat_Distribuidor->servicio }}</td>
                                 <td>{{ $troncal->nombre }}</td>
                                 <td>{{ $troncal->descripcion }}</td>
-                                <td>{{  ( $troncal->Troncales_Sansay != NULL ) ? $troncal->Troncales_Sansay->host : ''}}</td>
+                                <td>{{  $troncal->Troncales_Sansay->host}}</td>
                                 <!--td align="center">
                                     <input type="hidden" name="id" id="id" value="{{ $troncal->id }}">
                                     <button type="button" value="{{--$troncal->id--}}" class="btn bg-olive margin btn-sm viewConfig" style="margin: 0px;">

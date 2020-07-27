@@ -94,7 +94,7 @@ class DistribuidoresController extends Controller
         $directorio_imagenes = "/dist/".$distribuidor->id;
 
         if(!File::exists($directorio_imagenes)){
-            Storage::makeDirectory($directorio_imagenes);
+            Storage::disk('public')->makeDirectory($directorio_imagenes);
         }
   #dd($nombre_img2);
 

@@ -4,8 +4,11 @@ $(function() {
      */
     $(document).on("click", ".sub-menu", function(e) {
         e.preventDefault();
+
         let currentURL = window.location.href;
-        let id = $(this).data("id");
+        let id = $(this).attr('id');
+
+        console.log(id);
 
         if (id == 'sub-1') {
             url = currentURL + '/distribuidor';
@@ -65,12 +68,11 @@ $(function() {
         $.get(url, function(data, textStatus, jqXHR) {
             $(".viewResult").html(data);
             if (id != 4 || id != 20) {
-                $('.viewResult' + table).DataTable({
+                /*$('.viewResult' + table).DataTable({
                     "lengthChange": true
-                });
+                });*/
             }
         });
 
     });
 });
-'sub-'

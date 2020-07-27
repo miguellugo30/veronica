@@ -24,7 +24,7 @@
                 <label for="cliente">Empresa *:</label>
                 <select name="cliente" id="cliente" class="form-control form-control-sm">
                     <option disabled selected value="">Selecciona una empresa</option>
-                    <option value="30" {{ $user->id_cliente == 30 ? 'selected="selected"' : '' }}>C3NTRO</option>
+                    <option value="1" {{ $user->id_cliente == 1 ? 'selected="selected"' : '' }}>Veronica</option>
                     @foreach( $clientes as $cliente )
                         <option value="{{ $cliente->id }}" {{ $user->id_cliente == $cliente->id ? 'selected="selected"' : '' }}>{{ $cliente->nombre }}</option>
                     @endforeach

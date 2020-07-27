@@ -50,6 +50,6 @@ class Troncales extends Model
      */
     public function Troncales_Sansay()
     {
-        return $this->hasOne('App\Troncales_Sansay');
+        return $this->hasOne('App\Troncales_Sansay', 'Troncales_id', 'id');
     }
 }

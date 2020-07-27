@@ -2492,28 +2492,150 @@ $(function () {
 
   $(document).on("click", ".newEmpresa", function (e) {
     e.preventDefault();
-    $(".viewIndex").slideUp();
+    $(".showEmpresas").slideUp();
     $(".viewCreate").slideDown();
-    /**
-     * Seteamos el valor inicioa para la opcion siguiente y anterior
-     */
-
-    opcionSiguiente = 0;
-    opcionAnterior = -1;
-    regresos = 0;
-    var url = currentURL + '/empresas/create';
+    var url = currentURL + '/wizard/empresa';
     $.get(url, function (data, textStatus, jqXHR) {
-      $(".viewCreate").html(data);
-      var dato = 0 + ".dataEmpresa";
-      var url = currentURL + '/empresas/' + dato;
-      $.ajax({
-        url: url,
-        type: 'GET',
-        success: function success(result) {
-          $('#formDataEmpresa').html(result);
-        }
-      });
+      $(".viewWizarEmpresa").html(data);
     });
+  });
+  /**
+   * Evento para avanzar al siguiente paso
+   */
+
+  $(document).on('click', '.nextStep', function (event) {
+    var nextStep = $(this).data('step');
+
+    var _token = $("input[name=_token]").val();
+
+    var dataForm = $("#formWizardEmpresa").serializeArray();
+    var url = currentURL + '/wizard/empresa/' + nextStep;
+    console.log(dataForm);
+    $.ajax({
+      url: url,
+      type: "POST",
+      data: {
+        dataForm: dataForm,
+        _token: _token
+      },
+      success: function success(result) {
+        $(".viewWizarEmpresa").html(result);
+      }
+    });
+  });
+  /**
+   * Evento para retroceder al paso anterior
+   */
+
+  $(document).on('click', '.prevStep', function (event) {
+    var prevStep = $(this).data('step');
+
+    var _token = $("input[name=_token]").val();
+
+    var url = currentURL + '/wizard/empresa/' + prevStep;
+    $.ajax({
+      url: url,
+      type: "POST",
+      data: {
+        _token: _token
+      },
+      success: function success(result) {
+        $(".viewWizarEmpresa").html(result);
+      }
+    });
+  });
+  /**
+   * Evento para seleccionar los modulos
+   */
+
+  $(document).on('click', '.modulosEmpresa', function () {
+    var id = $(this).val();
+
+    if ($(this).prop('checked')) {
+      if (id == 1) {
+        $("#modulo_3").prop("checked", true);
+        $("#modulo_4").prop("checked", true);
+        $("#modulo_5").prop("checked", true);
+        $("#modulo_6").prop("checked", true);
+        $("#modulo_9").prop("checked", true);
+        $("#modulo_11").prop("checked", true);
+        $("#modulo_17").prop("checked", true);
+      } else if (id == 2) {
+        $("#modulo_3").prop("checked", true);
+        $("#modulo_4").prop("checked", true);
+        $("#modulo_6").prop("checked", true);
+        $("#modulo_9").prop("checked", true);
+        $("#modulo_17").prop("checked", true);
+      }
+    } else {
+      if (id == 1) {
+        $("#modulo_3").prop("checked", false);
+        $("#modulo_4").prop("checked", false);
+        $("#modulo_5").prop("checked", false);
+        $("#modulo_6").prop("checked", false);
+        $("#modulo_9").prop("checked", false);
+        $("#modulo_11").prop("checked", false);
+        $("#modulo_17").prop("checked", false);
+      } else if (id == 2) {
+        $("#modulo_3").prop("checked", false);
+        $("#modulo_4").prop("checked", false);
+        $("#modulo_6").prop("checked", false);
+        $("#modulo_9").prop("checked", false);
+        $("#modulo_17").prop("checked", false);
+      }
+    }
+  });
+  /**
+   * Evento para clonar una fila de la tabla de nuevo canal
+   */
+
+  $(document).on('click', '#addCanalWizard', function () {
+    var clickID = $(".tableNewCanal tbody tr:last").attr('id').replace('tr_', ''); // Genero el nuevo numero id
+
+    var newID = parseInt(clickID) + 1;
+    fila = $(".tableNewCanal tbody tr:eq()").clone().appendTo(".tableNewCanal"); //Clonamos la fila
+    //fila.find('select.tipo_canal').attr("data-pos", newID); //Buscamos el selecto con clase tipo_canal y le agregamos un nuevo atributo a pos
+
+    fila.find('select.tipo_canal').attr({
+      'data-pos': newID,
+      name: 'tipo_canal_' + newID
+    }); //Buscamos el selecto con clase tipo_canal y le agregamos un nuevo atributo a pos
+
+    fila.find('.protocolo').attr({
+      id: 'protocolo_' + newID,
+      name: 'protocolo_' + newID
+    }); //Buscamos el input con clase protocolo y le agregamos un nuevo ID
+
+    fila.find('.protocolo').val(""); //Buscamos el input con clase protocolo y le asignamos un valor vacio
+
+    fila.find('.Troncales_id_canal').attr({
+      id: 'Troncales_id_canal_' + newID,
+      name: 'Troncales_id_canal_' + newID
+    }); //Buscamos el input con clase Troncales_id_canal y le agregamos un nuevo ID
+
+    fila.find('.Troncales_id').attr({
+      id: 'Troncales_id_' + newID,
+      name: 'Troncales_id_' + newID
+    }); //Buscamos el input con clase Troncales_id_canal y le agregamos un nuevo ID
+
+    fila.find('.prefijo').attr({
+      id: 'prefijo_' + newID,
+      name: 'prefijo_' + newID
+    }); //Buscamos el input con clase Troncales_id_canal y le agregamos un nuevo ID
+
+    fila.find('.prefijo').val(""); //Buscamos el input con clase protocolo y le asignamos un valor vacio
+
+    fila.find('.btn-danger').css('display', '');
+    fila.attr("id", 'tr_' + newID);
+  });
+  /**
+   * Evento para eliminars una fila de la tabla de nuevo canal
+   */
+
+  $(document).on('click', '.deleteCanalWizard', function () {
+    console.log('deleteCanalWizard');
+    var tr = $(this).closest('tr');
+    tr.remove();
   });
   /**
    * Declaramos las opciones para la creacion de una nueva cuenta
@@ -2840,47 +2962,6 @@ $(function () {
     });
   });
   /**
-   * Evento para seleccionar los modulos
-   */
-
-  $(document).on('click', '.modulosEmpresa', function () {
-    var id = $(this).val();
-
-    if ($(this).prop('checked')) {
-      if (id == 1) {
-        $("#modulo_3").prop("checked", true);
-        $("#modulo_4").prop("checked", true);
-        $("#modulo_5").prop("checked", true);
-        $("#modulo_6").prop("checked", true);
-        $("#modulo_9").prop("checked", true);
-        $("#modulo_11").prop("checked", true);
-        $("#modulo_17").prop("checked", true);
-      } else if (id == 2) {
-        $("#modulo_3").prop("checked", true);
-        $("#modulo_4").prop("checked", true);
-        $("#modulo_6").prop("checked", true);
-        $("#modulo_9").prop("checked", true);
-        $("#modulo_17").prop("checked", true);
-      }
-    } else {
-      if (id == 1) {
-        $("#modulo_3").prop("checked", false);
-        $("#modulo_4").prop("checked", false);
-        $("#modulo_5").prop("checked", false);
-        $("#modulo_6").prop("checked", false);
-        $("#modulo_9").prop("checked", false);
-        $("#modulo_11").prop("checked", false);
-        $("#modulo_17").prop("checked", false);
-      } else if (id == 2) {
-        $("#modulo_3").prop("checked", false);
-        $("#modulo_4").prop("checked", false);
-        $("#modulo_6").prop("checked", false);
-        $("#modulo_9").prop("checked", false);
-        $("#modulo_17").prop("checked", false);
-      }
-    }
-  });
-  /**
    * Evento para abrir una sesion para entrar a la cuenta del cliente seleccionado
    */
 
@@ -3045,7 +3126,8 @@ $(function () {
   $(document).on("click", ".sub-menu", function (e) {
     e.preventDefault();
     var currentURL = window.location.href;
-    var id = $(this).data("id");
+    var id = $(this).attr('id');
+    console.log(id);
 
     if (id == 'sub-1') {
       url = currentURL + '/distribuidor';
@@ -3107,14 +3189,13 @@ $(function () {
       $(".viewResult").html(data);
 
       if (id != 4 || id != 20) {
-        $('.viewResult' + table).DataTable({
-          "lengthChange": true
-        });
+        /*$('.viewResult' + table).DataTable({
+            "lengthChange": true
+        });*/
       }
     });
   });
 });
-'sub-';
 
 /***/ }),
 
@@ -4595,7 +4676,7 @@ $(function () {
      * Condicion para que al elegir una empresa diferente a C3ntro, se deshabilite el rol de Super Administrador y Viceversa.
      */
 
-    if (id == 30) {
+    if (id == 1) {
       $("#cliente option:contains('Selecciona una empresa')").remove();
 
       if (!$("#rol option:contains('Super Administrador')").length) {
