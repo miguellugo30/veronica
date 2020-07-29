@@ -3127,7 +3127,6 @@ $(function () {
     e.preventDefault();
     var currentURL = window.location.href;
     var id = $(this).attr('id');
-    console.log(id);
 
     if (id == 'sub-1') {
       url = currentURL + '/distribuidor';

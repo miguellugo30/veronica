@@ -1,13 +1,16 @@
-<div class="box box-primary showEmpresas">
-    <div class="box-header with-border">
-        <h3 class="box-title"><i class="fas fa-building"></i> Empresas</h3>
-        <div class="box-tools pull-right">
+<div class="card  card-info card-outline showEmpresas">
+    <div class="card-header ui-sortable-handle" >
+        <h3 class="card-title">
+            <i class="fas fa-building"></i>
+            Empresas
+        </h3>
+        <div class="card-tools">
             @can('create empresas')
-            <button type="button" class="btn btn-primary btn-sm newEmpresa" data-widget="remove"><i class="fas fa-plus"></i> Nueva</button>
+                <button type="button" class="btn btn-block bg-gradient-info btn-sm newEmpresa" data-widget="remove"><i class="fas fa-plus"></i> Nueva</button>
             @endcan
         </div>
-    </div><!-- /.box-header -->
-    <div class="box-body">
+    </div><!-- /.card-header -->
+    <div class="card-body">
         <div class="row">
             <div class="col viewIndex table-responsive">
                 <table id="tableEmpresas" class="display table table-bordered table-hover table-sm" >
@@ -37,17 +40,25 @@
                 </table>
             </div>
         </div><!-- /.row -->
-    </div><!-- ./box-body -->
+    </div><!-- /.card-body -->
 </div>
-<div class="box box-primary viewCreate" style="display: none">
-    <div class="box-header with-border">
-        <h3 class="box-title"><i class="fas fa-building"></i>Nueva Empresa</h3>
-    </div><!-- /.box-header -->
-    <div class="box-body " >
-        <div class="row">
-            <div class="col viewWizarEmpresa table-responsive">
-            </div>
-        </div><!-- /.row -->
-    </div><!-- ./box-body -->
+<!-- /.card -->
+
+
+<div class="card viewCreate" style="display: none">
+    <div class="card-header ui-sortable-handle" >
+        <h3 class="card-title">
+            <i class="fas fa-building"></i>
+            Nueva Empresas
+        </h3>
+        <div class="card-tools">
+
+        </div>
+    </div><!-- /.card-header -->
+    <div class="mt-4">
+        <div class="col viewWizarEmpresa table-responsive mb-4">
+        </div>
+    </div><!-- /.card-body -->
 </div>
+<!-- /.card -->
 

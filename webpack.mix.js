@@ -1,5 +1,4 @@
 const mix = require('laravel-mix');
-
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -89,7 +88,10 @@ mix.js([
     .js([
         'resources/js/module_agentes/agentes_monitoreo.js',
         'resources/js/module_agentes/eventosPantallaAgente_monitoreo.js',
-    ], 'public/js/agente_monitoreo.js');
+    ], 'public/js/agente_monitoreo.js')
+    .js([
+        'resources/js/checkSesion.js'
+    ], 'public/js/checkSesion.js');
 /*
 .sass('resources/sass/app.scss', 'public/css');
 mix.js('resources/js/app.js', 'public/js/all.js')

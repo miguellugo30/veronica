@@ -15,7 +15,7 @@
         "cross-env": "^5.2.1",
         "jquery": "^3.5.1",
         "laravel-mix": "^4.1.4",
-        "lodash": "^4.17.15",
+        "lodash": "^4.17.19",
         "popper.js": "^1.16.1",
         "resolve-url-loader": "^2.3.1",
         "sass": "^1.26.9",
@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "express": "^4.17.1",
+        "inputmask": "^5.0.3",
         "ioredis": "^4.17.3",
         "laravel-echo": "^1.8.0",
         "laravel-echo-server": "^1.6.2",

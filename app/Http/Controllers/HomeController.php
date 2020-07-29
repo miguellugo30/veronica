@@ -26,7 +26,7 @@ class HomeController extends Controller
      */
     public function index( Request $request )
     {
-        //dd( $request );
+
         $user = Auth::user();
         $pos = Str::contains($user->email, 'soporte_');
 

@@ -8,8 +8,6 @@ $(function() {
         let currentURL = window.location.href;
         let id = $(this).attr('id');
 
-        console.log(id);
-
         if (id == 'sub-1') {
             url = currentURL + '/distribuidor';
             table = ' #tableDistribuidores';

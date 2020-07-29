@@ -80,6 +80,8 @@
 
         <script src="{{ asset('vendor/adminlte/dist/js/adminlte.min.js') }}"></script>
         <script src="{{ asset('js/administrador.js') }}"></script>
+        <script src="{{ asset('js/checkSesion.js') }}"></script>
+
     @else
         <script src="{{ mix(config('adminlte.laravel_mix_js_path', 'js/app.js')) }}"></script>
     @endif

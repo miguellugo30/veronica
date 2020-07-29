@@ -126,7 +126,7 @@ return [
     'classes_content_wrapper' => '',
     'classes_content_header' => '',
     'classes_content' => '',
-    'classes_sidebar' => 'sidebar-light-lightblue elevation-4',
+    'classes_sidebar' => 'sidebar-dark-primary elevation-4',
     'classes_sidebar_nav' => 'nav-flat nav-child-indent',
     'classes_topnav' => 'navbar-dark navbar-cyan',
     'classes_topnav_nav' => 'navbar-expand',
