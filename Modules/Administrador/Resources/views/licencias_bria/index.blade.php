@@ -1,15 +1,17 @@
-<div class="box box-primary">
-    <div class="box-header with-border">
-        <h3 class="box-title"><b><i class="far fa-credit-card"></i> Licencias Bria</b></h3>
-        <div class="box-tools pull-right">
+<div class="card  card-info card-outline showEmpresas">
+    <div class="card-header ui-sortable-handle" >
+        <h3 class="card-title">
+            <i class="far fa-credit-card"></i> Licencias Bria
+        </h3>
+        <div class="card-tools">
             @can('create lic bria')
                 <button type="button" class="btn btn-primary btn-sm newLicencia" ><i class="fas fa-plus"></i> Nueva Licencia</button>
             @endcan
         </div>
-    </div><!-- /.box-header -->
-    <div class="box-body">
+    </div><!-- /.card-header -->
+    <div class="card-body">
         <div class="row">
-            <div class="col-12 viewIndex table-responsive">
+            <div class="col viewIndex table-responsive">
                 <table id="licencias_bria" class="display table table-bordered table-hover table-sm" style="width:100%">
                     <thead>
                         <tr>
@@ -41,10 +43,11 @@
                     </tbody>
                 </table>
             </div>
-
         </div><!-- /.row -->
-    </div><!-- ./box-body -->
+    </div><!-- /.card-body -->
 </div>
+<!-- /.card -->
+
 <!-- MODAL -->
 <div class="modal fade bd-example-modal-lg" tabindex="-1" id="modal" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">

@@ -1,7 +1,9 @@
-<div class="box box-primary">
-    <div class="box-header with-border">
-        <h3 class="box-title"><b><i class="far fa-list-alt"></i> Campos Plantillas</b></h3>
-        <div class="box-tools pull-right">
+<div class="card  card-info card-outline showEmpresas">
+    <div class="card-header ui-sortable-handle" >
+        <h3 class="card-title">
+            <i class="far fa-list-alt"></i> Campos Plantillas
+        </h3>
+        <div class="card-tools">
             @can('delete campos plantillas')
                 <button type="button" class="btn btn-danger  btn-sm deleteCamPla" style="display:none"><i class="fas fa-trash-alt"></i> Elminar</button>
             @endcan
@@ -13,10 +15,10 @@
             @endcan
             <input type="hidden" name="idSeleccionado" id="idSeleccionado" value="">
         </div>
-    </div><!-- /.box-header -->
-    <div class="box-body">
+    </div><!-- /.card-header -->
+    <div class="card-body">
         <div class="row">
-            <div class="col-md-12 viewIndex">
+            <div class="col viewIndex table-responsive">
                 <table id="tableCamPla" class="display table table-bordered table-hover table-sm" style="width:100%">
                     <thead>
                         <tr>
@@ -38,11 +40,11 @@
                     </tbody>
                 </table>
             </div>
-
-            <div class="col-12 viewCreate"></div>
         </div><!-- /.row -->
-    </div><!-- ./box-body -->
+    </div><!-- /.card-body -->
 </div>
+<!-- /.card -->
+
 <!-- MODAL -->
 <div class="modal fade bd-example-modal-lg" tabindex="-1" id="modal" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">

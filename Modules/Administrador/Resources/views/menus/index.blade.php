@@ -1,7 +1,9 @@
-<div class="box box-primary">
-    <div class="box-header with-border">
-        <h3 class="box-title"><b><i class="fas fa-align-justify"></i> Menús</b></h3>
-        <div class="box-tools pull-right">
+<div class="card  card-info card-outline showEmpresas">
+    <div class="card-header ui-sortable-handle" >
+        <h3 class="card-title">
+            <i class="fas fa-align-justify"></i> Menús
+        </h3>
+        <div class="card-tools">
             @can('delete menus')
                 <button type="button" class="btn btn-danger  btn-sm deleteMenu" style="display:none"><i class="fas fa-trash-alt"></i> Eliminar</button>
             @endcan
@@ -16,49 +18,47 @@
             <input type="hidden" name="tipoSeleccionado" id="tipoSeleccionado" value="">
             <input type="hidden" name="ordenSeleccionado" id="ordenSeleccionado" value="0">
         </div>
-    </div><!-- /.box-header -->
-    <div class="box-body">
+    </div><!-- /.card-header -->
+    <div class="card-body">
         <div class="row">
-            <div class="col-12 viewIndex">
-                <div class="col-md-12 viewTable">
-                    <table id="tableMenus" class="display table table-sm table-hover" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Modulo</th>
-                                <th>Menu</th>
-                                <th>Descripción</th>
-                                <th>tipo</th>
+            <div class="col viewIndex table-responsive">
+                <table id="tableMenus" class="display table table-sm table-hover" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Modulo</th>
+                            <th>Menu</th>
+                            <th>Descripción</th>
+                            <th>tipo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($categorias as $categoria)
+                            <tr data-id="{{ $categoria->id }}">
+                                <td class="details-control" data-id="{{ $categoria->id }}" style="text-align: center; cursor:pointer">
+                                    <i class="fas fa-plus-circle mas"></i>
+                                </td>
+                                <td>{{ $categoria->Modulos->nombre }}</td>
+                                <td>{{ $categoria->nombre }}</td>
+                                <td>{{ $categoria->descripcion }}</td>
+                                <td>
+                                    @if ($categoria->tipo == 1)
+                                        Sistema
+                                    @else
+                                        Clientes
+                                    @endif
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($categorias as $categoria)
-                                <tr data-id="{{ $categoria->id }}">
-                                    <td class="details-control" data-id="{{ $categoria->id }}" style="text-align: center; cursor:pointer">
-                                        <i class="fas fa-plus-circle mas"></i>
-                                    </td>
-                                    <td>{{ $categoria->Modulos->nombre }}</td>
-                                    <td>{{ $categoria->nombre }}</td>
-                                    <td>{{ $categoria->descripcion }}</td>
-                                    <td>
-                                        @if ($categoria->tipo == 1)
-                                            Sistema
-                                        @else
-                                            Clientes
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
-            <div class="col-md-6 viewSubCat" ></div>
-
-            <div class="col-12 viewCreate"></div>
         </div><!-- /.row -->
-    </div><!-- ./box-body -->
+    </div><!-- /.card-body -->
 </div>
+<!-- /.card -->
+
+
 <!-- MODAL -->
 <div class="modal fade bd-example-modal-lg" tabindex="-1" id="modal" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">

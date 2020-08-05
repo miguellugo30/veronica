@@ -1,13 +1,15 @@
-<div class="box box-primary">
-    <div class="box-header with-border">
-        <h3 class="box-title"><i class="fas fa-project-diagram"></i> Canales</h3>
-        <div class="box-tools pull-right">
-            <!--button type="button" class="btn btn-primary btn-xs newCanal" data-widget="remove"><i class="fas fa-plus"></i> Nuevo Canal</button-->
+<div class="card  card-info card-outline showEmpresas">
+    <div class="card-header ui-sortable-handle" >
+        <h3 class="card-title">
+            <i class="fas fa-project-diagram"></i> Canales
+        </h3>
+        <div class="card-tools">
+
         </div>
-    </div><!-- /.box-header -->
-    <div class="box-body">
+    </div><!-- /.card-header -->
+    <div class="card-body">
         <div class="row">
-            <div class="col-md-12 viewIndex">
+            <div class="col viewIndex table-responsive">
                 <table id="tableCanales" class="display table table-bordered table-hover table-sm" style="width:100%">
                     <thead>
                         <tr>
@@ -38,8 +40,7 @@
                     </tbody>
                 </table>
             </div>
-
-            <div class="col-12 viewCreate"></div>
         </div><!-- /.row -->
-    </div><!-- ./box-body -->
+    </div><!-- /.card-body -->
 </div>
+<!-- /.card -->

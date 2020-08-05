@@ -14,19 +14,23 @@
                         </div>
                         <div class="col-md-6">
                     @endif
-                    <div class="checkbox">
-                        <label>
-                            <input  type="checkbox"
-                                    name="{{ Str::snake( Str::lower( $modulo->nombre ) ) }}"
-                                    @if ( isset( $datamodulo ) )
-                                        {{ array_key_exists( Str::snake( Str::lower( $modulo->nombre ) ), $datamodulo ) ? 'checked' : '' }}
-                                    @endif
-                                    class="modulosEmpresa" id="modulo_{{ $modulo->id }}"
-                                    value="{{ $modulo->id }}">
+                    <div class="custom-control custom-checkbox">
+                        <input  type="checkbox"
+                                name="{{ Str::snake( Str::lower( $modulo->nombre ) ) }}"
+                                @if ( isset( $datamodulo ) )
+                                    {{ array_key_exists( Str::snake( Str::lower( $modulo->nombre ) ), $datamodulo ) ? 'checked' : '' }}
+                                @endif
+                                class="modulosEmpresa custom-control-input" id="modulo_{{ $modulo->id }}"
+                                value="{{ $modulo->id }}">
+                        <label for="modulo_{{ $modulo->id }}" class="custom-control-label">
                             {{ $modulo->nombre }}
                         </label>
                     </div>
                 @endforeach
+                <div class="custom-control custom-checkbox">
+                    <input class="custom-control-input" type="checkbox" id="customCheckbox1" value="option1">
+                    <label for="customCheckbox1" class="custom-control-label">Custom Checkbox</label>
+                </div>
             </div>
         </div>
     </div>
