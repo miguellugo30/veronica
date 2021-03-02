@@ -21,7 +21,7 @@
                     class="form-control form-control-sm"
                     id="almacenamiento_posiciones"
                     name="almacenamiento_posiciones"
-                    value="{{ ( ( $dataposiciones['agentes_entrada'] + $dataposiciones['agentes_salida'] + $dataposiciones['agentes_full'] ) * 2048 / 1024 ) }} GB"
+                    value="{{ ( ( $dataposiciones['agentes_entrada'] + $dataposiciones['agentes_salida'] + $dataposiciones['agentes_full'] ) * 2048 / 1024 ) }}"
                     placeholder="Almacenamiento por posiciones" readonly >
         </div>
         <div class="form-group">

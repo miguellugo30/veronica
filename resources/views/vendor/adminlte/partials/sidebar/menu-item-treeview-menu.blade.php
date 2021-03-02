@@ -1,6 +1,6 @@
 <li @if(isset($item['id'])) id="{{ $item['id'] }}" @endif class="nav-item has-treeview {{ $item['submenu_class'] }}">
     {{-- Menu toggler --}}
-    <a id="cat-{{ $item['id'] }}" class="nav-link sub-menu {{ $item['class'] }} @if(isset($item['shift'])) {{ $item['shift'] }} @endif">
+    <a id="cat-{{ $item['id'] }}" class="nav-link {{ $item['class'] }} @if(isset($item['shift'])) {{ $item['shift'] }} @endif">
 
         <i class="{{ $item['icon'] ?? 'far fa-fw fa-circle' }} {{
             isset($item['icon_color']) ? 'text-'.$item['icon_color'] : ''

@@ -33,7 +33,7 @@ mix.js([
         'resources/js/module_administrador/cat_campos_plantillas.js',
         'resources/js/module_administrador/prefijos_marcacion.js',
         'resources/js/module_administrador/perfil_marcacion.js',
-    ], 'public/js/administrador.js')
+    ], 'public/js/administrador.js')/*
     .js([
         'resources/js/module_settings/menu.js',
         'resources/js/module_settings/formularios.js',
@@ -50,7 +50,7 @@ mix.js([
         'resources/js/module_settings/Prefijos_Marcacion.js',
         'resources/js/module_settings/baseDatos.js',
         'resources/js/module_settings/Perfil_Marcacion.js',
-    ], 'public/js/settings.js')
+    ], 'public/js/settings.js')*/
     .js([
         'resources/js/module_inbound/menu.js',
         'resources/js/module_inbound/campanas.js',
@@ -66,7 +66,7 @@ mix.js([
         'resources/js/module_inbound/reporte_llamadas_agentes.js',
         'resources/js/module_inbound/reporte_productividad_agentes.js',
         'resources/js/module_inbound/reporteTiempoInactivo.js',
-    ], 'public/js/inbound.js')
+    ], 'public/js/inbound.js')/*
     .js([
         'resources/js/module_recording/menu.js',
         'resources/js/module_recording/Grabaciones.js',
@@ -88,7 +88,10 @@ mix.js([
     .js([
         'resources/js/module_agentes/agentes_monitoreo.js',
         'resources/js/module_agentes/eventosPantallaAgente_monitoreo.js',
-    ], 'public/js/agente_monitoreo.js')
+    ], 'public/js/agente_monitoreo.js')*/
+    .js([
+        'resources/js/menu_principal.js',
+    ], 'public/js/menu_principal.js')
     .js([
         'resources/js/checkSesion.js'
     ], 'public/js/checkSesion.js');

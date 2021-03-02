@@ -1,14 +1,29 @@
-@extends('adminlte::page')
-{{--@extends('administrador::layouts.master')--}}
 
+<li class="nav-item">
+    <a class="nav-link" data-widget="pushmenu" href="#">
+        <i class="fas fa-bars"></i>
+        <span class="sr-only">Navegación de palanca</span>
+    </a>
+</li>
+<ul class="navbar-nav mr-auto">
+    @foreach ($categorias as $c)
 
-@section('title', 'App CCC')
+        @if ( $c->Sub_Categorias->isEmpty() )
+            <li class="nav-item">
+                <a class="nav-link sub-menu" id="sub-{{$c->id}}">{{$c->nombre}}</a>
+            </li>
+        @else
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{$c->nombre}}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    @foreach ( $c->Sub_Categorias as $sc)
+                        <a class="dropdown-item sub-menu" id="sub-{{$sc->id}}">{{$sc->nombre}}</a>
+                    @endforeach
+                </div>
+            </li>
+        @endif
 
-@section('content_header')
-    <!--h1>This view is loaded from module: {!! config('administrador.name') !!}</h1-->
-@stop
-
-@section('content')
-    <p></p>
-    @stop
-
+    @endforeach
+</ul>

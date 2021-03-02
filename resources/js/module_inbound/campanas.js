@@ -34,7 +34,7 @@ $(function() {
                 let id = $("#idSeleccionado").val();
                 let _method = "DELETE";
                 let _token = $("input[name=_token]").val();
-                let url = currentURL + '/campanas/' + id;
+                let url = currentURL + 'inbound/campanas/' + id;
 
                 $.ajax({
                     url: url,
@@ -65,7 +65,7 @@ $(function() {
         e.preventDefault();
 
         $('#tituloModal').html('Nueva Campaña');
-        let url = currentURL + '/campanas/create';
+        let url = currentURL + 'inbound/campanas/create';
         agentesParticipantes = new Array();
 
         $('#action').removeClass('updateCampana');
@@ -102,7 +102,7 @@ $(function() {
         let cal_lib = $("#cal_lib").val();
         let _token = $("input[name=_token]").val();
 
-        let url = currentURL + '/campanas';
+        let url = currentURL + 'inbound/campanas';
 
         $.ajax({
                 url: url,
@@ -150,7 +150,7 @@ $(function() {
         event.preventDefault();
         var id = $("#idSeleccionado").val();
         $('#tituloModal').html('Detalles de Campana');
-        var url = currentURL + '/campanas/' + id + '/edit';
+        var url = currentURL + 'inbound/campanas/' + id + '/edit';
 
         $('#action').addClass('updaCampanas');
         $('#action').removeClass('saveCampana');
@@ -188,7 +188,7 @@ $(function() {
         let cal_lib = $("#cal_lib").val();
         let _token = $("input[name=_token]").val();
         let _method = "PUT";
-        let url = currentURL + '/campanas/' + id;
+        let url = currentURL + 'inbound/campanas/' + id;
 
         $.post(url, {
             nombre: nombre,
@@ -242,7 +242,7 @@ $(function() {
         } else {
 
             let _token = $("input[name=_token]").val();
-            let url = currentURL + '/campanas/validar_modo_logueo';
+            let url = currentURL + 'inbound/campanas/validar_modo_logueo';
             let agentesSeleccionados = [];
             let agentesDiferentes = [];
             let agentesValidos = [];
@@ -365,7 +365,7 @@ $(function() {
 
                 let camapana_id = $("#id").val();
                 let _token = $("input[name=_token]").val();
-                let url = currentURL + '/campanas/eliminar-participantes';
+                let url = currentURL + 'inbound/campanas/eliminar-participantes';
 
                 $.ajax({
                     url: url,

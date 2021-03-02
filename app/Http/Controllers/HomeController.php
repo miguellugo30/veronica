@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Empresas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Token_Soporte;
+use Illuminate\Contracts\Events\Dispatcher;
+use JeroenNoten\LaravelAdminLte\Events\BuildingMenu;
+use App\Modulos;
+
 
 class HomeController extends Controller
 {
@@ -14,7 +19,7 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Dispatcher $events)
     {
         $this->middleware('auth');
     }
@@ -24,7 +29,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index( Request $request )
+    public function index( Request $request, Dispatcher $events)
     {
 
         $user = Auth::user();
@@ -64,6 +69,23 @@ class HomeController extends Controller
             }
             else
             {
+                $events->listen(BuildingMenu::class, function (BuildingMenu $event)
+                {
+                    $modulos = Empresas::with('Modulos')->where('id', Auth::user()->id_cliente)->first();
+                    $menu = array();
+                    foreach ($modulos->Modulos as $v)
+                    {
+                        $a = [
+                            'text' => $v->nombre,
+                            'id' => $v->id,
+                            'url' => "",
+                            'icon' => 'fas fa-angle-right',
+                            'classes' => 'menu'
+                        ];
+                        array_push( $menu, $a );
+                }
+                $event->menu->add( ...$menu );
+                });
                 /**
                  * Obtenemos las categorias relacionadas al usuario
                  **/

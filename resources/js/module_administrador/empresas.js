@@ -1,5 +1,11 @@
 $(function() {
     var currentURL = window.location.href;
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 5000
+    });
     /**
      * Evento para mostrar el formulario de crear un nuevo modulo
      */
@@ -27,17 +33,27 @@ $(function() {
 
         console.log(dataForm);
 
-        $.ajax({
-            url: url,
-            type: "POST",
-            data: {
-                dataForm: dataForm,
-                _token: _token,
-            },
-            success: function(result) {
-                $(".viewWizarEmpresa").html(result);
-            }
-        });
+        if (validarForm(dataForm)) {
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: {
+                    dataForm: dataForm,
+                    _token: _token,
+                },
+                success: function(result) {
+                    $(".viewWizarEmpresa").html(result);
+                }
+            });
+        } else {
+            toastr.error('Hay campos incompletos, favor de validar la información.');
+            /*
+            Toast.fire({
+                icon: 'error',
+                title: 'Hay campos incompletos, favor de validar la información.'
+            });
+            */
+        }
     });
     /**
      * Evento para retroceder al paso anterior
@@ -99,6 +115,35 @@ $(function() {
             }
         }
     });
+
+    function validarForm(data) {
+
+        let bandera = 0;
+
+        if (data.length == 0) {
+            bandera = 1;
+        } else {
+            data.forEach(function(currentValue, indice, array) {
+
+                console.log(currentValue.name + " " + currentValue.value);
+                if (currentValue.value === null || currentValue.value === '') {
+                    $('#' + currentValue.name).addClass('is-invalid');
+                    console.log('sin valores');
+                    bandera = 1;
+                }
+
+            });
+        }
+
+
+        if (bandera) {
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+
     /**
      * Evento para clonar una fila de la tabla de nuevo canal
      */
@@ -121,7 +166,7 @@ $(function() {
         fila.attr("id", 'tr_' + newID);
     });
     /**
-     * Evento para eliminars una fila de la tabla de nuevo canal
+     * Evento para eliminar una fila de la tabla de nuevo canal
      */
     $(document).on('click', '.deleteCanalWizard', function() {
         console.log('deleteCanalWizard')
@@ -129,172 +174,6 @@ $(function() {
         tr.remove();
     });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /**
-     * Declaramos las opciones para la creacion de una nueva cuenta
-     */
-    let opciones = ['dataEmpresa', 'dataInfra', 'dataModulo', 'dataPosiciones', 'dataAlmacenamiento', 'dataCanales', 'dataExtensiones', 'dataDids'];
-    /**
-     * Evento para guardar la nueva empresa
-     */
-    $(document).on('click', '#siguiente', function(event) {
-        event.preventDefault();
-
-        $('#anterior').slideDown();
-        $('.cancelEmpresa').slideUp();
-        /**
-         * Recuperamos la accion a relizar y la opcion a relaizar
-         */
-        let accion = $(this).attr("data-accion");
-        let opcion = $(this).attr("data-opcion-siguiente");
-        /**
-         * Se setea a crear si viene de un accion de actualizar
-         */
-        if (regresos > 1) {
-            $(this).attr("data-accion", "actualizar");
-            regresos--;
-        } else {
-            $(this).attr("data-accion", "crear");
-            regresos = 0;
-        }
-        /**
-         * Si aun es menor al tamaño del arreglo seguimos
-         * incrementando.
-         */
-        if (opcionSiguiente < opciones.length) {
-            opcionAnterior = opcionAnterior + 1;
-            opcionSiguiente = opcionSiguiente + 1;
-        }
-        /**
-         * Cuando lleguemos al final del arreglo ponermos
-         * el boton con la leyenda de finalizar
-         */
-        if (opcionSiguiente == 7) {
-            $('#siguiente').html('Finalizar');
-        }
-        /**
-         * Seteamos el valor de la siguiente opcion y anterior
-         */
-        $('#anterior').attr('data-opcion-anterior', opciones[opcionAnterior]);
-        $('#siguiente').attr('data-opcion-siguiente', opciones[opcionSiguiente]);
-
-        /**
-         * Dependiendo de la accion a realizar, se define
-         * la URL y metodo que se usara
-         */
-        if (accion.indexOf("actualizar") > -1) {
-            let id = $("#id_empresa").val(); //Recuperamos el id de la empresa ha editar
-            url = currentURL + '/empresas/' + id; //Definimos la url de edicion
-            method = "POST";
-            _method = "PUT";
-        } else {
-            url = currentURL + '/empresas'; //Definimos la URL para crear
-            method = "POST";
-            _method = "POST";
-        }
-
-        /**
-         * Recuperamos la informacion del formulario
-         */
-        let dataForm = $("#formDataEmpresa").serializeArray();
-        let _token = $("input[name=_token]").val();
-        /**
-         * Enviamos la informacion
-         */
-        $.ajax({
-            url: url,
-            type: method,
-            data: {
-                _token: _token,
-                _method: _method,
-                dataForm: dataForm,
-                accion: accion
-            },
-            success: function(result) {
-                if (opcion == 'dataDids') {
-                    $('.viewResult').html(result);
-                } else {
-                    $('#formDataEmpresa').html(result);
-                    $("#formDataEmpresa .saveExtension").slideUp();
-                    $("#formDataEmpresa .saveDid").slideUp();
-                    $("#formDataEmpresa .saveCanal").slideUp();
-                }
-            }
-        });
-    });
-    /**
-     * Evento para regresar a la opcion anterior
-     */
-    $(document).on('click', '#anterior', function(event) {
-        event.preventDefault();
-        /**
-         * Recuperamos la accion a relizar y la opcion a relaizar
-         */
-        let accion = $(this).attr("data-accion");
-        let opcion = $(this).attr("data-opcion-anterior");
-
-        $('#siguiente').attr("data-accion", "actualizar");
-        /**
-         * Seteamos el valor de la siguiente opcion y anterior
-         */
-        if (opcionSiguiente == 7) {
-            $('#siguiente').html('Siguiente');
-        }
-        if (opcionAnterior == 0) {
-            $('#anterior').slideUp();
-        }
-        if (opcionSiguiente > 0) {
-            regresos++;
-            opcionAnterior = opcionAnterior - 1;
-            opcionSiguiente = opcionSiguiente - 1;
-        }
-
-        $('#anterior').attr('data-opcion-anterior', opciones[opcionAnterior]);
-        $('#siguiente').attr('data-opcion-siguiente', opciones[opcionSiguiente]);
-
-        let id = $("#id_empresa").val();
-        let _token = $("input[name=_token]").val();
-        let dato = id + "." + opcion;
-
-        if (opcion == 'dataExtensiones') {
-            url = currentURL + '/extensiones/' + id;
-        } else if (opcion == 'dataCanales') {
-            url = currentURL + '/canales/' + id;
-        } else if (opcion == 'dataDids') {
-            url = currentURL + '/did/' + id;
-        } else {
-            url = currentURL + '/empresas/' + dato;
-        }
-
-        $.ajax({
-            url: url,
-            type: 'GET',
-            data: {
-                _token: _token,
-                accion: accion
-            },
-            success: function(result) {
-                $('#formDataEmpresa').html(result);
-            }
-        });
-
-    });
     /**
      * Evento para mostrar el formulario editar empresa
      */

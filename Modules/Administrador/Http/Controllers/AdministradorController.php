@@ -26,8 +26,7 @@ class AdministradorController extends Controller
 
         $events->listen(BuildingMenu::class, function (BuildingMenu $event)
         {
-            $categorias = Categorias::active()->where('modulos_id', 13)->with('Sub_Categorias')->get();
-
+            $categorias = Categorias::active()->where('modulos_id', 18)->with('Sub_Categorias')->get();
             $menu = array();
 
             foreach ($categorias as $v)

@@ -17,20 +17,12 @@ class OutboundController extends Controller
     public function index()
     {
         /**
-         * Obtenemos los datos del usuario logeado
-         */
-        $user = Auth::user();
-        /**
-         * Obtenemos el rol del usuario logeado
-         */
-        $rol = $user->getRoleNames();
-        /**
          * Obtenemos las categorias relacionadas al usuario
          */
-        $categorias = Categorias::where('modulos_id', 2)->get();
+        $categorias = Categorias::with('Sub_Categorias')->active()->where('modulos_id', 2)->get();
         $modulo = "Outbound";
 
-        return view('outbound::index', compact( 'rol', 'categorias', 'modulo' ));
+        return view('outbound::index', compact( 'categorias', 'modulo' ));
         //return view('outbound::index');
     }
 

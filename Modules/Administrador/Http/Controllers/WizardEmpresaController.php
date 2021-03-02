@@ -54,6 +54,7 @@ class WizardEmpresaController extends Controller
      */
     public function wizard( $step = null, Request $request )
     {
+        //dd( $request );
         /**
          * Eliminamos todo dato que se pudiera quedar en la session
          */
@@ -85,6 +86,7 @@ class WizardEmpresaController extends Controller
      */
     public function wizardPost( Request $request, $step )
     {
+        //dd( $step );
         /**
          * Recuperamos el indice del paso
          */

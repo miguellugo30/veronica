@@ -65,7 +65,7 @@ class Empresas extends Model
      */
     public function Modulos()
     {
-        return $this->belongsToMany('App\Modulos', 'Modulos_Empresas')->orderBy('prioridad');
+        return $this->belongsToMany('App\Modulos', 'Modulos_Empresas')->where('activo', 1)->orderBy('id');
     }
     /**
      * Relacion uno a uno con Cat_Estado_Empresas

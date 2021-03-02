@@ -81,4 +81,9 @@
             @endif
         </tbody>
     </table>
+    <div class="callout callout-info">
+        <h6><b>Nota</b></h6>
+
+        <p>Al finalizar el proceso alta, se completara el prefijo <b>( ID Proveedor + ID Empresa + Prefijo )</b></p>
+      </div>
 </div>

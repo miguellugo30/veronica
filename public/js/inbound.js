@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -966,7 +966,7 @@ $(function () {
 
         var _token = $("input[name=_token]").val();
 
-        var url = currentURL + '/campanas/' + id;
+        var url = currentURL + 'inbound/campanas/' + id;
         $.ajax({
           url: url,
           type: 'POST',
@@ -992,7 +992,7 @@ $(function () {
   $(document).on("click", ".newCampana", function (e) {
     e.preventDefault();
     $('#tituloModal').html('Nueva Campaña');
-    var url = currentURL + '/campanas/create';
+    var url = currentURL + 'inbound/campanas/create';
     agentesParticipantes = new Array();
     $('#action').removeClass('updateCampana');
     $('#action').addClass('saveCampana');
@@ -1031,7 +1031,7 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
-    var url = currentURL + '/campanas';
+    var url = currentURL + 'inbound/campanas';
     $.ajax({
       url: url,
       type: "post",
@@ -1073,7 +1073,7 @@ $(function () {
     event.preventDefault();
     var id = $("#idSeleccionado").val();
     $('#tituloModal').html('Detalles de Campana');
-    var url = currentURL + '/campanas/' + id + '/edit';
+    var url = currentURL + 'inbound/campanas/' + id + '/edit';
     $('#action').addClass('updaCampanas');
     $('#action').removeClass('saveCampana');
     $.ajax({
@@ -1114,7 +1114,7 @@ $(function () {
     var _token = $("input[name=_token]").val();
 
     var _method = "PUT";
-    var url = currentURL + '/campanas/' + id;
+    var url = currentURL + 'inbound/campanas/' + id;
     $.post(url, _defineProperty({
       nombre: nombre,
       agentesParticipantes: agentesParticipantes,
@@ -1156,7 +1156,7 @@ $(function () {
     } else {
       var _token = $("input[name=_token]").val();
 
-      var url = currentURL + '/campanas/validar_modo_logueo';
+      var url = currentURL + 'inbound/campanas/validar_modo_logueo';
       var agentesSeleccionados = [];
       var agentesDiferentes = [];
       var agentesValidos = [];
@@ -1254,7 +1254,7 @@ $(function () {
 
         var _token = $("input[name=_token]").val();
 
-        var url = currentURL + '/campanas/eliminar-participantes';
+        var url = currentURL + 'inbound/campanas/eliminar-participantes';
         $.ajax({
           url: url,
           type: 'POST',
@@ -1933,48 +1933,48 @@ $(function () {
    */
 
   $(document).on("click", ".sub-menu", function (e) {
-    stop(timerListAgente);
     e.preventDefault();
-    var id = $(this).data("id");
+    stop(timerListAgente);
+    var id = $(this).attr('id');
 
-    if (id == 'cat-16') {
-      url = currentURL + '/campanas';
+    if (id == 'sub-16') {
+      url = currentURL + 'inbound/campanas';
       table = '#tableFormulario';
     } else if (id == 'sub-32') {
-      url = currentURL + '/Condiciones_Tiempo';
+      url = currentURL + 'inbound/Condiciones_Tiempo';
       table = '#tableCondicionesTiempo';
     } else if (id == 'sub-31') {
-      url = currentURL + '/Desvios';
+      url = currentURL + 'inbound/Desvios';
       table = '#tableDesvios';
     } else if (id == 'sub-34') {
-      url = currentURL + '/Buzon_Voz';
+      url = currentURL + 'inbound/Buzon_Voz';
       table = '#tableBuzonVoz';
     } else if (id == 'sub-30') {
-      url = currentURL + '/Did_Enrutamiento';
+      url = currentURL + 'inbound/Did_Enrutamiento';
       table = '#tableDidEnrutamiento';
-    } else if (id == 'cat-6') {
-      url = currentURL + '/Ivr';
+    } else if (id == 'sub-6') {
+      url = currentURL + 'inbound/Ivr';
       table = '#tableivr';
     } else if (id == 'sub-39') {
-      url = currentURL + '/Metricas_ACD';
+      url = currentURL + 'inbound/Metricas_ACD';
       table = '#tableACD';
     } else if (id == 'sub-40') {
-      url = currentURL + '/Desglose_llamadas';
+      url = currentURL + 'inbound/Desglose_llamadas';
       table = '#tableDesgloseLlamadas';
     } else if (id == 'sub-42') {
-      url = currentURL + '/ReporteCalificaciones';
+      url = currentURL + 'inbound/ReporteCalificaciones';
       table = '#tableDesgloseLlamadas';
     } else if (id == 'sub-43') {
-      url = currentURL + '/ReporteLlamadasAgentes';
+      url = currentURL + 'inbound/ReporteLlamadasAgentes';
       table = '#tableDesgloseLlamadas';
     } else if (id == 'sub-44') {
-      url = currentURL + '/ReporteProductividadAgentes';
+      url = currentURL + 'inbound/ReporteProductividadAgentes';
       table = '#tableDesgloseLlamadas';
     } else if (id == 'sub-45') {
-      url = currentURL + '/ReporteTiempoInactivo';
+      url = currentURL + 'inbound/ReporteTiempoInactivo';
       table = '#tableReporteTiempoInactivo';
-    } else if (id == 'cat-26') {
-      url = currentURL + '/real_time/';
+    } else if (id == 'sub-26') {
+      url = currentURL + 'inbound/real_time/';
       $.get(url, function (data, textStatus, jqXHR) {
         $(".viewResult").html(data);
         $('.viewResult listadoAgentes').DataTable({
@@ -2490,27 +2490,27 @@ $(function () {
 
 /***/ }),
 
-/***/ 2:
+/***/ 1:
 /*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** multi ./resources/js/module_inbound/menu.js ./resources/js/module_inbound/campanas.js ./resources/js/module_inbound/CondicionesTiempo.js ./resources/js/module_inbound/desvios.js ./resources/js/module_inbound/buzon_voz.js ./resources/js/module_inbound/Did_Enrutamiento.js ./resources/js/module_inbound/ivr.js ./resources/js/module_inbound/Metricas_ACD.js ./resources/js/module_inbound/desglosellamadas.js ./resources/js/module_inbound/real_time.js ./resources/js/module_inbound/reporteCalificaciones.js ./resources/js/module_inbound/reporte_llamadas_agentes.js ./resources/js/module_inbound/reporte_productividad_agentes.js ./resources/js/module_inbound/reporteTiempoInactivo.js ***!
   \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\veronica\resources\js\module_inbound\menu.js */"./resources/js/module_inbound/menu.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\veronica\resources\js\module_inbound\campanas.js */"./resources/js/module_inbound/campanas.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\veronica\resources\js\module_inbound\CondicionesTiempo.js */"./resources/js/module_inbound/CondicionesTiempo.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\veronica\resources\js\module_inbound\desvios.js */"./resources/js/module_inbound/desvios.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\veronica\resources\js\module_inbound\buzon_voz.js */"./resources/js/module_inbound/buzon_voz.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\veronica\resources\js\module_inbound\Did_Enrutamiento.js */"./resources/js/module_inbound/Did_Enrutamiento.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\veronica\resources\js\module_inbound\ivr.js */"./resources/js/module_inbound/ivr.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\veronica\resources\js\module_inbound\Metricas_ACD.js */"./resources/js/module_inbound/Metricas_ACD.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\veronica\resources\js\module_inbound\desglosellamadas.js */"./resources/js/module_inbound/desglosellamadas.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\veronica\resources\js\module_inbound\real_time.js */"./resources/js/module_inbound/real_time.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\veronica\resources\js\module_inbound\reporteCalificaciones.js */"./resources/js/module_inbound/reporteCalificaciones.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\veronica\resources\js\module_inbound\reporte_llamadas_agentes.js */"./resources/js/module_inbound/reporte_llamadas_agentes.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\veronica\resources\js\module_inbound\reporte_productividad_agentes.js */"./resources/js/module_inbound/reporte_productividad_agentes.js");
-module.exports = __webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\veronica\resources\js\module_inbound\reporteTiempoInactivo.js */"./resources/js/module_inbound/reporteTiempoInactivo.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\Veronica\resources\js\module_inbound\menu.js */"./resources/js/module_inbound/menu.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\Veronica\resources\js\module_inbound\campanas.js */"./resources/js/module_inbound/campanas.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\Veronica\resources\js\module_inbound\CondicionesTiempo.js */"./resources/js/module_inbound/CondicionesTiempo.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\Veronica\resources\js\module_inbound\desvios.js */"./resources/js/module_inbound/desvios.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\Veronica\resources\js\module_inbound\buzon_voz.js */"./resources/js/module_inbound/buzon_voz.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\Veronica\resources\js\module_inbound\Did_Enrutamiento.js */"./resources/js/module_inbound/Did_Enrutamiento.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\Veronica\resources\js\module_inbound\ivr.js */"./resources/js/module_inbound/ivr.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\Veronica\resources\js\module_inbound\Metricas_ACD.js */"./resources/js/module_inbound/Metricas_ACD.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\Veronica\resources\js\module_inbound\desglosellamadas.js */"./resources/js/module_inbound/desglosellamadas.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\Veronica\resources\js\module_inbound\real_time.js */"./resources/js/module_inbound/real_time.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\Veronica\resources\js\module_inbound\reporteCalificaciones.js */"./resources/js/module_inbound/reporteCalificaciones.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\Veronica\resources\js\module_inbound\reporte_llamadas_agentes.js */"./resources/js/module_inbound/reporte_llamadas_agentes.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\Veronica\resources\js\module_inbound\reporte_productividad_agentes.js */"./resources/js/module_inbound/reporte_productividad_agentes.js");
+module.exports = __webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\Veronica\resources\js\module_inbound\reporteTiempoInactivo.js */"./resources/js/module_inbound/reporteTiempoInactivo.js");
 
 
 /***/ })

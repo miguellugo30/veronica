@@ -32,6 +32,7 @@
 
         <link rel="stylesheet" href="{{ asset('vendor/adminlte/dist/css/adminlte.min.css') }}">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     @else
         <link rel="stylesheet" href="{{ mix(config('adminlte.laravel_mix_css_path', 'css/app.css')) }}">
     @endif
@@ -79,11 +80,15 @@
         @include('adminlte::plugins', ['type' => 'js'])
 
         <script src="{{ asset('vendor/adminlte/dist/js/adminlte.min.js') }}"></script>
-        <script src="{{ asset('js/administrador.js') }}"></script>
+        <!--script src="{{-- asset('js/administrador.js') --}}"></script-->
+        <script src="/js/menu_principal.js"></script>
+        <script src="/js/inbound.js"></script>
         <script src="{{ asset('js/checkSesion.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
     @else
-        <script src="{{ mix(config('adminlte.laravel_mix_js_path', 'js/app.js')) }}"></script>
+        <!--script src="{{-- mix(config('adminlte.laravel_mix_js_path', 'js/app.js')) --}}"></script-->
     @endif
 
     {{-- Custom Scripts --}}

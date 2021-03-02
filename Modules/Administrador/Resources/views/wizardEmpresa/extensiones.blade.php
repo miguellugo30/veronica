@@ -4,35 +4,36 @@
         $dataCanales = array_chunk( Session::get( 'canales' ), 4 );
     @endphp
 @endif
+@if ( Session::has( 'posiciones' ) )
+    @php
+        $dataposiciones = Session::get( 'posiciones' );
+    @endphp
+@endif
 <div class="col-6" style="float:none; margin:auto">
     <div class="form-group row">
-        <label class="col-sm-3 col-form-label" for="canal_id"><b>Canal :</b></label>
-        <div class="col-sm-9">
+        <label class="col-sm-4 col-form-label" for="canal_id"><b>Canal :</b></label>
+        <div class="col-sm-8">
             <select name="canal_id" id="canal_id" class="form-control form-control-sm">
                 <option value="" >Selecciona un canal</option>
                 @if ( isset( $dataCanales ) )
                     @for ($i = 0; $i < count( $dataCanales ); $i++)
-
-                    <option value="">{{ $dataCanales[$i][1]."/" }}</option>
-                {{-- @foreach ($canales as $canal)
-                    <option value="{{$canal->id}}">{{ $canal->protocolo }}{{ $canal->Troncales->nombre }}/{{ $canal->prefijo }}</option>
-                @endforeach --}}
+                        <option value="{{$i}}">{{ $dataCanales[$i][1].$dataCanales[$i][3] }}</option>
                     @endfor
                 @endif
             </select>
         </div>
     </div>
-    <div class="form-group">
-        <label for="">Extensiones</label>
-        <div class="form-inline" style="text-align:center">
-            <div class="form-group">
-                <label for="extension">Extension:</label>
-                <input type="number" min="1" class="form-control" id="extension" name="extension" placeholder="Extension">
-            </div>
-            <div class="form-group">
-                <label for="posiciones">Posiciones:</label>
-                <input type="number" class="form-control" min="1" max="" id="posiciones" name="posiciones" value="">
-            </div>
+    <div class="form-group row">
+        <label class="col-sm-4 col-form-label" for="extension">Prefijo de Extension:</label>
+        <div class="col-sm-8" style="text-align:center">
+            <input type="number" min="1" class="form-control form-control-sm" id="extension" name="extension" placeholder="Extension">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-4 col-form-label" for="posiciones">Posiciones a generar:</label>
+        <div class="col-sm-8">
+            <input type="number" class="form-control form-control-sm" min="1" max="{{ $dataposiciones['agentes_entrada'] + $dataposiciones['agentes_salida'] + $dataposiciones['agentes_full'] }}" id="posiciones" name="posiciones" value="" placeholder="Posiciones">
+            <small id="emailHelp" class="form-text text-muted">Maximo de posiciones {{ $dataposiciones['agentes_entrada'] + $dataposiciones['agentes_salida'] + $dataposiciones['agentes_full'] }}.</small>
         </div>
     </div>
 </div>

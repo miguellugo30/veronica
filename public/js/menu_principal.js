@@ -81,34 +81,60 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./resources/js/checkSesion.js":
-/*!*************************************!*\
-  !*** ./resources/js/checkSesion.js ***!
-  \*************************************/
+/***/ "./resources/js/menu_principal.js":
+/*!****************************************!*\
+  !*** ./resources/js/menu_principal.js ***!
+  \****************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-$(document).ajaxError(function (event, jqxhr, settings, thrownError) {
-  if (jqxhr.status == 401) {
-    window.location.replace("/login");
-  }
+$(function () {
+  var currentURL = window.location.href;
+  /**
+   * Evento para el menu de sub categorias y mostrar la vista
+   */
+
+  $(document).on("click", ".menu", function (e) {
+    e.preventDefault();
+    var currentURL = window.location.href;
+    var id = $(this).attr('id');
+    $(".viewResult ").html('');
+
+    if (id == 'sub-1') {
+      url = currentURL + 'inbound';
+      table = ' #tableDistribuidores';
+    } else if (id == 'sub-2') {
+      url = currentURL + 'outbound';
+      table = ' #tableEmpresas';
+    } else if (id == 'sub-4') {
+      url = currentURL + 'recording';
+      table = ' #tableTiposCanal';
+    } else if (id == 'sub-17') {
+      url = currentURL + 'settings';
+      table = ' #licencias_bria';
+    }
+
+    $.get(url, function (data, textStatus, jqXHR) {
+      $(".view-sub-menu").html(data); //$(".menu_principal").html(data);
+    });
+  });
 });
 
 /***/ }),
 
-/***/ 3:
-/*!*******************************************!*\
-  !*** multi ./resources/js/checkSesion.js ***!
-  \*******************************************/
+/***/ 2:
+/*!**********************************************!*\
+  !*** multi ./resources/js/menu_principal.js ***!
+  \**********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\Veronica\resources\js\checkSesion.js */"./resources/js/checkSesion.js");
+module.exports = __webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\Veronica\resources\js\menu_principal.js */"./resources/js/menu_principal.js");
 
 
 /***/ })

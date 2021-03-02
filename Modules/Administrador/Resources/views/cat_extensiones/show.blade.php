@@ -43,11 +43,7 @@
                         <select  class="form-control form-control-sm" name="licencia_extension_{{ $extension->id }}" id="licencia_extension_{{ $extension->id }}" disabled>
                             <option value="0">Selecciona una licencia</option>
                             @foreach ($licencias as $licencia)
-<<<<<<< HEAD
                                 <option value="{{$licencia->id}}" {{ $licencia->id == $extension->Cat_Licencias_Bria_id ? "selected" : "" }} {{ $licencia->ocupadas >= $licencia->disponibles ? "hidden" : "" }}>{{ $licencia->licencia }}</option>
-=======
-                                <option value="{{$licencia->id}}">{{ $licencia->licencia }}</option>
->>>>>>> db6863daa77c3c4a9f8b7deed84e30e5b8dcd0bd
                             @endforeach
                         </select>
                     </td>

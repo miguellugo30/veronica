@@ -3,7 +3,7 @@
     {{ config('adminlte.classes_topnav', 'navbar-white navbar-light') }}">
 
     {{-- Navbar left links --}}
-    <ul class="navbar-nav">
+    <ul class="navbar-nav view-sub-menu">
         {{-- Left sidebar toggler link --}}
         @include('adminlte::partials.navbar.menu-item-left-sidebar-toggler')
 

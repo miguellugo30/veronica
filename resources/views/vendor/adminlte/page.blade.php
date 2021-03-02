@@ -1,6 +1,6 @@
 @extends('adminlte::master')
 
-@inject('layoutHelper', \JeroenNoten\LaravelAdminLte\Helpers\LayoutHelper)
+@inject('layoutHelper', '\JeroenNoten\LaravelAdminLte\Helpers\LayoutHelper')
 
 @if($layoutHelper->isLayoutTopnavEnabled())
     @php( $def_container_class = 'container' )
@@ -37,16 +37,15 @@
 
             {{-- Content Header --}}
             <div class="content-header">
-                <div class="{{ config('adminlte.classes_content_header') ?: $def_container_class }}">
+                <div class=" menu_principal {{ config('adminlte.classes_content_header') ?: $def_container_class }}">
                     @yield('content_header')
                 </div>
             </div>
 
             {{-- Main Content --}}
             <div class="content ">
-                <div class="{{ config('adminlte.classes_content') ?: $def_container_class }}">
+                <div class=" viewResult {{ config('adminlte.classes_content') ?: $def_container_class }}">
                     @yield('content')
-                    <section class="col-lg-12 viewResult"></section>
                 </div>
             </div>
 

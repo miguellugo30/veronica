@@ -9,7 +9,7 @@
         <div class="form-group row">
             <label class="col-sm-3 col-form-label" for="distribuidores_empresa"><b>Distribuidor *:</b></label>
             <div class="col-sm-9">
-                <select name="distribuidores_empresa" id="distribuidores_empresa" class="form-control form-control-sm"   >
+                <select name="distribuidores_empresa" id="distribuidores_empresa" class="form-control form-control-sm" required>
                     <option value="" >Selecciona un distribuidor</option>
                     @foreach( $data['Cat_Distribuidor'] as $distribuidor )
                         <option value="{{ $distribuidor->id }}"  {{ isset( $dataEmpresa ) ? $distribuidor->id == $dataEmpresa['distribuidores_empresa'] ? 'selected' : '' : '' }}  >{{ $distribuidor->servicio }}</option>
