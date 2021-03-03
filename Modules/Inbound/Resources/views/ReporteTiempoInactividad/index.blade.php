@@ -13,16 +13,17 @@
         height: 29px;
     }
 </style>
-<div class="box box-primary">
-    <div class="box-header with-border">
-        <h3 class="box-title"><b><i class="fas fa-filter"></i> Filtro</b></h3>
-        <div class="box-tools pull-right">
+
+<div class="card card-outline card-primary">
+    <div class="card-header">
+        <h3 class="card-title"><b><i class="fas fa-filter"></i> Filtro</b></h3>
+        <div class="card-tools pull-right">
             <button class='btn btn-primary btn-sm nuevo-reporte' style='display:none'>
                 Nuevo Reporte
             </button>
         </div>
-    </div><!-- /.box-header -->
-    <div class="box-body filtro-reporte">
+    </div><!--card-header-->
+    <div class="card-body">
         <div class="row">
             <div class="col">
                 <div class="alert alert-dark col text-center" role="alert">
@@ -135,8 +136,9 @@
                 <button type="submit" class="btn btn-primary generarReporteTiempoInactivo text-center">Generar</button>
             </div>
 
-    </div><!-- ./box-body -->
-</div>
+    </div><!--card-header-->
+  </div>
+
 <div class="viewReporte"></div>
 
 <iframe id="iFrameDescarga" src="" frameborder="0" style="display:none"></iframe>

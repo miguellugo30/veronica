@@ -16,8 +16,8 @@
     </div><!--card-header-->
     <div class="card-body">
         <div class="col-md-12 viewIndex">
-            <table id="tableCampanas" class="display table table-bordered table-hover table-sm" style="width:100%">
-                <thead>
+            <table id="tableCampanas" class="display table table-bordered table-striped table-hover table-sm" style="width:100%">
+                <thead class="thead-light">
                     <tr>
                         <th>Nombre</th>
                         <th>Estrateguia de Marcado</th>
@@ -35,13 +35,8 @@
                 </tbody>
             </table>
         </div>
-
-        <div class="col-12 viewCreate"></div>
     </div><!--card-header-->
   </div>
-
-
-
 <!-- MODAL -->
 <div class="modal fade bd-example-modal-lg" tabindex="-1" id="modal" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
