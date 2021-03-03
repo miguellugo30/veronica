@@ -1,4 +1,4 @@
-<li @if(isset($item['id'])) id="{{ $item['id'] }}" @endif class="nav-item ">
+<li @if(isset($item['id'])) id="{{ $item['id'] }}" @endif class="nav-item " style="cursor: pointer">
 
     <a id="sub-{{ $item['id'] }}" class="nav-link {{ $item['class'] }} @if(isset($item['shift'])) {{ $item['shift'] }} @endif"
         @if(isset($item['target'])) target="{{ $item['target'] }}" @endif

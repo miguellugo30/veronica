@@ -4,43 +4,43 @@ $(function() {
     /**
      * Evento para el menu de sub categorias y mostrar la vista
      */
-    $(document).on("click", ".sub-menu", function(e) {
+    $(document).on("click", ".sub-menu-settings", function(e) {
 
         e.preventDefault();
-        let id = $(this).data("id");
+        let id = $(this).attr('id');
 
-        if (id == 'sub-21') {
-            url = currentURL + '/formularios';
+        if (id == 'sub-sub-21') {
+            url = currentURL + 'settings/formularios';
             table = ' #tableFormulario';
-        } else if (id == 'sub-22') {
-            url = currentURL + '/speech';
+        } else if (id == 'sub-sub-22') {
+            url = currentURL + 'settings/speech';
             table = ' #tableSpeech';
-        } else if (id == 'sub-23') {
-            url = currentURL + '/calificaciones';
+        } else if (id == 'sub-sub-23') {
+            url = currentURL + 'settings/calificaciones';
             table = ' #tableCalificaciones';
-        } else if (id == 'cat-17') {
-            url = currentURL + '/Audios';
+        } else if (id == 'sub-17') {
+            url = currentURL + 'settings/Audios';
             table = ' #tableAudios';
-        } else if (id == 'sub-28') {
-            url = currentURL + '/Agentes';
+        } else if (id == 'sub-sub-28') {
+            url = currentURL + 'settings/Agentes';
             table = ' #tableAgentes';
-        } else if (id == 'sub-29') {
-            url = currentURL + '/Grupos';
+        } else if (id == 'sub-sub-29') {
+            url = currentURL + 'settings/Grupos';
             table = ' #tableGrupos';
-        } else if (id == 'sub-35') {
-            url = currentURL + '/EventosAgentes';
+        } else if (id == 'sub-sub-35') {
+            url = currentURL + 'settings/EventosAgentes';
             table = ' #tableEventosAgentes';
-        } else if (id == 'cat-28') {
-            url = currentURL + '/Plantillas';
+        } else if (id == 'sub-28') {
+            url = currentURL + 'settings/Plantillas';
             table = ' #tablePlantillas';
-        } else if (id == 'cat-30') {
-            url = currentURL + '/PrefijosMarcacion';
+        } else if (id == 'sub-30') {
+            url = currentURL + 'settings/PrefijosMarcacion';
             table = ' #tablePrefijosMarcacion';
-        } else if (id == 'cat-29') {
-            url = currentURL + '/BaseDatos';
+        } else if (id == 'sub-29') {
+            url = currentURL + 'settings/BaseDatos';
             table = ' #tableBaseDatos';
-        } else if (id == 'cat-31') {
-            url = currentURL + '/Perfil_Marcacion';
+        } else if (id == 'sub-31') {
+            url = currentURL + 'settings/Perfil_Marcacion';
             table = ' #tablePerfilMarcacion';
         }
 

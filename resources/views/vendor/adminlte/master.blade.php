@@ -82,6 +82,7 @@
         <script src="{{ asset('vendor/adminlte/dist/js/adminlte.min.js') }}"></script>
         <!--script src="{{-- asset('js/administrador.js') --}}"></script-->
         <script src="/js/menu_principal.js"></script>
+        <script src="/js/settings.js"></script>
         <script src="/js/inbound.js"></script>
         <script src="{{ asset('js/checkSesion.js') }}"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>

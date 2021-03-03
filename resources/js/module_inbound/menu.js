@@ -5,7 +5,7 @@ $(function() {
     /**
      * Evento para el menu de sub categorias y mostrar la vista
      */
-    $(document).on("click", ".sub-menu", function(e) {
+    $(document).on("click", ".sub-menu-inbound", function(e) {
 
         e.preventDefault();
         stop(timerListAgente);

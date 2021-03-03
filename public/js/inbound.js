@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -1932,7 +1932,7 @@ $(function () {
    * Evento para el menu de sub categorias y mostrar la vista
    */
 
-  $(document).on("click", ".sub-menu", function (e) {
+  $(document).on("click", ".sub-menu-inbound", function (e) {
     e.preventDefault();
     stop(timerListAgente);
     var id = $(this).attr('id');
@@ -2490,7 +2490,7 @@ $(function () {
 
 /***/ }),
 
-/***/ 1:
+/***/ 2:
 /*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** multi ./resources/js/module_inbound/menu.js ./resources/js/module_inbound/campanas.js ./resources/js/module_inbound/CondicionesTiempo.js ./resources/js/module_inbound/desvios.js ./resources/js/module_inbound/buzon_voz.js ./resources/js/module_inbound/Did_Enrutamiento.js ./resources/js/module_inbound/ivr.js ./resources/js/module_inbound/Metricas_ACD.js ./resources/js/module_inbound/desglosellamadas.js ./resources/js/module_inbound/real_time.js ./resources/js/module_inbound/reporteCalificaciones.js ./resources/js/module_inbound/reporte_llamadas_agentes.js ./resources/js/module_inbound/reporte_productividad_agentes.js ./resources/js/module_inbound/reporteTiempoInactivo.js ***!
   \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/

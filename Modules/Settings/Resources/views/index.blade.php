@@ -8,8 +8,8 @@
     @foreach ($categorias as $c)
 
         @if ( $c->Sub_Categorias->isEmpty() )
-            <li class="nav-item">
-                <a class="nav-link sub-menu" id="sub-{{$c->id}}">{{$c->nombre}}</a>
+            <li class="nav-item" style="cursor: pointer">
+                <a class="nav-link sub-menu-settings" id="sub-{{$c->id}}">{{$c->nombre}}</a>
             </li>
         @else
             <li class="nav-item dropdown">
@@ -18,7 +18,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     @foreach ( $c->Sub_Categorias as $sc)
-                        <a class="dropdown-item sub-menu" id="sub-{{$sc->id}}">{{$sc->nombre}}</a>
+                        <a class="dropdown-item sub-menu-settings" style="cursor: pointer" id="sub-sub-{{$sc->id}}">{{$sc->nombre}}</a>
                     @endforeach
                 </div>
             </li>
@@ -26,3 +26,5 @@
 
     @endforeach
 </ul>
+
+

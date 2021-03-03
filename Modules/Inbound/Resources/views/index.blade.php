@@ -1,4 +1,3 @@
-
 <li class="nav-item">
     <a class="nav-link" data-widget="pushmenu" href="#">
         <i class="fas fa-bars"></i>
@@ -10,7 +9,7 @@
 
         @if ( $c->Sub_Categorias->isEmpty() )
             <li class="nav-item">
-                <a class="nav-link sub-menu" id="sub-{{$c->id}}">{{$c->nombre}}</a>
+                <a class="nav-link sub-menu-inbound" id="sub-{{$c->id}}">{{$c->nombre}}</a>
             </li>
         @else
             <li class="nav-item dropdown">
@@ -19,7 +18,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     @foreach ( $c->Sub_Categorias as $sc)
-                        <a class="dropdown-item sub-menu" id="sub-{{$sc->id}}">{{$sc->nombre}}</a>
+                        <a class="dropdown-item sub-menu-inbound" id="sub-{{$sc->id}}">{{$sc->nombre}}</a>
                     @endforeach
                 </div>
             </li>

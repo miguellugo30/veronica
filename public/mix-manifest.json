@@ -2,5 +2,6 @@
     "/js/administrador.js": "/js/administrador.js",
     "/js/checkSesion.js": "/js/checkSesion.js",
     "/js/inbound.js": "/js/inbound.js",
-    "/js/menu_principal.js": "/js/menu_principal.js"
+    "/js/menu_principal.js": "/js/menu_principal.js",
+    "/js/settings.js": "/js/settings.js"
 }

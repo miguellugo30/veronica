@@ -33,7 +33,7 @@ $(function() {
                 let id = $("#idSeleccionado").val();
                 let _method = "DELETE";
                 let _token = $("input[name=_token]").val();
-                let url = currentURL + '/formularios/' + id;
+                let url = currentURL + 'settings/formularios/' + id;
 
                 $.ajax({
                     url: url,
@@ -64,7 +64,7 @@ $(function() {
         e.preventDefault();
 
         $('#tituloModal').html('Nuevo Formulario');
-        let url = currentURL + '/formularios/create';
+        let url = currentURL + 'settings/formularios/create';
 
         $('#action').removeClass('updateFormulario');
         $('#action').addClass('saveFormulario');
@@ -84,6 +84,7 @@ $(function() {
     $(document).on('click', '.saveFormulario', function(event) {
         event.preventDefault();
 
+
         let dataForm = $("#formDataFormulario").serializeArray();
         var data = {};
         $(dataForm).each(function(index, obj) {
@@ -91,7 +92,7 @@ $(function() {
         });
 
         let _token = $("input[name=_token]").val();
-        let url = currentURL + '/formularios';
+        let url = currentURL + 'settings/formularios';
 
         $.post(url, {
             dataForm: data,
@@ -117,7 +118,7 @@ $(function() {
         event.preventDefault();
         let id = $("#idSeleccionado").val();
         $('#tituloModal').html('Detalles de Formulario');
-        let url = currentURL + '/formularios/' + id;
+        let url = currentURL + 'settings/formularios/' + id;
 
         $('#action').removeClass('updateFormulario');
         $('#action').addClass('saveFormulario');
@@ -138,7 +139,7 @@ $(function() {
         event.preventDefault();
         var id = $("#idSeleccionado").val();
         $('#tituloModal').html('Detalles de Formulario');
-        var url = currentURL + '/formularios/' + id + '/edit';
+        var url = currentURL + 'settings/formularios/' + id + '/edit';
         $('#action').addClass('updateFormulario');
         $('#action').removeClass('saveFormulario');
         $.ajax({
@@ -165,7 +166,7 @@ $(function() {
 
         let _token = $("input[name=_token]").val();
         let _method = "PUT";
-        let url = currentURL + '/formularios/' + id;
+        let url = currentURL + 'settings/formularios/' + id;
 
         $.post(url, {
             dataForm: data,
@@ -204,7 +205,7 @@ $(function() {
             preConfirm: (nombreForm) => {
                 console.log(nombreForm)
                 let id = $("#idSeleccionado").val();
-                let url = currentURL + '/formularios/duplicar/' + id;
+                let url = currentURL + 'settings/formularios/duplicar/' + id;
                 let _token = $("input[name=_token]").val();
 
                 $.ajax({

@@ -33,7 +33,7 @@ mix.js([
         'resources/js/module_administrador/cat_campos_plantillas.js',
         'resources/js/module_administrador/prefijos_marcacion.js',
         'resources/js/module_administrador/perfil_marcacion.js',
-    ], 'public/js/administrador.js')/*
+    ], 'public/js/administrador.js')
     .js([
         'resources/js/module_settings/menu.js',
         'resources/js/module_settings/formularios.js',
@@ -50,7 +50,7 @@ mix.js([
         'resources/js/module_settings/Prefijos_Marcacion.js',
         'resources/js/module_settings/baseDatos.js',
         'resources/js/module_settings/Perfil_Marcacion.js',
-    ], 'public/js/settings.js')*/
+    ], 'public/js/settings.js')
     .js([
         'resources/js/module_inbound/menu.js',
         'resources/js/module_inbound/campanas.js',

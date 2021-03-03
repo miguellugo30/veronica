@@ -1946,7 +1946,7 @@ $(function () {
 
         var _token = $("input[name=_token]").val();
 
-        var url = currentURL + '/formularios/' + id;
+        var url = currentURL + 'settings/formularios/' + id;
         $.ajax({
           url: url,
           type: 'POST',
@@ -1972,7 +1972,7 @@ $(function () {
   $(document).on("click", ".newFormulario", function (e) {
     e.preventDefault();
     $('#tituloModal').html('Nuevo Formulario');
-    var url = currentURL + '/formularios/create';
+    var url = currentURL + 'settings/formularios/create';
     $('#action').removeClass('updateFormulario');
     $('#action').addClass('saveFormulario');
     $.ajax({
@@ -2001,7 +2001,7 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
-    var url = currentURL + '/formularios';
+    var url = currentURL + 'settings/formularios';
     $.post(url, {
       dataForm: data,
       _token: _token
@@ -2022,7 +2022,7 @@ $(function () {
     event.preventDefault();
     var id = $("#idSeleccionado").val();
     $('#tituloModal').html('Detalles de Formulario');
-    var url = currentURL + '/formularios/' + id;
+    var url = currentURL + 'settings/formularios/' + id;
     $('#action').removeClass('updateFormulario');
     $('#action').addClass('saveFormulario');
     $.ajax({
@@ -2045,7 +2045,7 @@ $(function () {
     event.preventDefault();
     var id = $("#idSeleccionado").val();
     $('#tituloModal').html('Detalles de Formulario');
-    var url = currentURL + '/formularios/' + id + '/edit';
+    var url = currentURL + 'settings/formularios/' + id + '/edit';
     $('#action').addClass('updateFormulario');
     $('#action').removeClass('saveFormulario');
     $.ajax({
@@ -2076,7 +2076,7 @@ $(function () {
     var _token = $("input[name=_token]").val();
 
     var _method = "PUT";
-    var url = currentURL + '/formularios/' + id;
+    var url = currentURL + 'settings/formularios/' + id;
     $.post(url, {
       dataForm: data,
       _method: _method,
@@ -2110,7 +2110,7 @@ $(function () {
       preConfirm: function preConfirm(nombreForm) {
         console.log(nombreForm);
         var id = $("#idSeleccionado").val();
-        var url = currentURL + '/formularios/duplicar/' + id;
+        var url = currentURL + 'settings/formularios/duplicar/' + id;
 
         var _token = $("input[name=_token]").val();
 
@@ -2352,42 +2352,42 @@ $(function () {
    * Evento para el menu de sub categorias y mostrar la vista
    */
 
-  $(document).on("click", ".sub-menu", function (e) {
+  $(document).on("click", ".sub-menu-settings", function (e) {
     e.preventDefault();
-    var id = $(this).data("id");
+    var id = $(this).attr('id');
 
-    if (id == 'sub-21') {
-      url = currentURL + '/formularios';
+    if (id == 'sub-sub-21') {
+      url = currentURL + 'settings/formularios';
       table = ' #tableFormulario';
-    } else if (id == 'sub-22') {
-      url = currentURL + '/speech';
+    } else if (id == 'sub-sub-22') {
+      url = currentURL + 'settings/speech';
       table = ' #tableSpeech';
-    } else if (id == 'sub-23') {
-      url = currentURL + '/calificaciones';
+    } else if (id == 'sub-sub-23') {
+      url = currentURL + 'settings/calificaciones';
       table = ' #tableCalificaciones';
-    } else if (id == 'cat-17') {
-      url = currentURL + '/Audios';
+    } else if (id == 'sub-17') {
+      url = currentURL + 'settings/Audios';
       table = ' #tableAudios';
-    } else if (id == 'sub-28') {
-      url = currentURL + '/Agentes';
+    } else if (id == 'sub-sub-28') {
+      url = currentURL + 'settings/Agentes';
       table = ' #tableAgentes';
-    } else if (id == 'sub-29') {
-      url = currentURL + '/Grupos';
+    } else if (id == 'sub-sub-29') {
+      url = currentURL + 'settings/Grupos';
       table = ' #tableGrupos';
-    } else if (id == 'sub-35') {
-      url = currentURL + '/EventosAgentes';
+    } else if (id == 'sub-sub-35') {
+      url = currentURL + 'settings/EventosAgentes';
       table = ' #tableEventosAgentes';
-    } else if (id == 'cat-28') {
-      url = currentURL + '/Plantillas';
+    } else if (id == 'sub-28') {
+      url = currentURL + 'settings/Plantillas';
       table = ' #tablePlantillas';
-    } else if (id == 'cat-30') {
-      url = currentURL + '/PrefijosMarcacion';
+    } else if (id == 'sub-30') {
+      url = currentURL + 'settings/PrefijosMarcacion';
       table = ' #tablePrefijosMarcacion';
-    } else if (id == 'cat-29') {
-      url = currentURL + '/BaseDatos';
+    } else if (id == 'sub-29') {
+      url = currentURL + 'settings/BaseDatos';
       table = ' #tableBaseDatos';
-    } else if (id == 'cat-31') {
-      url = currentURL + '/Perfil_Marcacion';
+    } else if (id == 'sub-31') {
+      url = currentURL + 'settings/Perfil_Marcacion';
       table = ' #tablePerfilMarcacion';
     }
 
