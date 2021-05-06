@@ -83,8 +83,8 @@ class HomeController extends Controller
                             'classes' => 'menu'
                         ];
                         array_push( $menu, $a );
-                }
-                $event->menu->add( ...$menu );
+                    }
+                    $event->menu->add( ...$menu );
                 });
                 /**
                  * Obtenemos las categorias relacionadas al usuario

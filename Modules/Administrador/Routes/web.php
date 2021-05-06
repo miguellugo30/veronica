@@ -15,6 +15,7 @@
  */
 Route::prefix('administrador')->group(function() {
     Route::get('/', 'AdministradorController@index')->middleware('auth')->name('administrador');
+    Route::get('/sub-menus/{id}', 'AdministradorController@subMenus')->middleware('auth')->name('administrador-sub-menus');
 });
 /*
 |--------------------------------------------------------------------------

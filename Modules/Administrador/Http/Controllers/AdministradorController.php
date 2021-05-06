@@ -14,6 +14,7 @@ use Illuminate\Support\Str;
  * Modelos
  */
 use App\Categorias;
+use App\Sub_Categorias;
 
 
 class AdministradorController extends Controller
@@ -38,26 +39,10 @@ class AdministradorController extends Controller
                     'url' => "",
                     'icon' => $v->class_icon,
                     'can' => $v->permiso,
-                    'clase' => 'menu'
+                    'classes' => 'menu-administrador'
                 ];
 
-                $sub_menu = array();
 
-                if ( $v->Sub_Categorias->isNotEmpty() )
-                {
-                    foreach ($v->Sub_Categorias as $k)
-                    {
-                        $e = [
-                                'text' => $k->nombre,
-                                'id' => $k->id,
-                                'can' => $k->permiso,
-                                'url'  => '',
-                            ];
-
-                        array_push( $sub_menu, $e );
-                    }
-                    $a['submenu'] = $sub_menu;
-                }
                 array_push( $menu, $a );
            }
            $event->menu->add( ...$menu );
@@ -150,5 +135,17 @@ class AdministradorController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function subMenus( $id)
+    {
+        $id = explode('-', $id);
+        /**
+         * Obtenemos las categorias relacionadas al usuario
+         */
+        $categorias = Sub_Categorias::active()->where('id_categoria', $id[1])->orderby('prioridad')->get();
+        $modulo = "Settings";
+
+        return view('administrador::subMenu', compact( 'categorias', 'modulo' ));
     }
 }

@@ -2996,75 +2996,14 @@ $(function () {
   /**
    * Evento para el menu de sub categorias y mostrar la vista
    */
-  $(document).on("click", ".sub-menu", function (e) {
+  $(document).on("click", ".menu-administrador", function (e) {
     e.preventDefault();
     var currentURL = window.location.href;
     var id = $(this).attr('id');
-
-    if (id == 'sub-1') {
-      url = currentURL + '/distribuidor';
-      table = ' #tableDistribuidores';
-    } else if (id == 'sub-2') {
-      url = currentURL + '/empresas';
-      table = ' #tableEmpresas';
-    } else if (id == 'sub-3') {
-      url = currentURL + '/modulos';
-      table = ' #tableModulos';
-    } else if (id == 'sub-4') {
-      url = currentURL + '/menus';
-      table = '#tableMenus';
-    } else if (id == 'sub-5') {
-      url = currentURL + '/usuarios';
-      table = ' #tableUsuarios';
-    } else if (id == 'sub-7') {
-      url = currentURL + '/did';
-      table = ' #tableDid';
-    } else if (id == 'sub-8') {
-      url = currentURL + '/troncales';
-      table = ' #tableTroncales';
-    } else if (id == 'sub-9') {
-      url = currentURL + '/cat_empresa';
-      table = ' #tableEdoEmp';
-    } else if (id == 'sub-10') {
-      url = currentURL + '/cat_ip_pbx';
-      table = ' #tablePbx';
-    } else if (id == 'sub-11') {
-      url = currentURL + '/cat_nas';
-      table = ' #tableNas';
-    } else if (id == 'sub-12') {
-      url = currentURL + '/cat_agente';
-      table = ' #tableEdoAge';
-    } else if (id == 'sub-13') {
-      url = currentURL + '/cat_cliente';
-      table = ' #tableEdoCli';
-    } else if (id == 'sub-14') {
-      url = currentURL + '/canales';
-      table = ' #tableCanales';
-    } else if (id == 'sub-15') {
-      url = currentURL + '/basedatos';
-      table = ' #tableBaseDatos';
-    } else if (id == 'sub-16') {
-      url = currentURL + '/cat_tipo_canales';
-      table = ' #tableTiposCanal';
-    } else if (id == 'sub-17') {
-      url = currentURL + '/licencias_bria';
-      table = ' #licencias_bria';
-    } else if (id == 'sub-18') {
-      url = currentURL + '/logs';
-      table = '#tableLogs';
-    } else if (id == 'sub-34') {
-      url = currentURL + '/cat_campos_plantillas';
-      table = ' #tableCamPla';
-    }
-
+    $(".viewResult ").html('');
+    url = currentURL + '/sub-menus/' + id;
     $.get(url, function (data, textStatus, jqXHR) {
-      $(".viewResult").html(data);
-
-      if (id != 4 || id != 20) {
-        /*$('.viewResult' + table).DataTable({
-            "lengthChange": true
-        });*/
-      }
+      $(".view-sub-menu").html(data);
     });
   });
 });
@@ -3939,6 +3878,86 @@ $(function () {
 
 /***/ }),
 
+/***/ "./resources/js/module_administrador/sub_menu.js":
+/*!*******************************************************!*\
+  !*** ./resources/js/module_administrador/sub_menu.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  /**
+   * Evento para el menu de sub categorias y mostrar la vista
+   */
+  $(document).on("click", ".sub-menu-administrador", function (e) {
+    e.preventDefault();
+    var currentURL = window.location.href;
+    var id = $(this).attr('id');
+
+    if (id == 'sub-1') {
+      url = currentURL + '/distribuidor';
+      table = ' #tableDistribuidores';
+    } else if (id == 'sub-2') {
+      url = currentURL + '/empresas';
+      table = ' #tableEmpresas';
+    } else if (id == 'sub-3') {
+      url = currentURL + '/modulos';
+      table = ' #tableModulos';
+    } else if (id == 'sub-4') {
+      url = currentURL + '/menus';
+      table = '#tableMenus';
+    } else if (id == 'sub-6') {
+      url = currentURL + '/usuarios';
+      table = ' #tableUsuarios';
+    } else if (id == 'sub-8') {
+      url = currentURL + '/did';
+      table = ' #tableDid';
+    } else if (id == 'sub-9') {
+      url = currentURL + '/troncales';
+      table = ' #tableTroncales';
+    } else if (id == 'sub-10') {
+      url = currentURL + '/cat_empresa';
+      table = ' #tableEdoEmp';
+    } else if (id == 'sub-11') {
+      url = currentURL + '/cat_ip_pbx';
+      table = ' #tablePbx';
+    } else if (id == 'sub-12') {
+      url = currentURL + '/cat_nas';
+      table = ' #tableNas';
+    } else if (id == 'sub-13') {
+      url = currentURL + '/cat_agente';
+      table = ' #tableEdoAge';
+    } else if (id == 'sub-14') {
+      url = currentURL + '/cat_cliente';
+      table = ' #tableEdoCli';
+    } else if (id == 'sub-15') {
+      url = currentURL + '/canales';
+      table = ' #tableCanales';
+    } else if (id == 'sub-16') {
+      url = currentURL + '/basedatos';
+      table = ' #tableBaseDatos';
+    } else if (id == 'sub-17') {
+      url = currentURL + '/cat_tipo_canales';
+      table = ' #tableTiposCanal';
+    } else if (id == 'sub-19') {
+      url = currentURL + '/licencias_bria';
+      table = ' #licencias_bria';
+    } else if (id == 'sub-20') {
+      url = currentURL + '/logs';
+      table = '#tableLogs';
+    } else if (id == 'sub-41') {
+      url = currentURL + '/cat_campos_plantillas';
+      table = ' #tableCamPla';
+    }
+
+    $.get(url, function (data, textStatus, jqXHR) {
+      $(".viewResult").html(data);
+    });
+  });
+});
+
+/***/ }),
+
 /***/ "./resources/js/module_administrador/submenus.js":
 /*!*******************************************************!*\
   !*** ./resources/js/module_administrador/submenus.js ***!
@@ -4624,34 +4643,35 @@ $(function () {
 /***/ }),
 
 /***/ 0:
-/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/module_administrador/usuarios.js ./resources/js/module_administrador/modulos.js ./resources/js/module_administrador/submenus.js ./resources/js/module_administrador/menus.js ./resources/js/module_administrador/distribuidores.js ./resources/js/module_administrador/dids.js ./resources/js/module_administrador/cat_estado_agente.js ./resources/js/module_administrador/cat_estado_cliente.js ./resources/js/module_administrador/cat_estado_empresa.js ./resources/js/module_administrador/cat_ip_pbx.js ./resources/js/module_administrador/cat_nas.js ./resources/js/module_administrador/troncales.js ./resources/js/module_administrador/canales.js ./resources/js/module_administrador/empresas.js ./resources/js/module_administrador/cat_base_datos.js ./resources/js/module_administrador/cat_tipo_canal.js ./resources/js/module_administrador/menu.js ./resources/js/module_administrador/cat_extensiones.js ./resources/js/module_administrador/licenciasBria.js ./resources/js/module_administrador/cat_campos_plantillas.js ./resources/js/module_administrador/prefijos_marcacion.js ./resources/js/module_administrador/perfil_marcacion.js ***!
-  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/module_administrador/usuarios.js ./resources/js/module_administrador/modulos.js ./resources/js/module_administrador/submenus.js ./resources/js/module_administrador/menus.js ./resources/js/module_administrador/distribuidores.js ./resources/js/module_administrador/dids.js ./resources/js/module_administrador/cat_estado_agente.js ./resources/js/module_administrador/cat_estado_cliente.js ./resources/js/module_administrador/cat_estado_empresa.js ./resources/js/module_administrador/cat_ip_pbx.js ./resources/js/module_administrador/cat_nas.js ./resources/js/module_administrador/troncales.js ./resources/js/module_administrador/canales.js ./resources/js/module_administrador/empresas.js ./resources/js/module_administrador/cat_base_datos.js ./resources/js/module_administrador/cat_tipo_canal.js ./resources/js/module_administrador/menu.js ./resources/js/module_administrador/sub_menu.js ./resources/js/module_administrador/cat_extensiones.js ./resources/js/module_administrador/licenciasBria.js ./resources/js/module_administrador/cat_campos_plantillas.js ./resources/js/module_administrador/prefijos_marcacion.js ./resources/js/module_administrador/perfil_marcacion.js ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\Veronica\resources\js\module_administrador\usuarios.js */"./resources/js/module_administrador/usuarios.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\Veronica\resources\js\module_administrador\modulos.js */"./resources/js/module_administrador/modulos.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\Veronica\resources\js\module_administrador\submenus.js */"./resources/js/module_administrador/submenus.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\Veronica\resources\js\module_administrador\menus.js */"./resources/js/module_administrador/menus.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\Veronica\resources\js\module_administrador\distribuidores.js */"./resources/js/module_administrador/distribuidores.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\Veronica\resources\js\module_administrador\dids.js */"./resources/js/module_administrador/dids.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\Veronica\resources\js\module_administrador\cat_estado_agente.js */"./resources/js/module_administrador/cat_estado_agente.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\Veronica\resources\js\module_administrador\cat_estado_cliente.js */"./resources/js/module_administrador/cat_estado_cliente.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\Veronica\resources\js\module_administrador\cat_estado_empresa.js */"./resources/js/module_administrador/cat_estado_empresa.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\Veronica\resources\js\module_administrador\cat_ip_pbx.js */"./resources/js/module_administrador/cat_ip_pbx.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\Veronica\resources\js\module_administrador\cat_nas.js */"./resources/js/module_administrador/cat_nas.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\Veronica\resources\js\module_administrador\troncales.js */"./resources/js/module_administrador/troncales.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\Veronica\resources\js\module_administrador\canales.js */"./resources/js/module_administrador/canales.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\Veronica\resources\js\module_administrador\empresas.js */"./resources/js/module_administrador/empresas.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\Veronica\resources\js\module_administrador\cat_base_datos.js */"./resources/js/module_administrador/cat_base_datos.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\Veronica\resources\js\module_administrador\cat_tipo_canal.js */"./resources/js/module_administrador/cat_tipo_canal.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\Veronica\resources\js\module_administrador\menu.js */"./resources/js/module_administrador/menu.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\Veronica\resources\js\module_administrador\cat_extensiones.js */"./resources/js/module_administrador/cat_extensiones.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\Veronica\resources\js\module_administrador\licenciasBria.js */"./resources/js/module_administrador/licenciasBria.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\Veronica\resources\js\module_administrador\cat_campos_plantillas.js */"./resources/js/module_administrador/cat_campos_plantillas.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\Veronica\resources\js\module_administrador\prefijos_marcacion.js */"./resources/js/module_administrador/prefijos_marcacion.js");
-module.exports = __webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\Veronica\resources\js\module_administrador\perfil_marcacion.js */"./resources/js/module_administrador/perfil_marcacion.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/usuarios.js */"./resources/js/module_administrador/usuarios.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/modulos.js */"./resources/js/module_administrador/modulos.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/submenus.js */"./resources/js/module_administrador/submenus.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/menus.js */"./resources/js/module_administrador/menus.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/distribuidores.js */"./resources/js/module_administrador/distribuidores.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/dids.js */"./resources/js/module_administrador/dids.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/cat_estado_agente.js */"./resources/js/module_administrador/cat_estado_agente.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/cat_estado_cliente.js */"./resources/js/module_administrador/cat_estado_cliente.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/cat_estado_empresa.js */"./resources/js/module_administrador/cat_estado_empresa.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/cat_ip_pbx.js */"./resources/js/module_administrador/cat_ip_pbx.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/cat_nas.js */"./resources/js/module_administrador/cat_nas.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/troncales.js */"./resources/js/module_administrador/troncales.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/canales.js */"./resources/js/module_administrador/canales.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/empresas.js */"./resources/js/module_administrador/empresas.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/cat_base_datos.js */"./resources/js/module_administrador/cat_base_datos.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/cat_tipo_canal.js */"./resources/js/module_administrador/cat_tipo_canal.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/menu.js */"./resources/js/module_administrador/menu.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/sub_menu.js */"./resources/js/module_administrador/sub_menu.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/cat_extensiones.js */"./resources/js/module_administrador/cat_extensiones.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/licenciasBria.js */"./resources/js/module_administrador/licenciasBria.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/cat_campos_plantillas.js */"./resources/js/module_administrador/cat_campos_plantillas.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/prefijos_marcacion.js */"./resources/js/module_administrador/prefijos_marcacion.js");
+module.exports = __webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/perfil_marcacion.js */"./resources/js/module_administrador/perfil_marcacion.js");
 
 
 /***/ })
