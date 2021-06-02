@@ -12,7 +12,6 @@
 @endif
 <fieldset>
     <div class="col-md-6" style="float:none; margin:auto">
-        <input type="hidden" name="action" id="action" value="dataAlmacenamiento">
         <div class="form-group">
             <label for="agentes_entrada"><b>Almacenamiento por posiciones ( GB )</b></label>
             <input  type="text"

@@ -142,16 +142,9 @@ class DidController extends Controller
          * Obtenemos la información del DID ha editar
          */
         $Dids = Dids::find($id);
-        /**
-         * Obtenemos las empresas activas
-         */
-        $empresas = Empresas::where('activo',1)->get();
-        /**
-         * Obtenemos los canales que están vinculadas a la empresa vinculada al DID
-         */
-        $empresa = Empresas::findOrFail(  $Dids->Empresas->id );
-        $canales = $empresa->canales;
-        return view('administrador::dids.edit',compact('Dids', 'empresas', 'canales'));
+        $canales = $Dids->Empresas->canales;
+
+        return view('administrador::dids.edit',compact('Dids', 'canales'));
     }
 
     /**

@@ -115,7 +115,7 @@ class CatExtensionesController extends Controller
      */
     public function edit($id)
     {
-        return view('administrador::edit');
+        return view('administrador::cat_extensiones.edit');
     }
 
     /**

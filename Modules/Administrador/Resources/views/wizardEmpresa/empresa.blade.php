@@ -7,20 +7,7 @@
 <div class="row">
     <div class="col">
         <div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="distribuidores_empresa"><b>Distribuidor *:</b></label>
-            <div class="col-sm-9">
-                <select name="distribuidores_empresa" id="distribuidores_empresa" class="form-control form-control-sm" required>
-                    <option value="" >Selecciona un distribuidor</option>
-                    @foreach( $data['Cat_Distribuidor'] as $distribuidor )
-                        <option value="{{ $distribuidor->id }}"  {{ isset( $dataEmpresa ) ? $distribuidor->id == $dataEmpresa['distribuidores_empresa'] ? 'selected' : '' : '' }}  >{{ $distribuidor->servicio }}</option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="nombre"><b>Empresa*:</b></label>
+            <label class="col-sm-2 col-form-label" for="nombre"><b>Empresa*:</b></label>
             <div class="col-sm-9">
                 <input type="text" class="form-control form-control-sm" id="nombre" name="nombre" placeholder="Empresa" value="{{ isset( $dataEmpresa ) ? $dataEmpresa['nombre'] : 'Veronica SA de CV' }}"  >
             </div>

@@ -58,7 +58,7 @@ class UsuariosController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(UsuariosRequest $request)
     {
         /**
          * Obtenemos todos los datos del formulario de alta

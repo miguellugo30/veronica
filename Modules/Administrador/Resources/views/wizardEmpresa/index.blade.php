@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <div class="col" style="text-align: center">
+    <div class="col" style="text-align: center; margin: auto; display: block ruby">
         <ul class="list-group list-group-horizontal" >
             @foreach( $steps as $key => $_step )
                 @if( $stepsAc['current'] == $_step )

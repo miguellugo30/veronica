@@ -20,10 +20,10 @@
         <div class="row">
             <div class="col viewIndex table-responsive">
                 <table id="tableTiposCanal" class="display table table-bordered table-hover table-sm" style="width:100%">
-                    <thead>
+                    <thead class="thead-light">
                         <tr>
                             <th>Nombre</th>
-                            <th>Distribuidor</th>
+                            <!--th>Distribuidor</th-->
                             <th>Prefjo</th>
                         </tr>
                     </thead>
@@ -31,7 +31,7 @@
                         @foreach ($tipocanales as $tipocanal)
                             <tr data-id="{{ $tipocanal->id }}" style="cursor:pointer">
                                 <td>{{$tipocanal->nombre}}</td>
-                                <td>{{$tipocanal->Cat_Distribuidor->servicio}}</td>
+                                <!--td>{{--$tipocanal->Cat_Distribuidor->servicio--}}</td-->
                                 <td>{{$tipocanal->prefijo}}</td>
                             </tr>
                         @endforeach

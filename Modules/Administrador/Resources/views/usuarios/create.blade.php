@@ -11,17 +11,16 @@
         </div>
         <div class="form-group">
             <label for="pass_1">Contraseña *:</label>
-            <input type="password" class="form-control form-control-sm" id="pass_1" placeholder="Contraseña">
+            <input type="password" class="form-control form-control-sm" id="password" placeholder="Contraseña">
         </div>
         <div class="form-group">
             <label for="pass_2">Confirmar contraseña *:</label>
-            <input type="password" class="form-control form-control-sm" id="pass_2" placeholder="Contraseña">
+            <input type="password" class="form-control form-control-sm" id="password_confirmation" placeholder="Contraseña">
         </div>
         <div class="form-group">
             <label for="cliente">Empresa *:</label>
             <select name="cliente" id="cliente" class="form-control form-control-sm">
                 <option value="">Selecciona una empresa</option>
-                <option value="1">Veronica</option>
                 @foreach( $clientes as $cliente )
                 <option value="{{ $cliente->id }}">{{ $cliente->nombre }}</option>
                 @endforeach

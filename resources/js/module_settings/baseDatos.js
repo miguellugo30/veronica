@@ -10,7 +10,7 @@ $(function() {
 
         $('#tituloModal').html('Nueva base de datos');
 
-        let url = currentURL + '/BaseDatos/create';
+        let url = currentURL + '/Base-Datos/create';
 
         $('#action').removeClass('updateBaseDatos');
         $('#action').addClass('saveBaseDatos');
@@ -57,7 +57,7 @@ $(function() {
         formData.append("_token", _token);
 
 
-        let url = currentURL + '/BaseDatos';
+        let url = currentURL + '/Base-Datos';
 
         $.ajax({
                 url: url,

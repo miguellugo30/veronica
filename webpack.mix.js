@@ -25,6 +25,7 @@ mix.js([
         'resources/js/module_administrador/troncales.js',
         'resources/js/module_administrador/canales.js',
         'resources/js/module_administrador/empresas.js',
+        'resources/js/module_administrador/actionEditEmpresa.js',
         'resources/js/module_administrador/cat_base_datos.js',
         'resources/js/module_administrador/cat_tipo_canal.js',
         'resources/js/module_administrador/menu.js',

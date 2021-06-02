@@ -157,6 +157,7 @@ $(function() {
 
         let pos = $(this).data('pos');
         let id_Tipo_Canal = $(this).val();
+        let prefijo = $("#tipo_canal_"+pos+" option:selected").data('pre_tipo');
 
         if (id_Tipo_Canal == 12 || id_Tipo_Canal == 11) {
             $("#protocolo_" + pos).val("LOCAL/");
@@ -167,6 +168,9 @@ $(function() {
             $("#Troncales_id_canal_" + pos).prop('disabled', false);
             $("#Troncales_id_" + pos).prop('disabled', 'disabled');
         }
+
+        $("#prefijo_"+pos).val(prefijo);
+
     });
     /**
      * Evento para habilitar la edicion del canal seleccionado

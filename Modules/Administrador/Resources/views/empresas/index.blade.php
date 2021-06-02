@@ -14,10 +14,10 @@
         <div class="row">
             <div class="col viewIndex table-responsive">
                 <table id="tableEmpresas" class="display table table-bordered table-hover table-sm" >
-                    <thead>
+                    <thead class="thead-light">
                         <tr>
                             <th>ID Cliente</th>
-                            <th>Distribuidor</th>
+                            <!--th>Distribuidor</th-->
                             <th>Nombre</th>
                             <th>Ubicación</th>
                             <th></th>
@@ -27,7 +27,7 @@
                         @foreach ($empresas as $empresa)
                             <tr data-id="{{ $empresa->id }}" style="cursor:pointer">
                                 <td>{{$empresa->id}}</td>
-                                <td>{{ $empresa->Config_Empresas->Distribuidores->servicio }}</td>
+                                <!--td>{{-- $empresa->Config_Empresas->Distribuidores->servicio --}}</td-->
                                 <td>{{$empresa->nombre}}</td>
                                 <td>{{$empresa->nombre}}</td>
                                 <td>

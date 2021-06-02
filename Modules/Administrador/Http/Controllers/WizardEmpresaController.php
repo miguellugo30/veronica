@@ -5,6 +5,7 @@ namespace Modules\Administrador\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use  Modules\Administrador\Http\Controllers\SaveWizardEmpresasController;
 /**
  * Modelos a usar
  */
@@ -15,6 +16,7 @@ use App\Modulos;
 use App\Config_Empresas;
 use App\Cat_Distribuidor;
 use App\Cat_Tipo_Canales;
+use App\Troncales;
 
 
 class WizardEmpresaController extends Controller
@@ -27,6 +29,7 @@ class WizardEmpresaController extends Controller
     public $Config_Empresas;
     public $Cat_Distribuidor;
     public $Cat_Tipo_Canales;
+    public $Troncales;
 
     public function __construct(
                         Cat_IP_PBX $Cat_IP_PBX,
@@ -35,7 +38,8 @@ class WizardEmpresaController extends Controller
                         Config_Empresas $Config_Empresas,
                         Cat_Distribuidor $Cat_Distribuidor,
                         Cat_Tipo_Canales $Cat_Tipo_Canales,
-                        Empresas $empresa
+                        Empresas $empresa,
+                        Troncales $Troncales
     )
     {
         $this->steps = ['empresa', 'infraestructura', 'modulo', 'posiciones', 'almacenamiento', 'canales', 'extensiones', 'dids'];
@@ -47,6 +51,7 @@ class WizardEmpresaController extends Controller
         $this->Config_Empresas = $Config_Empresas;
         $this->Cat_Distribuidor = $Cat_Distribuidor;
         $this->Cat_Tipo_Canales = $Cat_Tipo_Canales;
+        $this->Troncales = $Troncales;
     }
 
     /**
@@ -86,29 +91,46 @@ class WizardEmpresaController extends Controller
      */
     public function wizardPost( Request $request, $step )
     {
-        //dd( $step );
         /**
          * Recuperamos el indice del paso
          */
         $indice = $this->index( $step );
-        /**
-         * Procesamos la información del formulario
-         */
-        if ( isset( $request->dataForm ) )
+
+        if ( $step == 'end' )
         {
-            $this->processData( $request, $this->prevStep( $indice ) );
+            if ( isset( $request->dataForm ) )
+            {
+                $this->processData( $request, $this->prevStep( count($this->steps) ) );
+            }
+
+            session()->forget('start');
+            $storeData = new SaveWizardEmpresasController();
+            $storeData->store( session()->all() );
+
+            return redirect()->route('empresas.index');
+
         }
-        /**
-         * Recuperamos la información necesaria para dar del alta
-         * en el paso en turno
-         */
-        $data = $this->dataStep( $step );
+        else
+        {
+            /**
+             * Procesamos la información del formulario
+             */
+            if ( isset( $request->dataForm ) )
+            {
+                $this->processData( $request, $this->prevStep( $indice ) );
+            }
+            /**
+             * Recuperamos la información necesaria para dar del alta
+             * en el paso en turno
+             */
+            $data = $this->dataStep( $step );
 
-        $stepsAc = collect([ 'prev' => $this->prevStep( $indice ), 'current' => $step, 'next' => $this->nextStep( $indice ) ]);
-        $steps = $this->steps;
-        $stepNumber = $indice++;
+            $stepsAc = collect([ 'prev' => $this->prevStep( $indice ), 'current' => $step, 'next' => $this->nextStep( $indice ) ]);
+            $steps = $this->steps;
+            $stepNumber = $indice++;
 
-        return view('administrador::wizardEmpresa.index', compact( 'stepsAc', 'steps', 'indice', 'data' ));
+            return view('administrador::wizardEmpresa.index', compact( 'stepsAc', 'steps', 'indice', 'data' ));
+        }
     }
     /**
      * Función para obtener el siguiente elemento
@@ -159,7 +181,7 @@ class WizardEmpresaController extends Controller
             /**
              * Recuperamos todos los distribuidores que esten activos
              */
-            $data[ 'Cat_Distribuidor' ] = $this->Cat_Distribuidor->active()->get();
+            //$data[ 'Cat_Distribuidor' ] = $this->Cat_Distribuidor->active()->get();
 
         }
         elseif( $step == 'infraestructura' )
@@ -190,11 +212,11 @@ class WizardEmpresaController extends Controller
         }
         elseif( $step == 'canales' )
         {
-            $dataEmpresa = session( 'empresa' );
+            //$dataEmpresa = session( 'empresa' );
 
-            $distribuidor = $this->Cat_Distribuidor->findOrFail( $dataEmpresa['distribuidores_empresa'] );
-            $data[ 'troncales' ] = $distribuidor->Troncales;
-            $data[ 'canales' ] = $this->Cat_Tipo_Canales->where('Cat_Distribuidor_id', $dataEmpresa['distribuidores_empresa'] )->get();
+            //$distribuidor = $this->Cat_Distribuidor->findOrFail( $dataEmpresa['distribuidores_empresa'] );
+            $data[ 'troncales' ] = $this->Troncales->active()->get();
+            $data[ 'canales' ] = $this->Cat_Tipo_Canales->active()->get();
         }
         elseif( $step == 'extensiones' )
         {

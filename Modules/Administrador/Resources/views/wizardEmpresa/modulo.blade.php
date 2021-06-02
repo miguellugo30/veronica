@@ -27,10 +27,6 @@
                         </label>
                     </div>
                 @endforeach
-                <div class="custom-control custom-checkbox">
-                    <input class="custom-control-input" type="checkbox" id="customCheckbox1" value="option1">
-                    <label for="customCheckbox1" class="custom-control-label">Custom Checkbox</label>
-                </div>
             </div>
         </div>
     </div>

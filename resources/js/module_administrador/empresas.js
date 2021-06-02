@@ -31,28 +31,56 @@ $(function() {
         let dataForm = $("#formWizardEmpresa").serializeArray();
         let url = currentURL + '/wizard/empresa/' + nextStep;
 
-        console.log(dataForm);
+        //console.log(dataForm);
 
         if (validarForm(dataForm)) {
-            $.ajax({
-                url: url,
-                type: "POST",
-                data: {
-                    dataForm: dataForm,
-                    _token: _token,
-                },
-                success: function(result) {
-                    $(".viewWizarEmpresa").html(result);
-                }
-            });
+
+            if (nextStep == 'end') {
+
+                Swal.fire({
+                    title: '!!!Este es el último paso!!!',
+                    text: "Deseas guardar toda la información capturada?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Guardar!',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.value) {
+
+                        $.ajax({
+                            url: url,
+                            type: "POST",
+                            data: {
+                                dataForm: dataForm,
+                                _token: _token,
+                            },
+                            success: function(result) {
+                                $(".viewResult").html(result);
+                            }
+                        });
+
+                    }
+                });
+
+            } else {
+
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    data: {
+                        dataForm: dataForm,
+                        _token: _token,
+                    },
+                    success: function(result) {
+                        $(".viewWizarEmpresa").html(result);
+                    }
+                });
+            }
+
         } else {
             toastr.error('Hay campos incompletos, favor de validar la información.');
-            /*
-            Toast.fire({
-                icon: 'error',
-                title: 'Hay campos incompletos, favor de validar la información.'
-            });
-            */
         }
     });
     /**
@@ -125,16 +153,15 @@ $(function() {
         } else {
             data.forEach(function(currentValue, indice, array) {
 
-                console.log(currentValue.name + " " + currentValue.value);
+                //console.log(currentValue.name + " " + currentValue.value);
                 if (currentValue.value === null || currentValue.value === '') {
                     $('#' + currentValue.name).addClass('is-invalid');
-                    console.log('sin valores');
+                    //console.log('sin valores');
                     bandera = 1;
                 }
 
             });
         }
-
 
         if (bandera) {
             return false;
@@ -159,6 +186,8 @@ $(function() {
         fila.find('.protocolo').val(""); //Buscamos el input con clase protocolo y le asignamos un valor vacio
         fila.find('.Troncales_id_canal').attr({ id: 'Troncales_id_canal_' + newID, name: 'Troncales_id_canal_' + newID }); //Buscamos el input con clase Troncales_id_canal y le agregamos un nuevo ID
         fila.find('.Troncales_id').attr({ id: 'Troncales_id_' + newID, name: 'Troncales_id_' + newID }); //Buscamos el input con clase Troncales_id_canal y le agregamos un nuevo ID
+        fila.find('.nombre_troncal').attr({ id: 'nombre_troncal_' + newID, name: 'nombre_troncal_' + newID }); //Buscamos el input con clase Troncales_id_canal y le agregamos un nuevo ID
+        fila.find('.nombre_troncal').val(""); //Buscamos el input con clase protocolo y le asignamos un valor vacio
         fila.find('.prefijo').attr({ id: 'prefijo_' + newID, name: 'prefijo_' + newID }); //Buscamos el input con clase Troncales_id_canal y le agregamos un nuevo ID
         fila.find('.prefijo').val(""); //Buscamos el input con clase protocolo y le asignamos un valor vacio
         fila.find('.btn-danger').css('display', '');
@@ -166,39 +195,59 @@ $(function() {
         fila.attr("id", 'tr_' + newID);
     });
     /**
+     * Evento para obtener el txt del select de canales
+     */
+    $(document).on('change', '.Troncales_id_canal', function () {
+
+        var id = $(this).attr('id').replace('Troncales_id_canal_', '');
+        var nombre = $('#Troncales_id_canal_'+id+' option:selected').text();
+
+        $("#nombre_troncal_"+id).val(nombre);
+
+    })
+    /**
      * Evento para eliminar una fila de la tabla de nuevo canal
      */
     $(document).on('click', '.deleteCanalWizard', function() {
-        console.log('deleteCanalWizard')
         var tr = $(this).closest('tr')
         tr.remove();
     });
+    /**
+     * Validar los DIDs nuevos que tenga 10 digitos
+     */
+    $(document).on('blur', '#did', function () {
+        var dids = $(this).val();
 
+        if ( dids.split('\n').length == 0 ) {
+            toastr.error('Debe ingresar por lo menos un Did.');
+        }
+
+        var data = dids.split('\n');
+
+        for (let i = 0; i < data.length; i++) {
+            if (data[i].length < 10) {
+                toastr.error('Un Did no tiene 10 digitos.');
+            }
+            if (data[i].length > 10) {
+                toastr.error('Un Did tiene mas de 10 digitos.');
+            }
+        }
+    });
     /**
      * Evento para mostrar el formulario editar empresa
      */
     $(document).on('dblclick', '#tableEmpresas tbody tr', function(event) {
         event.preventDefault();
 
-        $(".newEmpresa").slideUp();
-        $(".viewIndex").slideUp();
-        $(".viewCreate").slideDown();
-
         let id = $(this).data("id");
-        let url = currentURL + "/empresas/" + id + "/edit";
+        let url = currentURL + '/empresas/' + id;
 
-        $.get(url, function(data, textStatus, jqXHR) {
-            $(".viewCreate").html(data);
-            let dato = id + ".dataGeneral";
-            let url = currentURL + '/empresas/' + dato;
-
-            $.ajax({
-                url: url,
-                type: 'GET',
-                success: function(result) {
-                    $('#formDataEmpresa').html(result);
-                }
-            });
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function(result) {
+                $(".viewResult").html(result);
+            }
         });
     });
     /**

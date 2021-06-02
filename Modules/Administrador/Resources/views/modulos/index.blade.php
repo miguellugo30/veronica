@@ -21,7 +21,7 @@
         <div class="row">
             <div class="col viewIndex table-responsive">
                 <table id="tableModulos" class="display table table-bordered table-hover table-sm" style="width:100%">
-                    <thead>
+                    <thead class="thead-light">
                         <tr>
                             <th>Nombre</th>
                             <th>Descripción</th>

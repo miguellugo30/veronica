@@ -25,7 +25,8 @@ $(function() {
 
         let name = $("#name").val();
         let email = $("#email").val();
-        let pass_1 = $("#pass_1").val();
+        let password = $("#password").val();
+        let password_confirmation = $("#password_confirmation").val();
         let cliente = $("#cliente").val();
         let rol = $("#rol").val();
         let _token = $("input[name=_token]").val();
@@ -37,7 +38,8 @@ $(function() {
         $.post(url, {
             name: name,
             email: email,
-            password: pass_1,
+            password: password,
+            password_confirmation: password_confirmation,
             id_cliente: cliente,
             rol: rol,
             arr: arr,

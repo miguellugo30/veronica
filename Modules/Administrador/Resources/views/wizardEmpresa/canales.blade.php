@@ -2,7 +2,7 @@
 <br>
 @if ( Session::has( 'canales' ) )
     @php
-        $dataCanales = array_chunk( Session::get( 'canales' ), 4 );
+        $dataCanales = array_chunk( Session::get( 'canales' ), 5 );
     @endphp
 @endif
 {{-- {{ dd( $dataCanales ) }}
@@ -23,7 +23,7 @@
             @if ( ! isset( $dataCanales ) )
                 <tr id="tr_1">
                     <td>
-                        <select name="tipo_canal_1" id="tipo_canal" class="form-control  form-control-sm tipo_canal" data-pos="1">
+                        <select name="tipo_canal_1" id="tipo_canal_1" class="form-control  form-control-sm tipo_canal" data-pos="1">
                             <option value="">Selecciona un tipo de canal</option>
                             @foreach( $data['canales'] as $canal )
                             <option value="{{ $canal->id }}" data-pre_tipo="{{ $canal->prefijo }}">{{ $canal->nombre }}</option>
@@ -41,7 +41,8 @@
                         </select>
                     </td>
                     <td>
-                        <input type="text" class="form-control form-control-sm prefijo" name="prefijo_1" id="prefijo_1" value="">
+                        <input type="text" class="form-control form-control-sm prefijo" name="prefijo_1" id="prefijo_1" value="" readonly>
+                        <input type="hidden" class="form-control form-control-sm nombre_troncal" name="nombre_troncal_1" id="nombre_troncal_1" value="">
                     </td>
                     <td class="deleteCanalWizard text-center">
                         <button type="button" name="remove" class="btn btn-danger btn-sm text-center" style="display:none"><i class="far fa-trash-alt"></i></button>
@@ -70,6 +71,7 @@
                         </td>
                         <td>
                             <input type="text" class="form-control form-control-sm prefijo" name="prefijo_{{ $i + 1 }}" id="prefijo_{{ $i + 1 }}" value="{{ $dataCanales[$i][3] }}">
+                            <input type="hidden" class="form-control form-control-sm nombre_troncal" name="nombre_troncal_{{ $i + 1 }}" id="nombre_troncal_{{ $i + 1 }}" value="{{ $dataCanales[$i][4] }}">
                         </td>
                         <td class="deleteCanalWizard">
                             @if ( $i > 0 )
@@ -84,6 +86,6 @@
     <div class="callout callout-info">
         <h6><b>Nota</b></h6>
 
-        <p>Al finalizar el proceso alta, se completara el prefijo <b>( ID Proveedor + ID Empresa + Prefijo )</b></p>
+        <p>Al finalizar el proceso alta, se completara el prefijo <b>( ID Empresa + Prefijo )</b></p>
       </div>
 </div>

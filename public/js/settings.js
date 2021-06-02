@@ -1195,7 +1195,7 @@ $(function () {
   $(document).on("click", ".newBaseDatos", function (e) {
     e.preventDefault();
     $('#tituloModal').html('Nueva base de datos');
-    var url = currentURL + '/BaseDatos/create';
+    var url = currentURL + '/Base-Datos/create';
     $('#action').removeClass('updateBaseDatos');
     $('#action').addClass('saveBaseDatos');
     $.ajax({
@@ -1240,7 +1240,7 @@ $(function () {
     formData.append("nombre", nombre);
     formData.append("plantilla", plantilla);
     formData.append("_token", _token);
-    var url = currentURL + '/BaseDatos';
+    var url = currentURL + '/Base-Datos';
     $.ajax({
       url: url,
       type: "POST",

@@ -12,7 +12,7 @@
             <div class="col viewIndex table-responsive">
                 <table id="tableDid" class="display table table-bordered table-hover table-sm" style="width:100%">
                     <!-- Encabezados de la tabla que se mostrara al inicio -->
-                    <thead>
+                    <thead class="thead-light">
                         <tr>
                             <th>Empresa</th>
                             <th>Canal</th>
