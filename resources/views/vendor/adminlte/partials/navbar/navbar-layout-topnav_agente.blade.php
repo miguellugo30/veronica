@@ -37,7 +37,7 @@
 
             {{-- User menu link --}}
             @include('adminlte::partials.navbar.menu-item-dropdown-user-menu')
-            @if(Auth::user())
+            @if(auth()->guard('agentes'))
                 @if(config('adminlte.usermenu_enabled'))
                 @else
                     @include('adminlte::partials.navbar.menu-item-logout-link')

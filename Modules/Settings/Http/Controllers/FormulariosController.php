@@ -50,7 +50,6 @@ class FormulariosController extends Controller
      */
     public function store(FormulariosRequest $request)
     {
-        $dataForm = $request->input('dataForm');
         $data = $request->dataForm;
 
         /**

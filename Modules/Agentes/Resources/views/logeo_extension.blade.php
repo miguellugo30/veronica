@@ -1,87 +1,90 @@
 @extends('adminlte::master')
 
+@section('adminlte_css_pre')
+    <link rel="stylesheet" href="{{ asset('vendor/icheck-bootstrap/icheck-bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/adminlte/css/auth_agentes.css') }}">
+@stop
+
 @section('adminlte_css')
-    <link rel="stylesheet" href="{{ asset('vendor/adminlte/plugins/iCheck/square/blue.css') }}">
-    <link rel="stylesheet" href="{{ asset('vendor/adminlte/css/auth.css') }}">
+    @stack('css')
     @yield('css')
 @stop
 
-@section('body_class', 'login-page')
+@section('classes_body', 'login-page')
+
+@php( $login_url = View::getSection('login_url') ?? config('adminlte.login_url', 'login') )
+@php( $register_url = View::getSection('register_url') ?? config('adminlte.register_url', 'register') )
+@php( $password_reset_url = View::getSection('password_reset_url') ?? config('adminlte.password_reset_url', 'password/reset') )
+@php( $dashboard_url = View::getSection('dashboard_url') ?? config('adminlte.dashboard_url', 'home') )
+
+@if (config('adminlte.use_route_url', false))
+    @php( $login_url = $login_url ? route($login_url) : '' )
+    @php( $register_url = $register_url ? route($register_url) : '' )
+    @php( $password_reset_url = $password_reset_url ? route($password_reset_url) : '' )
+    @php( $dashboard_url = $dashboard_url ? route($dashboard_url) : '' )
+@else
+    @php( $login_url = $login_url ? url($login_url) : '' )
+    @php( $register_url = $register_url ? url($register_url) : '' )
+    @php( $password_reset_url = $password_reset_url ? url($password_reset_url) : '' )
+    @php( $dashboard_url = $dashboard_url ? url($dashboard_url) : '' )
+@endif
 
 @section('body')
-
-<div class="col-12">
-
-    <img src="{{ Storage::url('/fondo/fondo_1.jpg') }}" class="img-fluid mx-auto d-block align-middle" alt="Responsive image" style="width: 50%;margin-top: 10%;">
-
-    <div class="login-box" style="margin-top: -16%;position: relative;margin-right: 26%;">
-        <!--div class="login-logo">
-            <a href="{{ url(config('adminlte.dashboard_url', 'home')) }}">AGENTE{!! config('adminlte.logo', '<b>Admin</b>LTE') !!}</a>
-        </div-->
-        <!-- /.login-logo -->
-        <div class="login-box-body" style="background: none;">
-            <!--p class="login-box-msg">{{-- trans('adminlte::adminlte.login_message') --}}</p-->
+    <div class="login-box border border-dark rounded text-white">
+        <div class="login-logo">
+            {!! config('adminlte.logo') !!}
+        </div>
+        <div class="card">
+            <div class="card-body login-card-body">
+                <h5 class="login-box-msg"><b>{{ __('adminlte::adminlte.login_message') }}</b></h5>
                 <form action="{{ url("agentes/extension") }}" method="post" name="inicioSesion">
-                {!! csrf_field() !!}
-                {{ $errors->has('message') }}
-                @if ( $errors->getBag('message')->first() != '' )
-                    <div class="alert alert-danger" role="alert">
-                        {{ $errors->getBag('message')->first() }}
+                    {{ csrf_field() }}
+                    <div class="form-group">
+                        <label for="email"><b>Usuario</b></label>
+                        <input type="text" name="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" value="{{ $agente->usuario }}" placeholder="Usuario" autofocus>
+                        @if ($errors->has('email'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('email') }}
+                            </div>
+                        @endif
                     </div>
-                @endif
-                <div class="form-group has-feedback {{ $errors->has('email') ? 'has-error' : '' }}">
-                    <input type="text" name="usuario" class="form-control form-control-sm" value="{{ $agente->usuario }}" placeholder="Usuario">
-                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                    @if ($errors->has('email'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('email') }}</strong>
-                        </span>
-                    @endif
-                </div>
-                <div class="form-group has-feedback {{ $errors->has('extension') ? 'has-error' : '' }}">
-                    <input type="txt" name="extension" class="form-control form-control-sm" placeholder="Extension" value="{{ $agente->extension }}">
-                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-                    @if ($errors->has('extension'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('extension') }}</strong>
-                        </span>
-                    @endif
-                </div>
-                <div class="row" style="float: right;margin-right: 3px;">
-                    <!-- /.col -->
-                    <div class="col-xs-4">
-                        <input type="hidden" name="token_soporte" id="token_soporte" value="{{ isset( $token ) ? $token : '' }}">
-                        <button type="submit" class="btn btn-primary btn-block btn-flat btn-sm">Ir</button>
+                    <div class="form-group">
+                        <label for="password"><b>Extension</b></label>
+                        <input type="text" name="extension" class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" placeholder="Extension" value="{{ $agente->extension }}">
+                        @if ($errors->has('extension'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('extension') }}
+                            </div>
+                        @endif
                     </div>
-                    <!-- /.col -->
-                </div>
-            </form>
-        </div><!-- /.login-box-body -->
-    </div><!-- /.login-box -->
+                    <div class="row">
+                        <div class="col-8">
 
-</div>
-    @php
-        if( isset($email) && isset($password) ){
-            echo '<script>
-                    window.onload=function(){
-                        // Una vez cargada la página, el formulario se enviara automáticamente.
-		                document.forms["inicioSesion"].submit();
-                    }
-                </script>';
-        }
-    @endphp
+                        </div>
+                        <div class="col-12">
+                            <input type="hidden" name="token_soporte" id="token_soporte" value="{{ isset( $token ) ? $token : '' }}">
+                            <button type="submit" class="btn btn-primary btn-block btn-flat rounded-pill ">
+                                {{ __('adminlte::adminlte.sign_in') }}
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    @if ( isset($email) && isset($password) )
+        <script>
+            window.onload=function(){
+                // Una vez cargada la página, el formulario se enviara automáticamente.
+                document.forms["inicioSesion"].submit();
+            }
+        </script>
+    @endif
 @stop
 
 @section('adminlte_js')
-    <script src="{{ asset('vendor/adminlte/plugins/iCheck/icheck.min.js') }}"></script>
-    <script>
-        $(function () {
-            $('input').iCheck({
-                checkboxClass: 'icheckbox_square-blue',
-                radioClass: 'iradio_square-blue',
-                increaseArea: '20%' // optional
-            });
-        });
-    </script>
+
+    <script src="{{ asset('vendor/adminlte/dist/js/adminlte.min.js') }}"></script>
+    @stack('js')
     @yield('js')
 @stop

@@ -12,6 +12,7 @@
 
         {{-- Custom left links --}}
         @yield('content_top_nav_left')
+
     </ul>
 
     {{-- Navbar right links --}}
@@ -23,9 +24,10 @@
         @each('adminlte::partials.navbar.menu-item', $adminlte->menu('navbar-right'), 'item')
 
         {{-- User menu link --}}
-        @if(Auth::user())
+        {{--@if(Auth::user())--}}
+        @if(auth()->guard('agentes'))
             @if(config('adminlte.usermenu_enabled'))
-                @include('adminlte::partials.navbar.menu-item-dropdown-user-menu')
+                @include('adminlte::partials.navbar.menu-item-dropdown-user-menu_agente')
             @else
                 @include('adminlte::partials.navbar.menu-item-logout-link')
             @endif

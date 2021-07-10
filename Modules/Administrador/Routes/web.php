@@ -22,8 +22,10 @@ Route::prefix('administrador')->group(function() {
 | RUTAS PARA EL SUB MODULO DE CUENTAS
 |--------------------------------------------------------------------------
 */
-Route::get('wizard/empresa/{step?}', 'WizardEmpresaController@wizard')->name('wizard.user')->prefix('administrador')->middleware('auth');
-Route::post('wizard/empresa/{step}', 'WizardEmpresaController@wizardPost')->name('wizard.user.post')->prefix('administrador')->middleware('auth');
+Route::middleware(['auth'])->namespace('\Modules\Administrador\Http\Controllers')->prefix('administrador')->group( function() {
+    Route::get('wizard/empresa/{step?}', 'WizardEmpresaController@wizard')->name('wizard.user');
+    Route::post('wizard/empresa/{step?}', 'WizardEmpresaController@wizardPost')->name('wizard.user.post');
+});
 /**
  * Rutas para CRUD de Distribuidores
  */

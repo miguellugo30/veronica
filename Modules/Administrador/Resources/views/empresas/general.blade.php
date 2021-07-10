@@ -375,7 +375,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-          <button type="button" class="btn btn-primary">Guardar</button>
+          <button type="button" data-seccion="" class="btn btn-primary updateSeccion">Guardar</button>
         </div>
       </div>
     </div>

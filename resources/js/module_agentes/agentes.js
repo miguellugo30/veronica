@@ -52,6 +52,7 @@ $(function() {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
+    /*
     var initialLocaleCode = 'es';
     var calendarEl = document.getElementById('calendar');
 
@@ -75,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     calendar.render();
-
+    */
     var id_agente = $('#id_agente').val();
     var timer = null;
     let currentURL = window.location.href.split('?');

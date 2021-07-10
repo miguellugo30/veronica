@@ -39,6 +39,7 @@ class ZonaHorariaController extends Controller
         /**
          * Retornamos la fecha y hora
          */
-        return $result['mensaje'];
+        return date('Y-m-d H:i:s');
+        //return $result['mensaje'];
     }
 }

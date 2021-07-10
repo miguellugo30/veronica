@@ -83,14 +83,17 @@ mix.js([
         'resources/js/module_monitor/menu.js',
         'resources/js/module_monitor/monitoreo.js',
     ], 'public/js/monitor.js')
+    */
     .js([
         'resources/js/module_agentes/agentes.js',
         'resources/js/module_agentes/eventosPantallaAgente.js',
     ], 'public/js/agente.js')
+    /*
     .js([
         'resources/js/module_agentes/agentes_monitoreo.js',
         'resources/js/module_agentes/eventosPantallaAgente_monitoreo.js',
-    ], 'public/js/agente_monitoreo.js')*/
+    ], 'public/js/agente_monitoreo.js')
+    */
     .js([
         'resources/js/menu_principal.js',
     ], 'public/js/menu_principal.js')

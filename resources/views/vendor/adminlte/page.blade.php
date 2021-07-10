@@ -22,7 +22,7 @@
 
         {{-- Top Navbar --}}
         @if($layoutHelper->isLayoutTopnavEnabled())
-            @include('adminlte::partials.navbar.navbar-layout-topnav')
+           {{-- @include('adminlte::partials.navbar.navbar-layout-topnav')--}}
         @else
             @include('adminlte::partials.navbar.navbar')
         @endif

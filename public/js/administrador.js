@@ -106,34 +106,40 @@ $(function () {
 
     if (modulo == 'editEmpresa') {
       url = currentURL + '/empresas/' + empresa_id + "/edit";
-      $('.modal-title').text('Editar Empresa');
-      $(".btn-primary").addClass('updateEmpresa');
+      $('.modal-title').text('Editar Empresa'); //$(".btn-primary").addClass('updateEmpresa');
+
+      $(".updateSeccion").attr('data-seccion', 'empresa');
     } else if (modulo == 'editInfraestructura') {
-      url = currentURL + '/infraestructura/' + empresa_id + "/edit";
-      $("#accionActualizar").addClass('updateExtension');
+      url = currentURL + '/infraestructura/' + empresa_id + "/edit"; //$("#accionActualizar").addClass('updateExtension');
+
       $('.modal-title').text('Editar Infraestructura');
     } else if (modulo == 'editModulos') {
-      url = currentURL + '/modulos/' + empresa_id + "/edit";
-      $("#accionActualizar").addClass('updateCanal');
+      url = currentURL + '/modulos/' + empresa_id + "/edit"; //$("#accionActualizar").addClass('updateCanal');
+
       $('.modal-title').text('Editar Modulos');
+      $(".updateSeccion").attr('data-seccion', 'modulos');
     } else if (modulo == 'editDid') {
       var did_id = $("#editSelectedDid").val();
-      url = currentURL + '/did/' + did_id + "/edit";
-      $("#accionActualizar").addClass('updateDid');
+      url = currentURL + '/did/' + did_id + "/edit"; //$("#accionActualizar").addClass('updateDid');
+
       $('.modal-title').text('Editar Did');
+      $(".updateSeccion").attr('data-seccion', 'did');
     } else if (modulo == 'editAlmacenamiento') {
-      url = currentURL + '/almacenamiento/' + empresa_id + "/edit";
-      $("#accionActualizar").addClass('updatePerfil');
+      url = currentURL + '/almacenamiento/' + empresa_id + "/edit"; //$("#accionActualizar").addClass('updatePerfil');
+
       $('.modal-title').text('Editar Almacenamiento');
+      $(".updateSeccion").attr('data-seccion', 'almacenamiento');
     } else if (modulo == 'editCanales') {
-      url = currentURL + '/canales/' + canal_id + "/edit";
-      $("#accionActualizar").addClass('updatePrefijos');
+      url = currentURL + '/canales/' + canal_id + "/edit"; //$("#accionActualizar").addClass('updatePrefijos');
+
       $('.modal-title').text('Editar Canales');
+      $(".updateSeccion").attr('data-seccion', 'canales');
     } else if (modulo == 'editExtensiones') {
       var extension_id = $("#editSelectedExtension").val();
-      url = currentURL + '/extensiones/' + extension_id + "/edit";
-      $("#accionActualizar").addClass('updateEmpresa');
+      url = currentURL + '/extensiones/' + extension_id + "/edit"; //$("#accionActualizar").addClass('updateEmpresa');
+
       $('.modal-title').text('Editar Extensiones');
+      $(".updateSeccion").attr('data-seccion', 'extensiones');
     }
 
     $.ajax({
@@ -178,6 +184,25 @@ $(function () {
     $("#editSelectedExtension").val(id);
     $(".tableExtensiones tbody tr").removeClass('table-primary');
     $(this).addClass('table-primary');
+  });
+  $(document).on('click', '.updateSeccion', function (event) {
+    var modulo = $(this).data('seccion');
+    var dataForm = $("#formUpdateSeccion").serializeArray();
+
+    var _token = $('meta[name=csrf-token]').attr('content');
+
+    $.ajax({
+      url: url,
+      type: "POST",
+      data: {
+        dataForm: dataForm,
+        modulo: modulo,
+        _token: _token
+      },
+      success: function success(result) {
+        $(".viewResult").html(result);
+      }
+    });
   });
 });
 

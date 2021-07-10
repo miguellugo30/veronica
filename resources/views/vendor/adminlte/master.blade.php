@@ -91,10 +91,10 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
         <script src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 
-        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <!--script src="https://code.highcharts.com/highcharts.js"></script>
         <script src="https://code.highcharts.com/modules/exporting.js"></script>
         <script src="https://code.highcharts.com/modules/export-data.js"></script>
-        <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+        <script src="https://code.highcharts.com/modules/accessibility.js"></script-->
 
     @else
         <!--script src="{{-- mix(config('adminlte.laravel_mix_js_path', 'js/app.js')) --}}"></script-->

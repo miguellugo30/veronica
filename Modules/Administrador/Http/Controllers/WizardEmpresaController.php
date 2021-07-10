@@ -57,7 +57,7 @@ class WizardEmpresaController extends Controller
     /**
      * Función para mostrar la vista inicial
      */
-    public function wizard( $step = null, Request $request )
+    public function wizard( Request $request, $step = null )
     {
         //dd( $request );
         /**

@@ -28,9 +28,9 @@ class EventosAgenteController extends Controller
          * Pausamos al agente dentro de la campana en BD
          */
         Miembros_Campana::where( 'membername', $agente )->update(['Paused' => 1]);
-        /**
+        /*
          * Pausamos al agente dentro del MS
-         */
+         *
         $evento = new EventosAmiController( $empresas_id );
         $evento->despausar_agente( $cdr->canal, 'pause' );
         /**
@@ -67,9 +67,9 @@ class EventosAgenteController extends Controller
          * Registramos el evento de cuando se puso nuevamente en disponible el agente
          */
         LogRegistroEventosController::actualiza_evento( $agente, $request->evento, 0 );
-        /**
+        /*
          * Despausamos al agente dentro de la campana en BD
-         */
+         *
         Miembros_Campana::where( 'membername', $agente )->update(['Paused' => 0]);
          /**
          * Obtenemos la zona horaria de la empresa
@@ -84,11 +84,12 @@ class EventosAgenteController extends Controller
          * Obtenemos el ultimo canal del agente
          */
         $cdr = Crd_Asignacion_Agente::where('Agentes_id', $agente)->orderBy('id', 'desc')->first();
-        /**
+        /*
          * Despausamos al agente dentro del MS
-         */
+         *
         $evento = new EventosAmiController( $empresas_id );
         $evento->despausar_agente( $cdr->canal, 'unpause' );
+        */
     }
     /**
      * Funcion para poner como  disponible a un agente
