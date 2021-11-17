@@ -2733,7 +2733,7 @@ $(function () {
     $('#tituloModal').html('Alta de Speech');
     $('#action').removeClass('deleteSpeech');
     $('#action').addClass('saveSpeech');
-    var url = currentURL + "/speech/create";
+    var url = currentURL + "settings/speech/create";
     $.get(url, function (data, textStatus, jqXHR) {
       $('#modal').modal({
         backdrop: 'static',
