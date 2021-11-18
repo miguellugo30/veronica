@@ -9,7 +9,7 @@ $(function() {
         $('#action').removeClass('updateIvr');
         $('#action').addClass('saveIvr');
 
-        let url = currentURL + "/Ivr/create";
+        let url = currentURL + "inbound/Ivr/create";
 
         $.get(url, function(data, textStatus, jqXHR) {
             $('#modal').modal({ backdrop: 'static', keyboard: false });
@@ -29,7 +29,7 @@ $(function() {
         });
         let Empresas_id = $("#Empresas_id").val();
         let _token = $("input[name=_token]").val();
-        let url = currentURL + '/Ivr';
+        let url = currentURL + 'inbound/Ivr';
 
         $.post(url, {
             Empresas_id: Empresas_id,
@@ -87,7 +87,7 @@ $(function() {
         nombre = nombre.replace('destino_', '');
 
         let id = 0 + '&' + opccion + '&' + nombre;
-        let url = currentURL + '/Did_Enrutamiento/' + id;
+        let url = currentURL + 'inbound/Did_Enrutamiento/' + id;
 
         $.ajax({
                 url: url,
@@ -132,7 +132,7 @@ $(function() {
                 let id = $("#idSeleccionado").val();
                 let _method = "DELETE";
                 let _token = $("input[name=_token]").val();
-                let url = currentURL + '/Ivr/' + id;
+                let url = currentURL + 'inbound/Ivr/' + id;
 
                 $.ajax({
                     url: url,
@@ -163,7 +163,7 @@ $(function() {
         event.preventDefault();
         var id = $("#idSeleccionado").val();
         $('#tituloModal').html('Edicion IVR');
-        var url = currentURL + '/Ivr/' + id + '/edit';
+        var url = currentURL + 'inbound/Ivr/' + id + '/edit';
         $('#action').addClass('updateIvr');
         $('#action').removeClass('saveIvr');
         $.ajax({
@@ -183,7 +183,7 @@ $(function() {
         let id = $(this).data('id');
         let _method = "DELETE";
         let _token = $("input[name=_token]").val();
-        let url = currentURL + '/Ivr_Opciones/' + id;
+        let url = currentURL + 'inbound/Ivr_Opciones/' + id;
 
         $.ajax({
             url: url,
@@ -212,7 +212,7 @@ $(function() {
         let id = $("#idSeleccionado").val();
         let _token = $("input[name=_token]").val();
         let _method = "PUT";
-        let url = currentURL + '/Ivr/' + id;
+        let url = currentURL + 'inbound/Ivr/' + id;
 
         $.post(url, {
 

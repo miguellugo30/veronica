@@ -10,7 +10,7 @@ $(function() {
 
         $('#tituloModal').html('Nueva base de datos');
 
-        let url = currentURL + '/Base-Datos/create';
+        let url = currentURL + 'settings/Base-Datos/create';
 
         $('#action').removeClass('updateBaseDatos');
         $('#action').addClass('saveBaseDatos');
@@ -30,7 +30,7 @@ $(function() {
     $(document).on("change", "#plantilla", function(e) {
 
         let id = $(this).val();
-        let url = currentURL + '/Plantillas/' + id;
+        let url = currentURL + 'settings/Plantillas/' + id;
         $.ajax({
             url: url,
             type: 'GET',
@@ -57,7 +57,7 @@ $(function() {
         formData.append("_token", _token);
 
 
-        let url = currentURL + '/Base-Datos';
+        let url = currentURL + 'settings/Base-Datos';
 
         $.ajax({
                 url: url,
@@ -124,7 +124,7 @@ $(function() {
 
         $('#tituloModal').html('Editar Base de datos');
 
-        var url = currentURL + '/BaseDatos/' + id + '/edit';
+        var url = currentURL + 'settings/BaseDatos/' + id + '/edit';
         $('#action').addClass('updateBaseDatos');
         $('#action').removeClass('saveBaseDatos');
         $.ajax({
@@ -147,7 +147,7 @@ $(function() {
 
         $('#tituloModalRegistros').html('Visualizar Base de datos');
 
-        var url = currentURL + '/BaseDatos/' + id;
+        var url = currentURL + 'settings/BaseDatos/' + id;
         $('#action').addClass('updateBaseDatos');
         $('#action').removeClass('saveBaseDatos');
         $.ajax({
@@ -181,7 +181,7 @@ $(function() {
         formData.append("_token", _token);
         formData.append("_method", _method);
 
-        let url = currentURL + '/BaseDatos/' + id;
+        let url = currentURL + 'settings/BaseDatos/' + id;
 
         $.ajax({
                 url: url,

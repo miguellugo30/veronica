@@ -20,7 +20,7 @@ $(function() {
 
         event.preventDefault();
         var id = $("#idSeleccionado").val();
-        var url = currentURL + '/Did_Enrutamiento/' + id + '/edit';
+        var url = currentURL + 'inbound/Did_Enrutamiento/' + id + '/edit';
 
         $('#tituloModal').html('Editar Enrutamiento');
         $('#action').addClass('updatedidenrutamiento');
@@ -50,7 +50,7 @@ $(function() {
         var id = $("#idSeleccionado").val();
         let _token = $("input[name=_token]").val();
 
-        let url = currentURL + '/Did_Enrutamiento/' + id;
+        let url = currentURL + 'inbound/Did_Enrutamiento/' + id;
 
         $.ajax({
                 url: url,
@@ -89,7 +89,7 @@ $(function() {
         nombre = nombre.replace('destino_', '');
 
         let id = 0 + '&' + opccion + '&' + nombre;
-        let url = currentURL + '/Did_Enrutamiento/' + id;
+        let url = currentURL + 'inbound/Did_Enrutamiento/' + id;
 
         $.ajax({
                 url: url,
@@ -142,7 +142,7 @@ $(function() {
         let id = $(this).data('id');
         let _method = "DELETE";
         let _token = $("input[name=_token]").val();
-        let url = currentURL + '/Did_Enrutamiento/' + id;
+        let url = currentURL + 'inbound/Did_Enrutamiento/' + id;
 
         $.ajax({
             url: url,

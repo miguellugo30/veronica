@@ -11,7 +11,7 @@ $(function() {
         $('#action').removeClass('deletePrefijoMarcacion');
         $('#action').addClass('savePrefijoMarcacion');
 
-        let url = currentURL + "/PrefijosMarcacion/create";
+        let url = currentURL + "settings/PrefijosMarcacion/create";
 
         $.get(url, function(data, textStatus, jqXHR) {
             $('#modal').modal('show');
@@ -31,7 +31,7 @@ $(function() {
         let prefijo = $("#prefijo").val();
         let prefijoNuevo = $("#prefijoNuevo").val();
         let _token = $("input[name=_token]").val();
-        let url = currentURL + '/PrefijosMarcacion';
+        let url = currentURL + 'settings/PrefijosMarcacion';
 
         $.post(url, {
             nombre: nombre,
@@ -82,7 +82,7 @@ $(function() {
 
         event.preventDefault();
         var id = $("#idSeleccionado").val();
-        var url = currentURL + '/PrefijosMarcacion/' + id + '/edit';
+        var url = currentURL + 'settings/PrefijosMarcacion/' + id + '/edit';
 
         $('#tituloModal').html('Editar Prefijos');
         $('#action').addClass('updatePrefijoMarcacion');
@@ -110,7 +110,7 @@ $(function() {
         let prefijoNuevo = $("#prefijoNuevo").val();
         let _token = $("input[name=_token]").val();
         let _method = "PUT";
-        let url = currentURL + '/PrefijosMarcacion/' + id;
+        let url = currentURL + 'settings/PrefijosMarcacion/' + id;
 
         $.post(url, {
                 id: id,
@@ -162,7 +162,7 @@ $(function() {
                 let id = $("#idSeleccionado").val();
                 let _method = "DELETE";
                 let _token = $("input[name=_token]").val();
-                let url = currentURL + '/PrefijosMarcacion/' + id;
+                let url = currentURL + 'settings/PrefijosMarcacion/' + id;
 
                 $.ajax({
                     url: url,

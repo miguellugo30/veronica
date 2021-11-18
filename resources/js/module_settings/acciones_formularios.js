@@ -52,7 +52,7 @@ $(function() {
 
         let _method = "DELETE";
         let _token = $("input[name=_token]").val();
-        let url = currentURL + '/campos/' + id + '&' + idForm;
+        let url = currentURL + 'settings/campos/' + id + '&' + idForm;
 
         $.ajax({
             url: url,

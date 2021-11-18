@@ -22,7 +22,7 @@ $(function() {
         $('#action').addClass('saveAudio');
         $("#action").css('display', '');
 
-        let url = currentURL + "/Audios/create";
+        let url = currentURL + "settings/Audios/create";
 
         $.get(url, function(data, textStatus, jqXHR) {
             $('#modal').modal('show');
@@ -52,7 +52,7 @@ $(function() {
         formData.append("File", file);
         formData.append("_token", _token);
 
-        let url = currentURL + '/Audios';
+        let url = currentURL + 'settings/Audios';
 
         $.ajax({
                 url: url,
@@ -98,7 +98,7 @@ $(function() {
                 let id = $("#idSeleccionado").val();
                 let _method = "DELETE";
                 let _token = $("input[name=_token]").val();
-                let url = currentURL + '/Audios/' + id;
+                let url = currentURL + 'settings/Audios/' + id;
 
                 $.ajax({
                     url: url,
@@ -127,7 +127,7 @@ $(function() {
      */
     $(document).on('click', '.reproducir-audio', function(event) {
         let id = $(this).data("id-audio");
-        let url = currentURL + '/Audios/' + id;
+        let url = currentURL + 'settings/Audios/' + id;
         let _token = $("input[name=_token]").val();
         $("#tituloModal").html('Reproducir Grabación');
 

@@ -37,7 +37,7 @@ $(function() {
             url = currentURL + 'settings/PrefijosMarcacion';
             table = ' #tablePrefijosMarcacion';
         } else if (id == 'sub-29') {
-            url = currentURL + 'settings/BaseDatos';
+            url = currentURL + 'settings/baseDatos';
             table = ' #tableBaseDatos';
         } else if (id == 'sub-31') {
             url = currentURL + 'settings/Perfil_Marcacion';
