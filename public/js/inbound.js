@@ -118,7 +118,7 @@ $(function () {
     $('#tituloModal').html('Conciciones De Tiempo');
     $('#action').removeClass('updateCondicion');
     $('#action').addClass('saveCondicion');
-    var url = currentURL + "/Condiciones_Tiempo/create";
+    var url = currentURL + "inbound/Condiciones_Tiempo/create";
     $.get(url, function (data, textStatus, jqXHR) {
       $('#modal').modal({
         backdrop: 'static',
@@ -151,7 +151,7 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
-    var url = currentURL + '/Condiciones_Tiempo';
+    var url = currentURL + 'inbound/Condiciones_Tiempo';
     $.ajax({
       url: url,
       type: "post",
@@ -212,7 +212,7 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
-    var url = currentURL + '/Condiciones_Tiempo/' + id + '&CDT';
+    var url = currentURL + 'inbound/Condiciones_Tiempo/' + id + '&CDT';
     $.ajax({
       url: url,
       type: 'POST',
@@ -260,7 +260,7 @@ $(function () {
 
         var _token = $("input[name=_token]").val();
 
-        var url = currentURL + '/Condiciones_Tiempo/' + id + "&GRP";
+        var url = currentURL + 'inbound/Condiciones_Tiempo/' + id + "&GRP";
         $.ajax({
           url: url,
           type: 'POST',
@@ -287,7 +287,7 @@ $(function () {
     event.preventDefault();
     var id = $("#idSeleccionado").val();
     $('#tituloModal').html('Condiciones de Tiempo');
-    var url = currentURL + '/Condiciones_Tiempo/' + id + '/edit';
+    var url = currentURL + 'inbound/Condiciones_Tiempo/' + id + '/edit';
     $('#action').addClass('updateCondicion');
     $('#action').removeClass('saveCondicion');
     $.ajax({
@@ -326,7 +326,7 @@ $(function () {
     var _token = $("input[name=_token]").val();
 
     var id = 0;
-    var url = currentURL + '/Condiciones_Tiempo/' + id;
+    var url = currentURL + 'inbound/Condiciones_Tiempo/' + id;
     $.ajax({
       url: url,
       type: "post",
@@ -361,7 +361,7 @@ $(function () {
     nombre = nombre.replace('destino_verdadero_', '');
     nombre = nombre.replace('destino_falso_', '');
     var id = 0 + '&' + opccion + '&' + nombre + '&' + accion;
-    var url = currentURL + '/Condiciones_Tiempo/' + id;
+    var url = currentURL + 'inbound/Condiciones_Tiempo/' + id;
     $.ajax({
       url: url,
       type: "GET",
@@ -433,7 +433,7 @@ $(function () {
   $(document).on('click', '.editdidenrutamiento', function (event) {
     event.preventDefault();
     var id = $("#idSeleccionado").val();
-    var url = currentURL + '/Did_Enrutamiento/' + id + '/edit';
+    var url = currentURL + 'inbound/Did_Enrutamiento/' + id + '/edit';
     $('#tituloModal').html('Editar Enrutamiento');
     $('#action').addClass('updatedidenrutamiento');
     $('#action').removeClass('savedidenrutamiento');
@@ -465,7 +465,7 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
-    var url = currentURL + '/Did_Enrutamiento/' + id;
+    var url = currentURL + 'inbound/Did_Enrutamiento/' + id;
     $.ajax({
       url: url,
       type: "post",
@@ -498,7 +498,7 @@ $(function () {
 
     nombre = nombre.replace('destino_', '');
     var id = 0 + '&' + opccion + '&' + nombre;
-    var url = currentURL + '/Did_Enrutamiento/' + id;
+    var url = currentURL + 'inbound/Did_Enrutamiento/' + id;
     $.ajax({
       url: url,
       type: "GET",
@@ -548,7 +548,7 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
-    var url = currentURL + '/Did_Enrutamiento/' + id;
+    var url = currentURL + 'inbound/Did_Enrutamiento/' + id;
     $.ajax({
       url: url,
       type: 'POST',
@@ -632,7 +632,7 @@ $(function () {
    */
 
   $(document).on("click", ".generarReporteACD", function (e) {
-    var url = currentURL + '/Metricas_ACD';
+    var url = currentURL + 'inbound/Metricas_ACD';
     var fecha_inicio = $("#fecha-inicio").val();
     var hora_inicio = $("#hora_inicio").val();
     var min_inicio = $("#min_inicio").val();
@@ -711,7 +711,7 @@ $(function () {
     var minuto_fin = $("#min_fin").val();
     dateinicio = fechainicio + " " + hora_inicio + ":" + minuto_inicio + ":00";
     datefin = fechafin + " " + hora_fin + ":" + minuto_fin + ":59";
-    var url = currentURL + "/Metricas_ACD/descargar/" + dateinicio + "/" + datefin;
+    var url = currentURL + "inbound/Metricas_ACD/descargar/" + dateinicio + "/" + datefin;
     $('#iFrameDescarga').attr('src', url);
   });
 });
@@ -750,7 +750,7 @@ $(function () {
     $('#tituloModal').html('Agregar Buzon De Voz');
     $('#action').removeClass('deleteBuzonVoz');
     $('#action').addClass('saveBuzonVoz');
-    var url = currentURL + "/Buzon_Voz/create";
+    var url = currentURL + "inbound/Buzon_Voz/create";
     $.get(url, function (data, textStatus, jqXHR) {
       $('#modal').modal('show');
       $("#modal-body").html(data);
@@ -771,7 +771,7 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
-    var url = currentURL + '/Buzon_Voz';
+    var url = currentURL + 'inbound/Buzon_Voz';
     $.post(url, {
       nombre: nombre,
       tiempo_maximo: tiempo_maximo,
@@ -816,7 +816,7 @@ $(function () {
 
         var _token = $("input[name=_token]").val();
 
-        var url = currentURL + '/Buzon_Voz/' + id;
+        var url = currentURL + 'inbound/Buzon_Voz/' + id;
         $.ajax({
           url: url,
           type: 'POST',
@@ -842,7 +842,7 @@ $(function () {
   $(document).on('click', '.editBuzonVoz', function (event) {
     event.preventDefault();
     var id = $("#idSeleccionado").val();
-    var url = currentURL + '/Buzon_Voz/' + id + '/edit';
+    var url = currentURL + 'inbound/Buzon_Voz/' + id + '/edit';
     $('#tituloModal').html('Editar Buzon De Voz');
     $('#action').addClass('updateBuzonVoz');
     $('#action').removeClass('saveBuzonVoz');
@@ -875,7 +875,7 @@ $(function () {
     var _token = $("input[name=_token]").val();
 
     var _method = "PUT";
-    var url = currentURL + '/Buzon_Voz/' + id;
+    var url = currentURL + 'inbound/Buzon_Voz/' + id;
     $.post(url, {
       nombre: nombre,
       tiempo_maximo: tiempo_maximo,
@@ -1358,7 +1358,7 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
-    var url = currentURL + "/Desglose_llamadas";
+    var url = currentURL + "inbound/Desglose_llamadas";
     var dateinicio = fechainicio + " " + hora_inicio + ":" + minuto_inicio + ":00";
     var datefin = fechafin + " " + hora_fin + ":" + minuto_fin + ":59";
     /**
@@ -1412,7 +1412,7 @@ $(function () {
     var _method = "PUT";
     dateinicio = fechainicio + " " + hora_inicio + ":" + minuto_inicio + ":00";
     datefin = fechafin + " " + hora_fin + ":" + minuto_fin + ":59";
-    var url = currentURL + "/Desglose_llamadas/descargar/" + dateinicio + "/" + datefin;
+    var url = currentURL + "inbound/Desglose_llamadas/descargar/" + dateinicio + "/" + datefin;
     $('#iFrameDescarga').attr('src', url);
   });
 });
@@ -1465,7 +1465,7 @@ $(function () {
 
         var _token = $("input[name=_token]").val();
 
-        var url = currentURL + '/Desvios/' + id;
+        var url = currentURL + 'inbound/Desvios/' + id;
         $.ajax({
           url: url,
           type: 'POST',
@@ -1493,7 +1493,7 @@ $(function () {
     $('#tituloModal').html('Agregar Desvio');
     $('#action').removeClass('deleteDesvio');
     $('#action').addClass('saveDesvio');
-    var url = currentURL + "/Desvios/create";
+    var url = currentURL + "inbound/Desvios/create";
     $.get(url, function (data, textStatus, jqXHR) {
       $('#modal').modal('show');
       $("#modal-body").html(data);
@@ -1513,7 +1513,7 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
-    var url = currentURL + '/Desvios';
+    var url = currentURL + 'inbound/Desvios';
     $.post(url, {
       nombre: nombre,
       Canales_id: Canales_id,
@@ -1557,7 +1557,7 @@ $(function () {
 
         var _token = $("input[name=_token]").val();
 
-        var url = currentURL + '/Desvios/' + id;
+        var url = currentURL + 'inbound/Desvios/' + id;
         $.ajax({
           url: url,
           type: 'POST',
@@ -1583,7 +1583,7 @@ $(function () {
   $(document).on('click', '.editDesvio', function (event) {
     event.preventDefault();
     var id = $("#idSeleccionado").val();
-    var url = currentURL + '/Desvios/' + id + '/edit';
+    var url = currentURL + 'inbound/Desvios/' + id + '/edit';
     $('#tituloModal').html('Editar Desvio');
     $('#action').addClass('updateDesvio');
     $('#action').removeClass('saveDesvio');
@@ -1615,7 +1615,7 @@ $(function () {
     var _token = $("input[name=_token]").val();
 
     var _method = "PUT";
-    var url = currentURL + '/Desvios/' + id;
+    var url = currentURL + 'inbound/Desvios/' + id;
     $.post(url, {
       nombre: nombre,
       Canales_id: Canales_id,
@@ -1676,7 +1676,7 @@ $(function () {
     $('#tituloModal').html('Nuevo IVR');
     $('#action').removeClass('updateIvr');
     $('#action').addClass('saveIvr');
-    var url = currentURL + "/Ivr/create";
+    var url = currentURL + "inbound/Ivr/create";
     $.get(url, function (data, textStatus, jqXHR) {
       $('#modal').modal({
         backdrop: 'static',
@@ -1700,7 +1700,7 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
-    var url = currentURL + '/Ivr';
+    var url = currentURL + 'inbound/Ivr';
     $.post(url, {
       Empresas_id: Empresas_id,
       dataForm: data,
@@ -1751,7 +1751,7 @@ $(function () {
 
     nombre = nombre.replace('destino_', '');
     var id = 0 + '&' + opccion + '&' + nombre;
-    var url = currentURL + '/Did_Enrutamiento/' + id;
+    var url = currentURL + 'inbound/Did_Enrutamiento/' + id;
     $.ajax({
       url: url,
       type: "GET",
@@ -1797,7 +1797,7 @@ $(function () {
 
         var _token = $("input[name=_token]").val();
 
-        var url = currentURL + '/Ivr/' + id;
+        var url = currentURL + 'inbound/Ivr/' + id;
         $.ajax({
           url: url,
           type: 'POST',
@@ -1824,7 +1824,7 @@ $(function () {
     event.preventDefault();
     var id = $("#idSeleccionado").val();
     $('#tituloModal').html('Edicion IVR');
-    var url = currentURL + '/Ivr/' + id + '/edit';
+    var url = currentURL + 'inbound/Ivr/' + id + '/edit';
     $('#action').addClass('updateIvr');
     $('#action').removeClass('saveIvr');
     $.ajax({
@@ -1850,7 +1850,7 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
-    var url = currentURL + '/Ivr_Opciones/' + id;
+    var url = currentURL + 'inbound/Ivr_Opciones/' + id;
     $.ajax({
       url: url,
       type: 'POST',
@@ -1880,7 +1880,7 @@ $(function () {
     var _token = $("input[name=_token]").val();
 
     var _method = "PUT";
-    var url = currentURL + '/Ivr/' + id;
+    var url = currentURL + 'inbound/Ivr/' + id;
     $.post(url, {
       Empresas_id: Empresas_id,
       dataForm: data,
@@ -2045,7 +2045,7 @@ $(function () {
   $(document).on("click", ".iniciar_monitoreo", function (e) {
     event.preventDefault();
     var idAgente = $(this).data('id');
-    var url = currentURL + "/real_time/agente/" + idAgente;
+    var url = currentURL + "inbound/real_time/agente/" + idAgente;
     var tab = window.open(url, '_blank');
 
     if (tab) {
@@ -2058,7 +2058,7 @@ $(function () {
   $(document).on("click", ".detener_monitoreo", function (e) {
     event.preventDefault();
     var idAgente = $(this).data('id');
-    var url = currentURL + "/real_time/detener/" + idAgente;
+    var url = currentURL + "inbound/real_time/detener/" + idAgente;
     $.get(url, function (data, textStatus, jqXHR) {
       console.log(data);
     });
@@ -2081,7 +2081,7 @@ $(function () {
    */
 
   $(document).on("click", ".generarReporteCalificaciones", function (e) {
-    var url = currentURL + '/ReporteCalificaciones';
+    var url = currentURL + 'inbound/ReporteCalificaciones';
     var fecha_inicio = $("#fecha-inicio").val();
     var hora_inicio = $("#hora_inicio").val();
     var min_inicio = $("#min_inicio").val();
@@ -2147,7 +2147,7 @@ $(function () {
    */
 
   $(document).on("click", ".generarReporteTiempoInactivo", function (e) {
-    var url = currentURL + '/ReporteTiempoInactivo';
+    var url = currentURL + 'inbound/ReporteTiempoInactivo';
     var fecha_inicio = $("#fecha-inicio").val();
     var hora_inicio = $("#hora_inicio").val();
     var min_inicio = $("#min_inicio").val();
@@ -2269,7 +2269,7 @@ $(function () {
    */
 
   $(document).on("click", ".generarReporteLlamadasAgentes", function (e) {
-    var url = currentURL + '/ReporteLlamadasAgentes';
+    var url = currentURL + 'inbound/ReporteLlamadasAgentes';
     var fecha_inicio = $("#fecha-inicio").val();
     var hora_inicio = $("#hora_inicio").val();
     var min_inicio = $("#min_inicio").val();
@@ -2369,7 +2369,7 @@ $(function () {
    */
 
   $(document).on("click", ".generarReporteProductividadAgentes", function (e) {
-    var url = currentURL + '/ReporteProductividadAgentes';
+    var url = currentURL + 'inbound/ReporteProductividadAgentes';
     var fecha_inicio = $("#fecha-inicio").val();
     var hora_inicio = $("#hora_inicio").val();
     var min_inicio = $("#min_inicio").val();
@@ -2497,20 +2497,20 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_inbound/menu.js */"./resources/js/module_inbound/menu.js");
-__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_inbound/campanas.js */"./resources/js/module_inbound/campanas.js");
-__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_inbound/CondicionesTiempo.js */"./resources/js/module_inbound/CondicionesTiempo.js");
-__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_inbound/desvios.js */"./resources/js/module_inbound/desvios.js");
-__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_inbound/buzon_voz.js */"./resources/js/module_inbound/buzon_voz.js");
-__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_inbound/Did_Enrutamiento.js */"./resources/js/module_inbound/Did_Enrutamiento.js");
-__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_inbound/ivr.js */"./resources/js/module_inbound/ivr.js");
-__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_inbound/Metricas_ACD.js */"./resources/js/module_inbound/Metricas_ACD.js");
-__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_inbound/desglosellamadas.js */"./resources/js/module_inbound/desglosellamadas.js");
-__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_inbound/real_time.js */"./resources/js/module_inbound/real_time.js");
-__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_inbound/reporteCalificaciones.js */"./resources/js/module_inbound/reporteCalificaciones.js");
-__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_inbound/reporte_llamadas_agentes.js */"./resources/js/module_inbound/reporte_llamadas_agentes.js");
-__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_inbound/reporte_productividad_agentes.js */"./resources/js/module_inbound/reporte_productividad_agentes.js");
-module.exports = __webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_inbound/reporteTiempoInactivo.js */"./resources/js/module_inbound/reporteTiempoInactivo.js");
+__webpack_require__(/*! /var/www/html/veronica/resources/js/module_inbound/menu.js */"./resources/js/module_inbound/menu.js");
+__webpack_require__(/*! /var/www/html/veronica/resources/js/module_inbound/campanas.js */"./resources/js/module_inbound/campanas.js");
+__webpack_require__(/*! /var/www/html/veronica/resources/js/module_inbound/CondicionesTiempo.js */"./resources/js/module_inbound/CondicionesTiempo.js");
+__webpack_require__(/*! /var/www/html/veronica/resources/js/module_inbound/desvios.js */"./resources/js/module_inbound/desvios.js");
+__webpack_require__(/*! /var/www/html/veronica/resources/js/module_inbound/buzon_voz.js */"./resources/js/module_inbound/buzon_voz.js");
+__webpack_require__(/*! /var/www/html/veronica/resources/js/module_inbound/Did_Enrutamiento.js */"./resources/js/module_inbound/Did_Enrutamiento.js");
+__webpack_require__(/*! /var/www/html/veronica/resources/js/module_inbound/ivr.js */"./resources/js/module_inbound/ivr.js");
+__webpack_require__(/*! /var/www/html/veronica/resources/js/module_inbound/Metricas_ACD.js */"./resources/js/module_inbound/Metricas_ACD.js");
+__webpack_require__(/*! /var/www/html/veronica/resources/js/module_inbound/desglosellamadas.js */"./resources/js/module_inbound/desglosellamadas.js");
+__webpack_require__(/*! /var/www/html/veronica/resources/js/module_inbound/real_time.js */"./resources/js/module_inbound/real_time.js");
+__webpack_require__(/*! /var/www/html/veronica/resources/js/module_inbound/reporteCalificaciones.js */"./resources/js/module_inbound/reporteCalificaciones.js");
+__webpack_require__(/*! /var/www/html/veronica/resources/js/module_inbound/reporte_llamadas_agentes.js */"./resources/js/module_inbound/reporte_llamadas_agentes.js");
+__webpack_require__(/*! /var/www/html/veronica/resources/js/module_inbound/reporte_productividad_agentes.js */"./resources/js/module_inbound/reporte_productividad_agentes.js");
+module.exports = __webpack_require__(/*! /var/www/html/veronica/resources/js/module_inbound/reporteTiempoInactivo.js */"./resources/js/module_inbound/reporteTiempoInactivo.js");
 
 
 /***/ })

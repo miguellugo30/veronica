@@ -21,7 +21,7 @@ $(function() {
         let hora_fin = $("#hora_fin").val();
         let minuto_fin = $("#min_fin").val();
         let _token = $("input[name=_token]").val();
-        let url = currentURL + "/Desglose_llamadas";
+        let url = currentURL + "inbound/Desglose_llamadas";
 
         let dateinicio = fechainicio + " " + hora_inicio + ":" + minuto_inicio + ":00";
         let datefin = fechafin + " " + hora_fin + ":" + minuto_fin + ":59";
@@ -72,7 +72,7 @@ $(function() {
 
         dateinicio = fechainicio + " " + hora_inicio + ":" + minuto_inicio + ":00";
         datefin = fechafin + " " + hora_fin + ":" + minuto_fin + ":59";
-        let url = currentURL + "/Desglose_llamadas/descargar/" + dateinicio + "/" + datefin;
+        let url = currentURL + "inbound/Desglose_llamadas/descargar/" + dateinicio + "/" + datefin;
         $('#iFrameDescarga').attr('src', url)
 
     });

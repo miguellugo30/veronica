@@ -6,7 +6,7 @@ $(function() {
      */
     $(document).on("click", ".generarReporteLlamadasAgentes", function(e) {
 
-        let url = currentURL + '/ReporteLlamadasAgentes';
+        let url = currentURL + 'inbound/ReporteLlamadasAgentes';
         let fecha_inicio = $("#fecha-inicio").val();
         let hora_inicio = $("#hora_inicio").val();
         let min_inicio = $("#min_inicio").val();

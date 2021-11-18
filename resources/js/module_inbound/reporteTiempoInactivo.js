@@ -6,7 +6,7 @@ $(function() {
      */
     $(document).on("click", ".generarReporteTiempoInactivo", function(e) {
 
-        let url = currentURL + '/ReporteTiempoInactivo';
+        let url = currentURL + 'inbound/ReporteTiempoInactivo';
         let fecha_inicio = $("#fecha-inicio").val();
         let hora_inicio = $("#hora_inicio").val();
         let min_inicio = $("#min_inicio").val();

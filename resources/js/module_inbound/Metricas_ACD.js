@@ -33,7 +33,7 @@ $(function() {
      */
     $(document).on("click", ".generarReporteACD", function(e) {
 
-        let url = currentURL + '/Metricas_ACD';
+        let url = currentURL + 'inbound/Metricas_ACD';
         let fecha_inicio = $("#fecha-inicio").val();
         let hora_inicio = $("#hora_inicio").val();
         let min_inicio = $("#min_inicio").val();
@@ -122,7 +122,7 @@ $(function() {
 
         dateinicio = fechainicio + " " + hora_inicio + ":" + minuto_inicio + ":00";
         datefin = fechafin + " " + hora_fin + ":" + minuto_fin + ":59";
-        let url = currentURL + "/Metricas_ACD/descargar/" + dateinicio + "/" + datefin;
+        let url = currentURL + "inbound/Metricas_ACD/descargar/" + dateinicio + "/" + datefin;
         $('#iFrameDescarga').attr('src', url)
 
     });

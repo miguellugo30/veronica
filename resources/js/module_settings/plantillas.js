@@ -11,7 +11,7 @@ $(function() {
         $('#action').removeClass('deletePlantilla');
         $('#action').addClass('savePlantilla');
 
-        let url = currentURL + "/Plantillas/create";
+        let url = currentURL + "settings/Plantillas/create";
 
         $.get(url, function(data, textStatus, jqXHR) {
             $('#modal').modal('show');
@@ -79,7 +79,7 @@ $(function() {
         });
 
         let _token = $("input[name=_token]").val();
-        let url = currentURL + '/Plantillas';
+        let url = currentURL + 'settings/Plantillas';
 
         $.post(url, {
             dataForm: data,
@@ -157,7 +157,7 @@ $(function() {
 
         $('#tituloModal').html('Editar Plantilla');
 
-        var url = currentURL + '/Plantillas/' + id + '/edit';
+        var url = currentURL + 'settings/Plantillas/' + id + '/edit';
         $('#action').addClass('updatePlantilla');
         $('#action').removeClass('savePlantilla');
         $.ajax({
@@ -207,7 +207,7 @@ $(function() {
 
         let _method = 'PUT';
         let _token = $("input[name=_token]").val();
-        let url = currentURL + '/Plantillas/' + id;
+        let url = currentURL + 'settings/Plantillas/' + id;
 
         $.ajax({
             url: url,
@@ -252,7 +252,7 @@ $(function() {
                 let id = $("#idSeleccionado").val();
                 let _method = "DELETE";
                 let _token = $("input[name=_token]").val();
-                let url = currentURL + '/Plantillas/' + id;
+                let url = currentURL + 'settings/Plantillas/' + id;
 
                 $.ajax({
                     url: url,

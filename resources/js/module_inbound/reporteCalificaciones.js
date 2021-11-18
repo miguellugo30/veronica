@@ -6,7 +6,7 @@ $(function() {
      */
     $(document).on("click", ".generarReporteCalificaciones", function(e) {
 
-        let url = currentURL + '/ReporteCalificaciones';
+        let url = currentURL + 'inbound/ReporteCalificaciones';
         let fecha_inicio = $("#fecha-inicio").val();
         let hora_inicio = $("#hora_inicio").val();
         let min_inicio = $("#min_inicio").val();

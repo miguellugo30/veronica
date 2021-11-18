@@ -34,7 +34,7 @@ $(function() {
                 let id = $("#idSeleccionado").val();
                 let _method = "DELETE";
                 let _token = $("input[name=_token]").val();
-                let url = currentURL + '/speech/' + id;
+                let url = currentURL + 'settings/speech/' + id;
 
                 $.ajax({
                     url: url,
@@ -67,7 +67,7 @@ $(function() {
         $('#action').removeClass('deleteSpeech');
         $('#action').addClass('saveSpeech');
 
-        let url = currentURL + "/speech/create";
+        let url = currentURL + "settings/speech/create";
 
         $.get(url, function(data, textStatus, jqXHR) {
             $('#modal').modal({ backdrop: 'static', keyboard: false });
@@ -82,7 +82,7 @@ $(function() {
 
         var id = $("#idSeleccionado").val();
         $('#tituloModal').html('Detalles de Speech');
-        var url = currentURL + '/speech/' + id + '/edit';
+        var url = currentURL + 'settings/speech/' + id + '/edit';
         $('#action').addClass('updateSpeech');
         $('#action').removeClass('saveSpeech');
         $.ajax({
@@ -108,7 +108,7 @@ $(function() {
         let id = $("#idSeleccionado").val();
         let _token = $("input[name=_token]").val();
         let _method = "PUT";
-        let url = currentURL + '/speech/' + id;
+        let url = currentURL + 'settings/speech/' + id;
 
         $.post(url, {
             dataForm: data,
@@ -141,7 +141,7 @@ $(function() {
         });
 
         let _token = $("input[name=_token]").val();
-        let url = currentURL + '/speech';
+        let url = currentURL + 'settings/speech';
 
         $.post(url, {
             dataForm: data,
@@ -175,7 +175,7 @@ $(function() {
         event.preventDefault();
         let id = $("#idSeleccionado").val();
         $('#tituloModal').html('Vista de Speech');
-        let url = currentURL + '/speech/' + id;
+        let url = currentURL + 'settings/speech/' + id;
 
         $.ajax({
             url: url,
