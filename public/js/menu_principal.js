@@ -134,7 +134,7 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/menu_principal.js */"./resources/js/menu_principal.js");
+module.exports = __webpack_require__(/*! /var/www/html/veronica/resources/js/menu_principal.js */"./resources/js/menu_principal.js");
 
 
 /***/ })

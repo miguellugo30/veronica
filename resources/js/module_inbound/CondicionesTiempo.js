@@ -24,7 +24,7 @@ $(function() {
         $('#action').removeClass('updateCondicion');
         $('#action').addClass('saveCondicion');
 
-        let url = currentURL + "/Condiciones_Tiempo/create";
+        let url = currentURL + "inbound/Condiciones_Tiempo/create";
 
         $.get(url, function(data, textStatus, jqXHR) {
             $('#modal').modal({ backdrop: 'static', keyboard: false });
@@ -51,7 +51,7 @@ $(function() {
         });
         let _token = $("input[name=_token]").val();
 
-        let url = currentURL + '/Condiciones_Tiempo';
+        let url = currentURL + 'inbound/Condiciones_Tiempo';
 
         $.ajax({
                 url: url,
@@ -117,7 +117,7 @@ $(function() {
         let id = $(this).data('id');
         let _method = "DELETE";
         let _token = $("input[name=_token]").val();
-        let url = currentURL + '/Condiciones_Tiempo/' + id + '&CDT';
+        let url = currentURL + 'inbound/Condiciones_Tiempo/' + id + '&CDT';
 
         $.ajax({
             url: url,
@@ -163,7 +163,7 @@ $(function() {
                 let id = $("#idSeleccionado").val();
                 let _method = "DELETE";
                 let _token = $("input[name=_token]").val();
-                let url = currentURL + '/Condiciones_Tiempo/' + id + "&GRP";
+                let url = currentURL + 'inbound/Condiciones_Tiempo/' + id + "&GRP";
 
                 $.ajax({
                     url: url,
@@ -194,7 +194,7 @@ $(function() {
         event.preventDefault();
         var id = $("#idSeleccionado").val();
         $('#tituloModal').html('Condiciones de Tiempo');
-        var url = currentURL + '/Condiciones_Tiempo/' + id + '/edit';
+        var url = currentURL + 'inbound/Condiciones_Tiempo/' + id + '/edit';
         $('#action').addClass('updateCondicion');
         $('#action').removeClass('saveCondicion');
         $.ajax({
@@ -224,7 +224,7 @@ $(function() {
         let _token = $("input[name=_token]").val();
         let id = 0;
 
-        let url = currentURL + '/Condiciones_Tiempo/' + id;
+        let url = currentURL + 'inbound/Condiciones_Tiempo/' + id;
 
         $.ajax({
                 url: url,
@@ -264,7 +264,7 @@ $(function() {
         nombre = nombre.replace('destino_falso_', '');
 
         let id = 0 + '&' + opccion + '&' + nombre + '&' + accion;
-        let url = currentURL + '/Condiciones_Tiempo/' + id;
+        let url = currentURL + 'inbound/Condiciones_Tiempo/' + id;
 
         $.ajax({
                 url: url,

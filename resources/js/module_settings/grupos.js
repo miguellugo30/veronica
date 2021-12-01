@@ -10,7 +10,7 @@ $(function() {
         $('#action').removeClass('deleteGrupo');
         $('#action').addClass('saveGrupo');
 
-        let url = currentURL + "/Grupos/create";
+        let url = currentURL + "settings/Grupos/create";
 
         $.get(url, function(data, textStatus, jqXHR) {
             $('#modal').modal('show');
@@ -26,7 +26,7 @@ $(function() {
         let nombre = $("#nombre").val();
         let descripcion = $("#descripcion").val();
         let _token = $("input[name=_token]").val();
-        let url = currentURL + '/Grupos';
+        let url = currentURL + 'settings/Grupos';
 
         $.post(url, {
                 nombre: nombre,
@@ -87,7 +87,7 @@ $(function() {
                 let id = $("#idSeleccionado").val();
                 let _method = "DELETE";
                 let _token = $("input[name=_token]").val();
-                let url = currentURL + '/Grupos/' + id;
+                let url = currentURL + 'settings/Grupos/' + id;
 
                 $.ajax({
                     url: url,
@@ -119,7 +119,7 @@ $(function() {
         event.preventDefault();
         var id = $("#idSeleccionado").val();
         $('#tituloModal').html('Editar Grupo');
-        var url = currentURL + '/Grupos/' + id + '/edit';
+        var url = currentURL + 'settings/Grupos/' + id + '/edit';
         $('#action').addClass('updateGrupo');
         $('#action').removeClass('saveGrupo');
         $.ajax({
@@ -142,7 +142,7 @@ $(function() {
         let descripcion = $("#descripcion").val();
         let _token = $("input[name=_token]").val();
         let _method = "PUT";
-        let url = currentURL + '/Grupos/' + id;
+        let url = currentURL + 'settings/Grupos/' + id;
 
         $.post(url, {
                 nombre: nombre,

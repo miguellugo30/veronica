@@ -10,7 +10,7 @@ $(function() {
         $('#action').removeClass('deleteEventoAgente');
         $('#action').addClass('saveEventoAgente');
 
-        let url = currentURL + "/EventosAgentes/create";
+        let url = currentURL + "settings/EventosAgentes/create";
 
         $.get(url, function(data, textStatus, jqXHR) {
             $('#modal').modal('show');
@@ -28,7 +28,7 @@ $(function() {
         //let fechaini = $("#fechaini").val();
         //let fechafin = $("#fechafin").val();
         let _token = $("input[name=_token]").val();
-        let url = currentURL + '/EventosAgentes';
+        let url = currentURL + 'settings/EventosAgentes';
 
         $.post(url, {
                 nombre: nombre,
@@ -94,7 +94,7 @@ $(function() {
                 let id = $("#idSeleccionado").val();
                 let _method = "DELETE";
                 let _token = $("input[name=_token]").val();
-                let url = currentURL + '/EventosAgentes/' + id;
+                let url = currentURL + 'settings/EventosAgentes/' + id;
 
                 $.ajax({
                     url: url,
@@ -126,7 +126,7 @@ $(function() {
         event.preventDefault();
         var id = $("#idSeleccionado").val();
         $('#tituloModal').html('Editar Evento');
-        var url = currentURL + '/EventosAgentes/' + id + '/edit';
+        var url = currentURL + 'settings/EventosAgentes/' + id + '/edit';
         $('#action').addClass('updateEventoAgente');
         $('#action').removeClass('saveEventoAgente');
         $.ajax({
@@ -149,7 +149,7 @@ $(function() {
         let tiempo = $("#tiempo").val();
         let _token = $("input[name=_token]").val();
         let _method = "PUT";
-        let url = currentURL + '/EventosAgentes/' + id;
+        let url = currentURL + 'settings/EventosAgentes/' + id;
 
         $.post(url, {
                 nombre: nombre,

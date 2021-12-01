@@ -22,7 +22,7 @@ $(function() {
         $('#action').removeClass('deleteBuzonVoz');
         $('#action').addClass('saveBuzonVoz');
 
-        let url = currentURL + "/Buzon_Voz/create";
+        let url = currentURL + "inbound/Buzon_Voz/create";
 
         $.get(url, function(data, textStatus, jqXHR) {
             $('#modal').modal('show');
@@ -42,7 +42,7 @@ $(function() {
         let correos = $("#correos").val();
         let Empresas_id = $("#Empresas_id").val();
         let _token = $("input[name=_token]").val();
-        let url = currentURL + '/Buzon_Voz';
+        let url = currentURL + 'inbound/Buzon_Voz';
 
         $.post(url, {
             nombre: nombre,
@@ -94,7 +94,7 @@ $(function() {
                 let id = $("#idSeleccionado").val();
                 let _method = "DELETE";
                 let _token = $("input[name=_token]").val();
-                let url = currentURL + '/Buzon_Voz/' + id;
+                let url = currentURL + 'inbound/Buzon_Voz/' + id;
 
                 $.ajax({
                     url: url,
@@ -125,7 +125,7 @@ $(function() {
 
         event.preventDefault();
         var id = $("#idSeleccionado").val();
-        var url = currentURL + '/Buzon_Voz/' + id + '/edit';
+        var url = currentURL + 'inbound/Buzon_Voz/' + id + '/edit';
 
         $('#tituloModal').html('Editar Buzon De Voz');
         $('#action').addClass('updateBuzonVoz');
@@ -154,7 +154,7 @@ $(function() {
         let Empresas_id = $("#Empresas_id").val();
         let _token = $("input[name=_token]").val();
         let _method = "PUT";
-        let url = currentURL + '/Buzon_Voz/' + id;
+        let url = currentURL + 'inbound/Buzon_Voz/' + id;
 
         $.post(url, {
             nombre: nombre,

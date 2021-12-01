@@ -199,7 +199,7 @@ $(function() {
 
         let id = $(this).data("id-eliminar");
         let _token = $("input[name=_token]").val();
-        let url = currentURL + '/calificaciones/eliminarCalificacion/' + id;
+        let url = currentURL + 'settings/calificaciones/eliminarCalificacion/' + id;
         let tr = $(this).closest('tr');
 
         $.ajax({
@@ -237,7 +237,7 @@ $(function() {
             preConfirm: (nombreForm) => {
 
                 let id = $("#idSeleccionado").val();
-                let url = currentURL + '/calificaciones/duplicar/' + id;
+                let url = currentURL + 'settings/calificaciones/duplicar/' + id;
                 let _token = $("input[name=_token]").val();
 
                 $.ajax({
@@ -269,7 +269,7 @@ $(function() {
     $(document).on('click', '.viewCalificaciones', function(event) {
 
         let id = $("#idSeleccionado").val();
-        let url = currentURL + '/calificaciones/' + id;
+        let url = currentURL + 'settings/calificaciones/' + id;
 
         $('#tituloModal').html('Visualizar Calificaciones');
 
@@ -289,7 +289,7 @@ $(function() {
 
         let id = $(this).val();
         console.log(id);
-        let url = currentURL + '/formularios/' + id;
+        let url = currentURL + 'settings/formularios/' + id;
 
         $.ajax({
             url: url,

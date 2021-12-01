@@ -11,7 +11,7 @@ $(function() {
         $('#action').removeClass('deletePerfilMarcacion');
         $('#action').addClass('savePerfilMarcacion');
 
-        let url = currentURL + "/Perfil_Marcacion/create";
+        let url = currentURL + "settings/Perfil_Marcacion/create";
 
         $.get(url, function(data, textStatus, jqXHR) {
             $('#modal').modal('show');
@@ -31,7 +31,7 @@ $(function() {
         let canal = $("#canal").val();
         let did = $("#did").val();
         let _token = $("input[name=_token]").val();
-        let url = currentURL + '/Perfil_Marcacion';
+        let url = currentURL + 'settings/Perfil_Marcacion';
 
         $.post(url, {
             nombre: nombre,
@@ -83,7 +83,7 @@ $(function() {
 
         event.preventDefault();
         var id = $("#idSeleccionado").val();
-        var url = currentURL + '/Perfil_Marcacion/' + id + '/edit';
+        var url = currentURL + 'settings/Perfil_Marcacion/' + id + '/edit';
 
         $('#tituloModal').html('Editar Perfil Marcacion');
         $('#action').addClass('updatePerfilMarcacion');
@@ -112,7 +112,7 @@ $(function() {
         let did = $("#did").val();
         let _token = $("input[name=_token]").val();
         let _method = "PUT";
-        let url = currentURL + '/Perfil_Marcacion/' + id;
+        let url = currentURL + 'settings/Perfil_Marcacion/' + id;
 
         $.post(url, {
                 id: id,
@@ -165,7 +165,7 @@ $(function() {
                 let id = $("#idSeleccionado").val();
                 let _method = "DELETE";
                 let _token = $("input[name=_token]").val();
-                let url = currentURL + '/Perfil_Marcacion/' + id;
+                let url = currentURL + 'settings/Perfil_Marcacion/' + id;
 
                 $.ajax({
                     url: url,

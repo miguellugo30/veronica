@@ -6,7 +6,7 @@ $(function() {
     $(document).on("click", ".iniciar_monitoreo", function(e) {
         event.preventDefault();
         let idAgente = $(this).data('id');
-        let url = currentURL + "/real_time/agente/" + idAgente;
+        let url = currentURL + "inbound/real_time/agente/" + idAgente;
         let tab = window.open(url, '_blank');
 
         if (tab) {
@@ -19,7 +19,7 @@ $(function() {
     $(document).on("click", ".detener_monitoreo", function(e) {
         event.preventDefault();
         let idAgente = $(this).data('id');
-        let url = currentURL + "/real_time/detener/" + idAgente;
+        let url = currentURL + "inbound/real_time/detener/" + idAgente;
 
         $.get(url, function(data, textStatus, jqXHR) {
             console.log(data);

@@ -6,7 +6,7 @@ $(function() {
      */
     $(document).on("click", ".generarReporteProductividadAgentes", function(e) {
 
-        let url = currentURL + '/ReporteProductividadAgentes';
+        let url = currentURL + 'inbound/ReporteProductividadAgentes';
         let fecha_inicio = $("#fecha-inicio").val();
         let hora_inicio = $("#hora_inicio").val();
         let min_inicio = $("#min_inicio").val();

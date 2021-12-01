@@ -157,7 +157,7 @@ $(function() {
                 let _token = $("input[name=_token]").val();
                 let tr = $(this).closest('tr');
                 let id = $(this).data('id');
-                let url = currentURL + '/speech/eliminar-opcion/' + id;
+                let url = currentURL + 'settings/speech/eliminar-opcion/' + id;
 
                 $.ajax({
                     url: url,
