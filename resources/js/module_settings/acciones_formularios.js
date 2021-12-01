@@ -2,7 +2,7 @@ $(function() {
     /**
      * Evento para agregar una nueva fila para campos nuevos en el formulario
      */
-    $(document).on('click', '#add', function() {
+    $(document).on('click', '#add-input-form', function() {
         var clickID = $(".tableNewForm tbody tr.clonar:last").attr('id').replace('tr_', '');
         $('#form_opc .form-control-sm').val('');
         // Genero el nuevo numero id

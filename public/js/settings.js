@@ -490,7 +490,7 @@ $(function () {
   /**
    * Evento para agregar una nueva fila para campos nuevos en el formulario
    */
-  $(document).on('click', '#add', function () {
+  $(document).on('click', '#add-input-form', function () {
     var clickID = $(".tableNewForm tbody tr.clonar:last").attr('id').replace('tr_', '');
     $('#form_opc .form-control-sm').val(''); // Genero el nuevo numero id
 
@@ -1419,7 +1419,7 @@ $(function () {
   $(document).on("click", ".newCalificaciones", function (e) {
     e.preventDefault();
     $('#tituloModal').html('Nuevas Calificaciones');
-    var url = currentURL + '/calificaciones/create';
+    var url = currentURL + 'settings/calificaciones/create';
     $('#action').removeClass('updateCalificaciones');
     $('#action').addClass('saveCalificaciones');
     $.ajax({
@@ -1468,7 +1468,7 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
-    var url = currentURL + '/calificaciones';
+    var url = currentURL + 'settings/calificaciones';
     $.post(url, {
       dataForm: data,
       _token: _token
@@ -1501,7 +1501,7 @@ $(function () {
     event.preventDefault();
     var id = $("#idSeleccionado").val();
     $('#tituloModal').html('Edicion de Calificaciones');
-    var url = currentURL + '/calificaciones/' + id + '/edit';
+    var url = currentURL + 'settings/calificaciones/' + id + '/edit';
     $('#action').removeClass('saveCalificaciones');
     $('#action').addClass('updateCalificaciones');
     $.ajax({
@@ -1532,7 +1532,7 @@ $(function () {
     var _token = $("input[name=_token]").val();
 
     var _method = "PUT";
-    var url = currentURL + '/calificaciones/' + id;
+    var url = currentURL + 'settings/calificaciones/' + id;
     $.post(url, {
       dataForm: data,
       _token: _token,
@@ -1573,7 +1573,7 @@ $(function () {
 
         var _token = $("input[name=_token]").val();
 
-        var url = currentURL + '/calificaciones/' + id;
+        var url = currentURL + 'settings/calificaciones/' + id;
         $.ajax({
           url: url,
           type: 'POST',
@@ -2885,7 +2885,7 @@ $(function () {
     $('#action_opc').addClass('saveOpciones');
     action = $(this).data('action');
     idTR = $(this).attr('name').replace('tipo_campo_', '');
-    var url = currentURL + '/subformularios/create';
+    var url = currentURL + 'settings/subformularios/create';
     $.ajax({
       url: url,
       type: 'GET',
@@ -2957,7 +2957,7 @@ $(function () {
 
       var _token = $("input[name=_token]").val();
 
-      var url = currentURL + '/subformularios/' + id;
+      var url = currentURL + 'settings/subformularios/' + id;
       $.ajax({
         url: url,
         type: 'POST',
@@ -3071,7 +3071,7 @@ $(function () {
     id = $(this).data('id-campo');
     var tipo_campo = $('#tr_' + idTR + ' #tipo_campo').val();
     $('#action_opc').addClass('updateOpciones');
-    var url = currentURL + '/subformularios/' + id + '/edit';
+    var url = currentURL + 'settings/subformularios/' + id + '/edit';
     $.ajax({
       url: url,
       type: 'GET',
@@ -3123,7 +3123,7 @@ $(function () {
     var _token = $("input[name=_token]").val();
 
     var _method = "PUT";
-    var url = currentURL + '/subformularios/' + val;
+    var url = currentURL + 'settings/subformularios/' + val;
     $.ajax({
       url: url,
       type: 'POST',

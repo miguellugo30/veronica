@@ -31,7 +31,7 @@
                             <th>Longitud *:</th>
                             <th>Requerido</th>
                             <th>Editable</th>
-                            <td><input type="button" class="btn btn-primary btn-sm" id = "add" value = "Agregar campo" /></td>
+                            <td><input type="button" class="btn btn-primary btn-sm" id = "add-input-form" value = "Agregar campo" /></td>
                             <td></td>
                         </tr>
                     </thead>

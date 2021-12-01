@@ -12,7 +12,7 @@ $(function() {
         action = $(this).data('action');
         idTR = $(this).attr('name').replace('tipo_campo_', '');
 
-        let url = currentURL + '/subformularios/create';
+        let url = currentURL + 'settings/subformularios/create';
 
         $.ajax({
             url: url,
@@ -79,7 +79,7 @@ $(function() {
 
             let _method = "DELETE";
             let _token = $("input[name=_token]").val();
-            let url = currentURL + '/subformularios/' + id;
+            let url = currentURL + 'settings/subformularios/' + id;
 
             $.ajax({
                 url: url,
@@ -197,7 +197,7 @@ $(function() {
 
         $('#action_opc').addClass('updateOpciones');
 
-        var url = currentURL + '/subformularios/' + id + '/edit';
+        var url = currentURL + 'settings/subformularios/' + id + '/edit';
 
         $.ajax({
             url: url,
@@ -247,7 +247,7 @@ $(function() {
         let dataOpciones = JSON.stringify($("#form_opc").serializeArray());
         let _token = $("input[name=_token]").val();
         let _method = "PUT";
-        let url = currentURL + '/subformularios/' + val;
+        let url = currentURL + 'settings/subformularios/' + val;
 
         $.ajax({
             url: url,

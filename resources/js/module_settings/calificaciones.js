@@ -9,7 +9,7 @@ $(function() {
 
         $('#tituloModal').html('Nuevas Calificaciones');
 
-        let url = currentURL + '/calificaciones/create';
+        let url = currentURL + 'settings/calificaciones/create';
 
         $('#action').removeClass('updateCalificaciones');
         $('#action').addClass('saveCalificaciones');
@@ -55,7 +55,7 @@ $(function() {
             data[obj.name] = obj.value;
         });
         let _token = $("input[name=_token]").val();
-        let url = currentURL + '/calificaciones';
+        let url = currentURL + 'settings/calificaciones';
 
         $.post(url, {
             dataForm: data,
@@ -97,7 +97,7 @@ $(function() {
 
         $('#tituloModal').html('Edicion de Calificaciones');
 
-        var url = currentURL + '/calificaciones/' + id + '/edit';
+        var url = currentURL + 'settings/calificaciones/' + id + '/edit';
 
         $('#action').removeClass('saveCalificaciones');
         $('#action').addClass('updateCalificaciones');
@@ -125,7 +125,7 @@ $(function() {
         var id = $("#idSeleccionado").val();
         let _token = $("input[name=_token]").val();
         let _method = "PUT";
-        let url = currentURL + '/calificaciones/' + id;
+        let url = currentURL + 'settings/calificaciones/' + id;
 
         $.post(url, {
             dataForm: data,
@@ -168,7 +168,7 @@ $(function() {
                 let id = $("#idSeleccionado").val();
                 let _method = "DELETE";
                 let _token = $("input[name=_token]").val();
-                let url = currentURL + '/calificaciones/' + id;
+                let url = currentURL + 'settings/calificaciones/' + id;
 
                 $.ajax({
                     url: url,
