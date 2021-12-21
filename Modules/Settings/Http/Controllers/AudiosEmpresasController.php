@@ -126,7 +126,7 @@ class AudiosEmpresasController extends Controller
         {
             $archivo = explode( '/',  $audio->ruta );
             $ruta = Storage::disk('public')->getAdapter()->getPathPrefix();
-            $source = file_get_contents( 'http://'.$pbx->Config_Empresas->ms->ip_pbx.'/ws-ms/tmp/'.$archivo[1] );
+            $source = file_get_contents( 'http://media.veronicacc.com/ws-ms/tmp/'.$archivo[1] );
             file_put_contents( $ruta.'tmp/'.$archivo[1], $source );
             $ruta = Storage::url( 'tmp/'.$archivo[1] ) ;
             $mensaje = "";
