@@ -72,8 +72,8 @@ class AudiosEmpresasController extends Controller
         /**
          * Subimos el archivo al media server
          */
-        $pbx = Empresas::empresa($empresa_id)->active()->with('Config_Empresas')->with('Config_Empresas.ms')->get()->first();
-        $wsdl = 'http://'.$pbx->Config_Empresas->ms->ip_pbx.'/ws-ms/index.php';
+        //$pbx = Empresas::empresa($empresa_id)->active()->with('Config_Empresas')->with('Config_Empresas.ms')->get()->first();
+        $wsdl = 'http://media.veronicacc.com/ws-ms/index.php';
         $client =  new  nusoap_client( $wsdl );
 
         $client->call('SubirArchivo', array(
@@ -113,7 +113,7 @@ class AudiosEmpresasController extends Controller
          * Descargamos el archivo al media server
          */
         $pbx = Empresas::empresa($empresa_id)->active()->with('Config_Empresas')->with('Config_Empresas.ms')->get()->first();
-        $wsdl = 'http://'.$pbx->Config_Empresas->ms->ip_pbx.'/ws-ms/index.php';
+        $wsdl = 'http://media.veronicacc.com/ws-ms/index.php';
         $client =  new  nusoap_client( $wsdl );
 
         $result = $client->call('BajarArchivo', array(
