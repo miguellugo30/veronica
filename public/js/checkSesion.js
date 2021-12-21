@@ -108,7 +108,7 @@ $(document).ajaxError(function (event, jqxhr, settings, thrownError) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /var/www/html/veronica/resources/js/checkSesion.js */"./resources/js/checkSesion.js");
+module.exports = __webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/checkSesion.js */"./resources/js/checkSesion.js");
 
 
 /***/ })

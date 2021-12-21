@@ -230,7 +230,7 @@ class FormulariosController extends Controller
     public function destroy($id)
     {
         Formularios::where('id',$id)
-        ->update(['activo'=>'0']);
+        ->update(['activo'=>0]);
 
         return redirect()->route('formularios.index');
     }

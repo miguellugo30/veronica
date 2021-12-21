@@ -590,8 +590,8 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /var/www/html/veronica/resources/js/module_agentes/agentes.js */"./resources/js/module_agentes/agentes.js");
-module.exports = __webpack_require__(/*! /var/www/html/veronica/resources/js/module_agentes/eventosPantallaAgente.js */"./resources/js/module_agentes/eventosPantallaAgente.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_agentes/agentes.js */"./resources/js/module_agentes/agentes.js");
+module.exports = __webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_agentes/eventosPantallaAgente.js */"./resources/js/module_agentes/eventosPantallaAgente.js");
 
 
 /***/ })

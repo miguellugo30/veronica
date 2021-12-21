@@ -64,7 +64,7 @@ class AudiosEmpresasController extends Controller
            Storage::makeDirectory($dir_audios);
 
        /** Colocar en el Directorio WEB SERVER **/
-       Storage::disk('public')->put($dir_audios."/".$aud_nom, \File::get($file));
+       $request->file('file')->storeAs($dir_audios, $file->getClientOriginalName());
         /** Crear el logs    */
         $mensaje = 'Se creo un nuevo registro, informacion capturada:'.var_export($request->all(), true);
         $log = new LogController;
@@ -167,7 +167,7 @@ class AudiosEmpresasController extends Controller
      */
     public function destroy($id)
     {
-        Audios_Empresa::where('id',$id)->update(['activo'=>'0']);
+        Audios_Empresa::where('id',$id)->update(['activo'=>0]);
 
         return redirect()->route('Audios.index');
          /**

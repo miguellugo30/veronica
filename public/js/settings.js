@@ -931,41 +931,46 @@ $(function () {
     var _token = $("input[name=_token]").val();
 
     var url = currentURL + 'settings/Agentes';
-
+    /*
     if (perfil == 0 && canal == 0) {
-      Swal.fire('Error!', 'Debes elegir un Canal o Perfil de marcacion.', 'error');
+        Swal.fire(
+            'Error!',
+            'Debes elegir un Canal o Perfil de marcacion.',
+            'error'
+        )
     } else {
-      $.post(url, {
-        grupo: grupo,
-        tipo_licencia: tipo_licencia,
-        nivel: nivel,
-        nombre: nombre,
-        usuario: usuario,
-        contrasena: contrasena,
-        extension: extension,
-        perfil: perfil,
-        Canales_id: canal,
-        canal: canal,
-        mix_monitor: mix_monitor,
-        calificar_llamada: calificar_llamada,
-        envio_sms: envio_sms,
-        editar_datos: editar_datos,
-        Cat_Estado_Agente_id: Cat_Estado_Agente_id,
-        _token: _token
-      }, function (data, textStatus, xhr) {
-        $('.viewResult').html(data);
-        $('.viewResult #tableAgentes').DataTable({
-          "lengthChange": true,
-          "order": [[2, "asc"]]
-        });
-      }).done(function () {
-        $('.modal-backdrop ').css('display', 'none');
-        $('#modal').modal('hide');
-        Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
-      }).fail(function (data) {
-        printErrorMsg(data.responseJSON.errors);
+        */
+
+    $.post(url, {
+      grupo: grupo,
+      tipo_licencia: tipo_licencia,
+      nivel: nivel,
+      nombre: nombre,
+      usuario: usuario,
+      contrasena: contrasena,
+      extension: extension,
+      perfil: perfil,
+      Canales_id: canal,
+      canal: canal,
+      mix_monitor: mix_monitor,
+      calificar_llamada: calificar_llamada,
+      envio_sms: envio_sms,
+      editar_datos: editar_datos,
+      Cat_Estado_Agente_id: Cat_Estado_Agente_id,
+      _token: _token
+    }, function (data, textStatus, xhr) {
+      $('.viewResult').html(data);
+      $('.viewResult #tableAgentes').DataTable({
+        "lengthChange": true,
+        "order": [[2, "asc"]]
       });
-    }
+    }).done(function () {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
+    }); //}
   });
   /**
    * Evento para guardar el nuevo agente
@@ -2384,7 +2389,7 @@ $(function () {
       url = currentURL + 'settings/PrefijosMarcacion';
       table = ' #tablePrefijosMarcacion';
     } else if (id == 'sub-29') {
-      url = currentURL + 'settings/baseDatos';
+      url = currentURL + 'settings/Base-Datos';
       table = ' #tableBaseDatos';
     } else if (id == 'sub-31') {
       url = currentURL + 'settings/Perfil_Marcacion';

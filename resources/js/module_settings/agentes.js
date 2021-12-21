@@ -181,7 +181,7 @@ $(function() {
         let Cat_Estado_Agente_id = $("#Cat_Estado_Agente_id").val();
         let _token = $("input[name=_token]").val();
         let url = currentURL + 'settings/Agentes';
-
+        /*
         if (perfil == 0 && canal == 0) {
             Swal.fire(
                 'Error!',
@@ -189,7 +189,7 @@ $(function() {
                 'error'
             )
         } else {
-
+            */
             $.post(url, {
                     grupo: grupo,
                     tipo_licencia: tipo_licencia,
@@ -228,7 +228,7 @@ $(function() {
                 .fail(function(data) {
                     printErrorMsg(data.responseJSON.errors);
                 });
-        }
+        //}
     });
     /**
      * Evento para guardar el nuevo agente
