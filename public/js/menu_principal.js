@@ -102,7 +102,6 @@ $(function () {
   $(document).on("click", ".menu", function (e) {
     e.preventDefault();
     var currentURL = window.location.href;
-    currentURL = currentURL + '/';
     var id = $(this).attr('id');
     $(".viewResult ").html('');
 

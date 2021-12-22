@@ -7,7 +7,6 @@ $(function() {
         e.preventDefault();
 
         let currentURL = window.location.href;
-        currentURL = currentURL + '/'
         let id = $(this).attr('id');
         $(".viewResult ").html('');
 
