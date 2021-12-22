@@ -124,7 +124,7 @@ $(function() {
 
         $('#tituloModal').html('Editar Base de datos');
 
-        var url = currentURL + 'settings/BaseDatos/' + id + '/edit';
+        var url = currentURL + 'settings/Base-Datos/' + id + '/edit';
         $('#action').addClass('updateBaseDatos');
         $('#action').removeClass('saveBaseDatos');
         $.ajax({
@@ -147,7 +147,7 @@ $(function() {
 
         $('#tituloModalRegistros').html('Visualizar Base de datos');
 
-        var url = currentURL + 'settings/BaseDatos/' + id;
+        var url = currentURL + 'settings/Base-Datos/' + id;
         $('#action').addClass('updateBaseDatos');
         $('#action').removeClass('saveBaseDatos');
         $.ajax({
@@ -181,7 +181,7 @@ $(function() {
         formData.append("_token", _token);
         formData.append("_method", _method);
 
-        let url = currentURL + 'settings/BaseDatos/' + id;
+        let url = currentURL + 'settings/Base-Datos/' + id;
 
         $.ajax({
                 url: url,

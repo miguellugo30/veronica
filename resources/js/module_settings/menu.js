@@ -47,7 +47,8 @@ $(function() {
         $.get(url, function(data, textStatus, jqXHR) {
             $(".viewResult").html(data);
             $('.viewResult' + table).DataTable({
-                "lengthChange": true
+                "lengthChange": true,
+                "ordering": false
             });
         });
     });

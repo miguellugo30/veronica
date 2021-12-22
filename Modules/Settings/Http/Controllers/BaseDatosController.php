@@ -86,7 +86,7 @@ class BaseDatosController extends Controller
          * Importamos la informacion del archivo adjunto
          */
         $data = new BaseDatosImport;
-        Excel::import($data, $request->file('archivo_datos')->getRealPath() );
+        Excel::import($data, $request->file('archivo_datos') );
         /**
          * Validamos que los encabezados coincidan
          */
@@ -112,7 +112,7 @@ class BaseDatosController extends Controller
             DB::table('Registros_base')->insert($chunk->toArray());
         }
 
-        return redirect()->route('BaseDatos.index');
+        return redirect()->route('Base-Datos.index');
     }
 
     /**

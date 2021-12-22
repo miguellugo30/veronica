@@ -1297,7 +1297,7 @@ $(function () {
     event.preventDefault();
     var id = $("#idSeleccionado").val();
     $('#tituloModal').html('Editar Base de datos');
-    var url = currentURL + 'settings/BaseDatos/' + id + '/edit';
+    var url = currentURL + 'settings/Base-Datos/' + id + '/edit';
     $('#action').addClass('updateBaseDatos');
     $('#action').removeClass('saveBaseDatos');
     $.ajax({
@@ -1320,7 +1320,7 @@ $(function () {
     event.preventDefault();
     var id = $("#idSeleccionado").val();
     $('#tituloModalRegistros').html('Visualizar Base de datos');
-    var url = currentURL + 'settings/BaseDatos/' + id;
+    var url = currentURL + 'settings/Base-Datos/' + id;
     $('#action').addClass('updateBaseDatos');
     $('#action').removeClass('saveBaseDatos');
     $.ajax({
@@ -1355,7 +1355,7 @@ $(function () {
     formData.append("accion", accion);
     formData.append("_token", _token);
     formData.append("_method", _method);
-    var url = currentURL + 'settings/BaseDatos/' + id;
+    var url = currentURL + 'settings/Base-Datos/' + id;
     $.ajax({
       url: url,
       type: "POST",
@@ -2399,7 +2399,8 @@ $(function () {
     $.get(url, function (data, textStatus, jqXHR) {
       $(".viewResult").html(data);
       $('.viewResult' + table).DataTable({
-        "lengthChange": true
+        "lengthChange": true,
+        "ordering": false
       });
     });
   });
