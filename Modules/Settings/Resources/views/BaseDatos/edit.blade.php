@@ -29,7 +29,7 @@
             <select name="accion" id="accion" class="form-control form-control-sm">
                 <option value="">Selecciona una acción</option>
                 <option value="1">Agregar registros</option>
-                <option value="2">Reemplazar registros no contactados</option>
+                <!--option value="2">Reemplazar registros no contactados</option-->
                 <option value="3">Reemplazar todos los registros</option>
             </select>
         </div>

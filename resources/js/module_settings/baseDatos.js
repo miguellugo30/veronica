@@ -77,7 +77,8 @@ $(function() {
                 $('.viewResult').html(data);
 
                 $('.viewResult #tableBaseDatos').DataTable({
-                    "lengthChange": false
+                    "lengthChange": false,
+                    "ordering": false
                 });
                 Swal.fire(
                     'Correcto!',
@@ -157,7 +158,8 @@ $(function() {
                 $('#modalRegistros').modal({ backdrop: 'static', keyboard: false });
                 $("#modal-body-registros").html(result);
                 $('#registroBaseDatos').DataTable({
-                    "lengthChange": true
+                    "lengthChange": true,
+                    "ordering": false
                 });
             }
         });
@@ -201,7 +203,8 @@ $(function() {
                 $('.viewResult').html(data);
 
                 $('.viewResult #tableBaseDatos').DataTable({
-                    "lengthChange": false
+                    "lengthChange": false,
+                    "ordering": false
                 });
                 Swal.fire(
                     'Correcto!',
@@ -224,6 +227,56 @@ $(function() {
             });
 
     });
+        /**
+     * Evento para eliminar una Base de Datos
+     */
+         $(document).on('click', '.deleteBaseDatos', function(event) {
+            event.preventDefault();
+            /**Modal de Alerta Swal.fire**/
+            Swal.fire({
+                title: 'Estas seguro?',
+                text: "Deseas eliminar el registro seleccionado!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, Eliminar!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.value) {
+                    let id = $("#idSeleccionado").val();
+                    let _method = "DELETE";
+                    let _token = $("input[name=_token]").val();
+                    let url = currentURL + 'settings/Base-Datos/' + id;
+
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: {
+                            _token: _token,
+                            _method: _method
+                        },
+                        success: function(result) {
+
+                            $('.modal-backdrop ').css('display', 'none');
+                            $('#modal').modal('hide');
+                            $('.viewResult').html(result);
+
+                            $('.viewResult #tableBaseDatos').DataTable({
+                                "lengthChange": false,
+                                "ordering": false
+                            });
+                            Swal.fire(
+                                'Eliminado!',
+                                'El registro ha sido eliminado.',
+                                'success'
+                            );
+
+                        }
+                    });
+                }
+            });
+        });
     /**
      * Funcion para mostrar los errores de los formularios
      */

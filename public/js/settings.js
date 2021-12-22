@@ -1262,7 +1262,8 @@ $(function () {
       $('#modal').modal('hide');
       $('.viewResult').html(data);
       $('.viewResult #tableBaseDatos').DataTable({
-        "lengthChange": false
+        "lengthChange": false,
+        "ordering": false
       });
       Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
     }).fail(function (data) {
@@ -1333,7 +1334,8 @@ $(function () {
         });
         $("#modal-body-registros").html(result);
         $('#registroBaseDatos').DataTable({
-          "lengthChange": true
+          "lengthChange": true,
+          "ordering": false
         });
       }
     });
@@ -1372,7 +1374,8 @@ $(function () {
       $('#modal').modal('hide');
       $('.viewResult').html(data);
       $('.viewResult #tableBaseDatos').DataTable({
-        "lengthChange": false
+        "lengthChange": false,
+        "ordering": false
       });
       Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
     }).fail(function (data) {
@@ -1384,6 +1387,52 @@ $(function () {
         $(".print-error-msg").find("ul").append('<li>' + data.responseJSON.message + '</li>');
       } else {
         printErrorMsg(data.responseJSON.errors);
+      }
+    });
+  });
+  /**
+  * Evento para eliminar una Base de Datos
+  */
+
+  $(document).on('click', '.deleteBaseDatos', function (event) {
+    event.preventDefault();
+    /**Modal de Alerta Swal.fire**/
+
+    Swal.fire({
+      title: 'Estas seguro?',
+      text: "Deseas eliminar el registro seleccionado!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Eliminar!',
+      cancelButtonText: 'Cancelar'
+    }).then(function (result) {
+      if (result.value) {
+        var id = $("#idSeleccionado").val();
+        var _method = "DELETE";
+
+        var _token = $("input[name=_token]").val();
+
+        var url = currentURL + 'settings/Base-Datos/' + id;
+        $.ajax({
+          url: url,
+          type: 'POST',
+          data: {
+            _token: _token,
+            _method: _method
+          },
+          success: function success(result) {
+            $('.modal-backdrop ').css('display', 'none');
+            $('#modal').modal('hide');
+            $('.viewResult').html(result);
+            $('.viewResult #tableBaseDatos').DataTable({
+              "lengthChange": false,
+              "ordering": false
+            });
+            Swal.fire('Eliminado!', 'El registro ha sido eliminado.', 'success');
+          }
+        });
       }
     });
   });
