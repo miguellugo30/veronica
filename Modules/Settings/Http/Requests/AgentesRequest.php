@@ -19,7 +19,7 @@ class AgentesRequest extends FormRequest
             'nivel' => 'required',
             'nombre' => 'required',
             'usuario' => 'required',
-            'contrasena' => 'required',
+            'contrasena' => 'required|min:6',
             'extension' => 'required|numeric',
             //'canal' => 'required',
         ];
