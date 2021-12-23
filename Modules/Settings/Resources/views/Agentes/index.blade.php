@@ -47,7 +47,13 @@
                             <td>{{ $agente->usuario }}</td>
                             <td>{{ $agente->contrasena }}</td>
                             <td>{{ $agente->extension_real }}</td>
-                            <td>{{ $agente->Canales->Cat_Tipo_Canales->nombre }}</td>
+                            <td>
+                                @if ( $agente->Canales == null )
+                                    Sin Canal
+                                @else
+                                    {{ $agente->Canales->Cat_Tipo_Canales->nombre }}
+                                @endif
+                            </td>
                             <td>{{-- $agente->Perfiles->first()->nombre --}}</td>
                             <td> </td>
                         </tr>
