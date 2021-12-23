@@ -54,7 +54,13 @@
                                     {{ $agente->Canales->Cat_Tipo_Canales->nombre }}
                                 @endif
                             </td>
-                            <td>{{-- $agente->Perfiles->first()->nombre --}}</td>
+                            <td>
+                                @if ($agente->Perfiles->isEmpty())
+                                    Sin Perfil
+                                @else
+                                    {{ $agente->Perfiles->first()->nombre }}
+                                @endif
+                            </td>
                             <td> </td>
                         </tr>
                     @endforeach
