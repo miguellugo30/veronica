@@ -43,7 +43,7 @@
                                 <input type="text" class="form-control form-control-sm opciones" name="nombre_campo_{{$campo->id }}" id="nombre_campo" value='{{$campo->nombre_campo }}'>
                             </td>
                             <td>
-                                <select name="tipo_campo_{{$campo->id }}" id="tipo_campo" data-action="edit" class="form-control form-control-sm opciones">
+                                <select name="tipo_campo_{{$campo->id }}" id="tipo_campo" data-action="edit" class="form-control form-control-sm opciones subFormulario">
                                     <option value="">Selecciona un tipo</option>
                                     <option value="text" {{('text' == $campo->tipo_campo) ? 'selected = "selected"':'' }}>Texto Corto</option>
                                     <option value="textarea" {{('textarea' == $campo->tipo_campo) ? 'selected = "selected"':'' }}>Texto Largo</option>
