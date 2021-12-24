@@ -500,11 +500,13 @@ $(function () {
 
     for (var i = 0; i < IDInput.length; i++) {
       fila.find('#' + IDInput[i]).attr('name', IDInput[i] + "_" + newID); //Cambiamos el nombre de los campos de la fila a clonar
+
+      fila.find('#' + IDInput[i]).attr('value', '');
     }
 
     fila.find('.btn-info').css('display', 'none');
     fila.find('.btn-danger').css('display', 'block');
-    fila.find('#id_campo').attr('value', '');
+    fila.find('#id_campo').attr('value', '0');
     fila.attr("id", 'tr_' + newID);
   });
   /**

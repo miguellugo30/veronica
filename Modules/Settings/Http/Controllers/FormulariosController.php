@@ -185,8 +185,9 @@ class FormulariosController extends Controller
      */
     public function update(FormulariosRequest $request, $id)
     {
-        $dataForm = $request->input('dataForm');
+
         $data = $request->dataForm;
+
 
         $idFormulario = $data['id_formulario'];
 
@@ -194,7 +195,7 @@ class FormulariosController extends Controller
         $info = array_chunk( $data, 6 );
 
         for ($i=0; $i < count( $info ); $i++) {
-            if ($info[$i][0] != NULL) {
+            if ($info[$i][0] != 0) {
                 Campos::where( 'id', $info[$i][0] )->update([
                                                         'nombre_campo' => $info[$i][1],
                                                         'tipo_campo' => $info[$i][2],

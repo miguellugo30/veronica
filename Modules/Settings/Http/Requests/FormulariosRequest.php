@@ -19,9 +19,12 @@ class FormulariosRequest extends FormRequest
             /**
              * Buscamos si el id_campo es null para permitir agregar los nuevos campos
              **/
-            if ($key == strpos($key,'id_campo')) {
+            if ($key == strpos($key,'id_campo') || $key !== strpos($key,'obligatorio') || $key !== strpos($key,'editable'))
+            {
                 $rules[ 'dataForm.'.$key] = 'nullable';
-            } else {
+            }
+            else
+            {
                 $rules[ 'dataForm.'.$key] = 'required';
             }
 
