@@ -133,6 +133,7 @@ class SpeechController extends Controller
             $bienvenida = $this->textoBienvenida( $campos->where('tipo', 1)->first()->id );
         }
 
+
         return view('settings::Speech.show', compact('speech', 'campos', 'bienvenida'));
     }
     /**
@@ -245,7 +246,7 @@ class SpeechController extends Controller
     private function textoBienvenida($idOs )
     {
         return DB::table('Opciones_Speech AS OS')
-            ->join('appLaravel.speech AS S', 'OS.speech_id_hijo', '=', 'S.id')
+            ->join('speech AS S', 'OS.speech_id_hijo', '=', 'S.id')
             ->select(
                 'S.texto'
             )

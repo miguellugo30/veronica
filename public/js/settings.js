@@ -568,9 +568,11 @@ $(function () {
 /***/ (function(module, exports) {
 
 $(function () {
+  var currentURL = window.location.href;
   /**
    * Evento para mostrar el boton de añadir y borrar cuando el tipo de speech sea dinamico
    */
+
   $(document).on('change', '.tipo', function (event) {
     event.preventDefault();
     var tipo = $('.tipo').val();
@@ -741,6 +743,20 @@ $(function () {
             Swal.fire('Eliminado!', 'El registro ha sido eliminado.', 'success');
           }
         });
+      }
+    });
+  });
+  $(document).on('click', '.opcionSpeech', function () {
+    var id = $(this).data('id');
+    var SpeechId = $(this).data('speech-id');
+    $('#tituloModal').html('Vista de Speech');
+    var url = currentURL + 'settings/speech/' + id;
+    $.ajax({
+      url: url,
+      type: 'GET',
+      success: function success(result) {
+        $("#opcion_seleccionada_" + SpeechId).html(result);
+        $("#opcion_seleccionada_" + SpeechId).slideDown();
       }
     });
   });

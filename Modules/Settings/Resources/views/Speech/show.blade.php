@@ -12,7 +12,13 @@
         <div class="col text-center">
             @foreach ($campos as $opcion)
                 @if ( $opcion->tipo == '0' )
-                    <button type="button" class="btn btn-primary btn-sm opcion" data-speech-id="{{$speech->id}}" data-id='{{ $opcion->speech_id_hijo }}'>{{ $opcion->nombre }}</button>
+                    <button type="button"
+                            class="btn btn-primary btn-sm opcionSpeech"
+                            data-speech-id="{{$speech->id}}"
+                            data-id='{{ $opcion->speech_id_hijo }}'
+                    >
+                                {{ $opcion->nombre }}
+                    </button>
                 @endif
             @endforeach
         </div>
