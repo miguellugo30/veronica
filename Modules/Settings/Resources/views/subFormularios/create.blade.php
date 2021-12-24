@@ -13,7 +13,7 @@
             </thead>
             <tbody>
                 <tr id="tr_opciones_1" class="clonar">
-                    <td>
+                    <td name="numero_1" id="numero_opcion">
                         1
                     </td>
                     <td>
@@ -22,13 +22,14 @@
                     <td>
                         <select name="form_id_1" id="form_id"  class="form-control form-control-sm ">
                             <option value="">Selecciona un Formulario</option>
+                                <option value="0">Sin Formulario</option>
                             @foreach ($formularios as $formulario)
                                 <option value="{{ $formulario->id }}">{{ $formulario->nombre }}</option>
                             @endforeach
                         </select>
                     </td>
-                    <td class="text-center tr_clone_remove_opcion" data-opcion-id="">
-                        <button type="button" name="remove" id="remove"class="btn btn-danger" ><i class="fas fa-trash-alt"></i></button>
+                    <td class="text-center " data-opcion-id="">
+                        <button type="button" name="remove" id="remove"class="btn btn-danger tr_clone_remove_opcion" style="display: none"><i class="fas fa-trash-alt"></i></button>
                     </td>
                 </tr>
             </tbody>

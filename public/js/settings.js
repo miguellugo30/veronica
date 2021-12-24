@@ -503,6 +503,7 @@ $(function () {
     }
 
     fila.find('.btn-info').css('display', 'none');
+    fila.find('.btn-danger').css('display', 'block');
     fila.find('#id_campo').attr('value', '');
     fila.attr("id", 'tr_' + newID);
   });
@@ -3008,11 +3009,16 @@ $(function () {
 
     fila.find('#id_campos').attr('name', 'id_campos_' + newID); //Buscamos el campo con id nombre_campo y le agregamos un nuevo nombre
 
+    fila.find('#numero_opcion').attr("name", 'numero_opcion_' + newID); //Buscamos el campo con id nombre_campo y le agregamos un nuevo nombre
+
+    fila.find('#numero_opcion').html(newID); //Buscamos el campo con id nombre_campo y le agregamos un nuevo nombre
+
     fila.find('#nombre_opcion').attr("name", 'nombre_opcion_' + newID); //Buscamos el campo con id nombre_campo y le agregamos un nuevo nombre
 
     fila.find('#form_id').attr("name", 'form_id_' + newID); //Buscamos el campo con id tipo_campo y le agregamos un nuevo nombre
 
     fila.attr("id", 'tr_opciones_' + newID);
+    fila.find('.btn-danger').css('display', 'block');
   });
   /**
    * Evento para eliminar una fila de la tabla de nuevo formulario

@@ -48,14 +48,14 @@
                                     <option value="fecha">Fecha</option>
                                     <option value="select">Opciones</option>
                                     <option value="numerico">Numerico</option>
-                                    <option value="separador">Seperador</option>
-                                    <option value="bloque_oculto">Crear Bloque Oculto</option>
+                                    <!--option value="separador">Seperador</option-->
+                                    <!--option value="bloque_oculto">Crear Bloque Oculto</option-->
                                     <option value="texto">Texto Escrito</option>
-                                    <option value="buscador">Buscador</option>
-                                    <option value="buscador_historio">Buscador Historio</option>
+                                    <!--option value="buscador">Buscador</option-->
+                                    <!--option value="buscador_historio">Buscador Historio</option-->
                                     <option value="asignador_folios">Asignador de Folios</option>
-                                    <option value="bloqueInicio">Bloque Inicio</option>
-                                    <option value="bloqueFin">Bloque Termino</option>
+                                    <!--option value="bloqueInicio">Bloque Inicio</option-->
+                                    <!--option value="bloqueFin">Bloque Termino</option-->
                                 </select>
                             </td>
                             <td>
@@ -70,8 +70,8 @@
                                 <input type="hidden" name="editable_hidden_1" id="editable_hidden" value="off" class="opciones">
                                 <input type="hidden" name="opciones_1" id="opciones" class="opciones " value="off">
                             </td>
-                            <td class="tr_clone_remove text-center">
-                                <button type="button" name="remove" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                            <td class=" text-center">
+                                <button type="button" name="remove" class="btn btn-danger tr_clone_remove" style="display:none"><i class="fas fa-trash-alt"></i></button>
                             </td>
                             <td class="text-center">
                                 <button type="button" name="view_1" id="view" class="btn btn-info view" style="display:none"><i class="fas fa-eye"></i></button>
