@@ -9,6 +9,7 @@ $(function() {
         let tipo = $(this).val();
 
         $('#action_opc').addClass('saveOpciones');
+        $('#action_opc').removeClass('updateOpciones');
         action = $(this).data('action');
         idTR = $(this).attr('name').replace('tipo_campo_', '');
 
@@ -65,6 +66,7 @@ $(function() {
         fila.find('#numero_opcion').attr("name", 'numero_opcion_' + newID); //Buscamos el campo con id nombre_campo y le agregamos un nuevo nombre
         fila.find('#numero_opcion').html(newID); //Buscamos el campo con id nombre_campo y le agregamos un nuevo nombre
         fila.find('#nombre_opcion').attr("name", 'nombre_opcion_' + newID); //Buscamos el campo con id nombre_campo y le agregamos un nuevo nombre
+        fila.find('#nombre_opcion').attr("value", ""); //Buscamos el campo con id nombre_campo y le agregamos un nuevo nombre
         fila.find('#form_id').attr("name", 'form_id_' + newID); //Buscamos el campo con id tipo_campo y le agregamos un nuevo nombre
         fila.attr("id", 'tr_opciones_' + newID);
         fila.find('.btn-danger').css('display', 'block');
@@ -108,6 +110,7 @@ $(function() {
         let dataOpciones = JSON.stringify($("#form_opc").serializeArray());
 
         $('input[name="opciones_' + idTR + '"]').val(dataOpciones);
+        $('button[name="view_' + idTR + '"]').removeClass('edit_opciones');
 
         $("#modal_opciones_campo").modal('hide');
         $("button[name='view_" + idTR + "']").slideDown();
@@ -133,6 +136,7 @@ $(function() {
 
         idTR = $(this).attr('name').replace('view_', '');
         $('#action_opc').addClass('saveOpciones');
+        $('#action_opc').removeClass('updateOpciones');
 
         let opciones = JSON.parse($("input[name=opciones_" + idTR + ']').val());
         let tipo_campo = $('#tr_' + idTR + ' .subFormulario').val();
@@ -199,6 +203,7 @@ $(function() {
         let tipo_campo = $('#tr_' + idTR + ' #tipo_campo').val();
 
         $('#action_opc').addClass('updateOpciones');
+        $('#action_opc').removeClass('saveOpciones');
 
         var url = currentURL + 'settings/subformularios/' + id + '/edit';
 

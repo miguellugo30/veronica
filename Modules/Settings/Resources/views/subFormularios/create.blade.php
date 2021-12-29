@@ -17,7 +17,7 @@
                         1
                     </td>
                     <td>
-                        <input type="text" class="form-control form-control-sm " name="nombre_opcion_1" id="nombre_opcion" placeholder="Nombre Opcion">
+                        <input type="text" class="form-control form-control-sm " name="nombre_opcion_1" id="nombre_opcion" placeholder="Nombre Opcion" value="">
                     </td>
                     <td>
                         <select name="form_id_1" id="form_id"  class="form-control form-control-sm ">

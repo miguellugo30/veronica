@@ -487,9 +487,11 @@ $(function () {
 /***/ (function(module, exports) {
 
 $(function () {
+  var currentURL = window.location.href;
   /**
    * Evento para agregar una nueva fila para campos nuevos en el formulario
    */
+
   $(document).on('click', '#add-input-form', function () {
     var clickID = $(".tableNewForm tbody tr.clonar:last").attr('id').replace('tr_', '');
     $('#form_opc .form-control-sm').val(''); // Genero el nuevo numero id
@@ -501,7 +503,11 @@ $(function () {
     for (var i = 0; i < IDInput.length; i++) {
       fila.find('#' + IDInput[i]).attr('name', IDInput[i] + "_" + newID); //Cambiamos el nombre de los campos de la fila a clonar
 
-      fila.find('#' + IDInput[i]).attr('value', '');
+      if (IDInput[i] != 'editable' || IDInput[i] != 'obligatorio') {
+        fila.find('#' + IDInput[i]).attr('value', '');
+      }
+
+      fila.find('#' + IDInput[i]).attr('data-id-campo', newID);
     }
 
     fila.find('.btn-info').css('display', 'none');
@@ -537,7 +543,7 @@ $(function () {
    * Evento para eliminar una fila de la tabla de nuevo formulario
    */
 
-  $(document).on('click', '.tr_edit_remove', function () {
+  $(document).on('click', '.tr_edit_form_remove', function () {
     var id = $(this).data('id-campo');
     var idForm = $("#id_formulario").val();
     var tr = $(this).closest('tr');
@@ -2143,6 +2149,7 @@ $(function () {
     var dataForm = $("#formDataFormulario").serializeArray();
     var data = {};
     $(dataForm).each(function (index, obj) {
+      console.log(obj.name + " --- " + obj.value);
       data[obj.name] = obj.value;
     });
 
@@ -2957,6 +2964,7 @@ $(function () {
   $(document).on("change", ".subFormulario", function (e) {
     var tipo = $(this).val();
     $('#action_opc').addClass('saveOpciones');
+    $('#action_opc').removeClass('updateOpciones');
     action = $(this).data('action');
     idTR = $(this).attr('name').replace('tipo_campo_', '');
     var url = currentURL + 'settings/subformularios/create';
@@ -3017,6 +3025,8 @@ $(function () {
 
     fila.find('#nombre_opcion').attr("name", 'nombre_opcion_' + newID); //Buscamos el campo con id nombre_campo y le agregamos un nuevo nombre
 
+    fila.find('#nombre_opcion').attr("value", ""); //Buscamos el campo con id nombre_campo y le agregamos un nuevo nombre
+
     fila.find('#form_id').attr("name", 'form_id_' + newID); //Buscamos el campo con id tipo_campo y le agregamos un nuevo nombre
 
     fila.attr("id", 'tr_opciones_' + newID);
@@ -3060,6 +3070,7 @@ $(function () {
     event.preventDefault();
     var dataOpciones = JSON.stringify($("#form_opc").serializeArray());
     $('input[name="opciones_' + idTR + '"]').val(dataOpciones);
+    $('button[name="view_' + idTR + '"]').removeClass('edit_opciones');
     $("#modal_opciones_campo").modal('hide');
     $("button[name='view_" + idTR + "']").slideDown();
     /**
@@ -3085,6 +3096,7 @@ $(function () {
     event.preventDefault();
     idTR = $(this).attr('name').replace('view_', '');
     $('#action_opc').addClass('saveOpciones');
+    $('#action_opc').removeClass('updateOpciones');
     var opciones = JSON.parse($("input[name=opciones_" + idTR + ']').val());
     var tipo_campo = $('#tr_' + idTR + ' .subFormulario').val();
 
@@ -3150,6 +3162,7 @@ $(function () {
     id = $(this).data('id-campo');
     var tipo_campo = $('#tr_' + idTR + ' #tipo_campo').val();
     $('#action_opc').addClass('updateOpciones');
+    $('#action_opc').removeClass('saveOpciones');
     var url = currentURL + 'settings/subformularios/' + id + '/edit';
     $.ajax({
       url: url,

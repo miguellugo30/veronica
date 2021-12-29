@@ -29,6 +29,7 @@
                             <td>
                                 <select name="form_id_{{$opcion->id}}" id="form_id"  class="form-control form-control-sm ">
                                     <option value="">Selecciona un Formulario</option>
+                                    <option value="0">Sin Formulario</option>
                                     @foreach ($formularios as $formulario)
                                         <option value="{{ $formulario->id }}" {{ ( $formulario->id == $opcion->Formularios_id ) ? 'selected=selected' : '' }}>{{ $formulario->nombre }}</option>
                                     @endforeach

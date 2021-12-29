@@ -161,6 +161,7 @@ $(function() {
         let dataForm = $("#formDataFormulario").serializeArray();
         var data = {};
         $(dataForm).each(function(index, obj) {
+            console.log( obj.name + " --- " +  obj.value );
             data[obj.name] = obj.value;
         });
 

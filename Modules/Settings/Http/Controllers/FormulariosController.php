@@ -192,7 +192,7 @@ class FormulariosController extends Controller
         $idFormulario = $data['id_formulario'];
 
         array_shift( $data );
-        $info = array_chunk( $data, 6 );
+        $info = array_chunk( $data, 7 );
 
         for ($i=0; $i < count( $info ); $i++) {
             if ($info[$i][0] != 0) {
@@ -204,13 +204,67 @@ class FormulariosController extends Controller
                                                         'editable' => $info[$i][5]
                                                     ]);
             } else {
-                $campo = Campos::create([
-                                        'nombre_campo' => $info[$i][1],
-                                        'tipo_campo' => $info[$i][2],
-                                        'tamano' => $info[$i][3],
-                                        'obligatorio' => $info[$i][4],
-                                        'editable' => $info[$i][5]
-                                    ]);
+
+                if ( $info[$i][2] == 'asignador_folios' ) {
+                    /**
+                     * Obtenemos las opciones que vienen en formato JSON
+                     * Y lo convertimos en un array
+                     */
+                    $opciones = json_decode($info[$i][6], true);
+                    /**
+                     * Insertamos el campo de tipo select
+                     */
+                    $campo = Campos::create([
+                                                'nombre_campo' => $info[$i][1],
+                                                'tipo_campo' => $info[$i][2],
+                                                'tamano' => $info[$i][3],
+                                                'obligatorio' => $info[$i][4],
+                                                'editable' => $info[$i][5],
+                                                'prefijo' => $opciones[0]['value'],
+                                                'folio' => $opciones[1]['value']
+                                            ]);
+
+                } else if ( $info[$i][2] == 'select' ) {
+                    /**
+                     * Obtenemos las opciones que vienen en formato JSON
+                     * Y lo convertimos en un array
+                     */
+                    $opciones = json_decode($info[$i][6], true);
+                    /**
+                     * Insertamos el campo de tipo select
+                     */
+                    $campo = Campos::create([
+                                                'nombre_campo' => $info[$i][1],
+                                                'tipo_campo' => $info[$i][2],
+                                                'tamano' => $info[$i][3],
+                                                'obligatorio' => $info[$i][4],
+                                                'editable' => $info[$i][5]
+                                            ]);
+                    /**
+                     * Insertamos las opciones y las relacionamos al campo
+                     * y al formulario que llamara si eligen uno
+                     */
+                    $k = 0;
+                    for ($j=0; $j < ( count($opciones) / 2 ); $j++) {
+                        Sub_Formularios::create([
+                                                    'opcion' => $opciones[$k]['value'],
+                                                    'texto' => $opciones[$k]['value'],
+                                                    'Formularios_id' => $idFormulario,
+                                                    'Campos_id' =>$campo->id
+                                                ]);
+                        $k = $k + 2;
+                    }
+                } else {
+
+                    $campo = Campos::create([
+                                            'nombre_campo' => $info[$i][1],
+                                            'tipo_campo' => $info[$i][2],
+                                            'tamano' => $info[$i][3],
+                                            'obligatorio' => $info[$i][4],
+                                            'editable' => $info[$i][5]
+                                        ]);
+                }
+
 
                 DB::table('Formularios_Campos')->insert(
                     ['Formularios_id' => $idFormulario, 'Campos_id' => $campo->id]

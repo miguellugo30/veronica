@@ -59,17 +59,28 @@
                             </td>
                             <td>
                                 <input type="checkbox" class="micheckbox opciones" name="obligatorio_{{$campo->id }}" id="obligatorio" {{('on' == $campo->obligatorio) ? 'checked':'' }} >
+
                                 <input type="hidden" name="obligatorio_hidden_{{$campo->id }}" class="opciones" id="obligatorio_hidden" value="off" {{('on' == $campo->obligatorio) ? 'disabled':'' }}>
                             </td>
                             <td>
                                 <input type="checkbox" class="micheckbox opciones" name="editable_{{$campo->id }}" id="editable" {{('on' == $campo->editable) ? 'checked':'' }} >
-                                <input type="hidden" name="editable_hidden_{{$campo->id }}" class="opciones campoEdi" id="editable_hidden" value="off" {{('on' == $campo->editable) ? 'disabled':'' }}>
+                                <input type="hidden" name="editable_hidden_{{$campo->id }}" id="editable_hidden" value="off" class="opciones">
+
+                                <input type="hidden" name="opciones_{{$campo->id }}" class="opciones campoEdi" id="opciones" value="off" {{('on' == $campo->editable) ? 'disabled':'' }}>
                             </td>
                             <td class="text-center">
-                                <button type="button" name="remove" id="id_campo" class="btn btn-danger tr_edit_remove" data-id-campo="{{$campo->id }}"><i class="fas fa-trash-alt"></i></button>
+                                <button type="button" name="remove" id="id_campo" class="btn btn-danger tr_edit_form_remove" data-id-campo="{{$campo->id }}"><i class="fas fa-trash-alt"></i></button>
                             </td>
                             <td class="text-center">
-                                <button type="button" name="view" id="view_{{$campo->id }}" class="btn btn-info edit_opciones" data-id-campo="{{$campo->id }}"  {{ ( ( $campo->Sub_Formularios->count() > 0 ) || ('asignador_folios' == $campo->tipo_campo) ) ? "" : 'style=display:none' }} > <i class="fas fa-eye"></i></button>
+                                <button type="button"
+                                        name="view_{{$campo->id }}"
+                                        class="btn btn-info edit_opciones view"
+                                        data-id-campo="{{$campo->id }}"
+                                        id="view"
+                                        {{ ( ( $campo->Sub_Formularios->count() > 0 ) || ('asignador_folios' == $campo->tipo_campo) ) ? "" : 'style=display:none' }}
+                                    >
+                                     <i class="fas fa-eye"></i>
+                                </button>
                             </td>
                         </tr>
                         @endforeach

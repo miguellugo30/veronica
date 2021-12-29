@@ -10,7 +10,7 @@
                     @can('edit formularios')
                         <a class="dropdown-item editFormulario" href="#"><i class="fas fa-pen-square"></i> Editar</a>
                     @endcan
-                        <a class="dropdown-item cloneFormulario" href="#"><i class="fas fa-clone"></i> Duplicar</a>
+                        <!--a class="dropdown-item cloneFormulario" href="#"><i class="fas fa-clone"></i> Duplicar</a-->
                     @can('view formularios')
                         <a class="dropdown-item viewFormulario" href="#"><i class="fas fa-eye"></i> Visualizar</a>
                     @endcan
