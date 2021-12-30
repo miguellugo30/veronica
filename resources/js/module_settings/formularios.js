@@ -148,6 +148,7 @@ $(function() {
             success: function success(result) {
                 $('#modal').modal({ backdrop: 'static', keyboard: false });
                 $("#modal-body").html(result);
+                $("#modal-body #view").removeClass('view')
             }
         });
     });

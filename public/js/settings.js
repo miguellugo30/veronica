@@ -2136,6 +2136,7 @@ $(function () {
           keyboard: false
         });
         $("#modal-body").html(result);
+        $("#modal-body #view").removeClass('view');
       }
     });
   });
