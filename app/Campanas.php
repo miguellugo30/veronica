@@ -10,7 +10,22 @@ class Campanas extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'nombre', 'modalidad_logue','modalidad_grabacion','opciones_desvio','id_opciones_desvio','buzon','speech_id','id_grabacion','time_max_sonora','time_max_llamada','time_liberacion','id_relacion','tipo_marcacion','Base_Datos_id','Empresas_id','Grupos_id'
+        'nombre',
+        'modalidad_logue',
+        'modalidad_grabacion',
+        'opciones_desvio',
+        'id_opciones_desvio',
+        'buzon','speech_id',
+        'id_grabacion',
+        'time_max_sonora',
+        'time_max_llamada',
+        'time_liberacion',
+        'id_relacion',
+        'tipo_marcacion',
+        'Base_Datos_id',
+        'Empresas_id',
+        'Grupos_id',
+        'fk_calificaciones_id'
     ];
     /**
      * Nombre de la tabla que se ocupra

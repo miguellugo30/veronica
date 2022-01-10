@@ -77,7 +77,8 @@ class CampanasController extends Controller
                 'time_max_llamada' =>  $request->input('alertstdll') ,
                 'time_liberacion' =>  $request->input('libta') ,
                 'Empresas_id'   => $empresa_id,
-                'Grupos_id' => $request->input('cal_lib')
+                'Grupos_id' => $request->input('cal_camp'),
+                'fk_calificaciones_id' => $request->input('cal_lib'),
             ]
         );
         /**
@@ -193,7 +194,8 @@ class CampanasController extends Controller
                                             'time_max_sonora' =>  $request->input('alertstll') ,
                                             'time_max_llamada' =>  $request->input('alertstdll') ,
                                             'time_liberacion' =>  $request->input('libta'),
-                                            'Grupos_id' => $request->input('cal_lib')
+                                            'Grupos_id' => $request->input('cal_camp'),
+                                            'fk_calificaciones_id' => $request->input('cal_lib'),
                                         ]);
 
         Campanas_Configuracion::where('Campanas_id', $id)->update([

@@ -100,6 +100,7 @@ $(function() {
         let alertstdll = $("#alertstdll").val();
         let libta = $("#libta").val();
         let cal_lib = $("#cal_lib").val();
+        let cal_camp = $("#cal_camp").val();
         let _token = $("input[name=_token]").val();
 
         let url = currentURL + 'inbound/campanas';
@@ -122,6 +123,7 @@ $(function() {
                     alertstdll: alertstdll,
                     libta: libta,
                     cal_lib: cal_lib,
+                    cal_camp: cal_camp,
                     _token: _token
                 },
             })
@@ -186,6 +188,7 @@ $(function() {
         let alertstdll = $("#alertstdll").val();
         let libta = $("#libta").val();
         let cal_lib = $("#cal_lib").val();
+        let cal_camp = $("#cal_camp").val();
         let _token = $("input[name=_token]").val();
         let _method = "PUT";
         let url = currentURL + 'inbound/campanas/' + id;
@@ -205,6 +208,7 @@ $(function() {
             alertstdll: alertstdll,
             libta: libta,
             cal_lib: cal_lib,
+            cal_camp: cal_camp,
             _token: _token,
             _method: _method,
             _token: _token

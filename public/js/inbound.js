@@ -1028,6 +1028,7 @@ $(function () {
     var alertstdll = $("#alertstdll").val();
     var libta = $("#libta").val();
     var cal_lib = $("#cal_lib").val();
+    var cal_camp = $("#cal_camp").val();
 
     var _token = $("input[name=_token]").val();
 
@@ -1050,6 +1051,7 @@ $(function () {
         alertstdll: alertstdll,
         libta: libta,
         cal_lib: cal_lib,
+        cal_camp: cal_camp,
         _token: _token
       }
     }).done(function (data) {
@@ -1110,6 +1112,7 @@ $(function () {
     var alertstdll = $("#alertstdll").val();
     var libta = $("#libta").val();
     var cal_lib = $("#cal_lib").val();
+    var cal_camp = $("#cal_camp").val();
 
     var _token = $("input[name=_token]").val();
 
@@ -1130,6 +1133,7 @@ $(function () {
       alertstdll: alertstdll,
       libta: libta,
       cal_lib: cal_lib,
+      cal_camp: cal_camp,
       _token: _token,
       _method: _method
     }, "_token", _token), function (data, textStatus, xhr) {
