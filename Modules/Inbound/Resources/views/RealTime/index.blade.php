@@ -3,18 +3,14 @@
         cursor: pointer;
     }
 </style>
-<div class="box box-primary">
-    <div class="box-header with-border">
-        <h3 class="box-title"><b><i class="fas fa-business-time"></i> Real Time Agentes</b></h3>
-        <div class="box-tools pull-right">
+
+<div class="card card-outline card-primary">
+    <div class="card-header">
+        <h3 class="card-title"><b><i class="fas fa-business-time"></i> Real Time Agentes</b></h3>
+    </div><!--card-header-->
+    <div class="card-body">
+        <div class="col-md-12 viewIndex">
 
         </div>
-    </div><!-- /.box-header -->
-    <div class="box-body">
-        <div class="row">
-            <div class="col-md-12 viewIndex">
-
-            </div>
-        </div><!-- /.row -->
-    </div><!-- ./box-body -->
-</div>
+    </div><!--card-header-->
+  </div>

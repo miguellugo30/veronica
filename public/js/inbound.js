@@ -1985,7 +1985,7 @@ $(function () {
           "lengthChange": true
         }); //start(url);
 
-        url = currentURL + '/real_time/0';
+        url = currentURL + 'inbound/real_time/0';
         $.get(url, function (data, textStatus, jqXHR) {
           $(".viewIndex").html(data);
           $('.viewIndex listadoAgentes').DataTable({
