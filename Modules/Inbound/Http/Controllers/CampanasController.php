@@ -121,7 +121,7 @@ class CampanasController extends Controller
                     'membername' =>  $agentesParticipantes[$i],
                     //'queue_name' => $campana->id,
                     'interface' => $interface.$extension,
-                    'paused' => $estado['paused'],
+                    'paused' => $estado,
                     'Agentes_id' =>  $agentesParticipantes[$i],
                     'Campanas_id'   => $campana->id
                 ]
