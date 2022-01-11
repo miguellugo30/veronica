@@ -36,7 +36,7 @@ class DidEnrutamientoController extends Controller
         $dids = Dids::empresa($empresa_id)->active()->with(['Did_Enrutamiento' => function ($query){
                         $query->where('activo', 1);
                 }])->get();
-                dd($dids);
+
 
         $data = array();
         foreach ($dids as $did) {
