@@ -36,6 +36,7 @@ class DidEnrutamientoController extends Controller
         $dids = Dids::empresa($empresa_id)->active()->with(['Did_Enrutamiento' => function ($query){
                         $query->where('activo', 1);
                 }])->get();
+                dd($dids);
 
         $data = array();
         foreach ($dids as $did) {
@@ -68,6 +69,8 @@ class DidEnrutamientoController extends Controller
                     $nombre = 'Buzon de Voz';
                 }else if ( $tabla == 'hangup' ) {
                     $nombre = 'Colgar';
+                }else if ( $tabla == 'Desvios' ) {
+                    $nombre = 'Desvio';
                 } else {
                     $dataApli = Buzon_Voz::active()->where('Empresas_id', $empresa_id)->get();
                     $nombre = $dataApli->nombre;
