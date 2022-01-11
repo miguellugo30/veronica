@@ -69,7 +69,7 @@ class EventosAgenteController extends Controller
         LogRegistroEventosController::actualiza_evento( $agente, $request->evento, 0 );
         /*
          * Despausamos al agente dentro de la campana en BD
-         *
+         */
         Miembros_Campana::where( 'membername', $agente )->update(['Paused' => 0]);
          /**
          * Obtenemos la zona horaria de la empresa
