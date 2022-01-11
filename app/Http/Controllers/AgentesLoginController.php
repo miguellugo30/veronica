@@ -163,7 +163,7 @@ class AgentesLoginController extends Controller
                 /**
                  * Ponemos al usuario en pausa dentro de la cola
                  */
-                $this->pausar_agente( $this->agente->id, 0 );
+                //$this->pausar_agente( $this->agente->id, 0 );
                 /**
                  * Si la modalidad de la campana es Canal cerrado agregamos a los agentes en
                  * las colas que este
@@ -179,8 +179,8 @@ class AgentesLoginController extends Controller
                     $miembros = Miembros_Campana::where('Agentes_id', $this->agente->id)->get();
                     foreach ($miembros as $miembro)
                     {
-                        $e = new EventosAmiController( $this->agente->Empresas_id );
-                        $e->addMember( $miembro->Campanas_id, $miembro->interface, $this->agente->id );
+                       // $e = new EventosAmiController( $this->agente->Empresas_id );
+                        //$e->addMember( $miembro->Campanas_id, $miembro->interface, $this->agente->id );
                     }
                 }
 
@@ -193,7 +193,7 @@ class AgentesLoginController extends Controller
                 /**
                  * Ponemos al usuario en pausa dentro de la cola
                  */
-                $this->pausar_agente( $this->agente->id, 0 );
+                //$this->pausar_agente( $this->agente->id, 0 );
                 /**
                  * Si la modalidad de la campana es Canal cerrado agregamos a los agentes en
                  * las colas que este
@@ -209,8 +209,8 @@ class AgentesLoginController extends Controller
                     $miembros = Miembros_Campana::where('Agentes_id', $this->agente->id)->get();
                     foreach ($miembros as $miembro)
                     {
-                        $e = new EventosAmiController( $this->agente->Empresas_id );
-                        $e->addMember( $miembro->Campanas_id, $miembro->interface, $this->agente->id );
+                        //$e = new EventosAmiController( $this->agente->Empresas_id );
+                        //$e->addMember( $miembro->Campanas_id, $miembro->interface, $this->agente->id );
                     }
                 }
 

@@ -104,7 +104,11 @@ document.addEventListener('DOMContentLoaded', function() {
                         $(".historico-llamadas").DataTable({
                             "searching": false,
                             "lengthChange": false,
-                            "iDisplayLength": 5
+                            "iDisplayLength": 5,
+                            "responsive": true,
+                            language: {
+                                url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json'
+                            }
                         });
                     });
 

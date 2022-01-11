@@ -175,14 +175,17 @@ class AgentesController extends Controller
         /**
          * Obtenemos la información de la campana a la cual esta el agente y la llamada
          */
+
         if ( $cdrDetalle->aplicacion == 'Campanas' ) {
-            $campana = Campanas::active()->where( 'id', $cdrDetalle->first()->id_aplicacion )->get()->first();
+            $campana = Campanas::active()->where( 'id', 6 )->get()->first();
         }
         /**
          * Obtenemos el Speech y el grupo de calificaciones
          */
-        $speech = $campana->speech;
-        $campos = $speech->Opciones_Speech;
+
+        $speech = $campana->Speech()->first();
+
+        $campos = $speech->Opciones_Speech()->first();
 
         if ( $speech->tipo == 'dinamico' )
         {
@@ -201,6 +204,8 @@ class AgentesController extends Controller
         }
 
         $grupo = $campana->Grupos->first();
+
+        //dd($grupo->Calificaciones()->first());
         /**
          * Obtenemos el histórico de llamadas de cliente
          */

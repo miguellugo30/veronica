@@ -193,7 +193,11 @@ document.addEventListener('DOMContentLoaded', function () {
             $(".historico-llamadas").DataTable({
               "searching": false,
               "lengthChange": false,
-              "iDisplayLength": 5
+              "iDisplayLength": 5,
+              "responsive": true,
+              language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json'
+              }
             });
           });
         } else if (obj['status'] == 2) {
@@ -578,6 +582,23 @@ $(function () {
         $('#opciones_conferencia').html(data);
       });
     }
+  });
+  /**
+   * Mostrar formulario vinculado a la calificacion seleccionada
+   */
+
+  $(document).on('change', '#calificacion', function (event) {
+    var id = $(this).val();
+    console.log(id);
+    var url = currentURL[0].replace('agentes/') + '/formularios/' + id;
+    console.log(url);
+    $.ajax({
+      url: url,
+      type: 'GET',
+      success: function success(result) {
+        $(".viewFormularioCalificacion").html(result);
+      }
+    });
   });
 });
 
