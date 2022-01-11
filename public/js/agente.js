@@ -253,8 +253,8 @@ document.addEventListener('DOMContentLoaded', function () {
         _token: _token
       }
     }).done(function (msg) {
-      $(".view-call").html(msg);
-      $(".view-call").html('<div class="col-12 text-center" style="padding-top: 19%;"><i class="fas fa-spinner fa-10x fa-spin text-info"></i></div>');
+      $(".viewResult").html(msg);
+      $(".viewResult").html('<div class="col-12 text-center" style="padding-top: 19%;"><i class="fas fa-spinner fa-10x fa-spin text-info"></i></div>');
       $(".estado-agente").html("<i class='fa fa-circle text-success'></i> Disponible");
       $(".colgar-llamada").prop("disabled", true);
       start();
