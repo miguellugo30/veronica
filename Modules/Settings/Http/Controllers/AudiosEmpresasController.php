@@ -57,14 +57,14 @@ class AudiosEmpresasController extends Controller
        $file = $request->file('file');
 
        /** Obtener el nombre del archivo **/
-       $aud_nom = $file->getClientOriginalName();
+       $aud_nom = str_replace(" ", "_",  $file->getClientOriginalName());
        $dir_audios = "/audios/".$empresa_id;
        /** Crear la Ruta en Storage */
        if(!File::exists($dir_audios))
            Storage::makeDirectory($dir_audios);
 
        /** Colocar en el Directorio WEB SERVER **/
-       $request->file('file')->storeAs($dir_audios, $file->getClientOriginalName());
+       $request->file('file')->storeAs($dir_audios, $aud_nom);
         /** Crear el logs    */
         $mensaje = 'Se creo un nuevo registro, informacion capturada:'.var_export($request->all(), true);
         $log = new LogController;

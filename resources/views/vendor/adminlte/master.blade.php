@@ -65,6 +65,12 @@
         <meta name="msapplication-TileImage" content="{{ asset('favicon/ms-icon-144x144.png') }}">
     @endif
 
+    <style>
+        .main-header .navbar-nav .nav-item {
+            cursor: pointer;
+        }
+    </style>
+
 </head>
 
 <body class="@yield('classes_body')" @yield('body_data')>
