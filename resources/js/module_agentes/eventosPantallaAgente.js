@@ -178,7 +178,7 @@ $(function() {
     /**
      * Mostrar formulario vinculado a la calificacion seleccionada
      */
-     $(document).on('change', '#calificacion', function(event) {
+     $(document).on('change', '#calificacionLlamada', function(event) {
 
         let id = $(this).val();
         console.log(id);

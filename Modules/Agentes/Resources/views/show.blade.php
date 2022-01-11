@@ -41,7 +41,7 @@
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="calificaciones"><b>Calificación:</b></label>
-                                        <select class="form-control form-control-sm" name="calificacion" id="calificacion">
+                                        <select class="form-control form-control-sm" name="calificacionLlamada" id="calificacionLlamada">
                                             <option value="">Selecciona una calificacion</option>
                                             @foreach ($grupo->Calificaciones as $calificacion)
                                                 <option data-calificacionId="{{$calificacion->id}}" value="{{$calificacion->Formularios_id}}">{{$calificacion->nombre}}</option>

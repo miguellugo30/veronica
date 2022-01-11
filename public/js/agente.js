@@ -587,7 +587,7 @@ $(function () {
    * Mostrar formulario vinculado a la calificacion seleccionada
    */
 
-  $(document).on('change', '#calificacion', function (event) {
+  $(document).on('change', '#calificacionLlamada', function (event) {
     var id = $(this).val();
     console.log(id);
     var url = currentURL[0].replace('agentes/') + '/formularios/' + id;
