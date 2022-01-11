@@ -590,9 +590,7 @@ $(function () {
 
   $(document).on('change', '#calificacionLlamada', function (event) {
     var id = $(this).val();
-    console.log(id);
     var url = currentURL[0].replace('agentes/') + '/formularios/' + id;
-    console.log(url);
     $.ajax({
       url: url,
       type: 'GET',

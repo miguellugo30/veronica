@@ -87,9 +87,9 @@ class EventosAgenteController extends Controller
         /*
          * Despausamos al agente dentro del MS
          *
+         */
         $evento = new EventosAmiController( $empresas_id );
         $evento->despausar_agente( $cdr->canal, 'unpause' );
-        */
     }
     /**
      * Funcion para poner como  disponible a un agente

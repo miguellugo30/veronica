@@ -181,9 +181,7 @@ $(function() {
      $(document).on('change', '#calificacionLlamada', function(event) {
 
         let id = $(this).val();
-        console.log(id);
         let url = currentURL[0].replace('agentes/')  + '/formularios/' + id;
-        console.log(url)
 
         $.ajax({
             url: url,
