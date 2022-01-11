@@ -85,7 +85,7 @@ class AudiosEmpresasController extends Controller
             [
                 'nombre' => $request->input('nombre'),
                 'descripcion'   => $request->input('descripcion'),
-                'ruta' =>  'Grabaciones_'.$empresa_id."/".$request->input('ruta') ,
+                'ruta' =>  'Grabaciones_'.$empresa_id."/".str_replace(" ", "_", $request->input('ruta') ),
                 'Empresas_id'   => $empresa_id
             ]
           );
