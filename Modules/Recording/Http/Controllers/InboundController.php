@@ -81,8 +81,7 @@ class InboundController extends Controller
             $ruta = Storage::disk('public')->getAdapter()->getPathPrefix();
             //dd($ruta);
             $source = file_get_contents( 'http://'.$pbx->Config_Empresas->ms->ip_pbx.'/ws-ms/tmp/'.$archivo[1] );
-            Storage::put('tmp'.$archivo[1], $source);
-            //file_put_contents( $ruta.'tmp/'.$archivo[1], $source );
+            file_put_contents( $ruta.'tmp/'.$archivo[1], $source );
             $ruta = Storage::url( 'tmp/'.$archivo[1] ) ;
             $mensaje = "";
         }
