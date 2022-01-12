@@ -13,6 +13,8 @@ use nusoap_client;
 use Storage;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\LogController;
+use ZipArchive;
+use File;
 
 use App\Empresas;
 use App\Grabaciones;
@@ -144,22 +146,38 @@ class InboundController extends Controller
                 $ruta = Storage::disk('public')->getAdapter()->getPathPrefix();
                 $source = file_get_contents( 'http://'.$pbx->Config_Empresas->ms->ip_pbx.'/ws-ms/tmp/'.$archivo[1] );
                 file_put_contents( $ruta.'tmp/'.$empresa_id.'/'.$archivo[1], $source );
-                $ruta = Storage::url( 'tmp/'.$empresa_id.'/'.$archivo[1] ) ;
+                //Storage::url( 'tmp/'.$archivo[1] ) ;
+                Storage::url( 'tmp/'.$empresa_id.'/'.$archivo[1] ) ;
             }
 
         }
         /*
          * CREAMOS EL ZIP CON LOS ARCHIVOS
-         $zipper = new \Chumper\Zipper\Zipper;
+         */
+         $zip = new ZipArchive;
+
+        $fileName = 'grabaciones_'.$empresa_id.'.zip';
+
+        if ($zip->open(public_path("storage/".$fileName), \ZipArchive::CREATE)== TRUE)
+        {
+            $files = File::files( 'storage/tmp/'.$empresa_id.'/' );
+            foreach ($files as $key => $value){
+                $relativeName = basename($value);
+                $zip->addFile($value, $relativeName);
+            }
+            $zip->close();
+        }
+
+        /*
          $ruta = glob(public_path( '/storage/tmp/'.$empresa_id.'/*' ) );
          $zipper->make('storage/tmp/grabaciones_'.$empresa_id.'.zip')->add( $ruta )->close();
          $zipper->close();
-         **/
         /**
          * Borramos el directorio temporal
-         */
+         **/
         Storage::disk('public')->deleteDirectory('/tmp/'.$empresa_id);
-        return 'storage/tmp/grabaciones_'.$empresa_id.'.zip';
+        //return response()->download(public_path("storage/".$fileName));
+        return 'storage/grabaciones_'.$empresa_id.'.zip';
     }
 
     /**

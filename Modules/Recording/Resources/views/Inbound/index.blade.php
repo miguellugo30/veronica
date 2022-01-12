@@ -74,12 +74,12 @@
     </div><!--card-header-->
     <div class="card-body">
         <div class="row ">
-            <div class="box-tools">
+            <!--div class="box-tools">
                 <div class="col-12">
                     <i class="fas fa-circle text-secondary"></i> La grabacion esta en el servidor de grabaciones<br>
                     <i class="fas fa-circle text-primary"></i> La grabacion esta en el FTP del cliente
                 </div>
-            </div>
+            </div-->
             <div class="col-12 viewreportedesglose"></div>
         </div><!-- /.row -->
     </div><!--card-header-->
