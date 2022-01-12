@@ -68,13 +68,13 @@ mix.js([
         'resources/js/module_inbound/reporte_llamadas_agentes.js',
         'resources/js/module_inbound/reporte_productividad_agentes.js',
         'resources/js/module_inbound/reporteTiempoInactivo.js',
-    ], 'public/js/inbound.js')/*
+    ], 'public/js/inbound.js')
     .js([
         'resources/js/module_recording/menu.js',
         'resources/js/module_recording/Grabaciones.js',
         'resources/js/module_recording/Inbound.js',
         'resources/js/module_recording/Almacenamiento.js',
-    ], 'public/js/recording.js')
+    ], 'public/js/recording.js')/*
     .js([
         'resources/js/module_voicemail/menu.js',
         'resources/js/module_voicemail/grabacionesVoicemail.js',

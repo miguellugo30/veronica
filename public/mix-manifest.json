@@ -4,5 +4,6 @@
     "/js/checkSesion.js": "/js/checkSesion.js",
     "/js/inbound.js": "/js/inbound.js",
     "/js/menu_principal.js": "/js/menu_principal.js",
+    "/js/recording.js": "/js/recording.js",
     "/js/settings.js": "/js/settings.js"
 }
