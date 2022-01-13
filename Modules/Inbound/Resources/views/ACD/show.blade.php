@@ -1,79 +1,61 @@
-<div class="box box-primary">
-    <div class="box-header with-border">
-        <h3 class="box-title"><b><i class="fas fa-chart-pie"></i></i> Métrica ACD</b></h3>
-        <!--div class="box-tools pull-right">
-            <button class='btn btn-primary btn-sm descargar-reporte' >
-                <i class="fas fa-circle-notch fa-spin" style="display:none"></i>
-                Descargar
-            </button>
-        </div-->
-    </div><!-- /.box-header -->
-    <div class="box-body">
+<div class="card card-outline card-primary">
+    <div class="card-header">
+        <h1 class="card-title"><b><i class="fas fa-chart-pie"></i> Métrica ACD</b></h1>
+    </div><!--card-header-->
+    <div class="card-body">
         <div class="row">
             <div class="col">
-                <div class="box-primary">
-                    <!--div class="box-header">
-                        <i class="fas fa-bookmark"></i>
-                        <h3 class="box-title"> <b>GENERAL</b> </h3>
-                    </div-->
-                    <div class="box-body">
-                        <div class="row">
-                            <div class="col">
-                                <table class="table table-bordered table-striped table-sm align-middle">
-                                    <thead class="thead-light">
-                                        <tr class="text-center">
-                                            <th colspan="3">Estadísticas</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr >
-                                            <td>Todas</td>
-                                            <td class="text-center">{{ $array->Todas }}</td>
-                                            <td class="text-center">{{ number_format( ( ($array->Todas) * 100 ) / ( $array->Todas ), 2) }} %</td>
-                                        </tr>
-                                        <tr >
-                                            <td>Contestadas</td>
-                                            <td class="text-center">{{ $array->Contestadas }}</td>
-                                            <td class="text-center">{{ number_format( ( $array->Contestadas * 100 ) / ( $array->Todas ), 2) }} %</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Abandonadas</td>
-                                            <td class="text-center">{{ $array->NoContestadas }}</td>
-                                            <td class="text-center">{{ number_format( ( $array->NoContestadas * 100 ) / ( $array->Todas ), 2) }} %</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Desviadas</td>
-                                            <td class="text-center">{{ $array->Desviadas }}</td>
-                                            <td class="text-center">{{ number_format( ( $array->Desviadas * 100 ) / ( $array->Todas ), 2) }} %</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Promedio de Espera</td>
-                                            <td class="text-center">{{ $array->PromediodeLlamada }} Hrs.</td>
-                                            <td class="text-center"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Promedio de Llamada</td>
-                                            <td class="text-center">{{ $array->PromediotiempoEspera }} Hrs.</td>
-                                            <td class="text-center"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Promedio de Abandono</td>
-                                            <td class="text-center">{{ $array->PromedioAbandono }} Hrs.</td>
-                                            <td class="text-center"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="col">
-                                <div id="container_1" style="height: 300px;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <table class="table table-bordered table-striped table-sm align-middle">
+                    <thead class="thead-light">
+                        <tr class="text-center">
+                            <th colspan="3">Estadísticas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr >
+                            <td>Todas</td>
+                            <td class="text-center">{{ $array->Todas }}</td>
+                            <td class="text-center">{{ number_format( ( ($array->Todas) * 100 ) / ( $array->Todas ), 2) }} %</td>
+                        </tr>
+                        <tr >
+                            <td>Contestadas</td>
+                            <td class="text-center">{{ $array->Contestadas }}</td>
+                            <td class="text-center">{{ number_format( ( $array->Contestadas * 100 ) / ( $array->Todas ), 2) }} %</td>
+                        </tr>
+                        <tr>
+                            <td>Abandonadas</td>
+                            <td class="text-center">{{ $array->NoContestadas }}</td>
+                            <td class="text-center">{{ number_format( ( $array->NoContestadas * 100 ) / ( $array->Todas ), 2) }} %</td>
+                        </tr>
+                        <tr>
+                            <td>Desviadas</td>
+                            <td class="text-center">{{ $array->Desviadas }}</td>
+                            <td class="text-center">{{ number_format( ( $array->Desviadas * 100 ) / ( $array->Todas ), 2) }} %</td>
+                        </tr>
+                        <tr>
+                            <td>Promedio de Espera</td>
+                            <td class="text-center">{{ $array->PromediodeLlamada }} Hrs.</td>
+                            <td class="text-center"></td>
+                        </tr>
+                        <tr>
+                            <td>Promedio de Llamada</td>
+                            <td class="text-center">{{ $array->PromediotiempoEspera }} Hrs.</td>
+                            <td class="text-center"></td>
+                        </tr>
+                        <tr>
+                            <td>Promedio de Abandono</td>
+                            <td class="text-center">{{ $array->PromedioAbandono }} Hrs.</td>
+                            <td class="text-center"></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-        </div><!-- /.row -->
-    </div><!-- ./box-body -->
-</div>
+            <div class="col">
+                <div id="container_1" style="height: 300px;"></div>
+            </div>
+        </div>
+    </div><!--card-header-->
+</div><!--card-->
 <script>
     $(function() {
         /**
@@ -123,17 +105,12 @@
 </script>
 
 @if ( $reportes['nivel-servicio'] == 1 )
-    <div class="box box-primary">
-        <div class="box-header with-border">
-            <h3 class="box-title"><b><i class="fas fa-chart-line"></i></i> Nivel de servicio</b></h3>
-            <!--div class="box-tools pull-right">
-                <button class='btn btn-primary btn-sm descargar-reporte' >
-                    <i class="fas fa-circle-notch fa-spin" style="display:none"></i>
-                    Descargar
-                </button>
-            </div-->
-        </div><!-- /.box-header -->
-        <div class="box-body">
+
+    <div class="card card-outline card-primary">
+        <div class="card-header">
+            <h1 class="card-title"><b><i class="fas fa-chart-line"></i> Nivel de servicio</b></h1>
+        </div><!--card-header-->
+        <div class="card-body">
             <div class="row">
                 <div class="col">
                     <table class="table table-bordered table-striped table-sm align-middle">
@@ -166,8 +143,8 @@
                     <div class="col" id="container_2" style="height: 600px;"></div>
                 </div>
             </div>
-        </div><!-- ./box-body -->
-    </div>
+        </div><!--card-header-->
+    </div><!--card-->
     <script>
         $(function() {
             /**
@@ -220,17 +197,12 @@
     </script>
 @endif
 @if ( $reportes['tendencia'] == 1 )
-    <div class="box box-primary">
-        <div class="box-header with-border">
-            <h3 class="box-title"><b><i class="fas fa-chart-line"></i></i> Tendencia de Llamadas</b></h3>
-            <!--div class="box-tools pull-right">
-                <button class='btn btn-primary btn-sm descargar-reporte' >
-                    <i class="fas fa-circle-notch fa-spin" style="display:none"></i>
-                    Descargar
-                </button>
-            </div-->
-        </div><!-- /.box-header -->
-        <div class="box-body">
+
+    <div class="card card-outline card-primary">
+        <div class="card-header">
+            <h1 class="card-title"><b><i class="fas fa-chart-line"></i></i> Tendencia de Llamadas</b></b></h1>
+        </div><!--card-header-->
+        <div class="card-body">
             <div class="row">
                 <div class="col table-responsive">
                     <table class="table table-bordered table-striped table-sm align-middle">
@@ -269,8 +241,9 @@
                     <div class="col" id="container_3" style="height: 600px;"></div>
                 </div>
             </div>
-        </div><!-- ./box-body -->
-    </div>
+        </div><!--card-header-->
+    </div><!--card-->
+
     <script>
 
         $(function() {
@@ -359,17 +332,12 @@
 
 @endif
 @if ( $reportes['calificaciones'] == 1 )
-    <div class="box box-primary">
-        <div class="box-header with-border">
-            <h3 class="box-title"><b><i class="fas fa-chart-line"></i></i> Calificaciones</b></h3>
-            <!--div class="box-tools pull-right">
-                <button class='btn btn-primary btn-sm descargar-reporte' >
-                    <i class="fas fa-circle-notch fa-spin" style="display:none"></i>
-                    Descargar
-                </button>
-            </div-->
-        </div><!-- /.box-header -->
-        <div class="box-body">
+
+    <div class="card card-outline card-primary">
+        <div class="card-header">
+            <h1 class="card-title"><b><i class="fas fa-chart-line"></i></i> Calificaciones</b></h1>
+        </div><!--card-header-->
+        <div class="card-body">
             <div class="row">
                 <div class="col table-responsive">
                     <table class="table table-bordered table-striped table-sm align-middle">
@@ -396,8 +364,9 @@
                     <div class="col" id="container_4" style="height: 300px;"></div>
                 </div>
             </div>
-        </div><!-- ./box-body -->
-    </div>
+        </div><!--card-header-->
+    </div><!--card-->
+
     <script>
 
         $(function() {
