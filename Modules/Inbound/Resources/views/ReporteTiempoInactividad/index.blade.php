@@ -23,7 +23,7 @@
             </button>
         </div>
     </div><!--card-header-->
-    <div class="card-body">
+    <div class="card-body filtro-reporte">
         <div class="row">
             <div class="col">
                 <div class="alert alert-dark col text-center" role="alert">
@@ -136,6 +136,7 @@
                 <button type="submit" class="btn btn-primary generarReporteTiempoInactivo text-center">Generar</button>
             </div>
 
+    </div><!--card-header-->
     </div><!--card-header-->
   </div>
 
