@@ -77,22 +77,22 @@
     </div><!--card-header-->
   </div>
 
-<div class="box box-primary" id='body-reporte' style='display:none'>
-    <div class="box-header with-border">
-        <h3 class="box-title"><b><i class="fas fa-filter"></i> Desglose</b></h3>
-        <div class="box-tools pull-right">
+
+  <div class="card card-outline card-primary" id='body-reporte' style='display:none'>
+    <div class="card-header">
+        <h1 class="card-title"><b><i class="fas fa-filter"></i> Desglose</b></h1>
+        <div class="card-tools">
             <button class='btn btn-primary btn-sm descargar-reporte' >
                 <i class="fas fa-circle-notch fa-spin" style="display:none"></i>
                 Descargar
             </button>
         </div>
-    </div><!-- /.box-header -->
-    <div class="box-body">
-        <div class="row ">
-            <div class="col-12 viewreportedesglose">
-            </div>
-        </div><!-- /.row -->
-    </div><!-- ./box-body -->
-</div>
+    </div><!--card-header-->
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12 viewreportedesglose"></div>
+        </div>
+    </div><!--card-header-->
+</div><!--card-->
 
 <iframe id="iFrameDescarga" src="" frameborder="0" style="display:none"></iframe>
