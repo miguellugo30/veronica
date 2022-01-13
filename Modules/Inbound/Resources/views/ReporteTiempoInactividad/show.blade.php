@@ -1,8 +1,8 @@
-<div class="box box-primary">
-    <div class="box-header with-border">
-        <h3 class="box-title"><b><i class="fas fa-chart-line"></i></i> Inactividad por agentes</b></h3>
-    </div><!-- /.box-header -->
-    <div class="box-body">
+<div class="card card-outline card-primary">
+    <div class="card-header">
+        <h1 class="card-title"><b><i class="fas fa-chart-line"></i> Inactividad por agentes</b></h1>
+    </div><!--card-header-->
+    <div class="card-body">
         <div class="row">
             <div class="col table-responsive">
                 <table class="table table-bordered table-striped table-sm align-middle">
@@ -66,5 +66,18 @@
         <div class="col align-items-center">
             <div class="col" id="container_4" style="height: 300px;"></div>
         </div>
+    </div><!--card-header-->
+</div><!--card-->
+
+
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title"><b><i class="fas fa-chart-line"></i></i> Inactividad por agentes</b></h3>
+    </div><!-- /.box-header -->
+    <div class="box-body">
+        <div class="row">
+
+        </div>
+
     </div><!-- ./box-body -->
 </div>

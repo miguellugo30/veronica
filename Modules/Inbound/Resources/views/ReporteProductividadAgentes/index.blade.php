@@ -16,15 +16,15 @@
 
 <div class="card card-outline card-primary">
     <div class="card-header">
-        <h3 class="card-title"><b><i class="fas fa-filter"></i> Filtro</b></h3>
+        <h3 class="card-title"><b><i class="fas fa-filter"></i> Filtro: Productividad agentes</b></h3>
         <div class="card-tools pull-right">
             <button class='btn btn-primary btn-sm nuevo-reporte' style='display:none'>
                 Nuevo Reporte
             </button>
         </div>
     </div><!--card-header-->
-    <div class="card-body">
-        <div class="row">
+    <div class="card-body filtro-reporte">
+        <div class="row ">
             <div class="col">
                 <div class="alert alert-dark col text-center" role="alert">
                     <b>Filtros por fecha</b>
