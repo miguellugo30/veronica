@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -49,12 +49,12 @@ class Bases_Datos extends Model
      */
     public function Plantillas()
     {
-        return $this->belongsTo('Nimbus\Cat_Plantilla', 'fk_cat_plantilla_id' );
+        return $this->belongsTo('App\Cat_Plantilla', 'fk_cat_plantilla_id' );
     }
     /**
      * Relacion uno a uno con Config Empresas
      */
     public function Empresas()
     {
-        return $this->belongsTo('Nimbus\Empresas', 'fk_empresa_id','id');
+        return $this->belongsTo('App\Empresas', 'fk_empresa_id','id');
     }}

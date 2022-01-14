@@ -5,10 +5,10 @@ namespace Modules\Settings\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Nimbus\Http\Controllers\LogController;
+use App\Http\Controllers\LogController;
 use Illuminate\Support\Facades\Auth;
-use Nimbus\Grupos;
-use Nimbus\User;
+use App\Grupos;
+use App\User;
 use Modules\Settings\Http\Requests\GruposRequest;
 
 

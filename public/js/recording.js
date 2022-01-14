@@ -236,9 +236,11 @@ $(function () {
 /***/ (function(module, exports) {
 
 $(function () {
+  var currentURL = window.location.href;
   /**
    * Evento para mostrar los resultados en el DataTable
    */
+
   $(document).on('click', '.filtrar', function (event) {
     event.preventDefault();
     /**
@@ -252,7 +254,7 @@ $(function () {
     var fechaF = $("#fechaFin").val();
     var hrI = $("#hrIni").val();
     var hrF = $("#hrFin").val();
-    var url = currentURL + '/Inbound';
+    var url = currentURL + 'recording/Inbound';
 
     var _token = $("input[name=_token]").val();
 
@@ -301,7 +303,7 @@ $(function () {
     var hrF = $("#hrFin").val();
     var fechaIni = fechaI + " " + hrI + ":00";
     var fechaFin = fechaF + " " + hrF + ":59";
-    var url = currentURL + "/Inbound/descargar/" + fechaIni + "/" + fechaFin;
+    var url = currentURL + "recording/Inbound/descargar/" + fechaIni + "/" + fechaFin;
     $('#iFrameDescarga').attr('src', url);
   });
   /**
@@ -311,7 +313,7 @@ $(function () {
   $(document).on('click', '.escuchar-grabacion', function (event) {
     event.preventDefault();
     var grab = $(this).attr('id');
-    var url = currentURL + '/Inbound/escuchar';
+    var url = currentURL + 'recording/Inbound/escuchar';
 
     var _token = $("input[name=_token]").val();
 
@@ -366,7 +368,7 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
-    var url = currentURL + '/Inbound/descargar';
+    var url = currentURL + 'recording/Inbound/descargar';
 
     if (valoresCheck.length == 0) {
       Swal.fire('Error!', 'Debes elegir por lo menos una grabacion.', 'error');
@@ -412,7 +414,7 @@ $(function () {
           var _token = $("input[name=_token]").val();
 
           var _method = "DELETE";
-          var url = currentURL + '/Inbound/0';
+          var url = currentURL + 'recording/Inbound/0';
           $.ajax({
             url: url,
             type: 'POST',
@@ -426,7 +428,7 @@ $(function () {
               var fechaF = $("#fechaFin").val();
               var hrI = $("#hrIni").val();
               var hrF = $("#hrFin").val();
-              var url = currentURL + '/Inbound';
+              var url = currentURL + 'recording/Inbound';
 
               var _token = $("input[name=_token]").val();
 
@@ -469,21 +471,21 @@ $(function () {
    * Evento para el menu de sub categorias y mostrar la vista
    */
 
-  $(document).on("click", ".sub-menu", function (e) {
+  $(document).on("click", ".sub-menu-recording", function (e) {
     e.preventDefault();
     var id = $(this).data("id");
 
     if (id == 'sub-36') {
-      url = currentURL + '/Inbound';
+      url = currentURL + 'recording/Inbound';
       table = ' #tableInbound';
     } else if (id == 'sub-37') {
-      url = currentURL + '/Outbound';
+      url = currentURL + 'recording/Outbound';
       table = ' #tableOutbound';
     } else if (id == 'sub-38') {
-      url = currentURL + '/Manuales';
+      url = currentURL + 'recording/Manuales';
       table = ' #tableManuales';
     } else if (id == 'cat-27') {
-      url = currentURL + '/Almacenamiento';
+      url = currentURL + 'recording/Almacenamiento';
       table = ' #tableAlmacenamiento';
     }
 
@@ -505,10 +507,10 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_recording\menu.js */"./resources/js/module_recording/menu.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_recording\Grabaciones.js */"./resources/js/module_recording/Grabaciones.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_recording\Inbound.js */"./resources/js/module_recording/Inbound.js");
-module.exports = __webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_recording\Almacenamiento.js */"./resources/js/module_recording/Almacenamiento.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_recording/menu.js */"./resources/js/module_recording/menu.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_recording/Grabaciones.js */"./resources/js/module_recording/Grabaciones.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_recording/Inbound.js */"./resources/js/module_recording/Inbound.js");
+module.exports = __webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_recording/Almacenamiento.js */"./resources/js/module_recording/Almacenamiento.js");
 
 
 /***/ })

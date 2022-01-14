@@ -6,18 +6,18 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use Nimbus\Exports\ReporteRecordingVoiceMailExport;
+use App\Exports\ReporteRecordingVoiceMailExport;
 use Maatwebsite\Excel\Facades\Excel;
 use nusoap_client;
 use Storage;
 use DB;
 use Illuminate\Support\Facades\Artisan;
-use Nimbus\Mail\EnvioBuzonVozMail;
+use App\Mail\EnvioBuzonVozMail;
 use Illuminate\Support\Facades\Mail;
-use Nimbus\Http\Controllers\LogController;
+use App\Http\Controllers\LogController;
 
-use Nimbus\Grabaciones_buzon_voz;
-Use Nimbus\Empresas;
+use App\Grabaciones_buzon_voz;
+Use App\Empresas;
 
 class GrabacionesBuzonVozController extends Controller
 {
@@ -305,13 +305,13 @@ class GrabacionesBuzonVozController extends Controller
             }
 
         }
-        /**
+        /*
          * CREAMOS EL ZIP CON LOS ARCHIVOS
+         $zipper = new \Chumper\Zipper\Zipper;
+         $ruta = glob(public_path( '/storage/tmp/'.$empresa_id.'/*' ) );
+         $zipper->make('storage/tmp/grabaciones_buzon_voz_'.$empresa_id.'.zip')->add( $ruta )->close();
+         $zipper->close();
          **/
-        $zipper = new \Chumper\Zipper\Zipper;
-        $ruta = glob(public_path( '/storage/tmp/'.$empresa_id.'/*' ) );
-        $zipper->make('storage/tmp/grabaciones_buzon_voz_'.$empresa_id.'.zip')->add( $ruta )->close();
-        $zipper->close();
         /**
          * Borramos el directorio temporal
          **/

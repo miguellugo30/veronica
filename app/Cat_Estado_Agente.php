@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -33,6 +33,6 @@ class Cat_Estado_Agente extends Model
      */
     public function Agentes()
     {
-        return $this->hasOne('Nimbus\Agentes', 'Cat_Estdo_Agente_id', 'id');
+        return $this->hasOne('App\Agentes', 'Cat_Estdo_Agente_id', 'id');
     }
 }

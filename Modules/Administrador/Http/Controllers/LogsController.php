@@ -5,7 +5,7 @@ namespace Modules\Administrador\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Nimbus\Logs;
+use App\Logs;
 
 class LogsController extends Controller
 {

@@ -5,11 +5,11 @@ namespace Modules\Administrador\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Nimbus\Canales;
-use Nimbus\Cat_Extensiones;
-use Nimbus\Config_Empresas;
-use Nimbus\LicenciasBria;
-use Nimbus\Http\Controllers\LogController;
+use App\Canales;
+use App\Cat_Extensiones;
+use App\Config_Empresas;
+use App\LicenciasBria;
+use App\Http\Controllers\LogController;
 
 class CatExtensionesController extends Controller
 {
@@ -115,7 +115,7 @@ class CatExtensionesController extends Controller
      */
     public function edit($id)
     {
-        return view('administrador::edit');
+        return view('administrador::cat_extensiones.edit');
     }
 
     /**

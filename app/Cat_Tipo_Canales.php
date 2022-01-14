@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -36,7 +36,7 @@ class Cat_Tipo_Canales extends Model
      */
     public function Cat_Distribuidor()
     {
-       return $this->belongsTo('Nimbus\Cat_Distribuidor', 'Cat_Distribuidor_id', 'id');
+       return $this->belongsTo('App\Cat_Distribuidor', 'Cat_Distribuidor_id', 'id');
     }
 
     /**
@@ -44,6 +44,6 @@ class Cat_Tipo_Canales extends Model
      */
     public function Canales()
     {
-        return $this->hasOne('Nimbus\Canales', 'id', 'Cat_Canales_Tipo_id');
+        return $this->hasOne('App\Canales', 'id', 'Cat_Canales_Tipo_id');
     }
 }

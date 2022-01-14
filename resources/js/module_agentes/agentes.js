@@ -40,9 +40,9 @@ $(function() {
 
     $(document).on("click", ".nav-link", function(e) {
         $('.nav-link').attr('data-toggle', 'tab');
-        let id = $(this).attr('href');
-        $(".tab-pane").removeClass('active');
-        $(id).addClass('active');
+        //let id = $(this).attr('href');
+        //$(".tab-pane").removeClass('active');
+        //$(id).addClass('active');
     });
 
     $(document).on("click", ".close", function(e) {
@@ -52,6 +52,7 @@ $(function() {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
+    /*
     var initialLocaleCode = 'es';
     var calendarEl = document.getElementById('calendar');
 
@@ -75,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     calendar.render();
-
+    */
     var id_agente = $('#id_agente').val();
     var timer = null;
     let currentURL = window.location.href.split('?');
@@ -99,11 +100,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     $(".colgar-llamada").prop("disabled", false);
 
                     $.get(currentURL[0] + "/" + id_agente + "/edit", function(data, textStatus, jqXHR) {
-                        $(".view-call").html(data);
+                        $(".viewResult").html(data);
                         $(".historico-llamadas").DataTable({
                             "searching": false,
                             "lengthChange": false,
-                            "iDisplayLength": 5
+                            "iDisplayLength": 5,
+                            "responsive": true,
+                            language: {
+                                url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json'
+                            }
                         });
                     });
 
@@ -119,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else if (obj['status'] == 0) {
 
                     if (obj['monitoreo'] == 1) {
-                        $(".view-call").html('<div class="col-12 text-center" style="padding-top: 19%;"><i class="fas fa-spinner fa-10x fa-spin text-info"></i></div>');
+                        $(".viewResult").html('<div class="col-12 text-center" style="padding-top: 19%;"><i class="fas fa-spinner fa-10x fa-spin text-info"></i></div>');
                         $(".colgar-llamada").prop("disabled", true);
                     }
                 }
@@ -139,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let id_agente = $('#id_agente').val();
         let canal = $("#canal").val();
         let canal_entrante = $("#canal_entrante").val();
-        let id_calificacion = $("#calificacion option:selected").data('calificacionid');
+        let id_calificacion = $("#calificacionLlamada option:selected").data('calificacionid');
         let uniqueid = $("#uniqueid").val();
         let _token = $("input[name=_token]").val();
         let datosFormulario = $(".formularioView").serializeArray();
@@ -158,8 +163,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 _token: _token
             }
         }).done(function(msg) {
-            $(".view-call").html(msg);
-            $(".view-call").html('<div class="col-12 text-center" style="padding-top: 19%;"><i class="fas fa-spinner fa-10x fa-spin text-info"></i></div>');
+            console.log(msg);
+            $(".viewResult").html(msg);
+            $(".viewResult").html('<div class="col-12 text-center" style="padding-top: 19%;"><i class="fas fa-spinner fa-10x fa-spin text-info"></i></div>');
             $(".estado-agente").html("<i class='fa fa-circle text-success'></i> Disponible");
             $(".colgar-llamada").prop("disabled", true);
             start();

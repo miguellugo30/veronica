@@ -5,9 +5,9 @@ namespace Modules\Administrador\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Nimbus\Cat_Tipo_Canales;
-use Nimbus\Cat_Distribuidor;
-use Nimbus\Http\Controllers\LogController;
+use App\Cat_Tipo_Canales;
+use App\Cat_Distribuidor;
+use App\Http\Controllers\LogController;
 use Modules\Administrador\Http\Requests\TipoCanalRequest;
 
 class TipoCanalcontroller extends Controller
@@ -18,7 +18,7 @@ class TipoCanalcontroller extends Controller
      */
     public function index()
     {
-        $tipocanales = Cat_Tipo_Canales::active()->with('Cat_Distribuidor')->get();
+        $tipocanales = Cat_Tipo_Canales::active()->get();
         //dd($tipocanales);
         return view('administrador::cat_tipo_canal.index',compact('tipocanales'));
     }
@@ -48,7 +48,7 @@ class TipoCanalcontroller extends Controller
         //$cat = Cat_Tipo_Canales::create( $request->all() );
         $cat = Cat_Tipo_Canales::create(['nombre' => $request->input('nombre'),
                                          'prefijo'=> $request->input('prefijo'),
-                                         'Cat_Distribuidor_id'=> $request->input('distribuidor')
+                                         'Cat_Distribuidor_id'=>1
                                         ]);
         /**
          * Creamos el logs
@@ -106,7 +106,7 @@ class TipoCanalcontroller extends Controller
                                 ->update([
                                     'nombre' => $request->input('nombre'),
                                     'prefijo' => $request->input('prefijo'),
-                                    'Cat_Distribuidor_id' => $request->input('distribuidor')
+                                    'Cat_Distribuidor_id' => 1
                                 ]);
         /**
          * Creamos el logs

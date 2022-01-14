@@ -34,7 +34,7 @@ $(function() {
                 let id = $("#idSeleccionado").val();
                 let _method = "DELETE";
                 let _token = $("input[name=_token]").val();
-                let url = currentURL + '/Agentes/' + id;
+                let url = currentURL + 'settings/Agentes/' + id;
 
                 $.ajax({
                     url: url,
@@ -67,7 +67,7 @@ $(function() {
         $('#action').removeClass('deleteAgente');
         $('#action').addClass('saveAgente');
 
-        let url = currentURL + "/Agentes/create";
+        let url = currentURL + "settings/Agentes/create";
 
         $.get(url, function(data, textStatus, jqXHR) {
             $('#modal').modal('show');
@@ -81,7 +81,7 @@ $(function() {
 
         event.preventDefault();
         var id = $("#idSeleccionado").val();
-        var url = currentURL + '/Agentes/' + id + '/edit';
+        var url = currentURL + 'settings/Agentes/' + id + '/edit';
 
         $('#tituloModal').html('Editar Agente');
         $('#action').addClass('updateAgente');
@@ -118,7 +118,7 @@ $(function() {
         let editar_datos = $("input[name='editar_datos']:checked").val();
         let _token = $("input[name=_token]").val();
         let _method = "PUT";
-        let url = currentURL + '/Agentes/' + id;
+        let url = currentURL + 'settings/Agentes/' + id;
 
         $.post(url, {
                 grupo: grupo,
@@ -180,8 +180,8 @@ $(function() {
         let editar_datos = $("input[name='editar_datos']:checked").val();
         let Cat_Estado_Agente_id = $("#Cat_Estado_Agente_id").val();
         let _token = $("input[name=_token]").val();
-        let url = currentURL + '/Agentes';
-
+        let url = currentURL + 'settings/Agentes';
+        /*
         if (perfil == 0 && canal == 0) {
             Swal.fire(
                 'Error!',
@@ -189,7 +189,7 @@ $(function() {
                 'error'
             )
         } else {
-
+            */
             $.post(url, {
                     grupo: grupo,
                     tipo_licencia: tipo_licencia,
@@ -228,7 +228,7 @@ $(function() {
                 .fail(function(data) {
                     printErrorMsg(data.responseJSON.errors);
                 });
-        }
+        //}
     });
     /**
      * Evento para guardar el nuevo agente

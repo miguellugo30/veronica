@@ -104,7 +104,7 @@ $(function () {
     $('#tituloModal').html('Alta de Perfil Marcacion');
     $('#action').removeClass('deletePerfilMarcacion');
     $('#action').addClass('savePerfilMarcacion');
-    var url = currentURL + "/Perfil_Marcacion/create";
+    var url = currentURL + "settings/Perfil_Marcacion/create";
     $.get(url, function (data, textStatus, jqXHR) {
       $('#modal').modal('show');
       $("#modal-body").html(data);
@@ -124,7 +124,7 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
-    var url = currentURL + '/Perfil_Marcacion';
+    var url = currentURL + 'settings/Perfil_Marcacion';
     $.post(url, {
       nombre: nombre,
       descripcion: descripcion,
@@ -165,7 +165,7 @@ $(function () {
   $(document).on('click', '.editPerfilMarcacion', function (event) {
     event.preventDefault();
     var id = $("#idSeleccionado").val();
-    var url = currentURL + '/Perfil_Marcacion/' + id + '/edit';
+    var url = currentURL + 'settings/Perfil_Marcacion/' + id + '/edit';
     $('#tituloModal').html('Editar Perfil Marcacion');
     $('#action').addClass('updatePerfilMarcacion');
     $('#action').removeClass('savePerfilMarcacion');
@@ -197,7 +197,7 @@ $(function () {
     var _token = $("input[name=_token]").val();
 
     var _method = "PUT";
-    var url = currentURL + '/Perfil_Marcacion/' + id;
+    var url = currentURL + 'settings/Perfil_Marcacion/' + id;
     $.post(url, {
       id: id,
       nombre: nombre,
@@ -244,7 +244,7 @@ $(function () {
 
         var _token = $("input[name=_token]").val();
 
-        var url = currentURL + '/Perfil_Marcacion/' + id;
+        var url = currentURL + 'settings/Perfil_Marcacion/' + id;
         $.ajax({
           url: url,
           type: 'POST',
@@ -302,7 +302,7 @@ $(function () {
     $('#tituloModal').html('Alta de Prefijo Marcacion');
     $('#action').removeClass('deletePrefijoMarcacion');
     $('#action').addClass('savePrefijoMarcacion');
-    var url = currentURL + "/PrefijosMarcacion/create";
+    var url = currentURL + "settings/PrefijosMarcacion/create";
     $.get(url, function (data, textStatus, jqXHR) {
       $('#modal').modal('show');
       $("#modal-body").html(data);
@@ -322,7 +322,7 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
-    var url = currentURL + '/PrefijosMarcacion';
+    var url = currentURL + 'settings/PrefijosMarcacion';
     $.post(url, {
       nombre: nombre,
       descripcion: descripcion,
@@ -362,7 +362,7 @@ $(function () {
   $(document).on('click', '.editPrefijoMarcacion', function (event) {
     event.preventDefault();
     var id = $("#idSeleccionado").val();
-    var url = currentURL + '/PrefijosMarcacion/' + id + '/edit';
+    var url = currentURL + 'settings/PrefijosMarcacion/' + id + '/edit';
     $('#tituloModal').html('Editar Prefijos');
     $('#action').addClass('updatePrefijoMarcacion');
     $('#action').removeClass('savePrefijoMarcacion');
@@ -393,7 +393,7 @@ $(function () {
     var _token = $("input[name=_token]").val();
 
     var _method = "PUT";
-    var url = currentURL + '/PrefijosMarcacion/' + id;
+    var url = currentURL + 'settings/PrefijosMarcacion/' + id;
     $.post(url, {
       id: id,
       nombre: nombre,
@@ -439,7 +439,7 @@ $(function () {
 
         var _token = $("input[name=_token]").val();
 
-        var url = currentURL + '/PrefijosMarcacion/' + id;
+        var url = currentURL + 'settings/PrefijosMarcacion/' + id;
         $.ajax({
           url: url,
           type: 'POST',
@@ -487,10 +487,12 @@ $(function () {
 /***/ (function(module, exports) {
 
 $(function () {
+  var currentURL = window.location.href;
   /**
    * Evento para agregar una nueva fila para campos nuevos en el formulario
    */
-  $(document).on('click', '#add', function () {
+
+  $(document).on('click', '#add-input-form', function () {
     var clickID = $(".tableNewForm tbody tr.clonar:last").attr('id').replace('tr_', '');
     $('#form_opc .form-control-sm').val(''); // Genero el nuevo numero id
 
@@ -500,10 +502,17 @@ $(function () {
 
     for (var i = 0; i < IDInput.length; i++) {
       fila.find('#' + IDInput[i]).attr('name', IDInput[i] + "_" + newID); //Cambiamos el nombre de los campos de la fila a clonar
+
+      if (IDInput[i] != 'editable' || IDInput[i] != 'obligatorio') {
+        fila.find('#' + IDInput[i]).attr('value', '');
+      }
+
+      fila.find('#' + IDInput[i]).attr('data-id-campo', newID);
     }
 
     fila.find('.btn-info').css('display', 'none');
-    fila.find('#id_campo').attr('value', '');
+    fila.find('.btn-danger').css('display', 'block');
+    fila.find('#id_campo').attr('value', '0');
     fila.attr("id", 'tr_' + newID);
   });
   /**
@@ -534,7 +543,7 @@ $(function () {
    * Evento para eliminar una fila de la tabla de nuevo formulario
    */
 
-  $(document).on('click', '.tr_edit_remove', function () {
+  $(document).on('click', '.tr_edit_form_remove', function () {
     var id = $(this).data('id-campo');
     var idForm = $("#id_formulario").val();
     var tr = $(this).closest('tr');
@@ -543,7 +552,7 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
-    var url = currentURL + '/campos/' + id + '&' + idForm;
+    var url = currentURL + 'settings/campos/' + id + '&' + idForm;
     $.ajax({
       url: url,
       type: 'POST',
@@ -568,9 +577,11 @@ $(function () {
 /***/ (function(module, exports) {
 
 $(function () {
+  var currentURL = window.location.href;
   /**
    * Evento para mostrar el boton de añadir y borrar cuando el tipo de speech sea dinamico
    */
+
   $(document).on('change', '.tipo', function (event) {
     event.preventDefault();
     var tipo = $('.tipo').val();
@@ -728,7 +739,7 @@ $(function () {
 
         var tr = $(_this).closest('tr');
         var id = $(_this).data('id');
-        var url = currentURL + '/speech/eliminar-opcion/' + id;
+        var url = currentURL + 'settings/speech/eliminar-opcion/' + id;
         $.ajax({
           url: url,
           type: 'POST',
@@ -741,6 +752,20 @@ $(function () {
             Swal.fire('Eliminado!', 'El registro ha sido eliminado.', 'success');
           }
         });
+      }
+    });
+  });
+  $(document).on('click', '.opcionSpeech', function () {
+    var id = $(this).data('id');
+    var SpeechId = $(this).data('speech-id');
+    $('#tituloModal').html('Vista de Speech');
+    var url = currentURL + 'settings/speech/' + id;
+    $.ajax({
+      url: url,
+      type: 'GET',
+      success: function success(result) {
+        $("#opcion_seleccionada_" + SpeechId).html(result);
+        $("#opcion_seleccionada_" + SpeechId).slideDown();
       }
     });
   });
@@ -794,7 +819,7 @@ $(function () {
 
         var _token = $("input[name=_token]").val();
 
-        var url = currentURL + '/Agentes/' + id;
+        var url = currentURL + 'settings/Agentes/' + id;
         $.ajax({
           url: url,
           type: 'POST',
@@ -822,7 +847,7 @@ $(function () {
     $('#tituloModal').html('Alta de Agente');
     $('#action').removeClass('deleteAgente');
     $('#action').addClass('saveAgente');
-    var url = currentURL + "/Agentes/create";
+    var url = currentURL + "settings/Agentes/create";
     $.get(url, function (data, textStatus, jqXHR) {
       $('#modal').modal('show');
       $("#modal-body").html(data);
@@ -835,7 +860,7 @@ $(function () {
   $(document).on('click', '.editAgente', function (event) {
     event.preventDefault();
     var id = $("#idSeleccionado").val();
-    var url = currentURL + '/Agentes/' + id + '/edit';
+    var url = currentURL + 'settings/Agentes/' + id + '/edit';
     $('#tituloModal').html('Editar Agente');
     $('#action').addClass('updateAgente');
     $('#action').removeClass('saveAgente');
@@ -875,7 +900,7 @@ $(function () {
     var _token = $("input[name=_token]").val();
 
     var _method = "PUT";
-    var url = currentURL + '/Agentes/' + id;
+    var url = currentURL + 'settings/Agentes/' + id;
     $.post(url, {
       grupo: grupo,
       tipo_licencia: tipo_licencia,
@@ -930,42 +955,47 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
-    var url = currentURL + '/Agentes';
-
+    var url = currentURL + 'settings/Agentes';
+    /*
     if (perfil == 0 && canal == 0) {
-      Swal.fire('Error!', 'Debes elegir un Canal o Perfil de marcacion.', 'error');
+        Swal.fire(
+            'Error!',
+            'Debes elegir un Canal o Perfil de marcacion.',
+            'error'
+        )
     } else {
-      $.post(url, {
-        grupo: grupo,
-        tipo_licencia: tipo_licencia,
-        nivel: nivel,
-        nombre: nombre,
-        usuario: usuario,
-        contrasena: contrasena,
-        extension: extension,
-        perfil: perfil,
-        Canales_id: canal,
-        canal: canal,
-        mix_monitor: mix_monitor,
-        calificar_llamada: calificar_llamada,
-        envio_sms: envio_sms,
-        editar_datos: editar_datos,
-        Cat_Estado_Agente_id: Cat_Estado_Agente_id,
-        _token: _token
-      }, function (data, textStatus, xhr) {
-        $('.viewResult').html(data);
-        $('.viewResult #tableAgentes').DataTable({
-          "lengthChange": true,
-          "order": [[2, "asc"]]
-        });
-      }).done(function () {
-        $('.modal-backdrop ').css('display', 'none');
-        $('#modal').modal('hide');
-        Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
-      }).fail(function (data) {
-        printErrorMsg(data.responseJSON.errors);
+        */
+
+    $.post(url, {
+      grupo: grupo,
+      tipo_licencia: tipo_licencia,
+      nivel: nivel,
+      nombre: nombre,
+      usuario: usuario,
+      contrasena: contrasena,
+      extension: extension,
+      perfil: perfil,
+      Canales_id: canal,
+      canal: canal,
+      mix_monitor: mix_monitor,
+      calificar_llamada: calificar_llamada,
+      envio_sms: envio_sms,
+      editar_datos: editar_datos,
+      Cat_Estado_Agente_id: Cat_Estado_Agente_id,
+      _token: _token
+    }, function (data, textStatus, xhr) {
+      $('.viewResult').html(data);
+      $('.viewResult #tableAgentes').DataTable({
+        "lengthChange": true,
+        "order": [[2, "asc"]]
       });
-    }
+    }).done(function () {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
+    }); //}
   });
   /**
    * Evento para guardar el nuevo agente
@@ -1039,7 +1069,7 @@ $(function () {
     $('#action').removeClass('deleteAudio');
     $('#action').addClass('saveAudio');
     $("#action").css('display', '');
-    var url = currentURL + "/Audios/create";
+    var url = currentURL + "settings/Audios/create";
     $.get(url, function (data, textStatus, jqXHR) {
       $('#modal').modal('show');
       $("#modal-body").html(data);
@@ -1068,7 +1098,7 @@ $(function () {
     formData.append("ruta", labelFile);
     formData.append("File", file);
     formData.append("_token", _token);
-    var url = currentURL + '/Audios';
+    var url = currentURL + 'settings/Audios';
     $.ajax({
       url: url,
       type: "post",
@@ -1111,7 +1141,7 @@ $(function () {
 
         var _token = $("input[name=_token]").val();
 
-        var url = currentURL + '/Audios/' + id;
+        var url = currentURL + 'settings/Audios/' + id;
         $.ajax({
           url: url,
           type: 'POST',
@@ -1136,7 +1166,7 @@ $(function () {
 
   $(document).on('click', '.reproducir-audio', function (event) {
     var id = $(this).data("id-audio");
-    var url = currentURL + '/Audios/' + id;
+    var url = currentURL + 'settings/Audios/' + id;
 
     var _token = $("input[name=_token]").val();
 
@@ -1195,7 +1225,7 @@ $(function () {
   $(document).on("click", ".newBaseDatos", function (e) {
     e.preventDefault();
     $('#tituloModal').html('Nueva base de datos');
-    var url = currentURL + '/BaseDatos/create';
+    var url = currentURL + 'settings/Base-Datos/create';
     $('#action').removeClass('updateBaseDatos');
     $('#action').addClass('saveBaseDatos');
     $.ajax({
@@ -1216,7 +1246,7 @@ $(function () {
 
   $(document).on("change", "#plantilla", function (e) {
     var id = $(this).val();
-    var url = currentURL + '/Plantillas/' + id;
+    var url = currentURL + 'settings/Plantillas/' + id;
     $.ajax({
       url: url,
       type: 'GET',
@@ -1240,7 +1270,7 @@ $(function () {
     formData.append("nombre", nombre);
     formData.append("plantilla", plantilla);
     formData.append("_token", _token);
-    var url = currentURL + '/BaseDatos';
+    var url = currentURL + 'settings/Base-Datos';
     $.ajax({
       url: url,
       type: "POST",
@@ -1257,7 +1287,8 @@ $(function () {
       $('#modal').modal('hide');
       $('.viewResult').html(data);
       $('.viewResult #tableBaseDatos').DataTable({
-        "lengthChange": false
+        "lengthChange": false,
+        "ordering": false
       });
       Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
     }).fail(function (data) {
@@ -1292,7 +1323,7 @@ $(function () {
     event.preventDefault();
     var id = $("#idSeleccionado").val();
     $('#tituloModal').html('Editar Base de datos');
-    var url = currentURL + '/BaseDatos/' + id + '/edit';
+    var url = currentURL + 'settings/Base-Datos/' + id + '/edit';
     $('#action').addClass('updateBaseDatos');
     $('#action').removeClass('saveBaseDatos');
     $.ajax({
@@ -1315,7 +1346,7 @@ $(function () {
     event.preventDefault();
     var id = $("#idSeleccionado").val();
     $('#tituloModalRegistros').html('Visualizar Base de datos');
-    var url = currentURL + '/BaseDatos/' + id;
+    var url = currentURL + 'settings/Base-Datos/' + id;
     $('#action').addClass('updateBaseDatos');
     $('#action').removeClass('saveBaseDatos');
     $.ajax({
@@ -1328,7 +1359,8 @@ $(function () {
         });
         $("#modal-body-registros").html(result);
         $('#registroBaseDatos').DataTable({
-          "lengthChange": true
+          "lengthChange": true,
+          "ordering": false
         });
       }
     });
@@ -1350,7 +1382,7 @@ $(function () {
     formData.append("accion", accion);
     formData.append("_token", _token);
     formData.append("_method", _method);
-    var url = currentURL + '/BaseDatos/' + id;
+    var url = currentURL + 'settings/Base-Datos/' + id;
     $.ajax({
       url: url,
       type: "POST",
@@ -1367,7 +1399,8 @@ $(function () {
       $('#modal').modal('hide');
       $('.viewResult').html(data);
       $('.viewResult #tableBaseDatos').DataTable({
-        "lengthChange": false
+        "lengthChange": false,
+        "ordering": false
       });
       Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
     }).fail(function (data) {
@@ -1379,6 +1412,52 @@ $(function () {
         $(".print-error-msg").find("ul").append('<li>' + data.responseJSON.message + '</li>');
       } else {
         printErrorMsg(data.responseJSON.errors);
+      }
+    });
+  });
+  /**
+  * Evento para eliminar una Base de Datos
+  */
+
+  $(document).on('click', '.deleteBaseDatos', function (event) {
+    event.preventDefault();
+    /**Modal de Alerta Swal.fire**/
+
+    Swal.fire({
+      title: 'Estas seguro?',
+      text: "Deseas eliminar el registro seleccionado!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Eliminar!',
+      cancelButtonText: 'Cancelar'
+    }).then(function (result) {
+      if (result.value) {
+        var id = $("#idSeleccionado").val();
+        var _method = "DELETE";
+
+        var _token = $("input[name=_token]").val();
+
+        var url = currentURL + 'settings/Base-Datos/' + id;
+        $.ajax({
+          url: url,
+          type: 'POST',
+          data: {
+            _token: _token,
+            _method: _method
+          },
+          success: function success(result) {
+            $('.modal-backdrop ').css('display', 'none');
+            $('#modal').modal('hide');
+            $('.viewResult').html(result);
+            $('.viewResult #tableBaseDatos').DataTable({
+              "lengthChange": false,
+              "ordering": false
+            });
+            Swal.fire('Eliminado!', 'El registro ha sido eliminado.', 'success');
+          }
+        });
       }
     });
   });
@@ -1419,7 +1498,7 @@ $(function () {
   $(document).on("click", ".newCalificaciones", function (e) {
     e.preventDefault();
     $('#tituloModal').html('Nuevas Calificaciones');
-    var url = currentURL + '/calificaciones/create';
+    var url = currentURL + 'settings/calificaciones/create';
     $('#action').removeClass('updateCalificaciones');
     $('#action').addClass('saveCalificaciones');
     $.ajax({
@@ -1468,7 +1547,7 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
-    var url = currentURL + '/calificaciones';
+    var url = currentURL + 'settings/calificaciones';
     $.post(url, {
       dataForm: data,
       _token: _token
@@ -1501,7 +1580,7 @@ $(function () {
     event.preventDefault();
     var id = $("#idSeleccionado").val();
     $('#tituloModal').html('Edicion de Calificaciones');
-    var url = currentURL + '/calificaciones/' + id + '/edit';
+    var url = currentURL + 'settings/calificaciones/' + id + '/edit';
     $('#action').removeClass('saveCalificaciones');
     $('#action').addClass('updateCalificaciones');
     $.ajax({
@@ -1532,7 +1611,7 @@ $(function () {
     var _token = $("input[name=_token]").val();
 
     var _method = "PUT";
-    var url = currentURL + '/calificaciones/' + id;
+    var url = currentURL + 'settings/calificaciones/' + id;
     $.post(url, {
       dataForm: data,
       _token: _token,
@@ -1573,7 +1652,7 @@ $(function () {
 
         var _token = $("input[name=_token]").val();
 
-        var url = currentURL + '/calificaciones/' + id;
+        var url = currentURL + 'settings/calificaciones/' + id;
         $.ajax({
           url: url,
           type: 'POST',
@@ -1601,7 +1680,7 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
-    var url = currentURL + '/calificaciones/eliminarCalificacion/' + id;
+    var url = currentURL + 'settings/calificaciones/eliminarCalificacion/' + id;
     var tr = $(this).closest('tr');
     $.ajax({
       url: url,
@@ -1633,7 +1712,7 @@ $(function () {
       showLoaderOnConfirm: true,
       preConfirm: function preConfirm(nombreForm) {
         var id = $("#idSeleccionado").val();
-        var url = currentURL + '/calificaciones/duplicar/' + id;
+        var url = currentURL + 'settings/calificaciones/duplicar/' + id;
 
         var _token = $("input[name=_token]").val();
 
@@ -1662,7 +1741,7 @@ $(function () {
 
   $(document).on('click', '.viewCalificaciones', function (event) {
     var id = $("#idSeleccionado").val();
-    var url = currentURL + '/calificaciones/' + id;
+    var url = currentURL + 'settings/calificaciones/' + id;
     $('#tituloModal').html('Visualizar Calificaciones');
     $.ajax({
       url: url,
@@ -1683,7 +1762,7 @@ $(function () {
   $(document).on('change', '#calificacion', function (event) {
     var id = $(this).val();
     console.log(id);
-    var url = currentURL + '/formularios/' + id;
+    var url = currentURL + 'settings/formularios/' + id;
     $.ajax({
       url: url,
       type: 'GET',
@@ -1729,7 +1808,7 @@ $(function () {
     $('#tituloModal').html('Alta de Evento');
     $('#action').removeClass('deleteEventoAgente');
     $('#action').addClass('saveEventoAgente');
-    var url = currentURL + "/EventosAgentes/create";
+    var url = currentURL + "settings/EventosAgentes/create";
     $.get(url, function (data, textStatus, jqXHR) {
       $('#modal').modal('show');
       $("#modal-body").html(data);
@@ -1747,7 +1826,7 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
-    var url = currentURL + '/EventosAgentes';
+    var url = currentURL + 'settings/EventosAgentes';
     $.post(url, {
       nombre: nombre,
       tiempo: tiempo,
@@ -1805,7 +1884,7 @@ $(function () {
 
         var _token = $("input[name=_token]").val();
 
-        var url = currentURL + '/EventosAgentes/' + id;
+        var url = currentURL + 'settings/EventosAgentes/' + id;
         $.ajax({
           url: url,
           type: 'POST',
@@ -1832,7 +1911,7 @@ $(function () {
     event.preventDefault();
     var id = $("#idSeleccionado").val();
     $('#tituloModal').html('Editar Evento');
-    var url = currentURL + '/EventosAgentes/' + id + '/edit';
+    var url = currentURL + 'settings/EventosAgentes/' + id + '/edit';
     $('#action').addClass('updateEventoAgente');
     $('#action').removeClass('saveEventoAgente');
     $.ajax({
@@ -1860,7 +1939,7 @@ $(function () {
     var _token = $("input[name=_token]").val();
 
     var _method = "PUT";
-    var url = currentURL + '/EventosAgentes/' + id;
+    var url = currentURL + 'settings/EventosAgentes/' + id;
     $.post(url, {
       nombre: nombre,
       tiempo: tiempo,
@@ -1946,7 +2025,7 @@ $(function () {
 
         var _token = $("input[name=_token]").val();
 
-        var url = currentURL + '/formularios/' + id;
+        var url = currentURL + 'settings/formularios/' + id;
         $.ajax({
           url: url,
           type: 'POST',
@@ -1972,7 +2051,7 @@ $(function () {
   $(document).on("click", ".newFormulario", function (e) {
     e.preventDefault();
     $('#tituloModal').html('Nuevo Formulario');
-    var url = currentURL + '/formularios/create';
+    var url = currentURL + 'settings/formularios/create';
     $('#action').removeClass('updateFormulario');
     $('#action').addClass('saveFormulario');
     $.ajax({
@@ -2001,7 +2080,7 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
-    var url = currentURL + '/formularios';
+    var url = currentURL + 'settings/formularios';
     $.post(url, {
       dataForm: data,
       _token: _token
@@ -2022,7 +2101,7 @@ $(function () {
     event.preventDefault();
     var id = $("#idSeleccionado").val();
     $('#tituloModal').html('Detalles de Formulario');
-    var url = currentURL + '/formularios/' + id;
+    var url = currentURL + 'settings/formularios/' + id;
     $('#action').removeClass('updateFormulario');
     $('#action').addClass('saveFormulario');
     $.ajax({
@@ -2045,7 +2124,7 @@ $(function () {
     event.preventDefault();
     var id = $("#idSeleccionado").val();
     $('#tituloModal').html('Detalles de Formulario');
-    var url = currentURL + '/formularios/' + id + '/edit';
+    var url = currentURL + 'settings/formularios/' + id + '/edit';
     $('#action').addClass('updateFormulario');
     $('#action').removeClass('saveFormulario');
     $.ajax({
@@ -2057,6 +2136,7 @@ $(function () {
           keyboard: false
         });
         $("#modal-body").html(result);
+        $("#modal-body #view").removeClass('view');
       }
     });
   });
@@ -2070,13 +2150,14 @@ $(function () {
     var dataForm = $("#formDataFormulario").serializeArray();
     var data = {};
     $(dataForm).each(function (index, obj) {
+      console.log(obj.name + " --- " + obj.value);
       data[obj.name] = obj.value;
     });
 
     var _token = $("input[name=_token]").val();
 
     var _method = "PUT";
-    var url = currentURL + '/formularios/' + id;
+    var url = currentURL + 'settings/formularios/' + id;
     $.post(url, {
       dataForm: data,
       _method: _method,
@@ -2110,7 +2191,7 @@ $(function () {
       preConfirm: function preConfirm(nombreForm) {
         console.log(nombreForm);
         var id = $("#idSeleccionado").val();
-        var url = currentURL + '/formularios/duplicar/' + id;
+        var url = currentURL + 'settings/formularios/duplicar/' + id;
 
         var _token = $("input[name=_token]").val();
 
@@ -2170,7 +2251,7 @@ $(function () {
     $('#tituloModal').html('Alta de Grupo');
     $('#action').removeClass('deleteGrupo');
     $('#action').addClass('saveGrupo');
-    var url = currentURL + "/Grupos/create";
+    var url = currentURL + "settings/Grupos/create";
     $.get(url, function (data, textStatus, jqXHR) {
       $('#modal').modal('show');
       $("#modal-body").html(data);
@@ -2187,7 +2268,7 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
-    var url = currentURL + '/Grupos';
+    var url = currentURL + 'settings/Grupos';
     $.post(url, {
       nombre: nombre,
       descripcion: descripcion,
@@ -2243,7 +2324,7 @@ $(function () {
 
         var _token = $("input[name=_token]").val();
 
-        var url = currentURL + '/Grupos/' + id;
+        var url = currentURL + 'settings/Grupos/' + id;
         $.ajax({
           url: url,
           type: 'POST',
@@ -2270,7 +2351,7 @@ $(function () {
     event.preventDefault();
     var id = $("#idSeleccionado").val();
     $('#tituloModal').html('Editar Grupo');
-    var url = currentURL + '/Grupos/' + id + '/edit';
+    var url = currentURL + 'settings/Grupos/' + id + '/edit';
     $('#action').addClass('updateGrupo');
     $('#action').removeClass('saveGrupo');
     $.ajax({
@@ -2298,7 +2379,7 @@ $(function () {
     var _token = $("input[name=_token]").val();
 
     var _method = "PUT";
-    var url = currentURL + '/Grupos/' + id;
+    var url = currentURL + 'settings/Grupos/' + id;
     $.post(url, {
       nombre: nombre,
       descripcion: descripcion,
@@ -2352,49 +2433,50 @@ $(function () {
    * Evento para el menu de sub categorias y mostrar la vista
    */
 
-  $(document).on("click", ".sub-menu", function (e) {
+  $(document).on("click", ".sub-menu-settings", function (e) {
     e.preventDefault();
-    var id = $(this).data("id");
+    var id = $(this).attr('id');
 
-    if (id == 'sub-21') {
-      url = currentURL + '/formularios';
+    if (id == 'sub-sub-21') {
+      url = currentURL + 'settings/formularios';
       table = ' #tableFormulario';
-    } else if (id == 'sub-22') {
-      url = currentURL + '/speech';
+    } else if (id == 'sub-sub-22') {
+      url = currentURL + 'settings/speech';
       table = ' #tableSpeech';
-    } else if (id == 'sub-23') {
-      url = currentURL + '/calificaciones';
+    } else if (id == 'sub-sub-23') {
+      url = currentURL + 'settings/calificaciones';
       table = ' #tableCalificaciones';
-    } else if (id == 'cat-17') {
-      url = currentURL + '/Audios';
+    } else if (id == 'sub-17') {
+      url = currentURL + 'settings/Audios';
       table = ' #tableAudios';
-    } else if (id == 'sub-28') {
-      url = currentURL + '/Agentes';
+    } else if (id == 'sub-sub-28') {
+      url = currentURL + 'settings/Agentes';
       table = ' #tableAgentes';
-    } else if (id == 'sub-29') {
-      url = currentURL + '/Grupos';
+    } else if (id == 'sub-sub-29') {
+      url = currentURL + 'settings/Grupos';
       table = ' #tableGrupos';
-    } else if (id == 'sub-35') {
-      url = currentURL + '/EventosAgentes';
+    } else if (id == 'sub-sub-35') {
+      url = currentURL + 'settings/EventosAgentes';
       table = ' #tableEventosAgentes';
-    } else if (id == 'cat-28') {
-      url = currentURL + '/Plantillas';
+    } else if (id == 'sub-28') {
+      url = currentURL + 'settings/Plantillas';
       table = ' #tablePlantillas';
-    } else if (id == 'cat-30') {
-      url = currentURL + '/PrefijosMarcacion';
+    } else if (id == 'sub-30') {
+      url = currentURL + 'settings/PrefijosMarcacion';
       table = ' #tablePrefijosMarcacion';
-    } else if (id == 'cat-29') {
-      url = currentURL + '/BaseDatos';
+    } else if (id == 'sub-29') {
+      url = currentURL + 'settings/Base-Datos';
       table = ' #tableBaseDatos';
-    } else if (id == 'cat-31') {
-      url = currentURL + '/Perfil_Marcacion';
+    } else if (id == 'sub-31') {
+      url = currentURL + 'settings/Perfil_Marcacion';
       table = ' #tablePerfilMarcacion';
     }
 
     $.get(url, function (data, textStatus, jqXHR) {
       $(".viewResult").html(data);
       $('.viewResult' + table).DataTable({
-        "lengthChange": true
+        "lengthChange": true,
+        "ordering": false
       });
     });
   });
@@ -2420,7 +2502,7 @@ $(function () {
     $('#tituloModal').html('Alta de Plantilla');
     $('#action').removeClass('deletePlantilla');
     $('#action').addClass('savePlantilla');
-    var url = currentURL + "/Plantillas/create";
+    var url = currentURL + "settings/Plantillas/create";
     $.get(url, function (data, textStatus, jqXHR) {
       $('#modal').modal('show');
       $("#modal-body").html(data);
@@ -2488,7 +2570,7 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
-    var url = currentURL + '/Plantillas';
+    var url = currentURL + 'settings/Plantillas';
     $.post(url, {
       dataForm: data,
       _token: _token
@@ -2543,7 +2625,7 @@ $(function () {
     event.preventDefault();
     var id = $("#idSeleccionado").val();
     $('#tituloModal').html('Editar Plantilla');
-    var url = currentURL + '/Plantillas/' + id + '/edit';
+    var url = currentURL + 'settings/Plantillas/' + id + '/edit';
     $('#action').addClass('updatePlantilla');
     $('#action').removeClass('savePlantilla');
     $.ajax({
@@ -2594,7 +2676,7 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
-    var url = currentURL + '/Plantillas/' + id;
+    var url = currentURL + 'settings/Plantillas/' + id;
     $.ajax({
       url: url,
       type: 'POST',
@@ -2637,7 +2719,7 @@ $(function () {
 
         var _token = $("input[name=_token]").val();
 
-        var url = currentURL + '/Plantillas/' + id;
+        var url = currentURL + 'settings/Plantillas/' + id;
         $.ajax({
           url: url,
           type: 'POST',
@@ -2705,7 +2787,7 @@ $(function () {
 
         var _token = $("input[name=_token]").val();
 
-        var url = currentURL + '/speech/' + id;
+        var url = currentURL + 'settings/speech/' + id;
         $.ajax({
           url: url,
           type: 'POST',
@@ -2733,7 +2815,7 @@ $(function () {
     $('#tituloModal').html('Alta de Speech');
     $('#action').removeClass('deleteSpeech');
     $('#action').addClass('saveSpeech');
-    var url = currentURL + "/speech/create";
+    var url = currentURL + "settings/speech/create";
     $.get(url, function (data, textStatus, jqXHR) {
       $('#modal').modal({
         backdrop: 'static',
@@ -2750,7 +2832,7 @@ $(function () {
     event.preventDefault();
     var id = $("#idSeleccionado").val();
     $('#tituloModal').html('Detalles de Speech');
-    var url = currentURL + '/speech/' + id + '/edit';
+    var url = currentURL + 'settings/speech/' + id + '/edit';
     $('#action').addClass('updateSpeech');
     $('#action').removeClass('saveSpeech');
     $.ajax({
@@ -2781,7 +2863,7 @@ $(function () {
     var _token = $("input[name=_token]").val();
 
     var _method = "PUT";
-    var url = currentURL + '/speech/' + id;
+    var url = currentURL + 'settings/speech/' + id;
     $.post(url, {
       dataForm: data,
       _method: _method,
@@ -2809,7 +2891,7 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
-    var url = currentURL + '/speech';
+    var url = currentURL + 'settings/speech';
     $.post(url, {
       dataForm: data,
       _token: _token
@@ -2834,7 +2916,7 @@ $(function () {
     event.preventDefault();
     var id = $("#idSeleccionado").val();
     $('#tituloModal').html('Vista de Speech');
-    var url = currentURL + '/speech/' + id;
+    var url = currentURL + 'settings/speech/' + id;
     $.ajax({
       url: url,
       type: 'GET',
@@ -2883,9 +2965,10 @@ $(function () {
   $(document).on("change", ".subFormulario", function (e) {
     var tipo = $(this).val();
     $('#action_opc').addClass('saveOpciones');
+    $('#action_opc').removeClass('updateOpciones');
     action = $(this).data('action');
     idTR = $(this).attr('name').replace('tipo_campo_', '');
-    var url = currentURL + '/subformularios/create';
+    var url = currentURL + 'settings/subformularios/create';
     $.ajax({
       url: url,
       type: 'GET',
@@ -2937,11 +3020,18 @@ $(function () {
 
     fila.find('#id_campos').attr('name', 'id_campos_' + newID); //Buscamos el campo con id nombre_campo y le agregamos un nuevo nombre
 
+    fila.find('#numero_opcion').attr("name", 'numero_opcion_' + newID); //Buscamos el campo con id nombre_campo y le agregamos un nuevo nombre
+
+    fila.find('#numero_opcion').html(newID); //Buscamos el campo con id nombre_campo y le agregamos un nuevo nombre
+
     fila.find('#nombre_opcion').attr("name", 'nombre_opcion_' + newID); //Buscamos el campo con id nombre_campo y le agregamos un nuevo nombre
+
+    fila.find('#nombre_opcion').attr("value", ""); //Buscamos el campo con id nombre_campo y le agregamos un nuevo nombre
 
     fila.find('#form_id').attr("name", 'form_id_' + newID); //Buscamos el campo con id tipo_campo y le agregamos un nuevo nombre
 
     fila.attr("id", 'tr_opciones_' + newID);
+    fila.find('.btn-danger').css('display', 'block');
   });
   /**
    * Evento para eliminar una fila de la tabla de nuevo formulario
@@ -2957,7 +3047,7 @@ $(function () {
 
       var _token = $("input[name=_token]").val();
 
-      var url = currentURL + '/subformularios/' + id;
+      var url = currentURL + 'settings/subformularios/' + id;
       $.ajax({
         url: url,
         type: 'POST',
@@ -2981,6 +3071,7 @@ $(function () {
     event.preventDefault();
     var dataOpciones = JSON.stringify($("#form_opc").serializeArray());
     $('input[name="opciones_' + idTR + '"]').val(dataOpciones);
+    $('button[name="view_' + idTR + '"]').removeClass('edit_opciones');
     $("#modal_opciones_campo").modal('hide');
     $("button[name='view_" + idTR + "']").slideDown();
     /**
@@ -3006,6 +3097,7 @@ $(function () {
     event.preventDefault();
     idTR = $(this).attr('name').replace('view_', '');
     $('#action_opc').addClass('saveOpciones');
+    $('#action_opc').removeClass('updateOpciones');
     var opciones = JSON.parse($("input[name=opciones_" + idTR + ']').val());
     var tipo_campo = $('#tr_' + idTR + ' .subFormulario').val();
 
@@ -3071,7 +3163,8 @@ $(function () {
     id = $(this).data('id-campo');
     var tipo_campo = $('#tr_' + idTR + ' #tipo_campo').val();
     $('#action_opc').addClass('updateOpciones');
-    var url = currentURL + '/subformularios/' + id + '/edit';
+    $('#action_opc').removeClass('saveOpciones');
+    var url = currentURL + 'settings/subformularios/' + id + '/edit';
     $.ajax({
       url: url,
       type: 'GET',
@@ -3123,7 +3216,7 @@ $(function () {
     var _token = $("input[name=_token]").val();
 
     var _method = "PUT";
-    var url = currentURL + '/subformularios/' + val;
+    var url = currentURL + 'settings/subformularios/' + val;
     $.ajax({
       url: url,
       type: 'POST',
@@ -3148,21 +3241,21 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_settings\menu.js */"./resources/js/module_settings/menu.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_settings\formularios.js */"./resources/js/module_settings/formularios.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_settings\sub_formularios.js */"./resources/js/module_settings/sub_formularios.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_settings\acciones_formularios.js */"./resources/js/module_settings/acciones_formularios.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_settings\audios.js */"./resources/js/module_settings/audios.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_settings\calificaciones.js */"./resources/js/module_settings/calificaciones.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_settings\agentes.js */"./resources/js/module_settings/agentes.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_settings\grupos.js */"./resources/js/module_settings/grupos.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_settings\speech.js */"./resources/js/module_settings/speech.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_settings\acciones_speech.js */"./resources/js/module_settings/acciones_speech.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_settings\eventos_agentes.js */"./resources/js/module_settings/eventos_agentes.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_settings\plantillas.js */"./resources/js/module_settings/plantillas.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_settings\Prefijos_Marcacion.js */"./resources/js/module_settings/Prefijos_Marcacion.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_settings\baseDatos.js */"./resources/js/module_settings/baseDatos.js");
-module.exports = __webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_settings\Perfil_Marcacion.js */"./resources/js/module_settings/Perfil_Marcacion.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_settings/menu.js */"./resources/js/module_settings/menu.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_settings/formularios.js */"./resources/js/module_settings/formularios.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_settings/sub_formularios.js */"./resources/js/module_settings/sub_formularios.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_settings/acciones_formularios.js */"./resources/js/module_settings/acciones_formularios.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_settings/audios.js */"./resources/js/module_settings/audios.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_settings/calificaciones.js */"./resources/js/module_settings/calificaciones.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_settings/agentes.js */"./resources/js/module_settings/agentes.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_settings/grupos.js */"./resources/js/module_settings/grupos.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_settings/speech.js */"./resources/js/module_settings/speech.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_settings/acciones_speech.js */"./resources/js/module_settings/acciones_speech.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_settings/eventos_agentes.js */"./resources/js/module_settings/eventos_agentes.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_settings/plantillas.js */"./resources/js/module_settings/plantillas.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_settings/Prefijos_Marcacion.js */"./resources/js/module_settings/Prefijos_Marcacion.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_settings/baseDatos.js */"./resources/js/module_settings/baseDatos.js");
+module.exports = __webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_settings/Perfil_Marcacion.js */"./resources/js/module_settings/Perfil_Marcacion.js");
 
 
 /***/ })

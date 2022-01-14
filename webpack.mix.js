@@ -1,5 +1,4 @@
 const mix = require('laravel-mix');
-
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -26,9 +25,11 @@ mix.js([
         'resources/js/module_administrador/troncales.js',
         'resources/js/module_administrador/canales.js',
         'resources/js/module_administrador/empresas.js',
+        'resources/js/module_administrador/actionEditEmpresa.js',
         'resources/js/module_administrador/cat_base_datos.js',
         'resources/js/module_administrador/cat_tipo_canal.js',
         'resources/js/module_administrador/menu.js',
+        'resources/js/module_administrador/sub_menu.js',
         'resources/js/module_administrador/cat_extensiones.js',
         'resources/js/module_administrador/licenciasBria.js',
         'resources/js/module_administrador/cat_campos_plantillas.js',
@@ -73,7 +74,7 @@ mix.js([
         'resources/js/module_recording/Grabaciones.js',
         'resources/js/module_recording/Inbound.js',
         'resources/js/module_recording/Almacenamiento.js',
-    ], 'public/js/recording.js')
+    ], 'public/js/recording.js')/*
     .js([
         'resources/js/module_voicemail/menu.js',
         'resources/js/module_voicemail/grabacionesVoicemail.js',
@@ -82,14 +83,23 @@ mix.js([
         'resources/js/module_monitor/menu.js',
         'resources/js/module_monitor/monitoreo.js',
     ], 'public/js/monitor.js')
+    */
     .js([
         'resources/js/module_agentes/agentes.js',
         'resources/js/module_agentes/eventosPantallaAgente.js',
     ], 'public/js/agente.js')
+    /*
     .js([
         'resources/js/module_agentes/agentes_monitoreo.js',
         'resources/js/module_agentes/eventosPantallaAgente_monitoreo.js',
-    ], 'public/js/agente_monitoreo.js');
+    ], 'public/js/agente_monitoreo.js')
+    */
+    .js([
+        'resources/js/menu_principal.js',
+    ], 'public/js/menu_principal.js')
+    .js([
+        'resources/js/checkSesion.js'
+    ], 'public/js/checkSesion.js');
 /*
 .sass('resources/sass/app.scss', 'public/css');
 mix.js('resources/js/app.js', 'public/js/all.js')

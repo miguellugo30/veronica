@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -30,13 +30,13 @@ class Token_Soporte extends Model
      */
     public function Users()
     {
-        return $this->belongsTo('Nimbus\User', 'users_id', 'id');
+        return $this->belongsTo('App\User', 'users_id', 'id');
     }
     /**
      * Relación muchos a uno con Cat_Distribuidor
      */
     public function Empresas()
     {
-        return $this->belongsTo('Nimbus\Empresas', 'Empresas_id', 'id');
+        return $this->belongsTo('App\Empresas', 'Empresas_id', 'id');
     }
 }

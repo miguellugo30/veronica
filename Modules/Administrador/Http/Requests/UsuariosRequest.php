@@ -16,7 +16,8 @@ class UsuariosRequest extends FormRequest
         return [
             'name' => 'required',
             'email' => 'required|email',
-            'password' => 'required',
+            'password' => 'required|confirmed|min:8',
+            'password_confirmation' => 'required|min:8',
             'id_cliente' => 'required',
             'rol' => 'required',
         ];
@@ -38,6 +39,7 @@ class UsuariosRequest extends FormRequest
             'name' => 'Nombre',
             'email' => 'E-mail',
             'password' => 'Contraseña',
+            'password_confirmation' => 'Confirmacion de Contraseña',
             'id_cliente' => 'Empresa',
             'rol' => 'Rol',
         ];

@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -34,7 +34,7 @@ class Did_Enrutamiento extends Model
     */
     public function Did()
     {
-        return $this->hasOne('Nimbus\Dids', 'id', 'Dids_id');
+        return $this->hasOne('App\Dids', 'id', 'Dids_id');
     }
 
 }

@@ -2,11 +2,11 @@
 
 namespace Modules\Administrador\Http\Controllers;
 
-use Nimbus\Modulos;
+use App\Modulos;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Nimbus\Http\Controllers\LogController;
+use App\Http\Controllers\LogController;
 use Modules\Administrador\Http\Requests\ModulosRequest;
 
 class ModulosController extends Controller

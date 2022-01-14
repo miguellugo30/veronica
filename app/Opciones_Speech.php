@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -34,6 +34,6 @@ class Opciones_Speech extends Model
      */
      public function Speech()
      {
-        return $this->belongsTo('Nimbus\speech');
+        return $this->belongsTo('App\speech');
      }
 }

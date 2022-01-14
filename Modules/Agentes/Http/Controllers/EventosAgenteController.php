@@ -7,11 +7,11 @@ use nusoap_client;
 use Illuminate\Routing\Controller;
 use Modules\Agentes\Http\Controllers\EventosAmiController;
 use Modules\Agentes\Http\Controllers\LogRegistroEventosController;
-use Nimbus\Http\Controllers\ZonaHorariaController;
+use App\Http\Controllers\ZonaHorariaController;
 
-use Nimbus\Miembros_Campana;
-use Nimbus\Empresas;
-use Nimbus\Crd_Asignacion_Agente;
+use App\Miembros_Campana;
+use App\Empresas;
+use App\Crd_Asignacion_Agente;
 
 class EventosAgenteController extends Controller
 {
@@ -28,9 +28,9 @@ class EventosAgenteController extends Controller
          * Pausamos al agente dentro de la campana en BD
          */
         Miembros_Campana::where( 'membername', $agente )->update(['Paused' => 1]);
-        /**
+        /*
          * Pausamos al agente dentro del MS
-         */
+         *
         $evento = new EventosAmiController( $empresas_id );
         $evento->despausar_agente( $cdr->canal, 'pause' );
         /**
@@ -67,7 +67,7 @@ class EventosAgenteController extends Controller
          * Registramos el evento de cuando se puso nuevamente en disponible el agente
          */
         LogRegistroEventosController::actualiza_evento( $agente, $request->evento, 0 );
-        /**
+        /*
          * Despausamos al agente dentro de la campana en BD
          */
         Miembros_Campana::where( 'membername', $agente )->update(['Paused' => 0]);
@@ -84,8 +84,9 @@ class EventosAgenteController extends Controller
          * Obtenemos el ultimo canal del agente
          */
         $cdr = Crd_Asignacion_Agente::where('Agentes_id', $agente)->orderBy('id', 'desc')->first();
-        /**
+        /*
          * Despausamos al agente dentro del MS
+         *
          */
         $evento = new EventosAmiController( $empresas_id );
         $evento->despausar_agente( $cdr->canal, 'unpause' );

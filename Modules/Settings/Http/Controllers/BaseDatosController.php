@@ -2,6 +2,7 @@
 
 namespace Modules\Settings\Http\Controllers;
 
+use App\BaseDatos;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -10,12 +11,12 @@ use Modules\Settings\Http\Requests\baseDatosRequest;
 use Maatwebsite\Excel\Facades\Excel;
 use DB;
 
-use Nimbus\Imports\BaseDatosImport;
+use App\Imports\BaseDatosImport;
 
-use Nimbus\Cat_Plantilla;
-use Nimbus\Bases_Datos;
-use Nimbus\Registros_base;
-use Nimbus\Plantillas_campos;
+use App\Cat_Plantilla;
+use App\Bases_Datos;
+use App\Registros_base;
+use App\Plantillas_campos;
 
 class BaseDatosController extends Controller
 {
@@ -86,7 +87,7 @@ class BaseDatosController extends Controller
          * Importamos la informacion del archivo adjunto
          */
         $data = new BaseDatosImport;
-        Excel::import($data, $request->file('archivo_datos')->getRealPath() );
+        Excel::import($data, $request->file('archivo_datos') );
         /**
          * Validamos que los encabezados coincidan
          */
@@ -112,7 +113,7 @@ class BaseDatosController extends Controller
             DB::table('Registros_base')->insert($chunk->toArray());
         }
 
-        return redirect()->route('BaseDatos.index');
+        return redirect()->route('Base-Datos.index');
     }
 
     /**
@@ -188,7 +189,7 @@ class BaseDatosController extends Controller
          * Importamos la informacion del archivo adjunto
          */
         $data = new BaseDatosImport;
-        Excel::import($data, $request->file('archivo_datos')->getRealPath() );
+        Excel::import($data, $request->file('archivo_datos'));
         /**
          * Validamos que los encabezados coincidan
          **/
@@ -211,6 +212,7 @@ class BaseDatosController extends Controller
 
         if ( $request->accion == 1 )
         {
+            //dd($chunks);
             foreach ($chunks as $chunk)
             {
                 DB::table('Registros_base')->insert($chunk->toArray());
@@ -229,7 +231,7 @@ class BaseDatosController extends Controller
         }
 
 
-        return redirect()->route('BaseDatos.index');
+        return redirect()->route('Base-Datos.index');
     }
 
     /**
@@ -239,7 +241,12 @@ class BaseDatosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        /**
+         * Actualizar información el table de Grupos
+         */
+        Bases_Datos::where( 'id', $id )->update(['activo' => 0]);
+
+        return redirect()->route('Base-Datos.index');
     }
     /***
      * Funcion que se encarga en validar si el numero de campos en el encabezado
@@ -260,9 +267,26 @@ class BaseDatosController extends Controller
     {
         $dataArray = [];
         $fecha_registro = date( 'Y-m-d H:i:s');
+        /**
+         * Validamos que no existan datos de la base de datos
+         */
+        $numRegistro = DB::table('Registros_base')
+                            ->select('no_registro')
+                            ->where('fk_bases_datos', $idBaseDatos)
+                            ->orderBy('no_registro', 'DESC')
+                            ->limit(1)
+                            ->get();
+
+
+        if ( $numRegistro->isEmpty() ) {
+            $j = 1;
+        } else {
+            $j = $numRegistro->first()->no_registro + 1;
+        }
+
 
         $num_campos = count( $campos );
-        $j = 1;
+        //$j = 1;
         foreach ($data->data as $key ) {
 
             $i = 0;

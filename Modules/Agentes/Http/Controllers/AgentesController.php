@@ -5,20 +5,20 @@ namespace Modules\Agentes\Http\Controllers;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Nimbus\Http\Controllers\ZonaHorariaController;
+use App\Http\Controllers\ZonaHorariaController;
 use Modules\Agentes\Http\Controllers\EventosAmiController;
 use Modules\Agentes\Http\Controllers\EventosAgenteController;
 use Modules\Agentes\Http\Controllers\CalificarLlamadaController;
-use Nimbus\Agentes;
-use Nimbus\Did_Enrutamiento;
-use Nimbus\Campanas;
-use Nimbus\Cat_Extensiones;
-use Nimbus\Cdr_call_center;
-use Nimbus\Cdr_call_center_detalles;
-use Nimbus\Crd_Asignacion_Agente;
-use Nimbus\Miembros_Campana;
-use Nimbus\Eventos_Agentes;
-use Nimbus\HistorialEventosAgentes;
+use App\Agentes;
+use App\Did_Enrutamiento;
+use App\Campanas;
+use App\Cat_Extensiones;
+use App\Cdr_call_center;
+use App\Cdr_call_center_detalles;
+use App\Crd_Asignacion_Agente;
+use App\Miembros_Campana;
+use App\Eventos_Agentes;
+use App\HistorialEventosAgentes;
 
 class AgentesController extends Controller
 {
@@ -175,14 +175,17 @@ class AgentesController extends Controller
         /**
          * Obtenemos la información de la campana a la cual esta el agente y la llamada
          */
+
         if ( $cdrDetalle->aplicacion == 'Campanas' ) {
-            $campana = Campanas::active()->where( 'id', $cdrDetalle->first()->id_aplicacion )->get()->first();
+            $campana = Campanas::active()->where( 'id', 6 )->get()->first();
         }
         /**
          * Obtenemos el Speech y el grupo de calificaciones
          */
-        $speech = $campana->speech;
-        $campos = $speech->Opciones_Speech;
+
+        $speech = $campana->Speech()->first();
+
+        $campos = $speech->Opciones_Speech()->first();
 
         if ( $speech->tipo == 'dinamico' )
         {
@@ -201,6 +204,8 @@ class AgentesController extends Controller
         }
 
         $grupo = $campana->Grupos->first();
+
+        //dd($grupo->Calificaciones()->first());
         /**
          * Obtenemos el histórico de llamadas de cliente
          */

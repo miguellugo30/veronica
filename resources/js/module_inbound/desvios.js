@@ -34,7 +34,7 @@ $(function() {
                 let id = $("#idSeleccionado").val();
                 let _method = "DELETE";
                 let _token = $("input[name=_token]").val();
-                let url = currentURL + '/Desvios/' + id;
+                let url = currentURL + 'inbound/Desvios/' + id;
 
                 $.ajax({
                     url: url,
@@ -67,7 +67,7 @@ $(function() {
         $('#action').removeClass('deleteDesvio');
         $('#action').addClass('saveDesvio');
 
-        let url = currentURL + "/Desvios/create";
+        let url = currentURL + "inbound/Desvios/create";
 
         $.get(url, function(data, textStatus, jqXHR) {
             $('#modal').modal('show');
@@ -86,7 +86,7 @@ $(function() {
         let ringeo = $("#ringeo").val();
         let Empresas_id = $("#Empresas_id").val();
         let _token = $("input[name=_token]").val();
-        let url = currentURL + '/Desvios';
+        let url = currentURL + 'inbound/Desvios';
 
         $.post(url, {
             nombre: nombre,
@@ -137,7 +137,7 @@ $(function() {
                 let id = $("#idSeleccionado").val();
                 let _method = "DELETE";
                 let _token = $("input[name=_token]").val();
-                let url = currentURL + '/Desvios/' + id;
+                let url = currentURL + 'inbound/Desvios/' + id;
 
                 $.ajax({
                     url: url,
@@ -168,7 +168,7 @@ $(function() {
 
         event.preventDefault();
         var id = $("#idSeleccionado").val();
-        var url = currentURL + '/Desvios/' + id + '/edit';
+        var url = currentURL + 'inbound/Desvios/' + id + '/edit';
 
         $('#tituloModal').html('Editar Desvio');
         $('#action').addClass('updateDesvio');
@@ -197,7 +197,7 @@ $(function() {
         let Empresas_id = $("#Empresas_id").val();
         let _token = $("input[name=_token]").val();
         let _method = "PUT";
-        let url = currentURL + '/Desvios/' + id;
+        let url = currentURL + 'inbound/Desvios/' + id;
 
         $.post(url, {
             nombre: nombre,

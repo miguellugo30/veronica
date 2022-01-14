@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
@@ -41,28 +41,28 @@ class User extends Authenticatable
      */
     public function categorias()
     {
-        return $this->belongsToMany('Nimbus\Categorias')->active()->orderBy('prioridad');
+        return $this->belongsToMany('App\Categorias')->active()->orderBy('prioridad');
     }
     /**
      * Relación muchos a uno con Empresas
      */
     public function Empresas()
     {
-        return $this->belongsTo('Nimbus\Empresas', 'Empresas_id');
+        return $this->belongsTo('App\Empresas', 'Empresas_id');
     }
     /**
      * Relación uno a muchos con Logs
      */
     public function Logs()
     {
-        return $this->hasMany('Nimbus\Empresas');
+        return $this->hasMany('App\Empresas');
     }
     /**
      * Relación uno a muchos con Token Soporte
      */
     public function Token_Soporte()
     {
-        return $this->hasMany('Nimbus\Token_Soporte');
+        return $this->hasMany('App\Token_Soporte');
     }
 
 }

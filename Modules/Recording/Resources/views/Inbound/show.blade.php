@@ -15,8 +15,8 @@
             <th class="buscar no-sort">Fecha Inicio</th>
             <th>Fecha Fin</th>
             <th >Duración</th>
-            <th>Calificación</th>
-            <th>Subcalificacion</th>
+            <!--th>Calificación</th>
+            <th>Subcalificación</th-->
             <th class="no-sort">Escuchar</th>
         </tr>
     </thead>
@@ -38,8 +38,8 @@
                 <td>{{ date('d-m-Y H:i:s',strtotime($grabacion->inicio)) }}</td>
                 <td>{{ date('d-m-Y H:i:s',strtotime($grabacion->fin)) }}</td>
                 <td>{{ date('H:i:s',strtotime($grabacion->duracion)) }}</td>
-                <td></td>
-                <td></td>
+                <!--td></td>
+                <td></td-->
                 <td  class="text-center"><i class="fas fa-volume-up fa-lg text-primary escuchar-grabacion" id="{{ $grabacion->escuchar."|".$grabacion->id }}"></i></td>
             </tr>
         @endforeach
@@ -55,8 +55,8 @@
             <th>Fecha Inicio</th>
             <th>Fecha Fin</th>
             <th>Duración</th>
-            <th>Calificación</th>
-            <th>Subcalificacion</th>
+            <!--th>Calificación</th>
+            <th>Subcalificación</th-->
             <th>Escuchar</th>
         </tr>
     </tfoot>

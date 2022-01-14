@@ -1,18 +1,18 @@
 <?php
 
-namespace Nimbus\Http\Controllers;
+namespace App\Http\Controllers;
 
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Nimbus\Http\Controllers\ZonaHorariaController;
+use App\Http\Controllers\ZonaHorariaController;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Modules\Agentes\Http\Controllers\LogRegistroEventosController;
 use Modules\Agentes\Http\Controllers\EventosAmiController;
 
-use Nimbus\Agentes;
-use Nimbus\CanalAgentes;
-use Nimbus\Miembros_Campana;
+use App\Agentes;
+use App\CanalAgentes;
+use App\Miembros_Campana;
 
 class AgentesLoginController extends Controller
 {
@@ -156,12 +156,14 @@ class AgentesLoginController extends Controller
              */
             $disponible = $this->Valida_Extension( $this->agente->extension );
 
-            if ( $disponible->Historial_Eventos->first()->fk_cat_estado_agente_id == 1 || $disponible->Historial_Eventos->first()->fk_cat_estado_agente_id == 11 )
+
+
+            if ($disponible->Historial_Eventos->isEmpty())
             {
                 /**
                  * Ponemos al usuario en pausa dentro de la cola
                  */
-                $this->pausar_agente( $this->agente->id, 0 );
+                //$this->pausar_agente( $this->agente->id, 0 );
                 /**
                  * Si la modalidad de la campana es Canal cerrado agregamos a los agentes en
                  * las colas que este
@@ -177,8 +179,38 @@ class AgentesLoginController extends Controller
                     $miembros = Miembros_Campana::where('Agentes_id', $this->agente->id)->get();
                     foreach ($miembros as $miembro)
                     {
-                        $e = new EventosAmiController( $this->agente->Empresas_id );
-                        $e->addMember( $miembro->Campanas_id, $miembro->interface, $this->agente->id );
+                       // $e = new EventosAmiController( $this->agente->Empresas_id );
+                        //$e->addMember( $miembro->Campanas_id, $miembro->interface, $this->agente->id );
+                    }
+                }
+
+                $evento = LogRegistroEventosController::registro_evento( $this->agente->id, 1 );
+
+                return redirect()->action('\Modules\Agentes\Http\Controllers\AgentesController@index', ['evento' => $evento->id]);
+            }
+            else if ( $disponible->Historial_Eventos->first()->fk_cat_estado_agente_id == 1 || $disponible->Historial_Eventos->first()->fk_cat_estado_agente_id == 11 )
+            {
+                /**
+                 * Ponemos al usuario en pausa dentro de la cola
+                 */
+                //$this->pausar_agente( $this->agente->id, 0 );
+                /**
+                 * Si la modalidad de la campana es Canal cerrado agregamos a los agentes en
+                 * las colas que este
+                 */
+                if ( $modalidad == 'canal_cerrado' )
+                {
+                    $e = new ZonaHorariaController();
+                    $fecha = $e->zona_horaria( NULL, auth()->guard('agentes')->id() );
+                    DB::select("CALL SP_Actualiza_Estado_Agentes(".auth()->guard('agentes')->id().",$estado,NULL,'$fecha')");
+                    /**
+                     * Obtenemos la informacion de la tabla miembros campana
+                     */
+                    $miembros = Miembros_Campana::where('Agentes_id', $this->agente->id)->get();
+                    foreach ($miembros as $miembro)
+                    {
+                        //$e = new EventosAmiController( $this->agente->Empresas_id );
+                        //$e->addMember( $miembro->Campanas_id, $miembro->interface, $this->agente->id );
                     }
                 }
 

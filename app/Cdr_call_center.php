@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -38,6 +38,6 @@ class Cdr_call_center extends Model
      */
     public function Cdr_call_center_detalles()
     {
-        return $this->belongsToMany('Nimbus\Cdr_call_center_detalles', 'uniqueid');
+        return $this->belongsToMany('App\Cdr_call_center_detalles', 'uniqueid');
     }
 }

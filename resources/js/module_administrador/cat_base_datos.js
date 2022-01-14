@@ -7,8 +7,8 @@ $(function() {
 
         e.preventDefault();
         $('#tituloModal').html('Nuevo Base de Datos');
-        $('#action').removeClass('updateBaseDatos');
-        $('#action').addClass('saveBaseDatos');
+        $('#action').removeClass('updateBaseDatosAdmin');
+        $('#action').addClass('saveBaseDatosAdmin');
 
         let url = currentURL + '/basedatos/create';
 
@@ -24,8 +24,8 @@ $(function() {
 
         e.preventDefault();
         $('#tituloModal').html('Editar Base de Datos');
-        $('#action').removeClass('saveBaseDatos');
-        $('#action').addClass('updateBaseDatos');
+        $('#action').removeClass('saveBaseDatosAdmin');
+        $('#action').addClass('updateBaseDatosAdmin');
 
         let id = $("#idSeleccionado").val();
 
@@ -39,7 +39,7 @@ $(function() {
     /**
      * Evento para guardar el nuevo modulo
      */
-    $(document).on('click', '.saveBaseDatos', function(event) {
+    $(document).on('click', '.saveBaseDatosAdmin', function(event) {
         event.preventDefault();
 
         let nombre = $("#nombre").val();
@@ -89,7 +89,7 @@ $(function() {
     /**
      * Evento para editar el modulo
      */
-    $(document).on('click', '.updateBaseDatos', function(event) {
+    $(document).on('click', '.updateBaseDatosAdmin', function(event) {
         event.preventDefault();
         let nombre = $("#nombre").val();
         let ubicacion = $("#ubicacion").val();

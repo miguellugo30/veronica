@@ -8,11 +8,11 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Modules\Settings\Http\Requests\SpeechRequest;
 use DB;
-use Nimbus\Http\Controllers\LogController;
+use App\Http\Controllers\LogController;
 
-use Nimbus\User;
-use Nimbus\Speech;
-use Nimbus\Opciones_Speech;
+use App\User;
+use App\Speech;
+use App\Opciones_Speech;
 
 class SpeechController extends Controller
 {
@@ -133,6 +133,7 @@ class SpeechController extends Controller
             $bienvenida = $this->textoBienvenida( $campos->where('tipo', 1)->first()->id );
         }
 
+
         return view('settings::Speech.show', compact('speech', 'campos', 'bienvenida'));
     }
     /**
@@ -245,7 +246,7 @@ class SpeechController extends Controller
     private function textoBienvenida($idOs )
     {
         return DB::table('Opciones_Speech AS OS')
-            ->join('appLaravel.speech AS S', 'OS.speech_id_hijo', '=', 'S.id')
+            ->join('speech AS S', 'OS.speech_id_hijo', '=', 'S.id')
             ->select(
                 'S.texto'
             )

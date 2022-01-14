@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -40,13 +40,13 @@ class Miembros_Campana extends Model
      */
     public function Campanas()
     {
-        return $this->belongsTo('Nimbus\Campanas', 'Campanas_id', 'id');
+        return $this->belongsTo('App\Campanas', 'Campanas_id', 'id');
     }
     /**
      * Muchos a uno con Agentes
      */
     public function Agentes()
     {
-        return $this->belongsTo('Nimbus\Agentes', 'Agentes_id', 'id');
+        return $this->belongsTo('App\Agentes', 'Agentes_id', 'id');
     }
 }

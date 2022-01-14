@@ -36,7 +36,7 @@
 
                 <div class="custom-file">
                     <input type="file" class="custom-file-input form-control-sm" id="file_input_header" name="file_input_header" lang="es"/>
-                    <label class="custom-file-label" for="file_input_header">Seleccionar Archivo</label>
+                    <label class="custom-file-label" for="file_input_header">Imagen de encabezado</label>
                 </div>
 
                 <!--label for="image_header" class="col-md-3 col-form-label text-md-right">Imagen header<br>
@@ -52,7 +52,7 @@
 
                 <div class="custom-file">
                     <input type="file" class="custom-file-input form-control-sm" id="file_input_pie" name="file_input_pie" lang="es"/>
-                    <label class="custom-file-label" for="file_input_pie">Seleccionar Archivo</label>
+                    <label class="custom-file-label" for="file_input_pie">Imagen de pie</label>
                 </div>
 
                 <!--label for="img_pie" class="col-md-2 col-form-label text-md-right">Imagen pie<br>

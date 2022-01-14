@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -37,13 +37,13 @@ class Campos extends Model
      */
     public function Formularios()
     {
-        return $this->belongsToMany('Nimbus\Formularios', 'Formularios_Campos');
+        return $this->belongsToMany('App\Formularios', 'Formularios_Campos');
     }
     /**
      * Relacion uno a muchos con Sub_Formularios
      */
     public function Sub_Formularios()
     {
-        return $this->hasMany('Nimbus\Sub_Formularios');
+        return $this->hasMany('App\Sub_Formularios');
     }
 }

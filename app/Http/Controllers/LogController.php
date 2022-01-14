@@ -1,12 +1,12 @@
 <?php
 
-namespace Nimbus\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Nimbus\Logs;
+use App\Logs;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
-use Nimbus\Token_Soporte;
+use App\Token_Soporte;
 
 class LogController extends Controller
 {

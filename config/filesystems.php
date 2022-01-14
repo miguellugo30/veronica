@@ -56,6 +56,13 @@ return [
             'visibility' => 'public',
         ],
 
+        'audios' => [
+            'driver' => 'local',
+            'root' => storage_path('app/audios'),
+            'url' => env('APP_URL').'/audios',
+            'visibility' => 'public',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
@@ -65,6 +72,11 @@ return [
             'url' => env('AWS_URL'),
         ],
 
+    ],
+
+    'links' => [
+        public_path('storage') => storage_path('app/public'),
+        public_path('audios') => storage_path('app/audios'),
     ],
 
 ];

@@ -8,7 +8,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use DB;
 
-use Nimbus\Campanas;
+use App\Campanas;
 
 class ReporteCalificacionesController extends Controller
 {

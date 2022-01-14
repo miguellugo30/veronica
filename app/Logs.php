@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -30,6 +30,6 @@ class Logs extends Model
      */
     public function Usuarios()
     {
-        return $this->belongsTo('Nimbus\User', 'users_id');
+        return $this->belongsTo('App\User', 'users_id');
     }
 }

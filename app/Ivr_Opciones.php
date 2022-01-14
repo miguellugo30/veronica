@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -27,6 +27,6 @@ class Ivr_Opciones extends Model
     */
     public function Ivr()
     {
-        return $this->belongsTo('Nimbus\Ivr_Opciones', 'Ivr_id', 'id');
+        return $this->belongsTo('App\Ivr_Opciones', 'Ivr_id', 'id');
     }
 }

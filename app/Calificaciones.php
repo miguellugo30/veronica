@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -36,20 +36,20 @@ class Calificaciones extends Model
      */
     public function Grupos()
     {
-        return $this->belongsToMany('Nimbus\Grupos', 'Grupo_Calificaciones');
+        return $this->belongsToMany('App\Grupos', 'Grupo_Calificaciones');
     }
     /**
      * Relacion uno a muchos con Sub_Calificaciones
      */
     public function Sub_Calificaciones()
     {
-        return $this->hasMany('Nimbus\Sub_Calificaciones');
+        return $this->hasMany('App\Sub_Calificaciones');
     }
     /**
      * Relacion uno a uno con Formularios
      */
     public function Formularios()
     {
-        return $this->hasOne('Nimbus\Formularios', 'id', 'Formularios_id');
+        return $this->hasOne('App\Formularios', 'id', 'Formularios_id');
     }
 }

@@ -5,7 +5,7 @@ namespace Modules\Agentes\Http\Controllers;
 use Illuminate\Routing\Controller;
 use PHPAMI\Ami;
 
-use Nimbus\Empresas;
+use App\Empresas;
 
 class EventosAmiController extends Controller
 {

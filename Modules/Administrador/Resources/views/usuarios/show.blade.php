@@ -5,7 +5,7 @@
         <ul class="nav nav-tabs">
             @foreach( $modulos as $modulo )
                 @if ($loop->first)
-                    <li class="nav-item active"><a href="#tab_{{ Str::snake( $modulo->nombre ) }}" class="nav-link" data-toggle="tab">{{ $modulo->nombre }}</a></li>
+                    <li class="nav-item active"><a href="#tab_{{ Str::snake( $modulo->nombre ) }}" class="nav-link active" data-toggle="tab">{{ $modulo->nombre }}</a></li>
                 @else
                     <li class="nav-item"><a href="#tab_{{ Str::snake( $modulo->nombre ) }}" class="nav-link" data-toggle="tab">{{ $modulo->nombre }}</a></li>
                 @endif
@@ -49,7 +49,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @foreach ($categoria->Sub_Categorias as $sub)
+                                                        @forelse ($categoria->Sub_Categorias as $sub)
                                                             <tr>
                                                                 <td>{{ $sub->nombre }}</td>
                                                                 @if ($sub->nombre == 'Logs')
@@ -64,7 +64,13 @@
                                                                         <td><input type="checkbox" name="permisos[]" id="permisos[]" value="{{ str_replace( 'view', 'delete',$sub->permiso) }}" class="mark"></td>
                                                                     @endif
                                                             </tr>
-                                                        @endforeach
+                                                        @empty
+                                                            <td></td>
+                                                            <td><input type="checkbox" name="permisos[]" id="permisos[]" value="{{ $categoria->permiso }}" class="mark"></td>
+                                                            <td><input type="checkbox" name="permisos[]" id="permisos[]" value="{{ str_replace( 'view', 'create',$categoria->permiso) }}" class="mark"></td>
+                                                            <td><input type="checkbox" name="permisos[]" id="permisos[]" value="{{ str_replace( 'view', 'edit',$categoria->permiso) }}" class="mark"></td>
+                                                            <td><input type="checkbox" name="permisos[]" id="permisos[]" value="{{ str_replace( 'view', 'delete',$categoria->permiso) }}" class="mark"></td>
+                                                        @endforelse
                                                     </tbody>
                                                 </table>
                                             </div>

@@ -8,14 +8,14 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use DB;
 use Modules\Settings\Http\Requests\CalificacionesRequest;
-use Nimbus\Http\Controllers\LogController;
+use App\Http\Controllers\LogController;
 /**
  * Modelos
  */
-use Nimbus\Calificaciones;
-use Nimbus\Grupos;
-use Nimbus\User;
-use Nimbus\Formularios;
+use App\Calificaciones;
+use App\Grupos;
+use App\User;
+use App\Formularios;
 
 class CalificacionesController extends Controller
 {

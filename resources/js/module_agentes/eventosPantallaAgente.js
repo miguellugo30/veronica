@@ -174,4 +174,21 @@ $(function() {
                 });
         }
     });
+
+    /**
+     * Mostrar formulario vinculado a la calificacion seleccionada
+     */
+     $(document).on('change', '#calificacionLlamada', function(event) {
+
+        let id = $(this).val();
+        let url = currentURL[0].replace('agentes/')  + '/formularios/' + id;
+
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function(result) {
+                $(".viewFormularioCalificacion").html(result);
+            }
+        });
+    });
 });

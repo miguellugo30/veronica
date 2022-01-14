@@ -1,10 +1,9 @@
 {
     "/js/administrador.js": "/js/administrador.js",
     "/js/agente.js": "/js/agente.js",
-    "/js/agente_monitoreo.js": "/js/agente_monitoreo.js",
+    "/js/checkSesion.js": "/js/checkSesion.js",
     "/js/inbound.js": "/js/inbound.js",
-    "/js/monitor.js": "/js/monitor.js",
+    "/js/menu_principal.js": "/js/menu_principal.js",
     "/js/recording.js": "/js/recording.js",
-    "/js/settings.js": "/js/settings.js",
-    "/js/viocemail.js": "/js/viocemail.js"
+    "/js/settings.js": "/js/settings.js"
 }

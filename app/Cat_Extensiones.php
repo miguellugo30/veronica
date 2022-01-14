@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -43,20 +43,20 @@ class Cat_Extensiones extends Model
      */
     public function Canales()
     {
-        return $this->hasOne('Nimbus\Canales', 'id', 'Canales_id');
+        return $this->hasOne('App\Canales', 'id', 'Canales_id');
     }
     /**
      * Relacion muchos a uno con Empresas
      */
     public function Empresas()
     {
-        return $this->belongsTo('Nimbus\Empresas', 'Empresas_id');
+        return $this->belongsTo('App\Empresas', 'Empresas_id');
     }
     /**
      * Relacion muchos a uno con Cat_Licencias_Bria
      */
     public function Licencias()
     {
-        return $this->belongsTo('Nimbus\LicenciasBria', 'Cat_Licencias_Bria_id');
+        return $this->belongsTo('App\LicenciasBria', 'Cat_Licencias_Bria_id');
     }
 }

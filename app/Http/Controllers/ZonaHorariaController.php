@@ -1,11 +1,11 @@
 <?php
 
-namespace Nimbus\Http\Controllers;
+namespace App\Http\Controllers;
 
 use DB;
 use nusoap_client;
-use Nimbus\Agentes;
-use Nimbus\Empresas;
+use App\Agentes;
+use App\Empresas;
 
 class ZonaHorariaController extends Controller
 {
@@ -39,6 +39,7 @@ class ZonaHorariaController extends Controller
         /**
          * Retornamos la fecha y hora
          */
-        return $result['mensaje'];
+        return date('Y-m-d H:i:s');
+        //return $result['mensaje'];
     }
 }

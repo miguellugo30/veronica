@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use Nimbus\User;
-use Nimbus\Categorias;
+use App\User;
+use App\Categorias;
 
 class RecordingController extends Controller
 {
@@ -18,19 +18,11 @@ class RecordingController extends Controller
     public function index()
     {
         /**
-         * Obtenemos los datos del usuario logueado
-         */
-        $user = User::find( Auth::id() );
-        /**
-         * Obtenemos el rol del usuario logueado
-         */
-        $rol = $user->getRoleNames();
-        /**
          * Obtenemos las categorias relacionadas al usuario
          */
-        $categorias = Categorias::where('modulos_id', 4)->get();
+        $categorias = Categorias::with('Sub_Categorias')->active()->where('modulos_id', 4)->get();
         $modulo = "Recording";
-        return view('recording::index', compact( 'rol', 'categorias', 'modulo' ));
+        return view('recording::index', compact( 'categorias', 'modulo' ));
     }
 
     /**

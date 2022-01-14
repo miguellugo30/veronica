@@ -10,13 +10,13 @@ use Modules\Agentes\Http\Controllers\EventosAgenteController;
 use Modules\Agentes\Http\Controllers\CalificarLlamadaController;
 use Modules\Agentes\Http\Controllers\EventosAmiController;
 use DB;
-use Nimbus\Http\Controllers\ZonaHorariaController;
+use App\Http\Controllers\ZonaHorariaController;
 
-use Nimbus\Agentes;
-use Nimbus\Eventos_Agentes;
-use Nimbus\Crd_Asignacion_Agente;
-use Nimbus\Campanas;
-use Nimbus\Miembros_Campana;
+use App\Agentes;
+use App\Eventos_Agentes;
+use App\Crd_Asignacion_Agente;
+use App\Campanas;
+use App\Miembros_Campana;
 
 
 class RealTimeController extends Controller

@@ -1,14 +1,19 @@
 @extends('adminlte::page_agente')
 {{--@extends('administrador::layouts.master')--}}
+  @section('title', 'Agentes')
 
+  @section('content_header')@stop
 
-    @section('title', 'Agentes')
+  @section('content')@stop
 
-    @section('content_header')
+  @section('css')
+      <!--link rel="stylesheet" href="/css/admin_custom.css"-->
+  @stop
 
-    @stop
-
-    @section('content')
-
-    @stop
-
+  @section('js')
+      <script>
+          $(function() {
+              $(".nav-link").removeClass('active');
+          });
+      </script>
+  @stop

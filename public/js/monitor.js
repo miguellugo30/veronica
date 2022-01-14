@@ -424,8 +424,8 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_monitor\menu.js */"./resources/js/module_monitor/menu.js");
-module.exports = __webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_monitor\monitoreo.js */"./resources/js/module_monitor/monitoreo.js");
+__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\Veronica\resources\js\module_monitor\menu.js */"./resources/js/module_monitor/menu.js");
+module.exports = __webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\Personales\Veronica\resources\js\module_monitor\monitoreo.js */"./resources/js/module_monitor/monitoreo.js");
 
 
 /***/ })

@@ -1,0 +1,1626 @@
+[
+	{
+		"id" : 1,
+		"name" : "view cuentas",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 2,
+		"name" : "view confi sistema",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 3,
+		"name" : "view voz",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 4,
+		"name" : "view catalogos",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 5,
+		"name" : "view tipificaciones",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 6,
+		"name" : "view ivr",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 7,
+		"name" : "view distribuidores",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 8,
+		"name" : "view empresas",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 9,
+		"name" : "view modulos",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 10,
+		"name" : "view menus",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 11,
+		"name" : "view smtp",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 12,
+		"name" : "view usuarios",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 13,
+		"name" : "view perfiles",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 14,
+		"name" : "view did",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 15,
+		"name" : "view troncales",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 16,
+		"name" : "view estados",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 17,
+		"name" : "view pbx",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 18,
+		"name" : "view nas",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 19,
+		"name" : "view edo agente",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 20,
+		"name" : "view edo cliente",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 21,
+		"name" : "view canales",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 22,
+		"name" : "view cat base datos",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 23,
+		"name" : "view tipo canal",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 24,
+		"name" : "view lic bria",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 25,
+		"name" : "view logs",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 26,
+		"name" : "view formularios",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 27,
+		"name" : "view speech",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 28,
+		"name" : "view calificaciones",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 29,
+		"name" : "create usuarios",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 30,
+		"name" : "edit usuarios",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 31,
+		"name" : "delete usuarios",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 32,
+		"name" : "create cat base datos",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 33,
+		"name" : "edit cat base datos",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 34,
+		"name" : "delete cat base datos",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 38,
+		"name" : "create tipo canal",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 39,
+		"name" : "edit tipo canal",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 40,
+		"name" : "delete tipo canal",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 41,
+		"name" : "create canales",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 42,
+		"name" : "edit canales",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 43,
+		"name" : "delete canales",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 44,
+		"name" : "create did",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 45,
+		"name" : "edit did",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 46,
+		"name" : "delete did",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 47,
+		"name" : "create distribuidores",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 48,
+		"name" : "edit distribuidores",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 49,
+		"name" : "delete distribuidores",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 50,
+		"name" : "create edo agente",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 51,
+		"name" : "edit edo agente",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 52,
+		"name" : "delete edo agente",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 53,
+		"name" : "create empresas",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 54,
+		"name" : "edit empresas",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 55,
+		"name" : "delete empresas",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 56,
+		"name" : "create edo cliente",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 57,
+		"name" : "edit edo cliente",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 58,
+		"name" : "delete edo cliente",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 59,
+		"name" : "create estados",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 60,
+		"name" : "edit estados",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 61,
+		"name" : "delete estados",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 62,
+		"name" : "create formularios",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 63,
+		"name" : "edit formularios",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 64,
+		"name" : "delete formularios",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 68,
+		"name" : "create lic bria",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 69,
+		"name" : "edit lic bria",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 70,
+		"name" : "delete lic bria",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 74,
+		"name" : "create menus",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 75,
+		"name" : "edit menus",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 76,
+		"name" : "delete menus",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 77,
+		"name" : "create modulos",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 78,
+		"name" : "edit modulos",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 79,
+		"name" : "delete modulos",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 80,
+		"name" : "create nas",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 81,
+		"name" : "edit nas",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 82,
+		"name" : "delete nas",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 83,
+		"name" : "create pbx",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 84,
+		"name" : "edit pbx",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 85,
+		"name" : "delete pbx",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 86,
+		"name" : "create perfiles",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 87,
+		"name" : "edit perfiles",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 88,
+		"name" : "delete perfiles",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 89,
+		"name" : "create smtp",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 90,
+		"name" : "edit smtp",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 91,
+		"name" : "delete smtp",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 92,
+		"name" : "create speech",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 93,
+		"name" : "edit speech",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 94,
+		"name" : "delete speech",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 95,
+		"name" : "create calificaciones",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 96,
+		"name" : "edit calificaciones",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 97,
+		"name" : "delete calificaciones",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 98,
+		"name" : "create troncales",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 99,
+		"name" : "edit troncales",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 100,
+		"name" : "delete troncales",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 104,
+		"name" : "create campanas",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 105,
+		"name" : "edit campanas",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 106,
+		"name" : "delete campanas",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 107,
+		"name" : "view campanas",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 108,
+		"name" : "edit audios",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 109,
+		"name" : "create audios",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 110,
+		"name" : "delete audios",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 111,
+		"name" : "view audios",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 112,
+		"name" : "create ivr",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 113,
+		"name" : "edit ivr",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 114,
+		"name" : "delete ivr",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 115,
+		"name" : "create agentes",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 116,
+		"name" : "edit agentes",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 117,
+		"name" : "delete agentes",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 118,
+		"name" : "view agentes",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 119,
+		"name" : "view config agentes",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 120,
+		"name" : "view grupos agentes",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 121,
+		"name" : "create grupos agentes",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 122,
+		"name" : "edit grupos agentes",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 123,
+		"name" : "delete grupos agentes",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 124,
+		"name" : "view rutas entrantes",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 125,
+		"name" : "view configuracion did",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 126,
+		"name" : "edit configuracion did",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 127,
+		"name" : "view desvio",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 128,
+		"name" : "edit desvio",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 129,
+		"name" : "delete desvio",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 130,
+		"name" : "create desvio",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 131,
+		"name" : "view condicion de tiempo",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 132,
+		"name" : "edit condicion de tiempo",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 133,
+		"name" : "create condicion de tiempo",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 134,
+		"name" : "delete condicion de tiempo",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 135,
+		"name" : "create configuracion did",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 136,
+		"name" : "delete configuracion did",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 137,
+		"name" : "view buzon de voz",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 138,
+		"name" : "edit buzon de voz",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 139,
+		"name" : "delete buzon de voz",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 140,
+		"name" : "create buzon de voz",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 141,
+		"name" : "view reportes global",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 142,
+		"name" : "create reportes global",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 143,
+		"name" : "edit reportes global",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 144,
+		"name" : "delete reportes global",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 145,
+		"name" : "view eventos",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 146,
+		"name" : "create eventos",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 147,
+		"name" : "edit eventos",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 148,
+		"name" : "delete eventos",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 149,
+		"name" : "view recording",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 150,
+		"name" : "create recording",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 151,
+		"name" : "edit recording",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 152,
+		"name" : "delete recording",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 153,
+		"name" : "view inbound",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 154,
+		"name" : "create inbound",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 155,
+		"name" : "edit inbound",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 156,
+		"name" : "delete inbound",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 157,
+		"name" : "view outbound",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 158,
+		"name" : "create outbound",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 159,
+		"name" : "edit outbound",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 160,
+		"name" : "delete outbound",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 161,
+		"name" : "view manuales",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 162,
+		"name" : "create manuales",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 163,
+		"name" : "edit manuales",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 164,
+		"name" : "delete manuales",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 165,
+		"name" : "view metricas acd",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 166,
+		"name" : "create metricas acd",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 167,
+		"name" : "edit metricas acd",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 168,
+		"name" : "delete metricas acd",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 169,
+		"name" : "view globales",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 170,
+		"name" : "create globales",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 171,
+		"name" : "edit globales",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 172,
+		"name" : "delete globales",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 173,
+		"name" : "view monitoreo avanzado",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 174,
+		"name" : "create monitoreo avanzado",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 175,
+		"name" : "edit monitoreo avanzado",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 176,
+		"name" : "delete monitoreo avanzado",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 181,
+		"name" : "view ",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 182,
+		"name" : "create ",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 183,
+		"name" : "edit ",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 184,
+		"name" : "delete ",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 185,
+		"name" : "view dsfafdsfsd",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 186,
+		"name" : "create dsfafdsfsd",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 187,
+		"name" : "edit dsfafdsfsd",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 188,
+		"name" : "delete dsfafdsfsd",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 189,
+		"name" : "view buzón de voz",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 190,
+		"name" : "create buzón de voz",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 191,
+		"name" : "edit buzón de voz",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 192,
+		"name" : "delete buzón de voz",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 197,
+		"name" : "view real time",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 198,
+		"name" : "create real time",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 199,
+		"name" : "edit real time",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 200,
+		"name" : "delete real time",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 201,
+		"name" : "view almacenamiento",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 202,
+		"name" : "create almacenamiento",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 203,
+		"name" : "edit almacenamiento",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 204,
+		"name" : "delete almacenamiento",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 205,
+		"name" : "view campos plantillas",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 206,
+		"name" : "create campos plantillas",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 207,
+		"name" : "edit campos plantillas",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 208,
+		"name" : "delete campos plantillas",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 209,
+		"name" : "view soporte tecnico",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 210,
+		"name" : "create soporte tecnico",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 211,
+		"name" : "edit soporte tecnico",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 212,
+		"name" : "delete soporte tecnico",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 213,
+		"name" : "view plantillas",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 214,
+		"name" : "create plantillas",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 215,
+		"name" : "edit plantillas",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 216,
+		"name" : "delete plantillas",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 217,
+		"name" : "view bases de datos",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 218,
+		"name" : "create bases de datos",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 219,
+		"name" : "edit bases de datos",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 220,
+		"name" : "delete bases de datos",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 221,
+		"name" : "view prefijos marcacion",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 222,
+		"name" : "create prefijos marcacion",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 223,
+		"name" : "edit prefijos marcacion",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 224,
+		"name" : "delete prefijos marcacion",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 225,
+		"name" : "view perfil marcacion",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 226,
+		"name" : "create perfil marcacion",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 227,
+		"name" : "edit perfil marcacion",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 228,
+		"name" : "delete perfil marcacion",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 229,
+		"name" : "view reportes datos",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 230,
+		"name" : "create reportes datos",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 231,
+		"name" : "edit reportes datos",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 232,
+		"name" : "delete reportes datos",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 233,
+		"name" : "view calificaciones",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 234,
+		"name" : "create calificaciones",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 235,
+		"name" : "edit calificaciones",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 236,
+		"name" : "delete calificaciones",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 237,
+		"name" : "view reportes agentes",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 238,
+		"name" : "create reportes agentes",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 239,
+		"name" : "edit reportes agentes",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 240,
+		"name" : "delete reportes agentes",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 241,
+		"name" : "view llamadas por agentes",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 242,
+		"name" : "create llamadas por agentes",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 243,
+		"name" : "edit llamadas por agentes",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 244,
+		"name" : "delete llamadas por agentes",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 245,
+		"name" : "view productividad agentes",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 246,
+		"name" : "create productividad agentes",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 247,
+		"name" : "edit productividad agentes",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 248,
+		"name" : "delete productividad agentes",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 249,
+		"name" : "view tiempo inactivo",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 250,
+		"name" : "create tiempo inactivo",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 251,
+		"name" : "edit tiempo inactivo",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	},
+	{
+		"id" : 252,
+		"name" : "delete tiempo inactivo",
+		"guard_name" : "web",
+		"created_at" : null,
+		"updated_at" : null
+	}
+]

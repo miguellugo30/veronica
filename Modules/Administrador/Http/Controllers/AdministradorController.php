@@ -6,12 +6,48 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Session;
-use Nimbus\User;
-use Nimbus\Categorias;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Contracts\Events\Dispatcher;
+use JeroenNoten\LaravelAdminLte\Events\BuildingMenu;
+use Illuminate\Support\Str;
+/**
+ * Modelos
+ */
+use App\Categorias;
+use App\Sub_Categorias;
+
 
 class AdministradorController extends Controller
 {
+
+    public function __construct(Dispatcher $events)
+    {
+
+        $this->middleware('auth');
+
+        $events->listen(BuildingMenu::class, function (BuildingMenu $event)
+        {
+            $categorias = Categorias::active()->where('modulos_id', 18)->with('Sub_Categorias')->get();
+            $menu = array();
+
+            foreach ($categorias as $v)
+            {
+                $a = [
+                    'text' => $v->nombre,
+                    'key' => Str::camel($v->nombre),
+                    'id' => $v->id,
+                    'url' => "",
+                    'icon' => $v->class_icon,
+                    'can' => $v->permiso,
+                    'classes' => 'menu-administrador'
+                ];
+
+
+                array_push( $menu, $a );
+           }
+           $event->menu->add( ...$menu );
+        });
+    }
     /**
      * Display a listing of the resource.
      * @return Response
@@ -25,11 +61,14 @@ class AdministradorController extends Controller
         /**
          * Obtenemos el rol del usuario logeado
          */
-        $rol = $user->getRoleNames();
+        $rol = array('Super Administrador');
         /**
          * Obtenemos las categorias relacionadas al usuario
          */
-        $categorias = Categorias::active()->where('modulos_id', 18)->with('Sub_Categorias')->get();
+        $categorias = Categorias::active()->where('modulos_id', 13)->with('Sub_Categorias')->get();
+
+        //dd( $rol );
+
         $modulo = "Administrador";
 
         return view('administrador::index', compact( 'rol', 'categorias', 'modulo' ) );
@@ -96,5 +135,17 @@ class AdministradorController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function subMenus( $id)
+    {
+        $id = explode('-', $id);
+        /**
+         * Obtenemos las categorias relacionadas al usuario
+         */
+        $categorias = Sub_Categorias::active()->where('id_categoria', $id[1])->orderby('prioridad')->get();
+        $modulo = "Settings";
+
+        return view('administrador::subMenu', compact( 'categorias', 'modulo' ));
     }
 }

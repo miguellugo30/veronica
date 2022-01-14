@@ -6,11 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Administrador\Http\Requests\PbxRequest;
-use Nimbus\Cat_IP_PBX;
-use Nimbus\Cat_NAS;
-use Nimbus\BaseDatos;
+use App\Cat_IP_PBX;
+use App\Cat_NAS;
+use App\BaseDatos;
 use DB;
-use Nimbus\Http\Controllers\LogController;
+use App\Http\Controllers\LogController;
 
 class CatIpPbxController extends Controller
 {
@@ -174,7 +174,7 @@ class CatIpPbxController extends Controller
     {
         Cat_IP_PBX::where( 'id', $id )
                 ->update([
-                    'activo' => '0'
+                    'activo' => 0
                 ]);
         /**
          * Creamos el logs

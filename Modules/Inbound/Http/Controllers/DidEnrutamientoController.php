@@ -5,22 +5,22 @@ namespace Modules\Inbound\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Nimbus\Http\Controllers\LogController;
+use App\Http\Controllers\LogController;
 use Illuminate\Support\Facades\Auth;
 use Modules\Inbound\Http\Requests\DidEnrutamientoRequest;
 use nusoap_client;
 use PHPAMI\Ami;
 
-use Nimbus\Empresas;
-use Nimbus\Did_Enrutamiento;
-use Nimbus\Dids;
-use Nimbus\Campanas;
-use Nimbus\Ivr;
-use Nimbus\Audios_Empresa;
-use Nimbus\Buzon_Voz;
-use Nimbus\Grupos;
-use Nimbus\Cat_Extensiones;
-use Nimbus\Desvios;
+use App\Empresas;
+use App\Did_Enrutamiento;
+use App\Dids;
+use App\Campanas;
+use App\Ivr;
+use App\Audios_Empresa;
+use App\Buzon_Voz;
+use App\Grupos;
+use App\Cat_Extensiones;
+use App\Desvios;
 
 class DidEnrutamientoController extends Controller
 {
@@ -36,6 +36,7 @@ class DidEnrutamientoController extends Controller
         $dids = Dids::empresa($empresa_id)->active()->with(['Did_Enrutamiento' => function ($query){
                         $query->where('activo', 1);
                 }])->get();
+
 
         $data = array();
         foreach ($dids as $did) {
@@ -68,6 +69,8 @@ class DidEnrutamientoController extends Controller
                     $nombre = 'Buzon de Voz';
                 }else if ( $tabla == 'hangup' ) {
                     $nombre = 'Colgar';
+                }else if ( $tabla == 'Desvios' ) {
+                    $nombre = 'Desvio';
                 } else {
                     $dataApli = Buzon_Voz::active()->where('Empresas_id', $empresa_id)->get();
                     $nombre = $dataApli->nombre;

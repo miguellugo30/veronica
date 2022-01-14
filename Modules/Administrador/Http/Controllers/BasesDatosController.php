@@ -10,8 +10,8 @@ use Modules\Administrador\Http\Requests\DataBaseRequest;
 /**
  * Clases independientes a laravel
  */
-use Nimbus\Http\Controllers\LogController;
-use Nimbus\BaseDatos;
+use App\Http\Controllers\LogController;
+use App\BaseDatos;
 
 class BasesDatosController extends Controller
 {

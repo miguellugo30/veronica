@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use Nimbus\User;
-use Nimbus\Categorias;
+use App\User;
+use App\Categorias;
 
 class SettingsController extends Controller
 {
@@ -18,21 +18,13 @@ class SettingsController extends Controller
     public function index()
     {
         /**
-         * Obtenemos los datos del usuario logeado
-         */
-        $user = User::find( Auth::id() );
-        /**
-         * Obtenemos el rol del usuario logeado
-         */
-        $rol = $user->getRoleNames();
-        /**
          * Obtenemos las categorias relacionadas al usuario
          */
-        $categorias = Categorias::active()->where('modulos_id', 17)->get();
+        $categorias = Categorias::with('Sub_Categorias')->active()->where('modulos_id', 17)->get();
 
         $modulo = "Settings";
 
-        return view('settings::index', compact( 'rol', 'categorias', 'modulo' ));
+        return view('settings::index', compact( 'categorias', 'modulo' ));
     }
 
     /**

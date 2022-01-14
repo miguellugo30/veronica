@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -37,13 +37,13 @@ class Modulos extends Model
      */
     public function Empresas()
     {
-        return $this->belongsToMany('Nimbus\Empresas', 'Modulos_Empresas');
+        return $this->belongsToMany('App\Empresas', 'Modulos_Empresas');
     }
     /**
      * Relacion uno a muchos con Modulos
      */
     public function Categorias()
     {
-        return $this->hasMany('Nimbus\Categorias')->where('activo',  1);
+        return $this->hasMany('App\Categorias')->where('activo',  1);
     }
 }

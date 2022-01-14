@@ -8,11 +8,11 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use nusoap_client;
 
-use Nimbus\Http\Controllers\LogController;
-use Nimbus\Audios_Empresa;
-use Nimbus\User;
+use App\Http\Controllers\LogController;
+use App\Audios_Empresa;
+use App\User;
 use Storage;
-use Nimbus\Empresas;
+use App\Empresas;
 use File;
 use Modules\Settings\Http\Requests\AudiosRequest;
 
@@ -57,14 +57,14 @@ class AudiosEmpresasController extends Controller
        $file = $request->file('file');
 
        /** Obtener el nombre del archivo **/
-       $aud_nom = $file->getClientOriginalName();
+       $aud_nom = str_replace(" ", "_",  $file->getClientOriginalName());
        $dir_audios = "/audios/".$empresa_id;
        /** Crear la Ruta en Storage */
        if(!File::exists($dir_audios))
            Storage::makeDirectory($dir_audios);
 
        /** Colocar en el Directorio WEB SERVER **/
-       Storage::disk('public')->put($dir_audios."/".$aud_nom, \File::get($file));
+       $request->file('file')->storeAs($dir_audios, $aud_nom);
         /** Crear el logs    */
         $mensaje = 'Se creo un nuevo registro, informacion capturada:'.var_export($request->all(), true);
         $log = new LogController;
@@ -72,8 +72,8 @@ class AudiosEmpresasController extends Controller
         /**
          * Subimos el archivo al media server
          */
-        $pbx = Empresas::empresa($empresa_id)->active()->with('Config_Empresas')->with('Config_Empresas.ms')->get()->first();
-        $wsdl = 'http://'.$pbx->Config_Empresas->ms->ip_pbx.'/ws-ms/index.php';
+        //$pbx = Empresas::empresa($empresa_id)->active()->with('Config_Empresas')->with('Config_Empresas.ms')->get()->first();
+        $wsdl = 'http://media.veronicacc.com/ws-ms/index.php';
         $client =  new  nusoap_client( $wsdl );
 
         $client->call('SubirArchivo', array(
@@ -85,7 +85,7 @@ class AudiosEmpresasController extends Controller
             [
                 'nombre' => $request->input('nombre'),
                 'descripcion'   => $request->input('descripcion'),
-                'ruta' =>  'Grabaciones_'.$empresa_id."/".$request->input('ruta') ,
+                'ruta' =>  'Grabaciones_'.$empresa_id."/".str_replace(" ", "_", $request->input('ruta') ),
                 'Empresas_id'   => $empresa_id
             ]
           );
@@ -113,7 +113,7 @@ class AudiosEmpresasController extends Controller
          * Descargamos el archivo al media server
          */
         $pbx = Empresas::empresa($empresa_id)->active()->with('Config_Empresas')->with('Config_Empresas.ms')->get()->first();
-        $wsdl = 'http://'.$pbx->Config_Empresas->ms->ip_pbx.'/ws-ms/index.php';
+        $wsdl = 'http://media.veronicacc.com/ws-ms/index.php';
         $client =  new  nusoap_client( $wsdl );
 
         $result = $client->call('BajarArchivo', array(
@@ -126,7 +126,7 @@ class AudiosEmpresasController extends Controller
         {
             $archivo = explode( '/',  $audio->ruta );
             $ruta = Storage::disk('public')->getAdapter()->getPathPrefix();
-            $source = file_get_contents( 'http://'.$pbx->Config_Empresas->ms->ip_pbx.'/ws-ms/tmp/'.$archivo[1] );
+            $source = file_get_contents( 'http://media.veronicacc.com/ws-ms/tmp/'.$archivo[1] );
             file_put_contents( $ruta.'tmp/'.$archivo[1], $source );
             $ruta = Storage::url( 'tmp/'.$archivo[1] ) ;
             $mensaje = "";
@@ -167,7 +167,7 @@ class AudiosEmpresasController extends Controller
      */
     public function destroy($id)
     {
-        Audios_Empresa::where('id',$id)->update(['activo'=>'0']);
+        Audios_Empresa::where('id',$id)->update(['activo'=>0]);
 
         return redirect()->route('Audios.index');
          /**

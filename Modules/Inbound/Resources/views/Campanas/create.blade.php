@@ -110,13 +110,20 @@
                         @foreach ($calificaciones as $calificacion)
                         <option value="{{ $calificacion->id }}">{{ $calificacion->nombre }}</option>
                         @endforeach
-
-
                     </select>
                 </div>
                 <!-- Desvio de llamadas -->
                 <div class="alert alert-dark" role="alert" style="height: 30px;padding: .3rem 1.25rem;">
-                Desvio de llamadas
+                Calificacion de Campaña
+                </div>
+                <div class="form-group">
+                    <label for="cal_camp"><b>Calificacion*:</b></label>
+                    <select name="cal_camp" id="cal_camp" class="form-control form-control-sm">
+                        <option value="">Seleccione Calificacion</option>
+                        @foreach ($calificaciones as $calificacion)
+                        <option value="{{ $calificacion->id }}">{{ $calificacion->nombre }}</option>
+                        @endforeach
+                    </select>
                 </div>
 
 

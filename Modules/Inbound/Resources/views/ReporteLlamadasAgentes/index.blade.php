@@ -13,16 +13,17 @@
         height: 29px;
     }
 </style>
-<div class="box box-primary">
-    <div class="box-header with-border">
-        <h3 class="box-title"><b><i class="fas fa-filter"></i> Filtro</b></h3>
-        <div class="box-tools pull-right">
+
+<div class="card card-outline card-primary">
+    <div class="card-header">
+        <h3 class="card-title"><b><i class="fas fa-filter"></i> Filtro: Reporte Llamadas por agente</b></h3>
+        <div class="card-tools pull-right">
             <button class='btn btn-primary btn-sm nuevo-reporte' style='display:none'>
                 Nuevo Reporte
             </button>
         </div>
-    </div><!-- /.box-header -->
-    <div class="box-body">
+    </div><!--card-header-->
+    <div class="card-body">
         <div class="row filtro-reporte justify-content-md-center">
             <div class="col-8 viewIndex">
                 <div class="container">
@@ -114,8 +115,8 @@
                 </div>
             </div><!-- /.col-6 -->
         </div><!-- /.row -->
-    </div><!-- ./box-body -->
-</div>
+    </div><!--card-header-->
+  </div>
 
 <div class="viewReporte"></div>
 

@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -134,47 +134,38 @@ function my_onkeydown_handler(event) {
 document.addEventListener("keydown", my_onkeydown_handler);
 $(function () {
   $(document).on("click", ".nav-link", function (e) {
-    $('.nav-link').attr('data-toggle', 'tab');
-    var id = $(this).attr('href');
-    $(".tab-pane").removeClass('active');
-    $(id).addClass('active');
+    $('.nav-link').attr('data-toggle', 'tab'); //let id = $(this).attr('href');
+    //$(".tab-pane").removeClass('active');
+    //$(id).addClass('active');
   });
   $(document).on("click", ".close", function (e) {
     $('.nav-link').attr('data-toggle', 'control-sidebar');
   });
 });
 document.addEventListener('DOMContentLoaded', function () {
+  /*
   var initialLocaleCode = 'es';
   var calendarEl = document.getElementById('calendar');
-  var calendar = new FullCalendar.Calendar(calendarEl, {
-    plugins: ['list'],
-    timeZone: 'UTC',
-    defaultView: 'listDay',
-    titleFormat: {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    },
-    views: {
-      listDay: {
-        buttonText: 'Dia'
+   var calendar = new FullCalendar.Calendar(calendarEl, {
+      plugins: ['list'],
+      timeZone: 'UTC',
+      defaultView: 'listDay',
+      titleFormat: { year: 'numeric', month: 'short', day: 'numeric' },
+      views: {
+          listDay: { buttonText: 'Dia' },
+          listWeek: { buttonText: 'Semana' },
+          listMonth: { buttonText: 'Mex' }
       },
-      listWeek: {
-        buttonText: 'Semana'
+      locale: initialLocaleCode,
+      header: {
+          left: 'title',
+          center: '',
+          right: 'listDay,listWeek,listMonth'
       },
-      listMonth: {
-        buttonText: 'Mex'
-      }
-    },
-    locale: initialLocaleCode,
-    header: {
-      left: 'title',
-      center: '',
-      right: 'listDay,listWeek,listMonth'
-    },
-    events: 'https://fullcalendar.io/demo-events.json'
+      events: 'https://fullcalendar.io/demo-events.json'
   });
-  calendar.render();
+   calendar.render();
+  */
   var id_agente = $('#id_agente').val();
   var timer = null;
   var currentURL = window.location.href.split('?');
@@ -198,11 +189,15 @@ document.addEventListener('DOMContentLoaded', function () {
           $(".estado-agente").html("<i class='fa fa-circle text-danger'></i> " + obj['estado']);
           $(".colgar-llamada").prop("disabled", false);
           $.get(currentURL[0] + "/" + id_agente + "/edit", function (data, textStatus, jqXHR) {
-            $(".view-call").html(data);
+            $(".viewResult").html(data);
             $(".historico-llamadas").DataTable({
               "searching": false,
               "lengthChange": false,
-              "iDisplayLength": 5
+              "iDisplayLength": 5,
+              "responsive": true,
+              language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json'
+              }
             });
           });
         } else if (obj['status'] == 2) {
@@ -217,7 +212,7 @@ document.addEventListener('DOMContentLoaded', function () {
           });
         } else if (obj['status'] == 0) {
           if (obj['monitoreo'] == 1) {
-            $(".view-call").html('<div class="col-12 text-center" style="padding-top: 19%;"><i class="fas fa-spinner fa-10x fa-spin text-info"></i></div>');
+            $(".viewResult").html('<div class="col-12 text-center" style="padding-top: 19%;"><i class="fas fa-spinner fa-10x fa-spin text-info"></i></div>');
             $(".colgar-llamada").prop("disabled", true);
           }
         }
@@ -238,7 +233,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var id_agente = $('#id_agente').val();
     var canal = $("#canal").val();
     var canal_entrante = $("#canal_entrante").val();
-    var id_calificacion = $("#calificacion option:selected").data('calificacionid');
+    var id_calificacion = $("#calificacionLlamada option:selected").data('calificacionid');
     var uniqueid = $("#uniqueid").val();
 
     var _token = $("input[name=_token]").val();
@@ -258,8 +253,9 @@ document.addEventListener('DOMContentLoaded', function () {
         _token: _token
       }
     }).done(function (msg) {
-      $(".view-call").html(msg);
-      $(".view-call").html('<div class="col-12 text-center" style="padding-top: 19%;"><i class="fas fa-spinner fa-10x fa-spin text-info"></i></div>');
+      console.log(msg);
+      $(".viewResult").html(msg);
+      $(".viewResult").html('<div class="col-12 text-center" style="padding-top: 19%;"><i class="fas fa-spinner fa-10x fa-spin text-info"></i></div>');
       $(".estado-agente").html("<i class='fa fa-circle text-success'></i> Disponible");
       $(".colgar-llamada").prop("disabled", true);
       start();
@@ -588,19 +584,34 @@ $(function () {
       });
     }
   });
+  /**
+   * Mostrar formulario vinculado a la calificacion seleccionada
+   */
+
+  $(document).on('change', '#calificacionLlamada', function (event) {
+    var id = $(this).val();
+    var url = currentURL[0].replace('agentes/') + '/formularios/' + id;
+    $.ajax({
+      url: url,
+      type: 'GET',
+      success: function success(result) {
+        $(".viewFormularioCalificacion").html(result);
+      }
+    });
+  });
 });
 
 /***/ }),
 
-/***/ 6:
+/***/ 4:
 /*!*************************************************************************************************************!*\
   !*** multi ./resources/js/module_agentes/agentes.js ./resources/js/module_agentes/eventosPantallaAgente.js ***!
   \*************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_agentes\agentes.js */"./resources/js/module_agentes/agentes.js");
-module.exports = __webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_agentes\eventosPantallaAgente.js */"./resources/js/module_agentes/eventosPantallaAgente.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_agentes/agentes.js */"./resources/js/module_agentes/agentes.js");
+module.exports = __webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_agentes/eventosPantallaAgente.js */"./resources/js/module_agentes/eventosPantallaAgente.js");
 
 
 /***/ })

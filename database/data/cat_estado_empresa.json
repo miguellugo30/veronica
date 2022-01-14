@@ -1,0 +1,12 @@
+[
+	{
+		"id" : 1,
+		"nombre" : "Demo-Sin-Facturar",
+		"activo" : "1"
+	},
+	{
+		"id" : 5,
+		"nombre" : "Facturable",
+		"activo" : "1"
+	}
+]

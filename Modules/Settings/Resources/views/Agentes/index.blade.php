@@ -1,7 +1,7 @@
-<div class="box box-primary">
-    <div class="box-header with-border">
-        <h3 class="box-title"><i class="fas fa-user-cog"></i> Agentes</h3>
-        <div class="box-tools pull-right">
+<div class="card card-outline card-primary">
+    <div class="card-header">
+        <h3 class="card-title"><b><i class="fas fa-user-cog"></i> Agentes</b></h3>
+        <div class="card-tools">
             @can('delete agentes')
                 <button type="button" class="btn btn-danger  btn-sm deleteAgente" style="display:none"><i class="fas fa-trash-alt"></i> Elminar</button>
             @endcan
@@ -13,52 +13,61 @@
             @endcan
             <input type="hidden" name="idSeleccionado" id="idSeleccionado" value="">
         </div>
-    </div><!-- /.box-header -->
-    <div class="box-body">
-        <div class="row">
-            <div class="col-md-12 viewIndex" >
-                <table id="tableAgentes" class="display table table-bordered table-hover table-sm" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>Tipo</th>
-                            <th>Grupo</th>
-                            <th>Nivel</th>
-                            <th>Nombre</th>
-                            <th>Usuario</th>
-                            <th>Contraseña</th>
-                            <th>Extensión</th>
-                            <th>Canal</th>
-                            <th>Prefil</th>
-                            <th>Prueba</th>
+    </div><!--card-header-->
+    <div class="card-body">
+        <div class="col-md-12 viewIndex">
+            <table id="tableAgentes" class="display table table-bordered table-striped table-hover table-sm" style="width:100%">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Grupo</th>
+                        <th>Nivel</th>
+                        <th>Nombre</th>
+                        <th>Usuario</th>
+                        <th>Contraseña</th>
+                        <th>Extensión</th>
+                        <th>Canal</th>
+                        <th>Prefil</th>
+                        <th>Prueba</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach( $agentes as $agente )
+                        <tr data-id="{{ $agente->id }}" style="cursor:pointer">
+                            <td>{{ $agente->tipo_licencia }} </td>
+                            <td>
+                                @if ( $agente->Grupos->isEmpty() )
+                                    Sin Grupo
+                                @else
+                                    {{ $agente->Grupos->first()->nombre }}
+                                @endif
+                            </td>
+                            <td>{{ $agente->nivel }}</td>
+                            <td>{{ $agente->nombre }}</td>
+                            <td>{{ $agente->usuario }}</td>
+                            <td>{{ $agente->contrasena }}</td>
+                            <td>{{ $agente->extension_real }}</td>
+                            <td>
+                                @if ( $agente->Canales == null )
+                                    Sin Canal
+                                @else
+                                    {{ $agente->Canales->Cat_Tipo_Canales->nombre }}
+                                @endif
+                            </td>
+                            <td>
+                                @if ($agente->Perfiles->isEmpty())
+                                    Sin Perfil
+                                @else
+                                    {{ $agente->Perfiles->first()->nombre }}
+                                @endif
+                            </td>
+                            <td> </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @foreach( $agentes as $agente )
-                            <tr data-id="{{ $agente->id }}" style="cursor:pointer">
-                                <td>{{ $agente->tipo_licencia }} </td>
-                                <td>
-                                    @if ( $agente->Grupos->isEmpty() )
-                                        Sin Grupo
-                                    @else
-                                        {{ $agente->Grupos[0]->nombre }}
-                                    @endif
-                                </td>
-                                <td>{{ $agente->nivel }}</td>
-                                <td>{{ $agente->nombre }}</td>
-                                <td>{{ $agente->usuario }}</td>
-                                <td>{{ $agente->contrasena }}</td>
-                                <td>{{ $agente->extension_real }}</td>
-                                <td>{{ $agente->Canales->Cat_Tipo_Canales->nombre }}</td>
-                                <td>{{ $agente->Perfiles[0]->nombre }}</td>
-                                <td> </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-12 viewCreate"></div>
-        </div><!-- /.row -->
-    </div><!-- ./box-body -->
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div><!--card-header-->
 </div>
 <!-- MODAL -->
 <div class="modal fade bd-example-modal-lg" tabindex="-1" id="modal" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">

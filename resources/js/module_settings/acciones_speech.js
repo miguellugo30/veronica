@@ -1,5 +1,6 @@
 $(function() {
 
+    var currentURL = window.location.href;
     /**
      * Evento para mostrar el boton de añadir y borrar cuando el tipo de speech sea dinamico
      */
@@ -157,7 +158,7 @@ $(function() {
                 let _token = $("input[name=_token]").val();
                 let tr = $(this).closest('tr');
                 let id = $(this).data('id');
-                let url = currentURL + '/speech/eliminar-opcion/' + id;
+                let url = currentURL + 'settings/speech/eliminar-opcion/' + id;
 
                 $.ajax({
                     url: url,
@@ -179,4 +180,26 @@ $(function() {
             }
         });
     });
+
+    $(document).on('click', '.opcionSpeech', function() {
+
+        let id = $(this).data('id');
+        let SpeechId = $(this).data('speech-id');
+
+        $('#tituloModal').html('Vista de Speech');
+        let url = currentURL + 'settings/speech/' + id;
+
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function(result) {
+
+                $("#opcion_seleccionada_"+SpeechId).html(result);
+                $("#opcion_seleccionada_"+SpeechId).slideDown();
+
+            }
+        });
+
+    });
+
 });

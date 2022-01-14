@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -39,14 +39,14 @@ class Formularios extends Model
      */
     public function Empresas()
     {
-        return $this->belongsTo('Nimbus\Empresas', 'Empresas_id','id');
+        return $this->belongsTo('App\Empresas', 'Empresas_id','id');
     }
     /**
      * Relacion muchos a uno con Tipo_Marcacion
      */
     public function Tipo_Marcacion()
     {
-        return $this->belongsTo('Nimbus\Cat_Tipo_Marcacion', 'Cat_Tipo_Marcacion_id','id');
+        return $this->belongsTo('App\Cat_Tipo_Marcacion', 'Cat_Tipo_Marcacion_id','id');
     }
     /*
     |--------------------------------------------------------------------------
@@ -57,14 +57,14 @@ class Formularios extends Model
      */
     public function Formularios_Campos()
     {
-        return $this->belongsToMany('Nimbus\Campos', 'Formularios_Campos');
+        return $this->belongsToMany('App\Campos', 'Formularios_Campos');
     }
     /**
      * Relacion uno a muchos con Sub_Formularios
      */
     public function Sub_Formularios()
     {
-        return $this->hasMany('Nimbus\Sub_Formularios');
+        return $this->hasMany('App\Sub_Formularios');
     }
 
     /**
@@ -72,7 +72,7 @@ class Formularios extends Model
      */
     public function Calificaciones()
     {
-        return $this->hasOne('Nimbus\Calificaciones', 'id', 'Formularios_id');
+        return $this->hasOne('App\Calificaciones', 'id', 'Formularios_id');
     }
 
 

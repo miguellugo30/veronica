@@ -5,8 +5,8 @@ namespace Modules\Administrador\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Nimbus\LicenciasBria;
-use Nimbus\Http\Controllers\LogController;
+use App\LicenciasBria;
+use App\Http\Controllers\LogController;
 use Modules\Administrador\Http\Requests\LicenciasBriaRequest;
 
 class LicenciasBriaController extends Controller

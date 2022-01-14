@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -24,6 +24,6 @@ class DatosFormularios extends Model
      */
     public function CDR()
     {
-        return $this->belongsTo('Nimbus\Crd_Call_Center', 'uniqueid', 'uniqueid');
+        return $this->belongsTo('App\Crd_Call_Center', 'uniqueid', 'uniqueid');
     }
 }

@@ -7,15 +7,17 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Modules\Recording\Http\Controllers\QueryReporteRecordingInboundController;
-use Nimbus\Exports\ReporteRecordingInboundExport;
+use App\Exports\ReporteRecordingInboundExport;
 use Maatwebsite\Excel\Facades\Excel;
 use nusoap_client;
 use Storage;
 use Illuminate\Support\Facades\Artisan;
-use Nimbus\Http\Controllers\LogController;
+use App\Http\Controllers\LogController;
+use ZipArchive;
+use File;
 
-use Nimbus\Empresas;
-use Nimbus\Grabaciones;
+use App\Empresas;
+use App\Grabaciones;
 
 class InboundController extends Controller
 {
@@ -66,7 +68,7 @@ class InboundController extends Controller
         $pbx = Empresas::empresa($empresa_id)->active()->with('Config_Empresas')->with('Config_Empresas.ms')->get()->first();
         $wsdl = 'http://'.$pbx->Config_Empresas->ms->ip_pbx.'/ws-ms/index.php';
         $cliente =  new  nusoap_client( $wsdl );
-
+        //dd($wsdl);
         $result =  $cliente->call('BajarGrabacionLlamada', array(
                                                                         'empresas_id' => $empresa_id,
                                                                         'id_grabacion' => $infoAudio[0],
@@ -79,6 +81,7 @@ class InboundController extends Controller
         {
             $archivo = explode( '/', $infoAudio[0] );
             $ruta = Storage::disk('public')->getAdapter()->getPathPrefix();
+            //dd($ruta);
             $source = file_get_contents( 'http://'.$pbx->Config_Empresas->ms->ip_pbx.'/ws-ms/tmp/'.$archivo[1] );
             file_put_contents( $ruta.'tmp/'.$archivo[1], $source );
             $ruta = Storage::url( 'tmp/'.$archivo[1] ) ;
@@ -143,22 +146,38 @@ class InboundController extends Controller
                 $ruta = Storage::disk('public')->getAdapter()->getPathPrefix();
                 $source = file_get_contents( 'http://'.$pbx->Config_Empresas->ms->ip_pbx.'/ws-ms/tmp/'.$archivo[1] );
                 file_put_contents( $ruta.'tmp/'.$empresa_id.'/'.$archivo[1], $source );
-                $ruta = Storage::url( 'tmp/'.$empresa_id.'/'.$archivo[1] ) ;
+                //Storage::url( 'tmp/'.$archivo[1] ) ;
+                Storage::url( 'tmp/'.$empresa_id.'/'.$archivo[1] ) ;
             }
 
         }
-        /**
+        /*
          * CREAMOS EL ZIP CON LOS ARCHIVOS
-         **/
-        $zipper = new \Chumper\Zipper\Zipper;
-        $ruta = glob(public_path( '/storage/tmp/'.$empresa_id.'/*' ) );
-        $zipper->make('storage/tmp/grabaciones_'.$empresa_id.'.zip')->add( $ruta )->close();
-        $zipper->close();
+         */
+         $zip = new ZipArchive;
+
+        $fileName = 'grabaciones_'.$empresa_id.'.zip';
+
+        if ($zip->open(public_path("storage/".$fileName), \ZipArchive::CREATE)== TRUE)
+        {
+            $files = File::files( 'storage/tmp/'.$empresa_id.'/' );
+            foreach ($files as $key => $value){
+                $relativeName = basename($value);
+                $zip->addFile($value, $relativeName);
+            }
+            $zip->close();
+        }
+
+        /*
+         $ruta = glob(public_path( '/storage/tmp/'.$empresa_id.'/*' ) );
+         $zipper->make('storage/tmp/grabaciones_'.$empresa_id.'.zip')->add( $ruta )->close();
+         $zipper->close();
         /**
          * Borramos el directorio temporal
-         */
+         **/
         Storage::disk('public')->deleteDirectory('/tmp/'.$empresa_id);
-        return 'storage/tmp/grabaciones_'.$empresa_id.'.zip';
+        //return response()->download(public_path("storage/".$fileName));
+        return 'storage/grabaciones_'.$empresa_id.'.zip';
     }
 
     /**

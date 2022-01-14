@@ -5,13 +5,13 @@ namespace Modules\Inbound\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Nimbus\Http\Controllers\LogController;
+use App\Http\Controllers\LogController;
 use Illuminate\Support\Facades\Auth;
 use Modules\Inbound\Http\Requests\BuzonVozRequest;
 
-use Nimbus\User;
-use Nimbus\Buzon_Voz;
-use Nimbus\Audios_Empresa;
+use App\User;
+use App\Buzon_Voz;
+use App\Audios_Empresa;
 
 
 class BuzonVozController extends Controller

@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -37,6 +37,6 @@ class LicenciasBria extends Model
      */
     public function Extensiones()
     {
-        return $this->hasMany('Nimbus\Cat_Extensiones', "Cat_Licencias_Bria_id");
+        return $this->hasMany('App\Cat_Extensiones', "Cat_Licencias_Bria_id");
     }
 }

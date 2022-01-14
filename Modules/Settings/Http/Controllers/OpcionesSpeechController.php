@@ -5,9 +5,9 @@ namespace Modules\Settings\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Nimbus\Http\Controllers\LogController;
-use Nimbus\speech;
-use Nimbus\Opciones_Speech;
+use App\Http\Controllers\LogController;
+use App\speech;
+use App\Opciones_Speech;
 
 class OpcionesSpeechController extends Controller
 {

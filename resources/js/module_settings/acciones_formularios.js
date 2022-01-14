@@ -1,8 +1,10 @@
 $(function() {
+
+    var currentURL = window.location.href;
     /**
      * Evento para agregar una nueva fila para campos nuevos en el formulario
      */
-    $(document).on('click', '#add', function() {
+    $(document).on('click', '#add-input-form', function() {
         var clickID = $(".tableNewForm tbody tr.clonar:last").attr('id').replace('tr_', '');
         $('#form_opc .form-control-sm').val('');
         // Genero el nuevo numero id
@@ -12,9 +14,14 @@ $(function() {
         fila = $(".tableNewForm tbody tr:eq()").clone().appendTo(".tableNewForm"); //Clonamos la fila
         for (let i = 0; i < IDInput.length; i++) {
             fila.find('#' + IDInput[i]).attr('name', IDInput[i] + "_" + newID); //Cambiamos el nombre de los campos de la fila a clonar
+            if ( IDInput[i] != 'editable' || IDInput[i] != 'obligatorio' ) {
+                fila.find('#' + IDInput[i]).attr('value', '');
+            }
+            fila.find('#' + IDInput[i]).attr('data-id-campo', newID)
         }
         fila.find('.btn-info').css('display', 'none');
-        fila.find('#id_campo').attr('value', '');
+        fila.find('.btn-danger').css('display', 'block');
+        fila.find('#id_campo').attr('value', '0');
         fila.attr("id", 'tr_' + newID);
 
     });
@@ -44,7 +51,8 @@ $(function() {
     /**
      * Evento para eliminar una fila de la tabla de nuevo formulario
      */
-    $(document).on('click', '.tr_edit_remove', function() {
+    $(document).on('click', '.tr_edit_form_remove', function() {
+
         let id = $(this).data('id-campo');
         let idForm = $("#id_formulario").val();
         let tr = $(this).closest('tr');
@@ -52,7 +60,7 @@ $(function() {
 
         let _method = "DELETE";
         let _token = $("input[name=_token]").val();
-        let url = currentURL + '/campos/' + id + '&' + idForm;
+        let url = currentURL + 'settings/campos/' + id + '&' + idForm;
 
         $.ajax({
             url: url,

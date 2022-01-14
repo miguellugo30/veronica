@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus\Exports;
+namespace App\Exports;
 use Modules\Recording\Http\Controllers\QueryReporteRecordingInboundController;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;

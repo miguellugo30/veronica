@@ -5,11 +5,11 @@ namespace Modules\Administrador\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Nimbus\Cat_Campos_Plantillas;
-use Nimbus\Empresas;
+use App\Cat_Campos_Plantillas;
+use App\Empresas;
 use DB;
 use Illuminate\Support\Facades\Auth;
-use Nimbus\Http\Controllers\LogController;
+use App\Http\Controllers\LogController;
 use Modules\Administrador\Http\Requests\CamposPlantillasRequest;
 
 class CatCamposPlantillasController extends Controller

@@ -1,7 +1,7 @@
-<div class="box box-primary">
-    <div class="box-header with-border">
-        <h3 class="box-title"><i class="far fa-id-card"></i> Perfil Marcacion</h3>
-        <div class="box-tools pull-right">
+<div class="card card-outline card-primary">
+    <div class="card-header">
+        <h3 class="card-title"><b><i class="far fa-id-card"></i> Perfil Marcacion</b></h3>
+        <div class="card-tools">
             @can('delete perfil marcacion')
                 <button type="button" class="btn btn-danger btn-sm deletePerfilMarcacion" style="display:none"><i class="fas fa-trash-alt"></i> Elminar</button>
             @endcan
@@ -13,43 +13,40 @@
             @endcan
             <input type="hidden" name="idSeleccionado" id="idSeleccionado" value="">
         </div>
-    </div><!-- /.box-header -->
-    <div class="box-body">
-        <div class="row">
-            <div class="col-md-12 viewIndex">
-                <table id="tablePerfilMarcacion" class="display table table-bordered table-hover table-sm" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Descripcion</th>
-                            <th>Prefijo Marcacion</th>
-                            <th>canal</th>
-                            <th>Did</th>
+    </div><!--card-header-->
+    <div class="card-body">
+        <div class="col-md-12 viewIndex">
+            <table id="tablePerfilMarcacion" class="display table table-bordered table-striped table-hover table-sm" style="width:100%">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Descripcion</th>
+                        <th>Prefijo Marcacion</th>
+                        <th>canal</th>
+                        <th>Did</th>
+                    </tr>
+                </thead>
+                <!-- Iterar el arreglo $perfiles que contiene el resultado de consultar todos los registros que contiene la tabla de Perfil Marcacion
+                :: Nombre de Prefijo Marcacion
+                :: Nombre de Perfil
+                :: Nombre de Canal (en la tabla Cat_Tipo_Canales)
+                :: Did
+                -->
+                <tbody>
+                    @foreach ($perfil_marcacion as $marcacion)
+                        <tr data-id="{{ $marcacion->Perfiles->id }}">
+                            <td>{{ $marcacion->Perfiles->nombre }}</td>
+                            <td>{{ $marcacion->Perfiles->descripcion }}</td>
+                            <td>{{ $marcacion->PrefijosMarcacion->nombre }}</td>
+                            <td>{{ $marcacion->Canales->Cat_Tipo_Canales->nombre }}</td>
+                            <td>{{ $marcacion->Dids->did }}</td>
                         </tr>
-                    </thead>
-                    <!-- Iterar el arreglo $perfiles que contiene el resultado de consultar todos los registros que contiene la tabla de Perfil Marcacion
-                    :: Nombre de Prefijo Marcacion
-                    :: Nombre de Perfil
-                    :: Nombre de Canal (en la tabla Cat_Tipo_Canales)
-                    :: Did
-                    -->
-                    <tbody>
-                        @foreach ($perfil_marcacion as $marcacion)
-                            <tr data-id="{{ $marcacion->Perfiles->id }}">
-                                <td>{{ $marcacion->Perfiles->nombre }}</td>
-                                <td>{{ $marcacion->Perfiles->descripcion }}</td>
-                                <td>{{ $marcacion->PrefijosMarcacion->nombre }}</td>
-                                <td>{{ $marcacion->Canales->Cat_Tipo_Canales->nombre }}</td>
-                                <td>{{ $marcacion->Dids->did }}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-12 viewCreate"></div>
-        </div><!-- /.row -->
-    </div><!-- ./box-body -->
-</div>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div><!--card-header-->
+  </div>
 <!-- MODAL -->
 <div class="modal fade bd-example-modal-lg" tabindex="-1" id="modal" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">

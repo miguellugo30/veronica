@@ -5,18 +5,18 @@ namespace Modules\Inbound\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Nimbus\Http\Controllers\LogController;
+use App\Http\Controllers\LogController;
 use Illuminate\Support\Facades\Auth;
 use Modules\Inbound\Http\Requests\CondicionesTiempoRequest;
 
-use Nimbus\Audios_Empresa;
-use Nimbus\Campanas;
-use Nimbus\Cat_Extensiones;
-use Nimbus\User;
-use Nimbus\Condiciones_Tiempo;
-use Nimbus\Desvios;
-use Nimbus\Grupos;
-use Nimbus\Ivr;
+use App\Audios_Empresa;
+use App\Campanas;
+use App\Cat_Extensiones;
+use App\User;
+use App\Condiciones_Tiempo;
+use App\Desvios;
+use App\Grupos;
+use App\Ivr;
 
 class CondicionesTiempoController extends Controller
 {

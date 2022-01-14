@@ -10,7 +10,7 @@ $(function() {
 
         $('#tituloModal').html('Nueva base de datos');
 
-        let url = currentURL + '/BaseDatos/create';
+        let url = currentURL + 'settings/Base-Datos/create';
 
         $('#action').removeClass('updateBaseDatos');
         $('#action').addClass('saveBaseDatos');
@@ -30,7 +30,7 @@ $(function() {
     $(document).on("change", "#plantilla", function(e) {
 
         let id = $(this).val();
-        let url = currentURL + '/Plantillas/' + id;
+        let url = currentURL + 'settings/Plantillas/' + id;
         $.ajax({
             url: url,
             type: 'GET',
@@ -57,7 +57,7 @@ $(function() {
         formData.append("_token", _token);
 
 
-        let url = currentURL + '/BaseDatos';
+        let url = currentURL + 'settings/Base-Datos';
 
         $.ajax({
                 url: url,
@@ -77,7 +77,8 @@ $(function() {
                 $('.viewResult').html(data);
 
                 $('.viewResult #tableBaseDatos').DataTable({
-                    "lengthChange": false
+                    "lengthChange": false,
+                    "ordering": false
                 });
                 Swal.fire(
                     'Correcto!',
@@ -124,7 +125,7 @@ $(function() {
 
         $('#tituloModal').html('Editar Base de datos');
 
-        var url = currentURL + '/BaseDatos/' + id + '/edit';
+        var url = currentURL + 'settings/Base-Datos/' + id + '/edit';
         $('#action').addClass('updateBaseDatos');
         $('#action').removeClass('saveBaseDatos');
         $.ajax({
@@ -147,7 +148,7 @@ $(function() {
 
         $('#tituloModalRegistros').html('Visualizar Base de datos');
 
-        var url = currentURL + '/BaseDatos/' + id;
+        var url = currentURL + 'settings/Base-Datos/' + id;
         $('#action').addClass('updateBaseDatos');
         $('#action').removeClass('saveBaseDatos');
         $.ajax({
@@ -157,7 +158,8 @@ $(function() {
                 $('#modalRegistros').modal({ backdrop: 'static', keyboard: false });
                 $("#modal-body-registros").html(result);
                 $('#registroBaseDatos').DataTable({
-                    "lengthChange": true
+                    "lengthChange": true,
+                    "ordering": false
                 });
             }
         });
@@ -181,7 +183,7 @@ $(function() {
         formData.append("_token", _token);
         formData.append("_method", _method);
 
-        let url = currentURL + '/BaseDatos/' + id;
+        let url = currentURL + 'settings/Base-Datos/' + id;
 
         $.ajax({
                 url: url,
@@ -201,7 +203,8 @@ $(function() {
                 $('.viewResult').html(data);
 
                 $('.viewResult #tableBaseDatos').DataTable({
-                    "lengthChange": false
+                    "lengthChange": false,
+                    "ordering": false
                 });
                 Swal.fire(
                     'Correcto!',
@@ -224,6 +227,56 @@ $(function() {
             });
 
     });
+        /**
+     * Evento para eliminar una Base de Datos
+     */
+         $(document).on('click', '.deleteBaseDatos', function(event) {
+            event.preventDefault();
+            /**Modal de Alerta Swal.fire**/
+            Swal.fire({
+                title: 'Estas seguro?',
+                text: "Deseas eliminar el registro seleccionado!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, Eliminar!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.value) {
+                    let id = $("#idSeleccionado").val();
+                    let _method = "DELETE";
+                    let _token = $("input[name=_token]").val();
+                    let url = currentURL + 'settings/Base-Datos/' + id;
+
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: {
+                            _token: _token,
+                            _method: _method
+                        },
+                        success: function(result) {
+
+                            $('.modal-backdrop ').css('display', 'none');
+                            $('#modal').modal('hide');
+                            $('.viewResult').html(result);
+
+                            $('.viewResult #tableBaseDatos').DataTable({
+                                "lengthChange": false,
+                                "ordering": false
+                            });
+                            Swal.fire(
+                                'Eliminado!',
+                                'El registro ha sido eliminado.',
+                                'success'
+                            );
+
+                        }
+                    });
+                }
+            });
+        });
     /**
      * Funcion para mostrar los errores de los formularios
      */

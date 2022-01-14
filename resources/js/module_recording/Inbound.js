@@ -1,4 +1,6 @@
 $(function() {
+
+    var currentURL = window.location.href;
     /**
      * Evento para mostrar los resultados en el DataTable
      */
@@ -15,7 +17,7 @@ $(function() {
         var fechaF = $("#fechaFin").val();
         var hrI = $("#hrIni").val();
         var hrF = $("#hrFin").val();
-        var url = currentURL + '/Inbound';
+        var url = currentURL + 'recording/Inbound';
         let _token = $("input[name=_token]").val();
         var fechaIni = (fechaI + " " + hrI + ":00");
         var fechaFin = (fechaF + " " + hrF + ":59");
@@ -62,7 +64,7 @@ $(function() {
         var fechaIni = (fechaI + " " + hrI + ":00");
         var fechaFin = (fechaF + " " + hrF + ":59");
 
-        let url = currentURL + "/Inbound/descargar/" + fechaIni + "/" + fechaFin;
+        let url = currentURL + "recording/Inbound/descargar/" + fechaIni + "/" + fechaFin;
         $('#iFrameDescarga').attr('src', url)
     });
     /**
@@ -72,7 +74,7 @@ $(function() {
         event.preventDefault();
 
         let grab = $(this).attr('id');
-        let url = currentURL + '/Inbound/escuchar';
+        let url = currentURL + 'recording/Inbound/escuchar';
         let _token = $("input[name=_token]").val();
 
         $.ajax({
@@ -125,7 +127,7 @@ $(function() {
         });
 
         let _token = $("input[name=_token]").val();
-        let url = currentURL + '/Inbound/descargar';
+        let url = currentURL + 'recording/Inbound/descargar';
 
         if (valoresCheck.length == 0) {
             Swal.fire(
@@ -182,7 +184,7 @@ $(function() {
 
                     let _token = $("input[name=_token]").val();
                     let _method = "DELETE";
-                    let url = currentURL + '/Inbound/0';
+                    let url = currentURL + 'recording/Inbound/0';
 
                     $.ajax({
                         url: url,
@@ -198,7 +200,7 @@ $(function() {
                             var fechaF = $("#fechaFin").val();
                             var hrI = $("#hrIni").val();
                             var hrF = $("#hrFin").val();
-                            var url = currentURL + '/Inbound';
+                            var url = currentURL + 'recording/Inbound';
                             let _token = $("input[name=_token]").val();
                             var fechaIni = (fechaI + " " + hrI + ":00");
                             var fechaFin = (fechaF + " " + hrF + ":59");

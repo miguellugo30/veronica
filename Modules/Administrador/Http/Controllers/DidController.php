@@ -5,14 +5,14 @@ namespace Modules\Administrador\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Nimbus\Http\Controllers\LogController;
+use App\Http\Controllers\LogController;
 use nusoap_client;
 /*
 * Agregar el modelo de la tabla que debe usar nuestro modulo
 */
-use Nimbus\Dids;
-use Nimbus\Empresas;
-use Nimbus\Canales;
+use App\Dids;
+use App\Empresas;
+use App\Canales;
 use PHPAMI\Ami;
 
 class DidController extends Controller
@@ -142,16 +142,9 @@ class DidController extends Controller
          * Obtenemos la información del DID ha editar
          */
         $Dids = Dids::find($id);
-        /**
-         * Obtenemos las empresas activas
-         */
-        $empresas = Empresas::where('activo',1)->get();
-        /**
-         * Obtenemos los canales que están vinculadas a la empresa vinculada al DID
-         */
-        $empresa = Empresas::findOrFail(  $Dids->Empresas->id );
-        $canales = $empresa->canales;
-        return view('administrador::dids.edit',compact('Dids', 'empresas', 'canales'));
+        $canales = $Dids->Empresas->canales;
+
+        return view('administrador::dids.edit',compact('Dids', 'canales'));
     }
 
     /**

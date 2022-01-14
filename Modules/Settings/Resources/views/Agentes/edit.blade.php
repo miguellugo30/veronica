@@ -8,7 +8,11 @@
             <select name="grupo" id="grupo" class="form-control form-control-sm">
                 <option value="0">Sin Grupo</option>
                 @foreach ($grupos as $grupo)
-                    <option value="{{$grupo->id}}" {{($grupo->id == $agente->Grupos[0]->pivot->grupos_id) ? 'selected = "selected"':'' }}>{{$grupo->nombre}}</option>
+                    @if ($agente->Grupos->isEmpty())
+                        <option value="{{$grupo->id}}" >{{$grupo->nombre}}</option>
+                    @else
+                        <option value="{{$grupo->id}}" {{($grupo->id == $agente->Grupos[0]->pivot->grupos_id) ? 'selected = "selected"':'' }}>{{$grupo->nombre}}</option>
+                    @endif
                 @endforeach
             </select>
             <input type="hidden" name="id" id="id"  value="{{$agente->id}}">

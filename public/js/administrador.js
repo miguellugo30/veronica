@@ -86,6 +86,128 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./resources/js/module_administrador/actionEditEmpresa.js":
+/*!****************************************************************!*\
+  !*** ./resources/js/module_administrador/actionEditEmpresa.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  var currentURL = window.location.href;
+  /**
+   * Evento para mostrar el formulario de crear un nuevo modulo
+   */
+
+  $(document).on("click", ".edit", function (e) {
+    e.preventDefault();
+    var modulo = $(this).attr('id');
+    var empresa_id = $("#empresa_id").val();
+
+    if (modulo == 'editEmpresa') {
+      url = currentURL + '/empresas/' + empresa_id + "/edit";
+      $('.modal-title').text('Editar Empresa'); //$(".btn-primary").addClass('updateEmpresa');
+
+      $(".updateSeccion").attr('data-seccion', 'empresa');
+    } else if (modulo == 'editInfraestructura') {
+      url = currentURL + '/infraestructura/' + empresa_id + "/edit"; //$("#accionActualizar").addClass('updateExtension');
+
+      $('.modal-title').text('Editar Infraestructura');
+    } else if (modulo == 'editModulos') {
+      url = currentURL + '/modulos/' + empresa_id + "/edit"; //$("#accionActualizar").addClass('updateCanal');
+
+      $('.modal-title').text('Editar Modulos');
+      $(".updateSeccion").attr('data-seccion', 'modulos');
+    } else if (modulo == 'editDid') {
+      var did_id = $("#editSelectedDid").val();
+      url = currentURL + '/did/' + did_id + "/edit"; //$("#accionActualizar").addClass('updateDid');
+
+      $('.modal-title').text('Editar Did');
+      $(".updateSeccion").attr('data-seccion', 'did');
+    } else if (modulo == 'editAlmacenamiento') {
+      url = currentURL + '/almacenamiento/' + empresa_id + "/edit"; //$("#accionActualizar").addClass('updatePerfil');
+
+      $('.modal-title').text('Editar Almacenamiento');
+      $(".updateSeccion").attr('data-seccion', 'almacenamiento');
+    } else if (modulo == 'editCanales') {
+      url = currentURL + '/canales/' + canal_id + "/edit"; //$("#accionActualizar").addClass('updatePrefijos');
+
+      $('.modal-title').text('Editar Canales');
+      $(".updateSeccion").attr('data-seccion', 'canales');
+    } else if (modulo == 'editExtensiones') {
+      var extension_id = $("#editSelectedExtension").val();
+      url = currentURL + '/extensiones/' + extension_id + "/edit"; //$("#accionActualizar").addClass('updateEmpresa');
+
+      $('.modal-title').text('Editar Extensiones');
+      $(".updateSeccion").attr('data-seccion', 'extensiones');
+    }
+
+    $.ajax({
+      url: url,
+      type: 'GET',
+      success: function success(result) {
+        $('.modal-body').html(result);
+        $('.modalEdit').modal('show');
+      }
+    });
+  });
+  /**
+   * Evento para mostrar el formulario editar modulo
+   */
+
+  $(document).on('click', '.tableDids tbody tr', function (event) {
+    event.preventDefault();
+    var id = $(this).data("id");
+    console.log(id);
+    $("#editSelectedDid").val(id);
+    $(".tableDids tbody tr").removeClass('table-primary');
+    $(this).addClass('table-primary');
+  });
+  /**
+   * Evento para mostrar el formulario editar modulo
+   */
+
+  $(document).on('click', '.tableCanales tbody tr', function (event) {
+    event.preventDefault();
+    var id = $(this).data("id");
+    $("#editSelectedCanal").val(id);
+    $(".tableCanales tbody tr").removeClass('table-primary');
+    $(this).addClass('table-primary');
+  });
+  /**
+   * Evento para mostrar el formulario editar modulo
+   */
+
+  $(document).on('click', '.tableExtensiones tbody tr', function (event) {
+    event.preventDefault();
+    var id = $(this).data("id");
+    $("#editSelectedExtension").val(id);
+    $(".tableExtensiones tbody tr").removeClass('table-primary');
+    $(this).addClass('table-primary');
+  });
+  $(document).on('click', '.updateSeccion', function (event) {
+    var modulo = $(this).data('seccion');
+    var dataForm = $("#formUpdateSeccion").serializeArray();
+
+    var _token = $('meta[name=csrf-token]').attr('content');
+
+    $.ajax({
+      url: url,
+      type: "POST",
+      data: {
+        dataForm: dataForm,
+        modulo: modulo,
+        _token: _token
+      },
+      success: function success(result) {
+        $(".viewResult").html(result);
+      }
+    });
+  });
+});
+
+/***/ }),
+
 /***/ "./resources/js/module_administrador/canales.js":
 /*!******************************************************!*\
   !*** ./resources/js/module_administrador/canales.js ***!
@@ -273,6 +395,7 @@ $(function () {
   $(document).on('change', '.tipo_canal', function (event) {
     var pos = $(this).data('pos');
     var id_Tipo_Canal = $(this).val();
+    var prefijo = $("#tipo_canal_" + pos + " option:selected").data('pre_tipo');
 
     if (id_Tipo_Canal == 12 || id_Tipo_Canal == 11) {
       $("#protocolo_" + pos).val("LOCAL/");
@@ -283,6 +406,8 @@ $(function () {
       $("#Troncales_id_canal_" + pos).prop('disabled', false);
       $("#Troncales_id_" + pos).prop('disabled', 'disabled');
     }
+
+    $("#prefijo_" + pos).val(prefijo);
   });
   /**
    * Evento para habilitar la edicion del canal seleccionado
@@ -363,8 +488,8 @@ $(function () {
   $(document).on("click", ".newDataBase", function (e) {
     e.preventDefault();
     $('#tituloModal').html('Nuevo Base de Datos');
-    $('#action').removeClass('updateBaseDatos');
-    $('#action').addClass('saveBaseDatos');
+    $('#action').removeClass('updateBaseDatosAdmin');
+    $('#action').addClass('saveBaseDatosAdmin');
     var url = currentURL + '/basedatos/create';
     $.get(url, function (data, textStatus, jqXHR) {
       $('#modal').modal('show');
@@ -378,8 +503,8 @@ $(function () {
   $(document).on("click", ".editDataBase", function (e) {
     e.preventDefault();
     $('#tituloModal').html('Editar Base de Datos');
-    $('#action').removeClass('saveBaseDatos');
-    $('#action').addClass('updateBaseDatos');
+    $('#action').removeClass('saveBaseDatosAdmin');
+    $('#action').addClass('updateBaseDatosAdmin');
     var id = $("#idSeleccionado").val();
     var url = currentURL + "/basedatos/" + id + "/edit";
     $.get(url, function (data, textStatus, jqXHR) {
@@ -391,7 +516,7 @@ $(function () {
    * Evento para guardar el nuevo modulo
    */
 
-  $(document).on('click', '.saveBaseDatos', function (event) {
+  $(document).on('click', '.saveBaseDatosAdmin', function (event) {
     event.preventDefault();
     var nombre = $("#nombre").val();
     var ubicacion = $("#ubicacion").val();
@@ -435,7 +560,7 @@ $(function () {
    * Evento para editar el modulo
    */
 
-  $(document).on('click', '.updateBaseDatos', function (event) {
+  $(document).on('click', '.updateBaseDatosAdmin', function (event) {
     event.preventDefault();
     var nombre = $("#nombre").val();
     var ubicacion = $("#ubicacion").val();
@@ -2486,203 +2611,255 @@ $(function () {
 
 $(function () {
   var currentURL = window.location.href;
+  var Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 5000
+  });
   /**
    * Evento para mostrar el formulario de crear un nuevo modulo
    */
 
   $(document).on("click", ".newEmpresa", function (e) {
     e.preventDefault();
-    $(".viewIndex").slideUp();
+    $(".showEmpresas").slideUp();
     $(".viewCreate").slideDown();
-    /**
-     * Seteamos el valor inicioa para la opcion siguiente y anterior
-     */
-
-    opcionSiguiente = 0;
-    opcionAnterior = -1;
-    regresos = 0;
-    var url = currentURL + '/empresas/create';
+    var url = currentURL + '/wizard/empresa';
     $.get(url, function (data, textStatus, jqXHR) {
-      $(".viewCreate").html(data);
-      var dato = 0 + ".dataEmpresa";
-      var url = currentURL + '/empresas/' + dato;
-      $.ajax({
-        url: url,
-        type: 'GET',
-        success: function success(result) {
-          $('#formDataEmpresa').html(result);
+      $(".viewWizarEmpresa").html(data);
+    });
+  });
+  /**
+   * Evento para avanzar al siguiente paso
+   */
+
+  $(document).on('click', '.nextStep', function (event) {
+    var nextStep = $(this).data('step');
+
+    var _token = $("input[name=_token]").val();
+
+    var dataForm = $("#formWizardEmpresa").serializeArray();
+    var url = currentURL + '/wizard/empresa/' + nextStep; //console.log(dataForm);
+
+    if (validarForm(dataForm)) {
+      if (nextStep == 'end') {
+        Swal.fire({
+          title: '!!!Este es el último paso!!!',
+          text: "Deseas guardar toda la información capturada?",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si, Guardar!',
+          cancelButtonText: 'Cancelar'
+        }).then(function (result) {
+          if (result.value) {
+            $.ajax({
+              url: url,
+              type: "POST",
+              data: {
+                dataForm: dataForm,
+                _token: _token
+              },
+              success: function success(result) {
+                $(".viewResult").html(result);
+              }
+            });
+          }
+        });
+      } else {
+        $.ajax({
+          url: url,
+          type: "POST",
+          data: {
+            dataForm: dataForm,
+            _token: _token
+          },
+          success: function success(result) {
+            $(".viewWizarEmpresa").html(result);
+          }
+        });
+      }
+    } else {
+      toastr.error('Hay campos incompletos, favor de validar la información.');
+    }
+  });
+  /**
+   * Evento para retroceder al paso anterior
+   */
+
+  $(document).on('click', '.prevStep', function (event) {
+    var prevStep = $(this).data('step');
+
+    var _token = $("input[name=_token]").val();
+
+    var url = currentURL + '/wizard/empresa/' + prevStep;
+    $.ajax({
+      url: url,
+      type: "POST",
+      data: {
+        _token: _token
+      },
+      success: function success(result) {
+        $(".viewWizarEmpresa").html(result);
+      }
+    });
+  });
+  /**
+   * Evento para seleccionar los modulos
+   */
+
+  $(document).on('click', '.modulosEmpresa', function () {
+    var id = $(this).val();
+
+    if ($(this).prop('checked')) {
+      if (id == 1) {
+        $("#modulo_3").prop("checked", true);
+        $("#modulo_4").prop("checked", true);
+        $("#modulo_5").prop("checked", true);
+        $("#modulo_6").prop("checked", true);
+        $("#modulo_9").prop("checked", true);
+        $("#modulo_11").prop("checked", true);
+        $("#modulo_17").prop("checked", true);
+      } else if (id == 2) {
+        $("#modulo_3").prop("checked", true);
+        $("#modulo_4").prop("checked", true);
+        $("#modulo_6").prop("checked", true);
+        $("#modulo_9").prop("checked", true);
+        $("#modulo_17").prop("checked", true);
+      }
+    } else {
+      if (id == 1) {
+        $("#modulo_3").prop("checked", false);
+        $("#modulo_4").prop("checked", false);
+        $("#modulo_5").prop("checked", false);
+        $("#modulo_6").prop("checked", false);
+        $("#modulo_9").prop("checked", false);
+        $("#modulo_11").prop("checked", false);
+        $("#modulo_17").prop("checked", false);
+      } else if (id == 2) {
+        $("#modulo_3").prop("checked", false);
+        $("#modulo_4").prop("checked", false);
+        $("#modulo_6").prop("checked", false);
+        $("#modulo_9").prop("checked", false);
+        $("#modulo_17").prop("checked", false);
+      }
+    }
+  });
+
+  function validarForm(data) {
+    var bandera = 0;
+
+    if (data.length == 0) {
+      bandera = 1;
+    } else {
+      data.forEach(function (currentValue, indice, array) {
+        //console.log(currentValue.name + " " + currentValue.value);
+        if (currentValue.value === null || currentValue.value === '') {
+          $('#' + currentValue.name).addClass('is-invalid'); //console.log('sin valores');
+
+          bandera = 1;
         }
       });
-    });
+    }
+
+    if (bandera) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+  /**
+   * Evento para clonar una fila de la tabla de nuevo canal
+   */
+
+
+  $(document).on('click', '#addCanalWizard', function () {
+    var clickID = $(".tableNewCanal tbody tr:last").attr('id').replace('tr_', ''); // Genero el nuevo numero id
+
+    var newID = parseInt(clickID) + 1;
+    fila = $(".tableNewCanal tbody tr:eq()").clone().appendTo(".tableNewCanal"); //Clonamos la fila
+    //fila.find('select.tipo_canal').attr("data-pos", newID); //Buscamos el selecto con clase tipo_canal y le agregamos un nuevo atributo a pos
+
+    fila.find('select.tipo_canal').attr({
+      'data-pos': newID,
+      name: 'tipo_canal_' + newID
+    }); //Buscamos el selecto con clase tipo_canal y le agregamos un nuevo atributo a pos
+
+    fila.find('.protocolo').attr({
+      id: 'protocolo_' + newID,
+      name: 'protocolo_' + newID
+    }); //Buscamos el input con clase protocolo y le agregamos un nuevo ID
+
+    fila.find('.protocolo').val(""); //Buscamos el input con clase protocolo y le asignamos un valor vacio
+
+    fila.find('.Troncales_id_canal').attr({
+      id: 'Troncales_id_canal_' + newID,
+      name: 'Troncales_id_canal_' + newID
+    }); //Buscamos el input con clase Troncales_id_canal y le agregamos un nuevo ID
+
+    fila.find('.Troncales_id').attr({
+      id: 'Troncales_id_' + newID,
+      name: 'Troncales_id_' + newID
+    }); //Buscamos el input con clase Troncales_id_canal y le agregamos un nuevo ID
+
+    fila.find('.nombre_troncal').attr({
+      id: 'nombre_troncal_' + newID,
+      name: 'nombre_troncal_' + newID
+    }); //Buscamos el input con clase Troncales_id_canal y le agregamos un nuevo ID
+
+    fila.find('.nombre_troncal').val(""); //Buscamos el input con clase protocolo y le asignamos un valor vacio
+
+    fila.find('.prefijo').attr({
+      id: 'prefijo_' + newID,
+      name: 'prefijo_' + newID
+    }); //Buscamos el input con clase Troncales_id_canal y le agregamos un nuevo ID
+
+    fila.find('.prefijo').val(""); //Buscamos el input con clase protocolo y le asignamos un valor vacio
+
+    fila.find('.btn-danger').css('display', '');
+    fila.attr("id", 'tr_' + newID);
   });
   /**
-   * Declaramos las opciones para la creacion de una nueva cuenta
+   * Evento para obtener el txt del select de canales
    */
 
-  var opciones = ['dataEmpresa', 'dataInfra', 'dataModulo', 'dataPosiciones', 'dataAlmacenamiento', 'dataCanales', 'dataExtensiones', 'dataDids'];
-  /**
-   * Evento para guardar la nueva empresa
-   */
-
-  $(document).on('click', '#siguiente', function (event) {
-    event.preventDefault();
-    $('#anterior').slideDown();
-    $('.cancelEmpresa').slideUp();
-    /**
-     * Recuperamos la accion a relizar y la opcion a relaizar
-     */
-
-    var accion = $(this).attr("data-accion");
-    var opcion = $(this).attr("data-opcion-siguiente");
-    /**
-     * Se setea a crear si viene de un accion de actualizar
-     */
-
-    if (regresos > 1) {
-      $(this).attr("data-accion", "actualizar");
-      regresos--;
-    } else {
-      $(this).attr("data-accion", "crear");
-      regresos = 0;
-    }
-    /**
-     * Si aun es menor al tamaño del arreglo seguimos
-     * incrementando.
-     */
-
-
-    if (opcionSiguiente < opciones.length) {
-      opcionAnterior = opcionAnterior + 1;
-      opcionSiguiente = opcionSiguiente + 1;
-    }
-    /**
-     * Cuando lleguemos al final del arreglo ponermos
-     * el boton con la leyenda de finalizar
-     */
-
-
-    if (opcionSiguiente == 7) {
-      $('#siguiente').html('Finalizar');
-    }
-    /**
-     * Seteamos el valor de la siguiente opcion y anterior
-     */
-
-
-    $('#anterior').attr('data-opcion-anterior', opciones[opcionAnterior]);
-    $('#siguiente').attr('data-opcion-siguiente', opciones[opcionSiguiente]);
-    /**
-     * Dependiendo de la accion a realizar, se define
-     * la URL y metodo que se usara
-     */
-
-    if (accion.indexOf("actualizar") > -1) {
-      var id = $("#id_empresa").val(); //Recuperamos el id de la empresa ha editar
-
-      url = currentURL + '/empresas/' + id; //Definimos la url de edicion
-
-      method = "POST";
-      _method = "PUT";
-    } else {
-      url = currentURL + '/empresas'; //Definimos la URL para crear
-
-      method = "POST";
-      _method = "POST";
-    }
-    /**
-     * Recuperamos la informacion del formulario
-     */
-
-
-    var dataForm = $("#formDataEmpresa").serializeArray();
-
-    var _token = $("input[name=_token]").val();
-    /**
-     * Enviamos la informacion
-     */
-
-
-    $.ajax({
-      url: url,
-      type: method,
-      data: {
-        _token: _token,
-        _method: _method,
-        dataForm: dataForm,
-        accion: accion
-      },
-      success: function success(result) {
-        if (opcion == 'dataDids') {
-          $('.viewResult').html(result);
-        } else {
-          $('#formDataEmpresa').html(result);
-          $("#formDataEmpresa .saveExtension").slideUp();
-          $("#formDataEmpresa .saveDid").slideUp();
-          $("#formDataEmpresa .saveCanal").slideUp();
-        }
-      }
-    });
+  $(document).on('change', '.Troncales_id_canal', function () {
+    var id = $(this).attr('id').replace('Troncales_id_canal_', '');
+    var nombre = $('#Troncales_id_canal_' + id + ' option:selected').text();
+    $("#nombre_troncal_" + id).val(nombre);
   });
   /**
-   * Evento para regresar a la opcion anterior
+   * Evento para eliminar una fila de la tabla de nuevo canal
    */
 
-  $(document).on('click', '#anterior', function (event) {
-    event.preventDefault();
-    /**
-     * Recuperamos la accion a relizar y la opcion a relaizar
-     */
+  $(document).on('click', '.deleteCanalWizard', function () {
+    var tr = $(this).closest('tr');
+    tr.remove();
+  });
+  /**
+   * Validar los DIDs nuevos que tenga 10 digitos
+   */
 
-    var accion = $(this).attr("data-accion");
-    var opcion = $(this).attr("data-opcion-anterior");
-    $('#siguiente').attr("data-accion", "actualizar");
-    /**
-     * Seteamos el valor de la siguiente opcion y anterior
-     */
+  $(document).on('blur', '#did', function () {
+    var dids = $(this).val();
 
-    if (opcionSiguiente == 7) {
-      $('#siguiente').html('Siguiente');
+    if (dids.split('\n').length == 0) {
+      toastr.error('Debe ingresar por lo menos un Did.');
     }
 
-    if (opcionAnterior == 0) {
-      $('#anterior').slideUp();
-    }
+    var data = dids.split('\n');
 
-    if (opcionSiguiente > 0) {
-      regresos++;
-      opcionAnterior = opcionAnterior - 1;
-      opcionSiguiente = opcionSiguiente - 1;
-    }
-
-    $('#anterior').attr('data-opcion-anterior', opciones[opcionAnterior]);
-    $('#siguiente').attr('data-opcion-siguiente', opciones[opcionSiguiente]);
-    var id = $("#id_empresa").val();
-
-    var _token = $("input[name=_token]").val();
-
-    var dato = id + "." + opcion;
-
-    if (opcion == 'dataExtensiones') {
-      url = currentURL + '/extensiones/' + id;
-    } else if (opcion == 'dataCanales') {
-      url = currentURL + '/canales/' + id;
-    } else if (opcion == 'dataDids') {
-      url = currentURL + '/did/' + id;
-    } else {
-      url = currentURL + '/empresas/' + dato;
-    }
-
-    $.ajax({
-      url: url,
-      type: 'GET',
-      data: {
-        _token: _token,
-        accion: accion
-      },
-      success: function success(result) {
-        $('#formDataEmpresa').html(result);
+    for (var i = 0; i < data.length; i++) {
+      if (data[i].length < 10) {
+        toastr.error('Un Did no tiene 10 digitos.');
       }
-    });
+
+      if (data[i].length > 10) {
+        toastr.error('Un Did tiene mas de 10 digitos.');
+      }
+    }
   });
   /**
    * Evento para mostrar el formulario editar empresa
@@ -2690,22 +2867,14 @@ $(function () {
 
   $(document).on('dblclick', '#tableEmpresas tbody tr', function (event) {
     event.preventDefault();
-    $(".newEmpresa").slideUp();
-    $(".viewIndex").slideUp();
-    $(".viewCreate").slideDown();
     var id = $(this).data("id");
-    var url = currentURL + "/empresas/" + id + "/edit";
-    $.get(url, function (data, textStatus, jqXHR) {
-      $(".viewCreate").html(data);
-      var dato = id + ".dataGeneral";
-      var url = currentURL + '/empresas/' + dato;
-      $.ajax({
-        url: url,
-        type: 'GET',
-        success: function success(result) {
-          $('#formDataEmpresa').html(result);
-        }
-      });
+    var url = currentURL + '/empresas/' + id;
+    $.ajax({
+      url: url,
+      type: 'GET',
+      success: function success(result) {
+        $(".viewResult").html(result);
+      }
     });
   });
   /**
@@ -2838,47 +3007,6 @@ $(function () {
         });
       }
     });
-  });
-  /**
-   * Evento para seleccionar los modulos
-   */
-
-  $(document).on('click', '.modulosEmpresa', function () {
-    var id = $(this).val();
-
-    if ($(this).prop('checked')) {
-      if (id == 1) {
-        $("#modulo_3").prop("checked", true);
-        $("#modulo_4").prop("checked", true);
-        $("#modulo_5").prop("checked", true);
-        $("#modulo_6").prop("checked", true);
-        $("#modulo_9").prop("checked", true);
-        $("#modulo_11").prop("checked", true);
-        $("#modulo_17").prop("checked", true);
-      } else if (id == 2) {
-        $("#modulo_3").prop("checked", true);
-        $("#modulo_4").prop("checked", true);
-        $("#modulo_6").prop("checked", true);
-        $("#modulo_9").prop("checked", true);
-        $("#modulo_17").prop("checked", true);
-      }
-    } else {
-      if (id == 1) {
-        $("#modulo_3").prop("checked", false);
-        $("#modulo_4").prop("checked", false);
-        $("#modulo_5").prop("checked", false);
-        $("#modulo_6").prop("checked", false);
-        $("#modulo_9").prop("checked", false);
-        $("#modulo_11").prop("checked", false);
-        $("#modulo_17").prop("checked", false);
-      } else if (id == 2) {
-        $("#modulo_3").prop("checked", false);
-        $("#modulo_4").prop("checked", false);
-        $("#modulo_6").prop("checked", false);
-        $("#modulo_9").prop("checked", false);
-        $("#modulo_17").prop("checked", false);
-      }
-    }
   });
   /**
    * Evento para abrir una sesion para entrar a la cuenta del cliente seleccionado
@@ -3042,85 +3170,17 @@ $(function () {
   /**
    * Evento para el menu de sub categorias y mostrar la vista
    */
-  $(document).on("click", ".sub-menu", function (e) {
+  $(document).on("click", ".menu-administrador", function (e) {
     e.preventDefault();
     var currentURL = window.location.href;
-    var id = $(this).data("id");
-
-    if (id == 'sub-6') {
-      url = currentURL + '/usuarios';
-      table = ' #tableUsuarios';
-    } else if (id == 'sub-4') {
-      url = currentURL + '/menus';
-      table = '#tableMenus';
-    } else if (id == 'sub-3') {
-      url = currentURL + '/modulos';
-      table = ' #tableModulos';
-    } else if (id == 'sub-1') {
-      url = currentURL + '/distribuidor';
-      table = ' #tableDistribuidores';
-    } else if (id == 'sub-8') {
-      url = currentURL + '/did';
-      table = ' #tableDid';
-    } else if (id == 'sub-10') {
-      url = currentURL + '/cat_empresa';
-      table = ' #tableEdoEmp';
-    } else if (id == 'sub-11') {
-      url = currentURL + '/cat_ip_pbx';
-      table = ' #tablePbx';
-    } else if (id == 'sub-12') {
-      url = currentURL + '/cat_nas';
-      table = ' #tableNas';
-    } else if (id == 'sub-13') {
-      url = currentURL + '/cat_agente';
-      table = ' #tableEdoAge';
-    } else if (id == 'sub-14') {
-      url = currentURL + '/cat_cliente';
-      table = ' #tableEdoCli';
-    } else if (id == 'sub-9') {
-      url = currentURL + '/troncales';
-      table = ' #tableTroncales';
-    } else if (id == 'sub-15') {
-      url = currentURL + '/canales';
-      table = ' #tableCanales';
-    } else if (id == 'sub-2') {
-      url = currentURL + '/empresas';
-      table = ' #tableEmpresas';
-    } else if (id == 'sub-16') {
-      url = currentURL + '/basedatos';
-      table = ' #tableBaseDatos';
-    } else if (id == 'sub-17') {
-      url = currentURL + '/cat_tipo_canales';
-      table = ' #tableTiposCanal';
-    } else if (id == 'sub-19') {
-      url = currentURL + '/licencias_bria';
-      table = ' #licencias_bria';
-    } else if (id == 'sub-20') {
-      url = currentURL + '/logs';
-      table = '#tableLogs';
-    } else if (id == 'sub-21') {
-      url = currentURL + '/formularios';
-      table = ' #tableFormularios';
-    } else if (id == 'sub-5') {
-      url = currentURL + '/smtp';
-      table = ' #tableSmtp';
-    } else if (id == 'sub-41') {
-      url = currentURL + '/cat_campos_plantillas';
-      table = ' #tableCamPla';
-    }
-
+    var id = $(this).attr('id');
+    $(".viewResult ").html('');
+    url = currentURL + '/sub-menus/' + id;
     $.get(url, function (data, textStatus, jqXHR) {
-      $(".viewResult").html(data);
-
-      if (id != 4 || id != 20) {
-        $('.viewResult' + table).DataTable({
-          "lengthChange": true
-        });
-      }
+      $(".view-sub-menu").html(data);
     });
   });
 });
-'sub-';
 
 /***/ }),
 
@@ -3992,6 +4052,86 @@ $(function () {
 
 /***/ }),
 
+/***/ "./resources/js/module_administrador/sub_menu.js":
+/*!*******************************************************!*\
+  !*** ./resources/js/module_administrador/sub_menu.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  /**
+   * Evento para el menu de sub categorias y mostrar la vista
+   */
+  $(document).on("click", ".sub-menu-administrador", function (e) {
+    e.preventDefault();
+    var currentURL = window.location.href;
+    var id = $(this).attr('id');
+
+    if (id == 'sub-1') {
+      url = currentURL + '/distribuidor';
+      table = ' #tableDistribuidores';
+    } else if (id == 'sub-2') {
+      url = currentURL + '/empresas';
+      table = ' #tableEmpresas';
+    } else if (id == 'sub-3') {
+      url = currentURL + '/modulos';
+      table = ' #tableModulos';
+    } else if (id == 'sub-4') {
+      url = currentURL + '/menus';
+      table = '#tableMenus';
+    } else if (id == 'sub-6') {
+      url = currentURL + '/usuarios';
+      table = ' #tableUsuarios';
+    } else if (id == 'sub-8') {
+      url = currentURL + '/did';
+      table = ' #tableDid';
+    } else if (id == 'sub-9') {
+      url = currentURL + '/troncales';
+      table = ' #tableTroncales';
+    } else if (id == 'sub-10') {
+      url = currentURL + '/cat_empresa';
+      table = ' #tableEdoEmp';
+    } else if (id == 'sub-11') {
+      url = currentURL + '/cat_ip_pbx';
+      table = ' #tablePbx';
+    } else if (id == 'sub-12') {
+      url = currentURL + '/cat_nas';
+      table = ' #tableNas';
+    } else if (id == 'sub-13') {
+      url = currentURL + '/cat_agente';
+      table = ' #tableEdoAge';
+    } else if (id == 'sub-14') {
+      url = currentURL + '/cat_cliente';
+      table = ' #tableEdoCli';
+    } else if (id == 'sub-15') {
+      url = currentURL + '/canales';
+      table = ' #tableCanales';
+    } else if (id == 'sub-16') {
+      url = currentURL + '/basedatos';
+      table = ' #tableBaseDatos';
+    } else if (id == 'sub-17') {
+      url = currentURL + '/cat_tipo_canales';
+      table = ' #tableTiposCanal';
+    } else if (id == 'sub-19') {
+      url = currentURL + '/licencias_bria';
+      table = ' #licencias_bria';
+    } else if (id == 'sub-20') {
+      url = currentURL + '/logs';
+      table = '#tableLogs';
+    } else if (id == 'sub-41') {
+      url = currentURL + '/cat_campos_plantillas';
+      table = ' #tableCamPla';
+    }
+
+    $.get(url, function (data, textStatus, jqXHR) {
+      $(".viewResult").html(data);
+    });
+  });
+});
+
+/***/ }),
+
 /***/ "./resources/js/module_administrador/submenus.js":
 /*!*******************************************************!*\
   !*** ./resources/js/module_administrador/submenus.js ***!
@@ -4436,7 +4576,8 @@ $(function () {
     event.preventDefault();
     var name = $("#name").val();
     var email = $("#email").val();
-    var pass_1 = $("#pass_1").val();
+    var password = $("#password").val();
+    var password_confirmation = $("#password_confirmation").val();
     var cliente = $("#cliente").val();
     var rol = $("#rol").val();
 
@@ -4449,7 +4590,8 @@ $(function () {
     $.post(url, {
       name: name,
       email: email,
-      password: pass_1,
+      password: password,
+      password_confirmation: password_confirmation,
       id_cliente: cliente,
       rol: rol,
       arr: arr,
@@ -4601,7 +4743,7 @@ $(function () {
      * Condicion para que al elegir una empresa diferente a C3ntro, se deshabilite el rol de Super Administrador y Viceversa.
      */
 
-    if (id == 30) {
+    if (id == 57) {
       $("#cliente option:contains('Selecciona una empresa')").remove();
 
       if (!$("#rol option:contains('Super Administrador')").length) {
@@ -4677,34 +4819,36 @@ $(function () {
 /***/ }),
 
 /***/ 0:
-/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/module_administrador/usuarios.js ./resources/js/module_administrador/modulos.js ./resources/js/module_administrador/submenus.js ./resources/js/module_administrador/menus.js ./resources/js/module_administrador/distribuidores.js ./resources/js/module_administrador/dids.js ./resources/js/module_administrador/cat_estado_agente.js ./resources/js/module_administrador/cat_estado_cliente.js ./resources/js/module_administrador/cat_estado_empresa.js ./resources/js/module_administrador/cat_ip_pbx.js ./resources/js/module_administrador/cat_nas.js ./resources/js/module_administrador/troncales.js ./resources/js/module_administrador/canales.js ./resources/js/module_administrador/empresas.js ./resources/js/module_administrador/cat_base_datos.js ./resources/js/module_administrador/cat_tipo_canal.js ./resources/js/module_administrador/menu.js ./resources/js/module_administrador/cat_extensiones.js ./resources/js/module_administrador/licenciasBria.js ./resources/js/module_administrador/cat_campos_plantillas.js ./resources/js/module_administrador/prefijos_marcacion.js ./resources/js/module_administrador/perfil_marcacion.js ***!
-  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/module_administrador/usuarios.js ./resources/js/module_administrador/modulos.js ./resources/js/module_administrador/submenus.js ./resources/js/module_administrador/menus.js ./resources/js/module_administrador/distribuidores.js ./resources/js/module_administrador/dids.js ./resources/js/module_administrador/cat_estado_agente.js ./resources/js/module_administrador/cat_estado_cliente.js ./resources/js/module_administrador/cat_estado_empresa.js ./resources/js/module_administrador/cat_ip_pbx.js ./resources/js/module_administrador/cat_nas.js ./resources/js/module_administrador/troncales.js ./resources/js/module_administrador/canales.js ./resources/js/module_administrador/empresas.js ./resources/js/module_administrador/actionEditEmpresa.js ./resources/js/module_administrador/cat_base_datos.js ./resources/js/module_administrador/cat_tipo_canal.js ./resources/js/module_administrador/menu.js ./resources/js/module_administrador/sub_menu.js ./resources/js/module_administrador/cat_extensiones.js ./resources/js/module_administrador/licenciasBria.js ./resources/js/module_administrador/cat_campos_plantillas.js ./resources/js/module_administrador/prefijos_marcacion.js ./resources/js/module_administrador/perfil_marcacion.js ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_administrador\usuarios.js */"./resources/js/module_administrador/usuarios.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_administrador\modulos.js */"./resources/js/module_administrador/modulos.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_administrador\submenus.js */"./resources/js/module_administrador/submenus.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_administrador\menus.js */"./resources/js/module_administrador/menus.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_administrador\distribuidores.js */"./resources/js/module_administrador/distribuidores.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_administrador\dids.js */"./resources/js/module_administrador/dids.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_administrador\cat_estado_agente.js */"./resources/js/module_administrador/cat_estado_agente.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_administrador\cat_estado_cliente.js */"./resources/js/module_administrador/cat_estado_cliente.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_administrador\cat_estado_empresa.js */"./resources/js/module_administrador/cat_estado_empresa.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_administrador\cat_ip_pbx.js */"./resources/js/module_administrador/cat_ip_pbx.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_administrador\cat_nas.js */"./resources/js/module_administrador/cat_nas.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_administrador\troncales.js */"./resources/js/module_administrador/troncales.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_administrador\canales.js */"./resources/js/module_administrador/canales.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_administrador\empresas.js */"./resources/js/module_administrador/empresas.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_administrador\cat_base_datos.js */"./resources/js/module_administrador/cat_base_datos.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_administrador\cat_tipo_canal.js */"./resources/js/module_administrador/cat_tipo_canal.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_administrador\menu.js */"./resources/js/module_administrador/menu.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_administrador\cat_extensiones.js */"./resources/js/module_administrador/cat_extensiones.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_administrador\licenciasBria.js */"./resources/js/module_administrador/licenciasBria.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_administrador\cat_campos_plantillas.js */"./resources/js/module_administrador/cat_campos_plantillas.js");
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_administrador\prefijos_marcacion.js */"./resources/js/module_administrador/prefijos_marcacion.js");
-module.exports = __webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_administrador\perfil_marcacion.js */"./resources/js/module_administrador/perfil_marcacion.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/usuarios.js */"./resources/js/module_administrador/usuarios.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/modulos.js */"./resources/js/module_administrador/modulos.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/submenus.js */"./resources/js/module_administrador/submenus.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/menus.js */"./resources/js/module_administrador/menus.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/distribuidores.js */"./resources/js/module_administrador/distribuidores.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/dids.js */"./resources/js/module_administrador/dids.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/cat_estado_agente.js */"./resources/js/module_administrador/cat_estado_agente.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/cat_estado_cliente.js */"./resources/js/module_administrador/cat_estado_cliente.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/cat_estado_empresa.js */"./resources/js/module_administrador/cat_estado_empresa.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/cat_ip_pbx.js */"./resources/js/module_administrador/cat_ip_pbx.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/cat_nas.js */"./resources/js/module_administrador/cat_nas.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/troncales.js */"./resources/js/module_administrador/troncales.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/canales.js */"./resources/js/module_administrador/canales.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/empresas.js */"./resources/js/module_administrador/empresas.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/actionEditEmpresa.js */"./resources/js/module_administrador/actionEditEmpresa.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/cat_base_datos.js */"./resources/js/module_administrador/cat_base_datos.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/cat_tipo_canal.js */"./resources/js/module_administrador/cat_tipo_canal.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/menu.js */"./resources/js/module_administrador/menu.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/sub_menu.js */"./resources/js/module_administrador/sub_menu.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/cat_extensiones.js */"./resources/js/module_administrador/cat_extensiones.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/licenciasBria.js */"./resources/js/module_administrador/licenciasBria.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/cat_campos_plantillas.js */"./resources/js/module_administrador/cat_campos_plantillas.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/prefijos_marcacion.js */"./resources/js/module_administrador/prefijos_marcacion.js");
+module.exports = __webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_administrador/perfil_marcacion.js */"./resources/js/module_administrador/perfil_marcacion.js");
 
 
 /***/ })

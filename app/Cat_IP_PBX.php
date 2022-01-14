@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -36,13 +36,13 @@ class Cat_IP_PBX extends Model
      */
     public function cat_nas()
     {
-        return $this->belongsToMany('Nimbus\Cat_NAS', 'Cat_IP_PBX_Cat_Nas', 'Cat_IP_PBX_id', 'Cat_Nas_id');
+        return $this->belongsToMany('App\Cat_NAS', 'Cat_IP_PBX_Cat_Nas', 'Cat_IP_PBX_id', 'Cat_Nas_id');
     }
     /**
      * Relacion muchos a uno con Base de Datos
      */
     public function BaseDatos()
     {
-        return $this->belongsTo('Nimbus\BaseDatos', 'Cat_Base_Datos_id');
+        return $this->belongsTo('App\BaseDatos', 'Cat_Base_Datos_id');
     }
 }

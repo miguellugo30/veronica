@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -30,13 +30,13 @@ class Cat_Campos_Plantillas extends Model
      */
     public function Empresas()
     {
-        return $this->belongsToMany('Nimbus\Empresas', 'Campos_plantillas_empresa', 'fk_cat_campos_plantilla_id', 'fk_empresas_id');
+        return $this->belongsToMany('App\Empresas', 'Campos_plantillas_empresa', 'fk_cat_campos_plantilla_id', 'fk_empresas_id');
     }
     /**
      * Relación muchos a uno con Empresas
      */
     public function Registros_base()
     {
-        return $this->hasMany('Nimbus\Registros_base', 'fk_cat_campos_plantilla_id','id');
+        return $this->hasMany('App\Registros_base', 'fk_cat_campos_plantilla_id','id');
     }
 }

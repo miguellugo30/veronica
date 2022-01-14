@@ -24,7 +24,6 @@
                 <label for="cliente">Empresa *:</label>
                 <select name="cliente" id="cliente" class="form-control form-control-sm">
                     <option disabled selected value="">Selecciona una empresa</option>
-                    <option value="30" {{ $user->id_cliente == 30 ? 'selected="selected"' : '' }}>C3NTRO</option>
                     @foreach( $clientes as $cliente )
                         <option value="{{ $cliente->id }}" {{ $user->id_cliente == $cliente->id ? 'selected="selected"' : '' }}>{{ $cliente->nombre }}</option>
                     @endforeach
@@ -58,7 +57,7 @@
                 <ul class="nav nav-tabs">
                     @foreach( $modulos as $modulo )
                         @if ($loop->first)
-                            <li class="nav-item active"><a href="#tab_{{ Str::snake( str_replace( '&', '',$modulo->nombre) ) }}" class="nav-link" data-toggle="tab">{{ $modulo->nombre }}</a></li>
+                            <li class="nav-item active"><a href="#tab_{{ Str::snake( str_replace( '&', '',$modulo->nombre) ) }}" class="nav-link active" data-toggle="tab">{{ $modulo->nombre }}</a></li>
                         @else
                             <li class="nav-item"><a href="#tab_{{ Str::snake( str_replace( '&', '',$modulo->nombre) ) }}" class="nav-link" data-toggle="tab">{{ $modulo->nombre }}</a></li>
                         @endif
@@ -88,7 +87,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td colspan="2" id="sub_cat_{{ $categoria->id }}" {{ $user->hasPermissionTo( $categoria->permiso ) ? 'style="display:"' : 'style="display:none"' }} >
+                                            <td colspan="2" id="sub_cat_{{ $categoria->id }}" {{ $user->hasPermissionTo( $categoria->permiso ) ? 'style=display:' : 'style=display:none' }} >
                                                 @if ( $categoria->Sub_Categorias->count() == 0 )
 
                                                     <table class="table table-bordered table-sm">

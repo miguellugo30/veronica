@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 7);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -126,37 +126,29 @@ $(function () {
   });
 });
 document.addEventListener('DOMContentLoaded', function () {
+  /*
   var initialLocaleCode = 'es';
   var calendarEl = document.getElementById('calendar');
-  var calendar = new FullCalendar.Calendar(calendarEl, {
-    plugins: ['list'],
-    timeZone: 'UTC',
-    defaultView: 'listDay',
-    titleFormat: {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    },
-    views: {
-      listDay: {
-        buttonText: 'Dia'
+   var calendar = new FullCalendar.Calendar(calendarEl, {
+      plugins: ['list'],
+      timeZone: 'UTC',
+      defaultView: 'listDay',
+      titleFormat: { year: 'numeric', month: 'short', day: 'numeric' },
+      views: {
+          listDay: { buttonText: 'Dia' },
+          listWeek: { buttonText: 'Semana' },
+          listMonth: { buttonText: 'Mex' }
       },
-      listWeek: {
-        buttonText: 'Semana'
+      locale: initialLocaleCode,
+      header: {
+          left: 'title',
+          center: '',
+          right: 'listDay,listWeek,listMonth'
       },
-      listMonth: {
-        buttonText: 'Mex'
-      }
-    },
-    locale: initialLocaleCode,
-    header: {
-      left: 'title',
-      center: '',
-      right: 'listDay,listWeek,listMonth'
-    },
-    events: 'https://fullcalendar.io/demo-events.json'
+      events: 'https://fullcalendar.io/demo-events.json'
   });
-  calendar.render();
+   calendar.render();
+  */
   var id_agente = $('#id_agente').val();
   var timer = null;
   var currentURL = window.location.href.split('?');
@@ -378,15 +370,15 @@ $(function () {
 
 /***/ }),
 
-/***/ 7:
+/***/ 4:
 /*!*********************************************************************************************************************************!*\
   !*** multi ./resources/js/module_agentes/agentes_monitoreo.js ./resources/js/module_agentes/eventosPantallaAgente_monitoreo.js ***!
   \*********************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_agentes\agentes_monitoreo.js */"./resources/js/module_agentes/agentes_monitoreo.js");
-module.exports = __webpack_require__(/*! C:\Users\mchlu\Documents\Desarrollos\C3ntro\Nimbus\resources\js\module_agentes\eventosPantallaAgente_monitoreo.js */"./resources/js/module_agentes/eventosPantallaAgente_monitoreo.js");
+__webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_agentes/agentes_monitoreo.js */"./resources/js/module_agentes/agentes_monitoreo.js");
+module.exports = __webpack_require__(/*! /Users/miguellugo/Documents/Desarrollos/Personales/Veronica/resources/js/module_agentes/eventosPantallaAgente_monitoreo.js */"./resources/js/module_agentes/eventosPantallaAgente_monitoreo.js");
 
 
 /***/ })

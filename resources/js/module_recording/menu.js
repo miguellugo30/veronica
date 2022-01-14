@@ -4,22 +4,22 @@ $(function() {
     /**
      * Evento para el menu de sub categorias y mostrar la vista
      */
-    $(document).on("click", ".sub-menu", function(e) {
+    $(document).on("click", ".sub-menu-recording", function(e) {
 
         e.preventDefault();
         let id = $(this).data("id");
 
         if (id == 'sub-36') {
-            url = currentURL + '/Inbound';
+            url = currentURL + 'recording/Inbound';
             table = ' #tableInbound';
         } else if (id == 'sub-37') {
-            url = currentURL + '/Outbound';
+            url = currentURL + 'recording/Outbound';
             table = ' #tableOutbound';
         } else if (id == 'sub-38') {
-            url = currentURL + '/Manuales';
+            url = currentURL + 'recording/Manuales';
             table = ' #tableManuales';
         } else if (id == 'cat-27') {
-            url = currentURL + '/Almacenamiento';
+            url = currentURL + 'recording/Almacenamiento';
             table = ' #tableAlmacenamiento';
         }
         $.get(url, function(data, textStatus, jqXHR) {

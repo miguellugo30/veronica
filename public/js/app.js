@@ -49178,7 +49178,7 @@ window.Echo = new !(function webpackMissingModule() { var e = new Error("Cannot 
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\Nimbus\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\App\resources\js\app.js */"./resources/js/app.js");
 
 
 /***/ })

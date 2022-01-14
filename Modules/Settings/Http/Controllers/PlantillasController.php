@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use Nimbus\Cat_Plantilla;
-use Nimbus\Plantillas_campos;
-use Nimbus\Http\Controllers\LogController;
+use App\Cat_Plantilla;
+use App\Plantillas_campos;
+use App\Http\Controllers\LogController;
 use DB;
 
 class PlantillasController extends Controller

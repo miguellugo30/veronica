@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -32,13 +32,13 @@ class Grabaciones_buzon_voz extends Model
      */
     public function Empresas()
     {
-        return $this->belongsTo('Nimbus\Empresas', 'Empresas_id','id');
+        return $this->belongsTo('App\Empresas', 'Empresas_id','id');
     }
     /**
      * Relacion muchos a uno con CDR call center detalles
      */
     public function Cdr_call_center_detalles()
     {
-        return $this->belongsTo('Nimbus\Cdr_call_center_detalles', 'uniqueid', 'uniqueid');
+        return $this->belongsTo('App\Cdr_call_center_detalles', 'uniqueid', 'uniqueid');
     }
 }

@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use Nimbus\User;
-use Nimbus\Categorias;
+use App\User;
+use App\Categorias;
 
 class InboundController extends Controller
 {
@@ -18,20 +18,12 @@ class InboundController extends Controller
     public function index()
     {
         /**
-         * Obtenemos los datos del usuario logeado
-         */
-        $user = User::find( Auth::id() );
-        /**
-         * Obtenemos el rol del usuario logeado
-         */
-        $rol = $user->getRoleNames();
-        /**
          * Obtenemos las categorias relacionadas al usuario
          */
-        $categorias = Categorias::where('modulos_id', 1)->orderby('prioridad')->get();
+        $categorias = Categorias::with('Sub_Categorias')->active()->where('modulos_id', 1)->orderby('prioridad')->get();
         $modulo = "Inbound";
-
-        return view('inbound::index', compact( 'rol', 'categorias', 'modulo' ));
+        //dd($categorias);
+        return view('inbound::index', compact( 'categorias', 'modulo' ));
     }
 
     /**

@@ -1,14 +1,19 @@
 @extends('adminlte::page')
-{{--@extends('administrador::layouts.master')--}}
 
+@section('title', 'Veronica CCC')
 
-@section('title', 'Nimbus CCC')
+@section('content_header')@stop
 
-@section('content_header')
-    <!--h1>This view is loaded from module: {!! config('administrador.name') !!}</h1-->
+@section('content')@stop
+
+@section('css')
+    <!--link rel="stylesheet" href="/css/admin_custom.css"-->
 @stop
 
-@section('content')
-    <p></p>
-    @stop
-
+@section('js')
+    <script>
+        $(function() {
+            $(".nav-link").removeClass('active');
+        });
+    </script>
+@stop

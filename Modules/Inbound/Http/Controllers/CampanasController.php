@@ -9,15 +9,15 @@ use Illuminate\Support\Facades\Auth;
 use DB;
 use Modules\Inbound\Http\Requests\CampanasRequest;
 
-use Nimbus\User;
-use Nimbus\Http\Controllers\LogController;
-use Nimbus\Campanas;
-use Nimbus\Audios_Empresa;
-use Nimbus\Campanas_Configuracion;
-use Nimbus\Agentes;
-use Nimbus\Miembros_Campana;
-use Nimbus\Speech;
-use Nimbus\Grupos;
+use App\User;
+use App\Http\Controllers\LogController;
+use App\Campanas;
+use App\Audios_Empresa;
+use App\Campanas_Configuracion;
+use App\Agentes;
+use App\Miembros_Campana;
+use App\Speech;
+use App\Grupos;
 
 class CampanasController extends Controller
 {
@@ -77,7 +77,8 @@ class CampanasController extends Controller
                 'time_max_llamada' =>  $request->input('alertstdll') ,
                 'time_liberacion' =>  $request->input('libta') ,
                 'Empresas_id'   => $empresa_id,
-                'Grupos_id' => $request->input('cal_lib')
+                'Grupos_id' => $request->input('cal_camp'),
+                'fk_calificaciones_id' => $request->input('cal_lib'),
             ]
         );
         /**
@@ -121,7 +122,7 @@ class CampanasController extends Controller
                     'membername' =>  $agentesParticipantes[$i],
                     //'queue_name' => $campana->id,
                     'interface' => $interface.$extension,
-                    'paused' => $estado['paused'],
+                    'paused' => $estado,
                     'Agentes_id' =>  $agentesParticipantes[$i],
                     'Campanas_id'   => $campana->id
                 ]
@@ -193,7 +194,8 @@ class CampanasController extends Controller
                                             'time_max_sonora' =>  $request->input('alertstll') ,
                                             'time_max_llamada' =>  $request->input('alertstdll') ,
                                             'time_liberacion' =>  $request->input('libta'),
-                                            'Grupos_id' => $request->input('cal_lib')
+                                            'Grupos_id' => $request->input('cal_camp'),
+                                            'fk_calificaciones_id' => $request->input('cal_lib'),
                                         ]);
 
         Campanas_Configuracion::where('Campanas_id', $id)->update([

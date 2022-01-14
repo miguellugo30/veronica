@@ -1,8 +1,8 @@
 <div class="box-body">
     <div class="row">
-        <div class="col-md-12 viewIndex" >
+        <div class="col-md-12 viewIndex table-responsive" >
             <table id="tabledesglose" class="display table table-bordered table-hover table-sm" style="width:100%">
-                <thead>
+                <thead class="thead-light">
                     <tr>
                         <th class="buscar">Campaña</th>
                         <th class="buscar">Numero Origen</th>
@@ -104,7 +104,11 @@ $(function() {
                     "ordering": false,
                     "searching": true,
                     "lengthChange": false,
-                    "pageLength": 20
+                    "pageLength": 20,
+                    "responsive": true,
+                    language: {
+                        url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json'
+                    }
                 });
     $('#tabledesglose thead tr th.buscar').on( 'keyup', "input",function () {
         table.column( $(this).parent().index() )

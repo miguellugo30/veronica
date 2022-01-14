@@ -31,7 +31,7 @@
                             <th>Longitud *:</th>
                             <th>Requerido</th>
                             <th>Editable</th>
-                            <td class="text-center"><input type="button" class="btn btn-primary btn-sm" id = "add" value = "Agregar campo" /></td>
+                            <td class="text-center"><input type="button" class="btn btn-primary btn-sm" id = "add-input-form" value = "Agregar campo" /></td>
                             <td></td>
                         </tr>
                     </thead>
@@ -43,21 +43,15 @@
                                 <input type="text" class="form-control form-control-sm opciones" name="nombre_campo_{{$campo->id }}" id="nombre_campo" value='{{$campo->nombre_campo }}'>
                             </td>
                             <td>
-                                <select name="tipo_campo_{{$campo->id }}" id="tipo_campo" data-action="edit" class="form-control form-control-sm opciones">
+                                <select name="tipo_campo_{{$campo->id }}" id="tipo_campo" data-action="edit" class="form-control form-control-sm opciones subFormulario">
                                     <option value="">Selecciona un tipo</option>
                                     <option value="text" {{('text' == $campo->tipo_campo) ? 'selected = "selected"':'' }}>Texto Corto</option>
                                     <option value="textarea" {{('textarea' == $campo->tipo_campo) ? 'selected = "selected"':'' }}>Texto Largo</option>
                                     <option value="fecha" {{('fecha' == $campo->tipo_campo) ? 'selected = "selected"':'' }}>Fecha</option>
                                     <option value="select" {{('select' == $campo->tipo_campo) ? 'selected = "selected"':'' }}>Opciones</option>
                                     <option value="numerico" {{('numerico' == $campo->tipo_campo) ? 'selected = "selected"':'' }}>Numerico</option>
-                                    <option value="separador" {{('separador' == $campo->tipo_campo) ? 'selected = "selected"':'' }}>Seperador</option>
-                                    <option value="bloque_oculto" {{('bloque_oculto' == $campo->tipo_campo) ? 'selected = "selected"':'' }}>Crear Bloque Oculto</option>
                                     <option value="texto" {{('texto' == $campo->tipo_campo) ? 'selected = "selected"':'' }}>Texto Escrito</option>
-                                    <option value="buscador" {{('buscador' == $campo->tipo_campo) ? 'selected = "selected"':'' }}>Buscador</option>
-                                    <option value="buscador_historico" {{('buscador_historico' == $campo->tipo_campo) ? 'selected = "selected"':'' }}>Buscador Historio</option>
                                     <option value="asignador_folios" {{('asignador_folios' == $campo->tipo_campo) ? 'selected = "selected"':'' }}>Asignador de Folios</option>
-                                    <option value="bloqueInicio" {{('bloqueInicio' == $campo->tipo_campo) ? 'selected = "selected"':'' }}>Bloque Inicio</option>
-                                    <option value="bloqueFin" {{('bloqueFin' == $campo->tipo_campo) ? 'selected = "selected"':'' }}>Bloque Termino</option>
                                 </select>
                             </td>
                             <td>
@@ -65,17 +59,28 @@
                             </td>
                             <td>
                                 <input type="checkbox" class="micheckbox opciones" name="obligatorio_{{$campo->id }}" id="obligatorio" {{('on' == $campo->obligatorio) ? 'checked':'' }} >
+
                                 <input type="hidden" name="obligatorio_hidden_{{$campo->id }}" class="opciones" id="obligatorio_hidden" value="off" {{('on' == $campo->obligatorio) ? 'disabled':'' }}>
                             </td>
                             <td>
                                 <input type="checkbox" class="micheckbox opciones" name="editable_{{$campo->id }}" id="editable" {{('on' == $campo->editable) ? 'checked':'' }} >
-                                <input type="hidden" name="editable_hidden_{{$campo->id }}" class="opciones campoEdi" id="editable_hidden" value="off" {{('on' == $campo->editable) ? 'disabled':'' }}>
+                                <input type="hidden" name="editable_hidden_{{$campo->id }}" id="editable_hidden" value="off" class="opciones">
+
+                                <input type="hidden" name="opciones_{{$campo->id }}" class="opciones campoEdi" id="opciones" value="off" {{('on' == $campo->editable) ? 'disabled':'' }}>
                             </td>
                             <td class="text-center">
-                                <button type="button" name="remove" id="id_campo" class="btn btn-danger tr_edit_remove" data-id-campo="{{$campo->id }}"><i class="fas fa-trash-alt"></i></button>
+                                <button type="button" name="remove" id="id_campo" class="btn btn-danger tr_edit_form_remove" data-id-campo="{{$campo->id }}"><i class="fas fa-trash-alt"></i></button>
                             </td>
                             <td class="text-center">
-                                <button type="button" name="view" id="view_{{$campo->id }}" class="btn btn-info edit_opciones" data-id-campo="{{$campo->id }}"  {{ ( ( $campo->Sub_Formularios->count() > 0 ) || ('asignador_folios' == $campo->tipo_campo) ) ? "" : 'style=display:none' }} > <i class="fas fa-eye"></i></button>
+                                <button type="button"
+                                        name="view_{{$campo->id }}"
+                                        class="btn btn-info edit_opciones view"
+                                        data-id-campo="{{$campo->id }}"
+                                        id="view"
+                                        {{ ( ( $campo->Sub_Formularios->count() > 0 ) || ('asignador_folios' == $campo->tipo_campo) ) ? "" : 'style=display:none' }}
+                                    >
+                                     <i class="fas fa-eye"></i>
+                                </button>
                             </td>
                         </tr>
                         @endforeach

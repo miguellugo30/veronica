@@ -1,13 +1,13 @@
-<div class="box box-primary">
-    <div class="box-header with-border">
-        <h3 class="box-title"><i class="fas fa fa-filter"></i> <b>Filtro</b></h3>
-        <div class="box-tools pull-right">
+<div class="card card-outline card-primary">
+    <div class="card-header">
+        <h3 class="card-title"><b><i class="fas fa fa-filter"></i> Filtro</b></h3>
+        <div class="card-tools">
             <button class='btn btn-primary btn-sm nuevo-reporte' style='display:none'>
                 Nuevo Reporte
             </button>
         </div>
-    </div><!-- /.box-header -->
-    <div class="box-body">
+    </div><!--card-header-->
+    <div class="card-body">
         <div class="body-filtro">
             <form enctype="multipart/form-data" id="filtargrabaciones" method="post">
                 <div class="row justify-content-md-center">
@@ -51,14 +51,13 @@
                 </div>
             </form>
         </div><!-- ./row -->
-    </div><!-- ./box-body -->
-</div><!-- ./box-primary -->
+    </div><!--card-header-->
+  </div>
 
-
-<div class="box box-primary" id='body-reporte' style='display:none'>
-    <div class="box-header with-border">
-        <h3 class="box-title"><b><i class="fas fa-filter"></i> Reporte: <label id="rangoFiltro"></label> </b></h3>
-        <div class="box-tools pull-right">
+  <div class="card card-outline card-primary" id='body-reporte' style='display:none'>
+    <div class="card-header">
+        <h3 class="card-title"><b><i class="fas fa fa-filter"></i> Reporte: <label id="rangoFiltro"></label></b></h3>
+        <div class="card-tools">
             <button class='btn btn-primary btn-sm descargar-reporte' >
                 <i class="far fa-file-excel"></i>
                 Descargar excel
@@ -72,20 +71,19 @@
                 Eliminar grabaciones
             </button>
         </div>
-    </div><!-- /.box-header -->
-    <div class="box-body">
+    </div><!--card-header-->
+    <div class="card-body">
         <div class="row ">
-            <div class="box-tools">
+            <!--div class="box-tools">
                 <div class="col-12">
                     <i class="fas fa-circle text-secondary"></i> La grabacion esta en el servidor de grabaciones<br>
                     <i class="fas fa-circle text-primary"></i> La grabacion esta en el FTP del cliente
                 </div>
-            </div>
-            <div class="col-12 viewreportedesglose">
-            </div>
+            </div-->
+            <div class="col-12 viewreportedesglose"></div>
         </div><!-- /.row -->
-    </div><!-- ./box-body -->
-</div>
+    </div><!--card-header-->
+  </div>
 <iframe id="iFrameDescarga" src="" frameborder="0" style="display:none"></iframe>
 <!-- MODAL -->
 <div class="modal fade " tabindex="-1" id="modal" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">

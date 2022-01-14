@@ -9,12 +9,12 @@ use Modules\Administrador\Http\Requests\TroncalesRequest;
 use PHPAMI\Ami;
 use nusoap_client;
 
-use Nimbus\Empresas;
-use Nimbus\Troncales;
-use Nimbus\Troncales_Sansay;
-use Nimbus\Cat_Distribuidor;
-use Nimbus\Cat_IP_PBX;
-use Nimbus\Http\Controllers\LogController;
+use App\Empresas;
+use App\Troncales;
+use App\Troncales_Sansay;
+use App\Cat_Distribuidor;
+use App\Cat_IP_PBX;
+use App\Http\Controllers\LogController;
 use Illuminate\Support\Facades\Auth;
 
 class TroncalesController extends Controller
@@ -29,6 +29,7 @@ class TroncalesController extends Controller
          * Recuperamos todos las troncales que esten activos
          */
         $troncales = Troncales::active()->with('Cat_Distribuidor')->with('Troncales_Sansay')->get();
+
         return view('administrador::troncales.index', compact('troncales'));
     }
 
@@ -188,7 +189,7 @@ class TroncalesController extends Controller
         $wsdl = 'http://'.$ip.'/ws-ms/index.php';
         $client =  new  nusoap_client( $wsdl );
         $result = $client->call('Troncales', array(
-                                                        'empresas_id' => $empresa_id
+                                                        'empresas_id' => $id
                                                     ));
         /**
          * Si la respuesta es 1, se hace el reload del sip
@@ -226,7 +227,7 @@ class TroncalesController extends Controller
          */
         Troncales::where( 'id', $id )
                    ->update([
-                       'activo' => '0',
+                       'activo' => 0,
                    ]);
          /**
          * Creamos el logs

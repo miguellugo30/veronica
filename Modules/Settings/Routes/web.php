@@ -93,7 +93,7 @@ Route::group(['namespace' => '\Modules\Settings\Http\Controllers', 'prefix' => '
  * Rutas para CRUD de Base de Datos
  */
 Route::group(['namespace' => '\Modules\Settings\Http\Controllers', 'prefix' => 'settings', 'middleware' => 'auth'], function() {
-    Route::resource('BaseDatos','BaseDatosController');
+    Route::resource('Base-Datos','BaseDatosController');
 });
 /*
  * Rutas para CRUD de Perfil Marcacion

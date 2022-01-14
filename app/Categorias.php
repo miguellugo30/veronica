@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -32,13 +32,13 @@ class Categorias extends Model
      */
     public function Sub_Categorias()
     {
-        return $this->hasMany('Nimbus\Sub_Categorias', 'id_categoria')->where('activo',  1)->orderBy('prioridad');
+        return $this->hasMany('App\Sub_Categorias', 'id_categoria')->where('activo',  1)->orderBy('prioridad');
     }
      /**
      * Relacion muchos a uno con sub Modulos
      */
     public function Modulos()
     {
-       return $this->belongsTo('Nimbus\Modulos', 'modulos_id', 'id');
+       return $this->belongsTo('App\Modulos', 'modulos_id', 'id');
     }
 }

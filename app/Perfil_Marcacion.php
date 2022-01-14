@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -36,27 +36,27 @@ class Perfil_Marcacion extends Model
     */
     public function PrefijosMarcacion()
     {
-       return $this->belongsTo('Nimbus\PrefijosMarcacion', 'fk_prefijos_marcacion_id');
+       return $this->belongsTo('App\PrefijosMarcacion', 'fk_prefijos_marcacion_id');
     }
    /**
     * Relacion muchos a uno con Perfiles
     */
     public function Perfiles()
     {
-       return $this->belongsTo('Nimbus\Perfiles', 'fk_perfiles_id');
+       return $this->belongsTo('App\Perfiles', 'fk_perfiles_id');
     }
    /**
     * Relacion muchos a uno con Canales
     */
     public function Canales()
     {
-       return $this->belongsTo('Nimbus\Canales','fk_canales_id', 'Cat_Canales_Tipo_id');
+       return $this->belongsTo('App\Canales','fk_canales_id', 'Cat_Canales_Tipo_id');
     }
    /**
     * Relacion muchos a uno con Dids
     */
     public function Dids()
     {
-       return $this->belongsTo('Nimbus\Dids', 'fk_dids_id');
+       return $this->belongsTo('App\Dids', 'fk_dids_id');
     }
 }

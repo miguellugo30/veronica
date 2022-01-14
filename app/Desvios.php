@@ -1,6 +1,6 @@
 <?php
 
-namespace Nimbus;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -38,13 +38,13 @@ class Desvios extends Model
      */
     public function Empresas()
     {
-        return $this->belongsTo('Nimbus\Empresas', 'Empresas_id','id');
+        return $this->belongsTo('App\Empresas', 'Empresas_id','id');
     }
     /**
      * Relacion uno a uno con Caneles
      */
     public function Canales()
     {
-        return $this->hasOne('Nimbus\Canales', 'id', 'Canales_id');
+        return $this->hasOne('App\Canales', 'id', 'Canales_id');
     }
 }
