@@ -85,6 +85,10 @@ mix.js([
     ], 'public/js/monitor.js')
     */
     .js([
+        'resources/js/module_outbound/menu.js',
+        'resources/js/module_outbound/campanas.js',
+    ], 'public/js/outbound.js')
+    .js([
         'resources/js/module_agentes/agentes.js',
         'resources/js/module_agentes/eventosPantallaAgente.js',
     ], 'public/js/agente.js')

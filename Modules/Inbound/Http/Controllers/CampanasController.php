@@ -29,7 +29,11 @@ class CampanasController extends Controller
     {
         $user = Auth::user();
         $empresa_id = $user->id_cliente;
-        $campanas = Campanas::empresa($empresa_id)->active()->with('Campanas_Configuracion')->get();
+        $campanas = Campanas::empresa($empresa_id)
+                    ->active()
+                    ->tipo('Inbound')
+                    ->with('Campanas_Configuracion')
+                    ->get();
 
         return view('inbound::Campanas.index',compact('campanas'));
     }

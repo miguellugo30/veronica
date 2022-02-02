@@ -19,11 +19,10 @@ class OutboundController extends Controller
         /**
          * Obtenemos las categorias relacionadas al usuario
          */
-        $categorias = Categorias::with('Sub_Categorias')->active()->where('modulos_id', 2)->get();
+        $categorias = Categorias::with('Sub_Categorias')->active()->where('modulos_id', 2)->orderby('prioridad')->get();
         $modulo = "Outbound";
 
         return view('outbound::index', compact( 'categorias', 'modulo' ));
-        //return view('outbound::index');
     }
 
     /**

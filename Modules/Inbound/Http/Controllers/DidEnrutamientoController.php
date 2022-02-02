@@ -33,55 +33,54 @@ class DidEnrutamientoController extends Controller
         $user = Auth::user();
         $empresa_id = $user->id_cliente;
 
-        $dids = Dids::empresa($empresa_id)->active()->with(['Did_Enrutamiento' => function ($query){
-                        $query->where('activo', 1);
-                }])->get();
+        $dids = Dids::empresa($empresa_id)->active()->with(['Did_Enrutamiento' => function ($query) {
+            $query->where('activo', 1);
+        }])->get();
 
 
         $data = array();
         foreach ($dids as $did) {
 
-            $info = [ $did->id, $did->did, $did->descripcion ];
-            if( $did->Did_Enrutamiento == NULL ){
+            $info = [$did->id, $did->did, $did->descripcion];
+            if ($did->Did_Enrutamiento == NULL) {
                 $desc = '';
                 $apli = '';
                 $nombre = '';
-            }else {
+            } else {
                 $apli = $did->Did_Enrutamiento->aplicacion;
                 $tabla = $did->Did_Enrutamiento->tabla;
 
-                if ( $tabla == 'Campanas' ) {
-                    $dataApli = Campanas::find( $did->Did_Enrutamiento->tabla_id );
+                if ($tabla == 'Campanas') {
+                    $dataApli = Campanas::find($did->Did_Enrutamiento->tabla_id);
                     $nombre = $dataApli->nombre;
-                }else if ( $tabla == 'Audios_Empresa' ) {
-                    $dataApli = Audios_Empresa::find( $did->Did_Enrutamiento->tabla_id );
+                } else if ($tabla == 'Audios_Empresa') {
+                    $dataApli = Audios_Empresa::find($did->Did_Enrutamiento->tabla_id);
                     $nombre = $dataApli->nombre;
-                }else if ( $tabla == 'Cat_Extensiones' ) {
-                    $dataApli = Cat_Extensiones::find( $did->Did_Enrutamiento->tabla_id );
+                } else if ($tabla == 'Cat_Extensiones') {
+                    $dataApli = Cat_Extensiones::find($did->Did_Enrutamiento->tabla_id);
                     $nombre = $dataApli->extension;
-                }else if ( $tabla == 'Condiciones_Tiempo' ) {
-                    $dataApli = Grupos::active()->where([['id', '=', $did->Did_Enrutamiento->tabla_id],['tipo_grupo','=','Condiciones de Tiempo']])->get();
+                } else if ($tabla == 'Condiciones_Tiempo') {
+                    $dataApli = Grupos::active()->where([['id', '=', $did->Did_Enrutamiento->tabla_id], ['tipo_grupo', '=', 'Condiciones de Tiempo']])->get();
                     $nombre = $dataApli[0]->nombre;
-                }else if ( $tabla == 'Ivr' ) {
-                    $dataApli = Ivr::find( $did->Did_Enrutamiento->tabla_id );
+                } else if ($tabla == 'Ivr') {
+                    $dataApli = Ivr::find($did->Did_Enrutamiento->tabla_id);
                     $nombre = $dataApli->nombre;
-                }else if ( $tabla == 'Buzon_Voz' ) {
+                } else if ($tabla == 'Buzon_Voz') {
                     $nombre = 'Buzon de Voz';
-                }else if ( $tabla == 'hangup' ) {
+                } else if ($tabla == 'hangup') {
                     $nombre = 'Colgar';
-                }else if ( $tabla == 'Desvios' ) {
+                } else if ($tabla == 'Desvios') {
                     $nombre = 'Desvio';
                 } else {
                     $dataApli = Buzon_Voz::active()->where('Empresas_id', $empresa_id)->get();
                     $nombre = $dataApli->nombre;
                 }
-
             }
             array_push($info, $apli, $nombre);
             array_push($data, $info);
         }
 
-        return view('inbound::Did_Enrutamiento.index',compact('data'));
+        return view('inbound::Did_Enrutamiento.index', compact('data'));
     }
 
     /**
@@ -110,11 +109,11 @@ class DidEnrutamientoController extends Controller
      */
     public function show($id)
     {
-        $data = explode( '&', $id );
+        $data = explode('&', $id);
         $destino = $data[1];
         $num = $data[2];
 
-        if ( isset( $data[3] ) ) {
+        if (isset($data[3])) {
             $empresa_id = $data[3];
         } else {
             $user = Auth::user();
@@ -128,7 +127,7 @@ class DidEnrutamientoController extends Controller
         } else if ($data[1] == 'Ivr') {
             $info = Ivr::active()->where('Empresas_id', $empresa_id)->get();
         } else if ($data[1] == 'Condiciones_Tiempo') {
-            $info = Grupos::active()->where([['Empresas_id', '=', $empresa_id],['tipo_grupo','=','Condiciones de Tiempo']])->get();
+            $info = Grupos::active()->where([['Empresas_id', '=', $empresa_id], ['tipo_grupo', '=', 'Condiciones de Tiempo']])->get();
         } else if ($data[1] == 'Cat_Extensiones') {
             $info = Cat_Extensiones::active()->where('Empresas_id', $empresa_id)->get();
         } else if ($data[1] == 'Conferencia') {
@@ -138,12 +137,12 @@ class DidEnrutamientoController extends Controller
         } else if ($data[1] == 'Desvios') {
             $info = Desvios::active()->where('Empresas_id', $empresa_id)->get();
         } else if ($data[1] == 'hangup') {
-            $info = [ ['id' => 0, 'nombre' => 'Colgar'] ];
+            $info = [['id' => 0, 'nombre' => 'Colgar']];
         } else if ($data[1] == 'Buzon_Voz') {
             $info = Buzon_Voz::active()->where('Empresas_id', $empresa_id)->get();
         }
 
-        return view('inbound::Did_Enrutamiento.show', compact( 'info', 'destino', 'num'));
+        return view('inbound::Did_Enrutamiento.show', compact('info', 'destino', 'num'));
     }
 
     /**
@@ -154,21 +153,20 @@ class DidEnrutamientoController extends Controller
     public function edit($id)
     {
 
-        $did = Dids::find( $id );
+        $did = Dids::find($id);
 
-        $enrutamiento = Did_Enrutamiento::active()->where('Dids_id',$id)->orderBy('prioridad', 'ASC')->get();
+        $enrutamiento = Did_Enrutamiento::active()->where('Dids_id', $id)->orderBy('prioridad', 'ASC')->get();
         $user = Auth::user();
         $empresa_id = $user->id_cliente;
 
         $data = array();
-        foreach ($enrutamiento as $v)
-        {
+        foreach ($enrutamiento as $v) {
             $datos = [
-                        $v->id,
-                        $v->aplicacion,
-                        $v->tabla,
-                        $v->tabla_id
-                    ];
+                $v->id,
+                $v->aplicacion,
+                $v->tabla,
+                $v->tabla_id
+            ];
 
             if ($v->tabla == 'Audios_Empresa') {
                 $info = Audios_Empresa::active()->where('Empresas_id', $empresa_id)->get();
@@ -177,7 +175,7 @@ class DidEnrutamientoController extends Controller
             } else if ($v->tabla == 'Ivr') {
                 $info = [];
             } else if ($v->tabla == 'Condiciones_Tiempo') {
-                $info = Grupos::active()->where([['Empresas_id', '=', $empresa_id],['tipo_grupo','=','Condiciones de Tiempo']])->get();
+                $info = Grupos::active()->where([['Empresas_id', '=', $empresa_id], ['tipo_grupo', '=', 'Condiciones de Tiempo']])->get();
             } else if ($v->tabla == 'Cat_Extensiones') {
                 $info = Cat_Extensiones::active()->where('Empresas_id', $empresa_id)->get();
             } else if ($v->tabla == 'Conferencia') {
@@ -187,7 +185,7 @@ class DidEnrutamientoController extends Controller
             } else if ($v->tabla == 'Desvios') {
                 $info = Desvios::active()->where('Empresas_id', $empresa_id)->get();
             } else if ($v->tabla == 'hangup') {
-                $info = [ ['id' => 0, 'nombre' => 'Colgar'] ];
+                $info = [['id' => 0, 'nombre' => 'Colgar']];
             } else if ($v->tabla == 'Buzon_Voz') {
                 $info = Buzon_Voz::active()->where('Empresas_id', $empresa_id)->get();
             }
@@ -195,7 +193,7 @@ class DidEnrutamientoController extends Controller
             array_push($datos, $info);
             array_push($data, $datos);
         }
-        return view('inbound::Did_Enrutamiento.edit',compact('data', 'id', 'did'));
+        return view('inbound::Did_Enrutamiento.edit', compact('data', 'id', 'did'));
     }
 
     /**
@@ -213,39 +211,35 @@ class DidEnrutamientoController extends Controller
         /**
          * Actualizamos registro
          **/
-        Dids::where('id', $idDid)->update([ 'descripcion' => $data['descripcion'] ]);
+        Dids::where('id', $idDid)->update(['descripcion' => $data['descripcion']]);
 
-        array_shift( $data );
-        array_shift( $data );
-        $info = array_chunk( $data, 3 );
+        array_shift($data);
+        array_shift($data);
+        $info = array_chunk($data, 3);
 
         $j = 1;
-        for ($i=0; $i < count($info); $i++)
-        {
-            if ($info[$i][0] == NULL)
-            {
+        for ($i = 0; $i < count($info); $i++) {
+            if ($info[$i][0] == NULL) {
                 /**
                  * Creamos registro
                  **/
                 Did_Enrutamiento::create([
-                                            'aplicacion' => $info[$i][1],
-                                            'prioridad' => $j,
-                                            'tabla' => $info[$i][1],
-                                            'tabla_id' => $info[$i][2],
-                                            'Dids_id' => $idDid
-                                        ]);
-            }
-            else
-            {
+                    'aplicacion' => $info[$i][1],
+                    'prioridad' => $j,
+                    'tabla' => $info[$i][1],
+                    'tabla_id' => $info[$i][2],
+                    'Dids_id' => $idDid
+                ]);
+            } else {
                 /**
                  * Actualizamos registro
                  **/
                 Did_Enrutamiento::where('id', $info[$i][0])->update([
-                                                                    'aplicacion' => $info[$i][1],
-                                                                    'prioridad' => $j,
-                                                                    'tabla' => $info[$i][1],
-                                                                    'tabla_id' => $info[$i][2]
-                                                                ]);
+                    'aplicacion' => $info[$i][1],
+                    'prioridad' => $j,
+                    'tabla' => $info[$i][1],
+                    'tabla_id' => $info[$i][2]
+                ]);
             }
             $j++;
         }
@@ -254,17 +248,15 @@ class DidEnrutamientoController extends Controller
          * los nuevos DID en el archivo EXTENSIONS_DID.CONF
          **/
         $pbx = Empresas::empresa($empresa_id)->active()->with('Config_Empresas')->with('Config_Empresas.ms')->get()->first();
-        $wsdl = 'http://'.$pbx->Config_Empresas->ms->ip_pbx.'/ws-ms/index.php';
-        $client =  new  nusoap_client( $wsdl );
+        $wsdl = 'http://' . $pbx->Config_Empresas->ms->ip_pbx . '/ws-ms/index.php';
+        $client =  new  nusoap_client($wsdl);
         $result = $client->call('EnrutamientoDid', array('empresas_id' => $empresa_id));
         /**
          * Si la respuesta es 1, se hace el reload del sip
          **/
-        if ($result['error'] == 1)
-        {
+        if ($result['error'] == 1) {
             $ami = new Ami();
-            if ($ami->connect($pbx->Config_Empresas->ms->ip_pbx.':5038', $pbx->Config_Empresas->usuario_ami, $pbx->Config_Empresas->clave_ami, 'off') === false)
-            {
+            if ($ami->connect($pbx->Config_Empresas->ms->ip_pbx . ':5038', $pbx->Config_Empresas->usuario_ami, $pbx->Config_Empresas->clave_ami, 'off') === false) {
                 throw new \RuntimeException('Could not connect to Asterisk Management Interface.');
             }
             $result  = $ami->command('dialplan Reload');
@@ -273,7 +265,7 @@ class DidEnrutamientoController extends Controller
         /**
          * Creamos el logs
          */
-        $mensaje = 'Se edito un registro con id: '.$idDid.', informacion editada: '.var_export($request->input('dataForm'), true);
+        $mensaje = 'Se edito un registro con id: ' . $idDid . ', informacion editada: ' . var_export($request->input('dataForm'), true);
         $log = new LogController;
         $log->store('Actualización', 'Did_Enrutamiento', $mensaje, $idDid);
 
@@ -288,11 +280,11 @@ class DidEnrutamientoController extends Controller
      */
     public function destroy($id)
     {
-        Did_Enrutamiento::where('id',$id)->update(['activo'=>'0']);
+        Did_Enrutamiento::where('id', $id)->update(['activo' => '0']);
         /**
          * Creamos el logs
          */
-        $mensaje = 'Se Elimino un registro con id: '.$id;
+        $mensaje = 'Se Elimino un registro con id: ' . $id;
         $log = new LogController;
         $log->store('Eliminacion', 'Did_Enrutamiento', $mensaje, $id);
     }

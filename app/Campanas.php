@@ -25,7 +25,9 @@ class Campanas extends Model
         'Base_Datos_id',
         'Empresas_id',
         'Grupos_id',
-        'fk_calificaciones_id'
+        'fk_calificaciones_id',
+        'no_intentos',
+        'modalidad_marcado'
     ];
     /**
      * Nombre de la tabla que se ocupra
@@ -45,6 +47,17 @@ class Campanas extends Model
     {
         return $query->where('Empresas_id', $empresa);
     }
+
+    public function scopeTipo($query, $tipo_marcacion)
+    {
+        return $query->where('tipo_marcacion', $tipo_marcacion);
+    }
+
+    public function scopeId($query, $id)
+    {
+        return $query->where('id', $id);
+    }
+
     /*
     |--------------------------------------------------------------------------
     | RELACIONES DE BASE DE DATOS
@@ -97,5 +110,19 @@ class Campanas extends Model
     public function Speech()
     {
         return $this->hasOne('App\Speech', 'id','speech_id');
+    }
+    /**
+     * Relacion uno a muchos con DID
+     */
+    public function Did()
+    {
+        return $this->belongsToMany('App\Dids', 'Campanas_did', 'fk_campanas', 'fk_dids');
+    }
+        /**
+     * Relacion muchos a uno Campanas
+     */
+    public function Estado_Campanas()
+    {
+        return $this->belongsToMany('App\Cat_estado_campanas', 'Campanas_activas', 'fk_campanas', 'fk_cat_estado_campanas')->where('activo',  1);
     }
 }

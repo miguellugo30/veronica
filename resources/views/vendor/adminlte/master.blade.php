@@ -93,6 +93,7 @@
         <script src="/js/inbound.js"></script>
         <script src="/js/administrador.js"></script>
         <script src="/js/recording.js"></script>
+        <script src="/js/outbound.js"></script>
         <script src="{{ asset('js/checkSesion.js') }}"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
