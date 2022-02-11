@@ -109,7 +109,7 @@
                 <div class="card-tools"></div><!--.card-tools-->
             </div><!-- .card-header -->
             <div class="card-body">
-                <div id="registro_llamada" class="col "></div>
+                <div id="llamadas_calificacion" class="col "></div>
             </div><!-- .card-body -->
         </div><!-- .card -->
     </div>
@@ -239,7 +239,7 @@
 </div><!--row -->
 
 </div>
-<!--script>
+<script>
     Highcharts.chart('llamadas_sistema', {
     chart: {
         plotBackgroundColor: null,
@@ -273,7 +273,7 @@
         colorByPoint: true,
         data: [
             @foreach ($estado_cliente as $i)
-                @if ( $i->parametrizar == 0 )
+                @if ( $i->parametrizar == 1 )
                     {
                         name: "{{$i->nombre}}",
                         y: 61.41,
@@ -283,7 +283,6 @@
         ]
     }]
 });
-
 
 Highcharts.chart('registro_llamada', {
     chart: {
@@ -362,13 +361,14 @@ Highcharts.chart('llamadas_calificacion', {
         colorByPoint: true,
         data: [
 
-            @foreach($campana->Grupos->first()->calificaciones as $i)
+            @foreach($campana->Grupos->first()->calificaciones as $e)
                 {
-                    name: "{{$i->nombre}}",
+                    name: "{{$e->nombre}}",
                     y: 61.41,
                 },
             @endforeach
         ]
     }]
 });
-</script-->
+
+</script>
