@@ -24,7 +24,7 @@
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
-        "express": "^4.17.1",
+        "express": "^4.17.3",
         "inputmask": "^5.0.3",
         "ioredis": "^4.17.3",
         "laravel-echo": "^1.8.0",
